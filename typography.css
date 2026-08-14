@@ -1,21 +1,51 @@
-@font-face{font-family:'Averta PE';src:local('Averta PE Regular'),local('AvertaPE-Regular'),url('./fonts/Averta-PE-Regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:swap}
-@font-face{font-family:'Averta PE';src:local('Averta PE Bold'),local('AvertaPE-Bold'),url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
-@font-face{font-family:'Averta PE';src:local('Averta PE Thin'),local('AvertaPE-Thin'),url('./fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:swap}
+@font-face{
+  font-family:'Averta PE';
+  src:url('./fonts/Averta-PE-Regular.otf') format('opentype');
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Averta PE';
+  src:url('./fonts/Averta-PE-Bold.otf') format('opentype');
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+}
+@font-face{
+  font-family:'Averta PE';
+  src:url('./fonts/Averta-PE-Thin.otf') format('opentype');
+  font-style:normal;
+  font-weight:300;
+  font-display:swap;
+}
 
-/* English defaults to Averta PE; unsupported Korean glyphs fall through to Pretendard. */
-html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
+/*
+  English uses Averta PE first.
+  Averta PE does not contain Korean glyphs, so Korean automatically falls back to Pretendard.
+  Do NOT use :lang(ko) on the page root because html lang="ko" would force Pretendard onto English too.
+*/
+html,body{
+  font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:400;
+  font-synthesis:none;
+}
 
-/* Default text = Regular */
-p,a,span,div,li,button,input,textarea{font-weight:400}
+h1,h2,h3,h4,h5,h6,p,a,span,div,li,button,input,textarea{
+  font-family:inherit;
+}
 
-/* Emphasis only = Bold */
+/* Regular is the default */
+p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-weight:400}
+
+/* Bold only for true emphasis */
 b,strong,.bold{font-weight:700}
 
-/* Decorative contrast only = Thin */
+/* Thin only for decorative contrast */
 .light,.thin{font-weight:300}
 
-/* Korean text naturally falls back to Pretendard; force it when explicitly tagged. */
-:lang(ko),[lang='ko']{font-family:Pretendard,'Averta PE',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-
-/* Headings inherit the Regular-first system unless explicitly emphasized. */
-h1,h2,h3,h4,h5,h6{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
+/* Optional explicit Korean override, only when an element itself is tagged lang="ko" */
+[lang='ko'].ko,
+.ko{
+  font-family:Pretendard,'Averta PE',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
