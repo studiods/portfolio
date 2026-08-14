@@ -1,0 +1,10 @@
+/* Thin-first typography system */
+html,body,body *{font-weight:300}
+b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
+.light,.thin{font-weight:300}
+
+/* English uses natural grammatical capitalization. */
+.top-center,.mini-label,.hero-bottom,.phil strong,.section-top h2,.project-meta,.archive h2,.footer h3,.case-kicker,.case-section .label{ text-transform:none; }
+
+/* Keep labels airy without relying on all-caps. */
+.mini-label,.project-meta,.case-kicker,.case-section .label,.footer h3{letter-spacing:.08em}
