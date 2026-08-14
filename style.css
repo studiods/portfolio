@@ -1,4 +1,4 @@
-@import url('./typography.css');
+@import url('./typography.css?v=3');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 :root{--bg:#f4f2ed;--fg:#111;--muted:#76736d;--line:#a9a59d;--pad:clamp(18px,2.2vw,34px);--gap:clamp(14px,1.4vw,24px)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--fg);font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:400;letter-spacing:-.028em}a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}::selection{background:#111;color:#fff}.shell{padding:0 var(--pad)}
