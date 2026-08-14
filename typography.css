@@ -1,51 +1,18 @@
-@font-face{
-  font-family:'Averta PE';
-  src:url('./fonts/Averta-PE-Regular.otf') format('opentype');
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Averta PE';
-  src:url('./fonts/Averta-PE-Bold.otf') format('opentype');
-  font-style:normal;
-  font-weight:700;
-  font-display:swap;
-}
-@font-face{
-  font-family:'Averta PE';
-  src:url('./fonts/Averta-PE-Thin.otf') format('opentype');
-  font-style:normal;
-  font-weight:300;
-  font-display:swap;
-}
+@font-face{font-family:'Averta PE';src:local('Averta PE Thin'),local('AvertaPE-Thin'),url('./fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:swap}
+@font-face{font-family:'Averta PE';src:local('Averta PE Bold'),local('AvertaPE-Bold'),url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
 
-/*
-  English uses Averta PE first.
-  Averta PE does not contain Korean glyphs, so Korean automatically falls back to Pretendard.
-  Do NOT use :lang(ko) on the page root because html lang="ko" would force Pretendard onto English too.
-*/
-html,body{
-  font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-weight:400;
-  font-synthesis:none;
-}
+/* English typography: Thin is the default. Bold is the only emphasis weight. */
+html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
+body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-weight:300}
 
-h1,h2,h3,h4,h5,h6,p,a,span,div,li,button,input,textarea{
-  font-family:inherit;
-}
-
-/* Regular is the default */
-p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-weight:400}
-
-/* Bold only for true emphasis */
+/* Emphasis only */
 b,strong,.bold{font-weight:700}
 
-/* Thin only for decorative contrast */
+/* Decorative/light class stays Thin */
 .light,.thin{font-weight:300}
 
-/* Optional explicit Korean override, only when an element itself is tagged lang="ko" */
-[lang='ko'].ko,
-.ko{
-  font-family:Pretendard,'Averta PE',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-}
+/* Korean glyphs are not contained in Averta and therefore fall back to Pretendard automatically. */
+.ko,[lang='ko'] .ko{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
+
+/* Preserve natural English capitalization instead of forcing uppercase/lowercase. */
+*{text-transform:none}
