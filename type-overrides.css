@@ -1,18 +1,22 @@
 /* TYPE ROLES */
-html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
-.top,.top *,.mini-label,.principle-no,.principle-en,.project-index,.showcase-meta,.view-project,.archive,.archive *,.footer,.footer *{font-family:'Averta PE',Pretendard,sans-serif;font-weight:400!important}
-.hero-quote,.subtractive-title{font-family:'Averta PE',Pretendard,sans-serif;font-weight:300}
+html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
+body{font-weight:300}
+/* UI stays Regular */
+.top,.top *,.mini-label,.principle-no,.project-index,.showcase-meta,.view-project,.archive,.archive *,.footer,.footer *{font-family:'Averta PE',Pretendard,sans-serif;font-weight:400!important}
+/* English content/titles stay Averta Thin */
+.hero-quote,.subtractive-title,.principles-intro,.principle-card h3,.principle-en,.showcase-project h3{font-family:'Averta PE',sans-serif;font-weight:300!important}
+/* Korean copy */
 .philosophy-statements,.quote-translation p,.subtractive-korean,.principle-card>p:last-child{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 
 /* GNB */
 .top{grid-template-columns:1fr;justify-items:center;padding-top:18px}
 .top-center{text-transform:none;gap:30px}
 
-/* SMALL SECTION LABELS: 1.3x + Regular */
-.mini-label{font-size:13px!important;line-height:1.2;letter-spacing:normal!important;text-transform:none!important;margin-bottom:28px}
+/* SMALL SECTION LABELS */
+.mini-label{font-size:13px!important;line-height:1.2;letter-spacing:normal!important;text-transform:none!important;margin-bottom:28px;font-weight:400!important}
 
-/* MASKED REVEAL: visible by default, JS only primes off-screen blocks. */
-.mask-line{display:block;overflow:hidden}
+/* STANDARD MASK REVEAL FOR NON-HERO CONTENT */
+.mask-line{display:block;overflow:hidden;position:relative}
 .mask-line>span{display:block;transform:translateY(0)}
 .mask-pending .mask-line>span{transform:translateY(-115%)}
 .mask-play .mask-line>span{transform:translateY(0);transition:transform .82s cubic-bezier(.18,.72,.2,1)}
@@ -24,41 +28,55 @@ html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'S
 .hero-sequence{height:205vh;position:relative;margin:0 calc(-1*var(--pad))}
 .hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;padding:84px var(--pad) 30px;background:var(--bg);display:flex;align-items:center}
 .hero-state{position:absolute;inset:84px var(--pad) 42px;display:flex;flex-direction:column;justify-content:center;transition:opacity .48s ease,transform .68s cubic-bezier(.2,.7,.2,1)}
-.hero-state-quote{opacity:1;transform:none}.hero-state-subtractive{opacity:0;transform:translateY(6vh);pointer-events:none}
-.hero-sequence.show-subtractive .hero-state-quote{opacity:0;transform:translateY(-5vh);pointer-events:none}.hero-sequence.show-subtractive .hero-state-subtractive{opacity:1;transform:none}
+.hero-state-quote{opacity:1;transform:none}.hero-state-subtractive{opacity:0;transform:translateY(5vh);pointer-events:none}
+.hero-sequence.show-subtractive .hero-state-quote{opacity:0;transform:translateY(-4vh);pointer-events:none}.hero-sequence.show-subtractive .hero-state-subtractive{opacity:1;transform:none}
 .hero-quote{font-size:clamp(43px,6.15vw,106px);line-height:.91;letter-spacing:normal;text-transform:uppercase;max-width:1500px}
-.hero-quote .mask-line>span{transform:translateY(-115%);animation:heroMaskDown .84s cubic-bezier(.18,.72,.2,1) forwards}
-.hero-quote .mask-line:nth-child(2)>span{animation-delay:.07s}.hero-quote .mask-line:nth-child(3)>span{animation-delay:.14s}.hero-quote .mask-line:nth-child(4)>span{animation-delay:.21s}
-@keyframes heroMaskDown{to{transform:translateY(0)}}
-.quote-translation{margin-top:32px;opacity:0;transform:translateY(-10px);animation:heroSupportIn .55s cubic-bezier(.18,.72,.2,1) .52s forwards}
+
+/* BLACK BAR WIPE: bar grows left-to-right, then clears as text is revealed */
+.bar-reveal .mask-line{overflow:hidden}
+.bar-reveal .mask-line>span{opacity:0;transform:none!important}
+.bar-reveal .mask-line::after{content:"";position:absolute;inset:0 auto 0 0;width:100%;background:#111;transform:scaleX(0);transform-origin:left center;z-index:2}
+.hero-quote .mask-line::after{animation:barSweep 1.02s cubic-bezier(.7,0,.2,1) forwards}
+.hero-quote .mask-line>span{animation:textAfterBar .01s linear forwards;animation-delay:.56s}
+.hero-quote .mask-line:nth-child(2)::after{animation-delay:.10s}.hero-quote .mask-line:nth-child(3)::after{animation-delay:.20s}.hero-quote .mask-line:nth-child(4)::after{animation-delay:.30s}
+.hero-quote .mask-line:nth-child(2)>span{animation-delay:.66s}.hero-quote .mask-line:nth-child(3)>span{animation-delay:.76s}.hero-quote .mask-line:nth-child(4)>span{animation-delay:.86s}
+@keyframes barSweep{0%{transform:scaleX(0);transform-origin:left center}48%{transform:scaleX(1);transform-origin:left center}52%{transform:scaleX(1);transform-origin:right center}100%{transform:scaleX(0);transform-origin:right center}}
+@keyframes textAfterBar{to{opacity:1}}
+.quote-translation{margin-top:32px;opacity:0;transform:translateY(-8px);animation:heroSupportIn .5s cubic-bezier(.18,.72,.2,1) .9s forwards}
 @keyframes heroSupportIn{to{opacity:1;transform:none}}
-.quote-translation p{margin:0;font-weight:300;font-size:clamp(15px,1.4vw,23px);line-height:1.3;letter-spacing:-.01em;text-transform:none}.quote-translation>span{display:block;margin-top:9px;font-weight:400!important;font-size:11px;text-transform:uppercase}
-.subtractive-title{font-size:clamp(72px,12vw,210px);line-height:.79;letter-spacing:normal;text-transform:uppercase}.subtractive-title .mask-line>span{transform:translateY(-115%);transition:transform .84s cubic-bezier(.18,.72,.2,1)}.subtractive-title .mask-line:nth-child(2)>span{transition-delay:.07s}.hero-sequence.show-subtractive .subtractive-title .mask-line>span{transform:translateY(0)}
-.subtractive-korean{margin:26px 0 0;font-weight:300;font-size:clamp(17px,1.6vw,26px);line-height:1.3;opacity:0;transform:translateY(-10px);transition:opacity .4s ease .26s,transform .55s cubic-bezier(.18,.72,.2,1) .26s}.hero-sequence.show-subtractive .subtractive-korean{opacity:1;transform:none}
+.quote-translation p{margin:0;font-weight:300;font-size:clamp(15px,1.4vw,23px);line-height:1.3;letter-spacing:-.01em;text-transform:none}.quote-translation>span{display:block;margin-top:9px;font-family:'Averta PE',sans-serif;font-weight:400!important;font-size:11px;text-transform:uppercase}
+.subtractive-title{font-size:clamp(72px,12vw,210px);line-height:.79;letter-spacing:normal;text-transform:uppercase}
+.subtractive-title .mask-line::after{animation:none}.subtractive-title .mask-line>span{animation:none;opacity:0}
+.hero-sequence.play-subtractive .subtractive-title .mask-line::after{animation:barSweep 1.02s cubic-bezier(.7,0,.2,1) forwards}
+.hero-sequence.play-subtractive .subtractive-title .mask-line:nth-child(2)::after{animation-delay:.12s}
+.hero-sequence.play-subtractive .subtractive-title .mask-line>span{animation:textAfterBar .01s linear forwards;animation-delay:.56s}
+.hero-sequence.play-subtractive .subtractive-title .mask-line:nth-child(2)>span{animation-delay:.68s}
+.subtractive-korean{margin:26px 0 0;font-weight:300;font-size:clamp(17px,1.6vw,26px);line-height:1.3;opacity:0;transform:translateY(-8px);transition:opacity .4s ease .76s,transform .5s cubic-bezier(.18,.72,.2,1) .76s}.hero-sequence.play-subtractive .subtractive-korean{opacity:1;transform:none}
 .hero-scroll-cue{position:absolute;right:var(--pad);bottom:22px;font-family:'Averta PE',sans-serif;font-weight:400;font-size:11px;text-transform:uppercase;z-index:5}.hero-sequence *{border-top:none!important;border-bottom:none!important}
 
 /* DESIGN PHILOSOPHY */
 .intro-block{padding:clamp(110px,9vh,170px) 0;display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);align-items:start}
-.philosophy-statements{grid-column:2;font-weight:100;color:var(--fg);font-size:clamp(31px,4vw,64px);line-height:1.06;letter-spacing:-.025em;word-break:keep-all}
-.philosophy-statements p{margin:0 0 .32em}.philosophy-statements p:last-child{margin-bottom:0}
+.philosophy-statements{grid-column:2;font-weight:100;color:var(--fg);font-size:clamp(24px,3vw,48px);line-height:1.05;letter-spacing:-.02em;word-break:keep-all}
+.philosophy-statements p{margin:0 0 .34em}.philosophy-statements p:last-child{margin-bottom:0}
 @supports not (font-weight:100){.philosophy-statements{font-weight:300}}
 
 /* DESIGN PRINCIPLES */
 .principles-section{margin:0 calc(-1*var(--pad));padding:clamp(96px,6vh,150px) var(--pad);background:#111;color:#fff;min-height:auto}
 .principles-head{display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);align-items:start;margin-bottom:clamp(75px,7vh,120px)}
-.light-ui{color:#8c8c8c}.principles-intro{grid-column:2;margin:0;font-family:'Averta PE',sans-serif;font-weight:400;font-size:clamp(42px,6vw,96px);line-height:.9;letter-spacing:normal;white-space:pre-line;min-height:2.7em}
+.light-ui{color:#8c8c8c}.principles-intro{grid-column:2;margin:0;font-family:'Averta PE',sans-serif;font-weight:300!important;font-size:clamp(42px,6vw,96px);line-height:.9;letter-spacing:normal;white-space:pre-line;min-height:2.7em}
 .principles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(28px,3vw,56px)}
 .principle-card{padding-top:16px;border-top:1px solid #555}.principle-no{display:block;font-size:14.3px;color:#777;margin-bottom:44px}
-.principle-card h3{font-family:'Averta PE',sans-serif;font-weight:400;font-size:clamp(36px,3.35vw,60px);line-height:.92;letter-spacing:normal;margin:0 0 28px;text-transform:uppercase;min-height:1.84em}.principle-en{font-size:14px!important;line-height:1.2;letter-spacing:.03em;color:#9a9a9a;margin:0 0 42px;text-transform:uppercase;white-space:nowrap}.principle-card>p:last-child{font-weight:300;font-size:16px;line-height:1.55;color:#bdbdbd;max-width:430px;margin:0}
+.principle-card h3{font-family:'Averta PE',sans-serif;font-weight:300!important;font-size:clamp(36px,3.35vw,60px);line-height:.92;letter-spacing:normal;margin:0 0 28px;text-transform:uppercase;min-height:1.84em}.principle-en{font-family:'Averta PE',sans-serif;font-weight:300!important;font-size:14px!important;line-height:1.2;letter-spacing:.03em;color:#9a9a9a;margin:0 0 42px;text-transform:uppercase;white-space:nowrap}.principle-card>p:last-child{font-weight:300;font-size:16px;line-height:1.55;color:#bdbdbd;max-width:430px;margin:0}
 
-/* SELECTED WORK: title left, project copy left, visual sticky right */
-.selected-work{display:block;padding:clamp(110px,9vh,170px) 0 80px;border-top:1px solid var(--fg)}
-.selected-work-header{display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);align-items:start;margin-bottom:80px}.selected-work-header>.mini-label{grid-column:1}.selected-work-header h2{grid-column:1;margin:0;font-family:'Averta PE',sans-serif;font-weight:400;font-size:clamp(42px,6vw,96px);line-height:.9;letter-spacing:normal;text-transform:uppercase}
-.project-stack{display:block}.showcase-project{display:grid!important;grid-template-columns:minmax(260px,1fr) minmax(0,2.2fr);gap:clamp(34px,5vw,88px);min-height:108vh;padding:72px 0 110px;border-top:1px solid var(--fg);position:relative}
-.project-copy{align-self:start;padding-top:4vh}.project-index{display:block;font-size:14.3px;line-height:1;margin-bottom:44px;color:var(--muted);transition:font-weight .2s,color .2s}.showcase-project.active .project-index{font-weight:700!important;color:var(--fg)}
-.showcase-project h3{font-family:'Averta PE',sans-serif;font-weight:400;font-size:clamp(34px,3.8vw,66px);line-height:.94;letter-spacing:normal;margin:0 0 30px;text-transform:uppercase}.showcase-meta{display:grid;gap:5px;font-size:12px;text-transform:uppercase;margin:0 0 24px;color:var(--muted)}
+/* WORKS: title label only, sticky copy left / scrolling visual right */
+.selected-work{display:block;padding:clamp(76px,7vh,120px) 0 80px;border-top:none!important}
+.selected-work-header{margin:0 0 clamp(32px,4vh,58px)}.selected-work-header>.mini-label{margin-bottom:0}.selected-work-header h2{display:none}
+.project-stack{display:block}.showcase-project{display:grid!important;grid-template-columns:minmax(260px,1fr) minmax(0,2.2fr);gap:clamp(34px,5vw,88px);min-height:108vh;padding:56px 0 104px;border-top:1px solid var(--fg);position:relative}
+.showcase-project:first-child{border-top:none;padding-top:18px}
+.project-copy{position:sticky;top:14vh;align-self:start;padding-top:0;height:fit-content}.project-index{display:none}
+.showcase-project h3{font-family:'Averta PE',sans-serif;font-weight:300!important;font-size:clamp(27px,3.04vw,53px);line-height:.95;letter-spacing:normal;margin:0 0 30px;text-transform:uppercase}.showcase-meta{display:grid;gap:5px;font-size:12px;text-transform:uppercase;margin:0 0 24px;color:var(--muted)}
 .view-project{display:inline-block;font-size:14.3px!important;line-height:1.2;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:3px;font-weight:400!important}
-.project-visual{position:sticky;top:11vh;align-self:start;height:fit-content}.project-visual .placeholder{width:100%;transition:transform .5s cubic-bezier(.2,.7,.2,1),background .35s ease}.showcase-project:hover .project-visual .placeholder{transform:scale(.992);background:#e9e6df}
+.project-visual{position:relative;align-self:start;height:fit-content}.project-visual .placeholder{width:100%;transition:transform .5s cubic-bezier(.2,.7,.2,1),background .35s ease}.showcase-project:hover .project-visual .placeholder{transform:scale(.992);background:#e9e6df}
 
 /* EARLIER WORK */
 .archive.earlier-work{padding:110px 0 90px;display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);border-top:1px solid var(--fg);margin-top:0}.archive.earlier-work h2{font-size:14.3px!important;font-weight:400!important;text-transform:none;margin:0}.archive.earlier-work .archive-row{font-size:16.9px!important;line-height:1.25;padding:19px 0;grid-template-columns:125px 1fr 1.4fr 36px}
@@ -66,6 +84,6 @@ html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'S
 /* FOOTER */
 .filip-footer{padding:110px 0 30px}.filip-footer .footer-grid{grid-template-columns:1fr 1fr 1fr}.filip-footer h3{font-size:13px!important;line-height:1.2;font-weight:400!important;margin-bottom:22px;letter-spacing:normal!important;text-transform:none!important}.filip-footer a,.filip-footer p{font-size:13px;line-height:1.7;font-weight:400!important}.footer,.footer *{font-weight:400!important}
 
-@media(max-width:850px){.top{justify-items:start}.hero-sequence{height:190vh}.hero-sticky{padding:78px var(--pad) 26px}.hero-state{inset:78px var(--pad) 40px}.hero-quote{font-size:clamp(30px,8.4vw,58px);line-height:.95}.quote-translation{margin-top:22px}.quote-translation p{font-size:14px}.subtractive-title{font-size:clamp(60px,17vw,112px);line-height:.82}.intro-block{display:block;padding:100px 0}.intro-block>.mini-label{margin-bottom:34px}.philosophy-statements{font-size:clamp(28px,7.6vw,48px);line-height:1.1}.principles-section{padding-block:90px}.principles-head{display:block;margin-bottom:70px}.principles-intro{font-size:clamp(40px,11vw,68px);margin-top:30px}.principles-grid{grid-template-columns:1fr;gap:70px}.principle-card h3{font-size:clamp(36px,10vw,60px);min-height:auto}.principle-en{white-space:normal}.selected-work-header{display:block}.selected-work-header>.mini-label{margin-bottom:30px}.selected-work-header h2{font-size:clamp(40px,11vw,68px)}.showcase-project{grid-template-columns:1fr;min-height:auto;padding:64px 0 90px}.project-copy{padding-top:0}.project-visual{position:static;grid-row:1}.project-copy{grid-row:2}.showcase-project h3{font-size:clamp(34px,9vw,58px)}.archive.earlier-work{display:block}.archive.earlier-work h2{margin-bottom:30px}.archive.earlier-work .archive-row{grid-template-columns:90px 1fr 28px;font-size:15px!important}.archive.earlier-work .archive-row .muted{display:none}.filip-footer .footer-grid{grid-template-columns:1fr;gap:44px}}
+@media(max-width:850px){.top{justify-items:start}.hero-sequence{height:190vh}.hero-sticky{padding:78px var(--pad) 26px}.hero-state{inset:78px var(--pad) 40px}.hero-quote{font-size:clamp(30px,8.4vw,58px);line-height:.95}.quote-translation{margin-top:22px}.quote-translation p{font-size:14px}.subtractive-title{font-size:clamp(60px,17vw,112px);line-height:.82}.intro-block{display:block;padding:100px 0}.intro-block>.mini-label{margin-bottom:34px}.philosophy-statements{font-size:clamp(23px,6.2vw,38px);line-height:1.08}.principles-section{padding-block:90px}.principles-head{display:block;margin-bottom:70px}.principles-intro{font-size:clamp(40px,11vw,68px);margin-top:30px}.principles-grid{grid-template-columns:1fr;gap:70px}.principle-card h3{font-size:clamp(36px,10vw,60px);min-height:auto}.principle-en{white-space:normal}.selected-work{padding-top:80px}.showcase-project{grid-template-columns:1fr;min-height:auto;padding:54px 0 86px}.project-copy{position:static;grid-row:2}.project-visual{grid-row:1}.showcase-project h3{font-size:clamp(30px,7.5vw,48px)}.archive.earlier-work{display:block}.archive.earlier-work h2{margin-bottom:30px}.archive.earlier-work .archive-row{grid-template-columns:90px 1fr 28px;font-size:15px!important}.archive.earlier-work .archive-row .muted{display:none}.filip-footer .footer-grid{grid-template-columns:1fr;gap:44px}}
 
-@media(prefers-reduced-motion:reduce){.hero-quote .mask-line>span{animation:none;transform:none}.quote-translation{animation:none;opacity:1;transform:none}.mask-pending .mask-line>span,.mask-play .mask-line>span{transform:none;transition:none}.hero-state,.subtractive-title .mask-line>span,.subtractive-korean{transition:none}}
+@media(prefers-reduced-motion:reduce){.bar-reveal .mask-line::after{animation:none!important;display:none}.bar-reveal .mask-line>span{animation:none!important;opacity:1}.quote-translation{animation:none;opacity:1;transform:none}.mask-pending .mask-line>span,.mask-play .mask-line>span{transform:none;transition:none}.hero-state,.subtractive-korean{transition:none}}
