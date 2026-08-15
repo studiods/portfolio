@@ -1,23 +1,29 @@
 /* TYPOGRAPHY ROLES */
 html,body,body *{font-weight:400}
-.hero-quote,.subtractive-title,.intro-copy,.principles-intro,.principle-card h3,.work-showcase-head h2,.showcase-project h3,.case-title,.case-copy h2,.about-hero h1{font-weight:300}
+
+/* Main editorial display text stays Light */
+.hero-quote,.subtractive-title,.intro-copy,.principles-intro,.case-title,.case-copy h2,.about-hero h1{font-weight:300}
 .light,.thin{font-weight:300}
 b,strong,.bold,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
-.top,.top *,.mini-label,.work-menu,.showcase-meta,.view-project,.archive,.archive-row,.footer,.footer *,.hero-scroll-cue{font-weight:400!important}
 
-/* GNB: CENTER MENU ONLY */
+/* Section/UI titles are Regular */
+.top,.top *,.mini-label,.intro-block>.mini-label,.principles-head>.mini-label,.principle-card h3,.work-rail>.mini-label,.work-menu,.work-showcase-head h2,.showcase-project h3,.showcase-meta,.view-project,.archive,.archive h2,.archive-row,.footer,.footer *,.footer-wordmark,.hero-scroll-cue{font-weight:400!important}
+
+/* GNB */
 .top{grid-template-columns:1fr;justify-items:center;padding-top:18px}
 .top-center{text-transform:none;gap:30px}
 
-/* ROBUST MASKED REVEAL
-   Content is visible by default. JS only adds .reveal-pending to elements it will animate,
-   so a JS/observer failure can never leave the page blank. */
-.reveal-title,.reveal-support{clip-path:none;transform:none;opacity:1}
-.reveal-pending{clip-path:inset(0 0 100% 0);transform:translateY(-.42em);opacity:.001;will-change:clip-path,transform,opacity}
-.reveal-pending.is-visible{clip-path:inset(0 0 0 0);transform:translateY(0);opacity:1;transition:clip-path .9s cubic-bezier(.18,.72,.2,1),transform .9s cubic-bezier(.18,.72,.2,1),opacity .2s ease}
-.reveal-support.reveal-pending.is-visible{transition-delay:.08s}
+/* SCROLL REVEAL — CONTENT IS ALWAYS VISIBLE BY DEFAULT.
+   Animation is added only when the element enters the viewport, so an observer failure can never hide content. */
+.reveal-title,.reveal-support{clip-path:none!important;transform:none!important;opacity:1!important}
+.reveal-title.animate-in,.reveal-support.animate-in{animation:maskRevealDown .9s cubic-bezier(.18,.72,.2,1) both}
+.reveal-support.animate-in{animation-delay:.08s}
+@keyframes maskRevealDown{
+  from{clip-path:inset(0 0 100% 0);transform:translateY(-.42em);opacity:1}
+  to{clip-path:inset(0 0 0 0);transform:translateY(0);opacity:1}
+}
 
-/* HERO: FIRST STATE ALWAYS RENDERS, THEN MASK-REVEALS ON LOAD */
+/* HERO */
 .hero-sequence{height:205vh;position:relative;margin:0 calc(-1*var(--pad))}
 .hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;padding:84px var(--pad) 30px;background:var(--bg);display:flex;align-items:center}
 .hero-state{position:absolute;inset:84px var(--pad) 42px;display:flex;flex-direction:column;justify-content:center;transition:opacity .48s ease,transform .68s cubic-bezier(.2,.7,.2,1)}
@@ -45,42 +51,43 @@ b,strong,.bold,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
 
 /* DESIGN PHILOSOPHY */
 .intro-block{padding:150px 0 150px;align-items:start}
-.intro-block>.mini-label{text-transform:none;font-family:'Averta PE',Pretendard,sans-serif;font-weight:400}
-.korean-philosophy{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:100;line-height:1.08;letter-spacing:-.02em;word-break:keep-all;text-transform:none;font-size:clamp(34px,4.5vw,70px);max-width:1100px}
+.intro-block>.mini-label{text-transform:none;font-family:'Averta PE',Pretendard,sans-serif;font-weight:400!important}
+.korean-philosophy{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:100;line-height:1.08;letter-spacing:-.02em;word-break:keep-all;text-transform:none;font-size:clamp(34px,4.5vw,70px);max-width:1100px;opacity:1!important;clip-path:none!important;transform:none!important}
 @supports not (font-weight:100){.korean-philosophy{font-weight:300}}
 
 /* DESIGN PRINCIPLES */
 .principles-section{margin:0 calc(-1*var(--pad));padding:110px var(--pad) 130px;background:#111;color:#fff;min-height:100vh}
 .principles-head{display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);align-items:start;margin-bottom:110px}
 .light-ui{color:#878787}
-.principles-intro{grid-column:2;margin:0;font-size:clamp(42px,6vw,96px);line-height:.9;letter-spacing:normal}
+.principles-head>.mini-label{font-weight:400!important}
+.principles-intro{grid-column:2;margin:0;font-size:clamp(42px,6vw,96px);line-height:.9;letter-spacing:normal;opacity:1!important;clip-path:none!important;transform:none!important}
 .principles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,54px)}
 .principle-card{padding-top:16px;border-top:1px solid #555}
 .principle-no{display:block;font-size:11px;color:#777;margin-bottom:50px;font-weight:400}
-.principle-card h3{font-family:'Averta PE',Pretendard,sans-serif;font-size:clamp(34px,3.3vw,58px);line-height:.94;letter-spacing:normal;margin:0 0 26px;text-transform:uppercase}
+.principle-card h3{font-family:'Averta PE',Pretendard,sans-serif;font-size:clamp(34px,3.3vw,58px);line-height:.94;letter-spacing:normal;margin:0 0 26px;text-transform:uppercase;font-weight:400!important;opacity:1!important;clip-path:none!important;transform:none!important}
 .principle-en{font-family:'Averta PE',Pretendard,sans-serif;font-weight:400!important;font-size:12px;letter-spacing:.04em;color:#8d8d8d;margin:0 0 48px;text-transform:uppercase}
 .principle-card>p:last-child{font-family:Pretendard,sans-serif;font-weight:300;font-size:16px;line-height:1.55;color:#bdbdbd;max-width:430px;margin:0}
 
-/* SELECTED WORK — LEFT RAIL / RIGHT SHOWCASE */
+/* SELECTED WORK */
 .selected-work{display:grid;grid-template-columns:minmax(210px,.72fr) minmax(0,2.28fr);gap:clamp(36px,5vw,96px);padding:150px 0 130px;border-top:1px solid var(--fg)}
-.work-rail{position:relative}.work-rail>.mini-label{margin-bottom:40px}
+.work-rail{position:relative}.work-rail>.mini-label{margin-bottom:40px;font-weight:400!important}
 .work-menu{position:sticky;top:110px;display:grid;gap:10px;font-family:'Averta PE',Pretendard,sans-serif;font-size:12px;line-height:1.2}
 .work-menu a{display:grid;grid-template-columns:28px 1fr;gap:12px;color:var(--muted);transition:color .25s,transform .25s;text-transform:uppercase}
 .work-menu a.active,.work-menu a:hover{color:var(--fg);transform:translateX(5px)}.work-menu a span{color:var(--muted)}
 .work-showcase{min-width:0}.work-showcase-head{min-height:48vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:70px}
-.work-showcase-head h2{font-size:clamp(72px,10.5vw,184px);line-height:.8;letter-spacing:normal;margin:0;text-transform:uppercase}
+.work-showcase-head h2{font-size:clamp(72px,10.5vw,184px);line-height:.8;letter-spacing:normal;margin:0;text-transform:uppercase;font-weight:400!important;opacity:1!important;clip-path:none!important;transform:none!important}
 .work-showcase-head p{font-size:11px;margin:28px 0 0;color:var(--muted);font-weight:400;text-transform:uppercase}
 .showcase-project{display:block;padding:64px 0 92px;border-top:1px solid var(--fg)}
 .showcase-meta{display:flex;justify-content:space-between;font-size:11px;text-transform:uppercase;margin-bottom:12px}
 .showcase-project .placeholder{transition:transform .55s cubic-bezier(.2,.7,.2,1),background .35s ease}.showcase-project:hover .placeholder{transform:scale(.992);background:#e9e6df}
-.showcase-project h3{font-family:'Averta PE',Pretendard,sans-serif;font-size:clamp(38px,5.7vw,92px);line-height:.92;letter-spacing:normal;margin:24px 0 16px;text-transform:uppercase;max-width:1180px}
+.showcase-project h3{font-family:'Averta PE',Pretendard,sans-serif;font-size:clamp(38px,5.7vw,92px);line-height:.92;letter-spacing:normal;margin:24px 0 16px;text-transform:uppercase;max-width:1180px;font-weight:400!important;opacity:1!important;clip-path:none!important;transform:none!important}
 .view-project{display:inline-block;font-size:11px;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px}
 
 /* ARCHIVE / FOOTER */
-.archive{margin-top:40px}.filip-footer{padding-top:110px}.filip-footer .footer-grid{grid-template-columns:1fr 1fr 1fr}
+.archive{margin-top:40px}.archive h2{font-weight:400!important}.filip-footer{padding-top:110px}.filip-footer .footer-grid{grid-template-columns:1fr 1fr 1fr}
 .footer-wordmark{font-family:'Averta PE',Pretendard,sans-serif;font-weight:400!important;font-size:clamp(54px,10.4vw,188px);line-height:.8;letter-spacing:normal;margin-top:100px;text-transform:uppercase;white-space:nowrap}
 .footer,.footer *,.footer-wordmark{font-weight:400!important}
 
 @media(max-width:850px){.top{justify-items:start}.hero-sequence{height:190vh}.hero-sticky{padding:78px var(--pad) 26px}.hero-state{inset:78px var(--pad) 40px}.hero-quote{font-size:clamp(30px,8.4vw,58px);line-height:.95}.quote-translation{margin-top:22px}.quote-translation p{font-size:14px}.subtractive-title{font-size:clamp(60px,17vw,112px);line-height:.82}.intro-block{padding:100px 0;display:block}.intro-block>.mini-label{margin-bottom:35px}.korean-philosophy{font-size:clamp(30px,8vw,52px);line-height:1.12}.principles-section{padding-top:90px;padding-bottom:100px;min-height:auto}.principles-head{display:block;margin-bottom:70px}.principles-intro{font-size:clamp(40px,11vw,68px);margin-top:34px}.principles-grid{grid-template-columns:1fr;gap:70px}.principle-no{margin-bottom:32px}.principle-card h3{font-size:clamp(36px,10vw,60px)}.selected-work{grid-template-columns:1fr;padding-top:100px}.work-menu{position:static;grid-template-columns:repeat(2,1fr);margin-bottom:30px}.work-showcase-head{min-height:35vh}.work-showcase-head h2{font-size:clamp(70px,20vw,120px)}.showcase-project h3{font-size:clamp(38px,11vw,68px)}.footer-wordmark{white-space:normal;font-size:clamp(54px,18vw,110px)}}
 
-@media(prefers-reduced-motion:reduce){.hero-quote span>i{animation:none;transform:none}.quote-translation{animation:none;opacity:1;transform:none}.reveal-pending{clip-path:none;transform:none;opacity:1}.hero-state{transition:none}.subtractive-title span{transition:none}.subtractive-korean{transition:none}}
+@media(prefers-reduced-motion:reduce){.hero-quote span>i{animation:none;transform:none}.quote-translation{animation:none;opacity:1;transform:none}.reveal-title.animate-in,.reveal-support.animate-in{animation:none}.hero-state{transition:none}.subtractive-title span{transition:none}.subtractive-korean{transition:none}}
