@@ -1,18 +1,13 @@
-@font-face{font-family:'Averta PE';src:local('Averta PE Thin'),local('AvertaPE-Thin'),url('./fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:swap}
-@font-face{font-family:'Averta PE';src:local('Averta PE Bold'),local('AvertaPE-Bold'),url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
+@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:block}
+@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:block}
+@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:block}
 
-/* English typography: Thin is the default. Bold is the only emphasis weight. */
-html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
-body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-weight:300}
+/* English is always drawn with Averta. Korean glyphs naturally fall through to Pretendard. */
+html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
+body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-family:inherit}
 
-/* Emphasis only */
-b,strong,.bold{font-weight:700}
+/* Explicit Korean copy uses Pretendard only. */
+.ko,[lang='ko'] .ko{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 
-/* Decorative/light class stays Thin */
 .light,.thin{font-weight:300}
-
-/* Korean glyphs are not contained in Averta and therefore fall back to Pretendard automatically. */
-.ko,[lang='ko'] .ko{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
-
-/* Preserve natural English capitalization instead of forcing uppercase/lowercase. */
-*{text-transform:none}
+b,strong,.bold{font-weight:700}
