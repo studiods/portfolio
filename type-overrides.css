@@ -1,32 +1,66 @@
-/* Thin-first typography system */
-html,body,body *{font-weight:300}
-b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
+/* Base UI typography: Regular. Main editorial display remains Light. */
+html,body,body *{font-weight:400}
+
+/* Main editorial/display text = Averta PE Light */
+.hero-line,.intro-copy,.ai-big,.case-title,.case-copy h2,.about-hero h1,.foot-name{font-weight:300}
 .light,.thin{font-weight:300}
 
-/* Menu names keep their original title case. */
-.top-center{ text-transform:none; }
+/* Point emphasis = Bold */
+b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
 
-/* All other English display/UI text is rendered uppercase by the base stylesheet. */
+/* UI elements = Regular */
+.top,.top a,.top-center,.top-right,.mini-label,.side-list,.hero-bottom,.section-top,.section-top h2,.section-top span,.project-meta,.project-title,.archive,.archive-row,.footer,.footer h3,.footer a,.footer p,.case-kicker,.case-meta,.case-section .label,.case-stats span,.timeline-row{font-weight:400}
 
-/* Korean quotation under hero: Pretendard Light, 30% of hero size. */
+/* Menu names keep title case; non-menu English remains controlled by base uppercase rules. */
+.top-center{text-transform:none}
+
+/* Hero quote: slightly smaller, fixed to a natural four-line rhythm on desktop. */
+.hero-line{
+  font-size:clamp(46px,6.9vw,118px);
+  line-height:.9;
+  letter-spacing:normal;
+}
+
+/* Korean quotation under hero */
 .hero-korean{
-  margin:28px 0 0;
+  margin:26px 0 0;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-weight:300;
-  font-size:clamp(16px,2.52vw,44px);
-  line-height:1.45;
+  font-size:clamp(15px,2.05vw,34px);
+  line-height:1.35;
   letter-spacing:normal;
   text-transform:none;
 }
 .hero-korean span{
   display:inline-block;
-  margin-top:10px;
+  margin-top:9px;
   font-family:'Averta PE',Pretendard,sans-serif;
-  font-weight:300;
-  font-size:.42em;
+  font-weight:400;
+  font-size:.45em;
+  text-transform:uppercase;
+}
+
+/* Korean design philosophy: Pretendard Thin if available, Light fallback. */
+.philosophy-label{
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:100;
+  text-transform:none;
+}
+.korean-philosophy{
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:100;
+  line-height:1.02;
+  letter-spacing:-.025em;
+  word-break:keep-all;
   text-transform:none;
 }
 
+@supports not (font-weight:100){
+  .philosophy-label,.korean-philosophy{font-weight:300}
+}
+
 @media(max-width:850px){
-  .hero-korean{font-size:clamp(15px,4.8vw,28px);margin-top:22px}
+  .hero-line{font-size:clamp(42px,12.4vw,78px);line-height:.92}
+  .hero-korean{font-size:clamp(14px,4.2vw,24px);margin-top:20px}
+  .korean-philosophy{line-height:1.06}
 }
