@@ -3,8 +3,30 @@ html,body,body *{font-weight:300}
 b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
 .light,.thin{font-weight:300}
 
-/* English uses natural grammatical capitalization. */
-.top-center,.mini-label,.hero-bottom,.phil strong,.section-top h2,.project-meta,.archive h2,.footer h3,.case-kicker,.case-section .label{ text-transform:none; }
+/* Menu names keep their original title case. */
+.top-center{ text-transform:none; }
 
-/* Keep labels airy without relying on all-caps. */
-.mini-label,.project-meta,.case-kicker,.case-section .label,.footer h3{letter-spacing:.08em}
+/* All other English display/UI text is rendered uppercase by the base stylesheet. */
+
+/* Korean quotation under hero: Pretendard Light, 30% of hero size. */
+.hero-korean{
+  margin:28px 0 0;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:300;
+  font-size:clamp(16px,2.52vw,44px);
+  line-height:1.45;
+  letter-spacing:normal;
+  text-transform:none;
+}
+.hero-korean span{
+  display:inline-block;
+  margin-top:10px;
+  font-family:'Averta PE',Pretendard,sans-serif;
+  font-weight:300;
+  font-size:.42em;
+  text-transform:none;
+}
+
+@media(max-width:850px){
+  .hero-korean{font-size:clamp(15px,4.8vw,28px);margin-top:22px}
+}
