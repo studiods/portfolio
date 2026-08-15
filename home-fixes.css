@@ -1,0 +1,31 @@
+/* Home-specific refinement: Design philosophy */
+.philosophy-statements{
+  display:grid;
+  grid-template-columns:1fr;
+  row-gap:.12em;
+  align-items:start;
+  justify-items:start;
+  line-height:1;
+  text-align:left;
+}
+.philosophy-statements p{
+  display:block;
+  width:100%;
+  margin:0!important;
+  padding:0!important;
+  line-height:1!important;
+  text-align:left;
+  text-indent:0;
+}
+.philosophy-statements .fill-char{
+  display:inline;
+  vertical-align:baseline;
+  line-height:inherit;
+}
+@media(max-width:850px){
+  .philosophy-statements{
+    row-gap:.14em;
+    line-height:1.03;
+  }
+  .philosophy-statements p{line-height:1.03!important}
+}
