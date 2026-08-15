@@ -11,14 +11,91 @@ b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{fon
 /* UI elements = Regular */
 .top,.top a,.top-center,.top-right,.mini-label,.side-list,.hero-bottom,.section-top,.section-top h2,.section-top span,.project-meta,.project-title,.archive,.archive-row,.footer,.footer h3,.footer a,.footer p,.case-kicker,.case-meta,.case-section .label,.case-stats span,.timeline-row{font-weight:400}
 
-/* Menu names keep title case; non-menu English remains controlled by base uppercase rules. */
+/* Menu names keep title case. */
 .top-center{text-transform:none}
 
-/* Hero quote: slightly smaller, fixed to a natural four-line rhythm on desktop. */
-.hero-line{
-  font-size:clamp(46px,6.9vw,118px);
-  line-height:.9;
+/* Flip-clock inspired opening screen */
+.flip-intro{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  position:relative;
+  padding:88px 0 28px;
+  perspective:1200px;
+}
+.flip-stage{width:min(100%,1380px)}
+.flip-row{
+  position:relative;
+  overflow:hidden;
+  height:clamp(64px,8.3vw,138px);
+  border-top:1px solid var(--fg);
+  display:flex;
+  align-items:center;
+  background:var(--bg);
+}
+.flip-row:last-of-type{border-bottom:1px solid var(--fg)}
+.flip-row:after{
+  content:"";
+  position:absolute;
+  left:0;right:0;top:50%;
+  height:1px;
+  background:rgba(17,17,17,.16);
+  pointer-events:none;
+}
+.flip-row span{
+  display:block;
+  width:100%;
+  font-family:'Averta PE',Pretendard,sans-serif;
+  font-size:clamp(44px,7.1vw,118px);
+  line-height:.88;
+  font-weight:300;
   letter-spacing:normal;
+  text-transform:uppercase;
+  transform-origin:50% 0%;
+  transform:rotateX(-92deg) translateY(-35%);
+  opacity:0;
+  animation:flipIn .72s cubic-bezier(.19,.78,.2,1) forwards;
+  will-change:transform,opacity;
+}
+.flip-row:nth-child(1) span{animation-delay:.18s}
+.flip-row:nth-child(2) span{animation-delay:.52s}
+.flip-row:nth-child(3) span{animation-delay:.86s}
+.flip-row:nth-child(4) span{animation-delay:1.2s}
+@keyframes flipIn{
+  0%{transform:rotateX(-92deg) translateY(-35%);opacity:0}
+  58%{transform:rotateX(8deg) translateY(1%);opacity:1}
+  100%{transform:rotateX(0deg) translateY(0);opacity:1}
+}
+.flip-author{
+  margin:14px 0 0;
+  font-family:'Averta PE',Pretendard,sans-serif;
+  font-size:11px;
+  font-weight:400;
+  text-transform:uppercase;
+  opacity:0;
+  animation:fadeUp .55s 1.72s ease forwards;
+}
+.flip-scroll{
+  position:absolute;
+  right:0;
+  bottom:26px;
+  font-family:'Averta PE',Pretendard,sans-serif;
+  font-size:10px;
+  font-weight:400;
+  text-transform:uppercase;
+  opacity:0;
+  animation:fadeUp .55s 2.05s ease forwards;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Second screen: philosophy statement revealed by scroll */
+.subtractive-hero{min-height:100vh}
+.subtractive-title{
+  font-size:clamp(68px,12vw,190px);
+  line-height:.78;
+  letter-spacing:normal;
+  text-transform:uppercase;
 }
 
 /* Korean quotation under hero */
@@ -59,8 +136,16 @@ b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{fon
   .philosophy-label,.korean-philosophy{font-weight:300}
 }
 
+@media(prefers-reduced-motion:reduce){
+  .flip-row span,.flip-author,.flip-scroll{animation:none;opacity:1;transform:none}
+}
+
 @media(max-width:850px){
-  .hero-line{font-size:clamp(42px,12.4vw,78px);line-height:.92}
+  .flip-intro{padding-top:82px;justify-content:center}
+  .flip-row{height:clamp(54px,15vw,92px)}
+  .flip-row span{font-size:clamp(34px,10.5vw,64px);line-height:.92}
+  .flip-scroll{right:0;bottom:18px}
+  .subtractive-title{font-size:clamp(70px,20vw,120px);line-height:.8}
   .hero-korean{font-size:clamp(14px,4.2vw,24px);margin-top:20px}
   .korean-philosophy{line-height:1.06}
 }
