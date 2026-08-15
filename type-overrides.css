@@ -1,151 +1,71 @@
-/* Base UI typography: Regular. Main editorial display remains Light. */
+/* Typography roles */
 html,body,body *{font-weight:400}
 
-/* Main editorial/display text = Averta PE Light */
-.hero-line,.intro-copy,.ai-big,.case-title,.case-copy h2,.about-hero h1,.foot-name{font-weight:300}
+/* Editorial/display text remains Light */
+.flip-copy,.subtractive-title,.intro-copy,.ai-big,.case-title,.case-copy h2,.about-hero h1{font-weight:300}
 .light,.thin{font-weight:300}
 
-/* Point emphasis = Bold */
+/* Point emphasis */
 b,strong,.bold,.phil strong,.case-copy h2 b,.case-stats strong,.about-hero b{font-weight:700}
 
-/* UI elements = Regular */
-.top,.top a,.top-center,.top-right,.mini-label,.side-list,.hero-bottom,.section-top,.section-top h2,.section-top span,.project-meta,.project-title,.archive,.archive-row,.footer,.footer h3,.footer a,.footer p,.case-kicker,.case-meta,.case-section .label,.case-stats span,.timeline-row{font-weight:400}
-
-/* Menu names keep title case. */
+/* UI = Regular */
+.top,.top a,.top-center,.top-right,.mini-label,.side-list,.section-top,.section-top h2,.section-top span,.project-meta,.project-title,.archive,.archive-row,.footer,.footer h3,.footer a,.footer p,.case-kicker,.case-meta,.case-section .label,.case-stats span,.timeline-row,.hero-scroll-cue{font-weight:400}
 .top-center{text-transform:none}
 
-/* Flip-clock inspired opening screen */
-.flip-intro{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  position:relative;
-  padding:88px 0 28px;
-  perspective:1200px;
-}
-.flip-stage{width:min(100%,1380px)}
-.flip-row{
-  position:relative;
-  overflow:hidden;
-  height:clamp(64px,8.3vw,138px);
-  border-top:1px solid var(--fg);
-  display:flex;
-  align-items:center;
-  background:var(--bg);
-}
-.flip-row:last-of-type{border-bottom:1px solid var(--fg)}
-.flip-row:after{
-  content:"";
-  position:absolute;
-  left:0;right:0;top:50%;
-  height:1px;
-  background:rgba(17,17,17,.16);
-  pointer-events:none;
-}
-.flip-row span{
-  display:block;
-  width:100%;
-  font-family:'Averta PE',Pretendard,sans-serif;
-  font-size:clamp(44px,7.1vw,118px);
-  line-height:.88;
-  font-weight:300;
-  letter-spacing:normal;
-  text-transform:uppercase;
-  transform-origin:50% 0%;
-  transform:rotateX(-92deg) translateY(-35%);
-  opacity:0;
-  animation:flipIn .72s cubic-bezier(.19,.78,.2,1) forwards;
-  will-change:transform,opacity;
-}
-.flip-row:nth-child(1) span{animation-delay:.18s}
-.flip-row:nth-child(2) span{animation-delay:.52s}
-.flip-row:nth-child(3) span{animation-delay:.86s}
-.flip-row:nth-child(4) span{animation-delay:1.2s}
-@keyframes flipIn{
-  0%{transform:rotateX(-92deg) translateY(-35%);opacity:0}
-  58%{transform:rotateX(8deg) translateY(1%);opacity:1}
-  100%{transform:rotateX(0deg) translateY(0);opacity:1}
-}
-.flip-author{
-  margin:14px 0 0;
-  font-family:'Averta PE',Pretendard,sans-serif;
-  font-size:11px;
-  font-weight:400;
-  text-transform:uppercase;
-  opacity:0;
-  animation:fadeUp .55s 1.72s ease forwards;
-}
-.flip-scroll{
-  position:absolute;
-  right:0;
-  bottom:26px;
-  font-family:'Averta PE',Pretendard,sans-serif;
-  font-size:10px;
-  font-weight:400;
-  text-transform:uppercase;
-  opacity:0;
-  animation:fadeUp .55s 2.05s ease forwards;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* First interaction stage: no divider lines or supporting rules. */
+.hero-sequence{height:200vh;position:relative;margin:0 calc(-1*var(--pad));}
+.hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden;padding:82px var(--pad) 26px;background:var(--bg);display:flex;align-items:center;}
+.hero-state{position:absolute;inset:82px var(--pad) 34px;display:flex;flex-direction:column;justify-content:center;transition:opacity .55s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
+.hero-state-quote{opacity:1;transform:translateY(0);}
+.hero-state-subtractive{opacity:0;transform:translateY(8vh);pointer-events:none;}
+.hero-sequence.show-subtractive .hero-state-quote{opacity:0;transform:translateY(-7vh);pointer-events:none;}
+.hero-sequence.show-subtractive .hero-state-subtractive{opacity:1;transform:translateY(0);}
 
-/* Second screen: philosophy statement revealed by scroll */
-.subtractive-hero{min-height:100vh}
-.subtractive-title{
-  font-size:clamp(68px,12vw,190px);
-  line-height:.78;
-  letter-spacing:normal;
-  text-transform:uppercase;
-}
+/* Flip-clock style line reveal: the text unfolds from the horizontal axis with no box/border. */
+.flip-copy{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(44px,6.25vw,108px);line-height:.91;letter-spacing:normal;text-transform:uppercase;max-width:1480px;}
+.flip-row{position:relative;height:.94em;perspective:1400px;transform-style:preserve-3d;overflow:visible;}
+.flip-final,.flip-half{position:absolute;inset:0;display:block;white-space:nowrap;}
+.flip-final{opacity:0;animation:flipFinal .01s linear forwards;animation-delay:calc(var(--delay) + 760ms);}
+.flip-half{backface-visibility:hidden;will-change:transform,opacity;}
+.flip-half-top{clip-path:inset(0 0 50% 0);transform-origin:50% 50%;transform:rotateX(-92deg);opacity:0;animation:flipTop .72s cubic-bezier(.2,.68,.2,1) forwards;animation-delay:var(--delay);}
+.flip-half-bottom{clip-path:inset(50% 0 0 0);transform-origin:50% 50%;transform:rotateX(92deg);opacity:0;animation:flipBottom .72s cubic-bezier(.2,.68,.2,1) forwards;animation-delay:calc(var(--delay) + 110ms);}
+@keyframes flipTop{0%{transform:rotateX(-92deg);opacity:0}18%{opacity:1}72%{transform:rotateX(8deg);opacity:1}100%{transform:rotateX(0);opacity:1}}
+@keyframes flipBottom{0%{transform:rotateX(92deg);opacity:0}18%{opacity:1}72%{transform:rotateX(-7deg);opacity:1}100%{transform:rotateX(0);opacity:1}}
+@keyframes flipFinal{to{opacity:1}}
 
-/* Korean quotation under hero */
-.hero-korean{
-  margin:26px 0 0;
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-weight:300;
-  font-size:clamp(15px,2.05vw,34px);
-  line-height:1.35;
-  letter-spacing:normal;
-  text-transform:none;
-}
-.hero-korean span{
-  display:inline-block;
-  margin-top:9px;
-  font-family:'Averta PE',Pretendard,sans-serif;
-  font-weight:400;
-  font-size:.45em;
-  text-transform:uppercase;
-}
+.quote-translation{margin-top:34px;opacity:0;animation:translationIn .5s ease forwards;animation-delay:1.28s;}
+.quote-translation p{margin:0;font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-size:clamp(15px,1.35vw,23px);line-height:1.32;letter-spacing:-.015em;text-transform:none;}
+.quote-translation span{display:block;margin-top:10px;font-family:'Averta PE',Pretendard,sans-serif;font-weight:400;font-size:11px;letter-spacing:normal;text-transform:uppercase;}
+@keyframes translationIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* Korean design philosophy: Pretendard Thin if available, Light fallback. */
-.philosophy-label{
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-weight:100;
-  text-transform:none;
-}
-.korean-philosophy{
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-weight:100;
-  line-height:1.02;
-  letter-spacing:-.025em;
-  word-break:keep-all;
-  text-transform:none;
-}
+.subtractive-title{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(70px,12.1vw,210px);line-height:.78;letter-spacing:normal;text-transform:uppercase;}
+.subtractive-title span{display:block;}
+.hero-scroll-cue{position:absolute;right:var(--pad);bottom:22px;font-family:'Averta PE',Pretendard,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:normal;z-index:5;}
 
-@supports not (font-weight:100){
-  .philosophy-label,.korean-philosophy{font-weight:300}
-}
+/* Remove decorative rules from the first sequence only. */
+.hero-sequence *{border-top:none!important;border-bottom:none!important;}
 
-@media(prefers-reduced-motion:reduce){
-  .flip-row span,.flip-author,.flip-scroll{animation:none;opacity:1;transform:none}
-}
+/* Korean philosophy */
+.philosophy-label{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:100;text-transform:none}
+.korean-philosophy{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:100;line-height:1.02;letter-spacing:-.025em;word-break:keep-all;text-transform:none}
+
+/* Footer / very bottom UI remains Regular, including the name */
+.footer,.footer *,.foot-name,.foot-name *{font-weight:400!important}
 
 @media(max-width:850px){
-  .flip-intro{padding-top:82px;justify-content:center}
-  .flip-row{height:clamp(54px,15vw,92px)}
-  .flip-row span{font-size:clamp(34px,10.5vw,64px);line-height:.92}
-  .flip-scroll{right:0;bottom:18px}
-  .subtractive-title{font-size:clamp(70px,20vw,120px);line-height:.8}
-  .hero-korean{font-size:clamp(14px,4.2vw,24px);margin-top:20px}
-  .korean-philosophy{line-height:1.06}
+  .hero-sequence{height:190vh}
+  .hero-sticky{padding:76px var(--pad) 24px}
+  .hero-state{inset:76px var(--pad) 34px}
+  .flip-copy{font-size:clamp(31px,8.6vw,64px);line-height:.94}
+  .flip-final,.flip-half{white-space:normal}
+  .quote-translation{margin-top:24px}
+  .quote-translation p{font-size:clamp(14px,4vw,20px);line-height:1.35}
+  .subtractive-title{font-size:clamp(62px,18vw,118px);line-height:.82}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .flip-final{opacity:1;animation:none}
+  .flip-half{display:none}
+  .quote-translation{opacity:1;animation:none}
+  .hero-state{transition:none}
 }
