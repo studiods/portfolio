@@ -45,9 +45,18 @@
   transition:none!important;
 }
 
-/* HERO: slightly longer sticky travel is reserved for fill -> hold -> exit beats. */
-.hero-sequence{height:275vh!important}
-.hero-state{overflow:hidden}
+/*
+  HERO sequence timing is controlled by normalized phases in home-interactions.js.
+  This height only controls overall physical scroll speed. A long enough travel is
+  deliberately reserved so FILL -> HOLD -> VISIBLE EXIT -> NEXT STATE is perceptible.
+*/
+.hero-sequence{height:420vh!important}
+.hero-state{
+  overflow:visible!important;
+  transition:none!important;
+  will-change:transform,opacity;
+  backface-visibility:hidden;
+}
 .hero-state-quote{opacity:1}
 .hero-state-definition{
   opacity:0;
@@ -118,12 +127,7 @@
 }
 .philosophy-statements p+p{margin-top:0!important}
 
-/*
-  Visible white spacer after Design philosophy.
-  This is a real block rather than margin so the shell/background cannot make
-  the added space appear black. It is outside the sticky section, so animation
-  timing remains unchanged.
-*/
+/* Visible white spacer after Design philosophy. */
 .philosophy-tail-space{
   display:block;
   width:100%;
@@ -164,7 +168,7 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:255vh!important}
+  .hero-sequence{height:390vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
@@ -211,7 +215,7 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:250vh!important}
+  .hero-sequence{height:380vh!important}
   .intro-block{min-height:180vh!important;margin-bottom:0!important}
   .philosophy-tail-space{height:clamp(84px,12vh,132px)}
   .principles-head{min-height:0!important;padding-bottom:36px!important}
