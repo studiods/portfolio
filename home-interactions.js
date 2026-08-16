@@ -56,7 +56,26 @@
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
-  $$('.js-char-fill').forEach(splitChars);
+  /*
+    Whole-line fill: each line is treated as one unit. A line moves from the
+    base alpha to 100% before the next line begins filling.
+  */
+  const setSequentialWhole = (els, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
+    const n = els.length || 1;
+    els.forEach((el, i) => {
+      const local = clamp(progress * n - i);
+      const alpha = baseAlpha + (1 - baseAlpha) * local;
+      el.style.color = `rgba(${rgb},${alpha})`;
+    });
+  };
+
+  /*
+    Design philosophy is intentionally excluded from character splitting so its
+    animation can be controlled by visual line (<p>) rather than by glyph/word.
+  */
+  $$('.js-char-fill')
+    .filter(el => !el.classList.contains('philosophy-statements'))
+    .forEach(splitChars);
 
   const hero = $('#heroSequence');
   const quoteState = $('.hero-state-quote', hero);
@@ -145,14 +164,15 @@
   };
 
   const philosophy = $('.philosophy-statements');
-  const philosophyChars = $$('.philosophy-statements .fill-char');
+  const philosophyLines = $$('.philosophy-statements > p');
   const renderPhilosophy = () => {
     if (!philosophy) return;
     const r = philosophy.getBoundingClientRect();
     const start = innerHeight * 0.98;
     const end = innerHeight * 0.18;
     const physicalRange = (start - end) * FILL_SLOWDOWN * SCROLL_DISTANCE_SCALE;
-    setChars(philosophyChars, clamp((start - r.top) / physicalRange));
+    const progress = clamp((start - r.top) / physicalRange);
+    setSequentialWhole(philosophyLines, progress);
   };
 
   const principles = $('#principles');
