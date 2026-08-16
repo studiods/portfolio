@@ -3,7 +3,7 @@
 @font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
 
 /* English is always drawn with Averta as soon as the preloaded face is ready; swap avoids FOIT. */
-html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:400}
+html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
 body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-family:inherit}
 
 /* Explicit Korean copy uses Pretendard only. */

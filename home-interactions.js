@@ -2,6 +2,9 @@
   const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
   const $ = (s, root = document) => root ? root.querySelector(s) : null;
   const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
+  const FILL_SLOWDOWN = 1.1;
+  const fillProgress = (value, start, duration) =>
+    clamp((value - start) / (duration * FILL_SLOWDOWN));
 
   /*
     Keep the first visit/reload deterministic. Browsers can restore the previous
@@ -37,16 +40,16 @@
     });
   };
 
-  const setChars = (chars, progress, rgb = '17,17,17') => {
+  const setChars = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
     const n = chars.length || 1;
     chars.forEach((char, i) => {
       const local = clamp(progress * n - i);
-      char.style.color = `rgba(${rgb},${0.05 + 0.95 * local})`;
+      char.style.color = `rgba(${rgb},${baseAlpha + (1 - baseAlpha) * local})`;
     });
   };
 
-  const setWhole = (els, progress, rgb = '17,17,17') => {
-    const alpha = 0.05 + 0.95 * clamp(progress);
+  const setWhole = (els, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
+    const alpha = baseAlpha + (1 - baseAlpha) * clamp(progress);
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
@@ -59,14 +62,12 @@
 
   const hero = $('#heroSequence');
   const quoteState = $('.hero-state-quote', hero);
-  const quote = $('.hero-quote', hero);
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
-  const definitionLines = $$('.definition-copy .fill-line', hero);
   const subState = $('.hero-state-subtractive', hero);
-  const subTitle = $('.subtractive-title', hero);
   const subLines = $$('.subtractive-korean .fill-line', hero);
   const quoteChars = $$('.hero-quote .fill-char', hero);
+  const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
 
   const renderHero = () => {
@@ -75,16 +76,16 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    setChars(quoteChars, clamp(p / 0.20));
-    setWhole(sourceOnly ? [sourceOnly] : [], clamp((p - 0.12) / 0.08));
+    setChars(quoteChars, fillProgress(p, 0, 0.20));
+    setWhole(sourceOnly ? [sourceOnly] : [], fillProgress(p, 0.12, 0.08));
 
-    const quoteOut = clamp((p - 0.25) / 0.09);
+    const quoteOut = clamp((p - 0.27) / 0.09);
     quoteState.style.opacity = String(1 - quoteOut);
     quoteState.style.transform = `translateY(${quoteOut * 1.1}em)`;
     quoteState.style.clipPath = `inset(0 0 ${quoteOut * 100}% 0)`;
 
-    const defIn = clamp((p - 0.31) / 0.09);
-    const defOut = clamp((p - 0.47) / 0.07);
+    const defIn = clamp((p - 0.34) / 0.09);
+    const defOut = clamp((p - 0.67) / 0.08);
     const defVisible = clamp(defIn - defOut);
     definition.style.opacity = String(defVisible);
     definition.style.transform = defOut > 0
@@ -94,22 +95,16 @@
       ? `inset(0 0 ${defOut * 100}% 0)`
       : `inset(${(1 - defIn) * 100}% 0 0 0)`;
     definition.setAttribute('aria-hidden', defVisible <= 0.001 ? 'true' : 'false');
-    setWhole(definitionLines.slice(0, 1), clamp((p - 0.36) / 0.06));
-    setWhole(definitionLines.slice(1), clamp((p - 0.40) / 0.06));
+    setChars(definitionChars, fillProgress(p, 0.39, 0.22));
 
-    const subIn = clamp((p - 0.52) / 0.09);
-    const subOut = clamp((p - 0.82) / 0.09);
-    const subVisible = clamp(subIn - subOut);
+    const subIn = clamp((p - 0.75) / 0.08);
+    const subVisible = subIn;
     subState.style.opacity = String(subVisible);
-    subState.style.transform = subOut > 0
-      ? `translateY(${subOut * 1.1}em)`
-      : `translateY(${(1 - subIn) * -0.8}em)`;
-    subState.style.clipPath = subOut > 0
-      ? `inset(0 0 ${subOut * 100}% 0)`
-      : `inset(${(1 - subIn) * 100}% 0 0 0)`;
+    subState.style.transform = `translateY(${(1 - subIn) * -0.8}em)`;
+    subState.style.clipPath = `inset(${(1 - subIn) * 100}% 0 0 0)`;
     subState.setAttribute('aria-hidden', subVisible <= 0.001 ? 'true' : 'false');
-    setChars(subChars, clamp((p - 0.58) / 0.11));
-    setWhole(subLines, clamp((p - 0.64) / 0.06));
+    setChars(subChars, fillProgress(p, 0.80, 0.11));
+    setWhole(subLines, fillProgress(p, 0.85, 0.06));
   };
 
   const philosophy = $('.philosophy-statements');
@@ -119,7 +114,10 @@
     const r = philosophy.getBoundingClientRect();
     const start = innerHeight * 0.94;
     const end = innerHeight * 0.30;
-    setChars(philosophyChars, clamp((start - r.top) / (start - end)));
+    setChars(
+      philosophyChars,
+      clamp((start - r.top) / ((start - end) * FILL_SLOWDOWN))
+    );
   };
 
   const principles = $('#principles');
@@ -133,18 +131,21 @@
   const renderPrinciples = () => {
     if (!principles || !principleIntro || !translation) return;
     const r = principles.getBoundingClientRect();
-    const travel = Math.max(1, principles.offsetHeight - innerHeight * 0.72);
-    const p = clamp((innerHeight * 0.78 - r.top) / travel);
+    const travel = Math.max(
+      innerHeight * 0.90,
+      principles.offsetHeight - innerHeight * 0.35
+    );
+    const p = clamp((innerHeight * 0.82 - r.top) / travel);
 
-    setChars(introChars, clamp(p / 0.23), '255,255,255');
+    setChars(introChars, fillProgress(p, 0, 0.23), '255,255,255', 0.16);
 
-    const introOut = clamp((p - 0.26) / 0.10);
+    const introOut = clamp((p - 0.34) / 0.10);
     principleIntro.style.opacity = String(1 - introOut);
     principleIntro.style.transform = `translateY(${introOut * 0.8}em)`;
     principleIntro.style.clipPath = `inset(0 0 ${introOut * 100}% 0)`;
 
-    const trIn = clamp((p - 0.32) / 0.09);
-    const trOut = clamp((p - 0.48) / 0.08);
+    const trIn = clamp((p - 0.40) / 0.10);
+    const trOut = clamp((p - 0.78) / 0.10);
     const trVisible = clamp(trIn - trOut);
     translation.style.opacity = String(trVisible);
     translation.style.transform = trOut > 0
@@ -154,10 +155,10 @@
       ? `inset(0 0 ${trOut * 100}% 0)`
       : `inset(${(1 - trIn) * 100}% 0 0 0)`;
     translation.setAttribute('aria-hidden', trVisible <= 0.001 ? 'true' : 'false');
-    setWhole(translationLine, clamp((p - 0.37) / 0.07), '255,255,255');
+    setWhole(translationLine, fillProgress(p, 0.47, 0.07), '255,255,255');
 
-    setChars(cardEnglishChars, clamp((p - 0.52) / 0.26), '255,255,255');
-    setWhole(cardKorean, clamp((p - 0.72) / 0.12), '255,255,255');
+    setChars(cardEnglishChars, fillProgress(p, 0.62, 0.26), '255,255,255');
+    setWhole(cardKorean, fillProgress(p, 0.78, 0.12), '255,255,255');
   };
 
   let raf = 0;
@@ -175,4 +176,7 @@
   render();
   addEventListener('scroll', requestRender, { passive: true });
   addEventListener('resize', requestRender);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(requestRender).catch(() => {});
+  }
 })();

@@ -16,34 +16,19 @@
   width:100%!important;
 }
 
-/*
-  IMPORTANT: disable legacy animations from type-overrides.css.
-  The homepage interaction is controlled only by home-interactions.js.
-  This prevents the opening copy from being translated -115% before JS runs.
-*/
-.hero-load-mask>span,
-.hero-load-mask>span:nth-child(n){
-  transform:none!important;
-  animation:none!important;
-}
-.subtractive-title>span,
-.hero-state-subtractive.sub-visible .subtractive-title>span{
-  transform:none!important;
-  animation:none!important;
-}
-
-/* Progressive enhancement: all source content is already visible at its intended low-alpha state before JS runs. */
+/* Progressive enhancement: source content is stable before JS initializes. */
 .hero-quote,
 .subtractive-title,
 .philosophy-statements{color:rgba(17,17,17,.05)}
 .quote-source-only,
-.definition-copy .fill-line,
+.definition-copy,
 .subtractive-korean .fill-line{color:rgba(17,17,17,.05)}
-.principles-intro,
 .principle-card h3,
 .principle-en,
 .principle-card>p:last-child,
 .principles-translation{color:rgba(255,255,255,.05)}
+.principles-intro{color:rgba(255,255,255,.16)}
+.principles-intro .fill-char{color:rgba(255,255,255,.16)}
 
 /* Character wrappers must not change line metrics when JS initializes. */
 .js-char-fill .fill-char,
@@ -52,6 +37,7 @@
 .principle-card h3 .fill-char,
 .principle-en .fill-char,
 .hero-quote .fill-char,
+.definition-copy .fill-char,
 .subtractive-title .fill-char{
   display:inline!important;
   vertical-align:baseline!important;
@@ -81,10 +67,10 @@
 .definition-copy{
   width:100%;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-weight:300;
-  font-size:clamp(30px,2.8vw,46px);
-  line-height:1.08;
-  letter-spacing:-.015em;
+  font-weight:100;
+  font-size:clamp(43px,6.15vw,106px);
+  line-height:.98;
+  letter-spacing:-.025em;
   word-break:keep-all;
 }
 .definition-copy p{margin:0;padding:0}
@@ -110,8 +96,13 @@
 .philosophy-statements p+p{margin-top:0!important}
 
 /* DESIGN PRINCIPLES */
-.principles-section{position:relative;overflow:hidden}
-.principles-head{position:relative;min-height:82vh;align-content:start}
+.principles-section{
+  position:relative;
+  overflow:hidden;
+  padding-top:clamp(72px,5vh,110px)!important;
+  padding-bottom:clamp(72px,5vh,110px)!important;
+}
+.principles-head{position:relative;min-height:58vh;align-content:start}
 .principles-intro,
 .principles-translation{
   position:absolute;
@@ -145,12 +136,22 @@
   .philosophy-statements,.principles-intro,.principles-translation{width:100%!important;margin-left:0!important}
   .philosophy-statements,.philosophy-statements p{line-height:1.16!important}
   .hero-sequence{height:220vh!important}
-  .definition-copy{font-size:clamp(26px,7vw,40px);line-height:1.1}
-  .principles-head{min-height:72vh}
+  .definition-copy{font-size:clamp(30px,8.4vw,58px);line-height:1.04}
+  .principles-head{min-height:56vh}
   .principles-intro,.principles-translation{position:absolute;left:0;top:52px;width:100%!important}
   .principles-translation{font-size:clamp(32px,9vw,54px)}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .hero-state-definition,.principles-translation{clip-path:none!important}
+  .hero-quote .fill-char,
+  .definition-copy .fill-char,
+  .subtractive-title .fill-char,
+  .philosophy-statements .fill-char{color:#111!important}
+  .principles-intro .fill-char,
+  .principle-card h3 .fill-char,
+  .principle-en .fill-char,
+  .principle-card>p:last-child{color:#fff!important}
+  .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
+  .hero-state-definition,.hero-state-subtractive,.principles-translation{opacity:0!important}
+  .principles-intro{opacity:1!important;transform:none!important;clip-path:none!important}
 }
