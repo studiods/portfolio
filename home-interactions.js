@@ -4,18 +4,13 @@
   const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
 
   /*
-    Global fill-speed control.
-    The original baseline was 1.10. 1.32 is exactly 20% slower than that build.
-    This stretches only the 5% -> 100% fill progress, not mask transitions.
+    Fill alpha still runs from 5% -> 100%, but the key UX issue is physical
+    scroll distance. SCROLL_DISTANCE_SCALE makes the same fill require about
+    30% more wheel/trackpad travel, which is perceptible regardless of scroll
+    device speed. FILL_SLOWDOWN keeps the previous alpha timing refinement.
   */
   const FILL_SLOWDOWN = 1.32;
-
-  /*
-    Previously each glyph moved from 5% -> 100% inside roughly 1 character-step.
-    With long headings that still looked almost instantaneous even though the
-    overall scroll range was 20% longer. FILL_FEATHER widens the fade window of
-    each glyph without changing the order of the fill sweep.
-  */
+  const SCROLL_DISTANCE_SCALE = 1.30;
   const FILL_FEATHER = 4;
 
   const fillProgress = (value, start, duration) =>
@@ -116,12 +111,10 @@
   const renderPhilosophy = () => {
     if (!philosophy) return;
     const r = philosophy.getBoundingClientRect();
-    const start = innerHeight * 0.94;
-    const end = innerHeight * 0.30;
-    setChars(
-      philosophyChars,
-      clamp((start - r.top) / ((start - end) * FILL_SLOWDOWN))
-    );
+    const start = innerHeight * 0.98;
+    const end = innerHeight * 0.18;
+    const physicalRange = (start - end) * FILL_SLOWDOWN * SCROLL_DISTANCE_SCALE;
+    setChars(philosophyChars, clamp((start - r.top) / physicalRange));
   };
 
   const principles = $('#principles');
@@ -133,10 +126,11 @@
   const renderPrinciples = () => {
     if (!principles || !principleIntro) return;
     const r = principles.getBoundingClientRect();
-    const travel = Math.max(
+    const baseTravel = Math.max(
       innerHeight * 0.90,
       principles.offsetHeight - innerHeight * 0.35
     );
+    const travel = baseTravel * SCROLL_DISTANCE_SCALE;
     const p = clamp((innerHeight * 0.82 - r.top) / travel);
 
     setChars(introChars, fillProgress(p, 0, 0.23), '255,255,255', 0.16);
