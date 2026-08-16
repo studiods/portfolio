@@ -6,11 +6,11 @@
   /*
     Fill alpha still runs from 5% -> 100%, but the key UX issue is physical
     scroll distance. SCROLL_DISTANCE_SCALE makes the same fill require about
-    50% more wheel/trackpad travel, which is perceptible regardless of scroll
+    30% more wheel/trackpad travel, which is perceptible regardless of scroll
     device speed. FILL_SLOWDOWN keeps the previous alpha timing refinement.
   */
   const FILL_SLOWDOWN = 1.32;
-  const SCROLL_DISTANCE_SCALE = 1.50;
+  const SCROLL_DISTANCE_SCALE = 1.30;
   const FILL_FEATHER = 4;
 
   const fillProgress = (value, start, duration) =>
