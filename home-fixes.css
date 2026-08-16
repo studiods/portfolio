@@ -84,6 +84,8 @@
   position:relative;
   min-height:165vh!important;
   padding:0!important;
+  /* Separate post-animation breathing room from the sticky progress itself. */
+  margin-bottom:clamp(140px,18vh,240px)!important;
 }
 .philosophy-sticky{
   position:sticky;
@@ -158,7 +160,11 @@
   .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px)}
 
-  .intro-block{min-height:175vh!important;padding:0!important}
+  .intro-block{
+    min-height:175vh!important;
+    padding:0!important;
+    margin-bottom:clamp(96px,14vh,160px)!important;
+  }
   .philosophy-sticky{
     top:14vh;
     display:block!important;
@@ -193,7 +199,10 @@
 @media(max-width:480px){
   .top a{font-size:12px}
   .hero-sequence{height:215vh!important}
-  .intro-block{min-height:180vh!important}
+  .intro-block{
+    min-height:180vh!important;
+    margin-bottom:clamp(84px,12vh,132px)!important;
+  }
   .principles-head{min-height:0!important;padding-bottom:36px!important}
   .showcase-project{padding-bottom:64px}
 }
@@ -210,6 +219,6 @@
   .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
   .hero-state-definition,.hero-state-subtractive{opacity:0!important}
   .philosophy-sticky{position:static!important}
-  .intro-block{min-height:auto!important;padding:80px 0!important}
+  .intro-block{min-height:auto!important;padding:80px 0!important;margin-bottom:80px!important}
   .principles-intro{opacity:1!important;transform:none!important;clip-path:none!important}
 }
