@@ -47,11 +47,10 @@
 
 /*
   HERO scroll-distance control.
-  353vh makes the same 0..1 animation progress require about 50% more physical
-  scroll than the original 235vh baseline, so the 5% -> 100% fill is clearly
-  slower on a wheel/trackpad instead of only changing alpha math.
+  305vh makes the same 0..1 animation progress require about 30% more physical
+  scroll than the original 235vh baseline.
 */
-.hero-sequence{height:353vh!important}
+.hero-sequence{height:305vh!important}
 .hero-state{overflow:hidden}
 .hero-state-quote{opacity:1}
 .hero-state-definition{
@@ -126,7 +125,7 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:330vh!important}
+  .hero-sequence{height:286vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
@@ -163,7 +162,7 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:323vh!important}
+  .hero-sequence{height:280vh!important}
   .principles-head{min-height:40vh}
   .showcase-project{padding-bottom:64px}
 }
