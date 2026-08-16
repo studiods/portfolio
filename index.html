@@ -9,7 +9,7 @@
   <link rel="preload" href="./fonts/Averta-PE-Bold.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./type-overrides.css?v=15">
-  <link rel="stylesheet" href="./home-fixes.css?v=4">
+  <link rel="stylesheet" href="./home-fixes.css?v=5">
 </head>
 <body>
 <nav class="top">
@@ -24,19 +24,24 @@
   <section class="hero-sequence" id="heroSequence">
     <div class="hero-sticky">
       <div class="hero-state hero-state-quote">
-        <div class="hero-quote hero-load-mask">
+        <div class="hero-quote hero-load-mask js-char-fill">
           <span>THE ABILITY TO SIMPLIFY</span>
           <span>MEANS TO ELIMINATE</span>
           <span>THE UNNECESSARY SO THAT</span>
           <span>THE NECESSARY MAY SPEAK.</span>
         </div>
-        <div class="quote-translation">
-          <span class="quote-source">HANS HOFMANN</span>
+        <div class="quote-source-only fill-line">HANS HOFMANN</div>
+      </div>
+
+      <div class="hero-state hero-state-definition" aria-hidden="true">
+        <div class="definition-copy definition-mask">
+          <p class="fill-line">필요한 말을 할 수 있도록 불필요한 내용을 제거하는 행위를</p>
+          <p class="fill-line">단순화 능력이라고 합니다.</p>
         </div>
       </div>
 
-      <div class="hero-state hero-state-subtractive">
-        <div class="subtractive-title">
+      <div class="hero-state hero-state-subtractive" aria-hidden="true">
+        <div class="subtractive-title js-char-fill">
           <span>SUBTRACTIVE</span>
           <span>DESIGN</span>
         </div>
@@ -51,7 +56,7 @@
 
   <section class="intro-block section-focus" id="philosophy">
     <div class="mini-label">Design philosophy</div>
-    <div class="philosophy-statements">
+    <div class="philosophy-statements js-char-fill">
       <p>할 수 있는 디자인이 아닌 필요한 디자인을 합니다.</p>
       <p>필요한 디자인의 시작은 철저한 문제 분석과 재정의에서 출발합니다.</p>
       <p>분석의 결과물은 언제나 명확성과 효율성을 최우선합니다.</p>
@@ -61,28 +66,29 @@
   <section class="principles-section section-focus" id="principles">
     <div class="principles-head">
       <div class="mini-label light-ui">Design principles</div>
-      <h2 class="principles-intro">LESS ASSUMPTION<br>LESS CONVENTION<br>LESS BIAS</h2>
+      <h2 class="principles-intro js-char-fill">LESS ASSUMPTION<br>LESS CONVENTION<br>LESS BIAS</h2>
+      <div class="principles-translation" aria-hidden="true"><p>가정을 덜고, 관습을 덜고, 편향을 덜어냅니다.</p></div>
     </div>
 
     <div class="principles-grid">
       <article class="principle-card">
         <span class="principle-no">01</span>
-        <h3>START WITH<br>WHY IT MATTERS</h3>
-        <p class="principle-en">REMOVE ASSUMPTIONS</p>
+        <h3 class="js-char-fill">START WITH<br>WHY IT MATTERS</h3>
+        <p class="principle-en js-char-fill">REMOVE ASSUMPTIONS</p>
         <p>해결책을 만들기 전에 왜 이 문제를 해결해야 하는지부터 정의합니다.</p>
       </article>
 
       <article class="principle-card">
         <span class="principle-no">02</span>
-        <h3>QUESTION THE<br>DEFAULT</h3>
-        <p class="principle-en">REMOVE CONVENTIONS</p>
+        <h3 class="js-char-fill">QUESTION THE<br>DEFAULT</h3>
+        <p class="principle-en js-char-fill">REMOVE CONVENTIONS</p>
         <p>익숙하다는 이유로 유지되는 방식보다 지금 필요한 경험을 다시 선택합니다.</p>
       </article>
 
       <article class="principle-card">
         <span class="principle-no">03</span>
-        <h3>DECIDE WITH<br>EVIDENCE</h3>
-        <p class="principle-en">REMOVE BIAS</p>
+        <h3 class="js-char-fill">DECIDE WITH<br>EVIDENCE</h3>
+        <p class="principle-en js-char-fill">REMOVE BIAS</p>
         <p>경험과 직관을 출발점으로 삼되 정성·정량 데이터로 판단의 편향을 줄입니다.</p>
       </article>
     </div>
@@ -91,86 +97,20 @@
   <section class="selected-work section-focus" id="work">
     <header class="selected-work-header"><div class="mini-label">Works</div></header>
     <div class="project-stack">
-      <article class="showcase-project" id="project-himart">
-        <div class="project-copy">
-          <a class="project-title-link" href="#"><h3>RETHINKING THE<br>COMMERCE JOURNEY</h3></a>
-          <div class="showcase-meta"><span>LOTTE HIMART</span></div>
-        </div>
-        <a class="project-visual" href="#" aria-label="Rethinking the commerce journey"><div class="placeholder wide"></div></a>
-      </article>
-
-      <article class="showcase-project" id="project-aimmo">
-        <div class="project-copy">
-          <a class="project-title-link" href="./aimmo.html"><h3>BUILDING A SYSTEM<br>WITHOUT STOPPING<br>THE PRODUCT</h3></a>
-          <div class="showcase-meta"><span>AIMMO</span></div>
-        </div>
-        <a class="project-visual" href="./aimmo.html" aria-label="Building a system without stopping the product"><div class="placeholder"></div></a>
-      </article>
-
-      <article class="showcase-project" id="project-nbt">
-        <div class="project-copy">
-          <a class="project-title-link" href="./stepup.html"><h3>DESIGNING A HABIT,<br>NOT A PEDOMETER</h3></a>
-          <div class="showcase-meta"><span>NBT</span></div>
-        </div>
-        <a class="project-visual" href="./stepup.html" aria-label="Designing a habit, not a pedometer"><div class="placeholder wide"></div></a>
-      </article>
-
-      <article class="showcase-project" id="project-trenbe">
-        <div class="project-copy">
-          <a class="project-title-link" href="#"><h3>CREATING ONE SHARED<br>MODEL OF THE CUSTOMER</h3></a>
-          <div class="showcase-meta"><span>TRENBE</span></div>
-        </div>
-        <a class="project-visual" href="#" aria-label="Creating one shared model of the customer"><div class="placeholder"></div></a>
-      </article>
-
-      <article class="showcase-project" id="project-yanolja">
-        <div class="project-copy">
-          <a class="project-title-link" href="#"><h3>DESIGNING FOR THE<br>REAL WORKING<br>ENVIRONMENT</h3></a>
-          <div class="showcase-meta"><span>YANOLJA</span></div>
-        </div>
-        <a class="project-visual" href="#" aria-label="Designing for the real working environment"><div class="placeholder wide"></div></a>
-      </article>
-
-      <article class="showcase-project" id="project-coupang">
-        <div class="project-copy">
-          <a class="project-title-link" href="#"><h3>MAKING A GROWING<br>CATALOG EASIER<br>TO SEARCH</h3></a>
-          <div class="showcase-meta"><span>COUPANG</span></div>
-        </div>
-        <a class="project-visual" href="#" aria-label="Making a growing catalog easier to search"><div class="placeholder"></div></a>
-      </article>
+      <article class="showcase-project" id="project-himart"><div class="project-copy"><a class="project-title-link" href="#"><h3>RETHINKING THE<br>COMMERCE JOURNEY</h3></a><div class="showcase-meta"><span>LOTTE HIMART</span></div></div><a class="project-visual" href="#" aria-label="Rethinking the commerce journey"><div class="placeholder wide"></div></a></article>
+      <article class="showcase-project" id="project-aimmo"><div class="project-copy"><a class="project-title-link" href="./aimmo.html"><h3>BUILDING A SYSTEM<br>WITHOUT STOPPING<br>THE PRODUCT</h3></a><div class="showcase-meta"><span>AIMMO</span></div></div><a class="project-visual" href="./aimmo.html" aria-label="Building a system without stopping the product"><div class="placeholder"></div></a></article>
+      <article class="showcase-project" id="project-nbt"><div class="project-copy"><a class="project-title-link" href="./stepup.html"><h3>DESIGNING A HABIT,<br>NOT A PEDOMETER</h3></a><div class="showcase-meta"><span>NBT</span></div></div><a class="project-visual" href="./stepup.html" aria-label="Designing a habit, not a pedometer"><div class="placeholder wide"></div></a></article>
+      <article class="showcase-project" id="project-trenbe"><div class="project-copy"><a class="project-title-link" href="#"><h3>CREATING ONE SHARED<br>MODEL OF THE CUSTOMER</h3></a><div class="showcase-meta"><span>TRENBE</span></div></div><a class="project-visual" href="#" aria-label="Creating one shared model of the customer"><div class="placeholder"></div></a></article>
+      <article class="showcase-project" id="project-yanolja"><div class="project-copy"><a class="project-title-link" href="#"><h3>DESIGNING FOR THE<br>REAL WORKING<br>ENVIRONMENT</h3></a><div class="showcase-meta"><span>YANOLJA</span></div></div><a class="project-visual" href="#" aria-label="Designing for the real working environment"><div class="placeholder wide"></div></a></article>
+      <article class="showcase-project" id="project-coupang"><div class="project-copy"><a class="project-title-link" href="#"><h3>MAKING A GROWING<br>CATALOG EASIER<br>TO SEARCH</h3></a><div class="showcase-meta"><span>COUPANG</span></div></div><a class="project-visual" href="#" aria-label="Making a growing catalog easier to search"><div class="placeholder"></div></a></article>
     </div>
   </section>
 
-  <section class="archive earlier-work" id="archive">
-    <h2>Earlier work</h2>
-    <div class="earlier-content">
-      <div class="earlier-company">VINYL</div>
-      <div class="archive-list">
-        <a class="archive-row" href="./about.html#vinyl"><span>LG smart tv</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>SKT t world mobile</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>SKT & douzone smart ceo</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>KB mobile bank</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>IRIVER s100</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>TUNTUN e-primary</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>SKT paperless office</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>SKT gesture tv</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>SKT hoppin</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>SKT smart cart</span></a>
-        <a class="archive-row" href="./about.html#vinyl"><span>PANTECH bumblebee</span></a>
-      </div>
-    </div>
-  </section>
+  <section class="archive earlier-work" id="archive"><h2>Earlier work</h2><div class="earlier-content"><div class="earlier-company">VINYL</div><div class="archive-list"><a class="archive-row" href="./about.html#vinyl"><span>LG smart tv</span></a><a class="archive-row" href="./about.html#vinyl"><span>SKT t world mobile</span></a><a class="archive-row" href="./about.html#vinyl"><span>SKT & douzone smart ceo</span></a><a class="archive-row" href="./about.html#vinyl"><span>KB mobile bank</span></a><a class="archive-row" href="./about.html#vinyl"><span>IRIVER s100</span></a><a class="archive-row" href="./about.html#vinyl"><span>TUNTUN e-primary</span></a><a class="archive-row" href="./about.html#vinyl"><span>SKT paperless office</span></a><a class="archive-row" href="./about.html#vinyl"><span>SKT gesture tv</span></a><a class="archive-row" href="./about.html#vinyl"><span>SKT hoppin</span></a><a class="archive-row" href="./about.html#vinyl"><span>SKT smart cart</span></a><a class="archive-row" href="./about.html#vinyl"><span>PANTECH bumblebee</span></a></div></div></section>
 
-  <footer class="footer filip-footer footer-contact-only" id="contact">
-    <div class="footer-grid">
-      <div>
-        <h3>Contact</h3>
-        <p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p>
-      </div>
-    </div>
-  </footer>
+  <footer class="footer filip-footer footer-contact-only" id="contact"><div class="footer-grid"><div><h3>Contact</h3><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></div></div></footer>
 </main>
 
-<script src="./home-interactions.js?v=1"></script>
+<script src="./home-interactions.js?v=2" defer></script>
 </body>
 </html>
