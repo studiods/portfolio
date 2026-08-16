@@ -4,13 +4,11 @@
   const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
 
   /*
-    Fill alpha still runs from 5% -> 100%, but the key UX issue is physical
-    scroll distance. SCROLL_DISTANCE_SCALE makes the same fill require about
-    30% more wheel/trackpad travel, which is perceptible regardless of scroll
-    device speed. FILL_SLOWDOWN keeps the previous alpha timing refinement.
+    Keep the fill treatment itself, but remove any extra physical scroll-distance
+    multiplier. 1.00 means the section uses the original baseline distance.
   */
   const FILL_SLOWDOWN = 1.32;
-  const SCROLL_DISTANCE_SCALE = 1.30;
+  const SCROLL_DISTANCE_SCALE = 1.00;
   const FILL_FEATHER = 4;
 
   const fillProgress = (value, start, duration) =>
@@ -70,22 +68,53 @@
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
 
+  /*
+    Hero timeline is intentionally staged so an outgoing state cannot begin
+    until its 5% -> 100% fill has completed. In particular, the Korean
+    definition finishes at ~0.664 and is held fully visible until 0.72.
+  */
+  const HERO = {
+    quoteFillStart: 0.00,
+    quoteFillDuration: 0.20,
+    sourceFillStart: 0.12,
+    sourceFillDuration: 0.08,
+    quoteOutStart: 0.27,
+    quoteOutDuration: 0.07,
+
+    defInStart: 0.34,
+    defInDuration: 0.07,
+    defFillStart: 0.40,
+    defFillDuration: 0.20,
+    defOutStart: 0.72,
+    defOutDuration: 0.07,
+
+    subInStart: 0.79,
+    subInDuration: 0.07,
+    subFillStart: 0.84,
+    subFillDuration: 0.10,
+    subKoreanFillStart: 0.90,
+    subKoreanFillDuration: 0.05
+  };
+
   const renderHero = () => {
     if (!hero || !quoteState || !definition || !subState) return;
     const rect = hero.getBoundingClientRect();
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    setChars(quoteChars, fillProgress(p, 0, 0.20));
-    setWhole(sourceOnly ? [sourceOnly] : [], fillProgress(p, 0.12, 0.08));
+    setChars(quoteChars, fillProgress(p, HERO.quoteFillStart, HERO.quoteFillDuration));
+    setWhole(
+      sourceOnly ? [sourceOnly] : [],
+      fillProgress(p, HERO.sourceFillStart, HERO.sourceFillDuration)
+    );
 
-    const quoteOut = clamp((p - 0.27) / 0.09);
+    const quoteOut = clamp((p - HERO.quoteOutStart) / HERO.quoteOutDuration);
     quoteState.style.opacity = String(1 - quoteOut);
     quoteState.style.transform = `translateY(${quoteOut * 1.1}em)`;
     quoteState.style.clipPath = `inset(0 0 ${quoteOut * 100}% 0)`;
 
-    const defIn = clamp((p - 0.34) / 0.09);
-    const defOut = clamp((p - 0.69) / 0.08);
+    const defIn = clamp((p - HERO.defInStart) / HERO.defInDuration);
+    const defOut = clamp((p - HERO.defOutStart) / HERO.defOutDuration);
     const defVisible = clamp(defIn - defOut);
     definition.style.opacity = String(defVisible);
     definition.style.transform = defOut > 0
@@ -95,15 +124,24 @@
       ? `inset(0 0 ${defOut * 100}% 0)`
       : `inset(${(1 - defIn) * 100}% 0 0 0)`;
     definition.setAttribute('aria-hidden', defVisible <= 0.001 ? 'true' : 'false');
-    setChars(definitionChars, fillProgress(p, 0.39, 0.22));
+    setChars(
+      definitionChars,
+      fillProgress(p, HERO.defFillStart, HERO.defFillDuration)
+    );
 
-    const subIn = clamp((p - 0.77) / 0.08);
+    const subIn = clamp((p - HERO.subInStart) / HERO.subInDuration);
     subState.style.opacity = String(subIn);
     subState.style.transform = `translateY(${(1 - subIn) * -0.8}em)`;
     subState.style.clipPath = `inset(${(1 - subIn) * 100}% 0 0 0)`;
     subState.setAttribute('aria-hidden', subIn <= 0.001 ? 'true' : 'false');
-    setChars(subChars, fillProgress(p, 0.82, 0.11));
-    setWhole(subLines, fillProgress(p, 0.87, 0.06));
+    setChars(
+      subChars,
+      fillProgress(p, HERO.subFillStart, HERO.subFillDuration)
+    );
+    setWhole(
+      subLines,
+      fillProgress(p, HERO.subKoreanFillStart, HERO.subKoreanFillDuration)
+    );
   };
 
   const philosophy = $('.philosophy-statements');
