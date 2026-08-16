@@ -3,12 +3,7 @@
   const $ = (s, root = document) => root ? root.querySelector(s) : null;
   const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
 
-  /*
-    Keep the fill treatment itself, but remove any extra physical scroll-distance
-    multiplier. 1.00 means the section uses the original baseline distance.
-  */
   const FILL_SLOWDOWN = 1.32;
-  const SCROLL_DISTANCE_SCALE = 1.00;
   const FILL_FEATHER = 4;
 
   const fillProgress = (value, start, duration) =>
@@ -56,10 +51,6 @@
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
-  /*
-    Whole-line fill: each line is treated as one unit. A line moves from the
-    base alpha to 100% before the next line begins filling.
-  */
   const setSequentialWhole = (els, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
     const n = els.length || 1;
     els.forEach((el, i) => {
@@ -69,10 +60,6 @@
     });
   };
 
-  /*
-    Design philosophy is intentionally excluded from character splitting so its
-    animation can be controlled by visual line (<p>) rather than by glyph/word.
-  */
   $$('.js-char-fill')
     .filter(el => !el.classList.contains('philosophy-statements'))
     .forEach(splitChars);
@@ -87,11 +74,6 @@
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
 
-  /*
-    Hero timeline is intentionally staged so an outgoing state cannot begin
-    until its 5% -> 100% fill has completed. In particular, the Korean
-    definition finishes at ~0.664 and is held fully visible until 0.72.
-  */
   const HERO = {
     quoteFillStart: 0.00,
     quoteFillDuration: 0.20,
@@ -163,16 +145,28 @@
     );
   };
 
-  const philosophy = $('.philosophy-statements');
-  const philosophyLines = $$('.philosophy-statements > p');
+  const philosophySection = $('#philosophy');
+  const philosophySticky = $('.philosophy-sticky', philosophySection);
+  const philosophyLines = $$('.philosophy-statements > p', philosophySection);
+
   const renderPhilosophy = () => {
-    if (!philosophy) return;
-    const r = philosophy.getBoundingClientRect();
-    const start = innerHeight * 0.98;
-    const end = innerHeight * 0.18;
-    const physicalRange = (start - end) * FILL_SLOWDOWN * SCROLL_DISTANCE_SCALE;
-    const progress = clamp((start - r.top) / physicalRange);
-    setSequentialWhole(philosophyLines, progress);
+    if (!philosophySection || !philosophySticky || !philosophyLines.length) return;
+
+    const sectionRect = philosophySection.getBoundingClientRect();
+    const stickyTop = innerHeight * (innerWidth <= 850 ? 0.14 : 0.18);
+    const stickyTravel = Math.max(
+      1,
+      philosophySection.offsetHeight - philosophySticky.offsetHeight - stickyTop
+    );
+    const p = clamp((stickyTop - sectionRect.top) / stickyTravel);
+
+    /*
+      Use 82% of the sticky travel for the five line fills, then keep the fully
+      filled philosophy on screen for the final 18% before the sticky releases.
+      This guarantees the section never scrolls away before the last line hits 100%.
+    */
+    const fillP = clamp(p / 0.82);
+    setSequentialWhole(philosophyLines, fillP);
   };
 
   const principles = $('#principles');
@@ -184,11 +178,10 @@
   const renderPrinciples = () => {
     if (!principles || !principleIntro) return;
     const r = principles.getBoundingClientRect();
-    const baseTravel = Math.max(
+    const travel = Math.max(
       innerHeight * 0.90,
       principles.offsetHeight - innerHeight * 0.35
     );
-    const travel = baseTravel * SCROLL_DISTANCE_SCALE;
     const p = clamp((innerHeight * 0.82 - r.top) / travel);
 
     setChars(introChars, fillProgress(p, 0, 0.23), '255,255,255', 0.16);
