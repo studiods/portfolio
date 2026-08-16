@@ -5,19 +5,22 @@
 
   /*
     Global fill-speed control.
-    The previous build already used 1.10. The request is to make every fill
-    animation 20% slower than the current build, so 1.10 × 1.20 = 1.32.
-    Only fill progress is slowed; mask/section transition timing is unchanged.
+    The original baseline was 1.10. 1.32 is exactly 20% slower than that build.
+    This stretches only the 5% -> 100% fill progress, not mask transitions.
   */
   const FILL_SLOWDOWN = 1.32;
+
+  /*
+    Previously each glyph moved from 5% -> 100% inside roughly 1 character-step.
+    With long headings that still looked almost instantaneous even though the
+    overall scroll range was 20% longer. FILL_FEATHER widens the fade window of
+    each glyph without changing the order of the fill sweep.
+  */
+  const FILL_FEATHER = 4;
+
   const fillProgress = (value, start, duration) =>
     clamp((value - start) / (duration * FILL_SLOWDOWN));
 
-  /*
-    Keep the first visit/reload deterministic. Browsers can restore the previous
-    scroll position after reload, which made the opening quote appear missing.
-    Preserve anchor navigation and back/forward restoration.
-  */
   try {
     const nav = performance.getEntriesByType('navigation')[0];
     const isBackForward = nav && nav.type === 'back_forward';
@@ -36,7 +39,6 @@
         [...node.textContent].forEach(ch => {
           const span = document.createElement('span');
           span.className = 'fill-char';
-          /* Keep ordinary spaces so splitting never changes line wrapping. */
           span.textContent = ch;
           frag.appendChild(span);
         });
@@ -49,8 +51,9 @@
 
   const setChars = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
     const n = chars.length || 1;
+    const sweep = progress * Math.max(1, n - 1 + FILL_FEATHER);
     chars.forEach((char, i) => {
-      const local = clamp(progress * n - i);
+      const local = clamp((sweep - i) / FILL_FEATHER);
       char.style.color = `rgba(${rgb},${baseAlpha + (1 - baseAlpha) * local})`;
     });
   };
@@ -60,11 +63,6 @@
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
-  /*
-    CSS already paints every animated source at 5%. Splitting therefore only
-    changes DOM structure, not visual state. .fill-char stays inline in CSS so
-    there is no reflow/flash during initialization.
-  */
   $$('.js-char-fill').forEach(splitChars);
 
   const hero = $('#heroSequence');
@@ -92,7 +90,7 @@
     quoteState.style.clipPath = `inset(0 0 ${quoteOut * 100}% 0)`;
 
     const defIn = clamp((p - 0.34) / 0.09);
-    const defOut = clamp((p - 0.67) / 0.08);
+    const defOut = clamp((p - 0.69) / 0.08);
     const defVisible = clamp(defIn - defOut);
     definition.style.opacity = String(defVisible);
     definition.style.transform = defOut > 0
@@ -104,14 +102,13 @@
     definition.setAttribute('aria-hidden', defVisible <= 0.001 ? 'true' : 'false');
     setChars(definitionChars, fillProgress(p, 0.39, 0.22));
 
-    const subIn = clamp((p - 0.75) / 0.08);
-    const subVisible = subIn;
-    subState.style.opacity = String(subVisible);
+    const subIn = clamp((p - 0.77) / 0.08);
+    subState.style.opacity = String(subIn);
     subState.style.transform = `translateY(${(1 - subIn) * -0.8}em)`;
     subState.style.clipPath = `inset(${(1 - subIn) * 100}% 0 0 0)`;
-    subState.setAttribute('aria-hidden', subVisible <= 0.001 ? 'true' : 'false');
-    setChars(subChars, fillProgress(p, 0.80, 0.11));
-    setWhole(subLines, fillProgress(p, 0.85, 0.06));
+    subState.setAttribute('aria-hidden', subIn <= 0.001 ? 'true' : 'false');
+    setChars(subChars, fillProgress(p, 0.82, 0.11));
+    setWhole(subLines, fillProgress(p, 0.87, 0.06));
   };
 
   const philosophy = $('.philosophy-statements');
@@ -162,7 +159,6 @@
     if (!raf) raf = requestAnimationFrame(render);
   };
 
-  /* One synchronous render establishes the exact initial state before interaction. */
   render();
   addEventListener('scroll', requestRender, { passive: true });
   addEventListener('resize', requestRender);
