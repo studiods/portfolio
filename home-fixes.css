@@ -47,10 +47,11 @@
 
 /*
   HERO sequence timing is controlled by normalized phases in home-interactions.js.
-  This height only controls overall physical scroll speed. A long enough travel is
-  deliberately reserved so FILL -> HOLD -> VISIBLE EXIT -> NEXT STATE is perceptible.
+  Hold phases are now one third of their previous physical scroll distance.
+  Total hero travel is reduced in the same proportion so fill / enter / exit
+  motions keep approximately the same physical scroll speed as before.
 */
-.hero-sequence{height:420vh!important}
+.hero-sequence{height:341vh!important}
 .hero-state{
   overflow:visible!important;
   transition:none!important;
@@ -168,7 +169,7 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:390vh!important}
+  .hero-sequence{height:318vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
@@ -215,7 +216,7 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:380vh!important}
+  .hero-sequence{height:311vh!important}
   .intro-block{min-height:180vh!important;margin-bottom:0!important}
   .philosophy-tail-space{height:clamp(84px,12vh,132px)}
   .principles-head{min-height:0!important;padding-bottom:36px!important}
