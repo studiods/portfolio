@@ -45,8 +45,8 @@
   transition:none!important;
 }
 
-/* HERO */
-.hero-sequence{height:235vh!important}
+/* HERO: slightly longer sticky travel is reserved for fill -> hold -> exit beats. */
+.hero-sequence{height:275vh!important}
 .hero-state{overflow:hidden}
 .hero-state-quote{opacity:1}
 .hero-state-definition{
@@ -164,7 +164,7 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:220vh!important}
+  .hero-sequence{height:255vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
@@ -211,7 +211,7 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:215vh!important}
+  .hero-sequence{height:250vh!important}
   .intro-block{min-height:180vh!important;margin-bottom:0!important}
   .philosophy-tail-space{height:clamp(84px,12vh,132px)}
   .principles-head{min-height:0!important;padding-bottom:36px!important}
