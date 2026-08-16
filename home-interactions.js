@@ -2,7 +2,14 @@
   const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
   const $ = (s, root = document) => root ? root.querySelector(s) : null;
   const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
-  const FILL_SLOWDOWN = 1.1;
+
+  /*
+    Global fill-speed control.
+    The previous build already used 1.10. The request is to make every fill
+    animation 20% slower than the current build, so 1.10 × 1.20 = 1.32.
+    Only fill progress is slowed; mask/section transition timing is unchanged.
+  */
+  const FILL_SLOWDOWN = 1.32;
   const fillProgress = (value, start, duration) =>
     clamp((value - start) / (duration * FILL_SLOWDOWN));
 
