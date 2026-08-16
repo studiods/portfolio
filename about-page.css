@@ -13,8 +13,6 @@
 .about-page .about-section-label,
 .about-page .about-meta,
 .about-page .career-period,
-.about-page .interview-no,
-.about-page .principle-no,
 .about-page .about-footer,
 .about-page .about-footer *{
   font-family:'Averta PE',sans-serif;
@@ -28,7 +26,6 @@
 .about-page .about-statement,
 .about-page .principle-title,
 .about-page .principle-copy,
-.about-page .thinking-close,
 .about-page .interview-q,
 .about-page .interview-a,
 .about-page .career-company,
@@ -122,10 +119,15 @@
   letter-spacing:-.045em;
   word-break:keep-all;
 }
+.about-page .about-statement-en{
+  font-family:'Averta PE',sans-serif;
+  font-weight:300;
+  letter-spacing:normal;
+}
 .about-page .principle-copy,
 .about-page .interview-a{
   font-size:var(--about-body-size);
-  line-height:1.72;
+  line-height:1.5;
   letter-spacing:-.02em;
 }
 
@@ -145,14 +147,10 @@
 }
 .about-page .principle-row{
   display:grid;
-  grid-template-columns:72px minmax(260px,.92fr) minmax(0,1.5fr);
+  grid-template-columns:minmax(260px,.92fr) minmax(0,1.5fr);
   column-gap:var(--gap);
   padding:27px 0 31px;
   border-bottom:1px solid rgba(255,255,255,.22);
-}
-.about-page .principle-no{
-  font-size:12px;
-  color:#777;
 }
 .about-page .principle-title{
   font-size:clamp(23px,2.1vw,35px);
@@ -162,13 +160,6 @@
 .about-page .principle-copy{
   max-width:780px;
   color:#aaa;
-}
-.about-page .thinking-close{
-  margin:clamp(58px,7vh,92px) 0 0;
-  max-width:1160px;
-  font-size:clamp(29px,3.45vw,56px);
-  line-height:1.2;
-  letter-spacing:-.045em;
 }
 
 /* INTERVIEW */
@@ -185,17 +176,14 @@
 }
 .about-page .interview-row{
   display:grid;
-  grid-template-columns:72px minmax(280px,.9fr) minmax(0,1.55fr);
+  grid-template-columns:minmax(280px,.9fr) minmax(0,1.55fr);
   column-gap:var(--gap);
   padding:clamp(28px,3.6vh,44px) 0;
   border-bottom:1px solid rgba(17,17,17,.25);
-  transition:padding .28s ease;
 }
-.about-page .interview-row:hover{padding-left:12px;padding-right:12px}
-.about-page .interview-no{font-size:12px;color:var(--muted)}
 .about-page .interview-q{
   font-size:clamp(19px,1.85vw,29px);
-  line-height:1.4;
+  line-height:1.36;
   letter-spacing:-.03em;
   word-break:keep-all;
 }
@@ -222,11 +210,15 @@
   align-items:start;
   padding:20px 0 22px;
   border-bottom:1px solid rgba(255,255,255,.18);
+  color:inherit;
+  text-decoration:none;
+  transition:background-color .22s ease,color .22s ease;
 }
 .about-page .career-period{
   font-size:12px;
   color:#777;
   padding-top:4px;
+  transition:color .22s ease;
 }
 .about-page .career-company{
   font-size:clamp(18px,1.5vw,24px);
@@ -237,6 +229,15 @@
   font-size:14px;
   line-height:1.6;
   color:#9a9a9a;
+  transition:color .22s ease;
+}
+.about-page .career-row-v2:hover{
+  background:#fff;
+  color:#111;
+}
+.about-page .career-row-v2:hover .career-period,
+.about-page .career-row-v2:hover .career-role{
+  color:#575757;
 }
 
 /* FOOTER */
@@ -272,9 +273,7 @@
   .about-page .interview-section,
   .about-page .career-section{padding-left:var(--pad);padding-right:var(--pad)}
   .about-page .principle-row,
-  .about-page .interview-row{grid-template-columns:42px 1fr;row-gap:18px}
-  .about-page .principle-copy,
-  .about-page .interview-a{grid-column:2}
+  .about-page .interview-row{grid-template-columns:1fr;row-gap:18px}
   .about-page .career-row-v2{grid-template-columns:110px 1fr;row-gap:8px}
   .about-page .career-role{grid-column:2}
 }
@@ -283,7 +282,5 @@
   .about-page .about-hero-v2{padding-top:102px}
   .about-page .about-hero-title{font-size:clamp(24px,7.6vw,36px)}
   .about-page .about-section{padding:68px 0}
-  .about-page .principle-row,
-  .about-page .interview-row{grid-template-columns:34px 1fr}
   .about-page .career-row-v2{grid-template-columns:90px 1fr}
 }
