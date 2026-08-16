@@ -1,9 +1,6 @@
-/* Home-specific refinement: shared editorial alignment */
+/* Home-specific refinement */
 
-/*
-  Design philosophy and Design principles must use the exact same two-column grid.
-  This removes the visual horizontal shift between the two sections.
-*/
+/* Shared editorial alignment */
 .intro-block,
 .principles-head{
   grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)!important;
@@ -11,7 +8,8 @@
 }
 
 .philosophy-statements,
-.principles-intro{
+.principles-intro,
+.principles-translation{
   grid-column:2!important;
   margin-left:0!important;
   padding-left:0!important;
@@ -19,31 +17,62 @@
   width:100%!important;
 }
 
-/* Design philosophy: every wrapped line and every sentence uses one rhythm. */
+/* HERO: enough scroll distance for quote → definition → Subtractive, but no dead space after. */
+.hero-sequence{height:235vh!important}
+.hero-state{overflow:hidden}
+.hero-state-definition{
+  opacity:0;
+  pointer-events:none;
+  color:var(--fg);
+}
+.quote-source-only{
+  margin-top:18px;
+  font-family:'Averta PE',sans-serif;
+  font-weight:400;
+  font-size:11px;
+  line-height:1.2;
+  color:rgba(17,17,17,.05);
+}
+.definition-copy{
+  width:100%;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:300;
+  font-size:clamp(30px,2.8vw,46px); /* approx. 2× former supporting copy */
+  line-height:1.08;
+  letter-spacing:-.015em;
+  word-break:keep-all;
+}
+.definition-copy p{
+  margin:0;
+  padding:0;
+  color:rgba(17,17,17,.05);
+}
+.definition-copy p + p{margin-top:0}
+
+/* The new JS masks the full Subtractive state; disable the legacy span animation. */
+.subtractive-title>span{
+  transform:none!important;
+  animation:none!important;
+}
+
+/* Philosophy: line spacing +5% from 1.08 → ~1.13. Sentence spacing is identical to wrapped-line spacing. */
 .philosophy-statements{
   display:block!important;
-  line-height:1.08!important;
+  line-height:1.134!important;
   text-align:left!important;
   word-break:keep-all;
   overflow-wrap:break-word;
 }
-
 .philosophy-statements p{
   display:block!important;
   width:100%!important;
   margin:0!important;
   padding:0!important;
-  line-height:1.08!important;
+  line-height:1.134!important;
   text-align:left!important;
   text-indent:0!important;
 }
-
-/* No extra paragraph gap: sentence-to-sentence baseline spacing now equals wrapped-line spacing. */
-.philosophy-statements p + p{
-  margin-top:0!important;
-}
-
-/* Character-fill animation must not alter Korean line metrics or alignment. */
+.philosophy-statements p + p{margin-top:0!important}
 .philosophy-statements .fill-char{
   display:inline!important;
   vertical-align:baseline!important;
@@ -52,20 +81,84 @@
   padding:0!important;
 }
 
+/* DESIGN PRINCIPLES: scroll-driven English fill → Korean translation → cards. */
+.principles-section{
+  position:relative;
+  overflow:hidden;
+}
+.principles-head{
+  position:relative;
+  min-height:82vh;
+  align-content:start;
+}
+.principles-intro,
+.principles-translation{
+  position:absolute;
+  left:calc((100% - var(--gap)) / 3.2 + var(--gap));
+  width:calc((100% - var(--gap)) * 2.2 / 3.2)!important;
+  margin:0!important;
+  will-change:transform,opacity,clip-path;
+}
+.principles-intro{
+  top:0;
+  min-height:0!important;
+  color:rgba(255,255,255,.05);
+}
+.principles-intro .fill-char,
+.principle-card h3 .fill-char,
+.principle-en .fill-char{
+  display:inline-block;
+  color:rgba(255,255,255,.05);
+}
+.principles-translation{
+  top:0;
+  opacity:0;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:300;
+  font-size:clamp(34px,4.7vw,76px);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  color:rgba(255,255,255,.05);
+  pointer-events:none;
+}
+.principles-translation p{margin:0;color:inherit}
+
+/* Remove periods from principle English display. */
+.principles-intro,
+.principle-card h3,
+.principle-en{font-weight:300!important}
+
+/* Korean card descriptions are whole-sentence fill units, and 01–03 share one progress. */
+.principle-card>p:last-child{
+  color:rgba(255,255,255,.05);
+  transition:color .03s linear;
+}
+
 @media(max-width:850px){
   .intro-block,
-  .principles-head{
-    display:block!important;
-  }
-
+  .principles-head{display:block!important}
   .philosophy-statements,
-  .principles-intro{
+  .principles-intro,
+  .principles-translation{
     width:100%!important;
     margin-left:0!important;
   }
-
   .philosophy-statements,
-  .philosophy-statements p{
-    line-height:1.1!important;
+  .philosophy-statements p{line-height:1.16!important}
+  .hero-sequence{height:220vh!important}
+  .definition-copy{font-size:clamp(26px,7vw,40px);line-height:1.1}
+  .principles-head{min-height:72vh}
+  .principles-intro,
+  .principles-translation{
+    position:absolute;
+    left:0;
+    top:52px;
+    width:100%!important;
   }
+  .principles-translation{font-size:clamp(32px,9vw,54px)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-state-definition,
+  .principles-translation{clip-path:none!important}
 }
