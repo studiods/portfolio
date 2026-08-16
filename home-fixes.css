@@ -16,7 +16,23 @@
   width:100%!important;
 }
 
-/* Progressive enhancement: animated source text is already painted at 5% before JS runs. */
+/*
+  IMPORTANT: disable legacy animations from type-overrides.css.
+  The homepage interaction is controlled only by home-interactions.js.
+  This prevents the opening copy from being translated -115% before JS runs.
+*/
+.hero-load-mask>span,
+.hero-load-mask>span:nth-child(n){
+  transform:none!important;
+  animation:none!important;
+}
+.subtractive-title>span,
+.hero-state-subtractive.sub-visible .subtractive-title>span{
+  transform:none!important;
+  animation:none!important;
+}
+
+/* Progressive enhancement: all source content is already visible at its intended low-alpha state before JS runs. */
 .hero-quote,
 .subtractive-title,
 .philosophy-statements{color:rgba(17,17,17,.05)}
@@ -28,7 +44,22 @@
 .principle-en,
 .principle-card>p:last-child,
 .principles-translation{color:rgba(255,255,255,.05)}
-.fill-char{transition:color .025s linear}
+
+/* Character wrappers must not change line metrics when JS initializes. */
+.js-char-fill .fill-char,
+.philosophy-statements .fill-char,
+.principles-intro .fill-char,
+.principle-card h3 .fill-char,
+.principle-en .fill-char,
+.hero-quote .fill-char,
+.subtractive-title .fill-char{
+  display:inline!important;
+  vertical-align:baseline!important;
+  line-height:inherit!important;
+  margin:0!important;
+  padding:0!important;
+  transition:none!important;
+}
 
 /* HERO */
 .hero-sequence{height:235vh!important}
@@ -58,7 +89,6 @@
 }
 .definition-copy p{margin:0;padding:0}
 .definition-copy p+p{margin-top:0}
-.subtractive-title>span{transform:none!important;animation:none!important}
 
 /* Philosophy */
 .philosophy-statements{
@@ -78,13 +108,6 @@
   text-indent:0!important;
 }
 .philosophy-statements p+p{margin-top:0!important}
-.philosophy-statements .fill-char{
-  display:inline!important;
-  vertical-align:baseline!important;
-  line-height:inherit!important;
-  margin:0!important;
-  padding:0!important;
-}
 
 /* DESIGN PRINCIPLES */
 .principles-section{position:relative;overflow:hidden}
@@ -97,10 +120,12 @@
   margin:0!important;
   will-change:transform,opacity,clip-path;
 }
-.principles-intro{top:0;min-height:0!important}
-.principles-intro .fill-char,
-.principle-card h3 .fill-char,
-.principle-en .fill-char{display:inline-block;color:rgba(255,255,255,.05)}
+.principles-intro{
+  top:0;
+  min-height:0!important;
+  opacity:1;
+  visibility:visible;
+}
 .principles-translation{
   top:0;
   opacity:0;
@@ -113,7 +138,7 @@
 }
 .principles-translation p{margin:0;color:inherit}
 .principles-intro,.principle-card h3,.principle-en{font-weight:300!important}
-.principle-card>p:last-child{transition:color .03s linear}
+.principle-card>p:last-child{transition:none!important}
 
 @media(max-width:850px){
   .intro-block,.principles-head{display:block!important}
