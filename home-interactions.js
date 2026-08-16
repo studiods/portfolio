@@ -63,27 +63,40 @@
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
 
+  /*
+    Hero is staged as FILL -> HOLD -> EXIT -> NEXT STATE.
+    The hold ranges deliberately consume real scroll distance, so a fully filled
+    message remains readable before it starts leaving. Exit movement also keeps
+    the text fully visible through the first 45% of travel, then fades/masks it.
+  */
   const HERO = {
     quoteFillStart: 0.00,
-    quoteFillDuration: 0.20,
-    sourceFillStart: 0.12,
-    sourceFillDuration: 0.08,
-    quoteOutStart: 0.27,
-    quoteOutDuration: 0.07,
+    quoteFillDuration: 0.16,
+    sourceFillStart: 0.10,
+    sourceFillDuration: 0.06,
+    quoteOutStart: 0.30,
+    quoteOutDuration: 0.10,
 
-    defInStart: 0.34,
+    defInStart: 0.40,
     defInDuration: 0.07,
-    defFillStart: 0.40,
-    defFillDuration: 0.20,
-    defOutStart: 0.72,
-    defOutDuration: 0.07,
+    defFillStart: 0.46,
+    defFillDuration: 0.14,
+    defOutStart: 0.73,
+    defOutDuration: 0.10,
 
-    subInStart: 0.79,
-    subInDuration: 0.07,
-    subFillStart: 0.84,
-    subFillDuration: 0.10,
-    subKoreanFillStart: 0.90,
-    subKoreanFillDuration: 0.05
+    subInStart: 0.83,
+    subInDuration: 0.06,
+    subFillStart: 0.88,
+    subFillDuration: 0.07,
+    subKoreanFillStart: 0.92,
+    subKoreanFillDuration: 0.04
+  };
+
+  const renderExit = (state, progress) => {
+    const fade = clamp((progress - 0.45) / 0.55);
+    state.style.opacity = String(1 - fade);
+    state.style.transform = `translateY(${progress * 1.35}em)`;
+    state.style.clipPath = `inset(0 0 ${fade * 100}% 0)`;
   };
 
   const renderHero = () => {
@@ -99,21 +112,18 @@
     );
 
     const quoteOut = clamp((p - HERO.quoteOutStart) / HERO.quoteOutDuration);
-    quoteState.style.opacity = String(1 - quoteOut);
-    quoteState.style.transform = `translateY(${quoteOut * 1.1}em)`;
-    quoteState.style.clipPath = `inset(0 0 ${quoteOut * 100}% 0)`;
+    renderExit(quoteState, quoteOut);
 
     const defIn = clamp((p - HERO.defInStart) / HERO.defInDuration);
     const defOut = clamp((p - HERO.defOutStart) / HERO.defOutDuration);
-    const defVisible = clamp(defIn - defOut);
-    definition.style.opacity = String(defVisible);
-    definition.style.transform = defOut > 0
-      ? `translateY(${defOut * 1.1}em)`
-      : `translateY(${(1 - defIn) * -0.8}em)`;
-    definition.style.clipPath = defOut > 0
-      ? `inset(0 0 ${defOut * 100}% 0)`
-      : `inset(${(1 - defIn) * 100}% 0 0 0)`;
-    definition.setAttribute('aria-hidden', defVisible <= 0.001 ? 'true' : 'false');
+    if (defOut > 0) {
+      renderExit(definition, defOut);
+    } else {
+      definition.style.opacity = String(defIn);
+      definition.style.transform = `translateY(${(1 - defIn) * -0.8}em)`;
+      definition.style.clipPath = `inset(${(1 - defIn) * 100}% 0 0 0)`;
+    }
+    definition.setAttribute('aria-hidden', defIn <= 0.001 || defOut >= 0.999 ? 'true' : 'false');
     setChars(
       definitionChars,
       fillProgress(p, HERO.defFillStart, HERO.defFillDuration)
@@ -149,13 +159,6 @@
     );
     const p = clamp((stickyTop - sectionRect.top) / stickyTravel);
 
-    /*
-      Design philosophy is the exception to the character-fill system.
-      Each authored <p> is one indivisible fill unit: every glyph in that row
-      shares exactly the same alpha while the row moves from 5% to 100%.
-      Only after one full row reaches 100% does the next row begin.
-      The final 18% of sticky travel is a hold with all rows at 100%.
-    */
     const fillP = clamp(p / 0.82);
     const lineCount = philosophyLines.length;
     const lineWindow = 1 / lineCount;
