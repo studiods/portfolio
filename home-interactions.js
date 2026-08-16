@@ -1,9 +1,23 @@
 (() => {
   const clamp = (v, min = 0, max = 1) => Math.max(min, Math.min(max, v));
-  const $ = (s, root = document) => root.querySelector(s);
-  const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+  const $ = (s, root = document) => root ? root.querySelector(s) : null;
+  const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
 
-  const splitChars = (el, preserveSpaces = false) => {
+  /*
+    Keep the first visit/reload deterministic. Browsers can restore the previous
+    scroll position after reload, which made the opening quote appear missing.
+    Preserve anchor navigation and back/forward restoration.
+  */
+  try {
+    const nav = performance.getEntriesByType('navigation')[0];
+    const isBackForward = nav && nav.type === 'back_forward';
+    if (!location.hash && !isBackForward) {
+      history.scrollRestoration = 'manual';
+      scrollTo(0, 0);
+    }
+  } catch (_) {}
+
+  const splitChars = (el) => {
     if (!el || el.dataset.split === '1') return;
     el.dataset.split = '1';
     [...el.childNodes].forEach(node => {
@@ -12,12 +26,13 @@
         [...node.textContent].forEach(ch => {
           const span = document.createElement('span');
           span.className = 'fill-char';
-          span.textContent = ch === ' ' && !preserveSpaces ? '\u00A0' : ch;
+          /* Keep ordinary spaces so splitting never changes line wrapping. */
+          span.textContent = ch;
           frag.appendChild(span);
         });
         node.replaceWith(frag);
       } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('fill-char')) {
-        splitChars(node, preserveSpaces);
+        splitChars(node);
       }
     });
   };
@@ -35,9 +50,12 @@
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
-  // Split only after CSS has already rendered every animated source at 5%.
-  $$('.js-char-fill').forEach(el => splitChars(el, !!el.closest('.philosophy-statements')));
-  document.documentElement.classList.add('motion-ready');
+  /*
+    CSS already paints every animated source at 5%. Splitting therefore only
+    changes DOM structure, not visual state. .fill-char stays inline in CSS so
+    there is no reflow/flash during initialization.
+  */
+  $$('.js-char-fill').forEach(splitChars);
 
   const hero = $('#heroSequence');
   const quoteState = $('.hero-state-quote', hero);
@@ -48,12 +66,11 @@
   const subState = $('.hero-state-subtractive', hero);
   const subTitle = $('.subtractive-title', hero);
   const subLines = $$('.subtractive-korean .fill-line', hero);
-
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
 
   const renderHero = () => {
-    if (!hero) return;
+    if (!hero || !quoteState || !definition || !subState) return;
     const rect = hero.getBoundingClientRect();
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
@@ -114,7 +131,7 @@
   const translationLine = $$('.principles-translation p', principles);
 
   const renderPrinciples = () => {
-    if (!principles) return;
+    if (!principles || !principleIntro || !translation) return;
     const r = principles.getBoundingClientRect();
     const travel = Math.max(1, principles.offsetHeight - innerHeight * 0.72);
     const p = clamp((innerHeight * 0.78 - r.top) / travel);
@@ -154,6 +171,7 @@
     if (!raf) raf = requestAnimationFrame(render);
   };
 
+  /* One synchronous render establishes the exact initial state before interaction. */
   render();
   addEventListener('scroll', requestRender, { passive: true });
   addEventListener('resize', requestRender);
