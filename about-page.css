@@ -6,28 +6,25 @@
   --about-body-size:clamp(16px,1.6vw,25px);
   --about-kr:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   text-transform:none;
-  font-family:var(--about-kr);
-  font-weight:100;
-  font-synthesis:none;
 }
 
-/* English-only UI / labels keep Averta Regular. */
-.about-page .about-en,
+/* English UI / labels */
 .about-page .about-index,
 .about-page .about-section-label,
 .about-page .about-meta,
 .about-page .career-period,
 .about-page .interview-no,
-.about-page .principle-no{
+.about-page .principle-no,
+.about-page .about-footer,
+.about-page .about-footer *{
   font-family:'Averta PE',sans-serif;
   font-weight:400;
   letter-spacing:normal;
 }
 
-/* Korean copy uses Pretendard Thin only. */
+/* Current Korean typography — Pretendard Thin */
 .about-page .about-hero-title,
 .about-page .about-lead,
-.about-page .about-copy,
 .about-page .about-statement,
 .about-page .principle-title,
 .about-page .principle-copy,
@@ -37,16 +34,8 @@
 .about-page .career-company,
 .about-page .career-role{
   font-family:var(--about-kr);
-  font-weight:100!important;
-  font-variation-settings:'wght' 100!important;
-  font-synthesis:none!important;
-}
-.about-page strong,
-.about-page b{
-  font-family:inherit;
-  font-weight:100!important;
-  font-variation-settings:'wght' 100!important;
-  font-synthesis:none!important;
+  font-weight:100;
+  font-variation-settings:'wght' 100;
 }
 
 /* HERO */
@@ -133,19 +122,12 @@
   letter-spacing:-.045em;
   word-break:keep-all;
 }
-.about-page .about-copy,
 .about-page .principle-copy,
 .about-page .interview-a{
   font-size:var(--about-body-size);
   line-height:1.72;
   letter-spacing:-.02em;
 }
-.about-page .about-copy{
-  max-width:940px;
-  color:#4f4d48;
-}
-.about-page .about-copy p{margin:0 0 1.1em}
-.about-page .about-copy p:last-child{margin-bottom:0}
 
 /* GOOD UX & DESIGN */
 .about-page .thinking-section{
@@ -257,6 +239,7 @@
   color:#9a9a9a;
 }
 
+/* FOOTER */
 .about-page .about-footer{
   margin:0 calc(-1*var(--pad));
   padding:82px var(--pad) 28px;
@@ -266,12 +249,6 @@
 .about-page .about-footer-inner{
   border-top:1px solid rgba(255,255,255,.3);
   padding-top:14px;
-}
-.about-page .about-footer h3,
-.about-page .about-footer p,
-.about-page .about-footer a{
-  font-family:'Averta PE',sans-serif;
-  font-weight:400;
 }
 .about-page .about-footer h3{margin:0 0 18px;font-size:13px}
 .about-page .about-footer p,
@@ -309,34 +286,4 @@
   .about-page .principle-row,
   .about-page .interview-row{grid-template-columns:34px 1fr}
   .about-page .career-row-v2{grid-template-columns:90px 1fr}
-}
-
-/*
-  FINAL TYPOGRAPHY LOCK
-  Loaded after style.css, typography.css and type-overrides.css.
-  Every element inside About is forced to Pretendard Thin first so older
-  global rules (including b/strong 700 and inherited Averta) cannot win.
-*/
-.about-page,
-.about-page *{
-  font-family:var(--about-kr)!important;
-  font-weight:100!important;
-  font-variation-settings:'wght' 100!important;
-  font-synthesis:none!important;
-}
-
-/* Explicit English-only UI exceptions. Korean and mixed Korean copy never enter this list. */
-.about-page .about-index,
-.about-page .about-index *,
-.about-page .about-section-label,
-.about-page .about-meta,
-.about-page .career-period,
-.about-page .interview-no,
-.about-page .principle-no,
-.about-page .about-footer,
-.about-page .about-footer *{
-  font-family:'Averta PE',sans-serif!important;
-  font-weight:400!important;
-  font-variation-settings:normal!important;
-  font-synthesis:none!important;
 }
