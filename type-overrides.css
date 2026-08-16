@@ -6,7 +6,7 @@ a{color:inherit;text-decoration:none}
 .shell{padding:0 var(--pad)}
 .top{position:fixed;z-index:30;top:0;left:0;right:0;height:52px;pointer-events:none}
 .top-center{position:absolute;left:50%;top:18px;transform:translateX(-50%);display:flex;gap:30px;pointer-events:auto;white-space:nowrap}
-.top a,.mini-label,.showcase-meta,.earlier-work,.footer,.footer *,.case-kicker,.case-meta,.case-section>.label,.section-top,.timeline-row{font-family:'Averta PE',sans-serif;font-weight:400!important}
+.top a,.mini-label,.showcase-meta,.footer,.footer *,.case-kicker,.case-meta,.case-section>.label,.section-top,.timeline-row{font-family:'Averta PE',sans-serif;font-weight:400!important}
 .top a{font-size:13px}
 .mini-label{font-size:13px;line-height:1.2;margin:0 0 28px;text-transform:none}
 .light-ui{color:#8c8c8c}
@@ -25,7 +25,6 @@ a{color:inherit;text-decoration:none}
 .subtractive-korean{margin:26px 0 0;font-family:Pretendard,sans-serif;font-weight:300;font-size:clamp(17px,1.6vw,26px);line-height:1.3}
 .subtractive-korean p{margin:0}
 .subtractive-korean .fill-line{color:rgba(17,17,17,.05)}
-.hero-scroll-cue{position:absolute;right:var(--pad);bottom:22px;font-family:'Averta PE',sans-serif;font-weight:400;font-size:11px;text-transform:uppercase}
 
 .intro-block{padding:clamp(12px,1.5vh,24px) 0 clamp(92px,7vh,130px);display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);align-items:start}
 .philosophy-statements{grid-column:2;font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:100;font-size:clamp(24px,3vw,48px);line-height:.84;letter-spacing:-.02em;word-break:keep-all}
@@ -59,10 +58,6 @@ a{color:inherit;text-decoration:none}
 .placeholder:after{transform:translate(-50%,-50%) rotate(-32deg)}
 .showcase-project:hover .placeholder{background:#e9e6df}
 
-.archive.earlier-work{padding:110px 0 90px;display:grid;grid-template-columns:1fr 2.2fr;gap:var(--gap);border-top:1px solid var(--line)}
-.archive.earlier-work h2{font-size:13px;line-height:1.2;margin:0;font-weight:400!important;text-transform:none}
-.earlier-content{display:grid;grid-template-columns:150px 1fr;gap:36px}
-.earlier-company{font-size:22.1px;font-weight:400}
 .archive-list{border-top:1px solid rgba(17,17,17,.3)}
 .archive-row{position:relative;display:block;padding:19px 0;border-bottom:1px solid rgba(17,17,17,.3);font-size:17px;line-height:1.25;text-transform:none}
 .archive-row:after{content:none!important}
@@ -121,10 +116,6 @@ a{color:inherit;text-decoration:none}
 .project-copy{position:static;grid-row:2}
 .project-visual{grid-row:1}
 .showcase-project h3{font-size:clamp(30px,7.5vw,48px)}
-.archive.earlier-work{display:block}
-.archive.earlier-work h2{margin-bottom:30px}
-.earlier-content{grid-template-columns:1fr}
-.earlier-company{font-size:22.1px;margin-bottom:-12px}
 .footer-grid{grid-template-columns:1fr;gap:44px}
 .case-meta{grid-template-columns:repeat(2,1fr)}
 .case-section{grid-template-columns:1fr;padding:72px 0}

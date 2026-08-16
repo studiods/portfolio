@@ -122,14 +122,12 @@
 
   const principles = $('#principles');
   const principleIntro = $('.principles-intro', principles);
-  const translation = $('.principles-translation', principles);
   const introChars = $$('.principles-intro .fill-char', principles);
   const cardEnglishChars = $$('.principle-card h3 .fill-char, .principle-en .fill-char', principles);
   const cardKorean = $$('.principle-card > p:last-child', principles);
-  const translationLine = $$('.principles-translation p', principles);
 
   const renderPrinciples = () => {
-    if (!principles || !principleIntro || !translation) return;
+    if (!principles || !principleIntro) return;
     const r = principles.getBoundingClientRect();
     const travel = Math.max(
       innerHeight * 0.90,
@@ -138,24 +136,9 @@
     const p = clamp((innerHeight * 0.82 - r.top) / travel);
 
     setChars(introChars, fillProgress(p, 0, 0.23), '255,255,255', 0.16);
-
-    const introOut = clamp((p - 0.34) / 0.10);
-    principleIntro.style.opacity = String(1 - introOut);
-    principleIntro.style.transform = `translateY(${introOut * 0.8}em)`;
-    principleIntro.style.clipPath = `inset(0 0 ${introOut * 100}% 0)`;
-
-    const trIn = clamp((p - 0.40) / 0.10);
-    const trOut = clamp((p - 0.78) / 0.10);
-    const trVisible = clamp(trIn - trOut);
-    translation.style.opacity = String(trVisible);
-    translation.style.transform = trOut > 0
-      ? `translateY(${trOut * 0.8}em)`
-      : `translateY(${(1 - trIn) * -0.7}em)`;
-    translation.style.clipPath = trOut > 0
-      ? `inset(0 0 ${trOut * 100}% 0)`
-      : `inset(${(1 - trIn) * 100}% 0 0 0)`;
-    translation.setAttribute('aria-hidden', trVisible <= 0.001 ? 'true' : 'false');
-    setWhole(translationLine, fillProgress(p, 0.47, 0.07), '255,255,255');
+    principleIntro.style.opacity = '1';
+    principleIntro.style.transform = 'none';
+    principleIntro.style.clipPath = 'inset(0)';
 
     setChars(cardEnglishChars, fillProgress(p, 0.62, 0.26), '255,255,255');
     setWhole(cardKorean, fillProgress(p, 0.78, 0.12), '255,255,255');

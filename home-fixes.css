@@ -7,8 +7,7 @@
   column-gap:var(--gap)!important;
 }
 .philosophy-statements,
-.principles-intro,
-.principles-translation{
+.principles-intro{
   grid-column:2!important;
   margin-left:0!important;
   padding-left:0!important;
@@ -25,8 +24,7 @@
 .subtractive-korean .fill-line{color:rgba(17,17,17,.05)}
 .principle-card h3,
 .principle-en,
-.principle-card>p:last-child,
-.principles-translation{color:rgba(255,255,255,.05)}
+.principle-card>p:last-child{color:rgba(255,255,255,.05)}
 .principles-intro{color:rgba(255,255,255,.16)}
 .principles-intro .fill-char{color:rgba(255,255,255,.16)}
 
@@ -68,7 +66,7 @@
   width:100%;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-weight:100;
-  font-size:clamp(43px,6.15vw,106px);
+  font-size:clamp(38.7px,5.535vw,95.4px);
   line-height:.98;
   letter-spacing:-.025em;
   word-break:keep-all;
@@ -103,8 +101,7 @@
   padding-bottom:clamp(72px,5vh,110px)!important;
 }
 .principles-head{position:relative;min-height:58vh;align-content:start}
-.principles-intro,
-.principles-translation{
+.principles-intro{
   position:absolute;
   left:calc((100% - var(--gap)) / 3.2 + var(--gap));
   width:calc((100% - var(--gap)) * 2.2 / 3.2)!important;
@@ -117,29 +114,56 @@
   opacity:1;
   visibility:visible;
 }
-.principles-translation{
-  top:0;
-  opacity:0;
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-weight:300;
-  font-size:clamp(34px,4.7vw,76px);
-  line-height:1.02;
-  letter-spacing:-.02em;
-  pointer-events:none;
-}
-.principles-translation p{margin:0;color:inherit}
 .principles-intro,.principle-card h3,.principle-en{font-weight:300!important}
 .principle-card>p:last-child{transition:none!important}
 
+/* Mobile-only layout: desktop rules above remain unchanged. */
 @media(max-width:850px){
-  .intro-block,.principles-head{display:block!important}
-  .philosophy-statements,.principles-intro,.principles-translation{width:100%!important;margin-left:0!important}
-  .philosophy-statements,.philosophy-statements p{line-height:1.16!important}
+  :root{--pad:clamp(18px,5vw,24px);--gap:clamp(18px,5vw,28px)}
+  body{overflow-x:hidden}
+  .top{height:50px}
+  .top-center{top:17px;gap:clamp(20px,7vw,30px)}
+
   .hero-sequence{height:220vh!important}
-  .definition-copy{font-size:clamp(30px,8.4vw,58px);line-height:1.04}
-  .principles-head{min-height:56vh}
-  .principles-intro,.principles-translation{position:absolute;left:0;top:52px;width:100%!important}
-  .principles-translation{font-size:clamp(32px,9vw,54px)}
+  .hero-sticky{padding:70px var(--pad) 24px}
+  .hero-state{inset:70px var(--pad) 36px}
+  .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
+  .definition-copy{font-size:clamp(27px,7.56vw,52.2px);line-height:1.06;letter-spacing:-.03em}
+  .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
+  .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px)}
+
+  .intro-block{display:block!important;padding:14px 0 82px}
+  .intro-block>.mini-label{margin-bottom:26px}
+  .philosophy-statements{width:100%!important;margin-left:0!important;font-size:clamp(22px,6.2vw,34px)}
+  .philosophy-statements,.philosophy-statements p{line-height:1.16!important}
+
+  .principles-section{padding:72px var(--pad)!important}
+  .principles-head{display:block!important;min-height:42vh;margin-bottom:58px}
+  .principles-intro{position:absolute;left:0;top:48px;width:100%!important;margin-left:0!important;font-size:clamp(34px,10vw,50px);line-height:.93}
+  .principles-grid{grid-template-columns:1fr;gap:64px}
+  .principle-no{margin-bottom:30px}
+  .principle-card h3{min-height:auto;font-size:clamp(30px,8.5vw,44px)}
+  .principle-en{white-space:normal;margin-bottom:26px}
+  .principle-card>p:last-child{font-size:15px;line-height:1.6}
+
+  .selected-work{padding:72px 0 64px}
+  .selected-work-header{margin-bottom:26px}
+  .showcase-project{grid-template-columns:1fr;min-height:auto;padding:48px 0 76px;gap:24px}
+  .showcase-project:first-child{padding-top:8px}
+  .project-copy{position:static;grid-row:2}
+  .project-visual{grid-row:1}
+  .showcase-project h3{font-size:clamp(29px,8vw,44px);margin-bottom:18px}
+  .placeholder,.placeholder.wide{aspect-ratio:4/3}
+
+  .footer,.filip-footer{padding:72px 0 24px}
+  .footer-grid{grid-template-columns:1fr;gap:36px}
+}
+
+@media(max-width:480px){
+  .top a{font-size:12px}
+  .hero-sequence{height:215vh!important}
+  .principles-head{min-height:40vh}
+  .showcase-project{padding-bottom:64px}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -152,6 +176,6 @@
   .principle-en .fill-char,
   .principle-card>p:last-child{color:#fff!important}
   .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
-  .hero-state-definition,.hero-state-subtractive,.principles-translation{opacity:0!important}
+  .hero-state-definition,.hero-state-subtractive{opacity:0!important}
   .principles-intro{opacity:1!important;transform:none!important;clip-path:none!important}
 }
