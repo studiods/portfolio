@@ -69,34 +69,50 @@
   const subChars = $$('.subtractive-title .fill-char', hero);
 
   /*
-    HERO TIMELINE — structural order is intentionally non-overlapping.
+    HERO TIMELINE
+    ----------------
+    The structural order remains fixed:
+      FILL -> HOLD -> VISIBLE EXIT -> NEXT STATE.
 
-    1) English quote fills completely
-    2) HOLD: scrolling changes no visual state
-    3) English quote visibly moves downward, staying opaque for most of the exit
-    4) Korean definition enters and fills completely
-    5) HOLD
-    6) Korean definition visibly moves downward, staying opaque for most of the exit
-    7) SUBTRACTIVE DESIGN enters and fills completely
-    8) HOLD until the sticky hero releases into the next section
+    Only the HOLD phases are reduced here. HOLD_SCALE = 1 / 3 means every fully
+    filled pause uses one third of its previous physical scroll distance.
+    Fill / enter / exit phase weights are left unchanged.
 
-    Overall speed can later be tuned only by changing .hero-sequence height in CSS.
-    These normalized phase boundaries preserve the sequence regardless of that speed.
+    CSS shortens the total hero travel by the same aggregate ratio so those
+    non-hold motions retain approximately the same physical scroll speed.
   */
+  const HERO_HOLD_SCALE = 1 / 3;
+  const HERO_PHASE = Object.freeze({
+    quoteFill: 0.13,
+    quoteHold: 0.15 * HERO_HOLD_SCALE,
+    quoteExit: 0.11,
+    defEnter: 0.06,
+    defFill: 0.12,
+    defHold: 0.14 * HERO_HOLD_SCALE,
+    defExit: 0.11,
+    subEnter: 0.04,
+    subFill: 0.06,
+    subHold: 0.08 * HERO_HOLD_SCALE
+  });
+
+  const HERO_TOTAL = Object.values(HERO_PHASE).reduce((sum, value) => sum + value, 0);
+  const heroPhase = key => HERO_PHASE[key] / HERO_TOTAL;
+  let heroCursor = 0;
+
   const HERO = Object.freeze({
-    quoteFillStart: 0.00,
-    quoteFillEnd: 0.13,
-    quoteHoldEnd: 0.28,
-    quoteExitEnd: 0.39,
+    quoteFillStart: heroCursor,
+    quoteFillEnd: (heroCursor += heroPhase('quoteFill')),
+    quoteHoldEnd: (heroCursor += heroPhase('quoteHold')),
+    quoteExitEnd: (heroCursor += heroPhase('quoteExit')),
 
-    defEnterEnd: 0.45,
-    defFillEnd: 0.57,
-    defHoldEnd: 0.71,
-    defExitEnd: 0.82,
+    defEnterEnd: (heroCursor += heroPhase('defEnter')),
+    defFillEnd: (heroCursor += heroPhase('defFill')),
+    defHoldEnd: (heroCursor += heroPhase('defHold')),
+    defExitEnd: (heroCursor += heroPhase('defExit')),
 
-    subEnterEnd: 0.86,
-    subFillEnd: 0.92,
-    subHoldEnd: 1.00
+    subEnterEnd: (heroCursor += heroPhase('subEnter')),
+    subFillEnd: (heroCursor += heroPhase('subFill')),
+    subHoldEnd: (heroCursor += heroPhase('subHold'))
   });
 
   const renderEnter = (state, progress) => {
@@ -112,11 +128,7 @@
     const distance = Math.min(innerHeight * 0.18, 190);
     const easedMove = 1 - Math.pow(1 - p, 1.6);
 
-    /*
-      Keep the outgoing copy at 100% opacity through 78% of the exit travel.
-      Only the final 22% fades. This makes the downward movement legible instead
-      of reading as an instantaneous disappearance.
-    */
+    /* Keep the outgoing copy visible through most of its downward movement. */
     const fade = phaseProgress(p, 0.78, 1.00);
     state.style.opacity = String(1 - fade);
     state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
@@ -130,19 +142,24 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: fill -> hold -> visible downward exit */
-    const quoteFill = phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd);
-    setChars(quoteChars, quoteFill);
+    /* STEP 1 — English quote: fill -> short hold -> visible downward exit */
+    setChars(
+      quoteChars,
+      phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
+    );
+
+    const quoteSourceStart = HERO.quoteFillStart +
+      (HERO.quoteFillEnd - HERO.quoteFillStart) * 0.62;
     setWhole(
       sourceOnly ? [sourceOnly] : [],
-      phaseProgress(p, 0.08, HERO.quoteFillEnd)
+      phaseProgress(p, quoteSourceStart, HERO.quoteFillEnd)
     );
 
     const quoteExit = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteExitEnd);
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition: enter -> fill -> hold -> visible downward exit */
+    /* STEP 2 — Korean definition: enter -> fill -> short hold -> visible exit */
     const defEnter = phaseProgress(p, HERO.quoteExitEnd, HERO.defEnterEnd);
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defExitEnd);
 
@@ -162,17 +179,21 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — SUBTRACTIVE DESIGN: enter -> fill -> hold until section releases */
+    /* STEP 3 — SUBTRACTIVE DESIGN: enter -> fill -> short hold -> section release */
     const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
     renderEnter(subState, subEnter);
 
+    const subFillSpan = HERO.subFillEnd - HERO.subEnterEnd;
+    const subTitleFillEnd = HERO.subEnterEnd + subFillSpan * 0.83;
+    const subKoreanFillStart = HERO.subEnterEnd + subFillSpan * 0.33;
+
     setChars(
       subChars,
-      phaseProgress(p, HERO.subEnterEnd, 0.91)
+      phaseProgress(p, HERO.subEnterEnd, subTitleFillEnd)
     );
     setWhole(
       subLines,
-      phaseProgress(p, 0.88, HERO.subFillEnd)
+      phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
     );
 
     subState.setAttribute('aria-hidden', subEnter <= 0.001 ? 'true' : 'false');
