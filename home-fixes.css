@@ -16,10 +16,10 @@
   width:100%!important;
 }
 
-/* Progressive enhancement: every animated source is already visible at 5% before JS runs. */
+/* Progressive enhancement: animated source text is already painted at 5% before JS runs. */
 .hero-quote,
 .subtractive-title,
-.philosophy-statements{color:rgba(17,17,17,.05)!important}
+.philosophy-statements{color:rgba(17,17,17,.05)}
 .quote-source-only,
 .definition-copy .fill-line,
 .subtractive-korean .fill-line{color:rgba(17,17,17,.05)}
@@ -27,18 +27,19 @@
 .principle-card h3,
 .principle-en,
 .principle-card>p:last-child,
-.principles-translation{color:rgba(255,255,255,.05)!important}
+.principles-translation{color:rgba(255,255,255,.05)}
 .fill-char{transition:color .025s linear}
 
 /* HERO */
 .hero-sequence{height:235vh!important}
 .hero-state{overflow:hidden}
-.hero-state-quote{opacity:1!important}
+.hero-state-quote{opacity:1}
 .hero-state-definition{
   opacity:0;
   pointer-events:none;
   color:var(--fg);
 }
+.hero-state-subtractive{opacity:0;pointer-events:none}
 .quote-source-only{
   margin-top:18px;
   font-family:'Averta PE',sans-serif;
@@ -58,13 +59,6 @@
 .definition-copy p{margin:0;padding:0}
 .definition-copy p+p{margin-top:0}
 .subtractive-title>span{transform:none!important;animation:none!important}
-
-/* Prevent pre-JS flash of states that are meant to enter later. */
-.hero-state-definition,
-.hero-state-subtractive,
-.principles-translation{visibility:visible}
-.hero-state-subtractive{opacity:0!important}
-.motion-ready .hero-state-subtractive{opacity:0}
 
 /* Philosophy */
 .philosophy-statements{
