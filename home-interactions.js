@@ -51,18 +51,7 @@
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
-  const setSequentialWhole = (els, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
-    const n = els.length || 1;
-    els.forEach((el, i) => {
-      const local = clamp(progress * n - i);
-      const alpha = baseAlpha + (1 - baseAlpha) * local;
-      el.style.color = `rgba(${rgb},${alpha})`;
-    });
-  };
-
-  $$('.js-char-fill')
-    .filter(el => !el.classList.contains('philosophy-statements'))
-    .forEach(splitChars);
+  $$('.js-char-fill').forEach(splitChars);
 
   const hero = $('#heroSequence');
   const quoteState = $('.hero-state-quote', hero);
@@ -161,12 +150,22 @@
     const p = clamp((stickyTop - sectionRect.top) / stickyTravel);
 
     /*
-      Use 82% of the sticky travel for the five line fills, then keep the fully
-      filled philosophy on screen for the final 18% before the sticky releases.
-      This guarantees the section never scrolls away before the last line hits 100%.
+      Design philosophy is the exception to the character-fill system.
+      Each authored <p> is one indivisible fill unit: every glyph in that row
+      shares exactly the same alpha while the row moves from 5% to 100%.
+      Only after one full row reaches 100% does the next row begin.
+      The final 18% of sticky travel is a hold with all rows at 100%.
     */
     const fillP = clamp(p / 0.82);
-    setSequentialWhole(philosophyLines, fillP);
+    const lineCount = philosophyLines.length;
+    const lineWindow = 1 / lineCount;
+
+    philosophyLines.forEach((line, index) => {
+      const lineStart = index * lineWindow;
+      const lineProgress = clamp((fillP - lineStart) / lineWindow);
+      const alpha = 0.05 + 0.95 * lineProgress;
+      line.style.color = `rgba(17,17,17,${alpha})`;
+    });
   };
 
   const principles = $('#principles');
