@@ -63,7 +63,7 @@
   opacity:0;
   pointer-events:none;
   color:var(--fg);
-  transform:translate3d(8vw,0,0);
+  transform:translate3d(0,-16vh,0);
 }
 .hero-state-subtractive{opacity:0;pointer-events:none;transform:translate3d(8vw,0,0)}
 .quote-source-only{
