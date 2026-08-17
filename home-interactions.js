@@ -119,6 +119,15 @@
     state.style.clipPath = 'none';
   };
 
+  const renderEnterDown = (state, progress) => {
+    const p = clamp(progress);
+    const distance = Math.min(innerHeight * 0.16, 170);
+    const easedMove = 1 - Math.pow(1 - p, 1.45);
+    state.style.opacity = String(p);
+    state.style.transform = `translate3d(0, ${-(1 - easedMove) * distance}px, 0)`;
+    state.style.clipPath = 'none';
+  };
+
   const renderExit = (state, progress) => {
     const p = clamp(progress);
     const distance = Math.min(innerHeight * 0.18, 190);
@@ -153,12 +162,12 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition enters while quote exits, then exits downward. */
+    /* STEP 2 — Korean definition enters from above while quote exits, then exits downward. */
     const defEnter = quoteExit;
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defTransitionEnd);
 
     if (p < HERO.defHoldEnd) {
-      renderEnter(definition, defEnter);
+      renderEnterDown(definition, defEnter);
     } else {
       renderExit(definition, defExit);
     }
