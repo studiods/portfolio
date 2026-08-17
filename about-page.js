@@ -4,17 +4,17 @@
   const heroLines = Array.from(document.querySelectorAll('.hero-mask-line-inner'));
   const profileItems = Array.from(document.querySelectorAll('.about-lead p'));
 
-  const revealItems = (items, stagger = 110, initialDelay = 0) => {
-    items.forEach((item, index) => {
+  const revealItems = (items, stagger = 80, initialDelay = 0) => {
+    items.filter(Boolean).forEach((item, index) => {
       window.setTimeout(() => item.classList.add('is-revealed'), initialDelay + index * stagger);
     });
   };
 
   const prepareItems = (items) => {
-    items.filter(Boolean).forEach((item) => item.classList.add('reveal-mask-item'));
+    items.filter(Boolean).forEach((item) => item.classList.add('reveal-item'));
   };
 
-  const revealGroupOnView = (trigger, items, stagger = 110) => {
+  const revealOnView = (trigger, items, stagger = 70) => {
     const validItems = items.filter(Boolean);
     if (!trigger || !validItems.length) return;
 
@@ -27,8 +27,8 @@
         observer.unobserve(entry.target);
       });
     }, {
-      threshold: 0.16,
-      rootMargin: '0px 0px -12% 0px'
+      threshold: 0.14,
+      rootMargin: '0px 0px -10% 0px'
     });
 
     observer.observe(trigger);
@@ -43,55 +43,31 @@
   prepareItems(profileItems);
 
   window.requestAnimationFrame(() => {
-    window.setTimeout(() => heroMain?.classList.add('is-line-visible'), 100);
-    revealItems(heroLines, 150, 470);
-    revealItems(profileItems, 130, 1050);
+    window.setTimeout(() => heroMain?.classList.add('is-line-visible'), 80);
+    revealItems(heroLines, 95, 300);
+    revealItems(profileItems, 90, 720);
   });
 
   const thinkingSection = document.querySelector('.thinking-section');
-  revealGroupOnView(
+  revealOnView(
     thinkingSection,
-    [
-      thinkingSection?.querySelector('.about-section-label'),
-      thinkingSection?.querySelector('.about-statement')
-    ],
-    150
+    [thinkingSection?.querySelector('.about-section-label'), thinkingSection?.querySelector('.about-statement')],
+    90
   );
-  document.querySelectorAll('.principle-row').forEach((row) => {
-    revealGroupOnView(row, [row.querySelector('.principle-title'), row.querySelector('.principle-copy')], 120);
-  });
+  document.querySelectorAll('.principle-row').forEach((row) => revealOnView(row, [row], 0));
 
   const interviewSection = document.querySelector('.interview-section');
-  revealGroupOnView(
+  revealOnView(
     interviewSection,
-    [
-      interviewSection?.querySelector('.about-section-label'),
-      interviewSection?.querySelector('.about-statement')
-    ],
-    150
+    [interviewSection?.querySelector('.about-section-label'), interviewSection?.querySelector('.about-statement')],
+    90
   );
-  document.querySelectorAll('.interview-row').forEach((row) => {
-    revealGroupOnView(row, [row.querySelector('.interview-q'), row.querySelector('.interview-a')], 120);
-  });
+  document.querySelectorAll('.interview-row').forEach((row) => revealOnView(row, [row], 0));
 
   const careerSection = document.querySelector('.career-section');
-  revealGroupOnView(
-    careerSection,
-    [careerSection?.querySelector('.about-section-label')],
-    0
-  );
-  document.querySelectorAll('.career-row-v2').forEach((row) => {
-    revealGroupOnView(
-      row,
-      [row.querySelector('.career-period'), row.querySelector('.career-company'), row.querySelector('.career-role')],
-      90
-    );
-  });
+  revealOnView(careerSection, [careerSection?.querySelector('.about-section-label')], 0);
+  document.querySelectorAll('.career-row-v2').forEach((row) => revealOnView(row, [row], 0));
 
   const footer = document.querySelector('.about-footer');
-  revealGroupOnView(
-    footer,
-    [footer?.querySelector('h3'), footer?.querySelector('p')],
-    120
-  );
+  revealOnView(footer, [footer?.querySelector('h3'), footer?.querySelector('p')], 80);
 })();
