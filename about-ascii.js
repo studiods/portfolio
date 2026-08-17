@@ -1,22 +1,42 @@
-(() => {
+(async () => {
   'use strict';
 
   const hero = document.querySelector('.about-ascii-hero');
   const stage = document.querySelector('.about-ascii-stage');
   const canvas = document.querySelector('.about-ascii-canvas');
+  const ctx = canvas?.getContext('2d', { alpha: false });
+
+  if (!hero || !stage || !canvas || !ctx) return;
+
+  const drawStatus = (text) => {
+    const rect = hero.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.max(1, Math.round(rect.width * dpr));
+    canvas.height = Math.max(1, Math.round(rect.height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, rect.width, rect.height);
+    ctx.fillStyle = 'rgba(244,242,237,.72)';
+    ctx.font = '12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(text, 18, 18);
+  };
+
+  drawStatus('ASCII LOADING');
+
   const packed = window.ABOUT_ASCII_PACKED;
-  if (!hero || !stage || !canvas || !packed || !packed.data) {
-    console.error('About ASCII: required DOM or frame data is missing.');
+  if (!packed || !packed.data) {
+    drawStatus('ASCII DATA ERROR');
+    console.error('About ASCII: frame data was not loaded.');
     return;
   }
-
-  const ctx = canvas.getContext('2d', { alpha: false });
-  if (!ctx) return;
 
   const cols = packed.width;
   const rows = packed.height;
   const frameCount = packed.count;
   const cellCount = cols * rows;
+  const packedPerFrame = Math.ceil(cellCount / 2);
   const palette = ' .,:;-=+*#%@';
   const SCENE_MS = 1800;
   const HOLD_MS = 1150;
@@ -37,40 +57,52 @@
     return (x >>> 0) / 4294967295;
   };
 
-  const decodePackedFrames = () => {
-    if (!window.pako || typeof window.pako.ungzip !== 'function') {
-      throw new Error('pako is unavailable');
-    }
-    const binary = atob(packed.data);
-    const compressed = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i += 1) compressed[i] = binary.charCodeAt(i);
-    const raw = window.pako.ungzip(compressed);
-    const packedPerFrame = Math.ceil(cellCount / 2);
-    const expected = packedPerFrame * frameCount;
-    if (raw.length < expected) throw new Error(`ASCII payload is incomplete: ${raw.length}/${expected}`);
-
-    const frames = [];
-    for (let f = 0; f < frameCount; f += 1) {
-      const frame = new Uint8Array(cellCount);
-      const offset = f * packedPerFrame;
-      let target = 0;
-      for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
-        const byte = raw[offset + i];
-        frame[target] = ((byte >>> 4) & 15) * 17;
-        if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
-        target += 2;
-      }
-      frames.push(frame);
-    }
-    return frames;
+  const base64ToBytes = (value) => {
+    const binary = atob(value);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return bytes;
   };
 
-  let frames;
+  const gunzip = async (compressed) => {
+    if (typeof DecompressionStream !== 'undefined') {
+      const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
+      return new Uint8Array(await new Response(stream).arrayBuffer());
+    }
+    if (window.pako?.ungzip) return window.pako.ungzip(compressed);
+    throw new Error('No gzip decoder available in this browser');
+  };
+
+  let raw;
   try {
-    frames = decodePackedFrames();
+    raw = packed.encoding === 'gzip-u4-all'
+      ? await gunzip(base64ToBytes(packed.data))
+      : base64ToBytes(packed.data);
   } catch (error) {
+    drawStatus('ASCII DECODE ERROR');
     console.error('About ASCII decode failed:', error);
     return;
+  }
+
+  const expected = packedPerFrame * frameCount;
+  if (raw.length < expected) {
+    drawStatus('ASCII PAYLOAD ERROR');
+    console.error(`About ASCII payload is incomplete: ${raw.length}/${expected}`);
+    return;
+  }
+
+  const frames = [];
+  for (let f = 0; f < frameCount; f += 1) {
+    const frame = new Uint8Array(cellCount);
+    const offset = f * packedPerFrame;
+    let target = 0;
+    for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
+      const byte = raw[offset + i];
+      frame[target] = ((byte >>> 4) & 15) * 17;
+      if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
+      target += 2;
+    }
+    frames.push(frame);
   }
 
   const timingStart = new Float32Array(cellCount);
@@ -105,8 +137,8 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cellWidth = cssWidth / cols;
     cellHeight = cssHeight / rows;
-    const fontSize = Math.max(4, Math.min(cellWidth * 1.08, cellHeight * 1.02));
-    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
+    const fontSize = Math.max(3.5, Math.min(cellWidth * 1.12, cellHeight * 1.04));
+    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     lastStaticIndex = -1;
@@ -115,6 +147,7 @@
   const draw = (now, morph = 0) => {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
+
     const current = frames[frameIndex];
     const next = frames[nextIndex];
     const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
@@ -145,7 +178,7 @@
       const ch = palette[paletteIndex];
       if (ch === ' ') continue;
       const x = (i % cols) * cellWidth + cellWidth * 0.5;
-      const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.55;
+      const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.54;
       const alpha = Math.min(1, 0.18 + normalized * 0.84 + chaos * 0.06);
       const tone = Math.round(172 + normalized * 83);
       ctx.fillStyle = `rgba(${tone},${tone},${tone},${alpha})`;
@@ -163,6 +196,7 @@
       lastStaticIndex = -1;
       elapsed = now - startedAt;
     }
+
     const morph = elapsed <= HOLD_MS ? 0 : clamp01((elapsed - HOLD_MS) / MORPH_MS);
     if (morph === 0) {
       if (lastStaticIndex !== frameIndex) {
@@ -210,15 +244,4 @@
     draw(performance.now(), 0);
     updateScrollState();
   }, { passive: true });
-
-  document.addEventListener('visibilitychange', () => {
-    if (reducedMotion) return;
-    if (document.hidden) {
-      cancelAnimationFrame(rafId);
-    } else {
-      startedAt = performance.now();
-      lastStaticIndex = -1;
-      rafId = requestAnimationFrame(renderLoop);
-    }
-  });
 })();
