@@ -37,17 +37,17 @@
   font-variation-settings:'wght' 300;
 }
 
-/* Shared reveal motion */
-.about-page .reveal-mask-item{
-  clip-path:inset(0 0 100% 0);
-  transform:translate3d(0,-22px,0);
+/* Motion: quiet fade-rise, no clipping or scroll-jacking */
+.about-page .reveal-item{
+  opacity:0;
+  transform:translate3d(0,14px,0);
   transition:
-    clip-path .72s cubic-bezier(.22,.61,.36,1),
-    transform .72s cubic-bezier(.22,.61,.36,1);
-  will-change:clip-path,transform;
+    opacity .5s ease-out,
+    transform .64s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
 }
-.about-page .reveal-mask-item.is-revealed{
-  clip-path:inset(0 0 0 0);
+.about-page .reveal-item.is-revealed{
+  opacity:1;
   transform:translate3d(0,0,0);
 }
 
@@ -80,7 +80,7 @@
   background:var(--fg);
   transform:scaleX(0);
   transform-origin:left center;
-  transition:transform .78s cubic-bezier(.22,.61,.36,1);
+  transition:transform .62s cubic-bezier(.22,1,.36,1);
 }
 .about-page .about-hero-main.is-line-visible::before{
   transform:scaleX(1);
@@ -95,17 +95,18 @@
 }
 .about-page .hero-mask-line{
   display:block;
-  overflow:hidden;
-  padding-bottom:.07em;
-  margin-bottom:-.07em;
 }
 .about-page .hero-mask-line-inner{
   display:block;
-  transform:translate3d(0,-115%,0);
-  transition:transform .78s cubic-bezier(.22,.61,.36,1);
-  will-change:transform;
+  opacity:0;
+  transform:translate3d(0,16px,0);
+  transition:
+    opacity .52s ease-out,
+    transform .68s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
 }
 .about-page .hero-mask-line-inner.is-revealed{
+  opacity:1;
   transform:translate3d(0,0,0);
 }
 .about-page .about-hero-bottom{
@@ -125,6 +126,8 @@
 }
 .about-page .about-lead p{margin:0 0 .82em}
 .about-page .about-lead p:first-child{opacity:.8}
+.about-page .about-lead p:first-child.reveal-item{opacity:0}
+.about-page .about-lead p:first-child.reveal-item.is-revealed{opacity:.8}
 .about-page .about-lead p:last-child{margin-bottom:0}
 
 /* Shared sections */
@@ -386,9 +389,10 @@
 @media(prefers-reduced-motion:reduce){
   .about-page .about-hero-main::before{transform:scaleX(1);transition:none}
   .about-page .hero-mask-line-inner,
-  .about-page .reveal-mask-item{
-    clip-path:none;
+  .about-page .reveal-item{
+    opacity:1;
     transform:none;
     transition:none;
   }
+  .about-page .about-lead p:first-child.reveal-item{opacity:.8}
 }
