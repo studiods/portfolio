@@ -87,11 +87,11 @@
     HERO TIMELINE
     ----------------
     The next state still starts only after 95% of the outgoing motion has
-    completed. Its reveal is no longer compressed into the final 5% of that
-    transition: it continues smoothly into the following fill phase.
+    completed. Its reveal continues smoothly into the following fill phase.
 
-    The three large text scenes share the same softened scroll response.
-    Character fill remains scroll-driven from 5% black to 100% black.
+    All three large text scenes use the same scroll-driven visual language:
+    top-down reveal on entry, 5% -> 100% character fill, then a downward move
+    combined with a strong opacity falloff on exit.
   */
   const HERO_HOLD_SCALE = 1 / 3;
   const HERO_PHASE = Object.freeze({
@@ -152,8 +152,14 @@
     const p = smoothstep(raw);
     const distance = Math.min(innerHeight * 0.18, 190);
     const easedMove = 1 - Math.pow(1 - p, 1.35);
-    const fade = smoothstep(phaseProgress(raw, 0.72, 1.00));
-    state.style.opacity = String(1 - fade);
+
+    // Fade starts almost as soon as the downward motion begins and reaches
+    // near-zero before the 95% handoff point, so the text visibly dissolves
+    // instead of travelling downward at full opacity.
+    const fadeProgress = smoothstep(phaseProgress(raw, 0.10, 0.90));
+    const fade = Math.pow(fadeProgress, 0.72);
+
+    state.style.opacity = String(Math.max(0, 1 - fade));
     state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
@@ -207,7 +213,16 @@
     /* STEP 3 — Same 95% gate and same softened top-down masked reveal. */
     const subWindow = enterWindow(HERO.defHoldEnd, HERO.defTransitionEnd, HERO.subFillEnd);
     const subEnter = phaseProgress(p, subWindow.start, subWindow.end);
-    renderMaskedEnterDown(subState, subRevealParts, subEnter);
+
+    const subExitStart = HERO.subFillEnd +
+      (HERO.subHoldEnd - HERO.subFillEnd) * 0.15;
+    const subExit = phaseProgress(p, subExitStart, HERO.subHoldEnd);
+
+    if (p < subExitStart) {
+      renderMaskedEnterDown(subState, subRevealParts, subEnter);
+    } else {
+      renderExit(subState, subExit);
+    }
 
     const subFillStart = subWindow.start + (subWindow.end - subWindow.start) * 0.16;
     const subTitleFillEnd = subFillStart + (HERO.subFillEnd - subFillStart) * 0.72;
@@ -222,7 +237,10 @@
       phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
     );
 
-    subState.setAttribute('aria-hidden', subEnter <= 0.001 ? 'true' : 'false');
+    subState.setAttribute(
+      'aria-hidden',
+      subEnter <= 0.001 || subExit >= 0.999 ? 'true' : 'false'
+    );
   };
 
   const philosophySection = $('#philosophy');
