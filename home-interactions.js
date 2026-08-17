@@ -5,7 +5,7 @@
 
   const FILL_SLOWDOWN = 1.32;
   const FILL_FEATHER = 4;
-  const NEXT_ENTER_AT = 0.84;
+  const NEXT_ENTER_AT = 0.95;
 
   const fillProgress = (value, start, duration) =>
     clamp((value - start) / (duration * FILL_SLOWDOWN));
@@ -64,6 +64,9 @@
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
   const subState = $('.hero-state-subtractive', hero);
+  const subTitle = $('.subtractive-title', hero);
+  const subKorean = $('.subtractive-korean', hero);
+  const subRevealParts = [subTitle, subKorean].filter(Boolean);
   const subLines = $$('.subtractive-korean .fill-line', hero);
   subLines.forEach(splitChars);
 
@@ -75,9 +78,8 @@
   /*
     HERO TIMELINE
     ----------------
-    The next state now waits until the outgoing state has completed 84% of its
-    movement. This avoids the previous early overlap while keeping a small,
-    intentional handoff between scenes.
+    The next state waits until the outgoing state has completed 95% of its
+    movement. This leaves only a very small overlap between scenes.
 
     Character fill remains scroll-driven: each character begins at 5% black
     and sweeps to 100% black in reading order.
@@ -112,14 +114,6 @@
     subHoldEnd: (heroCursor += heroPhase('subHold'))
   });
 
-  const renderEnter = (state, progress) => {
-    const p = clamp(progress);
-    const distance = Math.min(innerWidth * 0.18, 260);
-    state.style.opacity = String(p);
-    state.style.transform = `translate3d(${(1 - p) * distance}px, 0, 0)`;
-    state.style.clipPath = 'none';
-  };
-
   const renderEnterDown = (state, progress) => {
     const p = clamp(progress);
     const distance = Math.min(innerHeight * 0.16, 170);
@@ -127,6 +121,23 @@
     state.style.opacity = String(p);
     state.style.transform = `translate3d(0, ${-(1 - easedMove) * distance}px, 0)`;
     state.style.clipPath = 'none';
+  };
+
+  const renderMaskedEnterDown = (state, parts, progress) => {
+    const p = clamp(progress);
+    const distance = Math.min(innerHeight * 0.14, 150);
+    const easedMove = 1 - Math.pow(1 - p, 1.5);
+    const hiddenBottom = (1 - p) * 100;
+
+    state.style.opacity = p <= 0.001 ? '0' : '1';
+    state.style.transform = 'translate3d(0,0,0)';
+    state.style.clipPath = 'none';
+
+    parts.forEach(part => {
+      part.style.opacity = p <= 0.001 ? '0' : '1';
+      part.style.transform = `translate3d(0, ${-(1 - easedMove) * distance}px, 0)`;
+      part.style.clipPath = `inset(0 0 ${hiddenBottom}% 0)`;
+    });
   };
 
   const renderExit = (state, progress) => {
@@ -163,7 +174,7 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Wait until the quote is almost gone, then bring the definition down. */
+    /* STEP 2 — Start only after 95% of the quote exit, then move down from above. */
     const defEnter = phaseProgress(quoteExit, NEXT_ENTER_AT, 1);
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defTransitionEnd);
     const defFillStart = HERO.quoteHoldEnd +
@@ -185,15 +196,15 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — The final state also waits until the definition is almost gone. */
+    /* STEP 3 — Start only after 95% of the definition exit. Reveal downward through a mask. */
     const subEnter = phaseProgress(defExit, NEXT_ENTER_AT, 1);
-    renderEnter(subState, subEnter);
+    renderMaskedEnterDown(subState, subRevealParts, subEnter);
 
     const subFillStart = HERO.defHoldEnd +
       (HERO.defTransitionEnd - HERO.defHoldEnd) * NEXT_ENTER_AT;
     const subFillSpan = HERO.subFillEnd - subFillStart;
-    const subTitleFillEnd = subFillStart + subFillSpan * 0.78;
-    const subKoreanFillStart = subFillStart + subFillSpan * 0.28;
+    const subTitleFillEnd = subFillStart + subFillSpan * 0.72;
+    const subKoreanFillStart = subFillStart + subFillSpan * 0.34;
 
     setChars(
       subChars,
