@@ -124,10 +124,12 @@
   line-height:1.55;
   letter-spacing:-.025em;
 }
-.about-page .about-lead p{margin:0 0 .82em}
-.about-page .about-lead p:first-child{opacity:.8}
-.about-page .about-lead p:first-child.reveal-item{opacity:0}
-.about-page .about-lead p:first-child.reveal-item.is-revealed{opacity:.8}
+.about-page .about-lead p{
+  margin:0 0 .82em;
+  opacity:.8;
+}
+.about-page .about-lead p.reveal-item{opacity:0}
+.about-page .about-lead p.reveal-item.is-revealed{opacity:.8}
 .about-page .about-lead p:last-child{margin-bottom:0}
 
 /* Shared sections */
@@ -394,5 +396,5 @@
     transform:none;
     transition:none;
   }
-  .about-page .about-lead p:first-child.reveal-item{opacity:.8}
+  .about-page .about-lead p.reveal-item{opacity:.8}
 }
