@@ -44,7 +44,7 @@ body.works-page-body{
 .works-page-title{
   margin:0;
   font-family:'Averta PE',sans-serif;
-  font-weight:500;
+  font-weight:300;
   font-size:clamp(72px,9vw,160px);
   line-height:.8;
   letter-spacing:-.03em;
