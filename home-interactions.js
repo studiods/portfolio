@@ -74,9 +74,7 @@
   $$('.js-char-fill').forEach(splitChars);
 
   const hero = $('#heroSequence');
-  const heroWindow = $('#heroWindow', hero);
   const quoteState = $('.hero-state-quote', hero);
-  const quoteBlock = $('.hero-quote', hero);
   const quoteLines = $$('.hero-quote > span', hero);
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
@@ -87,28 +85,6 @@
   const subChars = $$('.subtractive-title .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
-  let heroBoxHeight = 1;
-
-  const updateHeroWindow = () => {
-    if (!heroWindow || !quoteBlock) return;
-    const quoteHeight = quoteBlock.getBoundingClientRect().height;
-    let sourceHeight = 0;
-    if (sourceOnly) {
-      const sourceStyle = getComputedStyle(sourceOnly);
-      sourceHeight = sourceOnly.getBoundingClientRect().height +
-        (parseFloat(sourceStyle.marginTop) || 0);
-    }
-    heroBoxHeight = Math.max(1, Math.ceil(quoteHeight + sourceHeight));
-    heroWindow.style.height = `${heroBoxHeight}px`;
-  };
-
-  /*
-    HERO TIMELINE
-    ----------------
-    All three scenes now live inside one clipping window whose height is measured
-    from the first quote block. Entry and exit travel use that exact box height,
-    so text is only visible while it is physically inside the shared window.
-  */
   const HERO_HOLD_SCALE = 1 / 3;
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13,
@@ -145,10 +121,26 @@
     subExitEnd: (heroCursor += heroPhase('subExit'))
   });
 
+  const exitOpacity = progress => {
+    const p = clamp(progress);
+    const EARLY_END = 0.10;
+    const EARLY_OPACITY = 0.56;
+
+    if (p <= 0) return 1;
+    if (p < EARLY_END) {
+      const t = p / EARLY_END;
+      const fastDrop = 1 - Math.pow(1 - t, 4);
+      return 1 - (1 - EARLY_OPACITY) * fastDrop;
+    }
+
+    const tail = (p - EARLY_END) / (1 - EARLY_END);
+    return Math.max(0, EARLY_OPACITY * (1 - Math.pow(tail, 1.4)));
+  };
+
   const renderEnter = (state, progress) => {
     const raw = clamp(progress);
     const p = easeInOut(raw);
-    const distance = heroBoxHeight * 0.98;
+    const distance = Math.min(innerHeight * 0.12, 140);
     const opacity = 1 - Math.pow(1 - raw, 1.65);
     state.style.opacity = String(opacity);
     state.style.transform = `translate3d(0, ${-(1 - p) * distance}px, 0)`;
@@ -157,11 +149,10 @@
 
   const renderExit = (state, progress) => {
     const raw = clamp(progress);
-    const p = easeInOut(raw);
-    const distance = heroBoxHeight * 0.98;
-    const fade = Math.pow(raw, 1.7);
-    state.style.opacity = String(Math.max(0, 1 - fade));
-    state.style.transform = `translate3d(0, ${p * distance}px, 0)`;
+    const distance = Math.min(innerHeight * 0.18, 190);
+    const easedMove = 1 - Math.pow(1 - raw, 1.6);
+    state.style.opacity = String(exitOpacity(raw));
+    state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
 
@@ -172,7 +163,6 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: fill -> hold -> box-clipped downward exit */
     setChars(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
@@ -189,7 +179,6 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition: enter from above -> fill -> hold -> same exit */
     const defEnter = phaseProgress(p, HERO.quoteExitEnd, HERO.defEnterEnd);
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defExitEnd);
 
@@ -209,7 +198,6 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — SUBTRACTIVE DESIGN: one visible alphabet at a time. */
     const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
     const subExit = phaseProgress(p, HERO.subHoldEnd, HERO.subExitEnd);
 
@@ -237,13 +225,6 @@
     );
   };
 
-  /*
-    Idle cue for the first quote.
-    - First run: after 2 seconds without interaction.
-    - Each line pulses from 5% black to 15% and back.
-    - The next line begins when the previous line reaches 90% of its pulse.
-    - After a completed pass, another pass starts 5 seconds later if idle.
-  */
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const IDLE_FIRST_DELAY = 2000;
   const IDLE_REPEAT_DELAY = 5000;
@@ -390,7 +371,6 @@
     if (!raf) raf = requestAnimationFrame(render);
   };
 
-  updateHeroWindow();
   render();
   scheduleIdleCue(IDLE_FIRST_DELAY);
 
@@ -402,15 +382,9 @@
   addEventListener('touchstart', registerUserAction, { passive: true });
   addEventListener('pointerdown', registerUserAction, { passive: true });
   addEventListener('keydown', registerUserAction);
-  addEventListener('resize', () => {
-    updateHeroWindow();
-    requestRender();
-  });
+  addEventListener('resize', requestRender);
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(() => {
-      updateHeroWindow();
-      requestRender();
-    }).catch(() => {});
+    document.fonts.ready.then(requestRender).catch(() => {});
   }
 })();
