@@ -71,8 +71,8 @@
   /*
     HERO TIMELINE
     ----------------
-    Each outgoing state leaves to the left while the following state enters
-    from the right during the same transition window.
+    Each outgoing state moves downward and fades away while the following
+    state enters during the same transition window.
 
     Only the HOLD phases are reduced here. HOLD_SCALE = 1 / 3 means every fully
     filled pause uses one third of its previous physical scroll distance.
@@ -121,12 +121,11 @@
 
   const renderExit = (state, progress) => {
     const p = clamp(progress);
-    const distance = Math.min(innerWidth * 0.72, 920);
+    const distance = Math.min(innerHeight * 0.18, 190);
     const easedMove = 1 - Math.pow(1 - p, 1.6);
-
-    const fade = phaseProgress(p, 0.28, 1.00);
+    const fade = phaseProgress(p, 0.78, 1.00);
     state.style.opacity = String(1 - fade);
-    state.style.transform = `translate3d(${-easedMove * distance}px, 0, 0)`;
+    state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
 
@@ -137,7 +136,7 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: fill -> hold -> exit left */
+    /* STEP 1 — English quote: fill -> hold -> exit downward */
     setChars(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
@@ -154,7 +153,7 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition enters while quote exits, then exits left. */
+    /* STEP 2 — Korean definition enters while quote exits, then exits downward. */
     const defEnter = quoteExit;
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defTransitionEnd);
 
