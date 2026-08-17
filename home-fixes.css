@@ -47,12 +47,24 @@
 
 /*
   HERO sequence timing is controlled by normalized phases in home-interactions.js.
-  Hold phases are now one third of their previous physical scroll distance.
-  Total hero travel is reduced in the same proportion so fill / enter / exit
-  motions keep approximately the same physical scroll speed as before.
+  All three hero scenes are clipped by one shared window. JS measures the first
+  quote block after fonts resolve and uses that exact height as the window and
+  as the vertical travel distance for entry / exit.
 */
 .hero-sequence{height:341vh!important}
-.hero-state{
+.hero-sticky{--hero-window-height:52vh}
+.hero-window{
+  position:absolute;
+  left:var(--pad);
+  right:var(--pad);
+  top:50%;
+  height:var(--hero-window-height);
+  transform:translateY(-50%);
+  overflow:hidden;
+}
+.hero-window .hero-state{
+  position:absolute!important;
+  inset:0!important;
   overflow:visible!important;
   transition:none!important;
   will-change:transform,opacity;
@@ -171,7 +183,7 @@
 
   .hero-sequence{height:318vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
-  .hero-state{inset:70px var(--pad) 36px}
+  .hero-window{left:var(--pad);right:var(--pad)}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
   .definition-copy{font-size:clamp(24.3px,6.804vw,46.98px);line-height:1.06;letter-spacing:-.03em}
   .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
@@ -232,6 +244,7 @@
   .principle-card h3 .fill-char,
   .principle-en .fill-char,
   .principle-card>p:last-child{color:#fff!important}
+  .hero-window{overflow:visible!important}
   .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
   .hero-state-definition,.hero-state-subtractive{opacity:0!important}
   .philosophy-sticky{position:static!important}
