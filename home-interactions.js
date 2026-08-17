@@ -14,6 +14,11 @@
     return clamp((value - start) / (end - start));
   };
 
+  const easeInOut = (value) => {
+    const t = clamp(value);
+    return t * t * (3 - 2 * t);
+  };
+
   try {
     const nav = performance.getEntriesByType('navigation')[0];
     const isBackForward = nav && nav.type === 'back_forward';
@@ -51,6 +56,16 @@
     });
   };
 
+  const setCharsOneByOne = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
+    const visibleChars = chars.filter(char => char.textContent.trim().length > 0);
+    const n = visibleChars.length || 1;
+    const sweep = clamp(progress) * n;
+    visibleChars.forEach((char, i) => {
+      const local = clamp(sweep - i);
+      char.style.color = `rgba(${rgb},${baseAlpha + (1 - baseAlpha) * local})`;
+    });
+  };
+
   const setWhole = (els, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
     const alpha = baseAlpha + (1 - baseAlpha) * clamp(progress);
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
@@ -59,7 +74,10 @@
   $$('.js-char-fill').forEach(splitChars);
 
   const hero = $('#heroSequence');
+  const heroWindow = $('#heroWindow', hero);
   const quoteState = $('.hero-state-quote', hero);
+  const quoteBlock = $('.hero-quote', hero);
+  const quoteLines = $$('.hero-quote > span', hero);
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
   const subState = $('.hero-state-subtractive', hero);
@@ -67,32 +85,43 @@
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
+  const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
+
+  let heroBoxHeight = 1;
+
+  const updateHeroWindow = () => {
+    if (!heroWindow || !quoteBlock) return;
+    const quoteHeight = quoteBlock.getBoundingClientRect().height;
+    let sourceHeight = 0;
+    if (sourceOnly) {
+      const sourceStyle = getComputedStyle(sourceOnly);
+      sourceHeight = sourceOnly.getBoundingClientRect().height +
+        (parseFloat(sourceStyle.marginTop) || 0);
+    }
+    heroBoxHeight = Math.max(1, Math.ceil(quoteHeight + sourceHeight));
+    heroWindow.style.height = `${heroBoxHeight}px`;
+  };
 
   /*
     HERO TIMELINE
     ----------------
-    The structural order remains fixed:
-      FILL -> HOLD -> VISIBLE EXIT -> NEXT STATE.
-
-    Only the HOLD phases are reduced here. HOLD_SCALE = 1 / 3 means every fully
-    filled pause uses one third of its previous physical scroll distance.
-    Fill / enter / exit phase weights are left unchanged.
-
-    CSS shortens the total hero travel by the same aggregate ratio so those
-    non-hold motions retain approximately the same physical scroll speed.
+    All three scenes now live inside one clipping window whose height is measured
+    from the first quote block. Entry and exit travel use that exact box height,
+    so text is only visible while it is physically inside the shared window.
   */
   const HERO_HOLD_SCALE = 1 / 3;
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13,
     quoteHold: 0.15 * HERO_HOLD_SCALE,
-    quoteExit: 0.11,
-    defEnter: 0.06,
+    quoteExit: 0.13,
+    defEnter: 0.09,
     defFill: 0.12,
     defHold: 0.14 * HERO_HOLD_SCALE,
-    defExit: 0.11,
-    subEnter: 0.04,
-    subFill: 0.06,
-    subHold: 0.08 * HERO_HOLD_SCALE
+    defExit: 0.13,
+    subEnter: 0.08,
+    subFill: 0.13,
+    subHold: 0.08 * HERO_HOLD_SCALE,
+    subExit: 0.13
   });
 
   const HERO_TOTAL = Object.values(HERO_PHASE).reduce((sum, value) => sum + value, 0);
@@ -112,30 +141,27 @@
 
     subEnterEnd: (heroCursor += heroPhase('subEnter')),
     subFillEnd: (heroCursor += heroPhase('subFill')),
-    subHoldEnd: (heroCursor += heroPhase('subHold'))
+    subHoldEnd: (heroCursor += heroPhase('subHold')),
+    subExitEnd: (heroCursor += heroPhase('subExit'))
   });
 
   const renderEnter = (state, progress) => {
-    const p = clamp(progress);
-    const distance = innerHeight * 0.065;
-    state.style.opacity = String(p);
+    const raw = clamp(progress);
+    const p = easeInOut(raw);
+    const distance = heroBoxHeight * 0.98;
+    const opacity = 1 - Math.pow(1 - raw, 1.65);
+    state.style.opacity = String(opacity);
     state.style.transform = `translate3d(0, ${-(1 - p) * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
 
   const renderExit = (state, progress) => {
-    const p = clamp(progress);
-    const distance = Math.min(innerHeight * 0.18, 190);
-    const easedMove = 1 - Math.pow(1 - p, 1.6);
-
-    /*
-      Transparency now starts from the beginning of the downward exit and
-      accelerates continuously. This avoids the previous last-moment opacity
-      drop while keeping the disappearance stronger toward the end.
-    */
-    const fade = Math.pow(p, 1.7);
+    const raw = clamp(progress);
+    const p = easeInOut(raw);
+    const distance = heroBoxHeight * 0.98;
+    const fade = Math.pow(raw, 1.7);
     state.style.opacity = String(Math.max(0, 1 - fade));
-    state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
+    state.style.transform = `translate3d(0, ${p * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
 
@@ -146,7 +172,7 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: fill -> short hold -> progressive fading exit */
+    /* STEP 1 — English quote: fill -> hold -> box-clipped downward exit */
     setChars(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
@@ -163,7 +189,7 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition: enter -> fill -> short hold -> same fading exit */
+    /* STEP 2 — Korean definition: enter from above -> fill -> hold -> same exit */
     const defEnter = phaseProgress(p, HERO.quoteExitEnd, HERO.defEnterEnd);
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defExitEnd);
 
@@ -183,26 +209,23 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — SUBTRACTIVE DESIGN: enter -> fill -> short hold -> same fading exit */
+    /* STEP 3 — SUBTRACTIVE DESIGN: one visible alphabet at a time. */
     const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
-    const subExitStart = HERO.subFillEnd +
-      (HERO.subHoldEnd - HERO.subFillEnd) * 0.22;
-    const subExit = phaseProgress(p, subExitStart, HERO.subHoldEnd);
+    const subExit = phaseProgress(p, HERO.subHoldEnd, HERO.subExitEnd);
 
-    if (p < subExitStart) {
+    if (p < HERO.subHoldEnd) {
       renderEnter(subState, subEnter);
     } else {
       renderExit(subState, subExit);
     }
 
-    const subFillSpan = HERO.subFillEnd - HERO.subEnterEnd;
-    const subTitleFillEnd = HERO.subEnterEnd + subFillSpan * 0.83;
-    const subKoreanFillStart = HERO.subEnterEnd + subFillSpan * 0.33;
-
-    setChars(
+    setCharsOneByOne(
       subChars,
-      phaseProgress(p, HERO.subEnterEnd, subTitleFillEnd)
+      phaseProgress(p, HERO.subEnterEnd, HERO.subFillEnd)
     );
+
+    const subKoreanFillStart = HERO.subEnterEnd +
+      (HERO.subFillEnd - HERO.subEnterEnd) * 0.44;
     setWhole(
       subLines,
       phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
@@ -212,6 +235,97 @@
       'aria-hidden',
       subEnter <= 0.001 || subExit >= 0.999 ? 'true' : 'false'
     );
+  };
+
+  /*
+    Idle cue for the first quote.
+    - First run: after 2 seconds without interaction.
+    - Each line pulses from 5% black to 15% and back.
+    - The next line begins when the previous line reaches 90% of its pulse.
+    - After a completed pass, another pass starts 5 seconds later if idle.
+  */
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const IDLE_FIRST_DELAY = 2000;
+  const IDLE_REPEAT_DELAY = 5000;
+  const IDLE_LINE_MS = 920;
+  const IDLE_NEXT_AT = 0.90;
+  const IDLE_BASE_ALPHA = 0.05;
+  const IDLE_PEAK_ALPHA = 0.15;
+  let idleTimer = 0;
+  let idleRaf = 0;
+  let idleCycleStartedAt = 0;
+
+  const heroIsAtRest = () => {
+    if (!hero) return false;
+    const rect = hero.getBoundingClientRect();
+    const travel = Math.max(1, hero.offsetHeight - innerHeight);
+    const p = clamp(-rect.top / travel);
+    return p < 0.002;
+  };
+
+  const restoreQuoteFromScroll = () => {
+    if (!heroIsAtRest()) return;
+    setChars(quoteChars, 0);
+    setWhole(sourceOnly ? [sourceOnly] : [], 0);
+  };
+
+  const stopIdleCue = () => {
+    if (idleTimer) clearTimeout(idleTimer);
+    if (idleRaf) cancelAnimationFrame(idleRaf);
+    idleTimer = 0;
+    idleRaf = 0;
+    idleCycleStartedAt = 0;
+    restoreQuoteFromScroll();
+  };
+
+  const scheduleIdleCue = (delay) => {
+    if (reducedMotion || !quoteLineChars.length) return;
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = window.setTimeout(() => {
+      idleTimer = 0;
+      if (heroIsAtRest()) {
+        idleCycleStartedAt = performance.now();
+        idleRaf = requestAnimationFrame(runIdleCue);
+      }
+    }, delay);
+  };
+
+  const runIdleCue = (now) => {
+    if (!heroIsAtRest()) {
+      stopIdleCue();
+      return;
+    }
+
+    const elapsed = now - idleCycleStartedAt;
+    const lineOffset = IDLE_LINE_MS * IDLE_NEXT_AT;
+    const totalDuration = IDLE_LINE_MS + lineOffset * (quoteLineChars.length - 1);
+
+    quoteLineChars.forEach((chars, lineIndex) => {
+      const local = clamp((elapsed - lineIndex * lineOffset) / IDLE_LINE_MS);
+      const pulse = local < 0.5
+        ? easeInOut(local * 2)
+        : easeInOut((1 - local) * 2);
+      const alpha = IDLE_BASE_ALPHA +
+        (IDLE_PEAK_ALPHA - IDLE_BASE_ALPHA) * pulse;
+      chars.forEach(char => {
+        char.style.color = `rgba(17,17,17,${alpha})`;
+      });
+    });
+
+    if (elapsed < totalDuration) {
+      idleRaf = requestAnimationFrame(runIdleCue);
+      return;
+    }
+
+    idleRaf = 0;
+    idleCycleStartedAt = 0;
+    restoreQuoteFromScroll();
+    scheduleIdleCue(IDLE_REPEAT_DELAY);
+  };
+
+  const registerUserAction = () => {
+    stopIdleCue();
+    if (heroIsAtRest()) scheduleIdleCue(IDLE_REPEAT_DELAY);
   };
 
   const philosophySection = $('#philosophy');
@@ -276,10 +390,27 @@
     if (!raf) raf = requestAnimationFrame(render);
   };
 
+  updateHeroWindow();
   render();
-  addEventListener('scroll', requestRender, { passive: true });
-  addEventListener('resize', requestRender);
+  scheduleIdleCue(IDLE_FIRST_DELAY);
+
+  addEventListener('scroll', () => {
+    registerUserAction();
+    requestRender();
+  }, { passive: true });
+  addEventListener('wheel', registerUserAction, { passive: true });
+  addEventListener('touchstart', registerUserAction, { passive: true });
+  addEventListener('pointerdown', registerUserAction, { passive: true });
+  addEventListener('keydown', registerUserAction);
+  addEventListener('resize', () => {
+    updateHeroWindow();
+    requestRender();
+  });
+
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(requestRender).catch(() => {});
+    document.fonts.ready.then(() => {
+      updateHeroWindow();
+      requestRender();
+    }).catch(() => {});
   }
 })();
