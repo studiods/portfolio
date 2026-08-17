@@ -4,9 +4,9 @@
   const hero = document.querySelector('#heroSequence');
   if (!hero) return;
 
-  const HOLD_MS = 800;
   const REARM_GAP = 0.025;
   const EPSILON = 0.0005;
+  const WHEEL_GESTURE_END_MS = 140;
 
   /* Keep these phase weights synchronized with home-interactions.js. */
   const HOLD_SCALE = 1 / 3;
@@ -47,7 +47,9 @@
 
   const consumed = new Set();
   let holding = false;
-  let holdTimer = 0;
+  let activeStop = null;
+  let holdStage = 'idle'; // idle -> settling -> armed -> consuming
+  let gestureTimer = 0;
   let lockY = 0;
   let lastProgress = 0;
   let internalScroll = false;
@@ -73,29 +75,58 @@
     requestAnimationFrame(() => { internalScroll = false; });
   };
 
-  const releaseHold = stop => {
+  const clearGestureTimer = () => {
+    if (gestureTimer) clearTimeout(gestureTimer);
+    gestureTimer = 0;
+  };
+
+  const releaseHold = () => {
+    if (!holding || !activeStop) return;
+    const stop = activeStop;
+    clearGestureTimer();
     consumed.add(stop.key);
     holding = false;
-    holdTimer = 0;
+    activeStop = null;
+    holdStage = 'idle';
 
-    /*
-      Consume the original scroll-distance hold invisibly while the scene is
-      already fully filled. The next user scroll can therefore start the exit
-      immediately after the 0.8s temporal pause.
-    */
+    /* Skip the scroll-distance hold after one full additional scroll gesture. */
     const releaseY = yForProgress(stop.release + EPSILON);
     setScrollY(releaseY);
     lastProgress = stop.release + EPSILON;
   };
 
+  const onGestureEnd = () => {
+    gestureTimer = 0;
+    if (!holding) return;
+
+    if (holdStage === 'settling') {
+      /* The gesture that completed the fill is over. The next gesture is ignored. */
+      holdStage = 'armed';
+      return;
+    }
+
+    if (holdStage === 'consuming') {
+      /* One complete extra scroll gesture has now been consumed. */
+      releaseHold();
+    }
+  };
+
+  const scheduleGestureEnd = () => {
+    clearGestureTimer();
+    gestureTimer = window.setTimeout(onGestureEnd, WHEEL_GESTURE_END_MS);
+  };
+
   const beginHold = stop => {
     if (holding) return;
     holding = true;
+    activeStop = stop;
+    holdStage = 'settling';
     lockY = yForProgress(stop.fill);
     setScrollY(lockY);
     lastProgress = stop.fill;
 
-    holdTimer = window.setTimeout(() => releaseHold(stop), HOLD_MS);
+    /* No fixed reading time: wait for the current scroll gesture to end. */
+    scheduleGestureEnd();
   };
 
   const checkProgress = () => {
@@ -120,9 +151,36 @@
     lastProgress = progress;
   };
 
-  const blockScrollInput = event => {
+  const onWheel = event => {
     if (!holding) return;
     event.preventDefault();
+
+    if (holdStage === 'armed') holdStage = 'consuming';
+    scheduleGestureEnd();
+  };
+
+  let touchActive = false;
+  const onTouchStart = event => {
+    if (!holding) return;
+    touchActive = true;
+    if (holdStage === 'armed') holdStage = 'consuming';
+    if (event.cancelable) event.preventDefault();
+  };
+
+  const onTouchMove = event => {
+    if (!holding) return;
+    if (event.cancelable) event.preventDefault();
+  };
+
+  const onTouchEnd = () => {
+    if (!holding || !touchActive) return;
+    touchActive = false;
+    if (holdStage === 'settling') {
+      clearGestureTimer();
+      holdStage = 'armed';
+    } else if (holdStage === 'consuming') {
+      releaseHold();
+    }
   };
 
   const scrollKeys = new Set([
@@ -130,10 +188,27 @@
     'Home', 'End', ' ', 'Spacebar'
   ]);
 
-  addEventListener('wheel', blockScrollInput, { passive: false });
-  addEventListener('touchmove', blockScrollInput, { passive: false });
+  addEventListener('wheel', onWheel, { passive: false });
+  addEventListener('touchstart', onTouchStart, { passive: false });
+  addEventListener('touchmove', onTouchMove, { passive: false });
+  addEventListener('touchend', onTouchEnd, { passive: true });
+  addEventListener('touchcancel', onTouchEnd, { passive: true });
+
   addEventListener('keydown', event => {
-    if (holding && scrollKeys.has(event.key)) event.preventDefault();
+    if (!holding || !scrollKeys.has(event.key)) return;
+    event.preventDefault();
+
+    if (holdStage === 'settling') {
+      clearGestureTimer();
+      holdStage = 'armed';
+      return;
+    }
+
+    if (holdStage === 'armed') {
+      /* One discrete keyboard scroll is ignored, then the following one can exit. */
+      holdStage = 'consuming';
+      releaseHold();
+    }
   }, { passive: false });
 
   addEventListener('scroll', () => {
@@ -145,12 +220,9 @@
   }, { passive: true });
 
   addEventListener('resize', () => {
-    if (holding) {
-      const active = stops.find(stop => Math.abs(lastProgress - stop.fill) < 0.01);
-      if (active) {
-        lockY = yForProgress(active.fill);
-        setScrollY(lockY);
-      }
+    if (holding && activeStop) {
+      lockY = yForProgress(activeStop.fill);
+      setScrollY(lockY);
     }
     lastProgress = metrics().progress;
   }, { passive: true });
