@@ -1,11 +1,14 @@
-(async () => {
+(() => {
   'use strict';
 
   const hero = document.querySelector('.about-ascii-hero');
   const stage = document.querySelector('.about-ascii-stage');
   const canvas = document.querySelector('.about-ascii-canvas');
   const packed = window.ABOUT_ASCII_PACKED;
-  if (!hero || !stage || !canvas || !packed || !packed.data) return;
+  if (!hero || !stage || !canvas || !packed || !packed.data) {
+    console.error('About ASCII: required DOM or frame data is missing.');
+    return;
+  }
 
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
@@ -34,19 +37,25 @@
     return (x >>> 0) / 4294967295;
   };
 
-  const decodePackedFrames = async () => {
+  const decodePackedFrames = () => {
+    if (!window.pako || typeof window.pako.ungzip !== 'function') {
+      throw new Error('pako is unavailable');
+    }
     const binary = atob(packed.data);
-    const compressed = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
-    const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
-    const raw = new Uint8Array(await new Response(stream).arrayBuffer());
+    const compressed = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) compressed[i] = binary.charCodeAt(i);
+    const raw = window.pako.ungzip(compressed);
     const packedPerFrame = Math.ceil(cellCount / 2);
+    const expected = packedPerFrame * frameCount;
+    if (raw.length < expected) throw new Error(`ASCII payload is incomplete: ${raw.length}/${expected}`);
+
     const frames = [];
     for (let f = 0; f < frameCount; f += 1) {
       const frame = new Uint8Array(cellCount);
       const offset = f * packedPerFrame;
       let target = 0;
       for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
-        const byte = raw[offset + i] || 0;
+        const byte = raw[offset + i];
         frame[target] = ((byte >>> 4) & 15) * 17;
         if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
         target += 2;
@@ -58,20 +67,18 @@
 
   let frames;
   try {
-    frames = await decodePackedFrames();
+    frames = decodePackedFrames();
   } catch (error) {
-    console.error('Failed to decode About ASCII data', error);
+    console.error('About ASCII decode failed:', error);
     return;
   }
 
   const timingStart = new Float32Array(cellCount);
   const timingEnd = new Float32Array(cellCount);
-
   let frameIndex = 0;
   let nextIndex = 1;
   let startedAt = performance.now();
   let rafId = 0;
-  let dpr = 1;
   let cssWidth = 0;
   let cssHeight = 0;
   let cellWidth = 1;
@@ -92,14 +99,14 @@
     const rect = hero.getBoundingClientRect();
     cssWidth = Math.max(1, rect.width);
     cssHeight = Math.max(1, rect.height);
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(cssWidth * dpr);
     canvas.height = Math.round(cssHeight * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cellWidth = cssWidth / cols;
     cellHeight = cssHeight / rows;
     const fontSize = Math.max(4, Math.min(cellWidth * 1.08, cellHeight * 1.02));
-    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace`;
+    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     lastStaticIndex = -1;
@@ -108,7 +115,6 @@
   const draw = (now, morph = 0) => {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
-
     const current = frames[frameIndex];
     const next = frames[nextIndex];
     const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
@@ -126,8 +132,8 @@
 
       const normalized = value / 255;
       if (normalized < 0.035) continue;
-
       let paletteIndex = Math.round(normalized * (palette.length - 1));
+
       if (morph > 0) {
         const noise = hash(seed + i * 47 + glitchTick * 131);
         if (noise < 0.08 + chaos * 0.4) {
@@ -138,7 +144,6 @@
 
       const ch = palette[paletteIndex];
       if (ch === ' ') continue;
-
       const x = (i % cols) * cellWidth + cellWidth * 0.5;
       const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.55;
       const alpha = Math.min(1, 0.18 + normalized * 0.84 + chaos * 0.06);
@@ -158,7 +163,6 @@
       lastStaticIndex = -1;
       elapsed = now - startedAt;
     }
-
     const morph = elapsed <= HOLD_MS ? 0 : clamp01((elapsed - HOLD_MS) / MORPH_MS);
     if (morph === 0) {
       if (lastStaticIndex !== frameIndex) {
@@ -169,7 +173,6 @@
       draw(now, morph);
       lastStaticIndex = -1;
     }
-
     rafId = requestAnimationFrame(renderLoop);
   };
 
@@ -180,7 +183,6 @@
     const passed = clamp01((-stageRect.top) / travel);
     const blackout = clamp01(passed / 0.62);
     const fadePhase = clamp01((passed - 0.62) / 0.38);
-
     hero.style.setProperty('--ascii-blackout', blackout.toFixed(3));
     hero.style.setProperty('--ascii-opacity', (1 - fadePhase).toFixed(3));
     hero.style.setProperty('--ascii-y', `${Math.round(-56 * fadePhase)}px`);
@@ -188,32 +190,27 @@
 
   prepareTransition();
   resize();
+  draw(performance.now(), 0);
   updateScrollState();
 
-  if (!reducedMotion) {
-    rafId = requestAnimationFrame(renderLoop);
-  } else {
-    draw(performance.now(), 0);
-  }
+  if (!reducedMotion) rafId = requestAnimationFrame(renderLoop);
 
-  const onResize = () => {
-    resize();
-    updateScrollState();
-    if (reducedMotion) draw(performance.now(), 0);
-  };
-
-  let ticking = false;
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
     requestAnimationFrame(() => {
       updateScrollState();
-      ticking = false;
+      scrollTicking = false;
     });
-  };
+  }, { passive: true });
 
-  window.addEventListener('resize', onResize, { passive: true });
-  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => {
+    resize();
+    draw(performance.now(), 0);
+    updateScrollState();
+  }, { passive: true });
+
   document.addEventListener('visibilitychange', () => {
     if (reducedMotion) return;
     if (document.hidden) {
