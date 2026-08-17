@@ -181,7 +181,7 @@
 }
 .about-page .interview-section .about-section-body{
   border-top:1px solid var(--fg);
-  padding-top:18px;
+  padding-top:30px;
 }
 .about-page .interview-list{
   margin-top:clamp(44px,5vh,68px);
@@ -266,6 +266,15 @@
 .about-page .about-footer h3{margin:0 0 18px;font-size:13px}
 .about-page .about-footer p,
 .about-page .about-footer a{margin:0;font-size:13px;line-height:1.7}
+
+/* Tall desktop displays: keep the first screen balanced instead of bottom-loading all profile content. */
+@media(min-width:851px) and (min-height:1000px){
+  .about-page .about-hero-v2{
+    align-content:center;
+    padding-top:clamp(100px,10vh,140px);
+    padding-bottom:clamp(48px,6vh,72px);
+  }
+}
 
 /* Mobile follows the same spacing scale used on the home page. */
 @media(max-width:850px){
