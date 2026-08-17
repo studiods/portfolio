@@ -166,7 +166,7 @@
 
     setChars(
       definitionChars,
-      phaseProgress(p, HERO.quoteTransitionEnd, HERO.defFillEnd)
+      phaseProgress(p, HERO.quoteHoldEnd, HERO.defFillEnd)
     );
 
     definition.setAttribute(
@@ -178,13 +178,13 @@
     const subEnter = defExit;
     renderEnter(subState, subEnter);
 
-    const subFillSpan = HERO.subFillEnd - HERO.defTransitionEnd;
-    const subTitleFillEnd = HERO.defTransitionEnd + subFillSpan * 0.83;
-    const subKoreanFillStart = HERO.defTransitionEnd + subFillSpan * 0.33;
+    const subFillSpan = HERO.subFillEnd - HERO.defHoldEnd;
+    const subTitleFillEnd = HERO.defHoldEnd + subFillSpan * 0.83;
+    const subKoreanFillStart = HERO.defHoldEnd + subFillSpan * 0.33;
 
     setChars(
       subChars,
-      phaseProgress(p, HERO.defTransitionEnd, subTitleFillEnd)
+      phaseProgress(p, HERO.defHoldEnd, subTitleFillEnd)
     );
     setWhole(
       subLines,
