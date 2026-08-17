@@ -1,4 +1,4 @@
-(async () => {
+(() => {
   'use strict';
 
   const hero = document.querySelector('.about-ascii-hero');
@@ -25,7 +25,7 @@
   drawStatus('ASCII LOADING');
 
   const packed = window.ABOUT_ASCII_PACKED;
-  if (!packed || !packed.data || Number(packed.count) !== 7) {
+  if (!packed || !Array.isArray(packed.bytes) || Number(packed.count) !== 7) {
     drawStatus('ASCII DATA ERROR');
     console.error('About ASCII: packed 7-frame data is missing or invalid.', packed);
     return;
@@ -56,42 +56,32 @@
     return (x >>> 0) / 4294967295;
   };
 
-  const base64ToBytes = (value) => {
-    const binary = atob(value);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
-    return bytes;
-  };
-
-  const gunzip = async (compressed) => {
-    if (typeof DecompressionStream !== 'undefined') {
-      try {
-        const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
-        return new Uint8Array(await new Response(stream).arrayBuffer());
-      } catch (error) {
-        console.warn('Native gzip decode failed, trying pako.', error);
-      }
-    }
-    if (window.pako && typeof window.pako.ungzip === 'function') {
-      return window.pako.ungzip(compressed);
-    }
-    throw new Error('No working gzip decoder is available.');
-  };
-
-  let raw;
-  try {
-    const compressed = base64ToBytes(packed.data);
-    raw = packed.encoding === 'gzip-u4-all' ? await gunzip(compressed) : compressed;
-  } catch (error) {
-    drawStatus('ASCII DECODE ERROR');
-    console.error('About ASCII decode failed:', error);
+  const expected = packedPerFrame * frameCount;
+  if (packed.encoding !== 'u4-array' || !Array.isArray(packed.bytes)) {
+    drawStatus('ASCII DATA ERROR');
+    console.error('About ASCII: expected an inline u4 byte array.', packed.encoding);
     return;
   }
 
-  const expected = packedPerFrame * frameCount;
+  const raw = Uint8Array.from(packed.bytes);
   if (raw.length !== expected) {
     drawStatus('ASCII PAYLOAD ERROR');
     console.error(`About ASCII payload mismatch: ${raw.length}/${expected}`);
+    return;
+  }
+
+  const checksum = (bytes) => {
+    let hashValue = 0x811c9dc5;
+    for (let i = 0; i < bytes.length; i += 1) {
+      hashValue ^= bytes[i];
+      hashValue = Math.imul(hashValue, 0x01000193);
+    }
+    return (hashValue >>> 0).toString(16).padStart(8, '0');
+  };
+  const actualChecksum = checksum(raw);
+  if (packed.checksum !== actualChecksum) {
+    drawStatus('ASCII DATA ERROR');
+    console.error(`About ASCII checksum mismatch: ${actualChecksum}/${packed.checksum}`);
     return;
   }
 
@@ -108,6 +98,7 @@
     }
     frames.push(frame);
   }
+  hero.dataset.asciiState = 'ready';
 
   const timingStart = new Float32Array(cellCount);
   const timingEnd = new Float32Array(cellCount);
