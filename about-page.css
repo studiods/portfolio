@@ -22,7 +22,6 @@
 
 /* Current Korean Thin typography */
 .about-page .about-hero-title,
-.about-page .about-lead,
 .about-page .about-statement,
 .about-page .career-company,
 .about-page .career-role{
@@ -32,6 +31,7 @@
 }
 
 /* Current Korean Light typography */
+.about-page .about-lead,
 .about-page .principle-title,
 .about-page .principle-copy,
 .about-page .interview-q,
@@ -58,7 +58,7 @@
 .about-page .about-hero-main{
   grid-column:2;
   border-top:1px solid var(--fg);
-  padding-top:18px;
+  padding-top:30px;
 }
 .about-page .about-hero-title{
   margin:0;
@@ -83,8 +83,8 @@
 }
 .about-page .about-lead{
   max-width:1040px;
-  font-size:var(--about-body-size);
-  line-height:1.6;
+  font-size:22px;
+  line-height:1.55;
   letter-spacing:-.025em;
 }
 .about-page .about-lead p{margin:0 0 .82em}
@@ -291,7 +291,9 @@
     margin-bottom:24px;
     font-size:12px;
   }
-  .about-page .about-hero-main{padding-top:14px}
+  .about-page .about-hero-main{
+    padding-top:clamp(18px,5vw,24px);
+  }
   .about-page .about-hero-title,
   .about-page .about-statement{
     font-size:clamp(30px,8.5vw,40px);
@@ -304,8 +306,8 @@
   }
   .about-page .about-meta{margin-bottom:22px;font-size:11px}
   .about-page .about-lead{
-    font-size:16px;
-    line-height:1.55;
+    font-size:clamp(16px,4.6vw,18px);
+    line-height:1.52;
   }
   .about-page .about-index{
     gap:10px 20px;
@@ -375,9 +377,15 @@
   :root{--pad:clamp(18px,5vw,20px)}
   .about-page{--about-mobile-content-pad:20px}
   .about-page .about-hero-v2{padding-top:92px}
+  .about-page .about-hero-main{
+    padding-top:clamp(16px,4.5vw,20px);
+  }
   .about-page .about-hero-title,
   .about-page .about-statement{
     font-size:clamp(28px,8.4vw,34px);
+  }
+  .about-page .about-lead{
+    font-size:clamp(15px,4.2vw,17px);
   }
   .about-page .about-section{padding:60px 0}
   .about-page .principle-title,
