@@ -9,9 +9,18 @@
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
 
-  const cols = source.width;
-  const rows = source.height;
+  const sourceCols = source.width;
+  const sourceRows = source.height;
+  const sourceCellCount = sourceCols * sourceRows;
+
+  /* 1.5× denser ASCII grid. The source data stays light, while the renderer
+     interpolates it to a finer grid for a more detailed portrait. */
+  const DENSITY_SCALE = 1.5;
+  const PORTRAIT_SCALE = 0.85;
+  const cols = Math.round(sourceCols * DENSITY_SCALE);
+  const rows = Math.round(sourceRows * DENSITY_SCALE);
   const cellCount = cols * rows;
+
   const palette = ' .,:;-=+*#%@';
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -36,20 +45,60 @@
 
   const decodeFrame = (encoded) => {
     const binary = atob(encoded);
-    const frame = new Uint8Array(cellCount);
+    const frame = new Uint8Array(sourceCellCount);
     let target = 0;
-    for (let i = 0; i < binary.length && target < cellCount; i += 1) {
+    for (let i = 0; i < binary.length && target < sourceCellCount; i += 1) {
       const packed = binary.charCodeAt(i);
       frame[target] = ((packed >>> 4) & 15) * 17;
-      if (target + 1 < cellCount) frame[target + 1] = (packed & 15) * 17;
+      if (target + 1 < sourceCellCount) frame[target + 1] = (packed & 15) * 17;
       target += 2;
     }
     return frame;
   };
 
-  const frames = source.frames.map(decodeFrame);
-  if (frames.some((frame) => frame.length !== cellCount)) return;
+  const sampleBilinear = (frame, sx, sy) => {
+    const x0 = Math.max(0, Math.min(sourceCols - 1, Math.floor(sx)));
+    const y0 = Math.max(0, Math.min(sourceRows - 1, Math.floor(sy)));
+    const x1 = Math.min(sourceCols - 1, x0 + 1);
+    const y1 = Math.min(sourceRows - 1, y0 + 1);
+    const tx = sx - x0;
+    const ty = sy - y0;
+    const a = frame[y0 * sourceCols + x0];
+    const b = frame[y0 * sourceCols + x1];
+    const c = frame[y1 * sourceCols + x0];
+    const d = frame[y1 * sourceCols + x1];
+    const top = a + (b - a) * tx;
+    const bottom = c + (d - c) * tx;
+    return Math.round(top + (bottom - top) * ty);
+  };
 
+  const resampleFrame = (sourceFrame) => {
+    const frame = new Uint8Array(cellCount);
+    const margin = (1 - PORTRAIT_SCALE) * 0.5;
+
+    for (let y = 0; y < rows; y += 1) {
+      const v = (y + 0.5) / rows;
+      for (let x = 0; x < cols; x += 1) {
+        const u = (x + 0.5) / cols;
+        const index = y * cols + x;
+
+        if (u < margin || u > 1 - margin || v < margin || v > 1 - margin) {
+          frame[index] = 0;
+          continue;
+        }
+
+        const sourceU = (u - margin) / PORTRAIT_SCALE;
+        const sourceV = (v - margin) / PORTRAIT_SCALE;
+        const sx = sourceU * (sourceCols - 1);
+        const sy = sourceV * (sourceRows - 1);
+        frame[index] = sampleBilinear(sourceFrame, sx, sy);
+      }
+    }
+
+    return frame;
+  };
+
+  const frames = source.frames.map((encoded) => resampleFrame(decodeFrame(encoded)));
   const timingStart = new Float32Array(cellCount);
   const timingEnd = new Float32Array(cellCount);
 
@@ -62,6 +111,7 @@
   let dpr = 1;
   let cellWidth = 1;
   let cellHeight = 1;
+  let lastStaticFrame = -1;
 
   const prepareTransition = () => {
     const seed = (currentIndex + 1) * 10007 + (nextIndex + 1) * 7919;
@@ -86,10 +136,11 @@
 
     cellWidth = cssWidth / cols;
     cellHeight = cssHeight / rows;
-    const fontSize = Math.max(6, cellHeight * 0.91);
+    const fontSize = Math.max(5, cellHeight * 0.9);
     ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    lastStaticFrame = -1;
   };
 
   const draw = (now, transitionProgress = 0) => {
@@ -160,6 +211,7 @@
       currentIndex = nextIndex;
       nextIndex = (nextIndex + 1) % frames.length;
       prepareTransition();
+      lastStaticFrame = -1;
       elapsed = now - sceneStartedAt;
     }
 
@@ -167,7 +219,16 @@
       ? 0
       : clamp01((elapsed - HOLD_MS) / TRANSITION_MS);
 
-    draw(now, transitionProgress);
+    if (transitionProgress === 0) {
+      if (lastStaticFrame !== currentIndex) {
+        draw(now, 0);
+        lastStaticFrame = currentIndex;
+      }
+    } else {
+      draw(now, transitionProgress);
+      lastStaticFrame = -1;
+    }
+
     animationFrame = requestAnimationFrame(tick);
   };
 
@@ -188,6 +249,7 @@
       return;
     }
     sceneStartedAt = performance.now();
+    lastStaticFrame = -1;
     animationFrame = requestAnimationFrame(tick);
   });
 
