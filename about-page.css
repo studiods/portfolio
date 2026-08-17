@@ -1,8 +1,17 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css');
 
 /* About page */
+html,
+body{
+  background:#050505;
+  color:#f4f2ed;
+}
 .about-page{
   --about-kr:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --fg:#f4f2ed;
+  --muted:#8b8984;
+  --line:#34322f;
+  color:var(--fg);
   text-transform:none;
 }
 
@@ -59,6 +68,7 @@
   grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);
   column-gap:var(--gap);
   align-content:center;
+  background:#050505;
 }
 .about-page .about-section-label{
   font-size:13px;
@@ -139,6 +149,7 @@
   column-gap:var(--gap);
   padding:clamp(88px,10vh,138px) 0;
   border-top:1px solid var(--line);
+  background:#050505;
 }
 .about-page .about-section-body{grid-column:2}
 .about-page .about-statement{
@@ -173,21 +184,21 @@
 
 /* Good UX & Design */
 .about-page .thinking-section{
-  background:#111;
-  color:#fff;
+  background:#050505;
+  color:#f4f2ed;
 }
 .about-page .thinking-section .about-section-label,
 .about-page .career-section .about-section-label{color:#777}
 .about-page .principles-list{
   margin-top:clamp(50px,6vh,78px);
-  border-top:1px solid rgba(255,255,255,.28);
+  border-top:1px solid rgba(255,255,255,.26);
 }
 .about-page .principle-row{
   display:grid;
   grid-template-columns:minmax(260px,.92fr) minmax(0,1.5fr);
   column-gap:var(--gap);
   padding:27px 0 31px;
-  border-bottom:1px solid rgba(255,255,255,.22);
+  border-bottom:1px solid rgba(255,255,255,.18);
 }
 .about-page .principle-title{
   font-size:26px;
@@ -200,9 +211,12 @@
 }
 
 /* Interview */
-.about-page .interview-section{background:#e9e6df}
+.about-page .interview-section{
+  background:#050505;
+  color:#f4f2ed;
+}
 .about-page .interview-section .about-section-body{
-  border-top:1px solid var(--fg);
+  border-top:1px solid rgba(255,255,255,.26);
   padding-top:30px;
 }
 .about-page .interview-list{margin-top:clamp(44px,5vh,68px)}
@@ -211,25 +225,26 @@
   grid-template-columns:minmax(280px,.9fr) minmax(0,1.55fr);
   column-gap:var(--gap);
   padding:clamp(28px,3.6vh,44px) 0;
-  border-bottom:1px solid rgba(17,17,17,.25);
+  border-bottom:1px solid rgba(255,255,255,.18);
 }
 .about-page .interview-q{
   font-size:26px;
   line-height:1.34;
   letter-spacing:-.03em;
   word-break:keep-all;
+  color:#f4f2ed;
 }
 .about-page .interview-a{
   max-width:880px;
-  color:#4f4d48;
+  color:#aaa;
 }
 
 /* Career */
 .about-page .career-section{
-  background:#111;
-  color:#fff;
+  background:#050505;
+  color:#f4f2ed;
 }
-.about-page .career-list{border-top:1px solid rgba(255,255,255,.3)}
+.about-page .career-list{border-top:1px solid rgba(255,255,255,.26)}
 .about-page .career-row-v2{
   display:grid;
   grid-template-columns:150px minmax(210px,.8fr) minmax(0,1.55fr);
@@ -260,7 +275,7 @@
   transition:color .22s ease;
 }
 .about-page .career-row-v2:hover{
-  background:#fff;
+  background:#f4f2ed;
   color:#111;
 }
 .about-page .career-row-v2:hover .career-period,
@@ -270,11 +285,11 @@
 .about-page .about-footer{
   margin:0 calc(-1*var(--pad));
   padding:82px var(--pad) 28px;
-  background:#111;
-  color:#fff;
+  background:#050505;
+  color:#f4f2ed;
 }
 .about-page .about-footer-inner{
-  border-top:1px solid rgba(255,255,255,.3);
+  border-top:1px solid rgba(255,255,255,.26);
   padding-top:14px;
 }
 .about-page .about-footer h3{margin:0 0 18px;font-size:13px}
