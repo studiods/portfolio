@@ -80,6 +80,12 @@
     gestureTimer = 0;
   };
 
+  const normalizeWheelDelta = event => {
+    if (event.deltaMode === 1) return event.deltaY * 16;
+    if (event.deltaMode === 2) return event.deltaY * innerHeight;
+    return event.deltaY;
+  };
+
   const releaseHold = () => {
     if (!holding || !activeStop) return;
     const stop = activeStop;
@@ -89,10 +95,11 @@
     activeStop = null;
     holdStage = 'idle';
 
-    /* Skip the scroll-distance hold after one full additional scroll gesture. */
-    const releaseY = yForProgress(stop.release + EPSILON);
+    /* Never move backward when releasing a hold. */
+    const targetY = yForProgress(stop.release + EPSILON);
+    const releaseY = Math.max(scrollY, targetY);
     setScrollY(releaseY);
-    lastProgress = stop.release + EPSILON;
+    lastProgress = Math.max(stop.release + EPSILON, metrics().progress);
   };
 
   const onGestureEnd = () => {
@@ -106,7 +113,7 @@
     }
 
     if (holdStage === 'consuming') {
-      /* One complete extra scroll gesture has now been consumed. */
+      /* One complete additional scroll gesture has been consumed. */
       releaseHold();
     }
   };
@@ -116,18 +123,30 @@
     gestureTimer = window.setTimeout(onGestureEnd, WHEEL_GESTURE_END_MS);
   };
 
-  const beginHold = stop => {
+  const beginHold = (stop, snapToFill) => {
     if (holding) return;
     holding = true;
     activeStop = stop;
     holdStage = 'settling';
-    lockY = yForProgress(stop.fill);
-    setScrollY(lockY);
-    lastProgress = stop.fill;
 
-    /* No fixed reading time: wait for the current scroll gesture to end. */
+    if (snapToFill) {
+      lockY = yForProgress(stop.fill);
+      setScrollY(lockY);
+    } else {
+      /* Fallback paths freeze at the current position instead of rewinding. */
+      lockY = scrollY;
+    }
+
+    lastProgress = Math.max(stop.fill, metrics().progress);
     scheduleGestureEnd();
   };
+
+  const findForwardCrossing = (fromProgress, toProgress) =>
+    stops.find(stop =>
+      !consumed.has(stop.key) &&
+      fromProgress < stop.fill &&
+      toProgress >= stop.fill
+    );
 
   const checkProgress = () => {
     const { progress } = metrics();
@@ -137,13 +156,10 @@
     });
 
     if (!holding) {
-      const crossed = stops.find(stop =>
-        !consumed.has(stop.key) &&
-        lastProgress < stop.fill &&
-        progress >= stop.fill
-      );
+      const crossed = findForwardCrossing(lastProgress, progress);
       if (crossed) {
-        beginHold(crossed);
+        /* Scrollbar / non-wheel fallback: freeze where we are, never jump back. */
+        beginHold(crossed, false);
         return;
       }
     }
@@ -152,11 +168,28 @@
   };
 
   const onWheel = event => {
-    if (!holding) return;
-    event.preventDefault();
+    if (holding) {
+      event.preventDefault();
+      if (holdStage === 'armed') holdStage = 'consuming';
+      scheduleGestureEnd();
+      return;
+    }
 
-    if (holdStage === 'armed') holdStage = 'consuming';
-    scheduleGestureEnd();
+    const delta = normalizeWheelDelta(event);
+    if (delta <= 0) return;
+
+    const { progress, travel } = metrics();
+    const predicted = clamp01(progress + delta / travel);
+    const crossing = findForwardCrossing(progress, predicted);
+
+    if (crossing) {
+      /*
+        Catch the threshold before the browser scrolls past it. This removes the
+        old overshoot -> snap-back frame that looked like the scene restarted.
+      */
+      event.preventDefault();
+      beginHold(crossing, true);
+    }
   };
 
   let touchActive = false;
@@ -205,7 +238,6 @@
     }
 
     if (holdStage === 'armed') {
-      /* One discrete keyboard scroll is ignored, then the following one can exit. */
       holdStage = 'consuming';
       releaseHold();
     }
@@ -221,8 +253,8 @@
 
   addEventListener('resize', () => {
     if (holding && activeStop) {
-      lockY = yForProgress(activeStop.fill);
-      setScrollY(lockY);
+      /* Preserve the currently visible hold position without forcing a rewind. */
+      lockY = scrollY;
     }
     lastProgress = metrics().progress;
   }, { passive: true });
