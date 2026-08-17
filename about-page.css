@@ -64,6 +64,12 @@
   letter-spacing:-.05em;
   word-break:keep-all;
 }
+.about-page .about-hero-title .typing-char{
+  visibility:hidden;
+}
+.about-page .about-hero-title .typing-char.is-visible{
+  visibility:visible;
+}
 .about-page .about-hero-bottom{
   grid-column:1/-1;
   display:grid;
@@ -80,6 +86,7 @@
   letter-spacing:-.025em;
 }
 .about-page .about-lead p{margin:0 0 .82em}
+.about-page .about-lead p:first-child{opacity:.8}
 .about-page .about-lead p:last-child{margin-bottom:0}
 
 /* Shared sections */
@@ -336,4 +343,8 @@
   .about-page .principle-title,
   .about-page .interview-q{font-size:20px}
   .about-page .career-row-v2{grid-template-columns:108px 1fr}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .about-page .about-hero-title .typing-char{visibility:visible}
 }
