@@ -35,12 +35,25 @@ body.works-page-body{
 
 .works-page{
   min-height:100vh;
-  padding:clamp(108px,11vh,148px) var(--works-pad) 48px;
+  padding:0 var(--works-pad) 48px;
+}
+.works-hero{
+  padding-top:clamp(116px,13vh,160px);
+  padding-bottom:clamp(500px,42vw,640px);
+}
+.works-page-title{
+  margin:0;
+  font-family:'Averta PE',sans-serif;
+  font-weight:500;
+  font-size:clamp(72px,9vw,160px);
+  line-height:.8;
+  letter-spacing:-.03em;
+  color:#fff;
 }
 .works-grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(48px,5.4vw,86px) var(--works-gap);
+  gap:clamp(64px,6.4vw,104px) var(--works-gap);
 }
 .works-card{
   min-width:0;
@@ -69,14 +82,24 @@ body.works-page-body{
 .works-card-media::before{transform:translate(-50%,-50%) rotate(45deg)}
 .works-card-media::after{transform:translate(-50%,-50%) rotate(-45deg)}
 .works-card-title{
-  margin:14px 0 0;
+  margin:18px 0 0;
   font-family:'Averta PE',sans-serif;
   font-weight:300;
-  font-size:clamp(17px,1.45vw,23px);
-  line-height:1.02;
+  font-size:clamp(34px,2.9vw,46px);
+  line-height:.94;
   letter-spacing:0;
   text-transform:uppercase;
   color:var(--works-fg);
+}
+.works-card-meta{
+  margin:12px 0 0;
+  font-family:'Averta PE',sans-serif;
+  font-weight:400;
+  font-size:12px;
+  line-height:1.35;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--works-muted);
 }
 .works-card:hover .works-card-media{
   transform:scale(.985);
@@ -108,14 +131,19 @@ body.works-page-body{
 
 @media(max-width:1100px){
   .works-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .works-card-title{font-size:clamp(30px,3.6vw,42px)}
 }
 @media(max-width:780px){
-  .works-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:44px 18px}
+  .works-hero{padding-top:108px;padding-bottom:clamp(280px,48vw,380px)}
+  .works-page-title{font-size:clamp(52px,14vw,94px);line-height:.82}
+  .works-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 18px}
+  .works-card-title{font-size:clamp(27px,6vw,38px)}
   .works-page-body .top{grid-template-columns:1fr}
   .works-page-body .top-center{justify-self:center}
 }
 @media(max-width:480px){
-  .works-page{padding-top:92px}
-  .works-grid{grid-template-columns:1fr;gap:52px}
-  .works-card-title{font-size:22px}
+  .works-hero{padding-top:92px;padding-bottom:250px}
+  .works-page-title{font-size:clamp(44px,12vw,82px)}
+  .works-grid{grid-template-columns:1fr;gap:64px}
+  .works-card-title{font-size:34px}
 }
