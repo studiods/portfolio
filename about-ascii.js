@@ -1,11 +1,10 @@
-(async () => {
+(() => {
   'use strict';
 
   const hero = document.querySelector('.about-ascii-hero');
   const stage = document.querySelector('.about-ascii-stage');
   const canvas = document.querySelector('.about-ascii-canvas');
   const ctx = canvas?.getContext('2d', { alpha: false });
-
   if (!hero || !stage || !canvas || !ctx) return;
 
   const drawStatus = (text) => {
@@ -25,18 +24,17 @@
 
   drawStatus('ASCII LOADING');
 
-  const packed = window.ABOUT_ASCII_PACKED;
-  if (!packed || !packed.data) {
+  const direct = window.ABOUT_ASCII_DATA;
+  if (!direct || !Array.isArray(direct.frames) || direct.frames.length < 2) {
     drawStatus('ASCII DATA ERROR');
-    console.error('About ASCII: frame data was not loaded.');
+    console.error('About ASCII: local frame data is missing or invalid.', direct);
     return;
   }
 
-  const cols = packed.width;
-  const rows = packed.height;
-  const frameCount = packed.count;
+  const cols = Number(direct.width) || 144;
+  const rows = Number(direct.height) || 81;
+  const frameCount = direct.frames.length;
   const cellCount = cols * rows;
-  const packedPerFrame = Math.ceil(cellCount / 2);
   const palette = ' .,:;-=+*#%@';
   const SCENE_MS = 1800;
   const HOLD_MS = 1150;
@@ -57,52 +55,30 @@
     return (x >>> 0) / 4294967295;
   };
 
-  const base64ToBytes = (value) => {
-    const binary = atob(value);
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
-    return bytes;
-  };
-
-  const gunzip = async (compressed) => {
-    if (typeof DecompressionStream !== 'undefined') {
-      const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
-      return new Uint8Array(await new Response(stream).arrayBuffer());
+  const decodeFrame = (encoded, frameNo) => {
+    const binary = atob(encoded);
+    const expectedBytes = Math.ceil(cellCount / 2);
+    if (binary.length < expectedBytes) {
+      throw new Error(`frame ${frameNo + 1} payload too short: ${binary.length}/${expectedBytes}`);
     }
-    if (window.pako?.ungzip) return window.pako.ungzip(compressed);
-    throw new Error('No gzip decoder available in this browser');
-  };
-
-  let raw;
-  try {
-    raw = packed.encoding === 'gzip-u4-all'
-      ? await gunzip(base64ToBytes(packed.data))
-      : base64ToBytes(packed.data);
-  } catch (error) {
-    drawStatus('ASCII DECODE ERROR');
-    console.error('About ASCII decode failed:', error);
-    return;
-  }
-
-  const expected = packedPerFrame * frameCount;
-  if (raw.length < expected) {
-    drawStatus('ASCII PAYLOAD ERROR');
-    console.error(`About ASCII payload is incomplete: ${raw.length}/${expected}`);
-    return;
-  }
-
-  const frames = [];
-  for (let f = 0; f < frameCount; f += 1) {
     const frame = new Uint8Array(cellCount);
-    const offset = f * packedPerFrame;
     let target = 0;
-    for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
-      const byte = raw[offset + i];
+    for (let i = 0; i < expectedBytes && target < cellCount; i += 1) {
+      const byte = binary.charCodeAt(i);
       frame[target] = ((byte >>> 4) & 15) * 17;
       if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
       target += 2;
     }
-    frames.push(frame);
+    return frame;
+  };
+
+  let frames;
+  try {
+    frames = direct.frames.map(decodeFrame);
+  } catch (error) {
+    drawStatus('ASCII FRAME ERROR');
+    console.error('About ASCII frame decode failed:', error);
+    return;
   }
 
   const timingStart = new Float32Array(cellCount);
