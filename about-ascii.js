@@ -1,4 +1,4 @@
-(() => {
+(async () => {
   'use strict';
 
   const hero = document.querySelector('.about-ascii-hero');
@@ -24,17 +24,18 @@
 
   drawStatus('ASCII LOADING');
 
-  const direct = window.ABOUT_ASCII_DATA;
-  if (!direct || !Array.isArray(direct.frames) || direct.frames.length < 2) {
+  const packed = window.ABOUT_ASCII_PACKED;
+  if (!packed || !packed.data || Number(packed.count) !== 7) {
     drawStatus('ASCII DATA ERROR');
-    console.error('About ASCII: local frame data is missing or invalid.', direct);
+    console.error('About ASCII: packed 7-frame data is missing or invalid.', packed);
     return;
   }
 
-  const cols = Number(direct.width) || 144;
-  const rows = Number(direct.height) || 81;
-  const frameCount = direct.frames.length;
+  const cols = Number(packed.width) || 144;
+  const rows = Number(packed.height) || 81;
+  const frameCount = Number(packed.count) || 7;
   const cellCount = cols * rows;
+  const packedPerFrame = Math.ceil(cellCount / 2);
   const palette = ' .,:;-=+*#%@';
   const SCENE_MS = 1800;
   const HOLD_MS = 1150;
@@ -55,30 +56,57 @@
     return (x >>> 0) / 4294967295;
   };
 
-  const decodeFrame = (encoded, frameNo) => {
-    const binary = atob(encoded);
-    const expectedBytes = Math.ceil(cellCount / 2);
-    if (binary.length < expectedBytes) {
-      throw new Error(`frame ${frameNo + 1} payload too short: ${binary.length}/${expectedBytes}`);
+  const base64ToBytes = (value) => {
+    const binary = atob(value);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return bytes;
+  };
+
+  const gunzip = async (compressed) => {
+    if (typeof DecompressionStream !== 'undefined') {
+      try {
+        const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
+      } catch (error) {
+        console.warn('Native gzip decode failed, trying pako.', error);
+      }
     }
+    if (window.pako && typeof window.pako.ungzip === 'function') {
+      return window.pako.ungzip(compressed);
+    }
+    throw new Error('No working gzip decoder is available.');
+  };
+
+  let raw;
+  try {
+    const compressed = base64ToBytes(packed.data);
+    raw = packed.encoding === 'gzip-u4-all' ? await gunzip(compressed) : compressed;
+  } catch (error) {
+    drawStatus('ASCII DECODE ERROR');
+    console.error('About ASCII decode failed:', error);
+    return;
+  }
+
+  const expected = packedPerFrame * frameCount;
+  if (raw.length !== expected) {
+    drawStatus('ASCII PAYLOAD ERROR');
+    console.error(`About ASCII payload mismatch: ${raw.length}/${expected}`);
+    return;
+  }
+
+  const frames = [];
+  for (let f = 0; f < frameCount; f += 1) {
     const frame = new Uint8Array(cellCount);
+    const offset = f * packedPerFrame;
     let target = 0;
-    for (let i = 0; i < expectedBytes && target < cellCount; i += 1) {
-      const byte = binary.charCodeAt(i);
+    for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
+      const byte = raw[offset + i];
       frame[target] = ((byte >>> 4) & 15) * 17;
       if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
       target += 2;
     }
-    return frame;
-  };
-
-  let frames;
-  try {
-    frames = direct.frames.map(decodeFrame);
-  } catch (error) {
-    drawStatus('ASCII FRAME ERROR');
-    console.error('About ASCII frame decode failed:', error);
-    return;
+    frames.push(frame);
   }
 
   const timingStart = new Float32Array(cellCount);
@@ -113,7 +141,7 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cellWidth = cssWidth / cols;
     cellHeight = cssHeight / rows;
-    const fontSize = Math.max(3.5, Math.min(cellWidth * 1.12, cellHeight * 1.04));
+    const fontSize = Math.max(3.4, Math.min(cellWidth * 1.08, cellHeight * 1.02));
     ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -123,7 +151,6 @@
   const draw = (now, morph = 0) => {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
-
     const current = frames[frameIndex];
     const next = frames[nextIndex];
     const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
@@ -138,11 +165,9 @@
         const local = morph <= start ? 0 : morph >= end ? 1 : smoothstep((morph - start) / Math.max(0.001, end - start));
         value = current[i] + (next[i] - current[i]) * local;
       }
-
       const normalized = value / 255;
       if (normalized < 0.035) continue;
       let paletteIndex = Math.round(normalized * (palette.length - 1));
-
       if (morph > 0) {
         const noise = hash(seed + i * 47 + glitchTick * 131);
         if (noise < 0.08 + chaos * 0.4) {
@@ -150,7 +175,6 @@
           paletteIndex = Math.max(1, Math.min(palette.length - 1, paletteIndex + Math.round((offsetNoise * 2 - 1) * (1 + chaos * 3))));
         }
       }
-
       const ch = palette[paletteIndex];
       if (ch === ' ') continue;
       const x = (i % cols) * cellWidth + cellWidth * 0.5;
@@ -172,7 +196,6 @@
       lastStaticIndex = -1;
       elapsed = now - startedAt;
     }
-
     const morph = elapsed <= HOLD_MS ? 0 : clamp01((elapsed - HOLD_MS) / MORPH_MS);
     if (morph === 0) {
       if (lastStaticIndex !== frameIndex) {
@@ -202,7 +225,6 @@
   resize();
   draw(performance.now(), 0);
   updateScrollState();
-
   if (!reducedMotion) rafId = requestAnimationFrame(renderLoop);
 
   let scrollTicking = false;
