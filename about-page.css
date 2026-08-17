@@ -37,6 +37,20 @@
   font-variation-settings:'wght' 300;
 }
 
+/* Shared reveal motion */
+.about-page .reveal-mask-item{
+  clip-path:inset(0 0 100% 0);
+  transform:translate3d(0,-22px,0);
+  transition:
+    clip-path .72s cubic-bezier(.22,.61,.36,1),
+    transform .72s cubic-bezier(.22,.61,.36,1);
+  will-change:clip-path,transform;
+}
+.about-page .reveal-mask-item.is-revealed{
+  clip-path:inset(0 0 0 0);
+  transform:translate3d(0,0,0);
+}
+
 /* Profile */
 .about-page .about-hero-v2{
   min-height:clamp(760px,82vh,920px);
@@ -52,9 +66,24 @@
   color:var(--muted);
 }
 .about-page .about-hero-main{
+  position:relative;
   grid-column:2;
-  border-top:1px solid var(--fg);
   padding-top:30px;
+}
+.about-page .about-hero-main::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:100%;
+  height:1px;
+  background:var(--fg);
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .78s cubic-bezier(.22,.61,.36,1);
+}
+.about-page .about-hero-main.is-line-visible::before{
+  transform:scaleX(1);
 }
 .about-page .about-hero-title{
   margin:0;
@@ -64,11 +93,20 @@
   letter-spacing:-.05em;
   word-break:keep-all;
 }
-.about-page .about-hero-title .typing-char{
-  visibility:hidden;
+.about-page .hero-mask-line{
+  display:block;
+  overflow:hidden;
+  padding-bottom:.07em;
+  margin-bottom:-.07em;
 }
-.about-page .about-hero-title .typing-char.is-visible{
-  visibility:visible;
+.about-page .hero-mask-line-inner{
+  display:block;
+  transform:translate3d(0,-115%,0);
+  transition:transform .78s cubic-bezier(.22,.61,.36,1);
+  will-change:transform;
+}
+.about-page .hero-mask-line-inner.is-revealed{
+  transform:translate3d(0,0,0);
 }
 .about-page .about-hero-bottom{
   grid-column:1/-1;
@@ -346,5 +384,11 @@
 }
 
 @media(prefers-reduced-motion:reduce){
-  .about-page .about-hero-title .typing-char{visibility:visible}
+  .about-page .about-hero-main::before{transform:scaleX(1);transition:none}
+  .about-page .hero-mask-line-inner,
+  .about-page .reveal-mask-item{
+    clip-path:none;
+    transform:none;
+    transition:none;
+  }
 }
