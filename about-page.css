@@ -1,12 +1,12 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css');
 
 :root{
-  --bg:#050505;
-  --fg:#f4f2ed;
-  --muted:#a5a29a;
-  --soft:#8a877f;
-  --line:rgba(244,242,237,.24);
-  --line-soft:rgba(244,242,237,.16);
+  --bg:#fff;
+  --fg:#111;
+  --muted:#6f6f6f;
+  --soft:#858585;
+  --line:rgba(17,17,17,.24);
+  --line-soft:rgba(17,17,17,.16);
   --pad:clamp(24px,3.2vw,44px);
   --gap:clamp(28px,3.4vw,64px);
   --kr:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
@@ -31,6 +31,8 @@ a{color:inherit;text-decoration:none}
   z-index:40;
   padding:18px var(--pad);
   pointer-events:none;
+  color:var(--fg);
+  mix-blend-mode:normal;
 }
 .top-center{
   display:flex;
@@ -40,7 +42,7 @@ a{color:inherit;text-decoration:none}
 }
 .top-center a{
   font:400 15px/1.1 var(--en);
-  color:rgba(244,242,237,.9);
+  color:rgba(17,17,17,.9);
 }
 
 .about-page{width:100%}
@@ -51,12 +53,15 @@ a{color:inherit;text-decoration:none}
   padding-right:var(--pad);
 }
 .about-stack{
-  padding-top:76px;
+  padding-top:0;
   background:var(--bg);
 }
 
 .about-ascii-stage{
   position:relative;
+  width:auto;
+  margin-left:calc(-1 * var(--pad));
+  margin-right:calc(-1 * var(--pad));
   min-height:clamp(980px,145vh,1500px);
 }
 .about-ascii-hero{
@@ -66,10 +71,12 @@ a{color:inherit;text-decoration:none}
   position:sticky;
   top:0;
   z-index:1;
-  width:100%;
-  aspect-ratio:16/9;
-  max-height:100vh;
-  background:#000;
+  width:100vw;
+  height:100vh;
+  height:100svh;
+  aspect-ratio:auto;
+  max-height:none;
+  background:#fff;
   overflow:hidden;
   opacity:var(--ascii-opacity);
   transform:translate3d(0,var(--ascii-y),0);
@@ -83,7 +90,7 @@ a{color:inherit;text-decoration:none}
 .about-ascii-blackout{
   position:absolute;
   inset:0;
-  background:#000;
+  background:#fff;
   opacity:var(--ascii-blackout);
   pointer-events:none;
 }
@@ -194,7 +201,7 @@ a{color:inherit;text-decoration:none}
   font-size:18px;
   line-height:1.5;
   letter-spacing:-.02em;
-  color:#a8a59e;
+  color:#595959;
 }
 .about-statement-en{
   font-family:var(--en);
@@ -216,7 +223,7 @@ a{color:inherit;text-decoration:none}
   padding:3px 0 0 20px;
   font-size:12px;
   line-height:1.4;
-  color:#7f7c75;
+  color:#737373;
 }
 .career-company{
   font-family:var(--kr);
@@ -229,14 +236,14 @@ a{color:inherit;text-decoration:none}
 .career-role{
   font-size:14px;
   line-height:1.6;
-  color:#98948d;
+  color:#686868;
 }
 .career-row-v2:hover{
   background:var(--fg);
-  color:#111;
+  color:var(--bg);
 }
 .career-row-v2:hover .career-period,
-.career-row-v2:hover .career-role{color:#565656}
+.career-row-v2:hover .career-role{color:#bdbdbd}
 
 .about-footer{
   background:var(--bg);
@@ -311,7 +318,6 @@ a{color:inherit;text-decoration:none}
 }
 
 @media (max-width:640px){
-  .about-stack{padding-top:68px}
   .about-ascii-stage{min-height:clamp(680px,102vh,920px)}
   .about-ascii-hero{top:0}
   .about-hero-v2{margin-top:-72px;padding-top:44px;padding-bottom:52px}
