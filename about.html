@@ -20,8 +20,12 @@
     .about-ascii-title{
       position:absolute;
       left:var(--pad);
-      bottom:max(clamp(24px,3.2vw,52px),calc(100% - 100vh + clamp(32px,4vh,56px)));
-      z-index:8;
+      top:calc(min(100vh,56.25vw) - clamp(118px,10vw,196px));
+      bottom:auto;
+      z-index:20;
+      display:block;
+      visibility:visible;
+      opacity:1;
       margin:0;
       font-family:'Averta PE',sans-serif;
       font-weight:300;
@@ -34,7 +38,8 @@
     @media(max-width:640px){
       .about-ascii-title{
         left:var(--pad);
-        bottom:max(20px,calc(100% - 100vh + 20px));
+        top:calc(56.25vw - clamp(64px,18vw,98px));
+        bottom:auto;
         font-size:clamp(44px,12vw,82px);
         line-height:.84;
       }
