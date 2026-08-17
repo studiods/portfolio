@@ -15,6 +15,28 @@
     .about-lead{color:rgba(244,242,237,.8)}
     .principle-title{color:rgba(244,242,237,.8)}
     .interview-row:first-child .interview-q{color:rgba(244,242,237,.8)}
+    .about-ascii-title{
+      position:absolute;
+      left:var(--pad);
+      bottom:clamp(24px,3.2vw,52px);
+      z-index:4;
+      margin:0;
+      font-family:'Averta PE',sans-serif;
+      font-weight:500;
+      font-size:clamp(72px,9vw,160px);
+      line-height:.8;
+      letter-spacing:-.03em;
+      color:#fff;
+      pointer-events:none;
+    }
+    @media(max-width:640px){
+      .about-ascii-title{
+        left:var(--pad);
+        bottom:20px;
+        font-size:clamp(44px,12vw,82px);
+        line-height:.84;
+      }
+    }
   </style>
 </head>
 <body>
@@ -33,6 +55,7 @@
       <div class="about-ascii-hero" aria-label="7개의 사진을 ASCII 문자로 재구성한 움직이는 초상">
         <canvas class="about-ascii-canvas" aria-hidden="true"></canvas>
         <div class="about-ascii-blackout" aria-hidden="true"></div>
+        <div class="about-ascii-title" aria-hidden="true">ABOUT</div>
       </div>
     </div>
 
