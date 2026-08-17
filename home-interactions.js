@@ -5,8 +5,6 @@
 
   const FILL_SLOWDOWN = 1.32;
   const FILL_FEATHER = 4;
-  const NEXT_ENTER_AT = 0.95;
-  const ENTER_SPAN = 0.62;
 
   const fillProgress = (value, start, duration) =>
     clamp((value - start) / (duration * FILL_SLOWDOWN));
@@ -14,11 +12,6 @@
   const phaseProgress = (value, start, end) => {
     if (end <= start) return value >= end ? 1 : 0;
     return clamp((value - start) / (end - start));
-  };
-
-  const smoothstep = value => {
-    const t = clamp(value);
-    return t * t * (3 - 2 * t);
   };
 
   try {
@@ -51,8 +44,7 @@
 
   const setChars = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
     const n = chars.length || 1;
-    const eased = smoothstep(progress);
-    const sweep = eased * Math.max(1, n - 1 + FILL_FEATHER);
+    const sweep = progress * Math.max(1, n - 1 + FILL_FEATHER);
     chars.forEach((char, i) => {
       const local = clamp((sweep - i) / FILL_FEATHER);
       char.style.color = `rgba(${rgb},${baseAlpha + (1 - baseAlpha) * local})`;
@@ -60,7 +52,7 @@
   };
 
   const setWhole = (els, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
-    const alpha = baseAlpha + (1 - baseAlpha) * smoothstep(progress);
+    const alpha = baseAlpha + (1 - baseAlpha) * clamp(progress);
     els.forEach(el => { el.style.color = `rgba(${rgb},${alpha})`; });
   };
 
@@ -70,37 +62,35 @@
   const quoteState = $('.hero-state-quote', hero);
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
-  const definitionCopy = $('.definition-copy', hero);
   const subState = $('.hero-state-subtractive', hero);
-  const subTitle = $('.subtractive-title', hero);
-  const subKorean = $('.subtractive-korean', hero);
-  const subRevealParts = [subTitle, subKorean].filter(Boolean);
   const subLines = $$('.subtractive-korean .fill-line', hero);
-  subLines.forEach(splitChars);
-
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
-  const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
 
   /*
     HERO TIMELINE
     ----------------
-    The next state still starts only after 95% of the outgoing motion has
-    completed. Its reveal continues smoothly into the following fill phase.
+    The structural order remains fixed:
+      FILL -> HOLD -> VISIBLE EXIT -> NEXT STATE.
 
-    All three large text scenes use the same scroll-driven visual language:
-    top-down reveal on entry, 5% -> 100% character fill, then a downward move
-    combined with a strong opacity falloff on exit.
+    Only the HOLD phases are reduced here. HOLD_SCALE = 1 / 3 means every fully
+    filled pause uses one third of its previous physical scroll distance.
+    Fill / enter / exit phase weights are left unchanged.
+
+    CSS shortens the total hero travel by the same aggregate ratio so those
+    non-hold motions retain approximately the same physical scroll speed.
   */
   const HERO_HOLD_SCALE = 1 / 3;
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13,
     quoteHold: 0.15 * HERO_HOLD_SCALE,
-    quoteTransition: 0.17,
+    quoteExit: 0.11,
+    defEnter: 0.06,
     defFill: 0.12,
     defHold: 0.14 * HERO_HOLD_SCALE,
-    defTransition: 0.15,
+    defExit: 0.11,
+    subEnter: 0.04,
     subFill: 0.06,
     subHold: 0.08 * HERO_HOLD_SCALE
   });
@@ -113,53 +103,34 @@
     quoteFillStart: heroCursor,
     quoteFillEnd: (heroCursor += heroPhase('quoteFill')),
     quoteHoldEnd: (heroCursor += heroPhase('quoteHold')),
-    quoteTransitionEnd: (heroCursor += heroPhase('quoteTransition')),
+    quoteExitEnd: (heroCursor += heroPhase('quoteExit')),
 
+    defEnterEnd: (heroCursor += heroPhase('defEnter')),
     defFillEnd: (heroCursor += heroPhase('defFill')),
     defHoldEnd: (heroCursor += heroPhase('defHold')),
-    defTransitionEnd: (heroCursor += heroPhase('defTransition')),
+    defExitEnd: (heroCursor += heroPhase('defExit')),
 
+    subEnterEnd: (heroCursor += heroPhase('subEnter')),
     subFillEnd: (heroCursor += heroPhase('subFill')),
     subHoldEnd: (heroCursor += heroPhase('subHold'))
   });
 
-  const enterWindow = (exitStart, exitEnd, nextFillEnd) => {
-    const start = exitStart + (exitEnd - exitStart) * NEXT_ENTER_AT;
-    const end = start + Math.max(0.001, nextFillEnd - start) * ENTER_SPAN;
-    return { start, end };
-  };
-
-  const renderMaskedEnterDown = (state, parts, progress) => {
-    const raw = clamp(progress);
-    const p = smoothstep(raw);
-    const distance = Math.min(innerHeight * 0.11, 120);
-    const hiddenBottom = (1 - p) * 100;
-
+  const renderEnter = (state, progress) => {
+    const p = clamp(progress);
+    const distance = innerHeight * 0.065;
     state.style.opacity = String(p);
-    state.style.transform = 'translate3d(0,0,0)';
+    state.style.transform = `translate3d(0, ${-(1 - p) * distance}px, 0)`;
     state.style.clipPath = 'none';
-
-    parts.forEach(part => {
-      if (!part) return;
-      part.style.opacity = '1';
-      part.style.transform = `translate3d(0, ${-(1 - p) * distance}px, 0)`;
-      part.style.clipPath = `inset(0 0 ${hiddenBottom}% 0)`;
-    });
   };
 
   const renderExit = (state, progress) => {
-    const raw = clamp(progress);
-    const p = smoothstep(raw);
+    const p = clamp(progress);
     const distance = Math.min(innerHeight * 0.18, 190);
-    const easedMove = 1 - Math.pow(1 - p, 1.35);
+    const easedMove = 1 - Math.pow(1 - p, 1.6);
 
-    // Fade starts almost as soon as the downward motion begins and reaches
-    // near-zero before the 95% handoff point, so the text visibly dissolves
-    // instead of travelling downward at full opacity.
-    const fadeProgress = smoothstep(phaseProgress(raw, 0.10, 0.90));
-    const fade = Math.pow(fadeProgress, 0.72);
-
-    state.style.opacity = String(Math.max(0, 1 - fade));
+    /* Keep the outgoing copy visible through most of its downward movement. */
+    const fade = phaseProgress(p, 0.78, 1.00);
+    state.style.opacity = String(1 - fade);
     state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
@@ -171,7 +142,7 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: softened 5% -> 100% character fill. */
+    /* STEP 1 — English quote: fill -> short hold -> visible downward exit */
     setChars(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
@@ -184,25 +155,23 @@
       phaseProgress(p, quoteSourceStart, HERO.quoteFillEnd)
     );
 
-    const quoteExit = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteTransitionEnd);
+    const quoteExit = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteExitEnd);
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — 95% gate, then a longer top-down masked reveal. */
-    const defWindow = enterWindow(HERO.quoteHoldEnd, HERO.quoteTransitionEnd, HERO.defFillEnd);
-    const defEnter = phaseProgress(p, defWindow.start, defWindow.end);
-    const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defTransitionEnd);
+    /* STEP 2 — Korean definition: enter -> fill -> short hold -> visible exit */
+    const defEnter = phaseProgress(p, HERO.quoteExitEnd, HERO.defEnterEnd);
+    const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defExitEnd);
 
     if (p < HERO.defHoldEnd) {
-      renderMaskedEnterDown(definition, [definitionCopy], defEnter);
+      renderEnter(definition, defEnter);
     } else {
       renderExit(definition, defExit);
     }
 
-    const defFillStart = defWindow.start + (defWindow.end - defWindow.start) * 0.18;
     setChars(
       definitionChars,
-      phaseProgress(p, defFillStart, HERO.defFillEnd)
+      phaseProgress(p, HERO.defEnterEnd, HERO.defFillEnd)
     );
 
     definition.setAttribute(
@@ -210,37 +179,24 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — Same 95% gate and same softened top-down masked reveal. */
-    const subWindow = enterWindow(HERO.defHoldEnd, HERO.defTransitionEnd, HERO.subFillEnd);
-    const subEnter = phaseProgress(p, subWindow.start, subWindow.end);
+    /* STEP 3 — SUBTRACTIVE DESIGN: enter -> fill -> short hold -> section release */
+    const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
+    renderEnter(subState, subEnter);
 
-    const subExitStart = HERO.subFillEnd +
-      (HERO.subHoldEnd - HERO.subFillEnd) * 0.15;
-    const subExit = phaseProgress(p, subExitStart, HERO.subHoldEnd);
-
-    if (p < subExitStart) {
-      renderMaskedEnterDown(subState, subRevealParts, subEnter);
-    } else {
-      renderExit(subState, subExit);
-    }
-
-    const subFillStart = subWindow.start + (subWindow.end - subWindow.start) * 0.16;
-    const subTitleFillEnd = subFillStart + (HERO.subFillEnd - subFillStart) * 0.72;
-    const subKoreanFillStart = subFillStart + (HERO.subFillEnd - subFillStart) * 0.34;
+    const subFillSpan = HERO.subFillEnd - HERO.subEnterEnd;
+    const subTitleFillEnd = HERO.subEnterEnd + subFillSpan * 0.83;
+    const subKoreanFillStart = HERO.subEnterEnd + subFillSpan * 0.33;
 
     setChars(
       subChars,
-      phaseProgress(p, subFillStart, subTitleFillEnd)
+      phaseProgress(p, HERO.subEnterEnd, subTitleFillEnd)
     );
-    setChars(
-      subKoreanChars,
+    setWhole(
+      subLines,
       phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
     );
 
-    subState.setAttribute(
-      'aria-hidden',
-      subEnter <= 0.001 || subExit >= 0.999 ? 'true' : 'false'
-    );
+    subState.setAttribute('aria-hidden', subEnter <= 0.001 ? 'true' : 'false');
   };
 
   const philosophySection = $('#philosophy');
