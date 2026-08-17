@@ -1,17 +1,13 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css');
 
-/* About page — editorial, content-first layout */
+/* About page */
 .about-page{
-  --about-col:minmax(0,2.2fr);
-  --about-body-size:clamp(16px,1.6vw,25px);
   --about-kr:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   text-transform:none;
 }
 
-/* English UI / labels */
-.about-page .about-index,
+/* English UI */
 .about-page .about-section-label,
-.about-page .about-meta,
 .about-page .career-period,
 .about-page .about-footer,
 .about-page .about-footer *{
@@ -20,7 +16,7 @@
   letter-spacing:normal;
 }
 
-/* Current Korean Thin typography */
+/* Korean Thin */
 .about-page .about-hero-title,
 .about-page .about-statement,
 .about-page .career-company,
@@ -30,7 +26,7 @@
   font-variation-settings:'wght' 100;
 }
 
-/* Current Korean Light typography */
+/* Korean Light */
 .about-page .about-lead,
 .about-page .principle-title,
 .about-page .principle-copy,
@@ -41,7 +37,7 @@
   font-variation-settings:'wght' 300;
 }
 
-/* HERO */
+/* Profile */
 .about-page .about-hero-v2{
   min-height:100vh;
   padding:clamp(120px,18vh,210px) 0 clamp(56px,8vh,90px);
@@ -76,12 +72,8 @@
   margin-top:clamp(48px,6vh,72px);
   padding-top:18px;
 }
-.about-page .about-meta{
-  font-size:12px;
-  line-height:1.55;
-  color:var(--muted);
-}
 .about-page .about-lead{
+  grid-column:2;
   max-width:1040px;
   font-size:22px;
   line-height:1.55;
@@ -89,29 +81,8 @@
 }
 .about-page .about-lead p{margin:0 0 .82em}
 .about-page .about-lead p:last-child{margin-bottom:0}
-.about-page .about-index{
-  grid-column:1/-1;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px 28px;
-  margin-top:32px;
-  font-size:12px;
-  color:var(--muted);
-}
-.about-page .about-index a{position:relative;text-transform:none}
-.about-page .about-index a:after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:100%;
-  bottom:-4px;
-  height:1px;
-  background:currentColor;
-  transition:right .3s;
-}
-.about-page .about-index a:hover:after{right:0}
 
-/* SHARED SECTION */
+/* Shared sections */
 .about-page .about-section{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);
@@ -140,16 +111,23 @@
   letter-spacing:-.02em;
 }
 
-/* GOOD UX & DESIGN */
-.about-page .thinking-section{
+/* Full-bleed sections */
+.about-page .thinking-section,
+.about-page .interview-section,
+.about-page .career-section{
   margin:0 calc(-1*var(--pad));
   padding-left:var(--pad);
   padding-right:var(--pad);
-  background:#111;
-  color:#fff;
   border-top:0;
 }
-.about-page .thinking-section .about-section-label{color:#777}
+
+/* Good UX & Design */
+.about-page .thinking-section{
+  background:#111;
+  color:#fff;
+}
+.about-page .thinking-section .about-section-label,
+.about-page .career-section .about-section-label{color:#777}
 .about-page .principles-list{
   margin-top:clamp(50px,6vh,78px);
   border-top:1px solid rgba(255,255,255,.28);
@@ -171,21 +149,13 @@
   color:#aaa;
 }
 
-/* INTERVIEW */
-.about-page .interview-section{
-  margin:0 calc(-1*var(--pad));
-  padding-left:var(--pad);
-  padding-right:var(--pad);
-  background:#e9e6df;
-  border-top:0;
-}
+/* Interview */
+.about-page .interview-section{background:#e9e6df}
 .about-page .interview-section .about-section-body{
   border-top:1px solid var(--fg);
   padding-top:30px;
 }
-.about-page .interview-list{
-  margin-top:clamp(44px,5vh,68px);
-}
+.about-page .interview-list{margin-top:clamp(44px,5vh,68px)}
 .about-page .interview-row{
   display:grid;
   grid-template-columns:minmax(280px,.9fr) minmax(0,1.55fr);
@@ -204,16 +174,11 @@
   color:#4f4d48;
 }
 
-/* CAREER */
+/* Career */
 .about-page .career-section{
-  margin:0 calc(-1*var(--pad));
-  padding-left:var(--pad);
-  padding-right:var(--pad);
   background:#111;
   color:#fff;
-  border-top:0;
 }
-.about-page .career-section .about-section-label{color:#777}
 .about-page .career-list{border-top:1px solid rgba(255,255,255,.3)}
 .about-page .career-row-v2{
   display:grid;
@@ -248,11 +213,9 @@
   color:#111;
 }
 .about-page .career-row-v2:hover .career-period,
-.about-page .career-row-v2:hover .career-role{
-  color:#575757;
-}
+.about-page .career-row-v2:hover .career-role{color:#575757}
 
-/* FOOTER */
+/* Footer */
 .about-page .about-footer{
   margin:0 calc(-1*var(--pad));
   padding:82px var(--pad) 28px;
@@ -267,7 +230,7 @@
 .about-page .about-footer p,
 .about-page .about-footer a{margin:0;font-size:13px;line-height:1.7}
 
-/* Tall desktop displays: keep the first screen balanced instead of bottom-loading all profile content. */
+/* Tall desktop */
 @media(min-width:851px) and (min-height:1000px){
   .about-page .about-hero-v2{
     align-content:center;
@@ -276,7 +239,7 @@
   }
 }
 
-/* Mobile follows the same spacing scale used on the home page. */
+/* Mobile */
 @media(max-width:850px){
   :root{
     --pad:clamp(18px,5vw,24px);
@@ -287,10 +250,7 @@
     padding-left:var(--pad);
     padding-right:var(--pad);
   }
-  .about-page{
-    --about-body-size:16px;
-    --about-mobile-content-pad:clamp(22px,6vw,28px);
-  }
+  .about-page{--about-mobile-content-pad:clamp(22px,6vw,28px)}
   .about-page .about-hero-v2{
     min-height:auto;
     padding:104px 0 64px;
@@ -300,9 +260,7 @@
     margin-bottom:24px;
     font-size:12px;
   }
-  .about-page .about-hero-main{
-    padding-top:clamp(18px,5vw,24px);
-  }
+  .about-page .about-hero-main{padding-top:clamp(18px,5vw,24px)}
   .about-page .about-hero-title,
   .about-page .about-statement{
     font-size:clamp(30px,8.5vw,40px);
@@ -313,15 +271,9 @@
     margin-top:38px;
     padding-top:14px;
   }
-  .about-page .about-meta{margin-bottom:22px;font-size:11px}
   .about-page .about-lead{
     font-size:clamp(16px,4.6vw,18px);
     line-height:1.52;
-  }
-  .about-page .about-index{
-    gap:10px 20px;
-    margin-top:24px;
-    font-size:11px;
   }
   .about-page .about-section{
     display:block;
@@ -329,8 +281,6 @@
   }
   .about-page .about-statement{margin-bottom:32px}
 
-  /* Full-bleed sections keep their backgrounds edge-to-edge,
-     but all visible content is inset on mobile. Profile remains unchanged. */
   .about-page .thinking-section,
   .about-page .interview-section,
   .about-page .career-section{
@@ -386,16 +336,10 @@
   :root{--pad:clamp(18px,5vw,20px)}
   .about-page{--about-mobile-content-pad:20px}
   .about-page .about-hero-v2{padding-top:92px}
-  .about-page .about-hero-main{
-    padding-top:clamp(16px,4.5vw,20px);
-  }
+  .about-page .about-hero-main{padding-top:clamp(16px,4.5vw,20px)}
   .about-page .about-hero-title,
-  .about-page .about-statement{
-    font-size:clamp(28px,8.4vw,34px);
-  }
-  .about-page .about-lead{
-    font-size:clamp(15px,4.2vw,17px);
-  }
+  .about-page .about-statement{font-size:clamp(28px,8.4vw,34px)}
+  .about-page .about-lead{font-size:clamp(15px,4.2vw,17px)}
   .about-page .about-section{padding:60px 0}
   .about-page .principle-title,
   .about-page .interview-q{font-size:20px}
