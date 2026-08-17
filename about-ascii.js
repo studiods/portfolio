@@ -13,9 +13,9 @@
     canvas.width = Math.max(1, Math.round(rect.width * dpr));
     canvas.height = Math.max(1, Math.round(rect.height * dpr));
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, rect.width, rect.height);
-    ctx.fillStyle = 'rgba(17,17,17,.72)';
+    ctx.fillStyle = 'rgba(244,242,237,.72)';
     ctx.font = '12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
@@ -110,8 +110,6 @@
   let cssHeight = 0;
   let cellWidth = 1;
   let cellHeight = 1;
-  let gridOffsetX = 0;
-  let gridOffsetY = 0;
   let lastStaticIndex = -1;
 
   const prepareTransition = () => {
@@ -132,11 +130,8 @@
     canvas.width = Math.round(cssWidth * dpr);
     canvas.height = Math.round(cssHeight * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const coverScale = Math.max(cssWidth / cols, cssHeight / rows);
-    cellWidth = coverScale;
-    cellHeight = coverScale;
-    gridOffsetX = (cssWidth - cols * coverScale) * 0.5;
-    gridOffsetY = (cssHeight - rows * coverScale) * 0.5;
+    cellWidth = cssWidth / cols;
+    cellHeight = cssHeight / rows;
     const fontSize = Math.max(3.4, Math.min(cellWidth * 1.08, cellHeight * 1.02));
     ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
     ctx.textAlign = 'center';
@@ -145,7 +140,7 @@
   };
 
   const draw = (now, morph = 0) => {
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
     const current = frames[frameIndex];
     const next = frames[nextIndex];
@@ -173,10 +168,10 @@
       }
       const ch = palette[paletteIndex];
       if (ch === ' ') continue;
-      const x = gridOffsetX + (i % cols) * cellWidth + cellWidth * 0.5;
-      const y = gridOffsetY + Math.floor(i / cols) * cellHeight + cellHeight * 0.54;
+      const x = (i % cols) * cellWidth + cellWidth * 0.5;
+      const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.54;
       const alpha = Math.min(1, 0.18 + normalized * 0.84 + chaos * 0.06);
-      const tone = Math.round(83 - normalized * 83);
+      const tone = Math.round(172 + normalized * 83);
       ctx.fillStyle = `rgba(${tone},${tone},${tone},${alpha})`;
       ctx.fillText(ch, x, y);
     }
@@ -210,11 +205,8 @@
     const heroRect = hero.getBoundingClientRect();
     const travel = Math.max(1, stage.offsetHeight - heroRect.height);
     const passed = clamp01((-stageRect.top) / travel);
-    const blackout = clamp01(passed / 0.62);
-    const fadePhase = clamp01((passed - 0.62) / 0.38);
+    const blackout = smoothstep(passed) * 0.92;
     hero.style.setProperty('--ascii-blackout', blackout.toFixed(3));
-    hero.style.setProperty('--ascii-opacity', (1 - fadePhase).toFixed(3));
-    hero.style.setProperty('--ascii-y', `${Math.round(-56 * fadePhase)}px`);
   };
 
   prepareTransition();
