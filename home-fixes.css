@@ -36,7 +36,8 @@
 .principle-en .fill-char,
 .hero-quote .fill-char,
 .definition-copy .fill-char,
-.subtractive-title .fill-char{
+.subtractive-title .fill-char,
+.subtractive-korean .fill-char{
   display:inline!important;
   vertical-align:baseline!important;
   line-height:inherit!important;
@@ -47,9 +48,8 @@
 
 /*
   HERO sequence timing is controlled by normalized phases in home-interactions.js.
-  Hold phases are now one third of their previous physical scroll distance.
-  Total hero travel is reduced in the same proportion so fill / enter / exit
-  motions keep approximately the same physical scroll speed as before.
+  Each next state now waits until 95% of the outgoing motion has completed.
+  Character fill remains directly tied to scroll position.
 */
 .hero-sequence{height:341vh!important}
 .hero-state{
@@ -65,7 +65,17 @@
   color:var(--fg);
   transform:translate3d(0,-16vh,0);
 }
-.hero-state-subtractive{opacity:0;pointer-events:none;transform:translate3d(8vw,0,0)}
+.hero-state-subtractive{
+  opacity:0;
+  pointer-events:none;
+  transform:none!important;
+}
+.subtractive-title,
+.subtractive-korean{
+  will-change:transform,clip-path;
+  transform:translate3d(0,-14vh,0);
+  clip-path:inset(0 0 100% 0);
+}
 .quote-source-only{
   margin-top:18px;
   font-family:'Averta PE',sans-serif;
@@ -227,7 +237,8 @@
 @media(prefers-reduced-motion:reduce){
   .hero-quote .fill-char,
   .definition-copy .fill-char,
-  .subtractive-title .fill-char{color:#111!important}
+  .subtractive-title .fill-char,
+  .subtractive-korean .fill-char{color:#111!important}
   .philosophy-statements p{color:#111!important}
   .principles-intro .fill-char,
   .principle-card h3 .fill-char,
@@ -235,6 +246,7 @@
   .principle-card>p:last-child{color:#fff!important}
   .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
   .hero-state-definition,.hero-state-subtractive{opacity:0!important}
+  .subtractive-title,.subtractive-korean{transform:none!important;clip-path:none!important}
   .philosophy-sticky{position:static!important}
   .intro-block{min-height:auto!important;padding:80px 0!important;margin-bottom:0!important}
   .philosophy-tail-space{height:80px!important}
