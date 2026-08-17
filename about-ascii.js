@@ -36,9 +36,9 @@
   const frameCount = Number(packed.count) || 7;
   const sourceCellCount = sourceCols * sourceRows;
   const packedPerFrame = Math.ceil(sourceCellCount / 2);
-  const cols = 192;
-  const rows = 108;
-  const cellCount = cols * rows;
+  const cols = sourceCols;
+  const rows = sourceRows;
+  const cellCount = sourceCellCount;
   const palette = ' .,:;-=+*#%@';
   const SCENE_MS = 1800;
   const HOLD_MS = 1150;
@@ -102,26 +102,7 @@
     sourceFrames.push(frame);
   }
 
-  const resampleFrame = (source) => {
-    const output = new Uint8Array(cellCount);
-    for (let y = 0; y < rows; y += 1) {
-      const sourceY = y * (sourceRows - 1) / Math.max(1, rows - 1);
-      const y0 = Math.floor(sourceY);
-      const y1 = Math.min(sourceRows - 1, y0 + 1);
-      const fy = sourceY - y0;
-      for (let x = 0; x < cols; x += 1) {
-        const sourceX = x * (sourceCols - 1) / Math.max(1, cols - 1);
-        const x0 = Math.floor(sourceX);
-        const x1 = Math.min(sourceCols - 1, x0 + 1);
-        const fx = sourceX - x0;
-        const top = source[y0 * sourceCols + x0] * (1 - fx) + source[y0 * sourceCols + x1] * fx;
-        const bottom = source[y1 * sourceCols + x0] * (1 - fx) + source[y1 * sourceCols + x1] * fx;
-        output[y * cols + x] = Math.round(top * (1 - fy) + bottom * fy);
-      }
-    }
-    return output;
-  };
-  const frames = sourceFrames.map(resampleFrame);
+  const frames = sourceFrames;
   hero.dataset.asciiState = 'ready';
 
   const timingStart = new Float32Array(cellCount);

@@ -205,9 +205,10 @@ a{color:inherit;text-decoration:none}
 .about-statement-en{
   font-family:var(--en);
   font-weight:100;
-  text-transform:none;
+  text-transform:uppercase;
   letter-spacing:.02em;
 }
+.interview-section .interview-list{border-top:0}
 
 .career-row-v2{
   display:grid;

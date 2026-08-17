@@ -63,8 +63,9 @@
   opacity:0;
   pointer-events:none;
   color:var(--fg);
+  transform:translate3d(8vw,0,0);
 }
-.hero-state-subtractive{opacity:0;pointer-events:none}
+.hero-state-subtractive{opacity:0;pointer-events:none;transform:translate3d(8vw,0,0)}
 .quote-source-only{
   margin-top:18px;
   font-family:'Averta PE',sans-serif;
