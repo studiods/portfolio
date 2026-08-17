@@ -22,7 +22,7 @@
     ctx.fillText(text, 18, 18);
   };
 
-  drawStatus('DOT LOADING');
+  drawStatus('ASCII LOADING');
 
   const packed = window.ABOUT_ASCII_PACKED;
   if (!packed || !Array.isArray(packed.bytes) || Number(packed.count) !== 7) {
@@ -31,12 +31,15 @@
     return;
   }
 
-  const cols = Number(packed.width) || 144;
-  const rows = Number(packed.height) || 81;
+  const sourceCols = Number(packed.width) || 144;
+  const sourceRows = Number(packed.height) || 81;
   const frameCount = Number(packed.count) || 7;
+  const sourceCellCount = sourceCols * sourceRows;
+  const packedPerFrame = Math.ceil(sourceCellCount / 2);
+  const cols = 192;
+  const rows = 108;
   const cellCount = cols * rows;
-  const packedPerFrame = Math.ceil(cellCount / 2);
-  const DOT_LEVELS = 12;
+  const palette = ' .,:;-=+*#%@';
   const SCENE_MS = 1800;
   const HOLD_MS = 1150;
   const MORPH_MS = SCENE_MS - HOLD_MS;
@@ -85,19 +88,40 @@
     return;
   }
 
-  const frames = [];
+  const sourceFrames = [];
   for (let f = 0; f < frameCount; f += 1) {
-    const frame = new Uint8Array(cellCount);
+    const frame = new Uint8Array(sourceCellCount);
     const offset = f * packedPerFrame;
     let target = 0;
-    for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
+    for (let i = 0; i < packedPerFrame && target < sourceCellCount; i += 1) {
       const byte = raw[offset + i];
       frame[target] = ((byte >>> 4) & 15) * 17;
-      if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
+      if (target + 1 < sourceCellCount) frame[target + 1] = (byte & 15) * 17;
       target += 2;
     }
-    frames.push(frame);
+    sourceFrames.push(frame);
   }
+
+  const resampleFrame = (source) => {
+    const output = new Uint8Array(cellCount);
+    for (let y = 0; y < rows; y += 1) {
+      const sourceY = y * (sourceRows - 1) / Math.max(1, rows - 1);
+      const y0 = Math.floor(sourceY);
+      const y1 = Math.min(sourceRows - 1, y0 + 1);
+      const fy = sourceY - y0;
+      for (let x = 0; x < cols; x += 1) {
+        const sourceX = x * (sourceCols - 1) / Math.max(1, cols - 1);
+        const x0 = Math.floor(sourceX);
+        const x1 = Math.min(sourceCols - 1, x0 + 1);
+        const fx = sourceX - x0;
+        const top = source[y0 * sourceCols + x0] * (1 - fx) + source[y0 * sourceCols + x1] * fx;
+        const bottom = source[y1 * sourceCols + x0] * (1 - fx) + source[y1 * sourceCols + x1] * fx;
+        output[y * cols + x] = Math.round(top * (1 - fy) + bottom * fy);
+      }
+    }
+    return output;
+  };
+  const frames = sourceFrames.map(resampleFrame);
   hero.dataset.asciiState = 'ready';
 
   const timingStart = new Float32Array(cellCount);
@@ -110,7 +134,10 @@
   let cssHeight = 0;
   let cellWidth = 1;
   let cellHeight = 1;
+  let renderDpr = 1;
+  let textScaleX = 1;
   let lastStaticIndex = -1;
+  const rowBuffers = Array.from({ length: rows }, () => new Array(cols).fill(' '));
 
   const prepareTransition = () => {
     const seed = (frameIndex + 1) * 733 + (nextIndex + 1) * 1597;
@@ -126,18 +153,22 @@
     const rect = hero.getBoundingClientRect();
     cssWidth = Math.max(1, rect.width);
     cssHeight = Math.max(1, rect.height);
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(cssWidth * dpr);
-    canvas.height = Math.round(cssHeight * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    renderDpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(cssWidth * renderDpr);
+    canvas.height = Math.round(cssHeight * renderDpr);
+    ctx.setTransform(renderDpr, 0, 0, renderDpr, 0, 0);
     cellWidth = cssWidth / cols;
     cellHeight = cssHeight / rows;
+    const fontSize = Math.max(1.8, cellHeight * 1.02);
+    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    textScaleX = cellWidth / Math.max(0.01, ctx.measureText('M').width);
     lastStaticIndex = -1;
   };
 
-  const dotBuckets = Array.from({ length: DOT_LEVELS }, () => []);
-
   const draw = (now, morph = 0) => {
+    ctx.setTransform(renderDpr, 0, 0, renderDpr, 0, 0);
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
     const current = frames[frameIndex];
@@ -145,8 +176,6 @@
     const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
     const glitchTick = Math.floor(now / GLITCH_MS);
     const seed = (frameIndex + 1) * 1063 + (nextIndex + 1) * 2207;
-
-    dotBuckets.forEach((bucket) => { bucket.length = 0; });
 
     for (let i = 0; i < cellCount; i += 1) {
       let value = current[i];
@@ -156,37 +185,22 @@
         const local = morph <= start ? 0 : morph >= end ? 1 : smoothstep((morph - start) / Math.max(0.001, end - start));
         value = current[i] + (next[i] - current[i]) * local;
       }
-      let normalized = value / 255;
+      const normalized = value / 255;
+      let paletteIndex = Math.round(normalized * (palette.length - 1));
       if (morph > 0) {
         const noise = hash(seed + i * 47 + glitchTick * 131);
-        normalized = clamp01(normalized + (noise * 2 - 1) * chaos * 0.16);
+        if (noise < 0.08 + chaos * 0.4) {
+          const offsetNoise = hash(seed + i * 71 + glitchTick * 197);
+          paletteIndex = Math.max(0, Math.min(palette.length - 1, paletteIndex + Math.round((offsetNoise * 2 - 1) * (1 + chaos * 3))));
+        }
       }
-      const shaped = Math.pow(normalized, 0.72);
-      const level = Math.round(shaped * (DOT_LEVELS - 1));
-      if (level < 1) continue;
-
-      const jitterX = morph > 0 ? (hash(seed + i * 71 + glitchTick * 197) * 2 - 1) * cellWidth * chaos * 0.18 : 0;
-      const jitterY = morph > 0 ? (hash(seed + i * 89 + glitchTick * 229) * 2 - 1) * cellHeight * chaos * 0.18 : 0;
-      const x = (i % cols) * cellWidth + cellWidth * 0.5 + jitterX;
-      const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.5 + jitterY;
-      dotBuckets[level].push(x, y);
+      rowBuffers[Math.floor(i / cols)][i % cols] = palette[paletteIndex];
     }
 
-    const maxRadius = Math.min(cellWidth, cellHeight) * 0.47;
-    for (let level = 1; level < DOT_LEVELS; level += 1) {
-      const bucket = dotBuckets[level];
-      if (!bucket.length) continue;
-      const normalized = level / (DOT_LEVELS - 1);
-      const radius = Math.max(0.42, maxRadius * (0.12 + Math.pow(normalized, 0.82) * 0.88));
-      const tone = Math.round(172 + normalized * 83);
-      const alpha = Math.min(1, 0.12 + normalized * 0.88 + chaos * 0.04);
-      ctx.fillStyle = `rgba(${tone},${tone},${tone},${alpha})`;
-      ctx.beginPath();
-      for (let p = 0; p < bucket.length; p += 2) {
-        ctx.moveTo(bucket[p] + radius, bucket[p + 1]);
-        ctx.arc(bucket[p], bucket[p + 1], radius, 0, Math.PI * 2);
-      }
-      ctx.fill();
+    ctx.setTransform(renderDpr * textScaleX, 0, 0, renderDpr, 0, 0);
+    ctx.fillStyle = 'rgba(244,242,237,.88)';
+    for (let row = 0; row < rows; row += 1) {
+      ctx.fillText(rowBuffers[row].join(''), 0, row * cellHeight + cellHeight * 0.54);
     }
   };
 
@@ -217,7 +231,9 @@
     const stageRect = stage.getBoundingClientRect();
     const heroRect = hero.getBoundingClientRect();
     const travel = Math.max(1, stage.offsetHeight - heroRect.height);
-    const passed = clamp01((-stageRect.top) / travel);
+    const fadeDistance = Math.max(travel, stage.offsetHeight * 0.82);
+    const fadeStart = Math.min(90, fadeDistance * 0.08);
+    const passed = clamp01((-stageRect.top - fadeStart) / Math.max(1, fadeDistance - fadeStart));
     const blackout = smoothstep(passed) * 0.92;
     hero.style.setProperty('--ascii-blackout', blackout.toFixed(3));
   };
