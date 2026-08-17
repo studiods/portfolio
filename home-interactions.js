@@ -5,6 +5,7 @@
 
   const FILL_SLOWDOWN = 1.32;
   const FILL_FEATHER = 4;
+  const NEXT_ENTER_AT = 0.84;
 
   const fillProgress = (value, start, duration) =>
     clamp((value - start) / (duration * FILL_SLOWDOWN));
@@ -64,22 +65,22 @@
   const definition = $('.hero-state-definition', hero);
   const subState = $('.hero-state-subtractive', hero);
   const subLines = $$('.subtractive-korean .fill-line', hero);
+  subLines.forEach(splitChars);
+
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
+  const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
 
   /*
     HERO TIMELINE
     ----------------
-    Each outgoing state moves downward and fades away while the following
-    state enters during the same transition window.
+    The next state now waits until the outgoing state has completed 84% of its
+    movement. This avoids the previous early overlap while keeping a small,
+    intentional handoff between scenes.
 
-    Only the HOLD phases are reduced here. HOLD_SCALE = 1 / 3 means every fully
-    filled pause uses one third of its previous physical scroll distance.
-    Fill / enter / exit phase weights are left unchanged.
-
-    CSS shortens the total hero travel by the same aggregate ratio so those
-    non-hold motions retain approximately the same physical scroll speed.
+    Character fill remains scroll-driven: each character begins at 5% black
+    and sweeps to 100% black in reading order.
   */
   const HERO_HOLD_SCALE = 1 / 3;
   const HERO_PHASE = Object.freeze({
@@ -145,7 +146,7 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: fill -> hold -> exit downward */
+    /* STEP 1 — English quote: 5% -> 100% fill, hold, then exit downward. */
     setChars(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
@@ -162,9 +163,11 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition enters from above while quote exits, then exits downward. */
-    const defEnter = quoteExit;
+    /* STEP 2 — Wait until the quote is almost gone, then bring the definition down. */
+    const defEnter = phaseProgress(quoteExit, NEXT_ENTER_AT, 1);
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defTransitionEnd);
+    const defFillStart = HERO.quoteHoldEnd +
+      (HERO.quoteTransitionEnd - HERO.quoteHoldEnd) * NEXT_ENTER_AT;
 
     if (p < HERO.defHoldEnd) {
       renderEnterDown(definition, defEnter);
@@ -174,7 +177,7 @@
 
     setChars(
       definitionChars,
-      phaseProgress(p, HERO.quoteHoldEnd, HERO.defFillEnd)
+      phaseProgress(p, defFillStart, HERO.defFillEnd)
     );
 
     definition.setAttribute(
@@ -182,20 +185,22 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — SUBTRACTIVE DESIGN enters while the definition exits. */
-    const subEnter = defExit;
+    /* STEP 3 — The final state also waits until the definition is almost gone. */
+    const subEnter = phaseProgress(defExit, NEXT_ENTER_AT, 1);
     renderEnter(subState, subEnter);
 
-    const subFillSpan = HERO.subFillEnd - HERO.defHoldEnd;
-    const subTitleFillEnd = HERO.defHoldEnd + subFillSpan * 0.83;
-    const subKoreanFillStart = HERO.defHoldEnd + subFillSpan * 0.33;
+    const subFillStart = HERO.defHoldEnd +
+      (HERO.defTransitionEnd - HERO.defHoldEnd) * NEXT_ENTER_AT;
+    const subFillSpan = HERO.subFillEnd - subFillStart;
+    const subTitleFillEnd = subFillStart + subFillSpan * 0.78;
+    const subKoreanFillStart = subFillStart + subFillSpan * 0.28;
 
     setChars(
       subChars,
-      phaseProgress(p, HERO.defHoldEnd, subTitleFillEnd)
+      phaseProgress(p, subFillStart, subTitleFillEnd)
     );
-    setWhole(
-      subLines,
+    setChars(
+      subKoreanChars,
       phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
     );
 
