@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    @font-face{font-family:'Averta Favicon';src:url('./fonts/Averta-PE-Bold.otf') format('opentype');font-weight:700;font-style:normal}
+    .mark{font-family:'Averta Favicon','Arial Black',Arial,sans-serif;font-weight:700;letter-spacing:-1.5px}
+  </style>
+  <rect width="64" height="64" fill="#000"/>
+  <text class="mark" x="32" y="39" fill="#fff" font-size="27" text-anchor="middle">SD</text>
+</svg>
