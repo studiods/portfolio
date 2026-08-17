@@ -48,8 +48,9 @@
 
 /*
   HERO sequence timing is controlled by normalized phases in home-interactions.js.
-  Each next state now waits until 95% of the outgoing motion has completed.
-  Character fill remains directly tied to scroll position.
+  Each next state still waits until 95% of the outgoing motion has completed,
+  but its top-down reveal now continues into the following fill phase instead
+  of being compressed into the final 5% of the outgoing transition.
 */
 .hero-sequence{height:341vh!important}
 .hero-state{
@@ -63,17 +64,18 @@
   opacity:0;
   pointer-events:none;
   color:var(--fg);
-  transform:translate3d(0,-16vh,0);
+  transform:none!important;
 }
 .hero-state-subtractive{
   opacity:0;
   pointer-events:none;
   transform:none!important;
 }
+.definition-copy,
 .subtractive-title,
 .subtractive-korean{
   will-change:transform,clip-path;
-  transform:translate3d(0,-14vh,0);
+  transform:translate3d(0,-11vh,0);
   clip-path:inset(0 0 100% 0);
 }
 .quote-source-only{
@@ -246,7 +248,7 @@
   .principle-card>p:last-child{color:#fff!important}
   .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
   .hero-state-definition,.hero-state-subtractive{opacity:0!important}
-  .subtractive-title,.subtractive-korean{transform:none!important;clip-path:none!important}
+  .definition-copy,.subtractive-title,.subtractive-korean{transform:none!important;clip-path:none!important}
   .philosophy-sticky{position:static!important}
   .intro-block{min-height:auto!important;padding:80px 0!important;margin-bottom:0!important}
   .philosophy-tail-space{height:80px!important}
