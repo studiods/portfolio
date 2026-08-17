@@ -278,7 +278,10 @@
     padding-left:var(--pad);
     padding-right:var(--pad);
   }
-  .about-page{--about-body-size:16px}
+  .about-page{
+    --about-body-size:16px;
+    --about-mobile-content-pad:clamp(22px,6vw,28px);
+  }
   .about-page .about-hero-v2{
     min-height:auto;
     padding:104px 0 64px;
@@ -314,12 +317,25 @@
     padding:68px 0;
   }
   .about-page .about-statement{margin-bottom:32px}
+
+  /* Full-bleed sections keep their backgrounds edge-to-edge,
+     but all visible content is inset on mobile. Profile remains unchanged. */
   .about-page .thinking-section,
   .about-page .interview-section,
   .about-page .career-section{
-    padding-left:var(--pad);
-    padding-right:var(--pad);
+    padding-left:0;
+    padding-right:0;
   }
+  .about-page .thinking-section > .about-section-label,
+  .about-page .interview-section > .about-section-label,
+  .about-page .career-section > .about-section-label,
+  .about-page .thinking-section > .about-section-body,
+  .about-page .interview-section > .about-section-body,
+  .about-page .career-section > .about-section-body{
+    padding-left:var(--about-mobile-content-pad);
+    padding-right:var(--about-mobile-content-pad);
+  }
+
   .about-page .principles-list,
   .about-page .interview-list{margin-top:34px}
   .about-page .principle-row,
@@ -350,13 +366,14 @@
   }
   .about-page .career-period{font-size:11px}
   .about-page .about-footer{
-    padding-left:var(--pad);
-    padding-right:var(--pad);
+    padding-left:var(--about-mobile-content-pad);
+    padding-right:var(--about-mobile-content-pad);
   }
 }
 
 @media(max-width:480px){
   :root{--pad:clamp(18px,5vw,20px)}
+  .about-page{--about-mobile-content-pad:20px}
   .about-page .about-hero-v2{padding-top:92px}
   .about-page .about-hero-title,
   .about-page .about-statement{
