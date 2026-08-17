@@ -1,0 +1,37 @@
+/* About ASCII portrait hero */
+.about-page .about-ascii-hero{
+  position:relative;
+  margin:0 calc(-1 * var(--pad));
+  width:auto;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  background:#050505;
+  isolation:isolate;
+}
+.about-page .about-ascii-canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  background:#050505;
+}
+.about-page .about-ascii-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 50% 48%,transparent 48%,rgba(0,0,0,.11) 76%,rgba(0,0,0,.26) 100%);
+  z-index:1;
+}
+
+@media(max-width:850px){
+  .about-page .about-ascii-hero{
+    margin-left:calc(-1 * var(--pad));
+    margin-right:calc(-1 * var(--pad));
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .about-page .about-ascii-hero::after{display:none}
+}
