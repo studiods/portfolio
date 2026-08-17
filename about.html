@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./style.css?v=17">
   <link rel="stylesheet" href="./typography.css?v=7">
   <link rel="stylesheet" href="./type-overrides.css?v=17">
-  <link rel="stylesheet" href="./about-page.css?v=14">
+  <link rel="stylesheet" href="./about-page.css?v=15">
 </head>
 <body>
 <nav class="top">
@@ -24,7 +24,11 @@
   <section class="about-hero-v2" id="profile">
     <div class="about-section-label">Profile</div>
     <div class="about-hero-main">
-      <h1 class="about-hero-title">아직도 성장하기 위해<br>끊임없이 노력하는 디자이너,<br>신동식입니다.</h1>
+      <h1 class="about-hero-title" aria-label="아직도 성장하기 위해 끊임없이 노력하는 디자이너, 신동식입니다.">
+        <span class="hero-mask-line"><span class="hero-mask-line-inner">아직도 성장하기 위해</span></span>
+        <span class="hero-mask-line"><span class="hero-mask-line-inner">끊임없이 노력하는 디자이너,</span></span>
+        <span class="hero-mask-line"><span class="hero-mask-line-inner">신동식입니다.</span></span>
+      </h1>
     </div>
 
     <div class="about-hero-bottom">
@@ -118,6 +122,6 @@
     </div>
   </footer>
 </main>
-<script src="./about-page.js?v=1" defer></script>
+<script src="./about-page.js?v=2" defer></script>
 </body>
 </html>
