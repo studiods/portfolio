@@ -40,8 +40,8 @@
   const rows = sourceRows;
   const cellCount = sourceCellCount;
   const palette = ' .,:;-=+*#%@';
-  const SCENE_MS = 1800;
-  const HOLD_MS = 1150;
+  const SCENE_MS = 1500;
+  const HOLD_MS = 960;
   const MORPH_MS = SCENE_MS - HOLD_MS;
   const GLITCH_MS = 48;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
