@@ -128,9 +128,13 @@
     const distance = Math.min(innerHeight * 0.18, 190);
     const easedMove = 1 - Math.pow(1 - p, 1.6);
 
-    /* Keep the outgoing copy visible through most of its downward movement. */
-    const fade = phaseProgress(p, 0.78, 1.00);
-    state.style.opacity = String(1 - fade);
+    /*
+      Transparency now starts from the beginning of the downward exit and
+      accelerates continuously. This avoids the previous last-moment opacity
+      drop while keeping the disappearance stronger toward the end.
+    */
+    const fade = Math.pow(p, 1.7);
+    state.style.opacity = String(Math.max(0, 1 - fade));
     state.style.transform = `translate3d(0, ${easedMove * distance}px, 0)`;
     state.style.clipPath = 'none';
   };
@@ -142,7 +146,7 @@
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const p = clamp(-rect.top / travel);
 
-    /* STEP 1 — English quote: fill -> short hold -> visible downward exit */
+    /* STEP 1 — English quote: fill -> short hold -> progressive fading exit */
     setChars(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
@@ -159,7 +163,7 @@
     renderExit(quoteState, quoteExit);
     quoteState.setAttribute('aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
 
-    /* STEP 2 — Korean definition: enter -> fill -> short hold -> visible exit */
+    /* STEP 2 — Korean definition: enter -> fill -> short hold -> same fading exit */
     const defEnter = phaseProgress(p, HERO.quoteExitEnd, HERO.defEnterEnd);
     const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defExitEnd);
 
@@ -179,9 +183,17 @@
       defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
     );
 
-    /* STEP 3 — SUBTRACTIVE DESIGN: enter -> fill -> short hold -> section release */
+    /* STEP 3 — SUBTRACTIVE DESIGN: enter -> fill -> short hold -> same fading exit */
     const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
-    renderEnter(subState, subEnter);
+    const subExitStart = HERO.subFillEnd +
+      (HERO.subHoldEnd - HERO.subFillEnd) * 0.22;
+    const subExit = phaseProgress(p, subExitStart, HERO.subHoldEnd);
+
+    if (p < subExitStart) {
+      renderEnter(subState, subEnter);
+    } else {
+      renderExit(subState, subExit);
+    }
 
     const subFillSpan = HERO.subFillEnd - HERO.subEnterEnd;
     const subTitleFillEnd = HERO.subEnterEnd + subFillSpan * 0.83;
@@ -196,7 +208,10 @@
       phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
     );
 
-    subState.setAttribute('aria-hidden', subEnter <= 0.001 ? 'true' : 'false');
+    subState.setAttribute(
+      'aria-hidden',
+      subEnter <= 0.001 || subExit >= 0.999 ? 'true' : 'false'
+    );
   };
 
   const philosophySection = $('#philosophy');
