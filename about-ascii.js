@@ -1,40 +1,31 @@
-(() => {
+(async () => {
   'use strict';
 
-  const root = document.querySelector('.about-ascii-hero');
-  const canvas = root?.querySelector('.about-ascii-canvas');
-  const source = window.ABOUT_ASCII_DATA;
-  if (!root || !canvas || !source || !Array.isArray(source.frames) || source.frames.length < 2) return;
+  const hero = document.querySelector('.about-ascii-hero');
+  const stage = document.querySelector('.about-ascii-stage');
+  const canvas = document.querySelector('.about-ascii-canvas');
+  const packed = window.ABOUT_ASCII_PACKED;
+  if (!hero || !stage || !canvas || !packed || !packed.data) return;
 
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
 
-  const sourceCols = source.width;
-  const sourceRows = source.height;
-  const sourceCellCount = sourceCols * sourceRows;
-
-  /* 1.5× denser ASCII grid. The source data stays light, while the renderer
-     interpolates it to a finer grid for a more detailed portrait. */
-  const DENSITY_SCALE = 1.5;
-  const PORTRAIT_SCALE = 0.85;
-  const cols = Math.round(sourceCols * DENSITY_SCALE);
-  const rows = Math.round(sourceRows * DENSITY_SCALE);
+  const cols = packed.width;
+  const rows = packed.height;
+  const frameCount = packed.count;
   const cellCount = cols * rows;
-
   const palette = ' .,:;-=+*#%@';
+  const SCENE_MS = 1800;
+  const HOLD_MS = 1150;
+  const MORPH_MS = SCENE_MS - HOLD_MS;
+  const GLITCH_MS = 48;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const SCENE_MS = 1800;
-  const HOLD_MS = 1200;
-  const TRANSITION_MS = SCENE_MS - HOLD_MS;
-  const GLITCH_STEP_MS = 55;
-
-  const clamp01 = (value) => Math.max(0, Math.min(1, value));
-  const smoothstep = (value) => {
-    const t = clamp01(value);
+  const clamp01 = (v) => Math.max(0, Math.min(1, v));
+  const smoothstep = (v) => {
+    const t = clamp01(v);
     return t * t * (3 - 2 * t);
   };
-
   const hash = (value) => {
     let x = value | 0;
     x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
@@ -43,215 +34,194 @@
     return (x >>> 0) / 4294967295;
   };
 
-  const decodeFrame = (encoded) => {
-    const binary = atob(encoded);
-    const frame = new Uint8Array(sourceCellCount);
-    let target = 0;
-    for (let i = 0; i < binary.length && target < sourceCellCount; i += 1) {
-      const packed = binary.charCodeAt(i);
-      frame[target] = ((packed >>> 4) & 15) * 17;
-      if (target + 1 < sourceCellCount) frame[target + 1] = (packed & 15) * 17;
-      target += 2;
-    }
-    return frame;
-  };
-
-  const sampleBilinear = (frame, sx, sy) => {
-    const x0 = Math.max(0, Math.min(sourceCols - 1, Math.floor(sx)));
-    const y0 = Math.max(0, Math.min(sourceRows - 1, Math.floor(sy)));
-    const x1 = Math.min(sourceCols - 1, x0 + 1);
-    const y1 = Math.min(sourceRows - 1, y0 + 1);
-    const tx = sx - x0;
-    const ty = sy - y0;
-    const a = frame[y0 * sourceCols + x0];
-    const b = frame[y0 * sourceCols + x1];
-    const c = frame[y1 * sourceCols + x0];
-    const d = frame[y1 * sourceCols + x1];
-    const top = a + (b - a) * tx;
-    const bottom = c + (d - c) * tx;
-    return Math.round(top + (bottom - top) * ty);
-  };
-
-  const resampleFrame = (sourceFrame) => {
-    const frame = new Uint8Array(cellCount);
-    const margin = (1 - PORTRAIT_SCALE) * 0.5;
-
-    for (let y = 0; y < rows; y += 1) {
-      const v = (y + 0.5) / rows;
-      for (let x = 0; x < cols; x += 1) {
-        const u = (x + 0.5) / cols;
-        const index = y * cols + x;
-
-        if (u < margin || u > 1 - margin || v < margin || v > 1 - margin) {
-          frame[index] = 0;
-          continue;
-        }
-
-        const sourceU = (u - margin) / PORTRAIT_SCALE;
-        const sourceV = (v - margin) / PORTRAIT_SCALE;
-        const sx = sourceU * (sourceCols - 1);
-        const sy = sourceV * (sourceRows - 1);
-        frame[index] = sampleBilinear(sourceFrame, sx, sy);
+  const decodePackedFrames = async () => {
+    const binary = atob(packed.data);
+    const compressed = Uint8Array.from(binary, (ch) => ch.charCodeAt(0));
+    const stream = new Blob([compressed]).stream().pipeThrough(new DecompressionStream('gzip'));
+    const raw = new Uint8Array(await new Response(stream).arrayBuffer());
+    const packedPerFrame = Math.ceil(cellCount / 2);
+    const frames = [];
+    for (let f = 0; f < frameCount; f += 1) {
+      const frame = new Uint8Array(cellCount);
+      const offset = f * packedPerFrame;
+      let target = 0;
+      for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
+        const byte = raw[offset + i] || 0;
+        frame[target] = ((byte >>> 4) & 15) * 17;
+        if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
+        target += 2;
       }
+      frames.push(frame);
     }
-
-    return frame;
+    return frames;
   };
 
-  const frames = source.frames.map((encoded) => resampleFrame(decodeFrame(encoded)));
+  let frames;
+  try {
+    frames = await decodePackedFrames();
+  } catch (error) {
+    console.error('Failed to decode About ASCII data', error);
+    return;
+  }
+
   const timingStart = new Float32Array(cellCount);
   const timingEnd = new Float32Array(cellCount);
 
-  let currentIndex = 0;
+  let frameIndex = 0;
   let nextIndex = 1;
-  let sceneStartedAt = performance.now();
-  let animationFrame = 0;
+  let startedAt = performance.now();
+  let rafId = 0;
+  let dpr = 1;
   let cssWidth = 0;
   let cssHeight = 0;
-  let dpr = 1;
   let cellWidth = 1;
   let cellHeight = 1;
-  let lastStaticFrame = -1;
+  let lastStaticIndex = -1;
 
   const prepareTransition = () => {
-    const seed = (currentIndex + 1) * 10007 + (nextIndex + 1) * 7919;
+    const seed = (frameIndex + 1) * 733 + (nextIndex + 1) * 1597;
     for (let i = 0; i < cellCount; i += 1) {
-      const start = hash(i * 17 + seed) * 0.54;
-      const duration = 0.30 + hash(i * 31 + seed * 3) * 0.31;
+      const start = hash(seed + i * 19) * 0.48;
+      const duration = 0.28 + hash(seed + i * 41) * 0.32;
       timingStart[i] = start;
       timingEnd[i] = Math.min(1, start + duration);
     }
   };
 
-  const resizeCanvas = () => {
-    const rect = root.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
-
-    cssWidth = rect.width;
-    cssHeight = rect.height;
+  const resize = () => {
+    const rect = hero.getBoundingClientRect();
+    cssWidth = Math.max(1, rect.width);
+    cssHeight = Math.max(1, rect.height);
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.max(1, Math.round(cssWidth * dpr));
-    canvas.height = Math.max(1, Math.round(cssHeight * dpr));
+    canvas.width = Math.round(cssWidth * dpr);
+    canvas.height = Math.round(cssHeight * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
     cellWidth = cssWidth / cols;
     cellHeight = cssHeight / rows;
-    const fontSize = Math.max(5, cellHeight * 0.9);
-    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace`;
+    const fontSize = Math.max(4, Math.min(cellWidth * 1.08, cellHeight * 1.02));
+    ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, monospace`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    lastStaticFrame = -1;
+    lastStaticIndex = -1;
   };
 
-  const draw = (now, transitionProgress = 0) => {
-    if (!cssWidth || !cssHeight) resizeCanvas();
-
-    ctx.fillStyle = '#050505';
+  const draw = (now, morph = 0) => {
+    ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
 
-    const current = frames[currentIndex];
+    const current = frames[frameIndex];
     const next = frames[nextIndex];
-    const inTransition = transitionProgress > 0;
-    const globalChaos = inTransition ? Math.sin(Math.PI * transitionProgress) : 0;
-    const glitchTick = Math.floor(now / GLITCH_STEP_MS);
-    const transitionSeed = (currentIndex + 1) * 1709 + (nextIndex + 1) * 3253;
+    const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
+    const glitchTick = Math.floor(now / GLITCH_MS);
+    const seed = (frameIndex + 1) * 1063 + (nextIndex + 1) * 2207;
 
     for (let i = 0; i < cellCount; i += 1) {
       let value = current[i];
-
-      if (inTransition) {
+      if (morph > 0) {
         const start = timingStart[i];
         const end = timingEnd[i];
-        const local = transitionProgress <= start
-          ? 0
-          : transitionProgress >= end
-            ? 1
-            : smoothstep((transitionProgress - start) / Math.max(0.001, end - start));
+        const local = morph <= start ? 0 : morph >= end ? 1 : smoothstep((morph - start) / Math.max(0.001, end - start));
         value = current[i] + (next[i] - current[i]) * local;
       }
 
       const normalized = value / 255;
-      if (normalized < 0.045) continue;
+      if (normalized < 0.035) continue;
 
       let paletteIndex = Math.round(normalized * (palette.length - 1));
-
-      if (inTransition && globalChaos > 0.04) {
-        const mutation = hash(i * 97 + glitchTick * 131 + transitionSeed);
-        const mutationChance = 0.10 + globalChaos * 0.48;
-        if (mutation < mutationChance) {
-          const spread = 2 + Math.floor(globalChaos * 4);
-          const offsetNoise = hash(i * 53 + glitchTick * 211 + transitionSeed * 7);
-          const offset = Math.round((offsetNoise * 2 - 1) * spread);
-          paletteIndex = Math.max(1, Math.min(palette.length - 1, paletteIndex + offset));
+      if (morph > 0) {
+        const noise = hash(seed + i * 47 + glitchTick * 131);
+        if (noise < 0.08 + chaos * 0.4) {
+          const offsetNoise = hash(seed + i * 71 + glitchTick * 197);
+          paletteIndex = Math.max(1, Math.min(palette.length - 1, paletteIndex + Math.round((offsetNoise * 2 - 1) * (1 + chaos * 3))));
         }
       }
 
-      const character = palette[paletteIndex];
-      if (character === ' ') continue;
+      const ch = palette[paletteIndex];
+      if (ch === ' ') continue;
 
       const x = (i % cols) * cellWidth + cellWidth * 0.5;
-      const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.52;
-      const alphaBase = 0.22 + normalized * 0.78;
-      const shimmer = inTransition
-        ? 0.82 + hash(i * 43 + glitchTick * 59 + transitionSeed) * 0.18 * globalChaos
-        : 1;
-      const alpha = Math.min(1, alphaBase * shimmer);
-      const tone = Math.round(185 + normalized * 70);
-
+      const y = Math.floor(i / cols) * cellHeight + cellHeight * 0.55;
+      const alpha = Math.min(1, 0.18 + normalized * 0.84 + chaos * 0.06);
+      const tone = Math.round(172 + normalized * 83);
       ctx.fillStyle = `rgba(${tone},${tone},${tone},${alpha})`;
-      ctx.fillText(character, x, y);
+      ctx.fillText(ch, x, y);
     }
   };
 
-  const tick = (now) => {
-    let elapsed = now - sceneStartedAt;
-
+  const renderLoop = (now) => {
+    let elapsed = now - startedAt;
     while (elapsed >= SCENE_MS) {
-      sceneStartedAt += SCENE_MS;
-      currentIndex = nextIndex;
+      startedAt += SCENE_MS;
+      frameIndex = nextIndex;
       nextIndex = (nextIndex + 1) % frames.length;
       prepareTransition();
-      lastStaticFrame = -1;
-      elapsed = now - sceneStartedAt;
+      lastStaticIndex = -1;
+      elapsed = now - startedAt;
     }
 
-    const transitionProgress = elapsed <= HOLD_MS
-      ? 0
-      : clamp01((elapsed - HOLD_MS) / TRANSITION_MS);
-
-    if (transitionProgress === 0) {
-      if (lastStaticFrame !== currentIndex) {
+    const morph = elapsed <= HOLD_MS ? 0 : clamp01((elapsed - HOLD_MS) / MORPH_MS);
+    if (morph === 0) {
+      if (lastStaticIndex !== frameIndex) {
         draw(now, 0);
-        lastStaticFrame = currentIndex;
+        lastStaticIndex = frameIndex;
       }
     } else {
-      draw(now, transitionProgress);
-      lastStaticFrame = -1;
+      draw(now, morph);
+      lastStaticIndex = -1;
     }
 
-    animationFrame = requestAnimationFrame(tick);
+    rafId = requestAnimationFrame(renderLoop);
+  };
+
+  const updateScrollState = () => {
+    const stageRect = stage.getBoundingClientRect();
+    const heroRect = hero.getBoundingClientRect();
+    const travel = Math.max(1, stage.offsetHeight - heroRect.height);
+    const passed = clamp01((-stageRect.top) / travel);
+    const blackout = clamp01(passed / 0.62);
+    const fadePhase = clamp01((passed - 0.62) / 0.38);
+
+    hero.style.setProperty('--ascii-blackout', blackout.toFixed(3));
+    hero.style.setProperty('--ascii-opacity', (1 - fadePhase).toFixed(3));
+    hero.style.setProperty('--ascii-y', `${Math.round(-56 * fadePhase)}px`);
   };
 
   prepareTransition();
-  resizeCanvas();
+  resize();
+  updateScrollState();
 
-  if (reducedMotion) {
+  if (!reducedMotion) {
+    rafId = requestAnimationFrame(renderLoop);
+  } else {
     draw(performance.now(), 0);
-    return;
   }
 
-  const resizeObserver = new ResizeObserver(() => resizeCanvas());
-  resizeObserver.observe(root);
+  const onResize = () => {
+    resize();
+    updateScrollState();
+    if (reducedMotion) draw(performance.now(), 0);
+  };
 
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      updateScrollState();
+      ticking = false;
+    });
+  };
+
+  window.addEventListener('resize', onResize, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
   document.addEventListener('visibilitychange', () => {
+    if (reducedMotion) return;
     if (document.hidden) {
-      cancelAnimationFrame(animationFrame);
-      return;
+      cancelAnimationFrame(rafId);
+    } else {
+      startedAt = performance.now();
+      lastStaticIndex = -1;
+      rafId = requestAnimationFrame(renderLoop);
     }
-    sceneStartedAt = performance.now();
-    lastStaticFrame = -1;
-    animationFrame = requestAnimationFrame(tick);
   });
-
-  animationFrame = requestAnimationFrame(tick);
 })();
