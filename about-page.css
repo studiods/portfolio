@@ -8,7 +8,6 @@
 
 /* English UI */
 .about-page .about-section-label,
-.about-page .career-period,
 .about-page .about-footer,
 .about-page .about-footer *{
   font-family:'Averta PE',sans-serif;
@@ -19,8 +18,7 @@
 /* Korean Thin */
 .about-page .about-hero-title,
 .about-page .about-statement,
-.about-page .career-company,
-.about-page .career-role{
+.about-page .career-company{
   font-family:var(--about-kr);
   font-weight:100;
   font-variation-settings:'wght' 100;
@@ -31,7 +29,9 @@
 .about-page .principle-title,
 .about-page .principle-copy,
 .about-page .interview-q,
-.about-page .interview-a{
+.about-page .interview-a,
+.about-page .career-period,
+.about-page .career-role{
   font-family:var(--about-kr);
   font-weight:300;
   font-variation-settings:'wght' 300;
@@ -39,12 +39,12 @@
 
 /* Profile */
 .about-page .about-hero-v2{
-  min-height:100vh;
-  padding:clamp(120px,18vh,210px) 0 clamp(56px,8vh,90px);
+  min-height:clamp(760px,82vh,920px);
+  padding:clamp(96px,10vh,130px) 0 clamp(48px,6vh,70px);
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);
   column-gap:var(--gap);
-  align-content:end;
+  align-content:center;
 }
 .about-page .about-section-label{
   font-size:13px;
@@ -193,8 +193,9 @@
 }
 .about-page .career-period{
   font-size:12px;
+  line-height:1.4;
   color:#777;
-  padding-top:4px;
+  padding:4px 0 0 20px;
   transition:color .22s ease;
 }
 .about-page .career-company{
@@ -229,15 +230,6 @@
 .about-page .about-footer h3{margin:0 0 18px;font-size:13px}
 .about-page .about-footer p,
 .about-page .about-footer a{margin:0;font-size:13px;line-height:1.7}
-
-/* Tall desktop */
-@media(min-width:851px) and (min-height:1000px){
-  .about-page .about-hero-v2{
-    align-content:center;
-    padding-top:clamp(100px,10vh,140px);
-    padding-bottom:clamp(48px,6vh,72px);
-  }
-}
 
 /* Mobile */
 @media(max-width:850px){
@@ -343,5 +335,5 @@
   .about-page .about-section{padding:60px 0}
   .about-page .principle-title,
   .about-page .interview-q{font-size:20px}
-  .about-page .career-row-v2{grid-template-columns:88px 1fr}
+  .about-page .career-row-v2{grid-template-columns:108px 1fr}
 }
