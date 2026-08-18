@@ -403,12 +403,18 @@
   };
 
   /*
-    After each hero message is fully visible, the following wheel gesture keeps
-    only half of its distance. The current gesture is allowed to finish first,
-    so trackpad momentum cannot accidentally consume the pause.
+    After each hero message and the philosophy statement are fully visible,
+    suppress the following downward wheel gesture. The gesture that completed
+    the text is allowed to finish first, so trackpad momentum cannot consume
+    the reading pause by accident.
   */
-  const gateThresholds = [HERO.quoteFillEnd, HERO.defFillEnd, HERO.subFillEnd];
-  const gateStates = gateThresholds.map(() => 'waiting');
+  const gateDefinitions = [
+    progress => progress.hero >= HERO.quoteFillEnd,
+    progress => progress.hero >= HERO.defFillEnd,
+    progress => progress.hero >= HERO.subFillEnd,
+    progress => progress.philosophy >= 0.82
+  ];
+  const gateStates = gateDefinitions.map(() => 'waiting');
   let wheelBurstActive = false;
   let wheelBurstTimer = 0;
   let activeGate = -1;
@@ -439,9 +445,9 @@
     enableWheelControl();
   };
 
-  const updateGates = heroProgress => {
-    gateThresholds.forEach((threshold, index) => {
-      if (gateStates[index] !== 'waiting' || heroProgress < threshold) return;
+  const updateGates = progress => {
+    gateDefinitions.forEach((isComplete, index) => {
+      if (gateStates[index] !== 'waiting' || !isComplete(progress)) return;
       if (wheelBurstActive) gateStates[index] = 'pending';
       else armGate(index);
     });
@@ -463,7 +469,7 @@
   const trackWheel = event => {
     registerUserAction();
     if (event.ctrlKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX) || event.deltaY <= 0) return;
-    if (scrollY > metrics.heroTop + metrics.heroTravel + 1) {
+    if (scrollY > metrics.philosophyTop + metrics.philosophyTravel + metrics.viewportHeight) {
       disableWheelTracking();
       return;
     }
@@ -478,9 +484,6 @@
     if (activeGate < 0) return;
 
     event.preventDefault();
-    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? metrics.viewportHeight : 1;
-    const scroller = document.scrollingElement;
-    if (scroller) scroller.scrollTop += event.deltaY * unit * 0.5;
   };
 
   const render = () => {
@@ -496,7 +499,6 @@
 
     if (Math.abs(heroProgress - lastHeroProgress) >= 0.0001) {
       renderHero(heroProgress);
-      updateGates(heroProgress);
       lastHeroProgress = heroProgress;
     }
     if (Math.abs(philosophyProgress - lastPhilosophyProgress) >= 0.0001) {
@@ -507,6 +509,7 @@
       renderPrinciples(principlesProgress);
       lastPrinciplesProgress = principlesProgress;
     }
+    updateGates({ hero: heroProgress, philosophy: philosophyProgress });
   };
   const requestRender = () => {
     if (!raf) raf = requestAnimationFrame(render);
