@@ -275,82 +275,156 @@
   };
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const IDLE_FIRST_DELAY = 2000;
-  const IDLE_REPEAT_DELAY = 5000;
-  const IDLE_LINE_MS = 920;
-  const IDLE_NEXT_AT = 0.90;
+
+  /*
+    Initial-page idle cue. It is intentionally isolated from the scroll-driven
+    hero timeline: the cue only runs while the page has never been interacted
+    with and the hero progress is still at zero. Any user interaction cancels
+    it permanently for that page view, so it can never fight the scroll scrub.
+
+    Pattern order is a ping-pong sequence: 1 > 2 > 3 > 2 > 1 > 2 > 3 ...
+    Pattern 1: words in reading order, 5% -> 50% -> 5%, 1s per word.
+    Pattern 2: lines in reading order, 5% -> 30% -> 5%, 1s per line.
+    Pattern 3: every word once in a fresh random order, same 50% pulse.
+    There is a 3s idle gap before the first pattern and between patterns.
+  */
+  const IDLE_DELAY_MS = 3000;
+  const IDLE_UNIT_MS = 1000;
   const IDLE_BASE_ALPHA = 0.05;
-  const IDLE_PEAK_ALPHA = 0.15;
+  const IDLE_WORD_PEAK_ALPHA = 0.50;
+  const IDLE_LINE_PEAK_ALPHA = 0.30;
+  const IDLE_PATTERN_ORDER = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
+
+  const quoteWordGroups = [];
+  quoteLineChars.forEach(chars => {
+    let word = [];
+    const flushWord = () => {
+      if (!word.length) return;
+      quoteWordGroups.push(word);
+      word = [];
+    };
+
+    chars.forEach(char => {
+      if (char.textContent.trim().length > 0) {
+        word.push(char);
+      } else {
+        flushWord();
+      }
+    });
+    flushWord();
+  });
+
+  const shuffleUnits = units => {
+    const copy = units.slice();
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  };
+
   let idleTimer = 0;
   let idleRaf = 0;
-  let idleCycleStartedAt = 0;
+  let idlePatternStartedAt = 0;
+  let idlePatternIndex = 0;
+  let idleUnits = [];
+  let idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
+  let idleDisabled = false;
 
   const heroIsAtRest = () => hero && getHeroProgress() < 0.002;
 
-  const restoreQuoteFromScroll = () => {
-    if (!heroIsAtRest()) return;
-    setCharsOneByOne(quoteChars, 0);
+  const paintQuoteBase = () => {
+    quoteChars.forEach(char => {
+      setStyle(char, 'color', `rgba(17,17,17,${IDLE_BASE_ALPHA.toFixed(3)})`);
+    });
     setWhole(sourceOnly ? [sourceOnly] : [], 0);
   };
 
-  const stopIdleCue = () => {
-    const wasAnimating = Boolean(idleRaf || idleCycleStartedAt);
+  const paintIdleUnit = (chars, alpha) => {
+    chars.forEach(char => {
+      if (char.textContent.trim().length > 0) {
+        setStyle(char, 'color', `rgba(17,17,17,${alpha.toFixed(3)})`);
+      }
+    });
+  };
+
+  const idlePulseAlpha = (localProgress, peakAlpha) => {
+    const local = clamp(localProgress);
+    const pulse = local < 0.5
+      ? easeInOut(local * 2)
+      : easeInOut((1 - local) * 2);
+    return IDLE_BASE_ALPHA + (peakAlpha - IDLE_BASE_ALPHA) * pulse;
+  };
+
+  const stopIdleCue = (restore = true) => {
     if (idleTimer) clearTimeout(idleTimer);
     if (idleRaf) cancelAnimationFrame(idleRaf);
     idleTimer = 0;
     idleRaf = 0;
-    idleCycleStartedAt = 0;
-    if (wasAnimating) restoreQuoteFromScroll();
+    idlePatternStartedAt = 0;
+    idleUnits = [];
+    if (restore && heroIsAtRest()) paintQuoteBase();
   };
 
-  const scheduleIdleCue = (delay) => {
-    if (reducedMotion || !quoteLineChars.length) return;
+  const prepareIdlePattern = () => {
+    const mode = IDLE_PATTERN_ORDER[idlePatternIndex];
+    if (mode === 'lines') {
+      idleUnits = quoteLineChars.map(chars => chars.filter(char => char.textContent.trim().length > 0));
+      idlePeakAlpha = IDLE_LINE_PEAK_ALPHA;
+    } else if (mode === 'randomWords') {
+      idleUnits = shuffleUnits(quoteWordGroups);
+      idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
+    } else {
+      idleUnits = quoteWordGroups.slice();
+      idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
+    }
+  };
+
+  const scheduleIdleCue = (delay = IDLE_DELAY_MS) => {
+    if (reducedMotion || idleDisabled || !quoteWordGroups.length || document.hidden) return;
     if (idleTimer) clearTimeout(idleTimer);
     idleTimer = window.setTimeout(() => {
       idleTimer = 0;
-      if (heroIsAtRest()) {
-        idleCycleStartedAt = performance.now();
-        idleRaf = requestAnimationFrame(runIdleCue);
-      }
+      if (idleDisabled || !heroIsAtRest() || document.hidden) return;
+      prepareIdlePattern();
+      paintQuoteBase();
+      idlePatternStartedAt = performance.now();
+      idleRaf = requestAnimationFrame(runIdleCue);
     }, delay);
   };
 
-  const runIdleCue = (now) => {
-    if (!heroIsAtRest()) {
-      stopIdleCue();
+  const runIdleCue = now => {
+    if (idleDisabled || !heroIsAtRest() || document.hidden) {
+      stopIdleCue(true);
       return;
     }
 
-    const elapsed = now - idleCycleStartedAt;
-    const lineOffset = IDLE_LINE_MS * IDLE_NEXT_AT;
-    const totalDuration = IDLE_LINE_MS + lineOffset * (quoteLineChars.length - 1);
+    const elapsed = now - idlePatternStartedAt;
+    const totalDuration = Math.max(1, idleUnits.length) * IDLE_UNIT_MS;
 
-    quoteLineChars.forEach((chars, lineIndex) => {
-      const local = clamp((elapsed - lineIndex * lineOffset) / IDLE_LINE_MS);
-      const pulse = local < 0.5
-        ? easeInOut(local * 2)
-        : easeInOut((1 - local) * 2);
-      const alpha = IDLE_BASE_ALPHA +
-        (IDLE_PEAK_ALPHA - IDLE_BASE_ALPHA) * pulse;
-      chars.forEach(char => {
-        setStyle(char, 'color', `rgba(17,17,17,${alpha.toFixed(3)})`);
-      });
-    });
-
-    if (elapsed < totalDuration) {
-      idleRaf = requestAnimationFrame(runIdleCue);
+    if (elapsed >= totalDuration) {
+      paintQuoteBase();
+      idleRaf = 0;
+      idlePatternStartedAt = 0;
+      idleUnits = [];
+      idlePatternIndex = (idlePatternIndex + 1) % IDLE_PATTERN_ORDER.length;
+      scheduleIdleCue(IDLE_DELAY_MS);
       return;
     }
 
-    idleRaf = 0;
-    idleCycleStartedAt = 0;
-    restoreQuoteFromScroll();
-    scheduleIdleCue(IDLE_REPEAT_DELAY);
+    const unitIndex = Math.min(idleUnits.length - 1, Math.floor(elapsed / IDLE_UNIT_MS));
+    const localProgress = (elapsed - unitIndex * IDLE_UNIT_MS) / IDLE_UNIT_MS;
+
+    /* Reset first so skipped animation frames can never leave a prior unit lit. */
+    paintQuoteBase();
+    paintIdleUnit(idleUnits[unitIndex], idlePulseAlpha(localProgress, idlePeakAlpha));
+    idleRaf = requestAnimationFrame(runIdleCue);
   };
 
   const registerUserAction = () => {
-    stopIdleCue();
-    if (heroIsAtRest()) scheduleIdleCue(IDLE_REPEAT_DELAY);
+    if (idleDisabled) return;
+    idleDisabled = true;
+    stopIdleCue(true);
   };
 
   const philosophySection = $('#philosophy');
@@ -468,10 +542,10 @@
   };
 
   refreshMetrics();
-  scheduleIdleCue(IDLE_FIRST_DELAY);
+  scheduleIdleCue(IDLE_DELAY_MS);
 
   addEventListener('scroll', () => {
-    registerUserAction();
+    if (getHeroProgress() > 0.002) registerUserAction();
     requestRender();
   }, { passive: true });
   addEventListener('wheel', registerUserAction, { passive: true });
@@ -479,6 +553,15 @@
   addEventListener('pointerdown', registerUserAction, { passive: true });
   addEventListener('keydown', registerUserAction);
   addEventListener('resize', scheduleMetricsRefresh, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (idleDisabled || reducedMotion) return;
+    if (document.hidden) {
+      stopIdleCue(true);
+    } else if (heroIsAtRest()) {
+      scheduleIdleCue(IDLE_DELAY_MS);
+    }
+  });
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(scheduleMetricsRefresh).catch(() => {});
