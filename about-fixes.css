@@ -120,6 +120,15 @@
   .about-section-rule{
     padding-top:24px;
   }
+
+  /*
+    Match Career's mobile section opening to Interview: the section label is
+    followed immediately by the top rule using the shared mobile row gap.
+    Desktop spacing stays untouched.
+  */
+  .career-section .career-list{
+    margin-top:0!important;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
