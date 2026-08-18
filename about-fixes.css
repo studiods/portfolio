@@ -15,11 +15,6 @@
   z-index:5;
 }
 
-/* Fixed black matte above the ASCII animation. */
-.about-ascii-hero::after{
-  background:rgba(0,0,0,.40);
-}
-
 /*
   Section labels use their own one-way reveal state instead of the generic
   reveal-item observer. This prevents small labels from being skipped when a
