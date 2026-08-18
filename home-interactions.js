@@ -106,10 +106,10 @@
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   /*
-    Scroll-story timeline weights. Each completed message receives a real
-    plateau in the sticky sequence instead of relying on canceled wheel input.
-    With the matching section heights in home-fixes.css, every plateau is
-    approximately 55–60% of the viewport on desktop and mobile.
+    Scroll-story timeline weights. Quote and definition retain their authored
+    hold/exit phases. The final SUBTRACTIVE DESIGN scene has no synthetic hold
+    or exit: once its fill completes, the sticky hero reaches its natural
+    boundary and subsequent scrolling moves the entire page upward.
   */
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13,
@@ -121,8 +121,8 @@
     defExit: 0.13,
     subEnter: 0.08,
     subFill: 0.13,
-    subHold: 0.24,
-    subExit: 0.13
+    subHold: 0,
+    subExit: 0
   });
 
   const HERO_TOTAL = Object.values(HERO_PHASE).reduce((sum, value) => sum + value, 0);
@@ -221,13 +221,13 @@
     );
 
     const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
-    const subExit = phaseProgress(p, HERO.subHoldEnd, HERO.subExitEnd);
 
-    if (p < HERO.subHoldEnd) {
-      renderEnter(subState, subEnter);
-    } else {
-      renderExit(subState, subExit);
-    }
+    /*
+      Keep the final state fully rendered after it has entered. There is no
+      translate-down/fade-out phase; CSS sticky containment performs the exit
+      naturally as the hero section itself scrolls upward off the viewport.
+    */
+    renderEnter(subState, subEnter);
 
     setCharsOneByOne(
       subChars,
@@ -244,7 +244,7 @@
     setAttribute(
       subState,
       'aria-hidden',
-      subEnter <= 0.001 || subExit >= 0.999 ? 'true' : 'false'
+      subEnter <= 0.001 ? 'true' : 'false'
     );
   };
 
