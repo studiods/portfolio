@@ -78,6 +78,18 @@
 }
 .definition-copy p{margin:0;padding:0}
 .definition-copy p+p{margin-top:0}
+.definition-copy::after{
+  content:'한스 호프만';
+  display:block;
+  margin-top:20px;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight:300;
+  font-size:12px;
+  line-height:1.4;
+  letter-spacing:-.01em;
+  color:rgba(17,17,17,.8);
+}
+.subtractive-korean{opacity:.8}
 
 /*
   Design philosophy is a self-contained sticky sequence.
@@ -169,8 +181,9 @@
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
   .definition-copy{font-size:clamp(24.3px,6.804vw,46.98px);line-height:1.06;letter-spacing:-.03em}
+  .definition-copy::after{margin-top:16px;font-size:11px}
   .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
-  .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px)}
+  .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.8}
 
   .intro-block{
     min-height:205vh!important;
