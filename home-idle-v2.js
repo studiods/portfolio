@@ -16,10 +16,10 @@
   if (reducedMotion) return;
 
   const BASE_ALPHA = 0.05;
-  const WORD_ALPHA = 0.50;
-  const LINE_ALPHA = 0.30;
+  const WORD_ALPHA = 1;
+  const LINE_ALPHA = 1;
   const UNIT_MS = 700;
-  const NEXT_UNIT_AT = 0.80;
+  const NEXT_UNIT_AT = 0.60;
   const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
   const TAIL_MS = UNIT_MS - STAGGER_MS;
   const GAP_MS = 3000;
@@ -116,9 +116,9 @@
 
     /*
       Web Animations API keeps the idle pulse independent from the scroll-driven
-      inline colors. Each unit still owns a full 700ms pulse, but the scheduler
-      starts the following unit at 80% (560ms), leaving a 140ms overlap so the
-      visual rhythm never drops to a dead stop between words/lines.
+      inline colors. Each unit owns a full 700ms pulse, while the next unit starts
+      at 60% (420ms). The resulting 280ms overlap creates a continuous wave-like
+      rhythm without shortening the individual pulse itself.
     */
     if (group[0]?.animate) {
       group.forEach(char => {
@@ -174,7 +174,7 @@
       }
     }
 
-    /* Let the final unit finish its remaining 20% before the 3s pattern gap. */
+    /* Let the final unit finish its remaining 40% before the 3s pattern gap. */
     return wait(TAIL_MS, token);
   };
 
