@@ -25,27 +25,23 @@
     return;
   }
 
-  /*
-    Keep the current final ASCII resolution: 288×162 (16:9).
-    A 3×2 layout therefore gives each card a 96×81 cell.
-    To preserve the full source height before downsampling, each 288×162 source
-    frame is center-cropped to 192×162 (32:27), then reduced exactly 2× to 96×81.
-  */
   const OUTPUT_COLS = 288;
   const OUTPUT_ROWS = 162;
   const GRID_COLS = 3;
   const GRID_ROWS = 2;
-  const CARD_COLS = OUTPUT_COLS / GRID_COLS; // 96
-  const CARD_ROWS = OUTPUT_ROWS / GRID_ROWS; // 81
-  const CROP_ROWS = sourceRows; // 162
-  const CROP_COLS = Math.round(CROP_ROWS * (CARD_COLS / CARD_ROWS)); // 192
-  const CROP_X = Math.floor((sourceCols - CROP_COLS) / 2); // 48
+  const SLOT_COUNT = GRID_COLS * GRID_ROWS;
+  const CARD_COLS = OUTPUT_COLS / GRID_COLS;
+  const CARD_ROWS = OUTPUT_ROWS / GRID_ROWS;
+  const CROP_ROWS = sourceRows;
+  const CROP_COLS = Math.round(CROP_ROWS * (CARD_COLS / CARD_ROWS));
+  const CROP_X = Math.floor((sourceCols - CROP_COLS) / 2);
 
   const PALETTE = ' .,:;-=+*#%@';
   const SCENE_MS = 1500;
   const HOLD_MS = 960;
   const MORPH_MS = SCENE_MS - HOLD_MS;
   const GLITCH_MS = 48;
+  const MATTE_ALPHA = 0.90;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const sourceCellCount = sourceCols * sourceRows;
@@ -79,17 +75,11 @@
     sourceFrames.push(frame);
   }
 
-  /*
-    Test selection: use frames 1–6 from the current seven-frame source set.
-    The seventh source frame remains untouched in about-ascii-data.js so this
-    experiment cannot alter the deployed About animation.
-  */
   const selectedFrames = sourceFrames.slice(0, 6);
 
   const buildCard = source => {
     const card = new Uint8Array(CARD_COLS * CARD_ROWS);
 
-    /* Exact 2× area reduction after the height-led center crop. */
     for (let y = 0; y < CARD_ROWS; y += 1) {
       const sy = y * 2;
       for (let x = 0; x < CARD_COLS; x += 1) {
@@ -134,13 +124,24 @@
     return copy;
   };
 
-  /* Ensure every card actually changes slot on each 1.5s scene. */
   const nextPermutation = current => {
     for (let attempt = 0; attempt < 24; attempt += 1) {
       const candidate = shuffle(current);
       if (candidate.every((value, index) => value !== current[index])) return candidate;
     }
     return [...current.slice(1), current[0]];
+  };
+
+  const pickMatteSlots = previous => {
+    const allSlots = Array.from({ length: SLOT_COUNT }, (_, index) => index);
+    const previousKey = previous?.slice().sort((a, b) => a - b).join(',') || '';
+
+    for (let attempt = 0; attempt < 32; attempt += 1) {
+      const candidate = shuffle(allSlots).slice(0, 3).sort((a, b) => a - b);
+      if (candidate.join(',') !== previousKey) return candidate;
+    }
+
+    return [0, 2, 4];
   };
 
   const clamp01 = value => Math.max(0, Math.min(1, value));
@@ -163,6 +164,8 @@
 
   let currentOrder = [0, 1, 2, 3, 4, 5];
   let upcomingOrder = nextPermutation(currentOrder);
+  let currentMatteSlots = pickMatteSlots();
+  let upcomingMatteSlots = pickMatteSlots(currentMatteSlots);
   let currentFrame = compose(currentOrder);
   let upcomingFrame = compose(upcomingOrder);
   let startedAt = performance.now();
@@ -206,6 +209,32 @@
     ctx.textBaseline = 'middle';
     textScaleX = cellWidth / Math.max(0.01, ctx.measureText('M').width);
     lastStaticSerial = -1;
+  };
+
+  const drawMatteSlots = morph => {
+    ctx.setTransform(renderDpr, 0, 0, renderDpr, 0, 0);
+    const currentSet = new Set(currentMatteSlots);
+    const upcomingSet = new Set(upcomingMatteSlots);
+
+    for (let slot = 0; slot < SLOT_COUNT; slot += 1) {
+      const currentValue = currentSet.has(slot) ? 1 : 0;
+      const upcomingValue = upcomingSet.has(slot) ? 1 : 0;
+      const blend = morph > 0
+        ? currentValue + (upcomingValue - currentValue) * smoothstep(morph)
+        : currentValue;
+      const alpha = MATTE_ALPHA * blend;
+      if (alpha <= 0.001) continue;
+
+      const gridX = slot % GRID_COLS;
+      const gridY = Math.floor(slot / GRID_COLS);
+      const x = gridX * CARD_COLS * cellWidth;
+      const y = gridY * CARD_ROWS * cellHeight;
+      const width = CARD_COLS * cellWidth;
+      const height = CARD_ROWS * cellHeight;
+
+      ctx.fillStyle = `rgba(0,0,0,${alpha.toFixed(3)})`;
+      ctx.fillRect(x, y, width, height);
+    }
   };
 
   const draw = (now, morph = 0) => {
@@ -258,13 +287,17 @@
     for (let row = 0; row < OUTPUT_ROWS; row += 1) {
       ctx.fillText(rowBuffers[row].join(''), 0, row * cellHeight + cellHeight * 0.54);
     }
+
+    drawMatteSlots(morph);
   };
 
   const advanceScene = () => {
     currentOrder = upcomingOrder;
     currentFrame = upcomingFrame;
+    currentMatteSlots = upcomingMatteSlots;
     upcomingOrder = nextPermutation(currentOrder);
     upcomingFrame = compose(upcomingOrder);
+    upcomingMatteSlots = pickMatteSlots(currentMatteSlots);
     prepareTransition();
     lastStaticSerial = -1;
   };
@@ -296,7 +329,7 @@
   prepareTransition();
   resize();
   draw(performance.now(), 0);
-  if (status) status.textContent = 'ASCII GRID TEST · 6 CARDS · 288×162';
+  if (status) status.textContent = 'ASCII GRID TEST · 3 CLEAR / 3 MATTE · 90%';
 
   if (!reducedMotion) rafId = requestAnimationFrame(renderLoop);
 
