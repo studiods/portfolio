@@ -106,21 +106,23 @@
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   /*
-    Scroll-story timeline weights. Quote and definition retain their authored
-    hold/exit phases. The final SUBTRACTIVE DESIGN scene has no synthetic hold
-    or exit: once its fill completes, the sticky hero reaches its natural
-    boundary and subsequent scrolling moves the entire page upward.
+    Only the three authored fill phases are 10% longer. Their matching CSS
+    hero travel is increased by the same total-distance ratio, so enter,
+    hold and exit distances remain effectively unchanged. This avoids making
+    the whole sequence feel slower and preserves the final natural sticky
+    release into Design philosophy.
   */
+  const HERO_FILL_SCALE = 1.10;
   const HERO_PHASE = Object.freeze({
-    quoteFill: 0.13,
+    quoteFill: 0.13 * HERO_FILL_SCALE,
     quoteHold: 0.24,
     quoteExit: 0.13,
     defEnter: 0.09,
-    defFill: 0.12,
+    defFill: 0.12 * HERO_FILL_SCALE,
     defHold: 0.24,
     defExit: 0.13,
     subEnter: 0.08,
-    subFill: 0.13,
+    subFill: 0.13 * HERO_FILL_SCALE,
     subHold: 0,
     subExit: 0
   });
