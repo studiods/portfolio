@@ -16,14 +16,12 @@
   if (reducedMotion) return;
 
   const BASE_ALPHA = 0.05;
-  const WORD_ALPHA = 1;
-  const LINE_ALPHA = 1;
-  const UNIT_MS = 700;
+  const WORD_ALPHA = 0.82;
+  const LINE_ALPHA = 0.82;
+  const UNIT_MS = 1000;
   const NEXT_UNIT_AT = 0.60;
   const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
   const TAIL_MS = UNIT_MS - STAGGER_MS;
-  const ATTACK_END = 0.34;
-  const SUSTAIN_END = 0.66;
   const GAP_MS = 3000;
   const PATTERNS = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
 
@@ -110,36 +108,40 @@
     timers.add(id);
   });
 
+  const rgba = alpha => `rgba(17,17,17,${alpha.toFixed(3)})`;
+
   const pulseUnit = (group, peakAlpha, token) => {
     if (!canRun(token)) return false;
 
-    const base = `rgba(17,17,17,${BASE_ALPHA})`;
-    const peak = `rgba(17,17,17,${peakAlpha})`;
+    const base = rgba(BASE_ALPHA);
 
     /*
-      A simple 0 -> 50% -> 100% pulse made the 60% scheduler overlap exist in
-      code, but not read as overlap: the outgoing unit had already started its
-      fade before the next unit became visually strong. Use an attack / sustain /
-      release envelope instead. The current unit reaches full black by 34%, holds
-      through 66%, and only then releases. Because the next unit starts at 60%,
-      the outgoing unit is still at 100% when the incoming unit begins. By the
-      time the outgoing unit ends, the incoming unit has reached its own sustain.
-    */
+      The previous 700ms attack reached full black in about 238ms, so although
+      units overlapped in time, each word visually snapped on. Use a full 1s
+      envelope with several intermediate alpha stops instead. The next unit still
+      starts at 60% (600ms), while the outgoing unit is still rising toward its
+      peak. This makes the transition read as a continuous wave rather than a set
+      of separate flashes. The peak is capped at 82% to keep the progression
+      visible instead of jumping from the 5% resting state to hard black.
+  */
     if (group[0]?.animate) {
+      const keyframes = [
+        { color: base, offset: 0 },
+        { color: rgba(0.14), offset: 0.18 },
+        { color: rgba(0.34), offset: 0.36 },
+        { color: rgba(0.60), offset: 0.54 },
+        { color: rgba(peakAlpha), offset: 0.72 },
+        { color: rgba(peakAlpha), offset: 0.78 },
+        { color: rgba(0.45), offset: 0.90 },
+        { color: base, offset: 1 }
+      ];
+
       group.forEach(char => {
-        const animation = char.animate(
-          [
-            { color: base, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
-            { color: peak, offset: ATTACK_END, easing: 'linear' },
-            { color: peak, offset: SUSTAIN_END, easing: 'cubic-bezier(.4,0,.8,.2)' },
-            { color: base, offset: 1 }
-          ],
-          {
-            duration: UNIT_MS,
-            easing: 'linear',
-            fill: 'none'
-          }
-        );
+        const animation = char.animate(keyframes, {
+          duration: UNIT_MS,
+          easing: 'linear',
+          fill: 'none'
+        });
         activeAnimations.add(animation);
         animation.finished
           .catch(() => {})
@@ -148,8 +150,8 @@
       return true;
     }
 
-    /* Very old-browser fallback: preserve the same visible overlap timing. */
-    group.forEach(char => { char.style.color = peak; });
+    /* Very old-browser fallback: keep the same overall 1s timing. */
+    group.forEach(char => { char.style.color = rgba(peakAlpha); });
     const id = window.setTimeout(() => {
       timers.delete(id);
       group.forEach(char => { char.style.color = base; });
