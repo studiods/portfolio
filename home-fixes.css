@@ -251,7 +251,12 @@
 }
 .principle-no{grid-column:1;margin:3px 0 0!important}
 .principle-copy{grid-column:2;min-width:0}
-.principle-copy-stage{position:relative;overflow:hidden;isolation:isolate}
+.principle-copy-stage{
+  position:relative;
+  min-height:clamp(69.12px,6.432vw,115.2px);
+  overflow:hidden;
+  isolation:isolate;
+}
 .principle-card h3{
   position:relative;
   z-index:1;
@@ -344,6 +349,7 @@
   .principles-grid{top:7vh;min-height:86vh;gap:50px!important}
   .principle-card{grid-template-columns:1fr!important}
   .principle-card-inner{grid-column:1;grid-template-columns:30px minmax(0,1fr);column-gap:10px}
+  .principle-copy-stage{min-height:clamp(57.6px,16.32vw,84.48px)}
   .principle-card h3{font-size:clamp(30px,8.5vw,44px)}
   .principle-en{white-space:normal!important;font-size:11px}
   .principle-ko{font-size:calc(clamp(30px,8.5vw,44px) - 5.333px)!important;line-height:1.12!important}
