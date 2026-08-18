@@ -7,7 +7,7 @@
   const packed = window.ABOUT_ASCII_PACKED;
 
   if (!canvas || !ctx || !packed || !Array.isArray(packed.bytes)) {
-    if (status) status.textContent = 'ASCII TEST · DATA ERROR';
+    if (status) status.textContent = 'ASCII GRID TEST · DATA ERROR';
     return;
   }
 
@@ -15,15 +15,31 @@
   const sourceRows = Number(packed.height) || 162;
   const frameCount = Number(packed.count) || 7;
 
-  if (frameCount !== 7 || sourceCols !== 288 || sourceRows !== 162) {
-    if (status) status.textContent = 'ASCII TEST · SOURCE SIZE ERROR';
-    console.error('ASCII single-frame test expects 7 frames at 288×162.', {
+  if (frameCount < 6 || sourceCols !== 288 || sourceRows !== 162) {
+    if (status) status.textContent = 'ASCII GRID TEST · SOURCE SIZE ERROR';
+    console.error('ASCII grid test expects at least 6 frames at 288×162.', {
       width: sourceCols,
       height: sourceRows,
       count: frameCount
     });
     return;
   }
+
+  /*
+    Keep the current final ASCII resolution: 288×162 (16:9).
+    A 3×2 layout therefore gives each card a 96×81 cell.
+    To preserve the full source height before downsampling, each 288×162 source
+    frame is center-cropped to 192×162 (32:27), then reduced exactly 2× to 96×81.
+  */
+  const OUTPUT_COLS = 288;
+  const OUTPUT_ROWS = 162;
+  const GRID_COLS = 3;
+  const GRID_ROWS = 2;
+  const CARD_COLS = OUTPUT_COLS / GRID_COLS; // 96
+  const CARD_ROWS = OUTPUT_ROWS / GRID_ROWS; // 81
+  const CROP_ROWS = sourceRows; // 162
+  const CROP_COLS = Math.round(CROP_ROWS * (CARD_COLS / CARD_ROWS)); // 192
+  const CROP_X = Math.floor((sourceCols - CROP_COLS) / 2); // 48
 
   const PALETTE = ' .,:;-=+*#%@';
   const SCENE_MS = 1500;
@@ -32,13 +48,13 @@
   const GLITCH_MS = 48;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const cellCount = sourceCols * sourceRows;
-  const packedPerFrame = Math.ceil(cellCount / 2);
+  const sourceCellCount = sourceCols * sourceRows;
+  const packedPerFrame = Math.ceil(sourceCellCount / 2);
   const expected = packedPerFrame * frameCount;
 
   if (packed.encoding !== 'u4-array' || packed.bytes.length !== expected) {
-    if (status) status.textContent = 'ASCII TEST · PAYLOAD ERROR';
-    console.error('ASCII single-frame test payload mismatch.', {
+    if (status) status.textContent = 'ASCII GRID TEST · PAYLOAD ERROR';
+    console.error('ASCII grid test payload mismatch.', {
       encoding: packed.encoding,
       actual: packed.bytes.length,
       expected
@@ -47,21 +63,85 @@
   }
 
   const raw = Uint8Array.from(packed.bytes);
-  const frames = [];
+  const sourceFrames = [];
 
   for (let frameIndex = 0; frameIndex < frameCount; frameIndex += 1) {
-    const frame = new Uint8Array(cellCount);
+    const frame = new Uint8Array(sourceCellCount);
     const offset = frameIndex * packedPerFrame;
     let target = 0;
 
-    for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
+    for (let i = 0; i < packedPerFrame && target < sourceCellCount; i += 1) {
       const byte = raw[offset + i];
       frame[target] = ((byte >>> 4) & 15) * 17;
-      if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
+      if (target + 1 < sourceCellCount) frame[target + 1] = (byte & 15) * 17;
       target += 2;
     }
-    frames.push(frame);
+    sourceFrames.push(frame);
   }
+
+  /*
+    Test selection: use frames 1–6 from the current seven-frame source set.
+    The seventh source frame remains untouched in about-ascii-data.js so this
+    experiment cannot alter the deployed About animation.
+  */
+  const selectedFrames = sourceFrames.slice(0, 6);
+
+  const buildCard = source => {
+    const card = new Uint8Array(CARD_COLS * CARD_ROWS);
+
+    /* Exact 2× area reduction after the height-led center crop. */
+    for (let y = 0; y < CARD_ROWS; y += 1) {
+      const sy = y * 2;
+      for (let x = 0; x < CARD_COLS; x += 1) {
+        const sx = CROP_X + x * 2;
+        const a = source[sy * sourceCols + sx];
+        const b = source[sy * sourceCols + sx + 1];
+        const c = source[(sy + 1) * sourceCols + sx];
+        const d = source[(sy + 1) * sourceCols + sx + 1];
+        card[y * CARD_COLS + x] = Math.round((a + b + c + d) / 4);
+      }
+    }
+
+    return card;
+  };
+
+  const cards = selectedFrames.map(buildCard);
+
+  const compose = order => {
+    const output = new Uint8Array(OUTPUT_COLS * OUTPUT_ROWS);
+
+    for (let slot = 0; slot < order.length; slot += 1) {
+      const gridX = slot % GRID_COLS;
+      const gridY = Math.floor(slot / GRID_COLS);
+      const card = cards[order[slot]];
+
+      for (let y = 0; y < CARD_ROWS; y += 1) {
+        const sourceStart = y * CARD_COLS;
+        const targetStart = (gridY * CARD_ROWS + y) * OUTPUT_COLS + gridX * CARD_COLS;
+        output.set(card.subarray(sourceStart, sourceStart + CARD_COLS), targetStart);
+      }
+    }
+
+    return output;
+  };
+
+  const shuffle = values => {
+    const copy = values.slice();
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  };
+
+  /* Ensure every card actually changes slot on each 1.5s scene. */
+  const nextPermutation = current => {
+    for (let attempt = 0; attempt < 24; attempt += 1) {
+      const candidate = shuffle(current);
+      if (candidate.every((value, index) => value !== current[index])) return candidate;
+    }
+    return [...current.slice(1), current[0]];
+  };
 
   const clamp01 = value => Math.max(0, Math.min(1, value));
   const smoothstep = value => {
@@ -75,21 +155,16 @@
     x ^= x >>> 16;
     return (x >>> 0) / 4294967295;
   };
-  const pickDifferent = previous => {
-    let next = previous;
-    while (next === previous) next = Math.floor(Math.random() * frameCount);
-    return next;
-  };
 
-  /*
-    This test deliberately uses the full 288×162 source frame with no portrait
-    crop. The original 16:9 composition — including more of the surrounding
-    background — is therefore preserved. CSS scales the 16:9 canvas to cover the
-    viewport, so physical pixel resolution may change but the source composition
-    and aspect ratio do not.
-  */
-  let currentIndex = Math.floor(Math.random() * frameCount);
-  let nextIndex = pickDifferent(currentIndex);
+  const cellCount = OUTPUT_COLS * OUTPUT_ROWS;
+  const timingStart = new Float32Array(cellCount);
+  const timingEnd = new Float32Array(cellCount);
+  const rowBuffers = Array.from({ length: OUTPUT_ROWS }, () => new Array(OUTPUT_COLS).fill(' '));
+
+  let currentOrder = [0, 1, 2, 3, 4, 5];
+  let upcomingOrder = nextPermutation(currentOrder);
+  let currentFrame = compose(currentOrder);
+  let upcomingFrame = compose(upcomingOrder);
   let startedAt = performance.now();
   let transitionSerial = 0;
   let rafId = 0;
@@ -99,15 +174,12 @@
   let cellHeight = 1;
   let renderDpr = 1;
   let textScaleX = 1;
-  let lastStaticIndex = -1;
-
-  const timingStart = new Float32Array(cellCount);
-  const timingEnd = new Float32Array(cellCount);
-  const rowBuffers = Array.from({ length: sourceRows }, () => new Array(sourceCols).fill(' '));
+  let lastStaticSerial = -1;
 
   const prepareTransition = () => {
     transitionSerial += 1;
-    const seed = transitionSerial * 733 + (currentIndex + 1) * 1597 + (nextIndex + 1) * 2207;
+    const orderSeed = upcomingOrder.reduce((seed, value, index) => seed + (value + 1) * (index + 5) * 97, 0);
+    const seed = transitionSerial * 733 + orderSeed * 1597;
 
     for (let i = 0; i < cellCount; i += 1) {
       const start = hash(seed + i * 19) * 0.48;
@@ -117,7 +189,7 @@
     }
   };
 
-  const resizeCanvas = () => {
+  const resize = () => {
     const rect = canvas.getBoundingClientRect();
     cssWidth = Math.max(1, rect.width);
     cssHeight = Math.max(1, rect.height);
@@ -126,14 +198,14 @@
     canvas.height = Math.round(cssHeight * renderDpr);
     ctx.setTransform(renderDpr, 0, 0, renderDpr, 0, 0);
 
-    cellWidth = cssWidth / sourceCols;
-    cellHeight = cssHeight / sourceRows;
+    cellWidth = cssWidth / OUTPUT_COLS;
+    cellHeight = cssHeight / OUTPUT_ROWS;
     const fontSize = Math.max(1.8, cellHeight * 1.02);
     ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     textScaleX = cellWidth / Math.max(0.01, ctx.measureText('M').width);
-    lastStaticIndex = -1;
+    lastStaticSerial = -1;
   };
 
   const draw = (now, morph = 0) => {
@@ -141,14 +213,13 @@
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
 
-    const current = frames[currentIndex];
-    const next = frames[nextIndex];
     const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
     const glitchTick = Math.floor(now / GLITCH_MS);
-    const seed = transitionSerial * 1063 + (currentIndex + 1) * 1601 + (nextIndex + 1) * 2207;
+    const orderSeed = upcomingOrder.reduce((seed, value, index) => seed + (value + 1) * (index + 11) * 83, 0);
+    const seed = transitionSerial * 1063 + orderSeed * 2207;
 
     for (let i = 0; i < cellCount; i += 1) {
-      let value = current[i];
+      let value = currentFrame[i];
 
       if (morph > 0) {
         const start = timingStart[i];
@@ -158,7 +229,7 @@
           : morph >= end
             ? 1
             : smoothstep((morph - start) / Math.max(0.001, end - start));
-        value = current[i] + (next[i] - current[i]) * local;
+        value = currentFrame[i] + (upcomingFrame[i] - currentFrame[i]) * local;
       }
 
       const normalized = value / 255;
@@ -178,22 +249,24 @@
         }
       }
 
-      rowBuffers[Math.floor(i / sourceCols)][i % sourceCols] = PALETTE[paletteIndex];
+      rowBuffers[Math.floor(i / OUTPUT_COLS)][i % OUTPUT_COLS] = PALETTE[paletteIndex];
     }
 
     ctx.setTransform(renderDpr * textScaleX, 0, 0, renderDpr, 0, 0);
     ctx.fillStyle = 'rgba(244,242,237,.88)';
 
-    for (let row = 0; row < sourceRows; row += 1) {
+    for (let row = 0; row < OUTPUT_ROWS; row += 1) {
       ctx.fillText(rowBuffers[row].join(''), 0, row * cellHeight + cellHeight * 0.54);
     }
   };
 
   const advanceScene = () => {
-    currentIndex = nextIndex;
-    nextIndex = pickDifferent(currentIndex);
+    currentOrder = upcomingOrder;
+    currentFrame = upcomingFrame;
+    upcomingOrder = nextPermutation(currentOrder);
+    upcomingFrame = compose(upcomingOrder);
     prepareTransition();
-    lastStaticIndex = -1;
+    lastStaticSerial = -1;
   };
 
   const renderLoop = now => {
@@ -208,27 +281,27 @@
     const morph = elapsed <= HOLD_MS ? 0 : clamp01((elapsed - HOLD_MS) / MORPH_MS);
 
     if (morph === 0) {
-      if (lastStaticIndex !== currentIndex) {
+      if (lastStaticSerial !== transitionSerial) {
         draw(now, 0);
-        lastStaticIndex = currentIndex;
+        lastStaticSerial = transitionSerial;
       }
     } else {
       draw(now, morph);
-      lastStaticIndex = -1;
+      lastStaticSerial = -1;
     }
 
     rafId = requestAnimationFrame(renderLoop);
   };
 
   prepareTransition();
-  resizeCanvas();
+  resize();
   draw(performance.now(), 0);
-  if (status) status.textContent = 'ASCII TEST · 1 FRAME · FULL 16:9 · 7 RANDOM';
+  if (status) status.textContent = 'ASCII GRID TEST · 6 CARDS · 288×162';
 
   if (!reducedMotion) rafId = requestAnimationFrame(renderLoop);
 
   window.addEventListener('resize', () => {
-    resizeCanvas();
+    resize();
     draw(performance.now(), 0);
   }, { passive: true });
 
