@@ -3,7 +3,7 @@
   const $ = (s, root = document) => root ? root.querySelector(s) : null;
   const $$ = (s, root = document) => root ? [...root.querySelectorAll(s)] : [];
 
-  const FILL_SLOWDOWN = 1.32;
+  const FILL_SLOWDOWN = 1.452;
   const FILL_FEATHER = 4;
   const styleCache = new WeakMap();
 
@@ -122,12 +122,13 @@
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   /*
-    Quote and definition keep the previous 10% longer fill distance. The final
-    SUBTRACTIVE DESIGN fill receives an additional 30% scroll distance. CSS
-    hero travel is increased by the matching phase-total ratio so unchanged
-    enter/hold/exit distances retain their previous physical scroll length.
+    Every hero fill is 10% longer than the previous deployed timing. The final
+    SUBTRACTIVE DESIGN fill keeps its additional 30% distance and then remains
+    fully rendered for about one viewport of native sticky scroll travel. CSS
+    height is increased by the matching phase-total ratio so all other phases
+    retain their previous physical scroll length.
   */
-  const HERO_FILL_SCALE = 1.10;
+  const HERO_FILL_SCALE = 1.21;
   const SUBTRACTIVE_FILL_SCALE = 1.30;
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13 * HERO_FILL_SCALE,
@@ -139,7 +140,7 @@
     defExit: 0.13,
     subEnter: 0.08,
     subFill: 0.13 * HERO_FILL_SCALE * SUBTRACTIVE_FILL_SCALE,
-    subHold: 0,
+    subHold: 0.40,
     subExit: 0
   });
 
