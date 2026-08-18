@@ -9,6 +9,7 @@
   --line-soft:rgba(244,242,237,.16);
   --pad:clamp(24px,3.2vw,44px);
   --gap:clamp(28px,3.4vw,64px);
+  --ascii-hero-height:min(100vh,56.25vw);
   --kr:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   --en:'Averta PE',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
@@ -60,12 +61,19 @@ a{color:inherit;text-decoration:none}
   background:var(--bg);
 }
 
+/*
+  The stage is exactly one viewport plus the ASCII hero height.
+  The Profile section is pulled up by the hero height, so it rises over the
+  sticky ASCII layer. The sticky layer is released only after Profile has
+  completely covered it.
+*/
 .about-ascii-stage{
   position:relative;
   width:auto;
+  height:calc(100vh + var(--ascii-hero-height));
+  min-height:0;
   margin-left:calc(-1 * var(--pad));
   margin-right:calc(-1 * var(--pad));
-  min-height:clamp(980px,145vh,1500px);
 }
 .about-ascii-hero{
   --ascii-blackout:0;
@@ -73,8 +81,8 @@ a{color:inherit;text-decoration:none}
   top:0;
   z-index:1;
   width:100vw;
-  height:auto;
-  aspect-ratio:16/9;
+  height:var(--ascii-hero-height);
+  aspect-ratio:auto;
   max-height:none;
   background:#000;
   overflow:hidden;
@@ -109,6 +117,8 @@ a{color:inherit;text-decoration:none}
   display:flex;
   align-items:center;
   justify-content:center;
+  width:100%;
+  height:100%;
   visibility:visible;
   opacity:1;
   margin:0;
@@ -128,7 +138,7 @@ a{color:inherit;text-decoration:none}
   width:100vw;
   margin-left:calc(-1 * var(--pad));
   margin-right:calc(-1 * var(--pad));
-  margin-top:clamp(-320px,-20vw,-190px);
+  margin-top:calc(-1 * var(--ascii-hero-height));
   padding-left:var(--pad);
   padding-right:var(--pad);
   padding-top:clamp(72px,8vh,108px);
@@ -337,14 +347,13 @@ a{color:inherit;text-decoration:none}
   :root{--pad:clamp(18px,4.4vw,24px);--gap:clamp(20px,5vw,28px)}
   .top{padding:16px var(--pad)}
   .top-center a{font-size:14px}
-  .about-ascii-stage{min-height:clamp(760px,110vh,1080px)}
   .about-hero-v2,
   .about-section{grid-template-columns:1fr;row-gap:22px}
   .about-hero-main,
   .about-section-rule,
   .about-hero-bottom,
   .about-section-body{grid-column:auto}
-  .about-hero-v2{padding-top:56px;margin-top:-120px}
+  .about-hero-v2{padding-top:56px}
   .about-hero-title,
   .about-statement{font-size:clamp(34px,7.6vw,48px);line-height:1.08}
   .about-lead{font-size:clamp(16px,3.9vw,19px);line-height:1.56}
@@ -363,9 +372,8 @@ a{color:inherit;text-decoration:none}
 }
 
 @media (max-width:640px){
-  .about-ascii-stage{min-height:clamp(680px,102vh,920px)}
   .about-ascii-hero{top:0}
-  .about-hero-v2{margin-top:-72px;padding-top:44px;padding-bottom:52px}
+  .about-hero-v2{padding-top:44px;padding-bottom:52px}
   .about-hero-main,
   .about-section-rule{padding-top:24px}
   .about-section{padding-top:58px;padding-bottom:58px}
