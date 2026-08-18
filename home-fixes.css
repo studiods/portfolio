@@ -179,6 +179,11 @@
 .principles-intro,.principle-card h3,.principle-en{font-weight:300!important}
 .principle-card>p:last-child{transition:none!important}
 
+/* Give the Works section about 20% more space above its label/content. */
+.selected-work{
+  padding-top:clamp(91px,8.4vh,144px)!important;
+}
+
 /* Mobile-only layout */
 @media(max-width:850px){
   :root{--pad:clamp(18px,5vw,24px);--gap:clamp(18px,5vw,28px)}
@@ -224,7 +229,7 @@
   .principle-en{white-space:normal;margin-bottom:26px}
   .principle-card>p:last-child{font-size:15px;line-height:1.6}
 
-  .selected-work{padding:72px 0 64px}
+  .selected-work{padding:86px 0 64px!important}
   .selected-work-header{margin-bottom:26px}
   .showcase-project{grid-template-columns:1fr;min-height:auto;padding:48px 0 76px;gap:24px}
   .showcase-project:first-child{padding-top:8px}
