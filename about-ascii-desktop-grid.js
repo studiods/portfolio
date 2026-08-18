@@ -50,7 +50,7 @@
   const MORPH_MS = SCENE_MS - HOLD_MS;
   const GLITCH_MS = 48;
   const DARK_MATTE_ALPHA = 0.70;
-  const LIGHT_MATTE_ALPHA = 0.20;
+  const LIGHT_MATTE_ALPHA = 0.30;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const sourceCellCount = sourceCols * sourceRows;
