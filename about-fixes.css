@@ -1,0 +1,21 @@
+.about-stack{
+  position:relative;
+  z-index:1;
+}
+
+/*
+  The ASCII stage intentionally continues behind Profile while the sticky
+  portrait is being covered. All content that follows Profile must therefore
+  establish a higher stacking level so it can never sit underneath the tail
+  of the sticky ASCII layer.
+*/
+.about-section,
+.about-footer{
+  position:relative;
+  z-index:5;
+}
+
+/* Fixed black matte above the ASCII animation. */
+.about-ascii-hero::after{
+  background:rgba(0,0,0,.30);
+}
