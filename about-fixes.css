@@ -19,3 +19,55 @@
 .about-ascii-hero::after{
   background:rgba(0,0,0,.30);
 }
+
+/*
+  Section labels use their own one-way reveal state instead of the generic
+  reveal-item observer. This prevents small labels from being skipped when a
+  fast scroll or browser scroll restoration jumps past their intersection
+  window. Default state is visible, so a JS failure can never hide a label.
+*/
+.thinking-section > .about-section-label,
+.interview-section > .about-section-label,
+.career-section > .about-section-label{
+  opacity:1;
+  transform:translate3d(0,0,0);
+  transition:opacity .5s ease-out,transform .72s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
+}
+
+.thinking-section > .about-section-label.section-label-pending,
+.interview-section > .about-section-label.section-label-pending,
+.career-section > .about-section-label.section-label-pending{
+  opacity:0;
+  transform:translate3d(0,18px,0);
+}
+
+.thinking-section > .about-section-label.section-label-visible,
+.interview-section > .about-section-label.section-label-visible,
+.career-section > .about-section-label.section-label-visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
+}
+
+/* Keep the distance from the horizontal rule to its headline identical. */
+.about-hero-main,
+.about-section-rule{
+  padding-top:30px;
+}
+
+@media(max-width:640px){
+  .about-hero-main,
+  .about-section-rule{
+    padding-top:24px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .thinking-section > .about-section-label,
+  .interview-section > .about-section-label,
+  .career-section > .about-section-label{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+}
