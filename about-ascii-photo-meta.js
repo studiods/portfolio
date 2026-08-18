@@ -1,0 +1,1 @@
+window.ABOUT_ASCII_PHOTO_META={"width":240,"height":135,"count":7,"encoding":"u4-deflate-base64","source":"user-uploaded originals; full-frame grayscale; no crop; mild detail simplification before downsampling"};window.ABOUT_ASCII_FRAME_B64=[];
