@@ -77,22 +77,23 @@
 }
 
 /*
-  Mobile portrait: crop the original 16:9 ASCII artwork to a centered 1:1
-  square instead of stretching it. The canvas is widened to its native 16:9
-  proportion and clipped by the square sticky viewport.
+  Mobile portrait: crop the original 16:9 ASCII artwork into a centered
+  1:1.2 viewport. The source aspect ratio is preserved and clipped equally
+  on the left and right. ABOUT remains centered to the viewport, not canvas.
 */
 @media(max-width:780px){
   :root{
-    --ascii-hero-height:100vw;
+    --ascii-hero-height:120vw;
   }
   .about-ascii-hero{
-    height:100vw;
+    height:120vw;
+    aspect-ratio:5/6;
   }
   .about-ascii-canvas{
     position:absolute!important;
     top:0;
     left:50%;
-    width:177.7778%!important;
+    width:213.3333%!important;
     height:100%!important;
     max-width:none!important;
     transform:translateX(-50%);
