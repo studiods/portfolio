@@ -111,22 +111,24 @@
   const quoteLines = $$('.hero-quote > span', hero);
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
+  const definitionSource = $('.definition-source', hero);
   const subState = $('.hero-state-subtractive', hero);
   const subLines = $$('.subtractive-korean .fill-line', hero);
   subLines.forEach(splitChars);
 
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
+  const definitionSourceChars = $$('.definition-source .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
   const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   /*
-    Every hero fill is 10% longer than the previous deployed timing. The final
-    SUBTRACTIVE DESIGN fill keeps its additional 30% distance and then remains
-    fully rendered for about one viewport of native sticky scroll travel. CSS
-    height is increased by the matching phase-total ratio so all other phases
-    retain their previous physical scroll length.
+    Keep the deployed hero travel unchanged. Small source/caption fill phases
+    are carved out of their existing hold windows: the Korean Hofmann credit
+    fills immediately after the definition, and the Korean subtractive caption
+    fills only after SUBTRACTIVE DESIGN is completely black. This preserves all
+    section-height math and the natural sticky release into Design philosophy.
   */
   const HERO_FILL_SCALE = 1.21;
   const SUBTRACTIVE_FILL_SCALE = 1.30;
@@ -136,11 +138,13 @@
     quoteExit: 0.13,
     defEnter: 0.09,
     defFill: 0.12 * HERO_FILL_SCALE,
-    defHold: 0.24,
+    defSourceFill: 0.04,
+    defHold: 0.20,
     defExit: 0.13,
     subEnter: 0.08,
     subFill: 0.13 * HERO_FILL_SCALE * SUBTRACTIVE_FILL_SCALE,
-    subHold: 0.40,
+    subCaptionFill: 0.10,
+    subHold: 0.30,
     subExit: 0
   });
 
@@ -156,11 +160,13 @@
 
     defEnterEnd: (heroCursor += heroPhase('defEnter')),
     defFillEnd: (heroCursor += heroPhase('defFill')),
+    defSourceFillEnd: (heroCursor += heroPhase('defSourceFill')),
     defHoldEnd: (heroCursor += heroPhase('defHold')),
     defExitEnd: (heroCursor += heroPhase('defExit')),
 
     subEnterEnd: (heroCursor += heroPhase('subEnter')),
     subFillEnd: (heroCursor += heroPhase('subFill')),
+    subCaptionFillEnd: (heroCursor += heroPhase('subCaptionFill')),
     subHoldEnd: (heroCursor += heroPhase('subHold')),
     subExitEnd: (heroCursor += heroPhase('subExit'))
   });
@@ -232,6 +238,10 @@
       definitionChars,
       phaseProgress(p, HERO.defEnterEnd, HERO.defFillEnd)
     );
+    setCharsOneByOne(
+      definitionSourceChars,
+      phaseProgress(p, HERO.defFillEnd, HERO.defSourceFillEnd)
+    );
 
     setAttribute(
       definition,
@@ -252,12 +262,9 @@
       subChars,
       phaseProgress(p, HERO.subEnterEnd, HERO.subFillEnd)
     );
-
-    const subKoreanFillStart = HERO.subEnterEnd +
-      (HERO.subFillEnd - HERO.subEnterEnd) * 0.44;
     setCharsOneByOne(
       subKoreanChars,
-      phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
+      phaseProgress(p, HERO.subFillEnd, HERO.subCaptionFillEnd)
     );
 
     setAttribute(
