@@ -80,6 +80,8 @@ a{color:inherit;text-decoration:none}
   overflow:hidden;
 }
 .about-ascii-canvas{
+  position:relative;
+  z-index:1;
   display:block;
   width:100%;
   height:100%;
@@ -87,25 +89,36 @@ a{color:inherit;text-decoration:none}
 .about-ascii-blackout{
   position:absolute;
   inset:0;
+  z-index:2;
   background:#000;
   opacity:var(--ascii-blackout);
   pointer-events:none;
 }
+.about-ascii-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  background:rgba(0,0,0,.20);
+  pointer-events:none;
+}
 .about-ascii-title{
   position:absolute;
-  z-index:3;
-  left:var(--pad);
-  bottom:clamp(18px,2.2vw,34px);
-  display:block;
+  inset:0;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   visibility:visible;
   opacity:1;
   margin:0;
   color:#fff;
-  font-family:var(--en);
-  font-size:clamp(72px,9vw,160px);
+  font-family:'Averta PE',sans-serif;
   font-weight:300;
+  font-size:clamp(72px,9vw,160px);
   line-height:.8;
   letter-spacing:-.03em;
+  text-align:center;
   pointer-events:none;
 }
 
