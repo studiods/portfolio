@@ -18,7 +18,10 @@
   const BASE_ALPHA = 0.05;
   const WORD_ALPHA = 0.50;
   const LINE_ALPHA = 0.30;
-  const UNIT_MS = 1000;
+  const UNIT_MS = 700;
+  const NEXT_UNIT_AT = 0.80;
+  const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
+  const TAIL_MS = UNIT_MS - STAGGER_MS;
   const GAP_MS = 3000;
   const PATTERNS = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
 
@@ -64,12 +67,17 @@
   let disabled = false;
   let runToken = 0;
   let patternIndex = 0;
-  let timer = 0;
+  const timers = new Set();
   const activeAnimations = new Set();
 
   const atTop = () => window.scrollY <= 8;
   const canRun = token =>
     !disabled && token === runToken && atTop() && !document.hidden;
+
+  const clearTimers = () => {
+    timers.forEach(id => clearTimeout(id));
+    timers.clear();
+  };
 
   const cancelAnimations = () => {
     activeAnimations.forEach(animation => {
@@ -80,8 +88,7 @@
 
   const stop = permanent => {
     runToken += 1;
-    if (timer) clearTimeout(timer);
-    timer = 0;
+    clearTimers();
     cancelAnimations();
     if (permanent) disabled = true;
     hero.dataset.idleState = permanent ? 'disabled' : 'paused';
@@ -93,51 +100,56 @@
       resolve(false);
       return;
     }
-    timer = window.setTimeout(() => {
-      timer = 0;
+
+    const id = window.setTimeout(() => {
+      timers.delete(id);
       resolve(canRun(token));
     }, ms);
+    timers.add(id);
   });
 
   const pulseUnit = (group, peakAlpha, token) => {
-    if (!canRun(token)) return Promise.resolve(false);
+    if (!canRun(token)) return false;
 
     const base = `rgba(17,17,17,${BASE_ALPHA})`;
     const peak = `rgba(17,17,17,${peakAlpha})`;
 
-    if (!group[0]?.animate) {
-      return new Promise(resolve => {
-        group.forEach(char => { char.style.color = peak; });
-        timer = window.setTimeout(() => {
-          timer = 0;
-          group.forEach(char => { char.style.color = base; });
-          resolve(canRun(token));
-        }, UNIT_MS);
+    /*
+      Web Animations API keeps the idle pulse independent from the scroll-driven
+      inline colors. Each unit still owns a full 700ms pulse, but the scheduler
+      starts the following unit at 80% (560ms), leaving a 140ms overlap so the
+      visual rhythm never drops to a dead stop between words/lines.
+    */
+    if (group[0]?.animate) {
+      group.forEach(char => {
+        const animation = char.animate(
+          [
+            { color: base, offset: 0 },
+            { color: peak, offset: 0.5 },
+            { color: base, offset: 1 }
+          ],
+          {
+            duration: UNIT_MS,
+            easing: 'ease-in-out',
+            fill: 'none'
+          }
+        );
+        activeAnimations.add(animation);
+        animation.finished
+          .catch(() => {})
+          .finally(() => activeAnimations.delete(animation));
       });
+      return true;
     }
 
-    const animations = group.map(char => {
-      const animation = char.animate(
-        [
-          { color: base, offset: 0 },
-          { color: peak, offset: 0.5 },
-          { color: base, offset: 1 }
-        ],
-        {
-          duration: UNIT_MS,
-          easing: 'ease-in-out',
-          fill: 'none'
-        }
-      );
-      activeAnimations.add(animation);
-      return animation;
-    });
-
-    return Promise.allSettled(animations.map(animation => animation.finished))
-      .then(() => {
-        animations.forEach(animation => activeAnimations.delete(animation));
-        return canRun(token);
-      });
+    /* Very old-browser fallback: preserve timing even without WAAPI. */
+    group.forEach(char => { char.style.color = peak; });
+    const id = window.setTimeout(() => {
+      timers.delete(id);
+      group.forEach(char => { char.style.color = base; });
+    }, UNIT_MS);
+    timers.add(id);
+    return true;
   };
 
   const currentPattern = () => {
@@ -151,6 +163,21 @@
     return { mode, groups: wordGroups, peak: WORD_ALPHA };
   };
 
+  const runPattern = async (pattern, token) => {
+    const { groups, peak } = pattern;
+
+    for (let index = 0; index < groups.length; index += 1) {
+      if (!pulseUnit(groups[index], peak, token)) return false;
+
+      if (index < groups.length - 1) {
+        if (!(await wait(STAGGER_MS, token))) return false;
+      }
+    }
+
+    /* Let the final unit finish its remaining 20% before the 3s pattern gap. */
+    return wait(TAIL_MS, token);
+  };
+
   const run = async token => {
     while (canRun(token)) {
       hero.dataset.idleState = 'waiting';
@@ -160,9 +187,7 @@
       hero.dataset.idleState = 'running';
       hero.dataset.idleMode = pattern.mode;
 
-      for (const group of pattern.groups) {
-        if (!(await pulseUnit(group, pattern.peak, token))) return;
-      }
+      if (!(await runPattern(pattern, token))) return;
 
       patternIndex = (patternIndex + 1) % PATTERNS.length;
       delete hero.dataset.idleMode;
