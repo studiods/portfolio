@@ -22,6 +22,8 @@
   const NEXT_UNIT_AT = 0.60;
   const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
   const TAIL_MS = UNIT_MS - STAGGER_MS;
+  const ATTACK_END = 0.34;
+  const SUSTAIN_END = 0.66;
   const GAP_MS = 3000;
   const PATTERNS = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
 
@@ -115,22 +117,26 @@
     const peak = `rgba(17,17,17,${peakAlpha})`;
 
     /*
-      Web Animations API keeps the idle pulse independent from the scroll-driven
-      inline colors. Each unit owns a full 700ms pulse, while the next unit starts
-      at 60% (420ms). The resulting 280ms overlap creates a continuous wave-like
-      rhythm without shortening the individual pulse itself.
+      A simple 0 -> 50% -> 100% pulse made the 60% scheduler overlap exist in
+      code, but not read as overlap: the outgoing unit had already started its
+      fade before the next unit became visually strong. Use an attack / sustain /
+      release envelope instead. The current unit reaches full black by 34%, holds
+      through 66%, and only then releases. Because the next unit starts at 60%,
+      the outgoing unit is still at 100% when the incoming unit begins. By the
+      time the outgoing unit ends, the incoming unit has reached its own sustain.
     */
     if (group[0]?.animate) {
       group.forEach(char => {
         const animation = char.animate(
           [
-            { color: base, offset: 0 },
-            { color: peak, offset: 0.5 },
+            { color: base, offset: 0, easing: 'cubic-bezier(.2,.7,.2,1)' },
+            { color: peak, offset: ATTACK_END, easing: 'linear' },
+            { color: peak, offset: SUSTAIN_END, easing: 'cubic-bezier(.4,0,.8,.2)' },
             { color: base, offset: 1 }
           ],
           {
             duration: UNIT_MS,
-            easing: 'ease-in-out',
+            easing: 'linear',
             fill: 'none'
           }
         );
@@ -142,7 +148,7 @@
       return true;
     }
 
-    /* Very old-browser fallback: preserve timing even without WAAPI. */
+    /* Very old-browser fallback: preserve the same visible overlap timing. */
     group.forEach(char => { char.style.color = peak; });
     const id = window.setTimeout(() => {
       timers.delete(id);
