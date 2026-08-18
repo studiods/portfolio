@@ -36,7 +36,8 @@
 .principle-en .fill-char,
 .hero-quote .fill-char,
 .definition-copy .fill-char,
-.subtractive-title .fill-char{
+.subtractive-title .fill-char,
+.subtractive-korean .fill-char{
   display:inline!important;
   vertical-align:baseline!important;
   line-height:inherit!important;
@@ -46,13 +47,13 @@
 }
 
 /*
-  HERO sequence timing is controlled by home-interactions.js. The three fill
-  phases are 10% longer, so total sticky travel is increased only by the
-  corresponding weighted amount. Non-fill enter/hold/exit distances therefore
-  stay effectively unchanged, and SUBTRACTIVE DESIGN still releases directly
-  into normal document scrolling after its fill completes.
+  HERO sequence timing is controlled by home-interactions.js. Quote and
+  definition retain their previous scroll distances; only the final
+  SUBTRACTIVE DESIGN fill is extended by 30%. Heights below are recalculated
+  from sticky travel (section height - 100vh), not by scaling the whole section,
+  so unchanged enter/hold/exit phases preserve their physical scroll distance.
 */
-.hero-sequence{height:435.6vh!important}
+.hero-sequence{height:446.44vh!important}
 .hero-state{
   overflow:visible!important;
   transition:none!important;
@@ -185,7 +186,7 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:420.2vh!important}
+  .hero-sequence{height:430.54vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
@@ -233,7 +234,7 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:411.9vh!important}
+  .hero-sequence{height:421.98vh!important}
   .intro-block{min-height:210vh!important;margin-bottom:0!important}
   .philosophy-tail-space{height:clamp(84px,12vh,132px)}
   .principles-head{min-height:0!important;padding-bottom:36px!important}
@@ -243,7 +244,8 @@
 @media(prefers-reduced-motion:reduce){
   .hero-quote .fill-char,
   .definition-copy .fill-char,
-  .subtractive-title .fill-char{color:#111!important}
+  .subtractive-title .fill-char,
+  .subtractive-korean .fill-char{color:#111!important}
   .philosophy-statements p{color:#111!important}
   .principles-intro .fill-char,
   .principle-card h3 .fill-char,
