@@ -105,18 +105,23 @@
   const subChars = $$('.subtractive-title .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
-  const HERO_HOLD_SCALE = 1 / 3;
+  /*
+    Scroll-story timeline weights. Each completed message receives a real
+    plateau in the sticky sequence instead of relying on canceled wheel input.
+    With the matching section heights in home-fixes.css, every plateau is
+    approximately 55–60% of the viewport on desktop and mobile.
+  */
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13,
-    quoteHold: 0.15 * HERO_HOLD_SCALE,
+    quoteHold: 0.24,
     quoteExit: 0.13,
     defEnter: 0.09,
     defFill: 0.12,
-    defHold: 0.14 * HERO_HOLD_SCALE,
+    defHold: 0.24,
     defExit: 0.13,
     subEnter: 0.08,
     subFill: 0.13,
-    subHold: 0.08 * HERO_HOLD_SCALE,
+    subHold: 0.24,
     subExit: 0.13
   });
 
@@ -326,10 +331,10 @@
   const philosophySticky = $('.philosophy-sticky', philosophySection);
   const philosophyLines = $$('.philosophy-statements > p', philosophySection);
 
-  const renderPhilosophy = (p) => {
+  const renderPhilosophy = (p, fillEnd) => {
     if (!philosophySection || !philosophySticky || !philosophyLines.length) return;
 
-    const fillP = clamp(p / 0.82);
+    const fillP = clamp(p / fillEnd);
     const lineCount = philosophyLines.length;
     const lineWindow = 1 / lineCount;
 
@@ -366,6 +371,7 @@
     philosophyTop: 0,
     philosophyTravel: 1,
     philosophyStickyTop: 0,
+    philosophyFillEnd: 0.82,
     principlesTop: 0,
     principlesTravel: 1
   };
@@ -388,6 +394,11 @@
     metrics.philosophyTravel = philosophySection && philosophySticky
       ? Math.max(1, philosophySection.offsetHeight - philosophySticky.offsetHeight - metrics.philosophyStickyTop)
       : 1;
+    metrics.philosophyFillEnd = clamp(
+      1 - (metrics.viewportHeight * 0.60) / metrics.philosophyTravel,
+      0.55,
+      0.82
+    );
     metrics.principlesTop = absoluteTop(principles);
     metrics.principlesTravel = principles
       ? Math.max(innerHeight * 0.90, principles.offsetHeight - innerHeight * 0.35)
@@ -400,90 +411,6 @@
 
   const scheduleMetricsRefresh = () => {
     if (!metricsRaf) metricsRaf = requestAnimationFrame(refreshMetrics);
-  };
-
-  /*
-    After each hero message and the philosophy statement are fully visible,
-    suppress the following downward wheel gesture. The gesture that completed
-    the text is allowed to finish first, so trackpad momentum cannot consume
-    the reading pause by accident.
-  */
-  const gateDefinitions = [
-    progress => progress.hero >= HERO.quoteFillEnd,
-    progress => progress.hero >= HERO.defFillEnd,
-    progress => progress.hero >= HERO.subFillEnd,
-    progress => progress.philosophy >= 0.82
-  ];
-  const gateStates = gateDefinitions.map(() => 'waiting');
-  let wheelBurstActive = false;
-  let wheelBurstTimer = 0;
-  let activeGate = -1;
-  let wheelControlListening = false;
-  let wheelTrackingListening = false;
-
-  const enableWheelControl = () => {
-    if (wheelControlListening) return;
-    addEventListener('wheel', onControlledWheel, { passive: false });
-    wheelControlListening = true;
-  };
-
-  const disableWheelControl = () => {
-    if (!wheelControlListening) return;
-    removeEventListener('wheel', onControlledWheel);
-    wheelControlListening = false;
-  };
-
-  const disableWheelTracking = () => {
-    disableWheelControl();
-    if (!wheelTrackingListening) return;
-    removeEventListener('wheel', trackWheel);
-    wheelTrackingListening = false;
-  };
-
-  const armGate = index => {
-    gateStates[index] = 'armed';
-    enableWheelControl();
-  };
-
-  const updateGates = progress => {
-    gateDefinitions.forEach((isComplete, index) => {
-      if (gateStates[index] !== 'waiting' || !isComplete(progress)) return;
-      if (wheelBurstActive) gateStates[index] = 'pending';
-      else armGate(index);
-    });
-  };
-
-  const finishWheelBurst = () => {
-    wheelBurstActive = false;
-    if (activeGate >= 0) {
-      gateStates[activeGate] = 'consumed';
-      activeGate = -1;
-    }
-    gateStates.forEach((state, index) => {
-      if (state === 'pending') armGate(index);
-    });
-    if (!gateStates.includes('armed')) disableWheelControl();
-    if (gateStates.every(state => state === 'consumed')) disableWheelTracking();
-  };
-
-  const trackWheel = event => {
-    registerUserAction();
-    if (event.ctrlKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX) || event.deltaY <= 0) return;
-    if (scrollY > metrics.philosophyTop + metrics.philosophyTravel + metrics.viewportHeight) {
-      disableWheelTracking();
-      return;
-    }
-    wheelBurstActive = true;
-    clearTimeout(wheelBurstTimer);
-    wheelBurstTimer = setTimeout(finishWheelBurst, 140);
-  };
-
-  const onControlledWheel = event => {
-    if (event.ctrlKey || Math.abs(event.deltaY) <= Math.abs(event.deltaX) || event.deltaY <= 0) return;
-    if (activeGate < 0) activeGate = gateStates.indexOf('armed');
-    if (activeGate < 0) return;
-
-    event.preventDefault();
   };
 
   const render = () => {
@@ -502,14 +429,13 @@
       lastHeroProgress = heroProgress;
     }
     if (Math.abs(philosophyProgress - lastPhilosophyProgress) >= 0.0001) {
-      renderPhilosophy(philosophyProgress);
+      renderPhilosophy(philosophyProgress, metrics.philosophyFillEnd);
       lastPhilosophyProgress = philosophyProgress;
     }
     if (Math.abs(principlesProgress - lastPrinciplesProgress) >= 0.0001) {
       renderPrinciples(principlesProgress);
       lastPrinciplesProgress = principlesProgress;
     }
-    updateGates({ hero: heroProgress, philosophy: philosophyProgress });
   };
   const requestRender = () => {
     if (!raf) raf = requestAnimationFrame(render);
@@ -522,10 +448,7 @@
     registerUserAction();
     requestRender();
   }, { passive: true });
-  if (!reducedMotion) {
-    addEventListener('wheel', trackWheel, { passive: true });
-    wheelTrackingListening = true;
-  }
+  addEventListener('wheel', registerUserAction, { passive: true });
   addEventListener('touchstart', registerUserAction, { passive: true });
   addEventListener('pointerdown', registerUserAction, { passive: true });
   addEventListener('keydown', registerUserAction);

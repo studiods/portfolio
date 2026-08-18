@@ -46,7 +46,7 @@
 }
 
 /* HERO sequence timing is controlled by home-interactions.js. */
-.hero-sequence{height:341vh!important}
+.hero-sequence{height:520vh!important}
 .hero-state{
   overflow:visible!important;
   transition:none!important;
@@ -87,7 +87,7 @@
 .intro-block{
   display:block!important;
   position:relative;
-  min-height:165vh!important;
+  min-height:205vh!important;
   padding:0!important;
   margin-bottom:0!important;
 }
@@ -164,7 +164,7 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:318vh!important}
+  .hero-sequence{height:500vh!important}
   .hero-sticky{padding:70px var(--pad) 24px}
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
@@ -173,7 +173,7 @@
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px)}
 
   .intro-block{
-    min-height:175vh!important;
+    min-height:205vh!important;
     padding:0!important;
     margin-bottom:0!important;
   }
@@ -211,8 +211,8 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:311vh!important}
-  .intro-block{min-height:180vh!important;margin-bottom:0!important}
+  .hero-sequence{height:490vh!important}
+  .intro-block{min-height:210vh!important;margin-bottom:0!important}
   .philosophy-tail-space{height:clamp(84px,12vh,132px)}
   .principles-head{min-height:0!important;padding-bottom:36px!important}
   .showcase-project{padding-bottom:64px}
