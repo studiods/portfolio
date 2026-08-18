@@ -10,8 +10,8 @@
 
   if (!hero || !stage || !canvas || !ctx || !meta || !Array.isArray(encoded)) return;
 
-  const COLS = Number(meta.width) || 240;
-  const ROWS = Number(meta.height) || 135;
+  const COLS = Number(meta.width) || 192;
+  const ROWS = Number(meta.height) || 108;
   const COUNT = Number(meta.count) || 7;
   const PACKED = Math.ceil(COLS * ROWS / 2);
   const SOURCE_RATIO = COLS / ROWS;
