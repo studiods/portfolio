@@ -51,6 +51,10 @@
     const t = clamp01(v);
     return t * t * (3 - 2 * t);
   };
+  const easeOutCubic = (v) => {
+    const t = clamp01(v);
+    return 1 - Math.pow(1 - t, 3);
+  };
   const hash = (value) => {
     let x = value | 0;
     x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
@@ -212,10 +216,8 @@
     const stageRect = stage.getBoundingClientRect();
     const heroRect = hero.getBoundingClientRect();
     const travel = Math.max(1, stage.offsetHeight - heroRect.height);
-    const fadeDistance = Math.max(travel, stage.offsetHeight * 0.82);
-    const fadeStart = Math.min(90, fadeDistance * 0.08);
-    const passed = clamp01((-stageRect.top - fadeStart) / Math.max(1, fadeDistance - fadeStart));
-    const blackout = smoothstep(passed) * 0.92;
+    const passed = clamp01(-stageRect.top / travel);
+    const blackout = easeOutCubic(passed) * 0.92;
     hero.style.setProperty('--ascii-blackout', blackout.toFixed(3));
   };
 
