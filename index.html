@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="./style.css?v=17">
   <link rel="stylesheet" href="./typography.css?v=7">
   <link rel="stylesheet" href="./type-overrides.css?v=18">
-  <link rel="stylesheet" href="./home-fixes.css?v=41">
+  <link rel="stylesheet" href="./home-fixes.css?v=42">
 </head>
 <body>
 <nav class="top">
@@ -76,30 +76,64 @@
   <div class="philosophy-tail-space" aria-hidden="true"></div>
 
   <section class="principles-section section-focus" id="principles">
-    <div class="principles-head">
-      <div class="mini-label light-ui">Design principles</div>
-      <h2 class="principles-intro js-char-fill">LESS ASSUMPTION<br>LESS CONVENTION<br>LESS BIAS</h2>
+    <div class="principles-intro-stage">
+      <div class="principles-head">
+        <div class="mini-label light-ui">Design principles</div>
+        <h2 class="principles-intro">
+          <span class="principles-intro-row">
+            <span class="principles-intro-en js-char-fill">LESS ASSUMPTION</span>
+            <span class="principles-intro-mask" aria-hidden="true"></span>
+            <span class="principles-intro-ko">가정을 덜어냅니다</span>
+          </span>
+          <span class="principles-intro-row">
+            <span class="principles-intro-en js-char-fill">LESS CONVENTION</span>
+            <span class="principles-intro-mask" aria-hidden="true"></span>
+            <span class="principles-intro-ko">관습을 의심합니다</span>
+          </span>
+          <span class="principles-intro-row">
+            <span class="principles-intro-en js-char-fill">LESS BIAS</span>
+            <span class="principles-intro-mask" aria-hidden="true"></span>
+            <span class="principles-intro-ko">편향을 줄입니다</span>
+          </span>
+        </h2>
+      </div>
     </div>
 
-    <div class="principles-grid">
-      <article class="principle-card">
-        <span class="principle-no">01</span>
-        <h3 class="js-char-fill">START WITH<br>WHY IT MATTERS</h3>
-        <p class="principle-en js-char-fill">REMOVE ASSUMPTIONS</p>
-        <p>해결책을 만들기 전에 왜 이 문제를 해결해야 하는지부터 정의합니다.</p>
-      </article>
-      <article class="principle-card">
-        <span class="principle-no">02</span>
-        <h3 class="js-char-fill">QUESTION THE<br>DEFAULT</h3>
-        <p class="principle-en js-char-fill">REMOVE CONVENTIONS</p>
-        <p>익숙하다는 이유로 유지되는 방식보다 지금 필요한 경험을 다시 선택합니다.</p>
-      </article>
-      <article class="principle-card">
-        <span class="principle-no">03</span>
-        <h3 class="js-char-fill">DECIDE WITH<br>EVIDENCE</h3>
-        <p class="principle-en js-char-fill">REMOVE BIAS</p>
-        <p>경험과 직관을 출발점으로 삼되 정성·정량 데이터로 판단의 편향을 줄입니다.</p>
-      </article>
+    <div class="principles-after-intro" aria-hidden="true"></div>
+
+    <div class="principles-cards-stage">
+      <div class="principles-grid">
+        <article class="principle-card">
+          <span class="principle-no">01</span>
+          <div class="principle-copy">
+            <h3 class="js-char-fill">START WITH<br>WHY IT MATTERS</h3>
+            <p class="principle-en js-char-fill">REMOVE ASSUMPTIONS</p>
+            <p class="principle-ko">왜 중요한지부터 시작합니다</p>
+          </div>
+        </article>
+        <article class="principle-card">
+          <span class="principle-no">02</span>
+          <div class="principle-copy">
+            <h3 class="js-char-fill">QUESTION THE<br>DEFAULT</h3>
+            <p class="principle-en js-char-fill">REMOVE CONVENTIONS</p>
+            <p class="principle-ko">당연한 것에 질문합니다</p>
+          </div>
+        </article>
+        <article class="principle-card">
+          <span class="principle-no">03</span>
+          <div class="principle-copy">
+            <h3 class="js-char-fill">DECIDE WITH<br>EVIDENCE</h3>
+            <p class="principle-en js-char-fill">REMOVE BIAS</p>
+            <p class="principle-ko">근거를 바탕으로 결정합니다</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="principles-before-showtime" aria-hidden="true"></div>
+    <div class="show-time">
+      <div class="mini-label light-ui">Show time</div>
+      <h2>LET’S TAKE A LOOK</h2>
     </div>
   </section>
 
@@ -118,7 +152,7 @@
 
   <footer class="footer filip-footer footer-contact-only" id="contact"><div class="footer-grid"><div><h3>Contact</h3><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></div></div></footer>
 </main>
-<script src="./home-interactions.js?v=40" defer></script>
+<script src="./home-interactions.js?v=41" defer></script>
 <script src="./home-idle-v2.js?v=6" defer></script>
 </body>
 </html>

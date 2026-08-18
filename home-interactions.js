@@ -447,21 +447,63 @@
   };
 
   const principles = $('#principles');
-  const principleIntro = $('.principles-intro', principles);
-  const introChars = $$('.principles-intro .fill-char', principles);
-  const cardEnglishChars = $$('.principle-card h3 .fill-char, .principle-en .fill-char', principles);
-  const cardKorean = $$('.principle-card > p:last-child', principles);
+  const principleIntroStage = $('.principles-intro-stage', principles);
+  const principleRows = $$('.principles-intro-row', principles);
+  const principleRowEnglish = principleRows.map(row => $$('.principles-intro-en .fill-char', row));
+  const principleRowMasks = principleRows.map(row => $('.principles-intro-mask', row));
+  const principleRowKorean = principleRows.map(row => $('.principles-intro-ko', row));
+  const principleCardsStage = $('.principles-cards-stage', principles);
+  const principleCards = $$('.principle-card', principles);
+  const principleCardEnglish = principleCards.map(card => $$('.fill-char', card));
+  const principleCardKorean = principleCards.map(card => $('.principle-ko', card));
 
-  const renderPrinciples = (p) => {
-    if (!principles || !principleIntro) return;
+  const renderPrinciplesIntro = p => {
+    if (!principleRows.length) return;
 
-    setChars(introChars, fillProgress(p, 0, 0.23), '255,255,255', 0.16);
-    setStyle(principleIntro, 'opacity', '1');
-    setStyle(principleIntro, 'transform', 'none');
-    setStyle(principleIntro, 'clipPath', 'inset(0)');
+    principleRows.forEach((row, index) => {
+      const englishProgress = fillProgress(p, index * 0.075, 0.10);
+      const translationProgress = easeInOut(phaseProgress(
+        p,
+        0.36 + index * 0.09,
+        0.46 + index * 0.09
+      ));
 
-    setChars(cardEnglishChars, fillProgress(p, 0.62, 0.26), '255,255,255');
-    setWhole(cardKorean, fillProgress(p, 0.78, 0.12), '255,255,255');
+      setChars(principleRowEnglish[index], englishProgress, '255,255,255', 0.16);
+      setStyle(principleRowMasks[index], 'transform', `scaleY(${translationProgress.toFixed(4)})`);
+      setStyle(principleRowKorean[index], 'opacity', translationProgress.toFixed(4));
+      setStyle(
+        principleRowKorean[index],
+        'transform',
+        `translate3d(0, ${(-100 * (1 - translationProgress)).toFixed(2)}%, 0)`
+      );
+    });
+  };
+
+  const CARD_PHASES = Object.freeze([
+    { enterStart: 0.00, enterEnd: 0.04, fillStart: 0.02, fillEnd: 0.20, koStart: 0.24, koEnd: 0.31 },
+    { enterStart: 0.34, enterEnd: 0.38, fillStart: 0.36, fillEnd: 0.54, koStart: 0.58, koEnd: 0.65 },
+    { enterStart: 0.68, enterEnd: 0.72, fillStart: 0.70, fillEnd: 0.88, koStart: 0.92, koEnd: 0.99 }
+  ]);
+
+  const renderPrincipleCards = p => {
+    principleCards.forEach((card, index) => {
+      const phase = CARD_PHASES[index];
+      if (!phase) return;
+
+      const enterProgress = easeInOut(phaseProgress(p, phase.enterStart, phase.enterEnd));
+      const fill = phaseProgress(p, phase.fillStart, phase.fillEnd);
+      const koreanProgress = easeInOut(phaseProgress(p, phase.koStart, phase.koEnd));
+
+      setStyle(card, 'opacity', enterProgress.toFixed(4));
+      setStyle(card, 'transform', `translate3d(0, ${(24 * (1 - enterProgress)).toFixed(2)}px, 0)`);
+      setChars(principleCardEnglish[index], fill, '255,255,255');
+      setStyle(principleCardKorean[index], 'opacity', koreanProgress.toFixed(4));
+      setStyle(
+        principleCardKorean[index],
+        'transform',
+        `translate3d(0, ${(-0.7 * (1 - koreanProgress)).toFixed(3)}em, 0)`
+      );
+    });
   };
 
   const metrics = {
@@ -472,14 +514,17 @@
     philosophyTravel: 1,
     philosophyStickyTop: 0,
     philosophyFillEnd: 0.82,
-    principlesTop: 0,
-    principlesTravel: 1
+    principlesIntroTop: 0,
+    principlesIntroTravel: 1,
+    principlesCardsTop: 0,
+    principlesCardsTravel: 1
   };
   let metricsRaf = 0;
   let raf = 0;
   let lastHeroProgress = -1;
   let lastPhilosophyProgress = -1;
-  let lastPrinciplesProgress = -1;
+  let lastPrinciplesIntroProgress = -1;
+  let lastPrinciplesCardsProgress = -1;
 
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
   const getHeroProgress = () => clamp((scrollY - metrics.heroTop) / metrics.heroTravel);
@@ -499,13 +544,18 @@
       0.55,
       0.82
     );
-    metrics.principlesTop = absoluteTop(principles);
-    metrics.principlesTravel = principles
-      ? Math.max(innerHeight * 0.90, principles.offsetHeight - innerHeight * 0.35)
+    metrics.principlesIntroTop = absoluteTop(principleIntroStage);
+    metrics.principlesIntroTravel = principleIntroStage
+      ? Math.max(1, principleIntroStage.offsetHeight - innerHeight)
+      : 1;
+    metrics.principlesCardsTop = absoluteTop(principleCardsStage);
+    metrics.principlesCardsTravel = principleCardsStage
+      ? Math.max(1, principleCardsStage.offsetHeight - innerHeight)
       : 1;
     lastHeroProgress = -1;
     lastPhilosophyProgress = -1;
-    lastPrinciplesProgress = -1;
+    lastPrinciplesIntroProgress = -1;
+    lastPrinciplesCardsProgress = -1;
     requestRender();
   };
 
@@ -520,8 +570,11 @@
     const philosophyProgress = clamp(
       (y + metrics.philosophyStickyTop - metrics.philosophyTop) / metrics.philosophyTravel
     );
-    const principlesProgress = clamp(
-      (y + metrics.viewportHeight * 0.82 - metrics.principlesTop) / metrics.principlesTravel
+    const principlesIntroProgress = clamp(
+      (y - metrics.principlesIntroTop) / metrics.principlesIntroTravel
+    );
+    const principlesCardsProgress = clamp(
+      (y - metrics.principlesCardsTop) / metrics.principlesCardsTravel
     );
 
     if (Math.abs(heroProgress - lastHeroProgress) >= 0.0001) {
@@ -532,9 +585,13 @@
       renderPhilosophy(philosophyProgress, metrics.philosophyFillEnd);
       lastPhilosophyProgress = philosophyProgress;
     }
-    if (Math.abs(principlesProgress - lastPrinciplesProgress) >= 0.0001) {
-      renderPrinciples(principlesProgress);
-      lastPrinciplesProgress = principlesProgress;
+    if (Math.abs(principlesIntroProgress - lastPrinciplesIntroProgress) >= 0.0001) {
+      renderPrinciplesIntro(principlesIntroProgress);
+      lastPrinciplesIntroProgress = principlesIntroProgress;
+    }
+    if (Math.abs(principlesCardsProgress - lastPrinciplesCardsProgress) >= 0.0001) {
+      renderPrincipleCards(principlesCardsProgress);
+      lastPrinciplesCardsProgress = principlesCardsProgress;
     }
   };
   const requestRender = () => {
