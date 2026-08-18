@@ -17,7 +17,7 @@
 
   if (frameCount !== 7 || sourceCols !== 288 || sourceRows !== 162) {
     if (status) status.textContent = 'ASCII TEST · SOURCE SIZE ERROR';
-    console.error('ASCII responsive test expects 7 frames at 288×162.', {
+    console.error('ASCII single-frame test expects 7 frames at 288×162.', {
       width: sourceCols,
       height: sourceRows,
       count: frameCount
@@ -30,16 +30,15 @@
   const HOLD_MS = 960;
   const MORPH_MS = SCENE_MS - HOLD_MS;
   const GLITCH_MS = 48;
-  const MOBILE_MAX = 768;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const sourceCellCount = sourceCols * sourceRows;
-  const packedPerFrame = Math.ceil(sourceCellCount / 2);
+  const cellCount = sourceCols * sourceRows;
+  const packedPerFrame = Math.ceil(cellCount / 2);
   const expected = packedPerFrame * frameCount;
 
   if (packed.encoding !== 'u4-array' || packed.bytes.length !== expected) {
     if (status) status.textContent = 'ASCII TEST · PAYLOAD ERROR';
-    console.error('ASCII responsive test payload mismatch.', {
+    console.error('ASCII single-frame test payload mismatch.', {
       encoding: packed.encoding,
       actual: packed.bytes.length,
       expected
@@ -48,20 +47,20 @@
   }
 
   const raw = Uint8Array.from(packed.bytes);
-  const sourceFrames = [];
+  const frames = [];
 
   for (let frameIndex = 0; frameIndex < frameCount; frameIndex += 1) {
-    const frame = new Uint8Array(sourceCellCount);
+    const frame = new Uint8Array(cellCount);
     const offset = frameIndex * packedPerFrame;
     let target = 0;
 
-    for (let i = 0; i < packedPerFrame && target < sourceCellCount; i += 1) {
+    for (let i = 0; i < packedPerFrame && target < cellCount; i += 1) {
       const byte = raw[offset + i];
       frame[target] = ((byte >>> 4) & 15) * 17;
-      if (target + 1 < sourceCellCount) frame[target + 1] = (byte & 15) * 17;
+      if (target + 1 < cellCount) frame[target + 1] = (byte & 15) * 17;
       target += 2;
     }
-    sourceFrames.push(frame);
+    frames.push(frame);
   }
 
   const clamp01 = value => Math.max(0, Math.min(1, value));
@@ -76,46 +75,21 @@
     x ^= x >>> 16;
     return (x >>> 0) / 4294967295;
   };
-
   const pickDifferent = previous => {
-    if (frameCount <= 1) return 0;
     let next = previous;
     while (next === previous) next = Math.floor(Math.random() * frameCount);
     return next;
   };
 
-  const pickPair = previous => {
-    for (let attempt = 0; attempt < 40; attempt += 1) {
-      const left = Math.floor(Math.random() * frameCount);
-      let right = left;
-      while (right === left) right = Math.floor(Math.random() * frameCount);
-
-      const sameOrder = previous && previous[0] === left && previous[1] === right;
-      const sameSet = previous && previous.includes(left) && previous.includes(right);
-      if (!sameOrder && !sameSet) return [left, right];
-    }
-
-    const left = previous ? (previous[0] + 2) % frameCount : 0;
-    let right = (left + 3) % frameCount;
-    if (right === left) right = (right + 1) % frameCount;
-    return [left, right];
-  };
-
-  let isMobile = window.innerWidth <= MOBILE_MAX;
-  let outputCols = 288;
-  let outputRows = 162;
-  let cellCount = outputCols * outputRows;
-  let rowBuffers = [];
-  let timingStart = new Float32Array(cellCount);
-  let timingEnd = new Float32Array(cellCount);
-
-  let currentSelection = isMobile ? [Math.floor(Math.random() * frameCount)] : pickPair(null);
-  let upcomingSelection = isMobile
-    ? [pickDifferent(currentSelection[0])]
-    : pickPair(currentSelection);
-  let currentFrame = null;
-  let upcomingFrame = null;
-
+  /*
+    This test deliberately uses the full 288×162 source frame with no portrait
+    crop. The original 16:9 composition — including more of the surrounding
+    background — is therefore preserved. CSS scales the 16:9 canvas to cover the
+    viewport, so physical pixel resolution may change but the source composition
+    and aspect ratio do not.
+  */
+  let currentIndex = Math.floor(Math.random() * frameCount);
+  let nextIndex = pickDifferent(currentIndex);
   let startedAt = performance.now();
   let transitionSerial = 0;
   let rafId = 0;
@@ -125,65 +99,15 @@
   let cellHeight = 1;
   let renderDpr = 1;
   let textScaleX = 1;
-  let lastStaticSerial = -1;
+  let lastStaticIndex = -1;
 
-  /*
-    Desktop: retain the existing 288×162 logical resolution and split it into
-    two 144×162 portrait cards. Each source uses the full 162px height and a
-    centered 144px-wide crop, so the overall output remains exactly 16:9.
-
-    Mobile: show one source only. A centered 162×162 crop uses the full source
-    height and produces a true 1:1 logical frame without stretching the portrait.
-  */
-  const cropSource = (source, cropCols, cropRows = sourceRows) => {
-    const cropX = Math.max(0, Math.floor((sourceCols - cropCols) / 2));
-    const cropY = Math.max(0, Math.floor((sourceRows - cropRows) / 2));
-    const output = new Uint8Array(cropCols * cropRows);
-
-    for (let y = 0; y < cropRows; y += 1) {
-      const sourceStart = (cropY + y) * sourceCols + cropX;
-      const targetStart = y * cropCols;
-      output.set(source.subarray(sourceStart, sourceStart + cropCols), targetStart);
-    }
-    return output;
-  };
-
-  const compose = selection => {
-    if (isMobile) {
-      return cropSource(sourceFrames[selection[0]], 162, 162);
-    }
-
-    const output = new Uint8Array(288 * 162);
-    const left = cropSource(sourceFrames[selection[0]], 144, 162);
-    const right = cropSource(sourceFrames[selection[1]], 144, 162);
-
-    for (let y = 0; y < 162; y += 1) {
-      const rowStart = y * 288;
-      const cardStart = y * 144;
-      output.set(left.subarray(cardStart, cardStart + 144), rowStart);
-      output.set(right.subarray(cardStart, cardStart + 144), rowStart + 144);
-    }
-    return output;
-  };
-
-  const prepareBuffers = () => {
-    outputCols = isMobile ? 162 : 288;
-    outputRows = 162;
-    cellCount = outputCols * outputRows;
-    rowBuffers = Array.from({ length: outputRows }, () => new Array(outputCols).fill(' '));
-    timingStart = new Float32Array(cellCount);
-    timingEnd = new Float32Array(cellCount);
-    currentFrame = compose(currentSelection);
-    upcomingFrame = compose(upcomingSelection);
-  };
+  const timingStart = new Float32Array(cellCount);
+  const timingEnd = new Float32Array(cellCount);
+  const rowBuffers = Array.from({ length: sourceRows }, () => new Array(sourceCols).fill(' '));
 
   const prepareTransition = () => {
     transitionSerial += 1;
-    const selectionSeed = upcomingSelection.reduce(
-      (seed, value, index) => seed + (value + 1) * (index + 5) * 97,
-      0
-    );
-    const seed = transitionSerial * 733 + selectionSeed * 1597;
+    const seed = transitionSerial * 733 + (currentIndex + 1) * 1597 + (nextIndex + 1) * 2207;
 
     for (let i = 0; i < cellCount; i += 1) {
       const start = hash(seed + i * 19) * 0.48;
@@ -202,14 +126,14 @@
     canvas.height = Math.round(cssHeight * renderDpr);
     ctx.setTransform(renderDpr, 0, 0, renderDpr, 0, 0);
 
-    cellWidth = cssWidth / outputCols;
-    cellHeight = cssHeight / outputRows;
+    cellWidth = cssWidth / sourceCols;
+    cellHeight = cssHeight / sourceRows;
     const fontSize = Math.max(1.8, cellHeight * 1.02);
     ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     textScaleX = cellWidth / Math.max(0.01, ctx.measureText('M').width);
-    lastStaticSerial = -1;
+    lastStaticIndex = -1;
   };
 
   const draw = (now, morph = 0) => {
@@ -217,16 +141,14 @@
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, cssWidth, cssHeight);
 
+    const current = frames[currentIndex];
+    const next = frames[nextIndex];
     const chaos = morph > 0 ? Math.sin(Math.PI * morph) : 0;
     const glitchTick = Math.floor(now / GLITCH_MS);
-    const selectionSeed = upcomingSelection.reduce(
-      (seed, value, index) => seed + (value + 1) * (index + 11) * 83,
-      0
-    );
-    const seed = transitionSerial * 1063 + selectionSeed * 2207;
+    const seed = transitionSerial * 1063 + (currentIndex + 1) * 1601 + (nextIndex + 1) * 2207;
 
     for (let i = 0; i < cellCount; i += 1) {
-      let value = currentFrame[i];
+      let value = current[i];
 
       if (morph > 0) {
         const start = timingStart[i];
@@ -236,7 +158,7 @@
           : morph >= end
             ? 1
             : smoothstep((morph - start) / Math.max(0.001, end - start));
-        value = currentFrame[i] + (upcomingFrame[i] - currentFrame[i]) * local;
+        value = current[i] + (next[i] - current[i]) * local;
       }
 
       const normalized = value / 255;
@@ -256,26 +178,22 @@
         }
       }
 
-      rowBuffers[Math.floor(i / outputCols)][i % outputCols] = PALETTE[paletteIndex];
+      rowBuffers[Math.floor(i / sourceCols)][i % sourceCols] = PALETTE[paletteIndex];
     }
 
     ctx.setTransform(renderDpr * textScaleX, 0, 0, renderDpr, 0, 0);
     ctx.fillStyle = 'rgba(244,242,237,.88)';
 
-    for (let row = 0; row < outputRows; row += 1) {
+    for (let row = 0; row < sourceRows; row += 1) {
       ctx.fillText(rowBuffers[row].join(''), 0, row * cellHeight + cellHeight * 0.54);
     }
   };
 
   const advanceScene = () => {
-    currentSelection = upcomingSelection;
-    currentFrame = upcomingFrame;
-    upcomingSelection = isMobile
-      ? [pickDifferent(currentSelection[0])]
-      : pickPair(currentSelection);
-    upcomingFrame = compose(upcomingSelection);
+    currentIndex = nextIndex;
+    nextIndex = pickDifferent(currentIndex);
     prepareTransition();
-    lastStaticSerial = -1;
+    lastStaticIndex = -1;
   };
 
   const renderLoop = now => {
@@ -290,49 +208,30 @@
     const morph = elapsed <= HOLD_MS ? 0 : clamp01((elapsed - HOLD_MS) / MORPH_MS);
 
     if (morph === 0) {
-      if (lastStaticSerial !== transitionSerial) {
+      if (lastStaticIndex !== currentIndex) {
         draw(now, 0);
-        lastStaticSerial = transitionSerial;
+        lastStaticIndex = currentIndex;
       }
     } else {
       draw(now, morph);
-      lastStaticSerial = -1;
+      lastStaticIndex = -1;
     }
 
     rafId = requestAnimationFrame(renderLoop);
   };
 
-  const reconfigureForViewport = () => {
-    const nextMobile = window.innerWidth <= MOBILE_MAX;
-    if (nextMobile !== isMobile) {
-      isMobile = nextMobile;
-      currentSelection = isMobile
-        ? [Math.floor(Math.random() * frameCount)]
-        : pickPair(null);
-      upcomingSelection = isMobile
-        ? [pickDifferent(currentSelection[0])]
-        : pickPair(currentSelection);
-      prepareBuffers();
-      prepareTransition();
-      startedAt = performance.now();
-    }
-
-    resizeCanvas();
-    draw(performance.now(), 0);
-    if (status) {
-      status.textContent = isMobile
-        ? 'ASCII TEST · MOBILE · 1 CARD · 1:1'
-        : 'ASCII TEST · DESKTOP · 2 CARDS · 16:9 · 7 RANDOM';
-    }
-  };
-
-  prepareBuffers();
   prepareTransition();
-  reconfigureForViewport();
+  resizeCanvas();
+  draw(performance.now(), 0);
+  if (status) status.textContent = 'ASCII TEST · 1 FRAME · FULL 16:9 · 7 RANDOM';
 
   if (!reducedMotion) rafId = requestAnimationFrame(renderLoop);
 
-  window.addEventListener('resize', reconfigureForViewport, { passive: true });
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    draw(performance.now(), 0);
+  }, { passive: true });
+
   window.addEventListener('pagehide', () => {
     if (rafId) cancelAnimationFrame(rafId);
   }, { once: true });
