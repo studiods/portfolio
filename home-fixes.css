@@ -319,15 +319,17 @@
     padding-right:var(--pad)!important;
   }
   .principles-persistent-label{top:70px;width:auto;height:0}
-  .principles-intro-stage{height:180vh}
+  /* One deliberate swipe is enough to complete the intro sequence. */
+  .principles-intro-stage{height:130vh}
   .principles-head{display:block!important;top:10vh;min-height:80vh!important;padding:70px 0 0!important}
   .principles-intro{position:relative;display:block;width:100%!important;margin-left:0!important;font-size:clamp(34px,10vw,50px);line-height:.93}
   .principles-intro-row{height:1.023em}
   .principles-intro-en{white-space:nowrap}
   .principles-intro-mask{height:.93em}
   .principles-intro-ko{font-size:var(--principles-ko-size);line-height:1.023}
-  .principles-after-intro{height:96px}
-  .principles-cards-stage{height:220vh}
+  .principles-after-intro{height:40px}
+  /* Keep the sticky reveal, but remove the former 120vh scroll runway. */
+  .principles-cards-stage{height:145vh}
   .principles-grid{top:7vh;min-height:86vh;gap:50px!important}
   .principle-card{grid-template-columns:1fr!important}
   .principle-card-inner{grid-column:1;grid-template-columns:30px minmax(0,1fr);column-gap:10px}

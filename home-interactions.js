@@ -493,9 +493,21 @@
     { enterStart: 0.72, enterEnd: 0.80, fillStart: 0.76, fillEnd: 0.92 }
   ]);
 
+  /*
+    Mobile has a much shorter physical scroll runway. Preserve the ordered
+    reveal while finishing within one normal swipe instead of requiring a
+    separate swipe for every card.
+  */
+  const MOBILE_CARD_PHASES = Object.freeze([
+    { enterStart: 0.00, enterEnd: 0.06, fillStart: 0.02, fillEnd: 0.12 },
+    { enterStart: 0.25, enterEnd: 0.31, fillStart: 0.27, fillEnd: 0.39 },
+    { enterStart: 0.50, enterEnd: 0.56, fillStart: 0.52, fillEnd: 0.64 }
+  ]);
+
   const renderPrincipleCards = p => {
+    const phases = innerWidth <= 850 ? MOBILE_CARD_PHASES : CARD_PHASES;
     principleCards.forEach((card, index) => {
-      const phase = CARD_PHASES[index];
+      const phase = phases[index];
       if (!phase) return;
 
       const enterProgress = easeInOut(phaseProgress(p, phase.enterStart, phase.enterEnd));
