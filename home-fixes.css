@@ -89,7 +89,7 @@
   letter-spacing:-.01em;
   color:rgba(17,17,17,.8);
 }
-.subtractive-korean{opacity:.8}
+.subtractive-korean{opacity:.7}
 
 /*
   Design philosophy is a self-contained sticky sequence.
@@ -186,7 +186,7 @@
   .definition-copy{font-size:clamp(24.3px,6.804vw,46.98px);line-height:1.06;letter-spacing:-.03em}
   .definition-copy::after{margin-top:16px;font-size:11px}
   .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
-  .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.8}
+  .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.7}
 
   .intro-block{
     min-height:205vh!important;
