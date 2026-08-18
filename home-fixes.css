@@ -21,6 +21,7 @@
 .philosophy-statements{color:rgba(17,17,17,.05)}
 .quote-source-only,
 .definition-copy,
+.definition-source,
 .subtractive-korean .fill-line{color:rgba(17,17,17,.05)}
 .principle-card h3,
 .principle-en,
@@ -36,6 +37,7 @@
 .principle-en .fill-char,
 .hero-quote .fill-char,
 .definition-copy .fill-char,
+.definition-source .fill-char,
 .subtractive-title .fill-char,
 .subtractive-korean .fill-char{
   display:inline!important;
@@ -50,8 +52,8 @@
   HERO sequence timing is controlled by home-interactions.js. Every fill is
   10% slower than the previous timing, while the completed SUBTRACTIVE DESIGN
   state receives about one viewport of native sticky hold distance. Heights
-  are recalculated from sticky travel (section height - 100vh), so unchanged
-  enter/hold/exit phases preserve their physical scroll distance.
+  remain unchanged because source/caption fills are carved from existing hold
+  windows rather than extending the overall scroll timeline.
 */
 .hero-sequence{height:559.17vh!important}
 .hero-state{
@@ -85,16 +87,14 @@
 }
 .definition-copy p{margin:0;padding:0}
 .definition-copy p+p{margin-top:0}
-.definition-copy::after{
-  content:'한스 호프만';
+.definition-source{
   display:block;
   margin-top:20px;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-weight:300;
-  font-size:12px;
+  font-size:14.4px;
   line-height:1.4;
   letter-spacing:-.01em;
-  color:rgba(17,17,17,.8);
 }
 .subtractive-korean{opacity:.7}
 
@@ -191,7 +191,7 @@
   .hero-state{inset:70px var(--pad) 36px}
   .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
   .definition-copy{font-size:clamp(24.3px,6.804vw,46.98px);line-height:1.06;letter-spacing:-.03em}
-  .definition-copy::after{margin-top:16px;font-size:11px}
+  .definition-source{margin-top:16px;font-size:13.2px}
   .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.7}
 
@@ -244,6 +244,7 @@
 @media(prefers-reduced-motion:reduce){
   .hero-quote .fill-char,
   .definition-copy .fill-char,
+  .definition-source .fill-char,
   .subtractive-title .fill-char,
   .subtractive-korean .fill-char{color:#111!important}
   .philosophy-statements p{color:#111!important}
