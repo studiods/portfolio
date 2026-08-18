@@ -135,7 +135,7 @@
 
     return Promise.allSettled(animations.map(animation => animation.finished))
       .then(() => {
-        animations.forEach(animation => activeIdleAnimations.delete(animation));
+        animations.forEach(animation => activeAnimations.delete(animation));
         return canRun(token);
       });
   };
