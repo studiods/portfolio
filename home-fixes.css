@@ -134,6 +134,9 @@
   color:rgba(17,17,17,.05);
 }
 .philosophy-statements p+p{margin-top:0!important}
+.philosophy-statements p.philosophy-group-start{
+  margin-top:.1em!important;
+}
 
 /* Visible white spacer after Design philosophy. */
 .philosophy-tail-space{
