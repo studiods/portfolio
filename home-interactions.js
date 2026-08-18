@@ -65,6 +65,7 @@
     });
   };
 
+  /* Feathered fill remains for sections below the hero. */
   const setChars = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
     const n = chars.length || 1;
     const sweep = progress * Math.max(1, n - 1 + FILL_FEATHER);
@@ -75,13 +76,25 @@
     });
   };
 
-  const setCharsOneByOne = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
+  /*
+    Hero fill: one visible character owns the transition at a time. Characters
+    already passed by the scroll sweep stay at full black; characters ahead
+    remain at the base alpha. This keeps the effect deterministic and tied to
+    scroll distance rather than elapsed time or wheel-event interception.
+  */
+  const setCharsOneByOne = (
+    chars,
+    progress,
+    rgb = '17,17,17',
+    baseAlpha = 0.05,
+    maxAlpha = 1
+  ) => {
     const visibleChars = chars.filter(char => char.textContent.trim().length > 0);
     const n = visibleChars.length || 1;
     const sweep = clamp(progress) * n;
     visibleChars.forEach((char, i) => {
       const local = clamp(sweep - i);
-      const alpha = (baseAlpha + (1 - baseAlpha) * local).toFixed(3);
+      const alpha = (baseAlpha + (maxAlpha - baseAlpha) * local).toFixed(3);
       setStyle(char, 'color', `rgba(${rgb},${alpha})`);
     });
   };
@@ -100,19 +113,22 @@
   const definition = $('.hero-state-definition', hero);
   const subState = $('.hero-state-subtractive', hero);
   const subLines = $$('.subtractive-korean .fill-line', hero);
+  subLines.forEach(splitChars);
+
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const subChars = $$('.subtractive-title .fill-char', hero);
+  const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   /*
-    Only the three authored fill phases are 10% longer. Their matching CSS
-    hero travel is increased by the same total-distance ratio, so enter,
-    hold and exit distances remain effectively unchanged. This avoids making
-    the whole sequence feel slower and preserves the final natural sticky
-    release into Design philosophy.
+    Quote and definition keep the previous 10% longer fill distance. The final
+    SUBTRACTIVE DESIGN fill receives an additional 30% scroll distance. CSS
+    hero travel is increased by the matching phase-total ratio so unchanged
+    enter/hold/exit distances retain their previous physical scroll length.
   */
   const HERO_FILL_SCALE = 1.10;
+  const SUBTRACTIVE_FILL_SCALE = 1.30;
   const HERO_PHASE = Object.freeze({
     quoteFill: 0.13 * HERO_FILL_SCALE,
     quoteHold: 0.24,
@@ -122,7 +138,7 @@
     defHold: 0.24,
     defExit: 0.13,
     subEnter: 0.08,
-    subFill: 0.13 * HERO_FILL_SCALE,
+    subFill: 0.13 * HERO_FILL_SCALE * SUBTRACTIVE_FILL_SCALE,
     subHold: 0,
     subExit: 0
   });
@@ -186,7 +202,7 @@
   const renderHero = (p) => {
     if (!hero || !quoteState || !definition || !subState) return;
 
-    setChars(
+    setCharsOneByOne(
       quoteChars,
       phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
     );
@@ -211,7 +227,7 @@
       renderExit(definition, defExit);
     }
 
-    setChars(
+    setCharsOneByOne(
       definitionChars,
       phaseProgress(p, HERO.defEnterEnd, HERO.defFillEnd)
     );
@@ -238,8 +254,8 @@
 
     const subKoreanFillStart = HERO.subEnterEnd +
       (HERO.subFillEnd - HERO.subEnterEnd) * 0.44;
-    setWhole(
-      subLines,
+    setCharsOneByOne(
+      subKoreanChars,
       phaseProgress(p, subKoreanFillStart, HERO.subFillEnd)
     );
 
@@ -265,7 +281,7 @@
 
   const restoreQuoteFromScroll = () => {
     if (!heroIsAtRest()) return;
-    setChars(quoteChars, 0);
+    setCharsOneByOne(quoteChars, 0);
     setWhole(sourceOnly ? [sourceOnly] : [], 0);
   };
 
