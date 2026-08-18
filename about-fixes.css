@@ -17,7 +17,7 @@
 
 /* Fixed black matte above the ASCII animation. */
 .about-ascii-hero::after{
-  background:rgba(0,0,0,.30);
+  background:rgba(0,0,0,.40);
 }
 
 /*
@@ -53,6 +53,50 @@
 .about-hero-main,
 .about-section-rule{
   padding-top:30px;
+}
+
+/* Editorial spacing shared by Profile, Good UX and Interview. */
+.about-hero-bottom{
+  margin-top:150px!important;
+}
+.thinking-section .principles-list,
+.interview-section .interview-list{
+  margin-top:150px!important;
+}
+
+/* Requested type sizes. */
+.about-lead{
+  font-size:18px!important;
+}
+.principle-title,
+.interview-q{
+  font-size:22px!important;
+}
+.interview-q::before{
+  content:'Q. ';
+}
+
+/*
+  Mobile portrait: crop the original 16:9 ASCII artwork to a centered 1:1
+  square instead of stretching it. The canvas is widened to its native 16:9
+  proportion and clipped by the square sticky viewport.
+*/
+@media(max-width:780px){
+  :root{
+    --ascii-hero-height:100vw;
+  }
+  .about-ascii-hero{
+    height:100vw;
+  }
+  .about-ascii-canvas{
+    position:absolute!important;
+    top:0;
+    left:50%;
+    width:177.7778%!important;
+    height:100%!important;
+    max-width:none!important;
+    transform:translateX(-50%);
+  }
 }
 
 @media(max-width:640px){
