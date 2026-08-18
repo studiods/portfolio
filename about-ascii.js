@@ -7,18 +7,18 @@
   const ctx = canvas?.getContext('2d', { alpha: false });
   if (!hero || !stage || !canvas || !ctx) return;
 
-  const SOURCE_COLS = 240;
-  const SOURCE_ROWS = 135;
+  const SOURCE_COLS = 192;
+  const SOURCE_ROWS = 108;
   const FRAME_COUNT = 7;
   const PACKED_BYTES_PER_FRAME = Math.ceil((SOURCE_COLS * SOURCE_ROWS) / 2);
   const FRAME_CHECKSUMS = [
-    '5b5d884a',
-    'b511def9',
-    'd0e0ada1',
-    'a94bd3ad',
-    'ad8985d9',
-    '5c99e83c',
-    'cefac965'
+    '79cd4ece',
+    '9e81a39e',
+    'c789e3aa',
+    'b18dd86f',
+    'af8546d7',
+    '9e03ddb2',
+    '4e56d670'
   ];
 
   const palette = ' .,:;-=+*#%@';
