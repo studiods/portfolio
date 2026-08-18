@@ -49,7 +49,8 @@
   const HOLD_MS = 960;
   const MORPH_MS = SCENE_MS - HOLD_MS;
   const GLITCH_MS = 48;
-  const MATTE_ALPHA = 0.80;
+  const DARK_MATTE_ALPHA = 0.70;
+  const LIGHT_MATTE_ALPHA = 0.20;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const sourceCellCount = sourceCols * sourceRows;
@@ -123,7 +124,7 @@
     return [...current.slice(1), current[0]];
   };
 
-  const pickMatteSlots = previous => {
+  const pickDarkSlots = previous => {
     const allSlots = Array.from({ length: SLOT_COUNT }, (_, index) => index);
     const previousKey = previous?.slice().sort((a, b) => a - b).join(',') || '';
     for (let attempt = 0; attempt < 32; attempt += 1) {
@@ -153,8 +154,8 @@
 
   let currentOrder = [0, 1, 2, 3, 4, 5];
   let upcomingOrder = nextPermutation(currentOrder);
-  let currentMatteSlots = pickMatteSlots();
-  let upcomingMatteSlots = pickMatteSlots(currentMatteSlots);
+  let currentDarkSlots = pickDarkSlots();
+  let upcomingDarkSlots = pickDarkSlots(currentDarkSlots);
   let currentFrame = compose(currentOrder);
   let upcomingFrame = compose(upcomingOrder);
   let startedAt = performance.now();
@@ -200,14 +201,14 @@
 
   const drawMattes = morph => {
     ctx.setTransform(renderDpr, 0, 0, renderDpr, 0, 0);
-    const currentSet = new Set(currentMatteSlots);
-    const upcomingSet = new Set(upcomingMatteSlots);
+    const currentSet = new Set(currentDarkSlots);
+    const upcomingSet = new Set(upcomingDarkSlots);
+    const t = morph > 0 ? smoothstep(morph) : 0;
+
     for (let slot = 0; slot < SLOT_COUNT; slot += 1) {
-      const from = currentSet.has(slot) ? 1 : 0;
-      const to = upcomingSet.has(slot) ? 1 : 0;
-      const blend = morph > 0 ? from + (to - from) * smoothstep(morph) : from;
-      const alpha = MATTE_ALPHA * blend;
-      if (alpha <= 0.001) continue;
+      const from = currentSet.has(slot) ? DARK_MATTE_ALPHA : LIGHT_MATTE_ALPHA;
+      const to = upcomingSet.has(slot) ? DARK_MATTE_ALPHA : LIGHT_MATTE_ALPHA;
+      const alpha = morph > 0 ? from + (to - from) * t : from;
       const gridX = slot % GRID_COLS;
       const gridY = Math.floor(slot / GRID_COLS);
       ctx.fillStyle = `rgba(0,0,0,${alpha.toFixed(3)})`;
@@ -260,10 +261,10 @@
   const advanceScene = () => {
     currentOrder = upcomingOrder;
     currentFrame = upcomingFrame;
-    currentMatteSlots = upcomingMatteSlots;
+    currentDarkSlots = upcomingDarkSlots;
     upcomingOrder = nextPermutation(currentOrder);
     upcomingFrame = compose(upcomingOrder);
-    upcomingMatteSlots = pickMatteSlots(currentMatteSlots);
+    upcomingDarkSlots = pickDarkSlots(currentDarkSlots);
     prepareTransition();
     lastStaticSerial = -1;
   };
