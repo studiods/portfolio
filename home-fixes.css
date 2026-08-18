@@ -23,9 +23,7 @@
 .definition-copy,
 .definition-source,
 .subtractive-korean .fill-line{color:rgba(17,17,17,.05)}
-.principle-card h3,
-.principle-en,
-.principle-card>p:last-child{color:rgba(255,255,255,.05)}
+.principle-en{color:rgba(255,255,255,.05)}
 .principles-intro{color:rgba(255,255,255,.16)}
 .principles-intro .fill-char{color:rgba(255,255,255,.16)}
 
@@ -33,7 +31,6 @@
 .js-char-fill .fill-char,
 .philosophy-statements .fill-char,
 .principles-intro .fill-char,
-.principle-card h3 .fill-char,
 .principle-en .fill-char,
 .hero-quote .fill-char,
 .definition-copy .fill-char,
@@ -155,6 +152,7 @@
 
 /* DESIGN PRINCIPLES */
 .principles-section{
+  --principles-ko-size:calc(clamp(42px,6vw,96px) - 13.333px);
   position:relative;
   overflow:clip;
   padding-top:0!important;
@@ -212,7 +210,7 @@
   z-index:3;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-weight:100;
-  font-size:calc(1em - 13.333px);
+  font-size:var(--principles-ko-size);
   line-height:.99;
   letter-spacing:-.03em;
   word-break:keep-all;
@@ -253,46 +251,28 @@
 .principle-copy{grid-column:2;min-width:0}
 .principle-copy-stage{
   position:relative;
-  min-height:clamp(70.56px,6.566vw,117.6px);
-  overflow:hidden;
-  isolation:isolate;
-}
-.principle-card h3{
-  position:relative;
-  z-index:1;
-  min-height:0!important;
-  margin:0!important;
-  font-weight:300!important;
-}
-.principle-copy-mask{
-  position:absolute;
-  z-index:2;
-  inset:0;
-  display:block;
-  background:#111;
-  clip-path:inset(0 0 100% 0);
-  will-change:clip-path;
+  min-height:0;
+  overflow:visible;
 }
 .principle-en{
   margin:12px 0 0!important;
   font-weight:300!important;
 }
 .principle-ko{
-  position:absolute;
+  position:relative;
   z-index:3;
-  inset:0;
+  inset:auto;
   margin:0!important;
   max-width:none!important;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:100!important;
-  font-size:calc(clamp(36px,3.35vw,60px) - 5.333px)!important;
-  line-height:1.08!important;
+  font-size:var(--principles-ko-size)!important;
+  line-height:.99!important;
   letter-spacing:-.03em;
   word-break:keep-all;
   color:#fff!important;
-  opacity:0;
-  transform:translate3d(0,-1.05em,0);
-  will-change:transform,opacity;
+  opacity:1;
+  transform:none;
 }
 
 /* Give the Works section about 20% more space above its label/content. */
@@ -308,12 +288,12 @@
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
   .hero-sequence{height:538.10vh!important}
-  .hero-sticky{padding:70px var(--pad) 24px}
-  .hero-state{inset:70px var(--pad) 36px}
-  .hero-quote{font-size:clamp(24px,6.4vw,34px);line-height:.97}
-  .definition-copy{font-size:clamp(24.3px,6.804vw,46.98px);line-height:1.06;letter-spacing:-.03em}
+  .hero-sticky{padding:70px 10px 24px}
+  .hero-state{inset:70px 10px 36px}
+  .hero-quote{font-size:clamp(25px,7.08vw,28px);line-height:.97}
+  .definition-copy{font-size:clamp(28px,7.6vw,40px);line-height:1.06;letter-spacing:-.03em}
   .definition-source{margin-top:16px;font-size:13.2px}
-  .subtractive-title{font-size:clamp(50px,14.5vw,78px);line-height:.82}
+  .subtractive-title{font-size:clamp(52px,14.9vw,80px);line-height:.82}
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.7}
 
   .intro-block{
@@ -332,27 +312,28 @@
   .philosophy-tail-space{height:clamp(96px,14vh,160px)}
 
   .principles-section{
-    padding-top:0!important;
+    --principles-ko-size:calc(clamp(34px,10vw,50px) - 13.333px);
+    padding-top:clamp(56px,15vw,80px)!important;
     padding-bottom:72px!important;
     padding-left:var(--pad)!important;
     padding-right:var(--pad)!important;
   }
   .principles-persistent-label{top:70px;width:auto;height:0}
-  .principles-intro-stage{height:300vh}
+  .principles-intro-stage{height:180vh}
   .principles-head{display:block!important;top:10vh;min-height:80vh!important;padding:70px 0 0!important}
   .principles-intro{position:relative;display:block;width:100%!important;margin-left:0!important;font-size:clamp(34px,10vw,50px);line-height:.93}
   .principles-intro-row{height:1.023em}
   .principles-intro-en{white-space:nowrap}
   .principles-intro-mask{height:.93em}
-  .principles-intro-ko{font-size:calc(1em - 13.333px);line-height:1.023}
-  .principles-cards-stage{height:380vh}
+  .principles-intro-ko{font-size:var(--principles-ko-size);line-height:1.023}
+  .principles-after-intro{height:96px}
+  .principles-cards-stage{height:220vh}
   .principles-grid{top:7vh;min-height:86vh;gap:50px!important}
   .principle-card{grid-template-columns:1fr!important}
   .principle-card-inner{grid-column:1;grid-template-columns:30px minmax(0,1fr);column-gap:10px}
-  .principle-copy-stage{min-height:clamp(58.8px,16.66vw,86.24px)}
-  .principle-card h3{font-size:clamp(30px,8.5vw,44px)}
+  .principle-copy-stage{min-height:0}
   .principle-en{white-space:normal!important;font-size:11px}
-  .principle-ko{font-size:calc(clamp(30px,8.5vw,44px) - 5.333px)!important;line-height:1.12!important}
+  .principle-ko{font-size:var(--principles-ko-size)!important;line-height:1.023!important}
 
   .selected-work{padding:86px 0 64px!important}
   .selected-work-header{margin-bottom:26px}
@@ -384,9 +365,7 @@
   .subtractive-korean .fill-char{color:#111!important}
   .philosophy-statements p{color:#111!important}
   .principles-intro .fill-char,
-  .principle-card h3 .fill-char,
-  .principle-en .fill-char,
-  .principle-card>p:last-child{color:#fff!important}
+  .principle-en .fill-char{color:#fff!important}
   .hero-state-quote{opacity:1!important;transform:none!important;clip-path:none!important}
   .hero-state-definition,.hero-state-subtractive{opacity:0!important}
   .philosophy-sticky{position:static!important}
@@ -397,7 +376,7 @@
   .principles-head{padding:80px 0!important}
   .principles-intro{opacity:1!important;transform:none!important;clip-path:none!important}
   .principles-persistent-label{position:static!important;height:auto!important;margin-bottom:28px}
-  .principles-intro-mask,.principle-copy-mask{clip-path:inset(0)!important}
+  .principles-intro-mask{clip-path:inset(0)!important}
   .principles-intro-ko{opacity:1!important;transform:none!important}
   .principle-card{opacity:1!important;transform:none!important}
   .principle-card .fill-char{color:#fff!important}
