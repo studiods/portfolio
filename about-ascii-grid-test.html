@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>About ASCII Single Test — Shin Dong Sik</title>
+  <title>About ASCII Grid Test — Shin Dong Sik</title>
   <style>
     :root{
       color-scheme:dark;
@@ -11,19 +11,19 @@
       color:#f4f2ed;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden}
+    html,body{margin:0;min-height:100%;background:#000}
     body{
-      position:relative;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
       font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
     }
     .ascii-grid-test{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:max(100vw,177.7778vh);
-      height:max(100vh,56.25vw);
+      position:relative;
+      width:100vw;
       aspect-ratio:16/9;
-      transform:translate(-50%,-50%);
+      max-height:100vh;
       overflow:hidden;
       background:#000;
     }
@@ -45,18 +45,24 @@
       color:rgba(244,242,237,.46);
       pointer-events:none;
     }
+    @media(max-aspect-ratio:16/9){
+      .ascii-grid-test{
+        width:auto;
+        height:100vh;
+      }
+    }
     @media(prefers-reduced-motion:reduce){
       .ascii-grid-test-status::after{content:' · REDUCED MOTION'}
     }
   </style>
 </head>
 <body>
-  <main class="ascii-grid-test" aria-label="기존 7개의 ASCII 초상을 원본 16대9 구도로 한 장씩 전체 화면에 보여주는 About 애니메이션 테스트">
+  <main class="ascii-grid-test" aria-label="6개의 ASCII 초상 카드를 3열 2행으로 배열한 About 애니메이션 테스트">
     <canvas class="ascii-grid-test-canvas" aria-hidden="true"></canvas>
-    <p class="ascii-grid-test-status">ASCII TEST · LOADING</p>
+    <p class="ascii-grid-test-status">ASCII GRID TEST · LOADING</p>
   </main>
 
   <script src="./about-ascii-data.js?v=8"></script>
-  <script src="./about-ascii-grid-test.js?v=3"></script>
+  <script src="./about-ascii-grid-test.js?v=1"></script>
 </body>
 </html>
