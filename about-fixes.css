@@ -91,14 +91,14 @@
   border-bottom-color:rgba(255,255,255,.07)!important;
 }
 
-/* Mobile keeps the same complete 16:9 source frame: no crop, no zoom. */
+/* Mobile uses a centered square crop while retaining the same ASCII source. */
 @media(max-width:780px){
   :root{
-    --ascii-hero-height:56.25vw;
+    --ascii-hero-height:100vw;
   }
   .about-ascii-hero{
     height:var(--ascii-hero-height);
-    aspect-ratio:16/9;
+    aspect-ratio:1/1;
   }
   .about-ascii-canvas{
     position:relative!important;

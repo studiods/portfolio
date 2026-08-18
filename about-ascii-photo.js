@@ -146,17 +146,23 @@
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
 
+      /*
+        Cover the hero at every viewport ratio. The source remains centered;
+        only the overflow is clipped, so no horizontal or vertical bars can
+        appear. On mobile the square hero therefore becomes a centered 1:1
+        crop of the same 16:9 ASCII frame.
+      */
       const heroRatio = width / height;
       if (heroRatio > SOURCE_RATIO) {
-        drawHeight = height;
-        drawWidth = drawHeight * SOURCE_RATIO;
-        drawX = (width - drawWidth) / 2;
-        drawY = 0;
-      } else {
         drawWidth = width;
         drawHeight = drawWidth / SOURCE_RATIO;
         drawX = 0;
         drawY = (height - drawHeight) / 2;
+      } else {
+        drawHeight = height;
+        drawWidth = drawHeight * SOURCE_RATIO;
+        drawX = (width - drawWidth) / 2;
+        drawY = 0;
       }
 
       cellWidth = drawWidth / COLS;
