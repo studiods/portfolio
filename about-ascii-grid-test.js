@@ -41,7 +41,7 @@
   const HOLD_MS = 960;
   const MORPH_MS = SCENE_MS - HOLD_MS;
   const GLITCH_MS = 48;
-  const MATTE_ALPHA = 0.90;
+  const MATTE_ALPHA = 0.80;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const sourceCellCount = sourceCols * sourceRows;
@@ -329,7 +329,7 @@
   prepareTransition();
   resize();
   draw(performance.now(), 0);
-  if (status) status.textContent = 'ASCII GRID TEST · 3 CLEAR / 3 MATTE · 90%';
+  if (status) status.textContent = 'ASCII GRID TEST · 3 CLEAR / 3 MATTE · 80%';
 
   if (!reducedMotion) rafId = requestAnimationFrame(renderLoop);
 
