@@ -455,34 +455,44 @@
   const principleCardsStage = $('.principles-cards-stage', principles);
   const principleCards = $$('.principle-card', principles);
   const principleCardEnglish = principleCards.map(card => $$('.fill-char', card));
+  const principleCardMasks = principleCards.map(card => $('.principle-copy-mask', card));
   const principleCardKorean = principleCards.map(card => $('.principle-ko', card));
 
   const renderPrinciplesIntro = p => {
     if (!principleRows.length) return;
 
     principleRows.forEach((row, index) => {
-      const englishProgress = fillProgress(p, index * 0.075, 0.10);
+      const englishProgress = fillProgress(p, index * 0.065, 0.085);
+      const maskProgress = easeInOut(phaseProgress(
+        p,
+        0.30 + index * 0.075,
+        0.405 + index * 0.075
+      ));
       const translationProgress = easeInOut(phaseProgress(
         p,
-        0.36 + index * 0.09,
-        0.46 + index * 0.09
+        0.315 + index * 0.075,
+        0.42 + index * 0.075
       ));
 
       setChars(principleRowEnglish[index], englishProgress, '255,255,255', 0.16);
-      setStyle(principleRowMasks[index], 'transform', `scaleY(${translationProgress.toFixed(4)})`);
+      setStyle(
+        principleRowMasks[index],
+        'clipPath',
+        `inset(0 0 ${(100 * (1 - maskProgress)).toFixed(2)}% 0)`
+      );
       setStyle(principleRowKorean[index], 'opacity', translationProgress.toFixed(4));
       setStyle(
         principleRowKorean[index],
         'transform',
-        `translate3d(0, ${(-100 * (1 - translationProgress)).toFixed(2)}%, 0)`
+        `translate3d(0, ${(-1.05 * (1 - translationProgress)).toFixed(3)}em, 0)`
       );
     });
   };
 
   const CARD_PHASES = Object.freeze([
-    { enterStart: 0.00, enterEnd: 0.04, fillStart: 0.02, fillEnd: 0.20, koStart: 0.24, koEnd: 0.31 },
-    { enterStart: 0.34, enterEnd: 0.38, fillStart: 0.36, fillEnd: 0.54, koStart: 0.58, koEnd: 0.65 },
-    { enterStart: 0.68, enterEnd: 0.72, fillStart: 0.70, fillEnd: 0.88, koStart: 0.92, koEnd: 0.99 }
+    { enterStart: 0.00, enterEnd: 0.04, fillStart: 0.02, fillEnd: 0.18, maskStart: 0.22, maskEnd: 0.30, koStart: 0.23, koEnd: 0.31 },
+    { enterStart: 0.34, enterEnd: 0.38, fillStart: 0.36, fillEnd: 0.52, maskStart: 0.56, maskEnd: 0.64, koStart: 0.57, koEnd: 0.65 },
+    { enterStart: 0.68, enterEnd: 0.72, fillStart: 0.70, fillEnd: 0.86, maskStart: 0.90, maskEnd: 0.98, koStart: 0.91, koEnd: 0.99 }
   ]);
 
   const renderPrincipleCards = p => {
@@ -492,16 +502,22 @@
 
       const enterProgress = easeInOut(phaseProgress(p, phase.enterStart, phase.enterEnd));
       const fill = phaseProgress(p, phase.fillStart, phase.fillEnd);
+      const maskProgress = easeInOut(phaseProgress(p, phase.maskStart, phase.maskEnd));
       const koreanProgress = easeInOut(phaseProgress(p, phase.koStart, phase.koEnd));
 
       setStyle(card, 'opacity', enterProgress.toFixed(4));
       setStyle(card, 'transform', `translate3d(0, ${(24 * (1 - enterProgress)).toFixed(2)}px, 0)`);
       setChars(principleCardEnglish[index], fill, '255,255,255');
+      setStyle(
+        principleCardMasks[index],
+        'clipPath',
+        `inset(0 0 ${(100 * (1 - maskProgress)).toFixed(2)}% 0)`
+      );
       setStyle(principleCardKorean[index], 'opacity', koreanProgress.toFixed(4));
       setStyle(
         principleCardKorean[index],
         'transform',
-        `translate3d(0, ${(-0.7 * (1 - koreanProgress)).toFixed(3)}em, 0)`
+        `translate3d(0, ${(-1.05 * (1 - koreanProgress)).toFixed(3)}em, 0)`
       );
     });
   };
