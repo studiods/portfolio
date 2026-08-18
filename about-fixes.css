@@ -64,9 +64,15 @@
   margin-top:150px!important;
 }
 
-/* Requested type sizes. */
+/* Requested type sizes and compact paragraph rhythm. */
 .about-lead{
   font-size:18px!important;
+}
+.about-lead p{
+  margin:0 0 .32em!important;
+}
+.about-lead p:last-child{
+  margin-bottom:0!important;
 }
 .principle-title,
 .interview-q{
@@ -74,6 +80,20 @@
 }
 .interview-q::before{
   content:'Q. ';
+}
+
+/*
+  Divider hierarchy: Good UX uses four 7% white lines (one list top + three
+  row bottoms), Interview uses five 7% row dividers, and Career keeps its
+  first/top rule while every row divider below it is reduced to 7% white.
+*/
+.thinking-section .principles-list{
+  border-top-color:rgba(255,255,255,.07)!important;
+}
+.thinking-section .principle-row,
+.interview-section .interview-row,
+.career-section .career-row-v2{
+  border-bottom-color:rgba(255,255,255,.07)!important;
 }
 
 /*
