@@ -79,7 +79,7 @@
   align-content:start!important;
   box-sizing:border-box!important;
   padding-top:0!important;
-  gap:63px!important;
+  gap:60px!important;
 }
 
 /* Numbers are removed from HTML; copy owns the full second column. */
@@ -110,8 +110,8 @@
   line-height:1.188!important;
 }
 
-/* Korean copy -> English caption: 20px -> 18px (10% reduction). */
-.home-test .principle-copy-stage{margin-bottom:18px!important}
+/* Korean copy -> English caption: 18px -> 16.2px (additional 10% reduction). */
+.home-test .principle-copy-stage{margin-bottom:16.2px!important}
 .home-test .principle-en{margin-top:0!important}
 
 .home-test .principle-card.test-timeline-card{
@@ -155,7 +155,7 @@
   .home-test .principles-cards-stage{height:245vh!important}
   .home-test .principles-grid{
     padding-top:0!important;
-    gap:63px!important;
+    gap:60px!important;
   }
   .home-test .principle-card-inner{
     position:relative!important;
@@ -172,7 +172,7 @@
     padding:0!important;
   }
   .home-test .principle-ko{line-height:1.228!important}
-  .home-test .principle-copy-stage{margin-bottom:18px!important}
+  .home-test .principle-copy-stage{margin-bottom:16.2px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
