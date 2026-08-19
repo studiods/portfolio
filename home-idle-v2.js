@@ -5,26 +5,22 @@
   const quote = hero?.querySelector('.hero-quote');
   if (!hero || !quote) return;
 
-  /*
-    home-interactions.js still contains the legacy idle controller. Disable it
-    first, then let this module own every no-action animation on the first hero.
-  */
+  /* Disable the legacy idle cue in home-interactions.js. */
   window.dispatchEvent(new Event('pointerdown'));
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) return;
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const BASE_ALPHA = 0.05;
   const FULL_ALPHA = 1;
-  const INITIAL_IDLE_MS = 3000;
-  const WORD_MS = 300;
-  const NEXT_WORD_AT = 0.60;
-  const WORD_STAGGER_MS = WORD_MS * NEXT_WORD_AT;
-  const GLYPH_CYCLE_MS = 36;
-  const RESOLVE_AT = 0.84;
-  const FADE_TO_BASE_MS = 2000;
-  const BASE_HOLD_MS = 1000;
+  const IDLE_RESTART_MS = 3000;
+  const CHAR_MS = 800;
+  const NEXT_CHAR_AT = 0.60;
+  const CHAR_STAGGER_MS = CHAR_MS * NEXT_CHAR_AT;
+  const SCRAMBLE_STATES = 3;
+  const SCRAMBLE_STATE_MS = CHAR_MS / SCRAMBLE_STATES;
+  const FADE_TO_BASE_MS = 3000;
 
   const logicalLines = [...quote.children].filter(
     el => el.matches('span') && !el.classList.contains('fill-char')
@@ -76,19 +72,40 @@
     char.style.color = `rgba(17,17,17,${alpha})`;
   };
 
-  const setWordFull = group => group.forEach(char => setCharAlpha(char, FULL_ALPHA));
   const resetAllToBase = () => allChars.forEach(char => setCharAlpha(char, BASE_ALPHA));
+  const setAllFull = () => allChars.forEach(char => setCharAlpha(char, FULL_ALPHA));
 
-  let disabled = false;
-  let runToken = 0;
+  const randomLetter = (finalChar, previous = '') => {
+    let glyph = finalChar;
+    for (let attempt = 0; attempt < 8 && (glyph === finalChar || glyph === previous); attempt += 1) {
+      glyph = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
+    }
+    return glyph === finalChar ? SCRAMBLE_POOL[(SCRAMBLE_POOL.indexOf(finalChar) + 7) % SCRAMBLE_POOL.length] : glyph;
+  };
+
+  const makeThreeStates = char => {
+    const finalChar = char.textContent.toUpperCase();
+    const states = [];
+    for (let index = 0; index < SCRAMBLE_STATES; index += 1) {
+      states.push(randomLetter(finalChar, states[index - 1] || ''));
+    }
+    return states;
+  };
+
+  let generation = 0;
+  let mode = 'sequential';
+  let idleTimer = 0;
   const timers = new Set();
   const rafs = new Set();
 
-  const atTop = () => window.scrollY <= 8;
-  const canRun = token =>
-    !disabled && token === runToken && atTop() && !document.hidden;
+  const atHeroStart = () => window.scrollY <= 8;
+  const alive = token => token === generation && !document.hidden && atHeroStart();
 
   const clearTimers = () => {
+    if (idleTimer) {
+      clearTimeout(idleTimer);
+      idleTimer = 0;
+    }
     timers.forEach(id => clearTimeout(id));
     timers.clear();
   };
@@ -107,57 +124,50 @@
   };
 
   const wait = (ms, token) => new Promise(resolve => {
-    if (!canRun(token)) {
+    if (!alive(token)) {
       resolve(false);
       return;
     }
     const id = setTimeout(() => {
       timers.delete(id);
-      resolve(canRun(token));
+      resolve(alive(token));
     }, ms);
     timers.add(id);
   });
 
-  const randomGlyph = (charIndex, cycle, seed) =>
-    SCRAMBLE_POOL[(charIndex * 17 + cycle * 13 + seed * 19) % SCRAMBLE_POOL.length];
-
-  const animateWord = (group, token, seed) => new Promise(resolve => {
-    if (!canRun(token)) {
+  const animateChar = (char, token) => new Promise(resolve => {
+    if (!alive(token)) {
       resolve(false);
       return;
     }
 
+    const states = makeThreeStates(char);
     const startedAt = performance.now();
 
     const frame = now => {
-      if (!canRun(token)) {
-        group.forEach(char => setCharAlpha(char, BASE_ALPHA));
+      if (!alive(token)) {
+        setCharAlpha(char, BASE_ALPHA);
         resolve(false);
         return;
       }
 
       const elapsed = now - startedAt;
-      const progress = Math.min(1, elapsed / WORD_MS);
-      const cycle = Math.floor(elapsed / GLYPH_CYCLE_MS);
-
-      if (progress < RESOLVE_AT) {
-        group.forEach((char, index) => {
-          char.style.color = 'transparent';
-          char.dataset.scramble = randomGlyph(index, cycle, seed);
-          char.style.setProperty('--scramble-alpha', '1');
-          char.style.setProperty('--scramble-rgb', '17,17,17');
-          char.classList.add('is-scrambling');
-        });
-      } else {
-        setWordFull(group);
-      }
-
-      if (progress >= 1) {
-        setWordFull(group);
+      if (elapsed >= CHAR_MS) {
+        setCharAlpha(char, FULL_ALPHA);
         resolve(true);
         return;
       }
 
+      const stateIndex = Math.min(
+        SCRAMBLE_STATES - 1,
+        Math.floor(elapsed / SCRAMBLE_STATE_MS)
+      );
+
+      char.style.color = 'transparent';
+      char.dataset.scramble = states[stateIndex];
+      char.style.setProperty('--scramble-alpha', '1');
+      char.style.setProperty('--scramble-rgb', '17,17,17');
+      char.classList.add('is-scrambling');
       nextFrame(frame);
     };
 
@@ -165,25 +175,27 @@
   });
 
   const fadeAllToBase = token => new Promise(resolve => {
-    if (!canRun(token)) {
+    if (!alive(token)) {
       resolve(false);
       return;
     }
 
-    allChars.forEach(clearScramble);
-    const startedAt = performance.now();
+    setAllFull();
     hero.dataset.idleState = 'fading-to-base';
+    const startedAt = performance.now();
 
     const frame = now => {
-      if (!canRun(token)) {
+      if (!alive(token)) {
         resetAllToBase();
         resolve(false);
         return;
       }
 
       const progress = Math.min(1, (now - startedAt) / FADE_TO_BASE_MS);
-      const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * progress;
+      const eased = progress * progress * (3 - 2 * progress);
+      const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * eased;
       allChars.forEach(char => {
+        clearScramble(char);
         char.style.color = `rgba(17,17,17,${alpha.toFixed(4)})`;
       });
 
@@ -199,85 +211,92 @@
     nextFrame(frame);
   });
 
-  const runWordPattern = async (groups, token, mode) => {
+  const orderedCharsForMode = currentMode => {
+    const words = currentMode === 'random' ? shuffle(wordGroups) : wordGroups.slice();
+    return words.flat();
+  };
+
+  const runPattern = async (currentMode, token) => {
     resetAllToBase();
     hero.dataset.idleState = 'running';
-    hero.dataset.idleMode = mode;
+    hero.dataset.idleMode = currentMode;
 
+    const chars = orderedCharsForMode(currentMode);
     const jobs = [];
-    for (let index = 0; index < groups.length; index += 1) {
-      if (!canRun(token)) return false;
-      jobs.push(animateWord(groups[index], token, index + (mode === 'random' ? 31 : 0)));
 
-      if (index < groups.length - 1) {
-        if (!(await wait(WORD_STAGGER_MS, token))) return false;
+    for (let index = 0; index < chars.length; index += 1) {
+      if (!alive(token)) return false;
+      jobs.push(animateChar(chars[index], token));
+
+      if (index < chars.length - 1) {
+        if (!(await wait(CHAR_STAGGER_MS, token))) return false;
       }
     }
 
     const results = await Promise.all(jobs);
-    if (!results.every(Boolean) || !canRun(token)) return false;
+    if (!results.every(Boolean) || !alive(token)) return false;
 
-    /* Every authored word has accumulated at 100% black. Fade immediately. */
-    allChars.forEach(char => setCharAlpha(char, FULL_ALPHA));
+    setAllFull();
+    hero.dataset.idleState = 'full';
 
     if (!(await fadeAllToBase(token))) return false;
 
-    hero.dataset.idleState = 'base-hold';
-    if (!(await wait(BASE_HOLD_MS, token))) return false;
-
     delete hero.dataset.idleMode;
+    hero.dataset.idleState = 'ready-next';
     return true;
   };
 
-  const stop = permanent => {
-    runToken += 1;
-    clearTimers();
-    clearRafs();
-    resetAllToBase();
-    if (permanent) disabled = true;
-    hero.dataset.idleState = permanent ? 'disabled' : 'paused';
-    delete hero.dataset.idleMode;
-  };
-
-  const run = async token => {
-    resetAllToBase();
-    hero.dataset.idleState = 'waiting';
-    if (!(await wait(INITIAL_IDLE_MS, token))) return;
-
-    while (canRun(token)) {
-      if (!(await runWordPattern(wordGroups, token, 'sequential'))) return;
-      if (!(await runWordPattern(shuffle(wordGroups), token, 'random'))) return;
+  const runLoop = async token => {
+    while (alive(token)) {
+      const completed = await runPattern(mode, token);
+      if (!completed || !alive(token)) return;
+      mode = mode === 'sequential' ? 'random' : 'sequential';
     }
   };
 
-  const start = () => {
-    if (disabled || document.hidden || !atTop()) return;
-    const token = ++runToken;
-    run(token).catch(error => {
-      console.error('Home idle scramble failed.', error);
-      stop(true);
-    });
+  const cancelCurrent = () => {
+    generation += 1;
+    clearTimers();
+    clearRafs();
+    resetAllToBase();
+    delete hero.dataset.idleMode;
+    hero.dataset.idleState = 'waiting';
   };
 
-  const stopFromUser = event => {
+  const armInitialAfterIdle = () => {
+    cancelCurrent();
+    mode = 'sequential';
+
+    if (document.hidden || !atHeroStart()) return;
+
+    const token = generation;
+    idleTimer = setTimeout(() => {
+      idleTimer = 0;
+      if (!alive(token)) return;
+      runLoop(token).catch(error => {
+        console.error('Home idle alphabet scramble failed.', error);
+        cancelCurrent();
+      });
+    }, IDLE_RESTART_MS);
+  };
+
+  const registerActivity = event => {
     if (event && event.isTrusted === false) return;
-    stop(true);
+    armInitialAfterIdle();
   };
 
-  window.addEventListener('wheel', stopFromUser, { passive: true });
-  window.addEventListener('touchstart', stopFromUser, { passive: true });
-  window.addEventListener('pointerdown', stopFromUser, { passive: true });
-  window.addEventListener('keydown', stopFromUser);
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 8) stop(true);
-  }, { passive: true });
+  window.addEventListener('wheel', registerActivity, { passive: true });
+  window.addEventListener('touchstart', registerActivity, { passive: true });
+  window.addEventListener('pointerdown', registerActivity, { passive: true });
+  window.addEventListener('pointermove', registerActivity, { passive: true });
+  window.addEventListener('keydown', registerActivity);
+  window.addEventListener('scroll', registerActivity, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (disabled) return;
-    if (document.hidden) stop(false);
-    else start();
+    if (document.hidden) cancelCurrent();
+    else armInitialAfterIdle();
   });
 
   hero.dataset.idleState = 'armed';
-  start();
+  armInitialAfterIdle();
 })();
