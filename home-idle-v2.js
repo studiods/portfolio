@@ -10,11 +10,11 @@
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const BASE_ALPHA = 0.05;
   const FULL_ALPHA = 1;
-  const IDLE_DELAY_MS = 3000;
-  const WORD_MS = 500;
+  const INITIAL_IDLE_MS = 3000;
+  const WORD_MS = 300;
   const NEXT_WORD_MS = WORD_MS * 0.5;
   const GLYPH_STEP_MS = 80;
   const FADE_TO_BASE_MS = 3000;
@@ -52,10 +52,10 @@
   const authoredChar = char => authoredChars.get(char) || char.textContent;
 
   /*
-    Random letters replace the live text node itself instead of using an
-    absolutely positioned pseudo element. This keeps scramble and authored
-    glyphs on the exact same font baseline. The original advance width is held
-    only while scrambling so neighboring letters do not shift horizontally.
+    Scramble glyphs replace the live text node instead of using an absolutely
+    positioned pseudo element. Random and authored glyphs therefore share the
+    exact same baseline. The original advance width is frozen only while a word
+    scrambles so neighboring letters do not shift horizontally.
   */
   const clearLegacyScramble = char => {
     char.classList.remove('is-scrambling');
@@ -83,7 +83,7 @@
   const resetToBase = () => allChars.forEach(char => restoreChar(char, BASE_ALPHA));
   const setAllFull = () => allChars.forEach(char => restoreChar(char, FULL_ALPHA));
 
-  const randomLetter = (finalChar, previous = '') => {
+  const randomGlyph = (finalChar, previous = '') => {
     let glyph = finalChar;
     for (let i = 0; i < 10 && (glyph === finalChar || glyph === previous); i += 1) {
       glyph = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
@@ -91,18 +91,19 @@
     return glyph;
   };
 
-  let generation = 0;
-  let idleTimer = 0;
+  let cancelled = false;
+  let completed = false;
+  let initialTimer = 0;
   const timers = new Set();
   const rafs = new Set();
 
   const atHeroStart = () => window.scrollY <= 8;
-  const alive = token => token === generation && !document.hidden && atHeroStart();
+  const canRun = () => !cancelled && !completed && !document.hidden && atHeroStart();
 
   const clearAsync = () => {
-    if (idleTimer) {
-      clearTimeout(idleTimer);
-      idleTimer = 0;
+    if (initialTimer) {
+      clearTimeout(initialTimer);
+      initialTimer = 0;
     }
     timers.forEach(id => clearTimeout(id));
     timers.clear();
@@ -118,31 +119,31 @@
     rafs.add(id);
   };
 
-  const wait = (ms, token) => new Promise(resolve => {
-    if (!alive(token)) {
+  const wait = ms => new Promise(resolve => {
+    if (!canRun()) {
       resolve(false);
       return;
     }
     const id = setTimeout(() => {
       timers.delete(id);
-      resolve(alive(token));
+      resolve(canRun());
     }, ms);
     timers.add(id);
   });
 
-  const animateWord = (chars, token) => new Promise(resolve => {
-    if (!alive(token)) {
+  const animateWord = chars => new Promise(resolve => {
+    if (!canRun()) {
       resolve(false);
       return;
     }
 
     chars.forEach(prepareChar);
     let lastStep = -1;
-    let previousGlyphs = new Array(chars.length).fill('');
+    const previousGlyphs = new Array(chars.length).fill('');
     const startedAt = performance.now();
 
     const frame = now => {
-      if (!alive(token)) {
+      if (!canRun()) {
         chars.forEach(char => restoreChar(char, BASE_ALPHA));
         resolve(false);
         return;
@@ -158,7 +159,7 @@
       const step = Math.floor(elapsed / GLYPH_STEP_MS);
       if (step !== lastStep) {
         chars.forEach((char, index) => {
-          const next = randomLetter(authoredChar(char).toUpperCase(), previousGlyphs[index]);
+          const next = randomGlyph(authoredChar(char).toUpperCase(), previousGlyphs[index]);
           previousGlyphs[index] = next;
           char.textContent = next;
         });
@@ -171,18 +172,18 @@
     nextFrame(frame);
   });
 
-  const fadeToBase = token => new Promise(resolve => {
-    if (!alive(token)) {
+  const fadeToBase = () => new Promise(resolve => {
+    if (!canRun()) {
       resolve(false);
       return;
     }
 
     setAllFull();
-    const startedAt = performance.now();
     hero.dataset.idleState = 'fading';
+    const startedAt = performance.now();
 
     const frame = now => {
-      if (!alive(token)) {
+      if (!canRun()) {
         resetToBase();
         resolve(false);
         return;
@@ -191,6 +192,7 @@
       const progress = Math.min(1, (now - startedAt) / FADE_TO_BASE_MS);
       const eased = progress * progress * (3 - 2 * progress);
       const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * eased;
+
       allChars.forEach(char => {
         clearLegacyScramble(char);
         char.textContent = authoredChar(char);
@@ -211,69 +213,55 @@
     nextFrame(frame);
   });
 
-  const runSequence = async token => {
+  const runOnce = async () => {
     resetToBase();
     hero.dataset.idleState = 'running';
 
     const jobs = [];
     for (let index = 0; index < wordGroups.length; index += 1) {
-      if (!alive(token)) return false;
-      jobs.push(animateWord(wordGroups[index], token));
+      if (!canRun()) return;
+      jobs.push(animateWord(wordGroups[index]));
 
       if (index < wordGroups.length - 1) {
-        if (!(await wait(NEXT_WORD_MS, token))) return false;
+        if (!(await wait(NEXT_WORD_MS))) return;
       }
     }
 
     const results = await Promise.all(jobs);
-    if (!results.every(Boolean) || !alive(token)) return false;
+    if (!results.every(Boolean) || !canRun()) return;
 
     setAllFull();
-    return fadeToBase(token);
+    if (!(await fadeToBase())) return;
+
+    completed = true;
+    hero.dataset.idleState = 'done';
   };
 
-  const runLoop = async token => {
-    while (alive(token)) {
-      if (!(await runSequence(token))) return;
-    }
-  };
-
-  const cancelAndReset = () => {
-    generation += 1;
+  const cancelPermanently = event => {
+    if (event && event.isTrusted === false) return;
+    if (completed || cancelled) return;
+    cancelled = true;
     clearAsync();
     resetToBase();
-    hero.dataset.idleState = 'waiting';
+    hero.dataset.idleState = 'disabled';
   };
 
-  const armAfterIdle = () => {
-    cancelAndReset();
-    if (document.hidden || !atHeroStart()) return;
-
-    const token = generation;
-    idleTimer = setTimeout(() => {
-      idleTimer = 0;
-      if (!alive(token)) return;
-      runLoop(token).catch(() => cancelAndReset());
-    }, IDLE_DELAY_MS);
-  };
-
-  const registerActivity = event => {
-    if (event && event.isTrusted === false) return;
-    armAfterIdle();
-  };
-
-  window.addEventListener('wheel', registerActivity, { passive: true });
-  window.addEventListener('touchstart', registerActivity, { passive: true });
-  window.addEventListener('pointerdown', registerActivity, { passive: true });
-  window.addEventListener('pointermove', registerActivity, { passive: true });
-  window.addEventListener('keydown', registerActivity);
-  window.addEventListener('scroll', registerActivity, { passive: true });
+  window.addEventListener('wheel', cancelPermanently, { passive: true });
+  window.addEventListener('touchstart', cancelPermanently, { passive: true });
+  window.addEventListener('pointerdown', cancelPermanently, { passive: true });
+  window.addEventListener('pointermove', cancelPermanently, { passive: true });
+  window.addEventListener('keydown', cancelPermanently);
+  window.addEventListener('scroll', cancelPermanently, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) cancelAndReset();
-    else armAfterIdle();
+    if (document.hidden) cancelPermanently();
   });
 
   hero.dataset.idleState = 'armed';
-  armAfterIdle();
+  resetToBase();
+  initialTimer = setTimeout(() => {
+    initialTimer = 0;
+    if (!canRun()) return;
+    runOnce().catch(() => cancelPermanently());
+  }, INITIAL_IDLE_MS);
 })();
