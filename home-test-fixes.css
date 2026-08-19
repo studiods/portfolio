@@ -1,33 +1,22 @@
 /* Isolated overrides for home-test.html only. Production index.html is untouched. */
 .home-test:not(.home-test-ready) .hero-quote{visibility:hidden}
 
-/* Preserve real spaces created by the production character splitter. */
 .home-test .principle-ko .fill-char.test-space,
 .home-test .showcase-project h3 .fill-char.test-space{
   white-space:pre!important;
 }
 
 /*
-  Master language-transition baseline correction.
-  2pt = 2.667 CSS px at 96dpi. Every incoming-language target is made
-  transformable first, then lifted without changing its line box.
+  Font-metric normalization master.
+  JS measures the actual Averta/Pretendard glyph boxes after the fonts load and
+  provides scale, Y shift and first-line baseline origin as CSS variables.
 */
-.home-test{
-  --language-transition-baseline-shift-ko:-2.667px;
-  --language-transition-baseline-shift-en:-2.667px;
-}
-.home-test .language-transition-target-ko,
-.home-test .language-transition-target-en{
-  display:inline-block!important;
-  transform-origin:left top!important;
-  vertical-align:top!important;
+.home-test .metric-calibrated-target{
+  transform:
+    translateY(var(--metric-shift-y,0px))
+    scale(var(--metric-scale,1))!important;
+  transform-origin:0 var(--metric-origin-y,50%)!important;
   will-change:transform;
-}
-.home-test .language-transition-target-ko{
-  transform:translateY(var(--language-transition-baseline-shift-ko))!important;
-}
-.home-test .language-transition-target-en{
-  transform:translateY(var(--language-transition-baseline-shift-en))!important;
 }
 
 /* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
@@ -52,43 +41,29 @@
   color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
 }
 
-/* Hero Korean definition: original responsive size minus only 3px. */
+/* Hero Korean definition: original responsive size minus exactly 3px. */
 .home-test .definition-copy{
   font-size:calc(clamp(34.83px,4.9815vw,85.86px) - 3px)!important;
 }
 
-/*
-  DESIGN PRINCIPLES
-  The label and all sticky content use one vertical lock line.
-  The section has the same generous lead/trailing whitespace.
-*/
+/* DESIGN PRINCIPLES */
 .home-test .principles-section{
   --principles-lock-top:12vh;
   --principles-edge-space:clamp(108px,12vh,168px);
   padding-top:var(--principles-edge-space)!important;
   padding-bottom:var(--principles-edge-space)!important;
 }
-.home-test .principles-persistent-label{
-  top:var(--principles-lock-top)!important;
-}
+.home-test .principles-persistent-label{top:var(--principles-lock-top)!important}
 .home-test .principles-head{
   top:var(--principles-lock-top)!important;
   padding-top:0!important;
 }
 
-/* Principles Korean intro: 2pt larger than the previous -12px test size. */
+/* Keep the requested base size; JS then applies font-metric optical normalization. */
 .home-test .principles-intro-ko{
   font-size:calc(var(--principles-ko-size) - 9.333px)!important;
 }
 
-/*
-  Critical handoff:
-  - no 300px dead spacer
-  - no negative-margin overlap
-  At the exact moment the intro sticky starts releasing, the cards stage is at
-  the viewport bottom. It then rises naturally with page scroll until its top
-  reaches the same lock line as the Design principles label.
-*/
 .home-test .principles-after-intro{height:0!important}
 .home-test .principles-cards-stage{
   margin-top:0!important;
@@ -102,11 +77,6 @@
   gap:70px!important;
 }
 
-/*
-  Copy starts on exactly the same vertical axis as LESS ASSUMPTION / the final
-  Korean intro. The number is positioned immediately to its left without moving
-  the copy itself, so 01-03 no longer sit at the far-left page column.
-*/
 @media(min-width:851px){
   .home-test .principle-card{
     grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)!important;
@@ -141,20 +111,9 @@
 .home-test .principle-ko{
   font-size:calc(var(--principles-ko-size) * .486)!important;
 }
+.home-test .principle-copy-stage{margin-bottom:20px!important}
+.home-test .principle-en{margin-top:0!important}
 
-/* Add 20px between Korean principle copy and its English caption. */
-.home-test .principle-copy-stage{
-  margin-bottom:20px!important;
-}
-.home-test .principle-en{
-  margin-top:0!important;
-}
-
-/*
-  The cards themselves do not use an artificial translate anymore. Their upward
-  motion is the real page motion before the sticky lock. Opacity is still owned
-  by the test timeline so 02/03 can enter sequentially.
-*/
 .home-test .principle-card.test-timeline-card{
   opacity:var(--test-card-opacity,0)!important;
   transform:none!important;
@@ -219,6 +178,7 @@
 }
 
 @media(prefers-reduced-motion:reduce){
+  .home-test .metric-calibrated-target{transform:none!important}
   .home-test .test-managed-char.test-progressive-pending,
   .home-test .test-managed-char.test-progressive-scramble,
   .home-test .test-managed-char.test-progressive-resolved{color:inherit!important}
