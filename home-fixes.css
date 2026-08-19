@@ -53,7 +53,7 @@
   position:absolute;
   left:0;
   top:0;
-  color:rgba(17,17,17,var(--scramble-alpha,1));
+  color:rgba(var(--scramble-rgb,17,17,17),var(--scramble-alpha,1));
   font:inherit;
   line-height:inherit;
   letter-spacing:inherit;
@@ -217,12 +217,7 @@
 .principles-intro-ko{position:absolute;inset:0;display:block}
 .principles-intro-en{z-index:1;line-height:.9;white-space:nowrap}
 .principles-intro-mask{
-  z-index:2;
-  bottom:auto;
-  height:.9em;
-  background:#111;
-  clip-path:inset(0 0 100% 0);
-  will-change:clip-path;
+  display:none!important;
 }
 .principles-intro-ko{
   z-index:3;
@@ -233,12 +228,12 @@
   letter-spacing:-.03em;
   word-break:keep-all;
   color:#fff;
-  opacity:0;
-  transform:translate3d(0,-1.05em,0);
-  will-change:transform,opacity;
+  opacity:1;
+  transform:none;
+  will-change:auto;
 }
 .principles-after-intro{height:40px}
-.principles-cards-stage{position:relative;height:380vh}
+.principles-cards-stage{position:relative;height:200vh}
 .principles-grid{
   position:sticky;
   top:8vh;

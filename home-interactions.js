@@ -157,10 +157,11 @@
   const randomGlyph = (index, step) =>
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
 
-  const setScrambleOverlay = (char, glyph, alpha = 1) => {
+  const setScrambleOverlay = (char, glyph, alpha = 1, rgb = '17,17,17') => {
     if (char.dataset.scramble !== glyph) char.dataset.scramble = glyph;
     if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
     setStyle(char, '--scramble-alpha', clamp(alpha).toFixed(3));
+    setStyle(char, '--scramble-rgb', rgb);
   };
 
   const clearScrambleOverlay = char => {
@@ -176,7 +177,7 @@
     });
   };
 
-  const renderScrambleToTarget = (chars, progress) => {
+  const renderScrambleToTarget = (chars, progress, rgb = '17,17,17') => {
     const entries = visibleCharEntries(chars);
     const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
     const p = clamp(progress);
@@ -191,18 +192,18 @@
       const local = clamp(sweep - index);
       if (local <= 0) {
         clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
+        setStyle(char, 'color', `rgba(${rgb},0)`);
       } else if (local < 0.72) {
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
-        setScrambleOverlay(char, randomGlyph(index, step));
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+        setScrambleOverlay(char, randomGlyph(index, step), 1, rgb);
       } else {
         clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,1)');
+        setStyle(char, 'color', `rgba(${rgb},1)`);
       }
     });
   };
 
-  const renderScrambleSource = (chars, progress) => {
+  const renderScrambleSource = (chars, progress, rgb = '17,17,17') => {
     const entries = visibleCharEntries(chars);
     const p = clamp(progress);
     const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
@@ -216,39 +217,23 @@
         return;
       }
       const local = clamp(sweep - index);
-      if (local >= 1) {
-        clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
-      } else {
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
-        setScrambleOverlay(char, randomGlyph(index, step), 1 - local);
-      }
-    });
-  };
-
-  const renderScrambleErase = (chars, progress) => {
-    const entries = visibleCharEntries(chars);
-    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
-    const sweep = clamp(progress) * count;
-    const step = Math.floor(clamp(progress) * count * 7);
-
-    entries.forEach(({ char, finalChar, index }) => {
-      if (index < 0) return;
-      const local = clamp(sweep - index);
       if (local <= 0) {
         clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,1)');
+        setStyle(char, 'color', `rgba(${rgb},1)`);
+      } else if (local < 0.68) {
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+        setScrambleOverlay(char, randomGlyph(index, step), 1, rgb);
       } else if (local < 1) {
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
-        setScrambleOverlay(char, randomGlyph(index, step), 1 - local);
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+        setScrambleOverlay(char, randomGlyph(index, step), (1 - local) / 0.32, rgb);
       } else {
         clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
+        setStyle(char, 'color', `rgba(${rgb},0)`);
       }
     });
   };
 
-  const renderScrambleReveal = (chars, progress) => {
+  const renderScrambleErase = (chars, progress, rgb = '17,17,17') => {
     const entries = visibleCharEntries(chars);
     const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
     const sweep = clamp(progress) * count;
@@ -259,13 +244,35 @@
       const local = clamp(sweep - index);
       if (local <= 0) {
         clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
-      } else if (local < 0.72) {
-        setStyle(char, 'color', 'rgba(17,17,17,0)');
-        setScrambleOverlay(char, randomGlyph(index, step));
+        setStyle(char, 'color', `rgba(${rgb},1)`);
+      } else if (local < 1) {
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+        setScrambleOverlay(char, randomGlyph(index, step), 1 - local, rgb);
       } else {
         clearScrambleOverlay(char);
-        setStyle(char, 'color', 'rgba(17,17,17,1)');
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+      }
+    });
+  };
+
+  const renderScrambleReveal = (chars, progress, rgb = '17,17,17') => {
+    const entries = visibleCharEntries(chars);
+    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
+    const sweep = clamp(progress) * count;
+    const step = Math.floor(clamp(progress) * count * 7);
+
+    entries.forEach(({ char, finalChar, index }) => {
+      if (index < 0) return;
+      const local = clamp(sweep - index);
+      if (local <= 0) {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+      } else if (local < 0.72) {
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+        setScrambleOverlay(char, randomGlyph(index, step), 1, rgb);
+      } else {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', `rgba(${rgb},1)`);
       }
     });
   };
@@ -310,7 +317,10 @@
     setStyle(definition, 'transform', 'none');
     setStyle(definition, 'clipPath', 'none');
 
-    renderScrambleToTarget(definitionChars, quoteMorph);
+    renderScrambleToTarget(
+      definitionChars,
+      phaseProgress(quoteMorph, 0.08, 1)
+    );
     renderScrambleToTarget(
       definitionSourceChars,
       phaseProgress(quoteMorph, 0.58, 1)
@@ -521,65 +531,88 @@
   const principles = $('#principles');
   const principleIntroStage = $('.principles-intro-stage', principles);
   const principleRows = $$('.principles-intro-row', principles);
+  const principleRowEnglishElements = principleRows.map(row => $('.principles-intro-en', row));
   const principleRowEnglish = principleRows.map(row => $$('.principles-intro-en .fill-char', row));
-  const principleRowMasks = principleRows.map(row => $('.principles-intro-mask', row));
-  const principleRowKorean = principleRows.map(row => $('.principles-intro-ko', row));
+  const principleRowKoreanElements = principleRows.map(row => $('.principles-intro-ko', row));
+  principleRowKoreanElements.forEach(splitChars);
+  const principleRowKorean = principleRows.map(row => $$('.principles-intro-ko .fill-char', row));
+  principleRowKorean.flat().forEach(char => { char.dataset.finalChar = char.textContent; });
   const principleCardsStage = $('.principles-cards-stage', principles);
   const principleCards = $$('.principle-card', principles);
   const principleCardEnglish = principleCards.map(card => $$('.principle-en .fill-char', card));
+  const principleCardKorean = principleCards.map(card => {
+    const title = $('.principle-ko', card);
+    splitChars(title);
+    const chars = $$('.fill-char', title);
+    chars.forEach(char => { char.dataset.finalChar = char.textContent; });
+    return chars;
+  });
+
+  const measuredTextHeight = element => {
+    if (!element) return 0;
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    return range.getBoundingClientRect().height;
+  };
+
+  const syncPrinciplesTextMetrics = () => {
+    let measuredSizeTotal = 0;
+    let measuredSizeCount = 0;
+    principleRows.forEach((row, index) => {
+      const english = principleRowEnglishElements[index];
+      const korean = principleRowKoreanElements[index];
+      if (!english || !korean) return;
+      const englishHeight = measuredTextHeight(english);
+      const koreanHeight = measuredTextHeight(korean);
+      const currentSize = parseFloat(getComputedStyle(korean).fontSize) || 1;
+      if (englishHeight > 0 && koreanHeight > 0) {
+        measuredSizeTotal += currentSize * englishHeight / koreanHeight;
+        measuredSizeCount += 1;
+      }
+    });
+    if (principles && measuredSizeCount) {
+      setStyle(
+        principles,
+        '--principles-ko-size',
+        `${(measuredSizeTotal / measuredSizeCount).toFixed(3)}px`
+      );
+    }
+  };
 
   const renderPrinciplesIntro = p => {
     if (!principleRows.length) return;
 
     principleRows.forEach((row, index) => {
       const englishProgress = fillProgress(p, index * 0.065, 0.085);
-      const maskProgress = easeInOut(phaseProgress(
+      const morphProgress = phaseProgress(
         p,
-        0.30 + index * 0.075,
-        0.405 + index * 0.075
-      ));
-      const translationProgress = easeInOut(phaseProgress(
-        p,
-        0.315 + index * 0.075,
-        0.42 + index * 0.075
-      ));
+        0.30 + index * 0.10,
+        0.43 + index * 0.10
+      );
 
       setChars(principleRowEnglish[index], englishProgress, '255,255,255', 0.16);
-      setStyle(
-        principleRowMasks[index],
-        'clipPath',
-        `inset(0 0 ${(100 * (1 - maskProgress)).toFixed(2)}% 0)`
+      renderScrambleSource(
+        principleRowEnglish[index],
+        morphProgress,
+        '255,255,255'
       );
-      setStyle(principleRowKorean[index], 'opacity', translationProgress.toFixed(4));
-      setStyle(
+      renderScrambleToTarget(
         principleRowKorean[index],
-        'transform',
-        `translate3d(0, ${(-1.05 * (1 - translationProgress)).toFixed(3)}em, 0)`
+        phaseProgress(morphProgress, 0.08, 1),
+        '255,255,255'
       );
     });
   };
 
   const CARD_PHASES = Object.freeze([
-    { enterStart: 0.00, enterEnd: 0.08, fillStart: 0.04, fillEnd: 0.20 },
-    { enterStart: 0.36, enterEnd: 0.44, fillStart: 0.40, fillEnd: 0.56 },
-    { enterStart: 0.72, enterEnd: 0.80, fillStart: 0.76, fillEnd: 0.92 }
-  ]);
-
-  /*
-    Mobile has a much shorter physical scroll runway. Preserve the ordered
-    reveal while finishing within one normal swipe instead of requiring a
-    separate swipe for every card.
-  */
-  const MOBILE_CARD_PHASES = Object.freeze([
-    { enterStart: 0.00, enterEnd: 0.06, fillStart: 0.02, fillEnd: 0.12 },
-    { enterStart: 0.25, enterEnd: 0.31, fillStart: 0.27, fillEnd: 0.39 },
-    { enterStart: 0.50, enterEnd: 0.56, fillStart: 0.52, fillEnd: 0.64 }
+    { enterStart: 0.00, enterEnd: 0.04, titleStart: 0.00, titleEnd: 0.26, fillStart: 0.10, fillEnd: 0.26 },
+    { enterStart: 0.26, enterEnd: 0.30, titleStart: 0.26, titleEnd: 0.52, fillStart: 0.36, fillEnd: 0.52 },
+    { enterStart: 0.52, enterEnd: 0.56, titleStart: 0.52, titleEnd: 0.78, fillStart: 0.62, fillEnd: 0.78 }
   ]);
 
   const renderPrincipleCards = p => {
-    const phases = innerWidth <= 850 ? MOBILE_CARD_PHASES : CARD_PHASES;
     principleCards.forEach((card, index) => {
-      const phase = phases[index];
+      const phase = CARD_PHASES[index];
       if (!phase) return;
 
       const enterProgress = easeInOut(phaseProgress(p, phase.enterStart, phase.enterEnd));
@@ -587,6 +620,11 @@
 
       setStyle(card, 'opacity', enterProgress.toFixed(4));
       setStyle(card, 'transform', `translate3d(0, ${(24 * (1 - enterProgress)).toFixed(2)}px, 0)`);
+      renderScrambleToTarget(
+        principleCardKorean[index],
+        phaseProgress(p, phase.titleStart, phase.titleEnd),
+        '255,255,255'
+      );
       setChars(principleCardEnglish[index], fill, '255,255,255');
     });
   };
@@ -618,6 +656,7 @@
     metricsRaf = 0;
     metrics.viewportHeight = innerHeight;
     syncHeroTextMetrics();
+    syncPrinciplesTextMetrics();
     metrics.heroTop = absoluteTop(hero);
     metrics.heroTravel = hero ? Math.max(1, hero.offsetHeight - innerHeight) : 1;
     metrics.philosophyTop = absoluteTop(philosophySection);
