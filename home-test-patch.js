@@ -34,6 +34,7 @@
   const introKorean = introRows.map(row => [...row.querySelectorAll('.principles-intro-ko .fill-char')]);
 
   const cardsStage = principles?.querySelector('.principles-cards-stage');
+  const cardsGrid = principles?.querySelector('.principles-grid');
   const cards = principles ? [...principles.querySelectorAll('.principle-card')] : [];
   const cardKoreanChars = cards.map(card => [...card.querySelectorAll('.principle-ko .fill-char')]);
   const cardEnglishChars = cards.map(card => [...card.querySelectorAll('.principle-en .fill-char')]);
@@ -91,12 +92,6 @@
     }
   };
 
-  /*
-    A single reveal model is used throughout the test home:
-    invisible -> three A-Z states -> authored character.
-    span=1 keeps the hero strictly one-character-at-a-time; larger spans make
-    Philosophy/Principles readable without making the random state flash by.
-  */
   const paintProgressiveReveal = (
     chars,
     progress,
@@ -153,7 +148,6 @@
     if (!hero || !quoteChars.length) return;
 
     if (!heroStarted) {
-      /* Leave the resting quote to home-idle-v2.js so the existing idle cue is unchanged. */
       clearPaint(quoteChars);
       return;
     }
@@ -165,7 +159,6 @@
     if (quoteProgress < 0.999) {
       paintProgressiveReveal(quoteChars, quoteProgress, '17,17,17', { span: 1, cycles: 3 });
     } else {
-      /* Give control back to the production morph after the first sentence is complete. */
       clearPaint(quoteChars);
     }
   };
@@ -180,7 +173,6 @@
   const updatePhilosophy = () => {
     if (!philosophyChars.length) return;
     const p = getPhilosophyProgress();
-    /* Use nearly the full sticky runway so the A-Z states remain legible. */
     const revealProgress = phaseProgress(p, 0.02, 0.92);
     paintProgressiveReveal(philosophyChars, revealProgress, '17,17,17', {
       span: 2.4,
@@ -235,45 +227,62 @@
     });
   };
 
+  /*
+    The first 20% of this timeline is consumed while 01 physically rises from
+    the viewport bottom to the sticky lock line. The remaining 80% runs while
+    the grid is locked. 03 finishes at 100%, exactly as the sticky hold ends.
+  */
   const CARD_PHASES = Object.freeze([
-    { enterStart: 0.00, enterEnd: 0.12, titleStart: 0.12, titleEnd: 0.34, enStart: 0.24, enEnd: 0.34 },
-    { enterStart: 0.34, enterEnd: 0.42, titleStart: 0.42, titleEnd: 0.64, enStart: 0.54, enEnd: 0.64 },
-    { enterStart: 0.64, enterEnd: 0.72, titleStart: 0.72, titleEnd: 0.94, enStart: 0.84, enEnd: 0.94 }
+    { enterStart: 0.00, enterEnd: 0.06, titleStart: 0.01, titleEnd: 0.32, enStart: 0.24, enEnd: 0.34 },
+    { enterStart: 0.34, enterEnd: 0.40, titleStart: 0.40, titleEnd: 0.64, enStart: 0.56, enEnd: 0.66 },
+    { enterStart: 0.66, enterEnd: 0.72, titleStart: 0.72, titleEnd: 0.94, enStart: 0.88, enEnd: 1.00 }
   ]);
 
   const updateCards = () => {
-    if (!introStage || !cardsStage || !cards.length) return;
+    if (!cardsStage || !cardsGrid || !cards.length) return;
 
-    const introTop = absoluteTop(introStage);
-    const introTravel = Math.max(1, introStage.offsetHeight - innerHeight);
-    /* Start exactly when the completed Korean intro begins to release. */
-    const startY = introTop + introTravel;
-    const timelineTravel = Math.max(1, innerHeight * (innerWidth <= 850 ? 1.45 : 1.28));
-    const p = clamp((scrollY - startY) / timelineTravel);
-    const riseDistance = Math.min(110, innerHeight * 0.14);
+    const stageTop = absoluteTop(cardsStage);
+    const stickyTop = parseFloat(getComputedStyle(cardsGrid).top) ||
+      (innerWidth <= 850 ? 70 : innerHeight * 0.12);
+
+    /* Stage top reaches the viewport bottom exactly when the intro releases. */
+    const approachStartY = stageTop - innerHeight;
+    const lockY = stageTop - stickyTop;
+    const approachProgress = phaseProgress(scrollY, approachStartY, lockY);
+
+    /* Native CSS sticky hold distance. */
+    const stickyHold = Math.max(1, cardsStage.offsetHeight - cardsGrid.offsetHeight);
+    const holdProgress = phaseProgress(scrollY, lockY, lockY + stickyHold);
+
+    const timelineProgress = scrollY < lockY
+      ? approachProgress * 0.20
+      : 0.20 + holdProgress * 0.80;
 
     cards.forEach((card, index) => {
       const phase = CARD_PHASES[index];
       if (!phase) return;
 
-      const enterProgress = easeInOut(phaseProgress(p, phase.enterStart, phase.enterEnd));
-      const titleProgress = phaseProgress(p, phase.titleStart, phase.titleEnd);
-      const englishProgress = phaseProgress(p, phase.enStart, phase.enEnd);
+      const enterProgress = easeInOut(
+        phaseProgress(timelineProgress, phase.enterStart, phase.enterEnd)
+      );
+      const titleProgress = phaseProgress(
+        timelineProgress,
+        phase.titleStart,
+        phase.titleEnd
+      );
+      const englishProgress = phaseProgress(
+        timelineProgress,
+        phase.enStart,
+        phase.enEnd
+      );
 
       card.style.setProperty('--test-card-opacity', enterProgress.toFixed(4));
-      card.style.setProperty('--test-card-y', `${(riseDistance * (1 - enterProgress)).toFixed(2)}px`);
+      card.style.removeProperty('--test-card-y');
 
-      if (titleProgress <= 0) {
-        paintProgressiveReveal(cardKoreanChars[index], 0, '255,255,255', {
-          span: 2.2,
-          cycles: 3
-        });
-      } else {
-        paintProgressiveReveal(cardKoreanChars[index], titleProgress, '255,255,255', {
-          span: 2.4,
-          cycles: 3
-        });
-      }
+      paintProgressiveReveal(cardKoreanChars[index], titleProgress, '255,255,255', {
+        span: 2.4,
+        cycles: 3
+      });
       setEnglishAlpha(index, englishProgress);
     });
   };
@@ -310,7 +319,6 @@
     document.fonts.ready.then(() => requestAnimationFrame(requestUpdate)).catch(() => {});
   }
 
-  /* Baseline deferred script has already split all characters. */
   update();
   body?.classList.add('home-test-ready');
 })();
