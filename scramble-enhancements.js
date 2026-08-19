@@ -63,7 +63,9 @@
       finalChar: el.dataset.finalChar || el.textContent,
       finalWidth: 0,
       active: false,
-      inlineLetterSpacing: ''
+      inlineLetterSpacing: '',
+      lastAttr: '',
+      lastRawGlyph: ''
     };
     states.set(el, state);
     return state;
@@ -140,6 +142,14 @@
     if (!state.active) beginActiveState(el, state);
 
     el.style.setProperty('--live-scramble-color', scrambleColor(el, attr));
+
+    /* A class mutation created by this renderer can trigger the observer again.
+       Do not generate another random character unless the owning timeline has
+       actually changed its raw glyph or source attribute. */
+    if (state.lastAttr === attr && state.lastRawGlyph === rawGlyph) return;
+
+    state.lastAttr = attr;
+    state.lastRawGlyph = rawGlyph;
     preserveAdvanceWidth(el, state, mixedGlyph(el, rawGlyph));
   };
 
