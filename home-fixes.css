@@ -84,7 +84,7 @@
   letter-spacing:-.025em;
   word-break:keep-all;
 }
-.definition-copy p{margin:0;padding:0}
+.definition-copy p{margin:0;padding:0;white-space:nowrap}
 .definition-copy p+p{margin-top:0}
 .definition-source{
   display:block;
@@ -297,7 +297,7 @@
   .hero-sticky{padding:70px 10px 24px}
   .hero-state{inset:70px 10px 36px}
   .hero-quote{font-size:clamp(25px,7.08vw,28px);line-height:.97}
-  .definition-copy{font-size:clamp(28px,7.6vw,40px);line-height:1.06;letter-spacing:-.03em}
+  .definition-copy{font-size:clamp(26px,7.1vw,40px);line-height:1.06;letter-spacing:-.03em}
   .definition-source{margin-top:16px;font-size:13.2px}
   .subtractive-title{font-size:clamp(52px,14.9vw,80px);line-height:.82}
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.7}
