@@ -6,7 +6,7 @@
   white-space:pre!important;
 }
 
-/* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
+/* One animation vocabulary: hidden -> three A-Z / 0-9 states -> authored glyph. */
 .home-test .test-managed-char.is-scrambling::after{display:none!important}
 .home-test .test-managed-char.test-progressive-pending{color:transparent!important}
 .home-test .test-managed-char.test-progressive-scramble{
@@ -49,8 +49,9 @@
 .home-test .principles-section{
   --principles-lock-top:12vh;
   --principles-edge-space:clamp(108px,12vh,168px);
+  --principles-bottom-space:clamp(54px,6vh,84px);
   padding-top:var(--principles-edge-space)!important;
-  padding-bottom:var(--principles-edge-space)!important;
+  padding-bottom:var(--principles-bottom-space)!important;
 }
 .home-test .principles-persistent-label{top:var(--principles-lock-top)!important}
 .home-test .principles-head{
@@ -80,7 +81,8 @@
   the page is allowed to continue into the cards.
 */
 .home-test .principles-intro-stage{height:185vh!important}
-.home-test .principles-after-intro{height:200px!important}
+/* Final Korean intro -> first principle copy: 200px -> 100px. */
+.home-test .principles-after-intro{height:100px!important}
 .home-test .principles-cards-stage{
   margin-top:0!important;
   height:250vh!important;
@@ -89,6 +91,7 @@
   top:var(--principles-lock-top)!important;
   align-content:start!important;
   box-sizing:border-box!important;
+  min-height:60vh!important;
   padding-top:0!important;
   gap:54px!important;
 }
@@ -165,8 +168,9 @@
     --principles-label-top:70px;
     --principles-content-top:clamp(118px,30vw,132px);
     --principles-edge-space:clamp(84px,20vw,120px);
+    --principles-bottom-space:clamp(42px,10vw,60px);
     padding-top:var(--principles-edge-space)!important;
-    padding-bottom:var(--principles-edge-space)!important;
+    padding-bottom:var(--principles-bottom-space)!important;
   }
   .home-test .principles-persistent-label{
     top:var(--principles-label-top)!important;
@@ -179,6 +183,7 @@
   .home-test .principles-intro-stage{height:180vh!important}
   .home-test .principles-cards-stage{height:245vh!important}
   .home-test .principles-grid{
+    min-height:64vh!important;
     padding-top:0!important;
     gap:54px!important;
   }
