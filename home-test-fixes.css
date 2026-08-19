@@ -28,6 +28,32 @@
   color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
 }
 
+/*
+  Home idle scramble does not use an absolutely-positioned pseudo glyph.
+  The live character itself is replaced, so the random A-Z glyph shares the
+  exact authored baseline. Freeze only its original advance width to prevent
+  neighboring letters from shifting while different glyph widths cycle.
+*/
+.home-test .hero-quote .fill-char.idle-inline-scramble{
+  display:inline-block!important;
+  width:var(--idle-char-width)!important;
+  min-width:var(--idle-char-width)!important;
+  max-width:var(--idle-char-width)!important;
+  position:static!important;
+  vertical-align:baseline!important;
+  line-height:inherit!important;
+  transform:none!important;
+  translate:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+}
+.home-test .hero-quote .fill-char.idle-inline-scramble::before,
+.home-test .hero-quote .fill-char.idle-inline-scramble::after{
+  content:none!important;
+  display:none!important;
+}
+
 /* HERO: keep current font size; reduce current line-height by 5%. */
 .home-test .definition-copy{
   font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
