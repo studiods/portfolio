@@ -5,263 +5,231 @@
   const quote = hero?.querySelector('.hero-quote');
   if (!hero || !quote) return;
 
-  /* Disable the legacy idle cue in home-interactions.js. */
+  /*
+    Disable the legacy idle loop inside home-interactions.js before registering
+    this module's own input listeners. The synthetic event has no browser default
+    action; it only reaches already-registered JS listeners.
+  */
   window.dispatchEvent(new Event('pointerdown'));
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) return;
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const BASE_ALPHA = 0.05;
-  const FULL_ALPHA = 1;
-  const INITIAL_IDLE_MS = 3000;
-  const WORD_MS = 300;
-  const NEXT_WORD_MS = WORD_MS * 0.5;
-  const GLYPH_STEP_MS = 80;
-  const FADE_TO_BASE_MS = 3000;
+  const WORD_ALPHA = 0.82;
+  const LINE_ALPHA = 0.82;
+  const UNIT_MS = 1000;
+  const NEXT_UNIT_AT = 0.60;
+  const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
+  const TAIL_MS = UNIT_MS - STAGGER_MS;
+  const GAP_MS = 3000;
+  const PATTERNS = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
 
   const logicalLines = [...quote.children].filter(
     el => el.matches('span') && !el.classList.contains('fill-char')
   );
+  const lineGroups = logicalLines
+    .map(line => [...line.querySelectorAll('.fill-char')]
+      .filter(char => char.textContent.trim().length > 0))
+    .filter(group => group.length > 0);
 
   const wordGroups = [];
   logicalLines.forEach(line => {
     const chars = [...line.querySelectorAll('.fill-char')];
-    let word = [];
-
+    let current = [];
     const flush = () => {
-      if (!word.length) return;
-      wordGroups.push(word);
-      word = [];
+      if (!current.length) return;
+      wordGroups.push(current);
+      current = [];
     };
 
     chars.forEach(char => {
-      if (char.textContent.trim()) word.push(char);
+      if (char.textContent.trim().length > 0) current.push(char);
       else flush();
     });
     flush();
   });
 
-  if (!wordGroups.length) return;
+  if (!lineGroups.length || !wordGroups.length) {
+    console.warn('Home idle: logical quote groups were not found.');
+    return;
+  }
 
-  const allChars = wordGroups.flat();
-  const authoredChars = new WeakMap();
-  allChars.forEach(char => {
-    authoredChars.set(char, char.dataset.finalChar || char.textContent);
-  });
-
-  const authoredChar = char => authoredChars.get(char) || char.textContent;
-
-  /*
-    Scramble glyphs replace the live text node instead of using an absolutely
-    positioned pseudo element. Random and authored glyphs therefore share the
-    exact same baseline. The original advance width is frozen only while a word
-    scrambles so neighboring letters do not shift horizontally.
-  */
-  const clearLegacyScramble = char => {
-    char.classList.remove('is-scrambling');
-    char.removeAttribute('data-scramble');
-    char.style.removeProperty('--scramble-alpha');
-    char.style.removeProperty('--scramble-rgb');
-  };
-
-  const restoreChar = (char, alpha) => {
-    clearLegacyScramble(char);
-    char.textContent = authoredChar(char);
-    char.classList.remove('idle-inline-scramble');
-    char.style.removeProperty('--idle-char-width');
-    char.style.color = `rgba(17,17,17,${alpha})`;
-  };
-
-  const prepareChar = char => {
-    restoreChar(char, BASE_ALPHA);
-    const width = char.getBoundingClientRect().width;
-    char.style.setProperty('--idle-char-width', `${width.toFixed(3)}px`);
-    char.classList.add('idle-inline-scramble');
-    char.style.color = 'rgba(17,17,17,1)';
-  };
-
-  const resetToBase = () => allChars.forEach(char => restoreChar(char, BASE_ALPHA));
-  const setAllFull = () => allChars.forEach(char => restoreChar(char, FULL_ALPHA));
-
-  const randomGlyph = (finalChar, previous = '') => {
-    let glyph = finalChar;
-    for (let i = 0; i < 10 && (glyph === finalChar || glyph === previous); i += 1) {
-      glyph = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
+  const shuffle = items => {
+    const copy = items.slice();
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
     }
-    return glyph;
+    return copy;
   };
 
-  let cancelled = false;
-  let completed = false;
-  let initialTimer = 0;
+  let disabled = false;
+  let runToken = 0;
+  let patternIndex = 0;
   const timers = new Set();
-  const rafs = new Set();
+  const activeAnimations = new Set();
 
-  const atHeroStart = () => window.scrollY <= 8;
-  const canRun = () => !cancelled && !completed && !document.hidden && atHeroStart();
+  const atTop = () => window.scrollY <= 8;
+  const canRun = token =>
+    !disabled && token === runToken && atTop() && !document.hidden;
 
-  const clearAsync = () => {
-    if (initialTimer) {
-      clearTimeout(initialTimer);
-      initialTimer = 0;
-    }
+  const clearTimers = () => {
     timers.forEach(id => clearTimeout(id));
     timers.clear();
-    rafs.forEach(id => cancelAnimationFrame(id));
-    rafs.clear();
   };
 
-  const nextFrame = callback => {
-    const id = requestAnimationFrame(now => {
-      rafs.delete(id);
-      callback(now);
+  const cancelAnimations = () => {
+    activeAnimations.forEach(animation => {
+      try { animation.cancel(); } catch (_) {}
     });
-    rafs.add(id);
+    activeAnimations.clear();
   };
 
-  const wait = ms => new Promise(resolve => {
-    if (!canRun()) {
+  const stop = permanent => {
+    runToken += 1;
+    clearTimers();
+    cancelAnimations();
+    if (permanent) disabled = true;
+    hero.dataset.idleState = permanent ? 'disabled' : 'paused';
+    delete hero.dataset.idleMode;
+  };
+
+  const wait = (ms, token) => new Promise(resolve => {
+    if (!canRun(token)) {
       resolve(false);
       return;
     }
-    const id = setTimeout(() => {
+
+    const id = window.setTimeout(() => {
       timers.delete(id);
-      resolve(canRun());
+      resolve(canRun(token));
     }, ms);
     timers.add(id);
   });
 
-  const animateWord = chars => new Promise(resolve => {
-    if (!canRun()) {
-      resolve(false);
-      return;
-    }
+  const rgba = alpha => `rgba(17,17,17,${alpha.toFixed(3)})`;
 
-    chars.forEach(prepareChar);
-    let lastStep = -1;
-    const previousGlyphs = new Array(chars.length).fill('');
-    const startedAt = performance.now();
+  const pulseUnit = (group, peakAlpha, token) => {
+    if (!canRun(token)) return false;
 
-    const frame = now => {
-      if (!canRun()) {
-        chars.forEach(char => restoreChar(char, BASE_ALPHA));
-        resolve(false);
-        return;
-      }
+    const base = rgba(BASE_ALPHA);
 
-      const elapsed = now - startedAt;
-      if (elapsed >= WORD_MS) {
-        chars.forEach(char => restoreChar(char, FULL_ALPHA));
-        resolve(true);
-        return;
-      }
+    /*
+      The previous 700ms attack reached full black in about 238ms, so although
+      units overlapped in time, each word visually snapped on. Use a full 1s
+      envelope with several intermediate alpha stops instead. The next unit still
+      starts at 60% (600ms), while the outgoing unit is still rising toward its
+      peak. This makes the transition read as a continuous wave rather than a set
+      of separate flashes. The peak is capped at 82% to keep the progression
+      visible instead of jumping from the 5% resting state to hard black.
+  */
+    if (group[0]?.animate) {
+      const keyframes = [
+        { color: base, offset: 0 },
+        { color: rgba(0.14), offset: 0.18 },
+        { color: rgba(0.34), offset: 0.36 },
+        { color: rgba(0.60), offset: 0.54 },
+        { color: rgba(peakAlpha), offset: 0.72 },
+        { color: rgba(peakAlpha), offset: 0.78 },
+        { color: rgba(0.45), offset: 0.90 },
+        { color: base, offset: 1 }
+      ];
 
-      const step = Math.floor(elapsed / GLYPH_STEP_MS);
-      if (step !== lastStep) {
-        chars.forEach((char, index) => {
-          const next = randomGlyph(authoredChar(char).toUpperCase(), previousGlyphs[index]);
-          previousGlyphs[index] = next;
-          char.textContent = next;
+      group.forEach(char => {
+        const animation = char.animate(keyframes, {
+          duration: UNIT_MS,
+          easing: 'linear',
+          fill: 'none'
         });
-        lastStep = step;
-      }
-
-      nextFrame(frame);
-    };
-
-    nextFrame(frame);
-  });
-
-  const fadeToBase = () => new Promise(resolve => {
-    if (!canRun()) {
-      resolve(false);
-      return;
-    }
-
-    setAllFull();
-    hero.dataset.idleState = 'fading';
-    const startedAt = performance.now();
-
-    const frame = now => {
-      if (!canRun()) {
-        resetToBase();
-        resolve(false);
-        return;
-      }
-
-      const progress = Math.min(1, (now - startedAt) / FADE_TO_BASE_MS);
-      const eased = progress * progress * (3 - 2 * progress);
-      const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * eased;
-
-      allChars.forEach(char => {
-        clearLegacyScramble(char);
-        char.textContent = authoredChar(char);
-        char.classList.remove('idle-inline-scramble');
-        char.style.removeProperty('--idle-char-width');
-        char.style.color = `rgba(17,17,17,${alpha.toFixed(4)})`;
+        activeAnimations.add(animation);
+        animation.finished
+          .catch(() => {})
+          .finally(() => activeAnimations.delete(animation));
       });
+      return true;
+    }
 
-      if (progress >= 1) {
-        resetToBase();
-        resolve(true);
-        return;
-      }
+    /* Very old-browser fallback: keep the same overall 1s timing. */
+    group.forEach(char => { char.style.color = rgba(peakAlpha); });
+    const id = window.setTimeout(() => {
+      timers.delete(id);
+      group.forEach(char => { char.style.color = base; });
+    }, UNIT_MS);
+    timers.add(id);
+    return true;
+  };
 
-      nextFrame(frame);
-    };
+  const currentPattern = () => {
+    const mode = PATTERNS[patternIndex];
+    if (mode === 'lines') {
+      return { mode, groups: lineGroups, peak: LINE_ALPHA };
+    }
+    if (mode === 'randomWords') {
+      return { mode, groups: shuffle(wordGroups), peak: WORD_ALPHA };
+    }
+    return { mode, groups: wordGroups, peak: WORD_ALPHA };
+  };
 
-    nextFrame(frame);
-  });
+  const runPattern = async (pattern, token) => {
+    const { groups, peak } = pattern;
 
-  const runOnce = async () => {
-    resetToBase();
-    hero.dataset.idleState = 'running';
+    for (let index = 0; index < groups.length; index += 1) {
+      if (!pulseUnit(groups[index], peak, token)) return false;
 
-    const jobs = [];
-    for (let index = 0; index < wordGroups.length; index += 1) {
-      if (!canRun()) return;
-      jobs.push(animateWord(wordGroups[index]));
-
-      if (index < wordGroups.length - 1) {
-        if (!(await wait(NEXT_WORD_MS))) return;
+      if (index < groups.length - 1) {
+        if (!(await wait(STAGGER_MS, token))) return false;
       }
     }
 
-    const results = await Promise.all(jobs);
-    if (!results.every(Boolean) || !canRun()) return;
-
-    setAllFull();
-    if (!(await fadeToBase())) return;
-
-    completed = true;
-    hero.dataset.idleState = 'done';
+    /* Let the final unit finish its remaining 40% before the 3s pattern gap. */
+    return wait(TAIL_MS, token);
   };
 
-  const cancelPermanently = event => {
+  const run = async token => {
+    while (canRun(token)) {
+      hero.dataset.idleState = 'waiting';
+      if (!(await wait(GAP_MS, token))) return;
+
+      const pattern = currentPattern();
+      hero.dataset.idleState = 'running';
+      hero.dataset.idleMode = pattern.mode;
+
+      if (!(await runPattern(pattern, token))) return;
+
+      patternIndex = (patternIndex + 1) % PATTERNS.length;
+      delete hero.dataset.idleMode;
+    }
+  };
+
+  const start = () => {
+    if (disabled || document.hidden || !atTop()) return;
+    const token = ++runToken;
+    run(token).catch(error => {
+      console.error('Home idle animation failed.', error);
+      stop(true);
+    });
+  };
+
+  const stopFromUser = event => {
     if (event && event.isTrusted === false) return;
-    if (completed || cancelled) return;
-    cancelled = true;
-    clearAsync();
-    resetToBase();
-    hero.dataset.idleState = 'disabled';
+    stop(true);
   };
 
-  window.addEventListener('wheel', cancelPermanently, { passive: true });
-  window.addEventListener('touchstart', cancelPermanently, { passive: true });
-  window.addEventListener('pointerdown', cancelPermanently, { passive: true });
-  window.addEventListener('pointermove', cancelPermanently, { passive: true });
-  window.addEventListener('keydown', cancelPermanently);
-  window.addEventListener('scroll', cancelPermanently, { passive: true });
+  window.addEventListener('wheel', stopFromUser, { passive: true });
+  window.addEventListener('touchstart', stopFromUser, { passive: true });
+  window.addEventListener('pointerdown', stopFromUser, { passive: true });
+  window.addEventListener('keydown', stopFromUser);
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 8) stop(true);
+  }, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) cancelPermanently();
+    if (disabled) return;
+    if (document.hidden) stop(false);
+    else start();
   });
 
   hero.dataset.idleState = 'armed';
-  resetToBase();
-  initialTimer = setTimeout(() => {
-    initialTimer = 0;
-    if (!canRun()) return;
-    runOnce().catch(() => cancelPermanently());
-  }, INITIAL_IDLE_MS);
+  start();
 })();
