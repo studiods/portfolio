@@ -23,12 +23,12 @@ body.works-page-body{
 }
 .works-page-body .top-center{
   display:flex;
-  gap:clamp(24px,2.8vw,44px);
+  gap:30px;
 }
 .works-page-body .top-center a{
   font-family:'Averta PE',sans-serif;
   font-weight:400;
-  font-size:15px;
+  font-size:13px;
   text-transform:none;
   color:rgba(244,242,237,.9);
 }
