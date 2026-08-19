@@ -9,15 +9,25 @@
 
 /*
   Master language-transition baseline correction.
-  2pt = 2.667 CSS px at 96dpi. The incoming language is lifted without changing
-  its line box, so EN -> KO and KO -> EN transitions visually share one baseline.
+  2pt = 2.667 CSS px at 96dpi. Every incoming-language target is made
+  transformable first, then lifted without changing its line box.
 */
 .home-test{
-  --language-transition-baseline-shift:-2.667px;
+  --language-transition-baseline-shift-ko:-2.667px;
+  --language-transition-baseline-shift-en:-2.667px;
 }
 .home-test .language-transition-target-ko,
 .home-test .language-transition-target-en{
-  transform:translateY(var(--language-transition-baseline-shift))!important;
+  display:inline-block!important;
+  transform-origin:left top!important;
+  vertical-align:top!important;
+  will-change:transform;
+}
+.home-test .language-transition-target-ko{
+  transform:translateY(var(--language-transition-baseline-shift-ko))!important;
+}
+.home-test .language-transition-target-en{
+  transform:translateY(var(--language-transition-baseline-shift-en))!important;
 }
 
 /* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
@@ -42,9 +52,9 @@
   color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
 }
 
-/* Hero Korean definition: another 3pt smaller than the current test version. */
+/* Hero Korean definition: original responsive size minus only 3px. */
 .home-test .definition-copy{
-  font-size:calc(clamp(34.83px,4.9815vw,85.86px) - 8px)!important;
+  font-size:calc(clamp(34.83px,4.9815vw,85.86px) - 3px)!important;
 }
 
 /*
@@ -66,9 +76,9 @@
   padding-top:0!important;
 }
 
-/* Korean intro: another 3pt smaller than the current test version (total -12px). */
+/* Principles Korean intro: 2pt larger than the previous -12px test size. */
 .home-test .principles-intro-ko{
-  font-size:calc(var(--principles-ko-size) - 12px)!important;
+  font-size:calc(var(--principles-ko-size) - 9.333px)!important;
 }
 
 /*
@@ -89,7 +99,7 @@
   align-content:start!important;
   box-sizing:border-box!important;
   padding-top:0!important;
-  gap:50px!important;
+  gap:70px!important;
 }
 
 /*
@@ -127,9 +137,17 @@
   }
 }
 
-/* 01-03 Korean copy remains at the current refined test size. */
+/* 01-03 Korean copy: 10% smaller than the previous .54 test size. */
 .home-test .principle-ko{
-  font-size:calc(var(--principles-ko-size) * .54)!important;
+  font-size:calc(var(--principles-ko-size) * .486)!important;
+}
+
+/* Add 20px between Korean principle copy and its English caption. */
+.home-test .principle-copy-stage{
+  margin-bottom:20px!important;
+}
+.home-test .principle-en{
+  margin-top:0!important;
 }
 
 /*
@@ -159,7 +177,7 @@
 
 @media(max-width:850px){
   .home-test .definition-copy{
-    font-size:calc(clamp(26px,7.1vw,40px) - 8px)!important;
+    font-size:calc(clamp(26px,7.1vw,40px) - 3px)!important;
   }
   .home-test .principles-section{
     --principles-lock-top:70px;
@@ -176,7 +194,7 @@
   .home-test .principles-cards-stage{height:245vh!important}
   .home-test .principles-grid{
     padding-top:0!important;
-    gap:50px!important;
+    gap:70px!important;
   }
   .home-test .principle-card-inner{
     position:relative!important;
@@ -197,6 +215,7 @@
     text-align:left!important;
   }
   .home-test .principle-copy{grid-column:2!important}
+  .home-test .principle-copy-stage{margin-bottom:20px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
