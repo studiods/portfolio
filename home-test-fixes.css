@@ -30,13 +30,14 @@
 
 /*
   HERO
-  Keep the current test size as the reference and reduce Korean by exactly 3px.
+  Keep the current test size as the reference, then reduce Korean by an additional
+  3pt (exact CSS pt unit) and increase line-height by 20% from the current value.
   SUBTRACTIVE DESIGN is intentionally not overridden here: production typography
   and sizing own that state again.
 */
 .home-test .definition-copy{
-  font-size:calc(clamp(43px,6.15vw,106px) - 3px)!important;
-  line-height:.91!important;
+  font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
+  line-height:1.092!important;
 }
 
 /* DESIGN PRINCIPLES */
@@ -139,8 +140,8 @@
 
 @media(max-width:850px){
   .home-test .definition-copy{
-    font-size:calc(clamp(30px,8.4vw,58px) - 3px)!important;
-    line-height:.95!important;
+    font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
+    line-height:1.14!important;
   }
   .home-test .principles-section{
     --principles-lock-top:70px;
