@@ -15,124 +15,17 @@
     clamp((value - start) / (duration * FILL_SLOWDOWN));
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
 
-  const PRINCIPLES_SCRAMBLE_SLOWDOWN = 1.20;
-  const slowPrinciplesEnd = (start, end) =>
-    Math.min(1, start + (end - start) * PRINCIPLES_SCRAMBLE_SLOWDOWN);
-
   /*
-    Font metric normalization master.
-    CSS font-size describes the em square, not the visible glyph box. We measure
-    Averta/Pretendard at the same 100px test size and normalize their visible
-    glyph-height ratios. Y offset is then derived from normalized ascent ratios.
+    Principles timing master.
+    The former 20% slowdown was barely perceptible because the intro stage had
+    only 30vh of effective sticky travel. CSS v9 expands that travel to 45vh.
+    These values then add a modest timing stretch without making the sequence
+    feel stalled.
   */
-  const METRIC_TEST_SIZE = 100;
-  const METRIC_SCALE_MIN = 0.88;
-  const METRIC_SCALE_MAX = 1.12;
-  const METRIC_SAMPLES = Object.freeze({
-    en: 'HAMBURGEFONTSIV',
-    ko: '가나다라마바사아자차카타파하'
-  });
-  const metricCanvas = document.createElement('canvas');
-  const metricContext = metricCanvas.getContext('2d');
-
-  const canvasFont = (style, sizePx) => {
-    const parts = [];
-    if (style.fontStyle && style.fontStyle !== 'normal') parts.push(style.fontStyle);
-    if (style.fontVariant && style.fontVariant !== 'normal') parts.push(style.fontVariant);
-    if (style.fontWeight) parts.push(style.fontWeight);
-    if (style.fontStretch && style.fontStretch !== 'normal') parts.push(style.fontStretch);
-    parts.push(`${sizePx}px`);
-    parts.push(style.fontFamily || 'sans-serif');
-    return parts.join(' ');
-  };
-
-  const measureFontMetric = (el, language) => {
-    if (!metricContext || !el) return null;
-    const style = getComputedStyle(el);
-    metricContext.textBaseline = 'alphabetic';
-    metricContext.font = canvasFont(style, METRIC_TEST_SIZE);
-    const metrics = metricContext.measureText(METRIC_SAMPLES[language]);
-    const ascent = Number.isFinite(metrics.actualBoundingBoxAscent)
-      ? metrics.actualBoundingBoxAscent
-      : metrics.fontBoundingBoxAscent;
-    const descent = Number.isFinite(metrics.actualBoundingBoxDescent)
-      ? metrics.actualBoundingBoxDescent
-      : metrics.fontBoundingBoxDescent;
-    const fontAscent = Number.isFinite(metrics.fontBoundingBoxAscent)
-      ? metrics.fontBoundingBoxAscent
-      : ascent;
-    const fontDescent = Number.isFinite(metrics.fontBoundingBoxDescent)
-      ? metrics.fontBoundingBoxDescent
-      : descent;
-    if (![ascent, descent, fontAscent, fontDescent].every(Number.isFinite)) return null;
-    return {
-      heightRatio: Math.max(0.01, (ascent + descent) / METRIC_TEST_SIZE),
-      ascentRatio: ascent / METRIC_TEST_SIZE,
-      fontAscentRatio: fontAscent / METRIC_TEST_SIZE,
-      fontDescentRatio: fontDescent / METRIC_TEST_SIZE
-    };
-  };
-
-  const clearMetricCalibration = target => {
-    if (!target) return;
-    target.classList.remove('metric-calibrated-target');
-    target.style.removeProperty('--metric-scale');
-    target.style.removeProperty('--metric-shift-y');
-    target.style.removeProperty('--metric-origin-y');
-  };
-
-  const calibrateLanguagePair = (source, target, sourceLanguage, targetLanguage) => {
-    if (!source || !target) return;
-    clearMetricCalibration(target);
-
-    const sourceMetric = measureFontMetric(source, sourceLanguage);
-    const targetMetric = measureFontMetric(target, targetLanguage);
-    if (!sourceMetric || !targetMetric) return;
-
-    const targetStyle = getComputedStyle(target);
-    const targetFontSize = parseFloat(targetStyle.fontSize) || 16;
-    const targetLineHeight = parseFloat(targetStyle.lineHeight) || targetFontSize;
-
-    const scale = clamp(
-      sourceMetric.heightRatio / targetMetric.heightRatio,
-      METRIC_SCALE_MIN,
-      METRIC_SCALE_MAX
-    );
-
-    const shiftY = targetFontSize *
-      (scale * targetMetric.ascentRatio - sourceMetric.ascentRatio);
-
-    const targetFontBoxHeight = targetFontSize *
-      (targetMetric.fontAscentRatio + targetMetric.fontDescentRatio);
-    const halfLeading = (targetLineHeight - targetFontBoxHeight) / 2;
-    const baselineOriginY = halfLeading + targetFontSize * targetMetric.fontAscentRatio;
-
-    target.style.setProperty('--metric-scale', scale.toFixed(4));
-    target.style.setProperty('--metric-shift-y', `${shiftY.toFixed(3)}px`);
-    target.style.setProperty('--metric-origin-y', `${baselineOriginY.toFixed(3)}px`);
-    target.classList.add('metric-calibrated-target');
-  };
-
-  const calibrateAllLanguageTransitions = () => {
-    const heroQuote = document.querySelector('.hero-state-quote .hero-quote');
-    const definitionCopy = document.querySelector('.hero-state-definition .definition-copy');
-    const quoteSource = document.querySelector('.hero-state-quote .quote-source-only');
-    const definitionSource = document.querySelector('.hero-state-definition .definition-source');
-    const subtractiveTitle = document.querySelector('.hero-state-subtractive .subtractive-title');
-
-    calibrateLanguagePair(heroQuote, definitionCopy, 'en', 'ko');
-    calibrateLanguagePair(quoteSource, definitionSource, 'en', 'ko');
-    calibrateLanguagePair(definitionCopy, subtractiveTitle, 'ko', 'en');
-
-    document.querySelectorAll('.principles-intro-row').forEach(row => {
-      calibrateLanguagePair(
-        row.querySelector('.principles-intro-en'),
-        row.querySelector('.principles-intro-ko'),
-        'en',
-        'ko'
-      );
-    });
-  };
+  const PRINCIPLES_INTRO_SLOWDOWN = 1.25;
+  const PRINCIPLES_CARD_SLOWDOWN = 1.20;
+  const slowEnd = (start, end, factor) =>
+    Math.min(1, start + (end - start) * factor);
 
   const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const randomGlyph = (index, step) =>
@@ -310,19 +203,19 @@
       const englishProgress = fillProgress(
         p,
         englishStart,
-        0.11 * PRINCIPLES_SCRAMBLE_SLOWDOWN
+        0.11 * PRINCIPLES_INTRO_SLOWDOWN
       );
       const morphStart = 0.28 + index * 0.12;
       const morphBaseEnd = 0.47 + index * 0.12;
       const morphProgress = phaseProgress(
         p,
         morphStart,
-        slowPrinciplesEnd(morphStart, morphBaseEnd)
+        slowEnd(morphStart, morphBaseEnd, PRINCIPLES_INTRO_SLOWDOWN)
       );
 
       if (morphProgress <= 0) {
         paintProgressiveReveal(introEnglish[index], englishProgress, '255,255,255', {
-          span: 2.1,
+          span: 2.25,
           cycles: 3
         });
         paintProgressiveReveal(introKorean[index], 0, '255,255,255', {
@@ -331,14 +224,14 @@
         });
       } else {
         paintProgressiveErase(introEnglish[index], morphProgress, '255,255,255', {
-          span: 1.8,
+          span: 2.1,
           cycles: 3
         });
         paintProgressiveReveal(
           introKorean[index],
           phaseProgress(morphProgress, 0.04, 1),
           '255,255,255',
-          { span: 2.4, cycles: 3 }
+          { span: 2.65, cycles: 3 }
         );
       }
     });
@@ -356,7 +249,7 @@
       enterStart: 0.00,
       enterEnd: 0.06,
       titleStart: 0.01,
-      titleEnd: slowPrinciplesEnd(0.01, 0.32),
+      titleEnd: slowEnd(0.01, 0.32, PRINCIPLES_CARD_SLOWDOWN),
       enStart: 0.24,
       enEnd: 0.34
     },
@@ -364,7 +257,7 @@
       enterStart: 0.34,
       enterEnd: 0.40,
       titleStart: 0.40,
-      titleEnd: slowPrinciplesEnd(0.40, 0.64),
+      titleEnd: slowEnd(0.40, 0.64, PRINCIPLES_CARD_SLOWDOWN),
       enStart: 0.56,
       enEnd: 0.66
     },
@@ -372,7 +265,7 @@
       enterStart: 0.66,
       enterEnd: 0.72,
       titleStart: 0.72,
-      titleEnd: slowPrinciplesEnd(0.72, 0.94),
+      titleEnd: slowEnd(0.72, 0.94, PRINCIPLES_CARD_SLOWDOWN),
       enStart: 0.88,
       enEnd: 1.00
     }
@@ -418,7 +311,6 @@
   };
 
   let raf = 0;
-  let metricRaf = 0;
   const update = () => {
     raf = 0;
     updateHero();
@@ -428,14 +320,6 @@
   };
   const requestUpdate = () => {
     if (!raf) raf = requestAnimationFrame(update);
-  };
-  const requestMetricCalibration = () => {
-    if (metricRaf) cancelAnimationFrame(metricRaf);
-    metricRaf = requestAnimationFrame(() => {
-      metricRaf = 0;
-      calibrateAllLanguageTransitions();
-      requestUpdate();
-    });
   };
 
   const startHeroSequence = event => {
@@ -452,21 +336,12 @@
     if (scrollY > 8) heroStarted = true;
     requestUpdate();
   }, { passive: true });
-  addEventListener('resize', () => {
-    requestMetricCalibration();
-    requestUpdate();
-  }, { passive: true });
+  addEventListener('resize', requestUpdate, { passive: true });
 
   update();
-  requestMetricCalibration();
   body?.classList.add('home-test-ready');
 
   if (document.fonts?.ready) {
-    document.fonts.ready.then(() => {
-      requestAnimationFrame(() => {
-        requestMetricCalibration();
-        requestUpdate();
-      });
-    }).catch(() => {});
+    document.fonts.ready.then(() => requestAnimationFrame(requestUpdate)).catch(() => {});
   }
 })();
