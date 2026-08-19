@@ -6,13 +6,19 @@
 
   /*
     home-interactions.js owns Hero / Philosophy / Works.
-    Hide only the Principles id while that script boots so it cannot retain
-    live references to a section that home-test-patch.js owns later.
+    Keep the real Principles section untouched and put a hidden first-match
+    decoy before it only while the base script captures its section references.
   */
-  if (principles) {
+  if (principles?.parentNode) {
+    const decoy = document.createElement('div');
+    decoy.id = 'principles';
+    decoy.hidden = true;
+    decoy.setAttribute('aria-hidden', 'true');
+    decoy.dataset.runtimeDecoy = 'home-interactions';
+    principles.parentNode.insertBefore(decoy, principles);
+
     state.principles = principles;
-    state.principlesOriginalId = principles.id;
-    principles.id = 'principles--patch-owned';
+    state.principlesDecoy = decoy;
     principles.dataset.runtimeOwner = 'patch-pending';
   }
 
