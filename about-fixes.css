@@ -3,7 +3,7 @@
   z-index:1;
 }
 
-/* The three editorial headings use a fixed-slot A-Z scramble, never a slide. */
+/* The three editorial headings use a fixed-slot A-Z / 0-9 scramble, never a slide. */
 .about-scramble-title .reveal-wrap{overflow:visible}
 .about-scramble-title .reveal-line,
 .about-scramble-title .reveal-line.is-visible{
@@ -30,6 +30,23 @@
   letter-spacing:inherit;
   white-space:pre;
   pointer-events:none;
+}
+
+/*
+  The ASCII portrait always begins with a 30% black veil. The existing scroll
+  blackout remains active on top of that base, so the image still darkens
+  progressively while Profile covers the sticky hero.
+*/
+.about-ascii-blackout{
+  opacity:calc(.3 + (var(--ascii-blackout,0) * .7))!important;
+}
+
+/* ABOUT is hidden only until the first alphanumeric scramble frame is prepared. */
+.about-ascii-title{
+  visibility:hidden;
+}
+.about-ascii-title.about-title-scramble-ready{
+  visibility:visible;
 }
 
 /*
@@ -157,6 +174,9 @@
 }
 
 @media(prefers-reduced-motion:reduce){
+  .about-ascii-title{
+    visibility:visible!important;
+  }
   .thinking-section > .about-section-label,
   .interview-section > .about-section-label,
   .career-section > .about-section-label{
