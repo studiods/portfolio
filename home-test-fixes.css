@@ -28,16 +28,10 @@
   color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
 }
 
-/*
-  HERO
-  Keep the current test size as the reference, then reduce Korean by an additional
-  3pt (exact CSS pt unit) and increase line-height by 20% from the current value.
-  SUBTRACTIVE DESIGN is intentionally not overridden here: production typography
-  and sizing own that state again.
-*/
+/* HERO: keep current font size; reduce current line-height by 5%. */
 .home-test .definition-copy{
   font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
-  line-height:1.092!important;
+  line-height:1.0374!important;
 }
 
 /* DESIGN PRINCIPLES */
@@ -53,18 +47,28 @@
   padding-top:0!important;
 }
 
-/* Current test size -10%. No runtime metric scaling. */
+/* LESS rows never travel vertically: only glyph states change in-place. */
+.home-test .principles-intro,
+.home-test .principles-intro-row,
+.home-test .principles-intro-en,
+.home-test .principles-intro-ko{
+  transform:none!important;
+  translate:none!important;
+  transition:none!important;
+  animation:none!important;
+}
+
 .home-test .principles-intro-ko{
   font-size:.9em!important;
   line-height:1!important;
 }
 
 /*
-  The former 130vh stage only provided 30vh of effective sticky scroll travel.
-  145vh provides 45vh: 50% more physical scroll distance for the same sequence,
-  so English reveal and Korean morph can actually be read while scrolling.
+  185vh leaves 85vh of effective sticky travel. The JS timeline spends that
+  distance on English reveal, English hold, Korean morph and Korean hold before
+  the page is allowed to continue into the cards.
 */
-.home-test .principles-intro-stage{height:145vh!important}
+.home-test .principles-intro-stage{height:185vh!important}
 .home-test .principles-after-intro{height:0!important}
 .home-test .principles-cards-stage{
   margin-top:0!important;
@@ -78,6 +82,7 @@
   gap:63px!important;
 }
 
+/* Numbers are removed from HTML; copy owns the full second column. */
 @media(min-width:851px){
   .home-test .principle-card{
     grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)!important;
@@ -91,15 +96,6 @@
     margin:0!important;
     padding:0!important;
   }
-  .home-test .principle-no{
-    position:absolute!important;
-    top:3px!important;
-    right:calc(100% + 12px)!important;
-    width:34px!important;
-    margin:0!important;
-    padding:0!important;
-    text-align:right!important;
-  }
   .home-test .principle-copy{
     display:block!important;
     width:100%!important;
@@ -107,15 +103,15 @@
     padding:0!important;
   }
 }
+.home-test .principle-no{display:none!important}
 
-/* Keep the latest requested 01-03 Korean size. */
 .home-test .principle-ko{
   font-size:calc(var(--principles-ko-size) * .486)!important;
   line-height:1.188!important;
 }
 
-/* Keep caption spacing; the larger line-height adds 20% more space between the two Korean rows. */
-.home-test .principle-copy-stage{margin-bottom:20px!important}
+/* Korean copy -> English caption: 20px -> 18px (10% reduction). */
+.home-test .principle-copy-stage{margin-bottom:18px!important}
 .home-test .principle-en{margin-top:0!important}
 
 .home-test .principle-card.test-timeline-card{
@@ -141,7 +137,7 @@
 @media(max-width:850px){
   .home-test .definition-copy{
     font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
-    line-height:1.14!important;
+    line-height:1.083!important;
   }
   .home-test .principles-section{
     --principles-lock-top:70px;
@@ -155,7 +151,7 @@
     top:var(--principles-lock-top)!important;
   }
   .home-test .principles-head{padding-top:0!important}
-  .home-test .principles-intro-stage{height:145vh!important}
+  .home-test .principles-intro-stage{height:180vh!important}
   .home-test .principles-cards-stage{height:245vh!important}
   .home-test .principles-grid{
     padding-top:0!important;
@@ -164,24 +160,19 @@
   .home-test .principle-card-inner{
     position:relative!important;
     grid-column:1 / -1!important;
-    display:grid!important;
-    grid-template-columns:30px minmax(0,1fr)!important;
-    column-gap:10px!important;
+    display:block!important;
     width:100%!important;
     margin:0!important;
     padding:0!important;
   }
-  .home-test .principle-no{
-    position:static!important;
-    grid-column:1!important;
-    width:auto!important;
-    margin:3px 0 0!important;
+  .home-test .principle-copy{
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
     padding:0!important;
-    text-align:left!important;
   }
-  .home-test .principle-copy{grid-column:2!important}
   .home-test .principle-ko{line-height:1.228!important}
-  .home-test .principle-copy-stage{margin-bottom:20px!important}
+  .home-test .principle-copy-stage{margin-bottom:18px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
