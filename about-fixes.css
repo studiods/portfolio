@@ -34,11 +34,10 @@
 
 /*
   The ASCII portrait always begins with a 30% black veil. The existing scroll
-  blackout remains active on top of that base, so the image still darkens
-  progressively while Profile covers the sticky hero.
+  blackout remains active; once it exceeds 30%, that stronger value takes over.
 */
 .about-ascii-blackout{
-  opacity:calc(.3 + (var(--ascii-blackout,0) * .7))!important;
+  opacity:max(.3,var(--ascii-blackout,0))!important;
 }
 
 /* ABOUT is hidden only until the first alphanumeric scramble frame is prepared. */
