@@ -48,6 +48,19 @@
       margin:0!important;
       padding:0!important;
       overflow:visible!important;
+    }
+
+    /*
+      Legacy CSS intentionally makes the authored glyph transparent while a
+      pseudo-element displays the random glyph. The pseudo-element is disabled
+      above, so the live-node renderer must explicitly win that old !important
+      transparency rule. Keep these selectors state-specific: resolved/pending
+      characters are still painted by their owning timeline.
+    */
+    html body .fill-char.live-scramble-glyph.is-scrambling,
+    html body .about-scramble-char.live-scramble-glyph.is-scrambling,
+    html body .entry-scramble-char.live-scramble-glyph.is-scrambling,
+    html body.home-test .test-managed-char.live-scramble-glyph.test-progressive-scramble{
       color:var(--live-scramble-color)!important;
     }
   `;
@@ -158,6 +171,8 @@
     if (!state || !state.active) return;
 
     state.active = false;
+    state.lastAttr = '';
+    state.lastRawGlyph = '';
     el.textContent = state.finalChar;
     if (state.inlineLetterSpacing) {
       el.style.letterSpacing = state.inlineLetterSpacing;
