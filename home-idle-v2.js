@@ -8,18 +8,15 @@
   /* Disable the legacy idle cue in home-interactions.js. */
   window.dispatchEvent(new Event('pointerdown'));
 
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const BASE_ALPHA = 0.05;
   const FULL_ALPHA = 1;
-  const IDLE_RESTART_MS = 3000;
-  const CHAR_MS = 800;
-  const NEXT_CHAR_AT = 0.60;
-  const CHAR_STAGGER_MS = CHAR_MS * NEXT_CHAR_AT;
-  const SCRAMBLE_STATES = 3;
-  const SCRAMBLE_STATE_MS = CHAR_MS / SCRAMBLE_STATES;
+  const IDLE_DELAY_MS = 3000;
+  const WORD_MS = 500;
+  const NEXT_WORD_MS = WORD_MS * 0.5;
+  const GLYPH_STEP_MS = 80;
   const FADE_TO_BASE_MS = 3000;
 
   const logicalLines = [...quote.children].filter(
@@ -29,25 +26,22 @@
   const wordGroups = [];
   logicalLines.forEach(line => {
     const chars = [...line.querySelectorAll('.fill-char')];
-    let current = [];
+    let word = [];
 
     const flush = () => {
-      if (!current.length) return;
-      wordGroups.push(current);
-      current = [];
+      if (!word.length) return;
+      wordGroups.push(word);
+      word = [];
     };
 
     chars.forEach(char => {
-      if (char.textContent.trim().length > 0) current.push(char);
+      if (char.textContent.trim()) word.push(char);
       else flush();
     });
     flush();
   });
 
-  if (!wordGroups.length) {
-    console.warn('Home idle scramble: quote word groups were not found.');
-    return;
-  }
+  if (!wordGroups.length) return;
 
   const allChars = wordGroups.flat();
   const authoredChars = new WeakMap();
@@ -55,22 +49,13 @@
     authoredChars.set(char, char.dataset.finalChar || char.textContent);
   });
 
-  const authoredChar = char => authoredChars.get(char) || char.dataset.finalChar || char.textContent;
-
-  const shuffle = items => {
-    const copy = items.slice();
-    for (let i = copy.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    return copy;
-  };
+  const authoredChar = char => authoredChars.get(char) || char.textContent;
 
   /*
-    Idle scramble intentionally does NOT use .is-scrambling::after.
-    That pseudo element is absolutely positioned from the inline box top, while
-    the authored glyph is painted on the font baseline. Replacing the text node
-    itself keeps both random and authored letters on the exact same baseline.
+    Random letters replace the live text node itself instead of using an
+    absolutely positioned pseudo element. This keeps scramble and authored
+    glyphs on the exact same font baseline. The original advance width is held
+    only while scrambling so neighboring letters do not shift horizontally.
   */
   const clearLegacyScramble = char => {
     char.classList.remove('is-scrambling');
@@ -79,49 +64,34 @@
     char.style.removeProperty('--scramble-rgb');
   };
 
-  const releaseInlineSlot = char => {
+  const restoreChar = (char, alpha) => {
     clearLegacyScramble(char);
     char.textContent = authoredChar(char);
     char.classList.remove('idle-inline-scramble');
     char.style.removeProperty('--idle-char-width');
-  };
-
-  const prepareInlineSlot = char => {
-    releaseInlineSlot(char);
-    const width = char.getBoundingClientRect().width;
-    char.style.setProperty('--idle-char-width', `${width.toFixed(3)}px`);
-    char.classList.add('idle-inline-scramble');
-  };
-
-  const setCharAlpha = (char, alpha) => {
-    releaseInlineSlot(char);
     char.style.color = `rgba(17,17,17,${alpha})`;
   };
 
-  const resetAllToBase = () => allChars.forEach(char => setCharAlpha(char, BASE_ALPHA));
-  const setAllFull = () => allChars.forEach(char => setCharAlpha(char, FULL_ALPHA));
+  const prepareChar = char => {
+    restoreChar(char, BASE_ALPHA);
+    const width = char.getBoundingClientRect().width;
+    char.style.setProperty('--idle-char-width', `${width.toFixed(3)}px`);
+    char.classList.add('idle-inline-scramble');
+    char.style.color = 'rgba(17,17,17,1)';
+  };
+
+  const resetToBase = () => allChars.forEach(char => restoreChar(char, BASE_ALPHA));
+  const setAllFull = () => allChars.forEach(char => restoreChar(char, FULL_ALPHA));
 
   const randomLetter = (finalChar, previous = '') => {
     let glyph = finalChar;
-    for (let attempt = 0; attempt < 8 && (glyph === finalChar || glyph === previous); attempt += 1) {
+    for (let i = 0; i < 10 && (glyph === finalChar || glyph === previous); i += 1) {
       glyph = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
     }
-    return glyph === finalChar
-      ? SCRAMBLE_POOL[(Math.max(0, SCRAMBLE_POOL.indexOf(finalChar)) + 7) % SCRAMBLE_POOL.length]
-      : glyph;
-  };
-
-  const makeThreeStates = char => {
-    const finalChar = authoredChar(char).toUpperCase();
-    const states = [];
-    for (let index = 0; index < SCRAMBLE_STATES; index += 1) {
-      states.push(randomLetter(finalChar, states[index - 1] || ''));
-    }
-    return states;
+    return glyph;
   };
 
   let generation = 0;
-  let mode = 'sequential';
   let idleTimer = 0;
   const timers = new Set();
   const rafs = new Set();
@@ -129,16 +99,13 @@
   const atHeroStart = () => window.scrollY <= 8;
   const alive = token => token === generation && !document.hidden && atHeroStart();
 
-  const clearTimers = () => {
+  const clearAsync = () => {
     if (idleTimer) {
       clearTimeout(idleTimer);
       idleTimer = 0;
     }
     timers.forEach(id => clearTimeout(id));
     timers.clear();
-  };
-
-  const clearRafs = () => {
     rafs.forEach(id => cancelAnimationFrame(id));
     rafs.clear();
   };
@@ -163,57 +130,60 @@
     timers.add(id);
   });
 
-  const animateChar = (char, token) => new Promise(resolve => {
+  const animateWord = (chars, token) => new Promise(resolve => {
     if (!alive(token)) {
       resolve(false);
       return;
     }
 
-    const states = makeThreeStates(char);
-    prepareInlineSlot(char);
+    chars.forEach(prepareChar);
+    let lastStep = -1;
+    let previousGlyphs = new Array(chars.length).fill('');
     const startedAt = performance.now();
 
     const frame = now => {
       if (!alive(token)) {
-        setCharAlpha(char, BASE_ALPHA);
+        chars.forEach(char => restoreChar(char, BASE_ALPHA));
         resolve(false);
         return;
       }
 
       const elapsed = now - startedAt;
-      if (elapsed >= CHAR_MS) {
-        setCharAlpha(char, FULL_ALPHA);
+      if (elapsed >= WORD_MS) {
+        chars.forEach(char => restoreChar(char, FULL_ALPHA));
         resolve(true);
         return;
       }
 
-      const stateIndex = Math.min(
-        SCRAMBLE_STATES - 1,
-        Math.floor(elapsed / SCRAMBLE_STATE_MS)
-      );
+      const step = Math.floor(elapsed / GLYPH_STEP_MS);
+      if (step !== lastStep) {
+        chars.forEach((char, index) => {
+          const next = randomLetter(authoredChar(char).toUpperCase(), previousGlyphs[index]);
+          previousGlyphs[index] = next;
+          char.textContent = next;
+        });
+        lastStep = step;
+      }
 
-      /* Same DOM glyph box, same font metrics, same baseline — only the letter changes. */
-      char.textContent = states[stateIndex];
-      char.style.color = 'rgba(17,17,17,1)';
       nextFrame(frame);
     };
 
     nextFrame(frame);
   });
 
-  const fadeAllToBase = token => new Promise(resolve => {
+  const fadeToBase = token => new Promise(resolve => {
     if (!alive(token)) {
       resolve(false);
       return;
     }
 
     setAllFull();
-    hero.dataset.idleState = 'fading-to-base';
     const startedAt = performance.now();
+    hero.dataset.idleState = 'fading';
 
     const frame = now => {
       if (!alive(token)) {
-        resetAllToBase();
+        resetToBase();
         resolve(false);
         return;
       }
@@ -222,12 +192,15 @@
       const eased = progress * progress * (3 - 2 * progress);
       const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * eased;
       allChars.forEach(char => {
-        releaseInlineSlot(char);
+        clearLegacyScramble(char);
+        char.textContent = authoredChar(char);
+        char.classList.remove('idle-inline-scramble');
+        char.style.removeProperty('--idle-char-width');
         char.style.color = `rgba(17,17,17,${alpha.toFixed(4)})`;
       });
 
       if (progress >= 1) {
-        resetAllToBase();
+        resetToBase();
         resolve(true);
         return;
       }
@@ -238,25 +211,17 @@
     nextFrame(frame);
   });
 
-  const orderedCharsForMode = currentMode => {
-    const words = currentMode === 'random' ? shuffle(wordGroups) : wordGroups.slice();
-    return words.flat();
-  };
-
-  const runPattern = async (currentMode, token) => {
-    resetAllToBase();
+  const runSequence = async token => {
+    resetToBase();
     hero.dataset.idleState = 'running';
-    hero.dataset.idleMode = currentMode;
 
-    const chars = orderedCharsForMode(currentMode);
     const jobs = [];
-
-    for (let index = 0; index < chars.length; index += 1) {
+    for (let index = 0; index < wordGroups.length; index += 1) {
       if (!alive(token)) return false;
-      jobs.push(animateChar(chars[index], token));
+      jobs.push(animateWord(wordGroups[index], token));
 
-      if (index < chars.length - 1) {
-        if (!(await wait(CHAR_STAGGER_MS, token))) return false;
+      if (index < wordGroups.length - 1) {
+        if (!(await wait(NEXT_WORD_MS, token))) return false;
       }
     }
 
@@ -264,52 +229,37 @@
     if (!results.every(Boolean) || !alive(token)) return false;
 
     setAllFull();
-    hero.dataset.idleState = 'full';
-
-    if (!(await fadeAllToBase(token))) return false;
-
-    delete hero.dataset.idleMode;
-    hero.dataset.idleState = 'ready-next';
-    return true;
+    return fadeToBase(token);
   };
 
   const runLoop = async token => {
     while (alive(token)) {
-      const completed = await runPattern(mode, token);
-      if (!completed || !alive(token)) return;
-      mode = mode === 'sequential' ? 'random' : 'sequential';
+      if (!(await runSequence(token))) return;
     }
   };
 
-  const cancelCurrent = () => {
+  const cancelAndReset = () => {
     generation += 1;
-    clearTimers();
-    clearRafs();
-    resetAllToBase();
-    delete hero.dataset.idleMode;
+    clearAsync();
+    resetToBase();
     hero.dataset.idleState = 'waiting';
   };
 
-  const armInitialAfterIdle = () => {
-    cancelCurrent();
-    mode = 'sequential';
-
+  const armAfterIdle = () => {
+    cancelAndReset();
     if (document.hidden || !atHeroStart()) return;
 
     const token = generation;
     idleTimer = setTimeout(() => {
       idleTimer = 0;
       if (!alive(token)) return;
-      runLoop(token).catch(error => {
-        console.error('Home idle alphabet scramble failed.', error);
-        cancelCurrent();
-      });
-    }, IDLE_RESTART_MS);
+      runLoop(token).catch(() => cancelAndReset());
+    }, IDLE_DELAY_MS);
   };
 
   const registerActivity = event => {
     if (event && event.isTrusted === false) return;
-    armInitialAfterIdle();
+    armAfterIdle();
   };
 
   window.addEventListener('wheel', registerActivity, { passive: true });
@@ -320,10 +270,10 @@
   window.addEventListener('scroll', registerActivity, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) cancelCurrent();
-    else armInitialAfterIdle();
+    if (document.hidden) cancelAndReset();
+    else armAfterIdle();
   });
 
   hero.dataset.idleState = 'armed';
-  armInitialAfterIdle();
+  armAfterIdle();
 })();
