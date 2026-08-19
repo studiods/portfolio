@@ -1,88 +1,149 @@
-/* Isolated overrides for home-test.html only. The production home is untouched. */
-
-/* Do not expose the baseline quote for a frame before the test patch is ready. */
+/* Isolated overrides for home-test.html only. Production index.html is untouched. */
 .home-test:not(.home-test-ready) .hero-quote{visibility:hidden}
 
-/* Preserve authored word spaces only in the two areas reported as collapsed. */
+/* Preserve real spaces created by the production character splitter. */
 .home-test .principle-ko .fill-char.test-space,
 .home-test .showcase-project h3 .fill-char.test-space{
   white-space:pre!important;
 }
 
-/* First hero quote: faint random glyphs occupy exactly the same character box. */
-.home-test .hero-quote .fill-char.test-hero-pre-scramble{
+/* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
+.home-test .test-managed-char.is-scrambling::after{display:none!important}
+.home-test .test-managed-char.test-progressive-pending{
+  color:transparent!important;
+}
+.home-test .test-managed-char.test-progressive-scramble{
   position:relative;
   color:transparent!important;
 }
-.home-test .hero-quote .fill-char.test-hero-pre-scramble::before{
+.home-test .test-managed-char.test-progressive-scramble::before{
   content:attr(data-test-scramble);
   position:absolute;
   inset:0 auto auto 0;
-  color:rgba(17,17,17,.05);
+  color:rgba(var(--test-rgb,17,17,17),var(--test-scramble-alpha,1));
   font:inherit;
   line-height:inherit;
   letter-spacing:inherit;
   white-space:pre;
   pointer-events:none;
 }
+.home-test .test-managed-char.test-progressive-resolved{
+  color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
+}
 
-/* Additional 4pt reduction from the current desktop Korean principle size. */
+/*
+  DESIGN PRINCIPLES
+  - 50%+ more lead space than the previous 8vh/72px rule.
+  - Label and LESS ASSUMPTION share the same sticky top line.
+*/
+.home-test .principles-section{
+  padding-top:clamp(108px,12vh,168px)!important;
+}
+.home-test .principles-persistent-label{
+  top:12vh!important;
+}
+.home-test .principles-head{
+  top:12vh!important;
+  padding-top:0!important;
+}
+
+/* Korean intro: exactly 3pt (4 CSS px) smaller than the current measured size. */
+.home-test .principles-intro-ko{
+  font-size:calc(var(--principles-ko-size) - 4px)!important;
+}
+
+/*
+  Pull the cards stage into the intro release while preserving the section's
+  overall scroll length. At intro completion the stage is already in the lower
+  viewport, so 01 can rise immediately instead of waiting for the intro to leave.
+*/
+.home-test .principles-cards-stage{
+  margin-top:calc(-70vh - 300px)!important;
+  height:calc(270vh + 300px)!important;
+}
+.home-test .principles-grid{
+  top:12vh!important;
+  align-content:start!important;
+  box-sizing:border-box!important;
+  padding-top:clamp(220px,30vh,300px)!important;
+}
+
+/* Desktop: 01 aligns to the Design principles label; copy aligns to LESS ASSUMPTION. */
 @media(min-width:851px){
-  .home-test .principles-intro-ko{
-    font-size:calc(var(--principles-ko-size) - 5.333px)!important;
+  .home-test .principle-card-inner{
+    grid-column:1 / -1!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)!important;
+    column-gap:var(--gap)!important;
+    width:100%!important;
+  }
+  .home-test .principle-no{
+    grid-column:1!important;
+    justify-self:start!important;
+    margin-left:0!important;
+    padding-left:0!important;
+  }
+  .home-test .principle-copy{
+    grid-column:2!important;
   }
 }
 
-/* Keep the existing 300px authored spacer, but remove the extra vertical centering
-   inside the following sticky grid so 01 follows that spacer directly. */
-.home-test .principles-grid{
-  align-content:start!important;
+/* 01-03 Korean copy: 10% smaller than the current card size (.666667 * .9 = .6). */
+.home-test .principle-ko{
+  font-size:calc(var(--principles-ko-size) * .6)!important;
 }
 
-/* The test timeline overrides only card visibility/translation; grid dimensions,
-   columns, sticky top and section heights remain the production values. */
+/* Test timeline owns card entry so production inline values cannot fight it. */
 .home-test .principle-card.test-timeline-card{
   opacity:var(--test-card-opacity,0)!important;
-  transform:translate3d(0,var(--test-card-y,24px),0)!important;
-}
-
-/* Suppress the production Korean scramble only inside the test card copy. */
-.home-test .principle-ko .fill-char.is-scrambling{
-  color:inherit!important;
-}
-.home-test .principle-ko .fill-char.is-scrambling::after{
-  display:none!important;
-}
-.home-test .principle-ko .fill-char.test-card-pending{
-  color:transparent!important;
-}
-.home-test .principle-ko .fill-char.test-card-scramble{
-  position:relative;
-  color:transparent!important;
-}
-.home-test .principle-ko .fill-char.test-card-scramble::before{
-  content:attr(data-test-scramble);
-  position:absolute;
-  inset:0 auto auto 0;
-  color:rgba(255,255,255,var(--test-scramble-alpha,1));
-  font:inherit;
-  line-height:inherit;
-  letter-spacing:inherit;
-  white-space:pre;
-  pointer-events:none;
-}
-.home-test .principle-ko .fill-char.test-card-resolved{
-  color:#fff!important;
+  transform:translate3d(0,var(--test-card-y,110px),0)!important;
 }
 .home-test .principle-en .fill-char{
   color:rgba(255,255,255,var(--test-en-alpha,.05))!important;
 }
 
+/* WORKS: each word is atomic; wrapping can happen only between words. */
+.home-test .showcase-project h3{
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  line-break:auto!important;
+}
+.home-test .showcase-project h3 .work-word{
+  display:inline-block!important;
+  white-space:nowrap!important;
+}
+
+@media(max-width:850px){
+  .home-test .principles-section{
+    padding-top:clamp(84px,20vw,120px)!important;
+  }
+  .home-test .principles-persistent-label,
+  .home-test .principles-head{
+    top:70px!important;
+  }
+  .home-test .principles-head{
+    padding-top:0!important;
+  }
+  .home-test .principles-cards-stage{
+    margin-top:calc(-60vh - 300px)!important;
+    height:calc(205vh + 300px)!important;
+  }
+  .home-test .principles-grid{
+    top:70px!important;
+    padding-top:clamp(190px,28vh,260px)!important;
+  }
+  .home-test .principle-card.test-timeline-card{
+    transform:translate3d(0,var(--test-card-y,88px),0)!important;
+  }
+}
+
 @media(prefers-reduced-motion:reduce){
-  .home-test .hero-quote .fill-char.test-hero-pre-scramble::before,
-  .home-test .principle-ko .fill-char.test-card-scramble::before{display:none!important}
-  .home-test .principle-ko .fill-char.test-card-pending,
-  .home-test .principle-ko .fill-char.test-card-scramble,
-  .home-test .principle-ko .fill-char.test-card-resolved{color:#fff!important}
+  .home-test .test-managed-char.test-progressive-pending,
+  .home-test .test-managed-char.test-progressive-scramble,
+  .home-test .test-managed-char.test-progressive-resolved{
+    color:inherit!important;
+  }
+  .home-test .test-managed-char.test-progressive-scramble::before{display:none!important}
   .home-test .principle-card.test-timeline-card{opacity:1!important;transform:none!important}
 }
