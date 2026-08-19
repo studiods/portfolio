@@ -74,7 +74,7 @@
     });
   };
 
-  const setCardCopyState = (index, titleProgress) => {
+  const setCardCopyState = (index, titleProgress, hasStarted) => {
     const chars = cardKoreanChars[index] || [];
     const visible = chars.filter(char => char.textContent.trim().length > 0);
     const count = visible.length || 1;
@@ -86,6 +86,13 @@
     chars.forEach(char => {
       const isSpace = char.textContent.trim().length === 0;
       char.classList.remove('test-card-pending', 'test-card-scramble', 'test-card-resolved');
+
+      if (!hasStarted) {
+        char.classList.add('test-card-pending');
+        delete char.dataset.testScramble;
+        char.style.removeProperty('--test-scramble-alpha');
+        return;
+      }
 
       if (isSpace) {
         if (p < 1) char.classList.add('test-card-pending');
@@ -153,7 +160,8 @@
 
       const titleProgress = phaseProgress(p, phase.titleStart, phase.titleEnd);
       const englishProgress = phaseProgress(p, phase.enStart, phase.enEnd);
-      setCardCopyState(index, titleProgress);
+      const titleStarted = index === 0 ? scrollY >= stickY : p >= phase.titleStart;
+      setCardCopyState(index, titleProgress, titleStarted);
       setEnglishAlpha(index, englishProgress);
     });
   };
