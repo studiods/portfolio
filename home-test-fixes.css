@@ -29,6 +29,11 @@
   color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
 }
 
+/* Hero Korean definition: 3pt (4px) smaller while preserving desktop ratio. */
+.home-test .definition-copy{
+  font-size:calc(clamp(34.83px,4.9815vw,85.86px) - 4px)!important;
+}
+
 /*
   DESIGN PRINCIPLES
   The label and all sticky content use one vertical lock line.
@@ -48,9 +53,9 @@
   padding-top:0!important;
 }
 
-/* Korean intro: 3pt smaller than the previous test version. */
+/* Korean intro: another 3pt smaller than the current test version (total -8px). */
 .home-test .principles-intro-ko{
-  font-size:calc(var(--principles-ko-size) - 4px)!important;
+  font-size:calc(var(--principles-ko-size) - 8px)!important;
 }
 
 /*
@@ -109,9 +114,9 @@
   }
 }
 
-/* 01-03 Korean copy remains 10% smaller than the production card size. */
+/* 01-03 Korean copy: another 10% smaller than the current test size (.6 * .9 = .54). */
 .home-test .principle-ko{
-  font-size:calc(var(--principles-ko-size) * .6)!important;
+  font-size:calc(var(--principles-ko-size) * .54)!important;
 }
 
 /*
@@ -140,6 +145,9 @@
 }
 
 @media(max-width:850px){
+  .home-test .definition-copy{
+    font-size:calc(clamp(26px,7.1vw,40px) - 4px)!important;
+  }
   .home-test .principles-section{
     --principles-lock-top:70px;
     --principles-edge-space:clamp(84px,20vw,120px);
