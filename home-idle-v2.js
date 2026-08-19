@@ -90,6 +90,14 @@
     rafs.clear();
   };
 
+  const nextFrame = callback => {
+    const id = requestAnimationFrame(now => {
+      rafs.delete(id);
+      callback(now);
+    });
+    rafs.add(id);
+  };
+
   const wait = (ms, token) => new Promise(resolve => {
     if (!canRun(token)) {
       resolve(false);
@@ -143,12 +151,10 @@
         return;
       }
 
-      const id = requestAnimationFrame(frame);
-      rafs.add(id);
+      nextFrame(frame);
     };
 
-    const id = requestAnimationFrame(frame);
-    rafs.add(id);
+    nextFrame(frame);
   });
 
   const runWordPattern = async (groups, token, mode) => {
