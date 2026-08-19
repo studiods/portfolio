@@ -33,6 +33,9 @@
   font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
   line-height:1.0374!important;
 }
+.home-test .definition-source{
+  font-size:11.55px!important;
+}
 
 /* DESIGN PRINCIPLES */
 .home-test .principles-section{
@@ -69,7 +72,7 @@
   the page is allowed to continue into the cards.
 */
 .home-test .principles-intro-stage{height:185vh!important}
-.home-test .principles-after-intro{height:0!important}
+.home-test .principles-after-intro{height:200px!important}
 .home-test .principles-cards-stage{
   margin-top:0!important;
   height:250vh!important;
@@ -79,7 +82,7 @@
   align-content:start!important;
   box-sizing:border-box!important;
   padding-top:0!important;
-  gap:60px!important;
+  gap:54px!important;
 }
 
 /* Numbers are removed from HTML; copy owns the full second column. */
@@ -155,7 +158,7 @@
   .home-test .principles-cards-stage{height:245vh!important}
   .home-test .principles-grid{
     padding-top:0!important;
-    gap:60px!important;
+    gap:54px!important;
   }
   .home-test .principle-card-inner{
     position:relative!important;
