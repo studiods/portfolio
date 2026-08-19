@@ -1,0 +1,88 @@
+/* Isolated overrides for home-test.html only. The production home is untouched. */
+
+/* Do not expose the baseline quote for a frame before the test patch is ready. */
+.home-test:not(.home-test-ready) .hero-quote{visibility:hidden}
+
+/* Preserve authored word spaces only in the two areas reported as collapsed. */
+.home-test .principle-ko .fill-char.test-space,
+.home-test .showcase-project h3 .fill-char.test-space{
+  white-space:pre!important;
+}
+
+/* First hero quote: faint random glyphs occupy exactly the same character box. */
+.home-test .hero-quote .fill-char.test-hero-pre-scramble{
+  position:relative;
+  color:transparent!important;
+}
+.home-test .hero-quote .fill-char.test-hero-pre-scramble::before{
+  content:attr(data-test-scramble);
+  position:absolute;
+  inset:0 auto auto 0;
+  color:rgba(17,17,17,.05);
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  white-space:pre;
+  pointer-events:none;
+}
+
+/* Additional 4pt reduction from the current desktop Korean principle size. */
+@media(min-width:851px){
+  .home-test .principles-intro-ko{
+    font-size:calc(var(--principles-ko-size) - 5.333px)!important;
+  }
+}
+
+/* Keep the existing 300px authored spacer, but remove the extra vertical centering
+   inside the following sticky grid so 01 follows that spacer directly. */
+.home-test .principles-grid{
+  align-content:start!important;
+}
+
+/* The test timeline overrides only card visibility/translation; grid dimensions,
+   columns, sticky top and section heights remain the production values. */
+.home-test .principle-card.test-timeline-card{
+  opacity:var(--test-card-opacity,0)!important;
+  transform:translate3d(0,var(--test-card-y,24px),0)!important;
+}
+
+/* Suppress the production Korean scramble only inside the test card copy. */
+.home-test .principle-ko .fill-char.is-scrambling{
+  color:inherit!important;
+}
+.home-test .principle-ko .fill-char.is-scrambling::after{
+  display:none!important;
+}
+.home-test .principle-ko .fill-char.test-card-pending{
+  color:transparent!important;
+}
+.home-test .principle-ko .fill-char.test-card-scramble{
+  position:relative;
+  color:transparent!important;
+}
+.home-test .principle-ko .fill-char.test-card-scramble::before{
+  content:attr(data-test-scramble);
+  position:absolute;
+  inset:0 auto auto 0;
+  color:rgba(255,255,255,var(--test-scramble-alpha,1));
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  white-space:pre;
+  pointer-events:none;
+}
+.home-test .principle-ko .fill-char.test-card-resolved{
+  color:#fff!important;
+}
+.home-test .principle-en .fill-char{
+  color:rgba(255,255,255,var(--test-en-alpha,.05))!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .home-test .hero-quote .fill-char.test-hero-pre-scramble::before,
+  .home-test .principle-ko .fill-char.test-card-scramble::before{display:none!important}
+  .home-test .principle-ko .fill-char.test-card-pending,
+  .home-test .principle-ko .fill-char.test-card-scramble,
+  .home-test .principle-ko .fill-char.test-card-resolved{color:#fff!important}
+  .home-test .principle-card.test-timeline-card{opacity:1!important;transform:none!important}
+}
