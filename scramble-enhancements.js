@@ -6,15 +6,15 @@
   const ALNUM_POOL = LETTERS + DIGITS;
 
   /*
-    Shared scramble renderer for Home / About / Works.
+    One rendering rule for every scramble on Home / About / Works:
+    - random glyphs are painted by the real character node, never a pseudo layer;
+    - the authored glyph width is frozen during the scramble;
+    - the character therefore keeps the exact authored baseline and x-position;
+    - every scramble uses A-Z + 0-9.
 
-    Rules:
-    - random glyphs are drawn by the authored character node itself;
-    - the node stays inline, so its baseline / line box never changes;
-    - the authored advance width is preserved with temporary letter-spacing;
-    - a timeline state class is paired only with its own data attribute;
-    - MutationObserver batches are collapsed to one render per element;
-    - visible random states use A-Z + 0-9.
+    The legacy pseudo glyphs are disabled before any later defer script can start
+    an animation, so there is no first frame where a glyph can appear above the
+    authored baseline.
   */
   const style = document.createElement('style');
   style.id = 'live-scramble-style';
@@ -32,15 +32,15 @@
     }
 
     html body .live-scramble-glyph{
-      display:inline!important;
+      display:inline-block!important;
+      width:var(--live-scramble-width)!important;
+      min-width:var(--live-scramble-width)!important;
+      max-width:var(--live-scramble-width)!important;
       position:static!important;
       top:auto!important;
       bottom:auto!important;
       left:auto!important;
       right:auto!important;
-      width:auto!important;
-      min-width:0!important;
-      max-width:none!important;
       vertical-align:baseline!important;
       line-height:inherit!important;
       transform:none!important;
@@ -48,19 +48,13 @@
       margin:0!important;
       padding:0!important;
       overflow:visible!important;
+      color:var(--live-scramble-color)!important;
     }
 
-    /*
-      Legacy CSS intentionally makes the authored glyph transparent while a
-      pseudo-element displays the random glyph. The pseudo-element is disabled
-      above, so the live-node renderer must explicitly win that old !important
-      transparency rule. Keep these selectors state-specific: resolved/pending
-      characters are still painted by their owning timeline.
-    */
-    html body .fill-char.live-scramble-glyph.is-scrambling,
-    html body .about-scramble-char.live-scramble-glyph.is-scrambling,
-    html body .entry-scramble-char.live-scramble-glyph.is-scrambling,
-    html body.home-test .test-managed-char.live-scramble-glyph.test-progressive-scramble{
+    html body.home-test .live-scramble-glyph.test-managed-char.test-progressive-scramble,
+    html body .live-scramble-glyph.about-scramble-char.is-scrambling,
+    html body .live-scramble-glyph.entry-scramble-char.is-scrambling,
+    html body .live-scramble-glyph.fill-char.is-scrambling{
       color:var(--live-scramble-color)!important;
     }
   `;
@@ -69,35 +63,21 @@
   const states = new WeakMap();
   const counters = new WeakMap();
 
-  const ensureState = el => {
+  const isScrambling = (el) =>
+    el.classList.contains('is-scrambling') ||
+    el.classList.contains('test-progressive-scramble');
+
+  const ensureState = (el) => {
     let state = states.get(el);
     if (state) return state;
+
     state = {
       finalChar: el.dataset.finalChar || el.textContent,
-      finalWidth: 0,
-      active: false,
-      inlineLetterSpacing: '',
-      lastAttr: '',
-      lastRawGlyph: ''
+      width: Math.max(0, el.getBoundingClientRect().width),
+      active: false
     };
     states.set(el, state);
     return state;
-  };
-
-  const resolveTimelineAttr = el => {
-    if (
-      el.classList.contains('test-progressive-scramble') &&
-      el.hasAttribute('data-test-scramble')
-    ) {
-      return 'data-test-scramble';
-    }
-    if (
-      el.classList.contains('is-scrambling') &&
-      el.hasAttribute('data-scramble')
-    ) {
-      return 'data-scramble';
-    }
-    return '';
   };
 
   const scrambleColor = (el, attr) => {
@@ -114,11 +94,11 @@
     ).trim();
 
     if (rgb) return `rgba(${rgb},${alpha || '1'})`;
+
     const parentColor = el.parentElement ? getComputedStyle(el.parentElement).color : '';
     return parentColor || '#fff';
   };
 
-  /* Every short sequence visibly contains a numeric state. */
   const mixedGlyph = (el, raw) => {
     const count = (counters.get(el) || 0) + 1;
     counters.set(el, count);
@@ -130,89 +110,63 @@
     return LETTERS[(code + count * 11) % LETTERS.length];
   };
 
-  const beginActiveState = (el, state) => {
-    state.inlineLetterSpacing = el.style.letterSpacing;
-    el.textContent = state.finalChar;
-    el.style.removeProperty('letter-spacing');
-    state.finalWidth = Math.max(0, el.getBoundingClientRect().width);
-    state.active = true;
-    if (!el.classList.contains('live-scramble-glyph')) {
-      el.classList.add('live-scramble-glyph');
-    }
-  };
-
-  const preserveAdvanceWidth = (el, state, glyph) => {
-    el.style.letterSpacing = '0px';
-    el.textContent = glyph;
-    const glyphWidth = Math.max(0, el.getBoundingClientRect().width);
-    const compensation = state.finalWidth - glyphWidth;
-    el.style.letterSpacing = `${compensation.toFixed(3)}px`;
-  };
-
   const activate = (el, rawGlyph, attr) => {
     if (!(el instanceof Element) || !rawGlyph) return;
     const state = ensureState(el);
-    if (!state.active) beginActiveState(el, state);
+
+    if (!state.active) {
+      el.textContent = state.finalChar;
+      state.width = Math.max(0, el.getBoundingClientRect().width);
+      el.style.setProperty('--live-scramble-width', `${state.width.toFixed(3)}px`);
+      el.classList.add('live-scramble-glyph');
+      state.active = true;
+    }
 
     el.style.setProperty('--live-scramble-color', scrambleColor(el, attr));
-
-    /* A class mutation created by this renderer can trigger the observer again.
-       Do not generate another random character unless the owning timeline has
-       actually changed its raw glyph or source attribute. */
-    if (state.lastAttr === attr && state.lastRawGlyph === rawGlyph) return;
-
-    state.lastAttr = attr;
-    state.lastRawGlyph = rawGlyph;
-    preserveAdvanceWidth(el, state, mixedGlyph(el, rawGlyph));
+    el.textContent = mixedGlyph(el, rawGlyph);
   };
 
-  const restore = el => {
+  const restore = (el) => {
     const state = states.get(el);
     if (!state || !state.active) return;
 
     state.active = false;
-    state.lastAttr = '';
-    state.lastRawGlyph = '';
     el.textContent = state.finalChar;
-    if (state.inlineLetterSpacing) {
-      el.style.letterSpacing = state.inlineLetterSpacing;
-    } else {
-      el.style.removeProperty('letter-spacing');
-    }
     el.classList.remove('live-scramble-glyph');
+    el.style.removeProperty('--live-scramble-width');
     el.style.removeProperty('--live-scramble-color');
   };
 
-  const syncElement = el => {
+  const syncElement = (el, attr) => {
     if (!(el instanceof Element)) return;
-    const attr = resolveTimelineAttr(el);
-    if (!attr) {
+    if (!isScrambling(el)) {
       restore(el);
       return;
     }
 
-    const glyph = el.getAttribute(attr);
-    if (glyph && /^[A-Z0-9]$/i.test(glyph)) {
-      activate(el, glyph.toUpperCase(), attr);
-    } else {
-      restore(el);
-    }
+    const dataAttr = attr === 'data-test-scramble' || el.hasAttribute('data-test-scramble')
+      ? 'data-test-scramble'
+      : 'data-scramble';
+    const glyph = el.getAttribute(dataAttr);
+    if (glyph && /^[A-Z0-9]$/i.test(glyph)) activate(el, glyph.toUpperCase(), dataAttr);
   };
 
-  const observer = new MutationObserver(mutations => {
-    const targets = new Set();
-    mutations.forEach(mutation => {
-      if (mutation.type !== 'attributes') return;
-      const attr = mutation.attributeName;
-      if (
-        attr === 'data-scramble' ||
-        attr === 'data-test-scramble' ||
-        attr === 'class'
-      ) {
-        targets.add(mutation.target);
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      const el = mutation.target;
+      if (!(el instanceof Element)) return;
+
+      if (mutation.type === 'attributes') {
+        const attr = mutation.attributeName;
+        if (
+          attr === 'data-scramble' ||
+          attr === 'data-test-scramble' ||
+          attr === 'class'
+        ) {
+          syncElement(el, attr);
+        }
       }
     });
-    targets.forEach(syncElement);
   });
 
   observer.observe(document.documentElement, {
@@ -221,7 +175,6 @@
     attributeFilter: ['data-scramble', 'data-test-scramble', 'class']
   });
 
-  /* ABOUT / WORKS entry titles retain their existing one-second timing. */
   const animateEntryTitle = (selector, fallbackText, readyClass) => {
     const title = document.querySelector(selector);
     if (!title || title.dataset.scrambleEnhanced === '1') return;
@@ -251,7 +204,7 @@
     const cycles = 4;
     const startedAt = performance.now();
 
-    const frame = now => {
+    const frame = (now) => {
       let complete = true;
       chars.forEach((char, index) => {
         const elapsed = now - startedAt - index * slotMs;
@@ -264,10 +217,10 @@
           complete = false;
           const cycle = Math.min(cycles - 1, Math.floor(elapsed / cycleMs));
           const glyph = ALNUM_POOL[(index * 13 + cycle * 17) % ALNUM_POOL.length];
-          if (char.dataset.scramble !== glyph) char.dataset.scramble = glyph;
-          if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
+          char.dataset.scramble = glyph;
+          char.classList.add('is-scrambling');
         } else {
-          if (char.classList.contains('is-scrambling')) char.classList.remove('is-scrambling');
+          char.classList.remove('is-scrambling');
           char.style.color = '';
         }
       });
