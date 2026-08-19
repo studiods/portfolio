@@ -3,12 +3,14 @@
 
   const state = window.__PORTFOLIO_HOME_OWNERS__ || {};
 
-  if (state.hero) state.hero.id = state.heroOriginalId || 'heroSequence';
-  if (state.philosophy) state.philosophy.id = state.philosophyOriginalId || 'philosophy';
+  state.heroDecoy?.remove();
+  state.philosophyDecoy?.remove();
+  state.heroDecoy = null;
+  state.philosophyDecoy = null;
 
-  const hero = document.getElementById('heroSequence');
-  const philosophy = document.getElementById('philosophy');
-  const principles = document.getElementById('principles');
+  const hero = state.hero || document.getElementById('heroSequence');
+  const philosophy = state.philosophy || document.getElementById('philosophy');
+  const principles = state.principles || document.getElementById('principles');
 
   hero?.setAttribute('data-runtime-owner', 'home-interactions');
   philosophy?.setAttribute('data-runtime-owner', 'home-interactions');
