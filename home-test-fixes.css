@@ -9,9 +9,7 @@
 
 /* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
 .home-test .test-managed-char.is-scrambling::after{display:none!important}
-.home-test .test-managed-char.test-progressive-pending{
-  color:transparent!important;
-}
+.home-test .test-managed-char.test-progressive-pending{color:transparent!important}
 .home-test .test-managed-char.test-progressive-scramble{
   position:relative;
   color:transparent!important;
@@ -33,70 +31,97 @@
 
 /*
   DESIGN PRINCIPLES
-  - 50%+ more lead space than the previous 8vh/72px rule.
-  - Label and LESS ASSUMPTION share the same sticky top line.
+  The label and all sticky content use one vertical lock line.
+  The section has the same generous lead/trailing whitespace.
 */
 .home-test .principles-section{
-  padding-top:clamp(108px,12vh,168px)!important;
+  --principles-lock-top:12vh;
+  --principles-edge-space:clamp(108px,12vh,168px);
+  padding-top:var(--principles-edge-space)!important;
+  padding-bottom:var(--principles-edge-space)!important;
 }
 .home-test .principles-persistent-label{
-  top:12vh!important;
+  top:var(--principles-lock-top)!important;
 }
 .home-test .principles-head{
-  top:12vh!important;
+  top:var(--principles-lock-top)!important;
   padding-top:0!important;
 }
 
-/* Korean intro: exactly 3pt (4 CSS px) smaller than the current measured size. */
+/* Korean intro: 3pt smaller than the previous test version. */
 .home-test .principles-intro-ko{
   font-size:calc(var(--principles-ko-size) - 4px)!important;
 }
 
 /*
-  Pull the cards stage into the intro release while preserving the section's
-  overall scroll length. At intro completion the stage is already in the lower
-  viewport, so 01 can rise immediately instead of waiting for the intro to leave.
+  Critical handoff:
+  - no 300px dead spacer
+  - no negative-margin overlap
+  At the exact moment the intro sticky starts releasing, the cards stage is at
+  the viewport bottom. It then rises naturally with page scroll until its top
+  reaches the same lock line as the Design principles label.
 */
+.home-test .principles-after-intro{height:0!important}
 .home-test .principles-cards-stage{
-  margin-top:calc(-70vh - 300px)!important;
-  height:calc(270vh + 300px)!important;
+  margin-top:0!important;
+  height:250vh!important;
 }
 .home-test .principles-grid{
-  top:12vh!important;
+  top:var(--principles-lock-top)!important;
   align-content:start!important;
   box-sizing:border-box!important;
-  padding-top:clamp(220px,30vh,300px)!important;
+  padding-top:0!important;
+  gap:50px!important;
 }
 
-/* Desktop: 01 aligns to the Design principles label; copy aligns to LESS ASSUMPTION. */
+/*
+  Copy starts on exactly the same vertical axis as LESS ASSUMPTION / the final
+  Korean intro. The number is positioned immediately to its left without moving
+  the copy itself, so 01-03 no longer sit at the far-left page column.
+*/
 @media(min-width:851px){
-  .home-test .principle-card-inner{
-    grid-column:1 / -1!important;
-    display:grid!important;
+  .home-test .principle-card{
     grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)!important;
     column-gap:var(--gap)!important;
+  }
+  .home-test .principle-card-inner{
+    grid-column:2!important;
+    display:block!important;
+    position:relative!important;
     width:100%!important;
+    margin:0!important;
+    padding:0!important;
   }
   .home-test .principle-no{
-    grid-column:1!important;
-    justify-self:start!important;
-    margin-left:0!important;
-    padding-left:0!important;
+    position:absolute!important;
+    top:3px!important;
+    right:calc(100% + 12px)!important;
+    width:34px!important;
+    margin:0!important;
+    padding:0!important;
+    text-align:right!important;
   }
   .home-test .principle-copy{
-    grid-column:2!important;
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
   }
 }
 
-/* 01-03 Korean copy: 10% smaller than the current card size (.666667 * .9 = .6). */
+/* 01-03 Korean copy remains 10% smaller than the production card size. */
 .home-test .principle-ko{
   font-size:calc(var(--principles-ko-size) * .6)!important;
 }
 
-/* Test timeline owns card entry so production inline values cannot fight it. */
+/*
+  The cards themselves do not use an artificial translate anymore. Their upward
+  motion is the real page motion before the sticky lock. Opacity is still owned
+  by the test timeline so 02/03 can enter sequentially.
+*/
 .home-test .principle-card.test-timeline-card{
   opacity:var(--test-card-opacity,0)!important;
-  transform:translate3d(0,var(--test-card-y,110px),0)!important;
+  transform:none!important;
 }
 .home-test .principle-en .fill-char{
   color:rgba(255,255,255,var(--test-en-alpha,.05))!important;
@@ -116,34 +141,47 @@
 
 @media(max-width:850px){
   .home-test .principles-section{
-    padding-top:clamp(84px,20vw,120px)!important;
+    --principles-lock-top:70px;
+    --principles-edge-space:clamp(84px,20vw,120px);
+    padding-top:var(--principles-edge-space)!important;
+    padding-bottom:var(--principles-edge-space)!important;
   }
   .home-test .principles-persistent-label,
-  .home-test .principles-head{
-    top:70px!important;
-  }
-  .home-test .principles-head{
-    padding-top:0!important;
-  }
-  .home-test .principles-cards-stage{
-    margin-top:calc(-60vh - 300px)!important;
-    height:calc(205vh + 300px)!important;
-  }
+  .home-test .principles-head,
   .home-test .principles-grid{
-    top:70px!important;
-    padding-top:clamp(190px,28vh,260px)!important;
+    top:var(--principles-lock-top)!important;
   }
-  .home-test .principle-card.test-timeline-card{
-    transform:translate3d(0,var(--test-card-y,88px),0)!important;
+  .home-test .principles-head{padding-top:0!important}
+  .home-test .principles-cards-stage{height:245vh!important}
+  .home-test .principles-grid{
+    padding-top:0!important;
+    gap:50px!important;
   }
+  .home-test .principle-card-inner{
+    position:relative!important;
+    grid-column:1 / -1!important;
+    display:grid!important;
+    grid-template-columns:30px minmax(0,1fr)!important;
+    column-gap:10px!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  .home-test .principle-no{
+    position:static!important;
+    grid-column:1!important;
+    width:auto!important;
+    margin:3px 0 0!important;
+    padding:0!important;
+    text-align:left!important;
+  }
+  .home-test .principle-copy{grid-column:2!important}
 }
 
 @media(prefers-reduced-motion:reduce){
   .home-test .test-managed-char.test-progressive-pending,
   .home-test .test-managed-char.test-progressive-scramble,
-  .home-test .test-managed-char.test-progressive-resolved{
-    color:inherit!important;
-  }
+  .home-test .test-managed-char.test-progressive-resolved{color:inherit!important}
   .home-test .test-managed-char.test-progressive-scramble::before{display:none!important}
   .home-test .principle-card.test-timeline-card{opacity:1!important;transform:none!important}
 }
