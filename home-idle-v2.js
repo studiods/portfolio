@@ -17,13 +17,14 @@
   const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const BASE_ALPHA = 0.05;
   const FULL_ALPHA = 1;
-  const IDLE_GAP_MS = 3000;
-  const FULL_HOLD_MS = 2000;
-  const WORD_MS = 1000;
-  const NEXT_WORD_AT = 0.80;
+  const INITIAL_IDLE_MS = 3000;
+  const WORD_MS = 300;
+  const NEXT_WORD_AT = 0.60;
   const WORD_STAGGER_MS = WORD_MS * NEXT_WORD_AT;
-  const GLYPH_CYCLE_MS = 72;
+  const GLYPH_CYCLE_MS = 36;
   const RESOLVE_AT = 0.84;
+  const FADE_TO_BASE_MS = 2000;
+  const BASE_HOLD_MS = 1000;
 
   const logicalLines = [...quote.children].filter(
     el => el.matches('span') && !el.classList.contains('fill-char')
@@ -163,6 +164,41 @@
     nextFrame(frame);
   });
 
+  const fadeAllToBase = token => new Promise(resolve => {
+    if (!canRun(token)) {
+      resolve(false);
+      return;
+    }
+
+    allChars.forEach(clearScramble);
+    const startedAt = performance.now();
+    hero.dataset.idleState = 'fading-to-base';
+
+    const frame = now => {
+      if (!canRun(token)) {
+        resetAllToBase();
+        resolve(false);
+        return;
+      }
+
+      const progress = Math.min(1, (now - startedAt) / FADE_TO_BASE_MS);
+      const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * progress;
+      allChars.forEach(char => {
+        char.style.color = `rgba(17,17,17,${alpha.toFixed(4)})`;
+      });
+
+      if (progress >= 1) {
+        resetAllToBase();
+        resolve(true);
+        return;
+      }
+
+      nextFrame(frame);
+    };
+
+    nextFrame(frame);
+  });
+
   const runWordPattern = async (groups, token, mode) => {
     resetAllToBase();
     hero.dataset.idleState = 'running';
@@ -181,15 +217,14 @@
     const results = await Promise.all(jobs);
     if (!results.every(Boolean) || !canRun(token)) return false;
 
-    /* Every authored word is now resolved and accumulated at 100% black. */
+    /* Every authored word has accumulated at 100% black. Fade immediately. */
     allChars.forEach(char => setCharAlpha(char, FULL_ALPHA));
-    hero.dataset.idleState = 'full-hold';
 
-    if (!(await wait(FULL_HOLD_MS, token))) return false;
+    if (!(await fadeAllToBase(token))) return false;
 
-    /* After the 2s full-black hold, return the entire quote to its 5% idle state. */
-    resetAllToBase();
-    hero.dataset.idleState = 'waiting';
+    hero.dataset.idleState = 'base-hold';
+    if (!(await wait(BASE_HOLD_MS, token))) return false;
+
     delete hero.dataset.idleMode;
     return true;
   };
@@ -207,16 +242,11 @@
   const run = async token => {
     resetAllToBase();
     hero.dataset.idleState = 'waiting';
-    if (!(await wait(IDLE_GAP_MS, token))) return;
+    if (!(await wait(INITIAL_IDLE_MS, token))) return;
 
     while (canRun(token)) {
       if (!(await runWordPattern(wordGroups, token, 'sequential'))) return;
-
-      if (!(await wait(IDLE_GAP_MS, token))) return;
-
       if (!(await runWordPattern(shuffle(wordGroups), token, 'random'))) return;
-
-      if (!(await wait(IDLE_GAP_MS, token))) return;
     }
   };
 
