@@ -6,226 +6,182 @@
   const ALNUM_POOL = LETTERS + DIGITS;
 
   /*
-    Initial English scramble must occupy the authored glyph's exact position.
-    Existing animations paint random glyphs with absolutely-positioned pseudo
-    elements, whose top edge is not the font baseline. This shared layer keeps
-    the animation timing intact but paints the random glyph through the live
-    character node itself. The authored advance width is frozen only during the
-    initial scramble so neighboring letters never shift.
+    One rendering rule for every scramble on Home / About / Works:
+    - random glyphs are painted by the real character node, never a pseudo layer;
+    - the authored glyph width is frozen during the scramble;
+    - the character therefore keeps the exact authored baseline and x-position;
+    - every scramble uses A-Z + 0-9.
 
-    Morph/erase animations are intentionally excluded: once a character has
-    resolved for the first time, this layer never intercepts that character
-    again.
+    The legacy pseudo glyphs are disabled before any later defer script can start
+    an animation, so there is no first frame where a glyph can appear above the
+    authored baseline.
   */
   const style = document.createElement('style');
-  style.id = 'baseline-live-scramble-style';
+  style.id = 'live-scramble-style';
   style.textContent = `
-    html body .baseline-live-scramble{
+    .fill-char.is-scrambling::before,
+    .fill-char.is-scrambling::after,
+    .test-managed-char.test-progressive-scramble::before,
+    .test-managed-char.test-progressive-scramble::after,
+    .about-scramble-char.is-scrambling::before,
+    .about-scramble-char.is-scrambling::after,
+    .entry-scramble-char.is-scrambling::before,
+    .entry-scramble-char.is-scrambling::after{
+      content:none!important;
+      display:none!important;
+    }
+
+    html body .live-scramble-glyph{
       display:inline-block!important;
-      width:var(--baseline-live-width)!important;
-      min-width:var(--baseline-live-width)!important;
-      max-width:var(--baseline-live-width)!important;
+      width:var(--live-scramble-width)!important;
+      min-width:var(--live-scramble-width)!important;
+      max-width:var(--live-scramble-width)!important;
       position:static!important;
+      top:auto!important;
+      bottom:auto!important;
+      left:auto!important;
+      right:auto!important;
       vertical-align:baseline!important;
       line-height:inherit!important;
       transform:none!important;
       translate:none!important;
       margin:0!important;
       padding:0!important;
-      color:var(--baseline-live-color)!important;
       overflow:visible!important;
+      color:var(--live-scramble-color)!important;
     }
-    html body .baseline-live-scramble.is-scrambling::before,
-    html body .baseline-live-scramble.is-scrambling::after,
-    body.home-test .baseline-live-scramble.test-managed-char.test-progressive-scramble::before,
-    body.home-test .baseline-live-scramble.test-managed-char.test-progressive-scramble::after{
-      content:none!important;
-      display:none!important;
+
+    html body.home-test .live-scramble-glyph.test-managed-char.test-progressive-scramble,
+    html body .live-scramble-glyph.about-scramble-char.is-scrambling,
+    html body .live-scramble-glyph.entry-scramble-char.is-scrambling,
+    html body .live-scramble-glyph.fill-char.is-scrambling{
+      color:var(--live-scramble-color)!important;
     }
   `;
   document.head.appendChild(style);
 
-  const baselineStates = new WeakMap();
+  const states = new WeakMap();
+  const counters = new WeakMap();
 
-  const initialEnglishRoot = (el) => el.closest(
-    '.hero-quote, ' +
-    '.subtractive-title, ' +
-    '.principles-intro-en, ' +
-    '.showcase-project h3, ' +
-    '.about-ascii-title, ' +
-    '.works-page-title, ' +
-    '.about-statement-en'
-  );
-
-  const isInitialEnglishTarget = (el) => {
-    if (!(el instanceof Element)) return false;
-    return Boolean(initialEnglishRoot(el));
-  };
-
-  const isScramblingNow = (el) =>
+  const isScrambling = (el) =>
     el.classList.contains('is-scrambling') ||
     el.classList.contains('test-progressive-scramble');
 
-  const ensureBaselineState = (el) => {
-    let state = baselineStates.get(el);
+  const ensureState = (el) => {
+    let state = states.get(el);
     if (state) return state;
 
-    const finalChar = el.dataset.finalChar || el.textContent;
     state = {
-      finalChar,
+      finalChar: el.dataset.finalChar || el.textContent,
       width: Math.max(0, el.getBoundingClientRect().width),
-      active: false,
-      done: false
+      active: false
     };
-    baselineStates.set(el, state);
+    states.set(el, state);
     return state;
   };
 
-  const liveColorFor = (el, attr) => {
+  const scrambleColor = (el, attr) => {
     const computed = getComputedStyle(el);
-    const rgbVar = (
+    const rgb = (
       attr === 'data-test-scramble'
         ? computed.getPropertyValue('--test-rgb')
         : computed.getPropertyValue('--scramble-rgb')
     ).trim();
-    const alphaVar = (
+    const alpha = (
       attr === 'data-test-scramble'
         ? computed.getPropertyValue('--test-scramble-alpha')
         : computed.getPropertyValue('--scramble-alpha')
     ).trim();
 
-    if (rgbVar) {
-      const alpha = alphaVar || '1';
-      return `rgba(${rgbVar},${alpha})`;
-    }
+    if (rgb) return `rgba(${rgb},${alpha || '1'})`;
 
-    const parent = el.parentElement;
-    return parent ? getComputedStyle(parent).color : 'currentColor';
+    const parentColor = el.parentElement ? getComputedStyle(el.parentElement).color : '';
+    return parentColor || '#fff';
   };
 
-  const activateBaselineGlyph = (el, glyph, attr) => {
-    if (!isInitialEnglishTarget(el)) return;
-    const state = ensureBaselineState(el);
-    if (state.done || !glyph) return;
+  /*
+    A three-state reveal must visibly contain a number as well as letters.
+    Every third update is numeric; the other updates are alphabetic. Longer
+    animations continue the same A/A/0 rhythm.
+  */
+  const mixedGlyph = (el, raw) => {
+    const count = (counters.get(el) || 0) + 1;
+    counters.set(el, count);
+    const code = raw?.charCodeAt?.(0) || 0;
+
+    if (count % 3 === 0) {
+      return DIGITS[(code + count * 7) % DIGITS.length];
+    }
+    return LETTERS[(code + count * 11) % LETTERS.length];
+  };
+
+  const activate = (el, rawGlyph, attr) => {
+    if (!(el instanceof Element) || !rawGlyph) return;
+    const state = ensureState(el);
 
     if (!state.active) {
-      /* Measure while the authored glyph still owns its natural advance width. */
+      /* Measure the authored glyph before replacing its text. */
       el.textContent = state.finalChar;
       state.width = Math.max(0, el.getBoundingClientRect().width);
-      el.style.setProperty('--baseline-live-width', `${state.width.toFixed(3)}px`);
-      el.classList.add('baseline-live-scramble');
+      el.style.setProperty('--live-scramble-width', `${state.width.toFixed(3)}px`);
+      el.classList.add('live-scramble-glyph');
       state.active = true;
     }
 
-    el.style.setProperty('--baseline-live-color', liveColorFor(el, attr));
-    el.textContent = glyph;
+    el.style.setProperty('--live-scramble-color', scrambleColor(el, attr));
+    el.textContent = mixedGlyph(el, rawGlyph);
   };
 
-  const finishInitialBaseline = (el) => {
-    const state = baselineStates.get(el);
-    if (!state || state.done || !state.active) return;
+  const restore = (el) => {
+    const state = states.get(el);
+    if (!state || !state.active) return;
+
     state.active = false;
-    state.done = true;
     el.textContent = state.finalChar;
-    el.classList.remove('baseline-live-scramble');
-    el.style.removeProperty('--baseline-live-width');
-    el.style.removeProperty('--baseline-live-color');
+    el.classList.remove('live-scramble-glyph');
+    el.style.removeProperty('--live-scramble-width');
+    el.style.removeProperty('--live-scramble-color');
   };
 
-  const baselineObserver = new MutationObserver((mutations) => {
+  const syncElement = (el, attr) => {
+    if (!(el instanceof Element)) return;
+    if (!isScrambling(el)) {
+      restore(el);
+      return;
+    }
+
+    const dataAttr = attr === 'data-test-scramble' || el.hasAttribute('data-test-scramble')
+      ? 'data-test-scramble'
+      : 'data-scramble';
+    const glyph = el.getAttribute(dataAttr);
+    if (glyph && /^[A-Z0-9]$/i.test(glyph)) activate(el, glyph.toUpperCase(), dataAttr);
+  };
+
+  const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       const el = mutation.target;
-      if (!(el instanceof Element) || !isInitialEnglishTarget(el)) return;
+      if (!(el instanceof Element)) return;
 
       if (mutation.type === 'attributes') {
         const attr = mutation.attributeName;
-        if (attr === 'data-scramble' || attr === 'data-test-scramble') {
-          const glyph = el.getAttribute(attr);
-          const state = baselineStates.get(el);
-          if ((!state || !state.done) && glyph) activateBaselineGlyph(el, glyph, attr);
-          return;
-        }
-
-        if (attr === 'class') {
-          const state = baselineStates.get(el);
-          if (state?.active && !isScramblingNow(el)) finishInitialBaseline(el);
+        if (
+          attr === 'data-scramble' ||
+          attr === 'data-test-scramble' ||
+          attr === 'class'
+        ) {
+          syncElement(el, attr);
         }
       }
     });
   });
 
-  baselineObserver.observe(document.documentElement, {
+  observer.observe(document.documentElement, {
     subtree: true,
     attributes: true,
     attributeFilter: ['data-scramble', 'data-test-scramble', 'class']
   });
 
-  /*
-    Keep the existing A-Z / 0-9 normalization on About and Works. The Home page
-    intentionally keeps its own authored scramble pool; this shared script is
-    loaded there only for baseline correction.
-  */
-  const counters = new WeakMap();
-  const suppressed = new WeakMap();
-  const normalizePoolOnThisPage = !document.body.classList.contains('home-test');
-
-  const markSuppressed = (el, attr) => {
-    let attrs = suppressed.get(el);
-    if (!attrs) {
-      attrs = new Set();
-      suppressed.set(el, attrs);
-    }
-    attrs.add(attr);
-  };
-
-  const consumeSuppressed = (el, attr) => {
-    const attrs = suppressed.get(el);
-    if (!attrs || !attrs.has(attr)) return false;
-    attrs.delete(attr);
-    return true;
-  };
-
-  const mixedGlyph = (el, attr, raw) => {
-    const nextCount = (counters.get(el) || 0) + 1;
-    counters.set(el, nextCount);
-    const code = raw?.charCodeAt?.(0) || 0;
-    const salt = attr === 'data-test-scramble' ? 17 : 29;
-
-    if (nextCount % 4 === 0 || nextCount % 7 === 3) {
-      return DIGITS[(code + nextCount * 7 + salt) % DIGITS.length];
-    }
-    return LETTERS[(code + nextCount * 11 + salt) % LETTERS.length];
-  };
-
-  const normalizeScrambleAttribute = (el, attr) => {
-    if (!normalizePoolOnThisPage || !(el instanceof Element)) return;
-    if (consumeSuppressed(el, attr)) return;
-    const raw = el.getAttribute(attr);
-    if (!raw || !/^[A-Z0-9]$/.test(raw)) return;
-    const next = mixedGlyph(el, attr, raw);
-    if (next === raw) return;
-    markSuppressed(el, attr);
-    el.setAttribute(attr, next);
-  };
-
-  const poolObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type !== 'attributes') return;
-      const attr = mutation.attributeName;
-      if (attr !== 'data-scramble' && attr !== 'data-test-scramble') return;
-      normalizeScrambleAttribute(mutation.target, attr);
-    });
-  });
-
-  if (normalizePoolOnThisPage) {
-    poolObserver.observe(document.documentElement, {
-      subtree: true,
-      attributes: true,
-      attributeFilter: ['data-scramble', 'data-test-scramble']
-    });
-  }
-
-  /* Entry titles keep their existing one-second timing; only painting changes. */
+  /* Entry titles keep the existing one-second timing; rendering is live-node. */
   const animateEntryTitle = (selector, fallbackText, readyClass) => {
     const title = document.querySelector(selector);
     if (!title || title.dataset.scrambleEnhanced === '1') return;
