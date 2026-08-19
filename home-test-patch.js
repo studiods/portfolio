@@ -15,35 +15,124 @@
     clamp((value - start) / (duration * FILL_SLOWDOWN));
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
 
-  /* Master motion values shared by every language-transition scramble. */
-  const LANGUAGE_TRANSITION_BASELINE_PT = 2;
-  const PT_TO_CSS_PX = 96 / 72;
-  const LANGUAGE_TRANSITION_BASELINE_PX = LANGUAGE_TRANSITION_BASELINE_PT * PT_TO_CSS_PX;
   const PRINCIPLES_SCRAMBLE_SLOWDOWN = 1.20;
   const slowPrinciplesEnd = (start, end) =>
     Math.min(1, start + (end - start) * PRINCIPLES_SCRAMBLE_SLOWDOWN);
 
-  document.documentElement.style.setProperty(
-    '--language-transition-baseline-shift',
-    `-${LANGUAGE_TRANSITION_BASELINE_PX.toFixed(3)}px`
-  );
+  /*
+    Font metric normalization master.
+    CSS font-size describes the em square, not the visible glyph box. We measure
+    Averta/Pretendard at the same 100px test size and normalize their visible
+    glyph-height ratios. Y offset is then derived from normalized ascent ratios.
+  */
+  const METRIC_TEST_SIZE = 100;
+  const METRIC_SCALE_MIN = 0.88;
+  const METRIC_SCALE_MAX = 1.12;
+  const METRIC_SAMPLES = Object.freeze({
+    en: 'HAMBURGEFONTSIV',
+    ko: '가나다라마바사아자차카타파하'
+  });
+  const metricCanvas = document.createElement('canvas');
+  const metricContext = metricCanvas.getContext('2d');
 
-  const markLanguageTransitionTarget = (selector, language) => {
-    document.querySelectorAll(selector).forEach(el => {
-      el.classList.add(`language-transition-target-${language}`);
-    });
+  const canvasFont = (style, sizePx) => {
+    const parts = [];
+    if (style.fontStyle && style.fontStyle !== 'normal') parts.push(style.fontStyle);
+    if (style.fontVariant && style.fontVariant !== 'normal') parts.push(style.fontVariant);
+    if (style.fontWeight) parts.push(style.fontWeight);
+    if (style.fontStretch && style.fontStretch !== 'normal') parts.push(style.fontStretch);
+    parts.push(`${sizePx}px`);
+    parts.push(style.fontFamily || 'sans-serif');
+    return parts.join(' ');
   };
 
-  /* EN -> KO targets */
-  markLanguageTransitionTarget(
-    '.hero-state-definition .definition-copy, .hero-state-definition .definition-source, .principles-intro-ko',
-    'ko'
-  );
-  /* KO -> EN targets */
-  markLanguageTransitionTarget(
-    '.hero-state-subtractive .subtractive-title, .principle-en',
-    'en'
-  );
+  const measureFontMetric = (el, language) => {
+    if (!metricContext || !el) return null;
+    const style = getComputedStyle(el);
+    metricContext.textBaseline = 'alphabetic';
+    metricContext.font = canvasFont(style, METRIC_TEST_SIZE);
+    const metrics = metricContext.measureText(METRIC_SAMPLES[language]);
+    const ascent = Number.isFinite(metrics.actualBoundingBoxAscent)
+      ? metrics.actualBoundingBoxAscent
+      : metrics.fontBoundingBoxAscent;
+    const descent = Number.isFinite(metrics.actualBoundingBoxDescent)
+      ? metrics.actualBoundingBoxDescent
+      : metrics.fontBoundingBoxDescent;
+    const fontAscent = Number.isFinite(metrics.fontBoundingBoxAscent)
+      ? metrics.fontBoundingBoxAscent
+      : ascent;
+    const fontDescent = Number.isFinite(metrics.fontBoundingBoxDescent)
+      ? metrics.fontBoundingBoxDescent
+      : descent;
+    if (![ascent, descent, fontAscent, fontDescent].every(Number.isFinite)) return null;
+    return {
+      heightRatio: Math.max(0.01, (ascent + descent) / METRIC_TEST_SIZE),
+      ascentRatio: ascent / METRIC_TEST_SIZE,
+      fontAscentRatio: fontAscent / METRIC_TEST_SIZE,
+      fontDescentRatio: fontDescent / METRIC_TEST_SIZE
+    };
+  };
+
+  const clearMetricCalibration = target => {
+    if (!target) return;
+    target.classList.remove('metric-calibrated-target');
+    target.style.removeProperty('--metric-scale');
+    target.style.removeProperty('--metric-shift-y');
+    target.style.removeProperty('--metric-origin-y');
+  };
+
+  const calibrateLanguagePair = (source, target, sourceLanguage, targetLanguage) => {
+    if (!source || !target) return;
+    clearMetricCalibration(target);
+
+    const sourceMetric = measureFontMetric(source, sourceLanguage);
+    const targetMetric = measureFontMetric(target, targetLanguage);
+    if (!sourceMetric || !targetMetric) return;
+
+    const targetStyle = getComputedStyle(target);
+    const targetFontSize = parseFloat(targetStyle.fontSize) || 16;
+    const targetLineHeight = parseFloat(targetStyle.lineHeight) || targetFontSize;
+
+    const scale = clamp(
+      sourceMetric.heightRatio / targetMetric.heightRatio,
+      METRIC_SCALE_MIN,
+      METRIC_SCALE_MAX
+    );
+
+    const shiftY = targetFontSize *
+      (scale * targetMetric.ascentRatio - sourceMetric.ascentRatio);
+
+    const targetFontBoxHeight = targetFontSize *
+      (targetMetric.fontAscentRatio + targetMetric.fontDescentRatio);
+    const halfLeading = (targetLineHeight - targetFontBoxHeight) / 2;
+    const baselineOriginY = halfLeading + targetFontSize * targetMetric.fontAscentRatio;
+
+    target.style.setProperty('--metric-scale', scale.toFixed(4));
+    target.style.setProperty('--metric-shift-y', `${shiftY.toFixed(3)}px`);
+    target.style.setProperty('--metric-origin-y', `${baselineOriginY.toFixed(3)}px`);
+    target.classList.add('metric-calibrated-target');
+  };
+
+  const calibrateAllLanguageTransitions = () => {
+    const heroQuote = document.querySelector('.hero-state-quote .hero-quote');
+    const definitionCopy = document.querySelector('.hero-state-definition .definition-copy');
+    const quoteSource = document.querySelector('.hero-state-quote .quote-source-only');
+    const definitionSource = document.querySelector('.hero-state-definition .definition-source');
+    const subtractiveTitle = document.querySelector('.hero-state-subtractive .subtractive-title');
+
+    calibrateLanguagePair(heroQuote, definitionCopy, 'en', 'ko');
+    calibrateLanguagePair(quoteSource, definitionSource, 'en', 'ko');
+    calibrateLanguagePair(definitionCopy, subtractiveTitle, 'ko', 'en');
+
+    document.querySelectorAll('.principles-intro-row').forEach(row => {
+      calibrateLanguagePair(
+        row.querySelector('.principles-intro-en'),
+        row.querySelector('.principles-intro-ko'),
+        'en',
+        'ko'
+      );
+    });
+  };
 
   const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const randomGlyph = (index, step) =>
@@ -130,8 +219,7 @@
   ) => {
     const entries = entriesFor(chars);
     const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
-    const p = clamp(progress);
-    const sweep = easeInOut(p) * (count + span);
+    const sweep = easeInOut(clamp(progress)) * (count + span);
 
     entries.forEach(({ char, index }) => {
       if (index < 0) return;
@@ -155,8 +243,7 @@
   ) => {
     const entries = entriesFor(chars);
     const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
-    const p = clamp(progress);
-    const sweep = easeInOut(p) * (count + span);
+    const sweep = easeInOut(clamp(progress)) * (count + span);
 
     entries.forEach(({ char, index }) => {
       if (index < 0) return;
@@ -176,16 +263,13 @@
 
   const updateHero = () => {
     if (!hero || !quoteChars.length) return;
-
     if (!heroStarted) {
       clearPaint(quoteChars);
       return;
     }
-
     const travel = Math.max(1, hero.offsetHeight - innerHeight);
     const progress = clamp((scrollY - absoluteTop(hero)) / travel);
     const quoteProgress = phaseProgress(progress, 0, 0.095);
-
     if (quoteProgress < 0.999) {
       paintProgressiveReveal(quoteChars, quoteProgress, '17,17,17', { span: 1, cycles: 3 });
     } else {
@@ -203,11 +287,12 @@
   const updatePhilosophy = () => {
     if (!philosophyChars.length) return;
     const p = getPhilosophyProgress();
-    const revealProgress = phaseProgress(p, 0.02, 0.92);
-    paintProgressiveReveal(philosophyChars, revealProgress, '17,17,17', {
-      span: 2.4,
-      cycles: 3
-    });
+    paintProgressiveReveal(
+      philosophyChars,
+      phaseProgress(p, 0.02, 0.92),
+      '17,17,17',
+      { span: 2.4, cycles: 3 }
+    );
   };
 
   const getIntroProgress = () => {
@@ -229,8 +314,11 @@
       );
       const morphStart = 0.28 + index * 0.12;
       const morphBaseEnd = 0.47 + index * 0.12;
-      const morphEnd = slowPrinciplesEnd(morphStart, morphBaseEnd);
-      const morphProgress = phaseProgress(p, morphStart, morphEnd);
+      const morphProgress = phaseProgress(
+        p,
+        morphStart,
+        slowPrinciplesEnd(morphStart, morphBaseEnd)
+      );
 
       if (morphProgress <= 0) {
         paintProgressiveReveal(introEnglish[index], englishProgress, '255,255,255', {
@@ -246,10 +334,12 @@
           span: 1.8,
           cycles: 3
         });
-        paintProgressiveReveal(introKorean[index], phaseProgress(morphProgress, 0.04, 1), '255,255,255', {
-          span: 2.4,
-          cycles: 3
-        });
+        paintProgressiveReveal(
+          introKorean[index],
+          phaseProgress(morphProgress, 0.04, 1),
+          '255,255,255',
+          { span: 2.4, cycles: 3 }
+        );
       }
     });
   };
@@ -261,11 +351,6 @@
     });
   };
 
-  /*
-    Root cause of the fast Principles scramble was the short scroll-progress
-    window assigned to each character sequence, not the random glyph count.
-    Keep three glyph states, but give every Korean title 20% more progress time.
-  */
   const CARD_PHASES = Object.freeze([
     {
       enterStart: 0.00,
@@ -295,18 +380,14 @@
 
   const updateCards = () => {
     if (!cardsStage || !cardsGrid || !cards.length) return;
-
     const stageTop = absoluteTop(cardsStage);
     const stickyTop = parseFloat(getComputedStyle(cardsGrid).top) ||
       (innerWidth <= 850 ? 70 : innerHeight * 0.12);
-
     const approachStartY = stageTop - innerHeight;
     const lockY = stageTop - stickyTop;
     const approachProgress = phaseProgress(scrollY, approachStartY, lockY);
-
     const stickyHold = Math.max(1, cardsStage.offsetHeight - cardsGrid.offsetHeight);
     const holdProgress = phaseProgress(scrollY, lockY, lockY + stickyHold);
-
     const timelineProgress = scrollY < lockY
       ? approachProgress * 0.20
       : 0.20 + holdProgress * 0.80;
@@ -314,7 +395,6 @@
     cards.forEach((card, index) => {
       const phase = CARD_PHASES[index];
       if (!phase) return;
-
       const enterProgress = easeInOut(
         phaseProgress(timelineProgress, phase.enterStart, phase.enterEnd)
       );
@@ -328,10 +408,7 @@
         phase.enStart,
         phase.enEnd
       );
-
       card.style.setProperty('--test-card-opacity', enterProgress.toFixed(4));
-      card.style.removeProperty('--test-card-y');
-
       paintProgressiveReveal(cardKoreanChars[index], titleProgress, '255,255,255', {
         span: 2.4,
         cycles: 3
@@ -341,6 +418,7 @@
   };
 
   let raf = 0;
+  let metricRaf = 0;
   const update = () => {
     raf = 0;
     updateHero();
@@ -350,6 +428,14 @@
   };
   const requestUpdate = () => {
     if (!raf) raf = requestAnimationFrame(update);
+  };
+  const requestMetricCalibration = () => {
+    if (metricRaf) cancelAnimationFrame(metricRaf);
+    metricRaf = requestAnimationFrame(() => {
+      metricRaf = 0;
+      calibrateAllLanguageTransitions();
+      requestUpdate();
+    });
   };
 
   const startHeroSequence = event => {
@@ -366,12 +452,21 @@
     if (scrollY > 8) heroStarted = true;
     requestUpdate();
   }, { passive: true });
-  addEventListener('resize', requestUpdate, { passive: true });
-
-  if (document.fonts?.ready) {
-    document.fonts.ready.then(() => requestAnimationFrame(requestUpdate)).catch(() => {});
-  }
+  addEventListener('resize', () => {
+    requestMetricCalibration();
+    requestUpdate();
+  }, { passive: true });
 
   update();
+  requestMetricCalibration();
   body?.classList.add('home-test-ready');
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      requestAnimationFrame(() => {
+        requestMetricCalibration();
+        requestUpdate();
+      });
+    }).catch(() => {});
+  }
 })();
