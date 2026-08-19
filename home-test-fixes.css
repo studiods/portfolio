@@ -7,6 +7,19 @@
   white-space:pre!important;
 }
 
+/*
+  Master language-transition baseline correction.
+  2pt = 2.667 CSS px at 96dpi. The incoming language is lifted without changing
+  its line box, so EN -> KO and KO -> EN transitions visually share one baseline.
+*/
+.home-test{
+  --language-transition-baseline-shift:-2.667px;
+}
+.home-test .language-transition-target-ko,
+.home-test .language-transition-target-en{
+  transform:translateY(var(--language-transition-baseline-shift))!important;
+}
+
 /* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
 .home-test .test-managed-char.is-scrambling::after{display:none!important}
 .home-test .test-managed-char.test-progressive-pending{color:transparent!important}
@@ -29,9 +42,9 @@
   color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
 }
 
-/* Hero Korean definition: 3pt (4px) smaller while preserving desktop ratio. */
+/* Hero Korean definition: another 3pt smaller than the current test version. */
 .home-test .definition-copy{
-  font-size:calc(clamp(34.83px,4.9815vw,85.86px) - 4px)!important;
+  font-size:calc(clamp(34.83px,4.9815vw,85.86px) - 8px)!important;
 }
 
 /*
@@ -53,9 +66,9 @@
   padding-top:0!important;
 }
 
-/* Korean intro: another 3pt smaller than the current test version (total -8px). */
+/* Korean intro: another 3pt smaller than the current test version (total -12px). */
 .home-test .principles-intro-ko{
-  font-size:calc(var(--principles-ko-size) - 8px)!important;
+  font-size:calc(var(--principles-ko-size) - 12px)!important;
 }
 
 /*
@@ -114,7 +127,7 @@
   }
 }
 
-/* 01-03 Korean copy: another 10% smaller than the current test size (.6 * .9 = .54). */
+/* 01-03 Korean copy remains at the current refined test size. */
 .home-test .principle-ko{
   font-size:calc(var(--principles-ko-size) * .54)!important;
 }
@@ -146,7 +159,7 @@
 
 @media(max-width:850px){
   .home-test .definition-copy{
-    font-size:calc(clamp(26px,7.1vw,40px) - 4px)!important;
+    font-size:calc(clamp(26px,7.1vw,40px) - 8px)!important;
   }
   .home-test .principles-section{
     --principles-lock-top:70px;
