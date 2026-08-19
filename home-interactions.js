@@ -16,7 +16,11 @@
     }
     if (cache[property] === value) return;
     cache[property] = value;
-    el.style[property] = value;
+    if (property.startsWith('--')) {
+      el.style.setProperty(property, value);
+    } else {
+      el.style[property] = value;
+    }
   };
 
   const setAttribute = (el, name, value) => {
