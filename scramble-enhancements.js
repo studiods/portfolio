@@ -99,6 +99,11 @@
     return parentColor || '#fff';
   };
 
+  /*
+    A three-state reveal must visibly contain a number as well as letters.
+    Every third update is numeric; the other updates are alphabetic. Longer
+    animations continue the same A/A/0 rhythm.
+  */
   const mixedGlyph = (el, raw) => {
     const count = (counters.get(el) || 0) + 1;
     counters.set(el, count);
@@ -115,6 +120,7 @@
     const state = ensureState(el);
 
     if (!state.active) {
+      /* Measure the authored glyph before replacing its text. */
       el.textContent = state.finalChar;
       state.width = Math.max(0, el.getBoundingClientRect().width);
       el.style.setProperty('--live-scramble-width', `${state.width.toFixed(3)}px`);
@@ -175,6 +181,7 @@
     attributeFilter: ['data-scramble', 'data-test-scramble', 'class']
   });
 
+  /* Entry titles keep the existing one-second timing; rendering is live-node. */
   const animateEntryTitle = (selector, fallbackText, readyClass) => {
     const title = document.querySelector(selector);
     if (!title || title.dataset.scrambleEnhanced === '1') return;

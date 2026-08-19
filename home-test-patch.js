@@ -10,17 +10,16 @@
     if (end <= start) return value >= end ? 1 : 0;
     return clamp((value - start) / (end - start));
   };
-  const FILL_SLOWDOWN = 1.452;
-  const fillProgress = (value, start, duration) =>
-    clamp((value - start) / (duration * FILL_SLOWDOWN));
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
 
   /*
-    Principles intro timeline.
-    English completes first, then holds, then Korean morphs, then holds again.
-    The enlarged CSS sticky stage converts these progress holds into real scroll
-    distance, giving the viewer time to read each completed state.
+    Production ownership rule:
+    - home-interactions.js owns Hero and Works entry animations.
+    - this file owns Design Philosophy and Design Principles only.
+    Keeping one renderer per section prevents a resolved glyph from being put
+    back into a scramble state by a second scroll timeline.
   */
+
   const PRINCIPLES_TIMING = Object.freeze({
     englishRevealEnd: 0.34,
     englishHoldEnd: 0.48,
@@ -31,13 +30,11 @@
   const slowEnd = (start, end, factor) =>
     Math.min(1, start + (end - start) * factor);
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const randomGlyph = (index, step) =>
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
 
   const body = document.body;
-  const hero = document.querySelector('#heroSequence');
-  const quoteChars = hero ? [...hero.querySelectorAll('.hero-quote .fill-char')] : [];
 
   const philosophy = document.querySelector('#philosophy');
   const philosophySticky = philosophy?.querySelector('.philosophy-sticky');
@@ -60,16 +57,31 @@
   });
   cards.forEach(card => card.classList.add('test-timeline-card'));
 
+  const authored = new WeakMap();
+  [
+    ...philosophyChars,
+    ...introEnglish.flat(),
+    ...introKorean.flat(),
+    ...cardKoreanChars.flat(),
+    ...cardEnglishChars.flat()
+  ].forEach(char => {
+    authored.set(char, char.dataset.finalChar || char.textContent);
+  });
+
+  const finalCharFor = char => authored.get(char) ?? char.dataset.finalChar ?? char.textContent;
+
   const entriesFor = chars => {
     let index = 0;
     return chars.map(char => {
-      const visible = char.textContent.trim().length > 0;
-      return { char, index: visible ? index++ : -1 };
+      const finalChar = finalCharFor(char);
+      const visible = finalChar.trim().length > 0;
+      return { char, finalChar, index: visible ? index++ : -1 };
     });
   };
 
   const clearPaint = chars => {
     chars.forEach(char => {
+      char.textContent = finalCharFor(char);
       char.classList.remove(
         'test-managed-char',
         'test-progressive-pending',
@@ -84,6 +96,7 @@
   };
 
   const paintState = (char, state, rgb, glyph = '', alpha = 1, finalAlpha = 1) => {
+    const finalChar = finalCharFor(char);
     char.classList.add('test-managed-char');
     char.classList.remove(
       'test-progressive-pending',
@@ -94,14 +107,17 @@
     char.style.setProperty('--test-final-alpha', String(finalAlpha));
 
     if (state === 'pending') {
+      char.textContent = finalChar;
       char.classList.add('test-progressive-pending');
       delete char.dataset.testScramble;
       char.style.removeProperty('--test-scramble-alpha');
     } else if (state === 'scramble') {
+      char.textContent = finalChar;
       char.classList.add('test-progressive-scramble');
       char.dataset.testScramble = glyph;
       char.style.setProperty('--test-scramble-alpha', String(alpha));
     } else {
+      char.textContent = finalChar;
       char.classList.add('test-progressive-resolved');
       delete char.dataset.testScramble;
       char.style.removeProperty('--test-scramble-alpha');
@@ -156,24 +172,6 @@
     });
   };
 
-  let heroStarted = scrollY > 8;
-
-  const updateHero = () => {
-    if (!hero || !quoteChars.length) return;
-    if (!heroStarted) {
-      clearPaint(quoteChars);
-      return;
-    }
-    const travel = Math.max(1, hero.offsetHeight - innerHeight);
-    const progress = clamp((scrollY - absoluteTop(hero)) / travel);
-    const quoteProgress = phaseProgress(progress, 0, 0.095);
-    if (quoteProgress < 0.999) {
-      paintProgressiveReveal(quoteChars, quoteProgress, '17,17,17', { span: 1, cycles: 3 });
-    } else {
-      clearPaint(quoteChars);
-    }
-  };
-
   const getPhilosophyProgress = () => {
     if (!philosophy || !philosophySticky) return 0;
     const stickyTop = innerHeight * (innerWidth <= 850 ? 0.14 : 0.18);
@@ -188,7 +186,8 @@
       philosophyChars,
       phaseProgress(p, 0.02, 0.92),
       '17,17,17',
-      { span: 2.4, cycles: 3 }
+      /* span:1 means the next glyph cannot start before the current one resolves. */
+      { span: 1, cycles: 3 }
     );
   };
 
@@ -203,19 +202,16 @@
     const p = getIntroProgress();
 
     introRows.forEach((row, index) => {
-      /* Force every LESS row to stay at its authored coordinates. */
       row.style.setProperty('transform', 'none');
       const enNode = row.querySelector('.principles-intro-en');
       const koNode = row.querySelector('.principles-intro-ko');
       enNode?.style.setProperty('transform', 'none');
       koNode?.style.setProperty('transform', 'none');
 
-      /* All English rows finish before the first Korean row starts. */
       const englishStart = index * 0.055;
       const englishEnd = 0.23 + index * 0.055;
       const englishProgress = phaseProgress(p, englishStart, englishEnd);
 
-      /* Korean morph starts only after the English hold has finished. */
       const morphStart = PRINCIPLES_TIMING.englishHoldEnd + index * 0.055;
       const morphEnd = 0.70 + index * 0.06;
       const morphProgress = phaseProgress(p, morphStart, morphEnd);
@@ -244,7 +240,6 @@
         return;
       }
 
-      /* Final Korean hold: no further glyph changes until the sticky stage ends. */
       paintProgressiveErase(introEnglish[index], 1, '255,255,255', {
         span: 2.2,
         cycles: 3
@@ -332,7 +327,6 @@
   let raf = 0;
   const update = () => {
     raf = 0;
-    updateHero();
     updatePhilosophy();
     updatePrinciplesIntro();
     updateCards();
@@ -341,20 +335,7 @@
     if (!raf) raf = requestAnimationFrame(update);
   };
 
-  const startHeroSequence = event => {
-    if (event && event.isTrusted === false) return;
-    heroStarted = true;
-    requestUpdate();
-  };
-
-  addEventListener('wheel', startHeroSequence, { passive: true });
-  addEventListener('touchstart', startHeroSequence, { passive: true });
-  addEventListener('pointerdown', startHeroSequence, { passive: true });
-  addEventListener('keydown', startHeroSequence);
-  addEventListener('scroll', () => {
-    if (scrollY > 8) heroStarted = true;
-    requestUpdate();
-  }, { passive: true });
+  addEventListener('scroll', requestUpdate, { passive: true });
   addEventListener('resize', requestUpdate, { passive: true });
 
   update();

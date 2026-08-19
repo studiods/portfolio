@@ -86,12 +86,6 @@
     });
   };
 
-  /*
-    Hero fill: one visible character owns the transition at a time. Characters
-    already passed by the scroll sweep stay at full black; characters ahead
-    remain at the base alpha. This keeps the effect deterministic and tied to
-    scroll distance rather than elapsed time or wheel-event interception.
-  */
   const setCharsOneByOne = (
     chars,
     progress,
@@ -135,12 +129,6 @@
   const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
-  /*
-    The hero is one scroll-scrubbed sequence. Its two completed-text holds are
-    intentionally long so a normal next scroll gesture is absorbed before the
-    transition continues. Transitions themselves mutate characters in place;
-    no competing translate/mask animation is used.
-  */
   const HERO = Object.freeze({
     quoteFillStart: 0,
     quoteFillEnd: 0.095,
@@ -155,7 +143,7 @@
     subHoldEnd: 1
   });
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const rememberFinalChars = chars => chars.forEach(char => {
     char.dataset.finalChar = char.textContent;
   });
@@ -187,7 +175,6 @@
     });
   };
 
-  /* Each character shows exactly three A-Z states before its final glyph. */
   const renderThreeCycleReveal = (
     chars,
     progress,
@@ -227,7 +214,7 @@
     const sweep = easeInOut(p) * count;
     const step = Math.floor(p * count * 7);
 
-    entries.forEach(({ char, finalChar, index }) => {
+    entries.forEach(({ char, index }) => {
       if (index < 0) {
         clearScrambleOverlay(char);
         return;
@@ -253,7 +240,7 @@
     const sweep = p * count;
     const step = Math.floor(p * count * 7);
 
-    entries.forEach(({ char, finalChar, index }) => {
+    entries.forEach(({ char, index }) => {
       if (index < 0) return;
       if (p <= 0) {
         clearScrambleOverlay(char);
@@ -282,7 +269,7 @@
     const sweep = clamp(progress) * count;
     const step = Math.floor(clamp(progress) * count * 7);
 
-    entries.forEach(({ char, finalChar, index }) => {
+    entries.forEach(({ char, index }) => {
       if (index < 0) return;
       const local = clamp(sweep - index);
       if (local <= 0) {
@@ -304,7 +291,7 @@
     const sweep = clamp(progress) * count;
     const step = Math.floor(clamp(progress) * count * 7);
 
-    entries.forEach(({ char, finalChar, index }) => {
+    entries.forEach(({ char, index }) => {
       if (index < 0) return;
       const local = clamp(sweep - index);
       if (local <= 0) {
@@ -402,19 +389,8 @@
   };
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const PATCH_OWNS_LOWER_TIMELINES = document.body.classList.contains('home-test');
 
-  /*
-    Initial-page idle cue. It is intentionally isolated from the scroll-driven
-    hero timeline: the cue only runs while the page has never been interacted
-    with and the hero progress is still at zero. Any user interaction cancels
-    it permanently for that page view, so it can never fight the scroll scrub.
-
-    Pattern order is a ping-pong sequence: 1 > 2 > 3 > 2 > 1 > 2 > 3 ...
-    Pattern 1: words in reading order, 5% -> 50% -> 5%, 1s per word.
-    Pattern 2: lines in reading order, 5% -> 30% -> 5%, 1s per line.
-    Pattern 3: every word once in a fresh random order, same 50% pulse.
-    There is a 3s idle gap before the first pattern and between patterns.
-  */
   const IDLE_DELAY_MS = 3000;
   const IDLE_UNIT_MS = 1000;
   const IDLE_BASE_ALPHA = 0.05;
@@ -458,6 +434,22 @@
   let idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
   let idleDisabled = false;
 
+  const metrics = {
+    viewportHeight: innerHeight,
+    heroTop: 0,
+    heroTravel: 1,
+    philosophyTop: 0,
+    philosophyTravel: 1,
+    philosophyStickyTop: 0,
+    philosophyFillEnd: 0.82,
+    principlesIntroTop: 0,
+    principlesIntroTravel: 1,
+    principlesCardsTop: 0,
+    principlesCardsTravel: 1
+  };
+
+  const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
+  const getHeroProgress = () => clamp((scrollY - metrics.heroTop) / metrics.heroTravel);
   const heroIsAtRest = () => hero && getHeroProgress() < 0.002;
 
   const paintQuoteBase = () => {
@@ -541,8 +533,6 @@
 
     const unitIndex = Math.min(idleUnits.length - 1, Math.floor(elapsed / IDLE_UNIT_MS));
     const localProgress = (elapsed - unitIndex * IDLE_UNIT_MS) / IDLE_UNIT_MS;
-
-    /* Reset first so skipped animation frames can never leave a prior unit lit. */
     paintQuoteBase();
     paintIdleUnit(idleUnits[unitIndex], idlePulseAlpha(localProgress, idlePeakAlpha));
     idleRaf = requestAnimationFrame(runIdleCue);
@@ -563,7 +553,6 @@
 
   const renderPhilosophy = (p, fillEnd) => {
     if (!philosophySection || !philosophySticky || !philosophyLines.length) return;
-
     renderThreeCycleReveal(
       philosophyChars,
       clamp(p / fillEnd),
@@ -626,7 +615,6 @@
 
   const renderPrinciplesIntro = p => {
     if (!principleRows.length) return;
-
     principleRows.forEach((row, index) => {
       const englishProgress = fillProgress(p, index * 0.065, 0.11);
       const morphProgress = phaseProgress(
@@ -634,7 +622,6 @@
         0.28 + index * 0.12,
         0.47 + index * 0.12
       );
-
       renderThreeCycleReveal(
         principleRowEnglish[index],
         englishProgress,
@@ -669,10 +656,8 @@
     principleCards.forEach((card, index) => {
       const phase = CARD_PHASES[index];
       if (!phase) return;
-
       const enterProgress = easeInOut(phaseProgress(p, phase.enterStart, phase.enterEnd));
       const fill = phaseProgress(p, phase.fillStart, phase.fillEnd);
-
       setStyle(card, 'opacity', enterProgress.toFixed(4));
       setStyle(card, 'transform', `translate3d(0, ${(24 * (1 - enterProgress)).toFixed(2)}px, 0)`);
       renderThreeCycleReveal(
@@ -741,28 +726,12 @@
     entryScrambleTargets.forEach(target => entryObserver.observe(target));
   }
 
-  const metrics = {
-    viewportHeight: innerHeight,
-    heroTop: 0,
-    heroTravel: 1,
-    philosophyTop: 0,
-    philosophyTravel: 1,
-    philosophyStickyTop: 0,
-    philosophyFillEnd: 0.82,
-    principlesIntroTop: 0,
-    principlesIntroTravel: 1,
-    principlesCardsTop: 0,
-    principlesCardsTravel: 1
-  };
   let metricsRaf = 0;
   let raf = 0;
   let lastHeroProgress = -1;
   let lastPhilosophyProgress = -1;
   let lastPrinciplesIntroProgress = -1;
   let lastPrinciplesCardsProgress = -1;
-
-  const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
-  const getHeroProgress = () => clamp((scrollY - metrics.heroTop) / metrics.heroTravel);
 
   const refreshMetrics = () => {
     metricsRaf = 0;
@@ -818,15 +787,15 @@
       renderHero(heroProgress);
       lastHeroProgress = heroProgress;
     }
-    if (Math.abs(philosophyProgress - lastPhilosophyProgress) >= 0.0001) {
+    if (!PATCH_OWNS_LOWER_TIMELINES && Math.abs(philosophyProgress - lastPhilosophyProgress) >= 0.0001) {
       renderPhilosophy(philosophyProgress, metrics.philosophyFillEnd);
       lastPhilosophyProgress = philosophyProgress;
     }
-    if (Math.abs(principlesIntroProgress - lastPrinciplesIntroProgress) >= 0.0001) {
+    if (!PATCH_OWNS_LOWER_TIMELINES && Math.abs(principlesIntroProgress - lastPrinciplesIntroProgress) >= 0.0001) {
       renderPrinciplesIntro(principlesIntroProgress);
       lastPrinciplesIntroProgress = principlesIntroProgress;
     }
-    if (Math.abs(principlesCardsProgress - lastPrinciplesCardsProgress) >= 0.0001) {
+    if (!PATCH_OWNS_LOWER_TIMELINES && Math.abs(principlesCardsProgress - lastPrinciplesCardsProgress) >= 0.0001) {
       renderPrincipleCards(principlesCardsProgress);
       lastPrinciplesCardsProgress = principlesCardsProgress;
     }
