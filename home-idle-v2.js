@@ -15,7 +15,10 @@
   if (reducedMotion) return;
 
   const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const BASE_ALPHA = 0.05;
+  const FULL_ALPHA = 1;
   const IDLE_GAP_MS = 3000;
+  const FULL_HOLD_MS = 2000;
   const WORD_MS = 1000;
   const NEXT_WORD_AT = 0.80;
   const WORD_STAGGER_MS = WORD_MS * NEXT_WORD_AT;
@@ -49,6 +52,8 @@
     return;
   }
 
+  const allChars = wordGroups.flat();
+
   const shuffle = items => {
     const copy = items.slice();
     for (let i = copy.length - 1; i > 0; i -= 1) {
@@ -58,18 +63,20 @@
     return copy;
   };
 
-  const originalInlineColor = new WeakMap();
-  const rememberColor = char => {
-    if (!originalInlineColor.has(char)) originalInlineColor.set(char, char.style.color || '');
-  };
-  const restoreChar = char => {
+  const clearScramble = char => {
     char.classList.remove('is-scrambling');
     char.removeAttribute('data-scramble');
     char.style.removeProperty('--scramble-alpha');
     char.style.removeProperty('--scramble-rgb');
-    if (originalInlineColor.has(char)) char.style.color = originalInlineColor.get(char);
   };
-  const restoreAll = () => wordGroups.flat().forEach(restoreChar);
+
+  const setCharAlpha = (char, alpha) => {
+    clearScramble(char);
+    char.style.color = `rgba(17,17,17,${alpha})`;
+  };
+
+  const setWordFull = group => group.forEach(char => setCharAlpha(char, FULL_ALPHA));
+  const resetAllToBase = () => allChars.forEach(char => setCharAlpha(char, BASE_ALPHA));
 
   let disabled = false;
   let runToken = 0;
@@ -119,12 +126,11 @@
       return;
     }
 
-    group.forEach(rememberColor);
     const startedAt = performance.now();
 
     const frame = now => {
       if (!canRun(token)) {
-        group.forEach(restoreChar);
+        group.forEach(char => setCharAlpha(char, BASE_ALPHA));
         resolve(false);
         return;
       }
@@ -137,16 +143,16 @@
         group.forEach((char, index) => {
           char.style.color = 'transparent';
           char.dataset.scramble = randomGlyph(index, cycle, seed);
-          char.style.setProperty('--scramble-alpha', '0.88');
+          char.style.setProperty('--scramble-alpha', '1');
           char.style.setProperty('--scramble-rgb', '17,17,17');
           char.classList.add('is-scrambling');
         });
       } else {
-        group.forEach(restoreChar);
+        setWordFull(group);
       }
 
       if (progress >= 1) {
-        group.forEach(restoreChar);
+        setWordFull(group);
         resolve(true);
         return;
       }
@@ -158,6 +164,7 @@
   });
 
   const runWordPattern = async (groups, token, mode) => {
+    resetAllToBase();
     hero.dataset.idleState = 'running';
     hero.dataset.idleMode = mode;
 
@@ -174,7 +181,15 @@
     const results = await Promise.all(jobs);
     if (!results.every(Boolean) || !canRun(token)) return false;
 
-    restoreAll();
+    /* Every authored word is now resolved and accumulated at 100% black. */
+    allChars.forEach(char => setCharAlpha(char, FULL_ALPHA));
+    hero.dataset.idleState = 'full-hold';
+
+    if (!(await wait(FULL_HOLD_MS, token))) return false;
+
+    /* After the 2s full-black hold, return the entire quote to its 5% idle state. */
+    resetAllToBase();
+    hero.dataset.idleState = 'waiting';
     delete hero.dataset.idleMode;
     return true;
   };
@@ -183,25 +198,24 @@
     runToken += 1;
     clearTimers();
     clearRafs();
-    restoreAll();
+    resetAllToBase();
     if (permanent) disabled = true;
     hero.dataset.idleState = permanent ? 'disabled' : 'paused';
     delete hero.dataset.idleMode;
   };
 
   const run = async token => {
+    resetAllToBase();
     hero.dataset.idleState = 'waiting';
     if (!(await wait(IDLE_GAP_MS, token))) return;
 
     while (canRun(token)) {
       if (!(await runWordPattern(wordGroups, token, 'sequential'))) return;
 
-      hero.dataset.idleState = 'waiting';
       if (!(await wait(IDLE_GAP_MS, token))) return;
 
       if (!(await runWordPattern(shuffle(wordGroups), token, 'random'))) return;
 
-      hero.dataset.idleState = 'waiting';
       if (!(await wait(IDLE_GAP_MS, token))) return;
     }
   };
