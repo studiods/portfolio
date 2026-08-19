@@ -184,9 +184,9 @@
     padding:0!important;
   }
 
-  /* Responsive mobile card copy: ~17px on compact phones to 21px on wide phones. */
+  /* Responsive mobile card copy: exact 1.3x increase from the previous clamp. */
   .home-test .principle-ko{
-    font-size:clamp(17px,4.8vw,21px)!important;
+    font-size:clamp(22.1px,6.24vw,27.3px)!important;
     line-height:1.22!important;
   }
   .home-test .principle-copy-stage{margin-bottom:16.2px!important}
