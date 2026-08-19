@@ -50,6 +50,12 @@
   }
 
   const allChars = wordGroups.flat();
+  const authoredChars = new WeakMap();
+  allChars.forEach(char => {
+    authoredChars.set(char, char.dataset.finalChar || char.textContent);
+  });
+
+  const authoredChar = char => authoredChars.get(char) || char.dataset.finalChar || char.textContent;
 
   const shuffle = items => {
     const copy = items.slice();
@@ -60,15 +66,35 @@
     return copy;
   };
 
-  const clearScramble = char => {
+  /*
+    Idle scramble intentionally does NOT use .is-scrambling::after.
+    That pseudo element is absolutely positioned from the inline box top, while
+    the authored glyph is painted on the font baseline. Replacing the text node
+    itself keeps both random and authored letters on the exact same baseline.
+  */
+  const clearLegacyScramble = char => {
     char.classList.remove('is-scrambling');
     char.removeAttribute('data-scramble');
     char.style.removeProperty('--scramble-alpha');
     char.style.removeProperty('--scramble-rgb');
   };
 
+  const releaseInlineSlot = char => {
+    clearLegacyScramble(char);
+    char.textContent = authoredChar(char);
+    char.classList.remove('idle-inline-scramble');
+    char.style.removeProperty('--idle-char-width');
+  };
+
+  const prepareInlineSlot = char => {
+    releaseInlineSlot(char);
+    const width = char.getBoundingClientRect().width;
+    char.style.setProperty('--idle-char-width', `${width.toFixed(3)}px`);
+    char.classList.add('idle-inline-scramble');
+  };
+
   const setCharAlpha = (char, alpha) => {
-    clearScramble(char);
+    releaseInlineSlot(char);
     char.style.color = `rgba(17,17,17,${alpha})`;
   };
 
@@ -80,11 +106,13 @@
     for (let attempt = 0; attempt < 8 && (glyph === finalChar || glyph === previous); attempt += 1) {
       glyph = SCRAMBLE_POOL[Math.floor(Math.random() * SCRAMBLE_POOL.length)];
     }
-    return glyph === finalChar ? SCRAMBLE_POOL[(SCRAMBLE_POOL.indexOf(finalChar) + 7) % SCRAMBLE_POOL.length] : glyph;
+    return glyph === finalChar
+      ? SCRAMBLE_POOL[(Math.max(0, SCRAMBLE_POOL.indexOf(finalChar)) + 7) % SCRAMBLE_POOL.length]
+      : glyph;
   };
 
   const makeThreeStates = char => {
-    const finalChar = char.textContent.toUpperCase();
+    const finalChar = authoredChar(char).toUpperCase();
     const states = [];
     for (let index = 0; index < SCRAMBLE_STATES; index += 1) {
       states.push(randomLetter(finalChar, states[index - 1] || ''));
@@ -142,6 +170,7 @@
     }
 
     const states = makeThreeStates(char);
+    prepareInlineSlot(char);
     const startedAt = performance.now();
 
     const frame = now => {
@@ -163,11 +192,9 @@
         Math.floor(elapsed / SCRAMBLE_STATE_MS)
       );
 
-      char.style.color = 'transparent';
-      char.dataset.scramble = states[stateIndex];
-      char.style.setProperty('--scramble-alpha', '1');
-      char.style.setProperty('--scramble-rgb', '17,17,17');
-      char.classList.add('is-scrambling');
+      /* Same DOM glyph box, same font metrics, same baseline — only the letter changes. */
+      char.textContent = states[stateIndex];
+      char.style.color = 'rgba(17,17,17,1)';
       nextFrame(frame);
     };
 
@@ -195,7 +222,7 @@
       const eased = progress * progress * (3 - 2 * progress);
       const alpha = FULL_ALPHA + (BASE_ALPHA - FULL_ALPHA) * eased;
       allChars.forEach(char => {
-        clearScramble(char);
+        releaseInlineSlot(char);
         char.style.color = `rgba(17,17,17,${alpha.toFixed(4)})`;
       });
 
