@@ -49,6 +49,28 @@ body.works-page-body{
   line-height:.8;
   letter-spacing:-.03em;
   color:#fff;
+  visibility:hidden;
+}
+.works-page-title.works-title-scramble-ready{visibility:visible}
+.works-page-title .entry-scramble-char{
+  display:inline!important;
+  position:relative;
+  vertical-align:baseline;
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+}
+.works-page-title .entry-scramble-char.is-scrambling{color:transparent!important}
+.works-page-title .entry-scramble-char.is-scrambling::after{
+  content:attr(data-scramble);
+  position:absolute;
+  inset:0 auto auto 0;
+  color:#fff;
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  white-space:pre;
+  pointer-events:none;
 }
 .works-grid{
   display:grid;
