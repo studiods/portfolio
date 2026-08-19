@@ -69,46 +69,52 @@
     normalizeScrambleAttribute(el, 'data-test-scramble')
   );
 
-  const animateAboutTitle = () => {
-    const title = document.querySelector('.about-ascii-title');
+  /*
+    Entry titles (ABOUT / WORKS) use exactly one second in total.
+    Each of the five authored letters owns one 200ms slot: during its slot the
+    glyph cycles through A-Z / 0-9, resolves, then the next letter begins.
+  */
+  const animateEntryTitle = (selector, fallbackText, readyClass) => {
+    const title = document.querySelector(selector);
     if (!title || title.dataset.scrambleEnhanced === '1') return;
     title.dataset.scrambleEnhanced = '1';
 
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const finalText = title.textContent.trim() || 'ABOUT';
-    title.classList.add('about-title-scramble-ready');
+    const finalText = title.textContent.trim() || fallbackText;
+    title.classList.add(readyClass);
 
     if (reducedMotion) return;
 
     title.textContent = '';
     const chars = Array.from(finalText).map((character, index) => {
       const span = document.createElement('span');
-      span.className = 'about-scramble-char';
+      span.className = 'about-scramble-char entry-scramble-char';
       span.textContent = character;
       span.dataset.finalChar = character;
       span.style.color = 'transparent';
-      span.dataset.aboutTitleIndex = String(index);
+      span.dataset.entryTitleIndex = String(index);
       title.appendChild(span);
       return span;
     });
 
-    const startedAt = performance.now() + 100;
-    const staggerMs = 58;
-    const cycleMs = 92;
+    const TOTAL_MS = 1000;
+    const slotMs = TOTAL_MS / Math.max(1, chars.length);
+    const cycleMs = slotMs / 4;
     const cycles = 4;
+    const startedAt = performance.now();
 
     const frame = (now) => {
       let complete = true;
       chars.forEach((char, index) => {
-        const elapsed = now - startedAt - index * staggerMs;
+        const elapsed = now - startedAt - index * slotMs;
         if (elapsed < 0) {
           complete = false;
           return;
         }
 
-        const cycle = Math.floor(elapsed / cycleMs);
-        if (cycle < cycles) {
+        if (elapsed < slotMs) {
           complete = false;
+          const cycle = Math.min(cycles - 1, Math.floor(elapsed / cycleMs));
           const glyph = ALNUM_POOL[(index * 13 + cycle * 17) % ALNUM_POOL.length];
           char.dataset.scramble = glyph;
           char.classList.add('is-scrambling');
@@ -124,5 +130,6 @@
     requestAnimationFrame(frame);
   };
 
-  animateAboutTitle();
+  animateEntryTitle('.about-ascii-title', 'ABOUT', 'about-title-scramble-ready');
+  animateEntryTitle('.works-page-title', 'WORKS', 'works-title-scramble-ready');
 })();
