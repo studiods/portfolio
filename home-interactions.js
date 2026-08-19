@@ -108,9 +108,11 @@
 
   const hero = $('#heroSequence');
   const quoteState = $('.hero-state-quote', hero);
+  const heroQuote = $('.hero-quote', hero);
   const quoteLines = $$('.hero-quote > span', hero);
   const sourceOnly = $('.quote-source-only', hero);
   const definition = $('.hero-state-definition', hero);
+  const definitionCopy = $('.definition-copy', hero);
   const definitionSource = $('.definition-source', hero);
   const subState = $('.hero-state-subtractive', hero);
   const subLines = $$('.subtractive-korean .fill-line', hero);
@@ -143,7 +145,7 @@
     subHoldEnd: 1
   });
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789가나다라마바사아자차카타파하';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const rememberFinalChars = chars => chars.forEach(char => {
     char.dataset.finalChar = char.textContent;
   });
@@ -155,8 +157,14 @@
   const randomGlyph = (index, step) =>
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
 
-  const setGlyph = (char, value) => {
-    if (char.textContent !== value) char.textContent = value;
+  const setScrambleOverlay = (char, glyph, alpha = 1) => {
+    if (char.dataset.scramble !== glyph) char.dataset.scramble = glyph;
+    if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
+    setStyle(char, '--scramble-alpha', clamp(alpha).toFixed(3));
+  };
+
+  const clearScrambleOverlay = char => {
+    if (char.classList.contains('is-scrambling')) char.classList.remove('is-scrambling');
   };
 
   const visibleCharEntries = chars => {
@@ -172,32 +180,49 @@
     const entries = visibleCharEntries(chars);
     const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
     const p = clamp(progress);
-    const locked = easeInOut(p) * count;
-    const step = Math.floor(p * 64);
+    const sweep = easeInOut(p) * count;
+    const step = Math.floor(p * count * 7);
 
     entries.forEach(({ char, finalChar, index }) => {
       if (index < 0) {
-        setGlyph(char, finalChar);
+        clearScrambleOverlay(char);
         return;
       }
-      setGlyph(char, index + 1 <= locked ? finalChar : randomGlyph(index, step));
-      setStyle(char, 'color', 'rgba(17,17,17,1)');
+      const local = clamp(sweep - index);
+      if (local <= 0) {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+      } else if (local < 0.72) {
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+        setScrambleOverlay(char, randomGlyph(index, step));
+      } else {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,1)');
+      }
     });
   };
 
   const renderScrambleSource = (chars, progress) => {
     const entries = visibleCharEntries(chars);
     const p = clamp(progress);
-    const step = Math.floor(p * 64);
+    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
+    const sweep = p * count;
+    const step = Math.floor(p * count * 7);
 
     entries.forEach(({ char, finalChar, index }) => {
       if (index < 0) return;
       if (p <= 0) {
-        setGlyph(char, finalChar);
+        clearScrambleOverlay(char);
         return;
       }
-      setGlyph(char, randomGlyph(index, step));
-      setStyle(char, 'color', 'rgba(17,17,17,1)');
+      const local = clamp(sweep - index);
+      if (local >= 1) {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+      } else {
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+        setScrambleOverlay(char, randomGlyph(index, step), 1 - local);
+      }
     });
   };
 
@@ -210,8 +235,16 @@
     entries.forEach(({ char, finalChar, index }) => {
       if (index < 0) return;
       const local = clamp(sweep - index);
-      setGlyph(char, local > 0 && local < 1 ? randomGlyph(index, step) : finalChar);
-      setStyle(char, 'color', `rgba(17,17,17,${(1 - local).toFixed(3)})`);
+      if (local <= 0) {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,1)');
+      } else if (local < 1) {
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+        setScrambleOverlay(char, randomGlyph(index, step), 1 - local);
+      } else {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+      }
     });
   };
 
@@ -224,9 +257,28 @@
     entries.forEach(({ char, finalChar, index }) => {
       if (index < 0) return;
       const local = clamp(sweep - index);
-      setGlyph(char, local > 0 && local < 0.72 ? randomGlyph(index, step) : finalChar);
-      setStyle(char, 'color', `rgba(17,17,17,${local.toFixed(3)})`);
+      if (local <= 0) {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+      } else if (local < 0.72) {
+        setStyle(char, 'color', 'rgba(17,17,17,0)');
+        setScrambleOverlay(char, randomGlyph(index, step));
+      } else {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', 'rgba(17,17,17,1)');
+      }
     });
+  };
+
+  const syncHeroTextMetrics = () => {
+    if (!heroQuote || !definitionCopy) return;
+    const quoteHeight = heroQuote.getBoundingClientRect().height;
+    const definitionStyle = getComputedStyle(definitionCopy);
+    const currentSize = parseFloat(definitionStyle.fontSize) || 1;
+    const lineHeight = parseFloat(definitionStyle.lineHeight) || currentSize;
+    const lineRatio = lineHeight / currentSize;
+    const targetSize = quoteHeight / (4 * lineRatio);
+    setStyle(definitionCopy, 'fontSize', `${targetSize.toFixed(3)}px`);
   };
 
   const renderHero = (p) => {
@@ -251,9 +303,10 @@
       HERO.definitionEraseEnd
     );
     renderScrambleSource(quoteChars, quoteMorph);
-    setStyle(quoteState, 'opacity', (1 - easeInOut(quoteMorph)).toFixed(4));
+    setStyle(quoteState, 'opacity', '1');
     setStyle(quoteState, 'transform', 'none');
-    setStyle(definition, 'opacity', easeInOut(quoteMorph).toFixed(4));
+    setStyle(sourceOnly, 'opacity', (1 - easeInOut(quoteMorph)).toFixed(4));
+    setStyle(definition, 'opacity', quoteMorph > 0 ? '1' : '0');
     setStyle(definition, 'transform', 'none');
     setStyle(definition, 'clipPath', 'none');
 
@@ -564,6 +617,7 @@
   const refreshMetrics = () => {
     metricsRaf = 0;
     metrics.viewportHeight = innerHeight;
+    syncHeroTextMetrics();
     metrics.heroTop = absoluteTop(hero);
     metrics.heroTravel = hero ? Math.max(1, hero.offsetHeight - innerHeight) : 1;
     metrics.philosophyTop = absoluteTop(philosophySection);

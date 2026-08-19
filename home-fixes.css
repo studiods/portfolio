@@ -44,6 +44,22 @@
   padding:0!important;
   transition:none!important;
 }
+.fill-char.is-scrambling{
+  position:relative;
+  color:transparent!important;
+}
+.fill-char.is-scrambling::after{
+  content:attr(data-scramble);
+  position:absolute;
+  left:0;
+  top:0;
+  color:rgba(17,17,17,var(--scramble-alpha,1));
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  white-space:pre;
+  pointer-events:none;
+}
 
 /*
   HERO sequence timing is controlled by home-interactions.js. Every fill is
@@ -88,11 +104,11 @@
 .definition-copy p+p{margin-top:0}
 .definition-source{
   display:block;
-  margin-top:20px;
+  margin-top:18px;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-weight:300;
-  font-size:14.4px;
-  line-height:1.4;
+  font-size:11px;
+  line-height:1.2;
   letter-spacing:-.01em;
 }
 .subtractive-korean{opacity:.7}
@@ -245,13 +261,14 @@
   will-change:transform,opacity;
 }
 .principle-card-inner{
-  grid-column:2;
+  grid-column:1 / -1;
   display:grid;
   grid-template-columns:34px minmax(0,1fr);
   column-gap:12px;
   min-width:0;
   margin-left:0;
   padding-left:0;
+  width:100%;
 }
 .principle-no{grid-column:1;margin:3px 0 0!important;padding-left:0!important;text-align:left}
 .principle-copy{grid-column:2;min-width:0}
@@ -298,7 +315,7 @@
   .hero-state{inset:70px 10px 36px}
   .hero-quote{font-size:clamp(25px,7.08vw,28px);line-height:.97}
   .definition-copy{font-size:clamp(26px,7.1vw,40px);line-height:1.06;letter-spacing:-.03em}
-  .definition-source{margin-top:16px;font-size:13.2px}
+  .definition-source{margin-top:18px;font-size:11px;line-height:1.2}
   .subtractive-title{font-size:clamp(52px,14.9vw,80px);line-height:.82}
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.7}
 
@@ -338,7 +355,7 @@
   .principles-cards-stage{height:145vh}
   .principles-grid{top:7vh;min-height:86vh;gap:50px!important}
   .principle-card{grid-template-columns:1fr!important}
-  .principle-card-inner{grid-column:1;grid-template-columns:30px minmax(0,1fr);column-gap:10px;width:100%}
+  .principle-card-inner{grid-column:1 / -1;grid-template-columns:30px minmax(0,1fr);column-gap:10px;width:100%}
   .principle-copy-stage{min-height:0}
   .principle-en{white-space:normal!important;font-size:11px}
   .principle-ko{font-size:var(--principles-ko-size)!important;line-height:1.023!important}
