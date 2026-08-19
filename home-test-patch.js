@@ -15,6 +15,36 @@
     clamp((value - start) / (duration * FILL_SLOWDOWN));
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
 
+  /* Master motion values shared by every language-transition scramble. */
+  const LANGUAGE_TRANSITION_BASELINE_PT = 2;
+  const PT_TO_CSS_PX = 96 / 72;
+  const LANGUAGE_TRANSITION_BASELINE_PX = LANGUAGE_TRANSITION_BASELINE_PT * PT_TO_CSS_PX;
+  const PRINCIPLES_SCRAMBLE_SLOWDOWN = 1.20;
+  const slowPrinciplesEnd = (start, end) =>
+    Math.min(1, start + (end - start) * PRINCIPLES_SCRAMBLE_SLOWDOWN);
+
+  document.documentElement.style.setProperty(
+    '--language-transition-baseline-shift',
+    `-${LANGUAGE_TRANSITION_BASELINE_PX.toFixed(3)}px`
+  );
+
+  const markLanguageTransitionTarget = (selector, language) => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.classList.add(`language-transition-target-${language}`);
+    });
+  };
+
+  /* EN -> KO targets */
+  markLanguageTransitionTarget(
+    '.hero-state-definition .definition-copy, .hero-state-definition .definition-source, .principles-intro-ko',
+    'ko'
+  );
+  /* KO -> EN targets */
+  markLanguageTransitionTarget(
+    '.hero-state-subtractive .subtractive-title, .principle-en',
+    'en'
+  );
+
   const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const randomGlyph = (index, step) =>
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
@@ -191,12 +221,16 @@
     const p = getIntroProgress();
 
     introRows.forEach((row, index) => {
-      const englishProgress = fillProgress(p, index * 0.065, 0.11);
-      const morphProgress = phaseProgress(
+      const englishStart = index * 0.065;
+      const englishProgress = fillProgress(
         p,
-        0.28 + index * 0.12,
-        0.47 + index * 0.12
+        englishStart,
+        0.11 * PRINCIPLES_SCRAMBLE_SLOWDOWN
       );
+      const morphStart = 0.28 + index * 0.12;
+      const morphBaseEnd = 0.47 + index * 0.12;
+      const morphEnd = slowPrinciplesEnd(morphStart, morphBaseEnd);
+      const morphProgress = phaseProgress(p, morphStart, morphEnd);
 
       if (morphProgress <= 0) {
         paintProgressiveReveal(introEnglish[index], englishProgress, '255,255,255', {
@@ -228,14 +262,35 @@
   };
 
   /*
-    The first 20% of this timeline is consumed while 01 physically rises from
-    the viewport bottom to the sticky lock line. The remaining 80% runs while
-    the grid is locked. 03 finishes at 100%, exactly as the sticky hold ends.
+    Root cause of the fast Principles scramble was the short scroll-progress
+    window assigned to each character sequence, not the random glyph count.
+    Keep three glyph states, but give every Korean title 20% more progress time.
   */
   const CARD_PHASES = Object.freeze([
-    { enterStart: 0.00, enterEnd: 0.06, titleStart: 0.01, titleEnd: 0.32, enStart: 0.24, enEnd: 0.34 },
-    { enterStart: 0.34, enterEnd: 0.40, titleStart: 0.40, titleEnd: 0.64, enStart: 0.56, enEnd: 0.66 },
-    { enterStart: 0.66, enterEnd: 0.72, titleStart: 0.72, titleEnd: 0.94, enStart: 0.88, enEnd: 1.00 }
+    {
+      enterStart: 0.00,
+      enterEnd: 0.06,
+      titleStart: 0.01,
+      titleEnd: slowPrinciplesEnd(0.01, 0.32),
+      enStart: 0.24,
+      enEnd: 0.34
+    },
+    {
+      enterStart: 0.34,
+      enterEnd: 0.40,
+      titleStart: 0.40,
+      titleEnd: slowPrinciplesEnd(0.40, 0.64),
+      enStart: 0.56,
+      enEnd: 0.66
+    },
+    {
+      enterStart: 0.66,
+      enterEnd: 0.72,
+      titleStart: 0.72,
+      titleEnd: slowPrinciplesEnd(0.72, 0.94),
+      enStart: 0.88,
+      enEnd: 1.00
+    }
   ]);
 
   const updateCards = () => {
@@ -245,12 +300,10 @@
     const stickyTop = parseFloat(getComputedStyle(cardsGrid).top) ||
       (innerWidth <= 850 ? 70 : innerHeight * 0.12);
 
-    /* Stage top reaches the viewport bottom exactly when the intro releases. */
     const approachStartY = stageTop - innerHeight;
     const lockY = stageTop - stickyTop;
     const approachProgress = phaseProgress(scrollY, approachStartY, lockY);
 
-    /* Native CSS sticky hold distance. */
     const stickyHold = Math.max(1, cardsStage.offsetHeight - cardsGrid.offsetHeight);
     const holdProgress = phaseProgress(scrollY, lockY, lockY + stickyHold);
 
