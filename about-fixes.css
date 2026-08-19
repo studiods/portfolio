@@ -3,6 +3,35 @@
   z-index:1;
 }
 
+/* The three editorial headings use a fixed-slot A-Z scramble, never a slide. */
+.about-scramble-title .reveal-wrap{overflow:visible}
+.about-scramble-title .reveal-line,
+.about-scramble-title .reveal-line.is-visible{
+  opacity:1!important;
+  transform:none!important;
+  transition:none!important;
+}
+.about-scramble-char{
+  display:inline!important;
+  position:relative;
+  vertical-align:baseline;
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+}
+.about-scramble-char.is-scrambling{color:transparent!important}
+.about-scramble-char.is-scrambling::after{
+  content:attr(data-scramble);
+  position:absolute;
+  inset:0 auto auto 0;
+  color:#f4f2ed;
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  white-space:pre;
+  pointer-events:none;
+}
+
 /*
   The ASCII stage intentionally continues behind Profile while the sticky
   portrait is being covered. All content that follows Profile must therefore
