@@ -6,20 +6,6 @@
   white-space:pre!important;
 }
 
-/*
-  TYPOGRAPHY NORMALIZATION MASTER
-  JS writes actual used font-size, absolute line-height and Y shift after
-  measuring the loaded Averta/Pretendard glyph boxes at the same test size.
-  No transform scaling is used: the font-size itself is normalized.
-*/
-.home-test .metric-calibrated-target{
-  font-size:var(--metric-font-size)!important;
-  line-height:var(--metric-line-height)!important;
-  transform:translateY(var(--metric-shift-y,0px))!important;
-  transform-origin:0 0!important;
-  will-change:transform;
-}
-
 /* One animation vocabulary: hidden -> three A-Z states -> authored glyph. */
 .home-test .test-managed-char.is-scrambling::after{display:none!important}
 .home-test .test-managed-char.test-progressive-pending{color:transparent!important}
@@ -43,12 +29,13 @@
 }
 
 /*
-  HERO: before calibration Korean uses EXACTLY the same base font-size and
-  line-height as the English quote. Runtime JS then applies only the measured
-  optical ratio from the real Averta/Pretendard glyph boxes.
+  HERO
+  Keep the current test size as the reference and reduce Korean by exactly 3px.
+  SUBTRACTIVE DESIGN is intentionally not overridden here: production typography
+  and sizing own that state again.
 */
 .home-test .definition-copy{
-  font-size:clamp(43px,6.15vw,106px)!important;
+  font-size:calc(clamp(43px,6.15vw,106px) - 3px)!important;
   line-height:.91!important;
 }
 
@@ -65,12 +52,18 @@
   padding-top:0!important;
 }
 
-/* Same-size first; metric JS applies only measured optical correction. */
+/* Current test size -10%. No runtime metric scaling. */
 .home-test .principles-intro-ko{
-  font-size:1em!important;
-  line-height:inherit!important;
+  font-size:.9em!important;
+  line-height:1!important;
 }
 
+/*
+  The former 130vh stage only provided 30vh of effective sticky scroll travel.
+  145vh provides 45vh: 50% more physical scroll distance for the same sequence,
+  so English reveal and Korean morph can actually be read while scrolling.
+*/
+.home-test .principles-intro-stage{height:145vh!important}
 .home-test .principles-after-intro{height:0!important}
 .home-test .principles-cards-stage{
   margin-top:0!important;
@@ -81,7 +74,7 @@
   align-content:start!important;
   box-sizing:border-box!important;
   padding-top:0!important;
-  gap:70px!important;
+  gap:63px!important;
 }
 
 @media(min-width:851px){
@@ -114,12 +107,13 @@
   }
 }
 
-/* Keep the latest requested 01-03 Korean scale. */
+/* Keep the latest requested 01-03 Korean size. */
 .home-test .principle-ko{
   font-size:calc(var(--principles-ko-size) * .486)!important;
+  line-height:1.188!important;
 }
 
-/* Korean principle copy -> English caption spacing. */
+/* Keep caption spacing; the larger line-height adds 20% more space between the two Korean rows. */
 .home-test .principle-copy-stage{margin-bottom:20px!important}
 .home-test .principle-en{margin-top:0!important}
 
@@ -145,7 +139,7 @@
 
 @media(max-width:850px){
   .home-test .definition-copy{
-    font-size:clamp(30px,8.4vw,58px)!important;
+    font-size:calc(clamp(30px,8.4vw,58px) - 3px)!important;
     line-height:.95!important;
   }
   .home-test .principles-section{
@@ -160,10 +154,11 @@
     top:var(--principles-lock-top)!important;
   }
   .home-test .principles-head{padding-top:0!important}
+  .home-test .principles-intro-stage{height:145vh!important}
   .home-test .principles-cards-stage{height:245vh!important}
   .home-test .principles-grid{
     padding-top:0!important;
-    gap:70px!important;
+    gap:63px!important;
   }
   .home-test .principle-card-inner{
     position:relative!important;
@@ -184,6 +179,7 @@
     text-align:left!important;
   }
   .home-test .principle-copy{grid-column:2!important}
+  .home-test .principle-ko{line-height:1.228!important}
   .home-test .principle-copy-stage{margin-bottom:20px!important}
 }
 
@@ -193,5 +189,4 @@
   .home-test .test-managed-char.test-progressive-resolved{color:inherit!important}
   .home-test .test-managed-char.test-progressive-scramble::before{display:none!important}
   .home-test .principle-card.test-timeline-card{opacity:1!important;transform:none!important}
-  .home-test .metric-calibrated-target{transform:none!important}
 }
