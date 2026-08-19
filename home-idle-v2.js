@@ -6,37 +6,31 @@
   if (!hero || !quote) return;
 
   /*
-    Disable the legacy idle loop inside home-interactions.js before registering
-    this module's own input listeners. The synthetic event has no browser default
-    action; it only reaches already-registered JS listeners.
+    home-interactions.js still contains the legacy idle controller. Disable it
+    first, then let this module own every no-action animation on the first hero.
   */
   window.dispatchEvent(new Event('pointerdown'));
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) return;
 
-  const BASE_ALPHA = 0.05;
-  const WORD_ALPHA = 0.82;
-  const LINE_ALPHA = 0.82;
-  const UNIT_MS = 1000;
-  const NEXT_UNIT_AT = 0.60;
-  const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
-  const TAIL_MS = UNIT_MS - STAGGER_MS;
-  const GAP_MS = 3000;
-  const PATTERNS = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const IDLE_GAP_MS = 3000;
+  const WORD_MS = 1000;
+  const NEXT_WORD_AT = 0.80;
+  const WORD_STAGGER_MS = WORD_MS * NEXT_WORD_AT;
+  const GLYPH_CYCLE_MS = 72;
+  const RESOLVE_AT = 0.84;
 
   const logicalLines = [...quote.children].filter(
     el => el.matches('span') && !el.classList.contains('fill-char')
   );
-  const lineGroups = logicalLines
-    .map(line => [...line.querySelectorAll('.fill-char')]
-      .filter(char => char.textContent.trim().length > 0))
-    .filter(group => group.length > 0);
 
   const wordGroups = [];
   logicalLines.forEach(line => {
     const chars = [...line.querySelectorAll('.fill-char')];
     let current = [];
+
     const flush = () => {
       if (!current.length) return;
       wordGroups.push(current);
@@ -50,8 +44,8 @@
     flush();
   });
 
-  if (!lineGroups.length || !wordGroups.length) {
-    console.warn('Home idle: logical quote groups were not found.');
+  if (!wordGroups.length) {
+    console.warn('Home idle scramble: quote word groups were not found.');
     return;
   }
 
@@ -64,11 +58,23 @@
     return copy;
   };
 
+  const originalInlineColor = new WeakMap();
+  const rememberColor = char => {
+    if (!originalInlineColor.has(char)) originalInlineColor.set(char, char.style.color || '');
+  };
+  const restoreChar = char => {
+    char.classList.remove('is-scrambling');
+    char.removeAttribute('data-scramble');
+    char.style.removeProperty('--scramble-alpha');
+    char.style.removeProperty('--scramble-rgb');
+    if (originalInlineColor.has(char)) char.style.color = originalInlineColor.get(char);
+  };
+  const restoreAll = () => wordGroups.flat().forEach(restoreChar);
+
   let disabled = false;
   let runToken = 0;
-  let patternIndex = 0;
   const timers = new Set();
-  const activeAnimations = new Set();
+  const rafs = new Set();
 
   const atTop = () => window.scrollY <= 8;
   const canRun = token =>
@@ -79,20 +85,9 @@
     timers.clear();
   };
 
-  const cancelAnimations = () => {
-    activeAnimations.forEach(animation => {
-      try { animation.cancel(); } catch (_) {}
-    });
-    activeAnimations.clear();
-  };
-
-  const stop = permanent => {
-    runToken += 1;
-    clearTimers();
-    cancelAnimations();
-    if (permanent) disabled = true;
-    hero.dataset.idleState = permanent ? 'disabled' : 'paused';
-    delete hero.dataset.idleMode;
+  const clearRafs = () => {
+    rafs.forEach(id => cancelAnimationFrame(id));
+    rafs.clear();
   };
 
   const wait = (ms, token) => new Promise(resolve => {
@@ -100,105 +95,108 @@
       resolve(false);
       return;
     }
-
-    const id = window.setTimeout(() => {
+    const id = setTimeout(() => {
       timers.delete(id);
       resolve(canRun(token));
     }, ms);
     timers.add(id);
   });
 
-  const rgba = alpha => `rgba(17,17,17,${alpha.toFixed(3)})`;
+  const randomGlyph = (charIndex, cycle, seed) =>
+    SCRAMBLE_POOL[(charIndex * 17 + cycle * 13 + seed * 19) % SCRAMBLE_POOL.length];
 
-  const pulseUnit = (group, peakAlpha, token) => {
-    if (!canRun(token)) return false;
+  const animateWord = (group, token, seed) => new Promise(resolve => {
+    if (!canRun(token)) {
+      resolve(false);
+      return;
+    }
 
-    const base = rgba(BASE_ALPHA);
+    group.forEach(rememberColor);
+    const startedAt = performance.now();
 
-    /*
-      The previous 700ms attack reached full black in about 238ms, so although
-      units overlapped in time, each word visually snapped on. Use a full 1s
-      envelope with several intermediate alpha stops instead. The next unit still
-      starts at 60% (600ms), while the outgoing unit is still rising toward its
-      peak. This makes the transition read as a continuous wave rather than a set
-      of separate flashes. The peak is capped at 82% to keep the progression
-      visible instead of jumping from the 5% resting state to hard black.
-  */
-    if (group[0]?.animate) {
-      const keyframes = [
-        { color: base, offset: 0 },
-        { color: rgba(0.14), offset: 0.18 },
-        { color: rgba(0.34), offset: 0.36 },
-        { color: rgba(0.60), offset: 0.54 },
-        { color: rgba(peakAlpha), offset: 0.72 },
-        { color: rgba(peakAlpha), offset: 0.78 },
-        { color: rgba(0.45), offset: 0.90 },
-        { color: base, offset: 1 }
-      ];
+    const frame = now => {
+      if (!canRun(token)) {
+        group.forEach(restoreChar);
+        resolve(false);
+        return;
+      }
 
-      group.forEach(char => {
-        const animation = char.animate(keyframes, {
-          duration: UNIT_MS,
-          easing: 'linear',
-          fill: 'none'
+      const elapsed = now - startedAt;
+      const progress = Math.min(1, elapsed / WORD_MS);
+      const cycle = Math.floor(elapsed / GLYPH_CYCLE_MS);
+
+      if (progress < RESOLVE_AT) {
+        group.forEach((char, index) => {
+          char.style.color = 'transparent';
+          char.dataset.scramble = randomGlyph(index, cycle, seed);
+          char.style.setProperty('--scramble-alpha', '0.88');
+          char.style.setProperty('--scramble-rgb', '17,17,17');
+          char.classList.add('is-scrambling');
         });
-        activeAnimations.add(animation);
-        animation.finished
-          .catch(() => {})
-          .finally(() => activeAnimations.delete(animation));
-      });
-      return true;
-    }
+      } else {
+        group.forEach(restoreChar);
+      }
 
-    /* Very old-browser fallback: keep the same overall 1s timing. */
-    group.forEach(char => { char.style.color = rgba(peakAlpha); });
-    const id = window.setTimeout(() => {
-      timers.delete(id);
-      group.forEach(char => { char.style.color = base; });
-    }, UNIT_MS);
-    timers.add(id);
-    return true;
-  };
+      if (progress >= 1) {
+        group.forEach(restoreChar);
+        resolve(true);
+        return;
+      }
 
-  const currentPattern = () => {
-    const mode = PATTERNS[patternIndex];
-    if (mode === 'lines') {
-      return { mode, groups: lineGroups, peak: LINE_ALPHA };
-    }
-    if (mode === 'randomWords') {
-      return { mode, groups: shuffle(wordGroups), peak: WORD_ALPHA };
-    }
-    return { mode, groups: wordGroups, peak: WORD_ALPHA };
-  };
+      const id = requestAnimationFrame(frame);
+      rafs.add(id);
+    };
 
-  const runPattern = async (pattern, token) => {
-    const { groups, peak } = pattern;
+    const id = requestAnimationFrame(frame);
+    rafs.add(id);
+  });
 
+  const runWordPattern = async (groups, token, mode) => {
+    hero.dataset.idleState = 'running';
+    hero.dataset.idleMode = mode;
+
+    const jobs = [];
     for (let index = 0; index < groups.length; index += 1) {
-      if (!pulseUnit(groups[index], peak, token)) return false;
+      if (!canRun(token)) return false;
+      jobs.push(animateWord(groups[index], token, index + (mode === 'random' ? 31 : 0)));
 
       if (index < groups.length - 1) {
-        if (!(await wait(STAGGER_MS, token))) return false;
+        if (!(await wait(WORD_STAGGER_MS, token))) return false;
       }
     }
 
-    /* Let the final unit finish its remaining 40% before the 3s pattern gap. */
-    return wait(TAIL_MS, token);
+    const results = await Promise.all(jobs);
+    if (!results.every(Boolean) || !canRun(token)) return false;
+
+    restoreAll();
+    delete hero.dataset.idleMode;
+    return true;
+  };
+
+  const stop = permanent => {
+    runToken += 1;
+    clearTimers();
+    clearRafs();
+    restoreAll();
+    if (permanent) disabled = true;
+    hero.dataset.idleState = permanent ? 'disabled' : 'paused';
+    delete hero.dataset.idleMode;
   };
 
   const run = async token => {
+    hero.dataset.idleState = 'waiting';
+    if (!(await wait(IDLE_GAP_MS, token))) return;
+
     while (canRun(token)) {
+      if (!(await runWordPattern(wordGroups, token, 'sequential'))) return;
+
       hero.dataset.idleState = 'waiting';
-      if (!(await wait(GAP_MS, token))) return;
+      if (!(await wait(IDLE_GAP_MS, token))) return;
 
-      const pattern = currentPattern();
-      hero.dataset.idleState = 'running';
-      hero.dataset.idleMode = pattern.mode;
+      if (!(await runWordPattern(shuffle(wordGroups), token, 'random'))) return;
 
-      if (!(await runPattern(pattern, token))) return;
-
-      patternIndex = (patternIndex + 1) % PATTERNS.length;
-      delete hero.dataset.idleMode;
+      hero.dataset.idleState = 'waiting';
+      if (!(await wait(IDLE_GAP_MS, token))) return;
     }
   };
 
@@ -206,7 +204,7 @@
     if (disabled || document.hidden || !atTop()) return;
     const token = ++runToken;
     run(token).catch(error => {
-      console.error('Home idle animation failed.', error);
+      console.error('Home idle scramble failed.', error);
       stop(true);
     });
   };
