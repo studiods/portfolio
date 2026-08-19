@@ -66,6 +66,8 @@
   color:var(--fg);
 }
 .hero-state-subtractive{opacity:0;pointer-events:none}
+.hero-state-definition,
+.hero-state-subtractive{transform:none!important}
 .quote-source-only{
   margin-top:18px;
   font-family:'Averta PE',sans-serif;
@@ -167,7 +169,7 @@
   pointer-events:none;
 }
 .principles-persistent-label .mini-label{margin:0}
-.principles-intro-stage{position:relative;height:320vh}
+.principles-intro-stage{position:relative;height:130vh}
 .principles-head{
   position:sticky;
   top:12vh;
@@ -219,7 +221,7 @@
   transform:translate3d(0,-1.05em,0);
   will-change:transform,opacity;
 }
-.principles-after-intro{height:200px}
+.principles-after-intro{height:40px}
 .principles-cards-stage{position:relative;height:380vh}
 .principles-grid{
   position:sticky;
@@ -229,6 +231,8 @@
   gap:50px!important;
   align-content:center;
   min-height:84vh;
+  padding-left:0!important;
+  margin-left:0!important;
 }
 .principle-card{
   display:grid;
@@ -246,8 +250,10 @@
   grid-template-columns:34px minmax(0,1fr);
   column-gap:12px;
   min-width:0;
+  margin-left:0;
+  padding-left:0;
 }
-.principle-no{grid-column:1;margin:3px 0 0!important}
+.principle-no{grid-column:1;margin:3px 0 0!important;padding-left:0!important;text-align:left}
 .principle-copy{grid-column:2;min-width:0}
 .principle-copy-stage{
   position:relative;
@@ -318,7 +324,7 @@
     padding-left:var(--pad)!important;
     padding-right:var(--pad)!important;
   }
-  .principles-persistent-label{top:70px;width:auto;height:0}
+  .principles-persistent-label{top:70px;left:0;width:auto;height:0;margin-left:0;padding-left:0}
   /* One deliberate swipe is enough to complete the intro sequence. */
   .principles-intro-stage{height:130vh}
   .principles-head{display:block!important;top:10vh;min-height:80vh!important;padding:70px 0 0!important}
@@ -327,12 +333,12 @@
   .principles-intro-en{white-space:nowrap}
   .principles-intro-mask{height:.93em}
   .principles-intro-ko{font-size:var(--principles-ko-size);line-height:1.023}
-  .principles-after-intro{height:40px}
+  .principles-after-intro{height:32px}
   /* Keep the sticky reveal, but remove the former 120vh scroll runway. */
   .principles-cards-stage{height:145vh}
   .principles-grid{top:7vh;min-height:86vh;gap:50px!important}
   .principle-card{grid-template-columns:1fr!important}
-  .principle-card-inner{grid-column:1;grid-template-columns:30px minmax(0,1fr);column-gap:10px}
+  .principle-card-inner{grid-column:1;grid-template-columns:30px minmax(0,1fr);column-gap:10px;width:100%}
   .principle-copy-stage{min-height:0}
   .principle-en{white-space:normal!important;font-size:11px}
   .principle-ko{font-size:var(--principles-ko-size)!important;line-height:1.023!important}

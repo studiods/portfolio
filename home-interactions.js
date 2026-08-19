@@ -124,86 +124,109 @@
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   /*
-    Keep the deployed hero travel unchanged. Small source/caption fill phases
-    are carved out of their existing hold windows: the Korean Hofmann credit
-    fills immediately after the definition, and the Korean subtractive caption
-    fills only after SUBTRACTIVE DESIGN is completely black. This preserves all
-    section-height math and the natural sticky release into Design philosophy.
+    The hero is one scroll-scrubbed sequence. Its two completed-text holds are
+    intentionally long so a normal next scroll gesture is absorbed before the
+    transition continues. Transitions themselves mutate characters in place;
+    no competing translate/mask animation is used.
   */
-  const HERO_FILL_SCALE = 1.21;
-  const SUBTRACTIVE_FILL_SCALE = 1.30;
-  const HERO_PHASE = Object.freeze({
-    quoteFill: 0.13 * HERO_FILL_SCALE,
-    quoteHold: 0.24,
-    quoteExit: 0.13,
-    defEnter: 0.09,
-    defFill: 0.12 * HERO_FILL_SCALE,
-    defSourceFill: 0.04,
-    defHold: 0.20,
-    defExit: 0.13,
-    subEnter: 0.08,
-    subFill: 0.13 * HERO_FILL_SCALE * SUBTRACTIVE_FILL_SCALE,
-    subCaptionFill: 0.10,
-    subHold: 0.30,
-    subExit: 0
-  });
-
-  const HERO_TOTAL = Object.values(HERO_PHASE).reduce((sum, value) => sum + value, 0);
-  const heroPhase = key => HERO_PHASE[key] / HERO_TOTAL;
-  let heroCursor = 0;
-
   const HERO = Object.freeze({
-    quoteFillStart: heroCursor,
-    quoteFillEnd: (heroCursor += heroPhase('quoteFill')),
-    quoteHoldEnd: (heroCursor += heroPhase('quoteHold')),
-    quoteExitEnd: (heroCursor += heroPhase('quoteExit')),
-
-    defEnterEnd: (heroCursor += heroPhase('defEnter')),
-    defFillEnd: (heroCursor += heroPhase('defFill')),
-    defSourceFillEnd: (heroCursor += heroPhase('defSourceFill')),
-    defHoldEnd: (heroCursor += heroPhase('defHold')),
-    defExitEnd: (heroCursor += heroPhase('defExit')),
-
-    subEnterEnd: (heroCursor += heroPhase('subEnter')),
-    subFillEnd: (heroCursor += heroPhase('subFill')),
-    subCaptionFillEnd: (heroCursor += heroPhase('subCaptionFill')),
-    subHoldEnd: (heroCursor += heroPhase('subHold')),
-    subExitEnd: (heroCursor += heroPhase('subExit'))
+    quoteFillStart: 0,
+    quoteFillEnd: 0.095,
+    quoteHoldEnd: 0.245,
+    quoteMorphEnd: 0.395,
+    definitionHoldEnd: 0.555,
+    definitionEraseEnd: 0.695,
+    subRevealStart: 0.625,
+    subRevealEnd: 0.790,
+    subFillEnd: 0.910,
+    subCaptionFillEnd: 0.960,
+    subHoldEnd: 1
   });
 
-  const exitOpacity = progress => {
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789가나다라마바사아자차카타파하';
+  const rememberFinalChars = chars => chars.forEach(char => {
+    char.dataset.finalChar = char.textContent;
+  });
+  rememberFinalChars(definitionChars);
+  rememberFinalChars(definitionSourceChars);
+  rememberFinalChars(subChars);
+  rememberFinalChars(quoteChars);
+
+  const randomGlyph = (index, step) =>
+    SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
+
+  const setGlyph = (char, value) => {
+    if (char.textContent !== value) char.textContent = value;
+  };
+
+  const visibleCharEntries = chars => {
+    let visibleIndex = 0;
+    return chars.map(char => {
+      const finalChar = char.dataset.finalChar ?? char.textContent;
+      if (!finalChar.trim()) return { char, finalChar, index: -1 };
+      return { char, finalChar, index: visibleIndex++ };
+    });
+  };
+
+  const renderScrambleToTarget = (chars, progress) => {
+    const entries = visibleCharEntries(chars);
+    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
     const p = clamp(progress);
-    const EARLY_END = 0.10;
-    const EARLY_OPACITY = 0.56;
+    const locked = easeInOut(p) * count;
+    const step = Math.floor(p * 64);
 
-    if (p <= 0) return 1;
-    if (p < EARLY_END) {
-      const t = p / EARLY_END;
-      const fastDrop = 1 - Math.pow(1 - t, 4);
-      return 1 - (1 - EARLY_OPACITY) * fastDrop;
-    }
-
-    const tail = (p - EARLY_END) / (1 - EARLY_END);
-    return Math.max(0, EARLY_OPACITY * (1 - Math.pow(tail, 1.4)));
+    entries.forEach(({ char, finalChar, index }) => {
+      if (index < 0) {
+        setGlyph(char, finalChar);
+        return;
+      }
+      setGlyph(char, index + 1 <= locked ? finalChar : randomGlyph(index, step));
+      setStyle(char, 'color', 'rgba(17,17,17,1)');
+    });
   };
 
-  const renderEnter = (state, progress) => {
-    const raw = clamp(progress);
-    const p = easeInOut(raw);
-    const distance = Math.min(innerHeight * 0.12, 140);
-    const opacity = 1 - Math.pow(1 - raw, 1.65);
-    setStyle(state, 'opacity', opacity.toFixed(4));
-    setStyle(state, 'transform', `translate3d(0, ${(-(1 - p) * distance).toFixed(2)}px, 0)`);
-    setStyle(state, 'clipPath', 'none');
+  const renderScrambleSource = (chars, progress) => {
+    const entries = visibleCharEntries(chars);
+    const p = clamp(progress);
+    const step = Math.floor(p * 64);
+
+    entries.forEach(({ char, finalChar, index }) => {
+      if (index < 0) return;
+      if (p <= 0) {
+        setGlyph(char, finalChar);
+        return;
+      }
+      setGlyph(char, randomGlyph(index, step));
+      setStyle(char, 'color', 'rgba(17,17,17,1)');
+    });
   };
 
-  const renderExit = (state, progress) => {
-    const raw = clamp(progress);
-    const distance = Math.min(innerHeight * 0.18, 190);
-    const easedMove = 1 - Math.pow(1 - raw, 1.6);
-    setStyle(state, 'opacity', exitOpacity(raw).toFixed(4));
-    setStyle(state, 'transform', `translate3d(0, ${(easedMove * distance).toFixed(2)}px, 0)`);
-    setStyle(state, 'clipPath', 'none');
+  const renderScrambleErase = (chars, progress) => {
+    const entries = visibleCharEntries(chars);
+    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
+    const sweep = clamp(progress) * count;
+    const step = Math.floor(clamp(progress) * count * 7);
+
+    entries.forEach(({ char, finalChar, index }) => {
+      if (index < 0) return;
+      const local = clamp(sweep - index);
+      setGlyph(char, local > 0 && local < 1 ? randomGlyph(index, step) : finalChar);
+      setStyle(char, 'color', `rgba(17,17,17,${(1 - local).toFixed(3)})`);
+    });
+  };
+
+  const renderScrambleReveal = (chars, progress) => {
+    const entries = visibleCharEntries(chars);
+    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
+    const sweep = clamp(progress) * count;
+    const step = Math.floor(clamp(progress) * count * 7);
+
+    entries.forEach(({ char, finalChar, index }) => {
+      if (index < 0) return;
+      const local = clamp(sweep - index);
+      setGlyph(char, local > 0 && local < 0.72 ? randomGlyph(index, step) : finalChar);
+      setStyle(char, 'color', `rgba(17,17,17,${local.toFixed(3)})`);
+    });
   };
 
   const renderHero = (p) => {
@@ -221,56 +244,52 @@
       phaseProgress(p, quoteSourceStart, HERO.quoteFillEnd)
     );
 
-    const quoteExit = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteExitEnd);
-    renderExit(quoteState, quoteExit);
-    setAttribute(quoteState, 'aria-hidden', quoteExit >= 0.999 ? 'true' : 'false');
+    const quoteMorph = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteMorphEnd);
+    const definitionErase = phaseProgress(
+      p,
+      HERO.definitionHoldEnd,
+      HERO.definitionEraseEnd
+    );
+    renderScrambleSource(quoteChars, quoteMorph);
+    setStyle(quoteState, 'opacity', (1 - easeInOut(quoteMorph)).toFixed(4));
+    setStyle(quoteState, 'transform', 'none');
+    setStyle(definition, 'opacity', easeInOut(quoteMorph).toFixed(4));
+    setStyle(definition, 'transform', 'none');
+    setStyle(definition, 'clipPath', 'none');
 
-    const defEnter = phaseProgress(p, HERO.quoteExitEnd, HERO.defEnterEnd);
-    const defExit = phaseProgress(p, HERO.defHoldEnd, HERO.defExitEnd);
-
-    if (p < HERO.defHoldEnd) {
-      renderEnter(definition, defEnter);
-    } else {
-      renderExit(definition, defExit);
+    renderScrambleToTarget(definitionChars, quoteMorph);
+    renderScrambleToTarget(
+      definitionSourceChars,
+      phaseProgress(quoteMorph, 0.58, 1)
+    );
+    if (definitionErase > 0) {
+      renderScrambleErase(definitionChars, definitionErase);
+      renderScrambleErase(definitionSourceChars, definitionErase);
     }
 
-    setCharsOneByOne(
-      definitionChars,
-      phaseProgress(p, HERO.defEnterEnd, HERO.defFillEnd)
-    );
-    setCharsOneByOne(
-      definitionSourceChars,
-      phaseProgress(p, HERO.defFillEnd, HERO.defSourceFillEnd)
-    );
-
+    setAttribute(quoteState, 'aria-hidden', quoteMorph >= 0.999 ? 'true' : 'false');
     setAttribute(
       definition,
       'aria-hidden',
-      defEnter <= 0.001 || defExit >= 0.999 ? 'true' : 'false'
+      quoteMorph <= 0.001 || definitionErase >= 0.999 ? 'true' : 'false'
     );
 
-    const subEnter = phaseProgress(p, HERO.defExitEnd, HERO.subEnterEnd);
-
-    /*
-      Keep the final state fully rendered after it has entered. There is no
-      translate-down/fade-out phase; CSS sticky containment performs the exit
-      naturally as the hero section itself scrolls upward off the viewport.
-    */
-    renderEnter(subState, subEnter);
-
-    setCharsOneByOne(
-      subChars,
-      phaseProgress(p, HERO.subEnterEnd, HERO.subFillEnd)
-    );
+    const subReveal = phaseProgress(p, HERO.subRevealStart, HERO.subRevealEnd);
+    setStyle(subState, 'opacity', subReveal > 0 ? '1' : '0');
+    setStyle(subState, 'transform', 'none');
+    setStyle(subState, 'clipPath', 'none');
+    renderScrambleReveal(subChars, subReveal);
     setCharsOneByOne(
       subKoreanChars,
-      phaseProgress(p, HERO.subFillEnd, HERO.subCaptionFillEnd)
+      phaseProgress(p, HERO.subFillEnd, HERO.subCaptionFillEnd),
+      '17,17,17',
+      0
     );
 
     setAttribute(
       subState,
       'aria-hidden',
-      subEnter <= 0.001 ? 'true' : 'false'
+      subReveal <= 0.001 ? 'true' : 'false'
     );
   };
 
