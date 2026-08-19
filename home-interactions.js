@@ -70,12 +70,18 @@
   };
 
   /* Feathered fill remains for sections below the hero. */
-  const setChars = (chars, progress, rgb = '17,17,17', baseAlpha = 0.05) => {
+  const setChars = (
+    chars,
+    progress,
+    rgb = '17,17,17',
+    baseAlpha = 0.05,
+    maxAlpha = 1
+  ) => {
     const n = chars.length || 1;
     const sweep = progress * Math.max(1, n - 1 + FILL_FEATHER);
     chars.forEach((char, i) => {
       const local = clamp((sweep - i) / FILL_FEATHER);
-      const alpha = (baseAlpha + (1 - baseAlpha) * local).toFixed(3);
+      const alpha = (baseAlpha + (maxAlpha - baseAlpha) * local).toFixed(3);
       setStyle(char, 'color', `rgba(${rgb},${alpha})`);
     });
   };
@@ -178,6 +184,39 @@
       const finalChar = char.dataset.finalChar ?? char.textContent;
       if (!finalChar.trim()) return { char, finalChar, index: -1 };
       return { char, finalChar, index: visibleIndex++ };
+    });
+  };
+
+  /* Each character shows exactly three A-Z states before its final glyph. */
+  const renderThreeCycleReveal = (
+    chars,
+    progress,
+    rgb = '17,17,17',
+    baseAlpha = 0,
+    finalAlpha = 1,
+    scrambleRatio = 0.78
+  ) => {
+    const entries = visibleCharEntries(chars);
+    const count = entries.reduce((n, entry) => n + (entry.index >= 0 ? 1 : 0), 0) || 1;
+    const sweep = easeInOut(clamp(progress)) * count;
+
+    entries.forEach(({ char, index }) => {
+      if (index < 0) {
+        clearScrambleOverlay(char);
+        return;
+      }
+      const local = clamp(sweep - index);
+      if (local <= 0) {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', `rgba(${rgb},${baseAlpha})`);
+      } else if (local < scrambleRatio) {
+        const cycle = Math.min(2, Math.floor((local / scrambleRatio) * 3));
+        setStyle(char, 'color', `rgba(${rgb},0)`);
+        setScrambleOverlay(char, randomGlyph(index, cycle), finalAlpha, rgb);
+      } else {
+        clearScrambleOverlay(char);
+        setStyle(char, 'color', `rgba(${rgb},${finalAlpha})`);
+      }
     });
   };
 
@@ -295,9 +334,11 @@
   const renderHero = (p) => {
     if (!hero || !quoteState || !definition || !subState) return;
 
-    setCharsOneByOne(
+    renderThreeCycleReveal(
       quoteChars,
-      phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd)
+      phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd),
+      '17,17,17',
+      0.05
     );
 
     const quoteSourceStart = HERO.quoteFillStart +
@@ -346,7 +387,7 @@
     setStyle(subState, 'transform', 'none');
     setStyle(subState, 'clipPath', 'none');
     renderScrambleReveal(subChars, subReveal);
-    setCharsOneByOne(
+    renderThreeCycleReveal(
       subKoreanChars,
       phaseProgress(p, HERO.subFillEnd, HERO.subCaptionFillEnd),
       '17,17,17',
@@ -516,20 +557,19 @@
   const philosophySection = $('#philosophy');
   const philosophySticky = $('.philosophy-sticky', philosophySection);
   const philosophyLines = $$('.philosophy-statements > p', philosophySection);
+  philosophyLines.forEach(splitChars);
+  const philosophyChars = $$('.philosophy-statements .fill-char', philosophySection);
+  rememberFinalChars(philosophyChars);
 
   const renderPhilosophy = (p, fillEnd) => {
     if (!philosophySection || !philosophySticky || !philosophyLines.length) return;
 
-    const fillP = clamp(p / fillEnd);
-    const lineCount = philosophyLines.length;
-    const lineWindow = 1 / lineCount;
-
-    philosophyLines.forEach((line, index) => {
-      const lineStart = index * lineWindow;
-      const lineProgress = clamp((fillP - lineStart) / lineWindow);
-      const alpha = (0.05 + 0.95 * lineProgress).toFixed(3);
-      setStyle(line, 'color', `rgba(17,17,17,${alpha})`);
-    });
+    renderThreeCycleReveal(
+      philosophyChars,
+      clamp(p / fillEnd),
+      '17,17,17',
+      0.05
+    );
   };
 
   const principles = $('#principles');
@@ -570,7 +610,8 @@
       const koreanHeight = measuredTextHeight(korean);
       const currentSize = parseFloat(getComputedStyle(korean).fontSize) || 1;
       if (englishHeight > 0 && koreanHeight > 0) {
-        measuredSizeTotal += currentSize * englishHeight / koreanHeight;
+        const matchedSize = currentSize * englishHeight / koreanHeight;
+        measuredSizeTotal += innerWidth > 850 ? matchedSize - (4 * 96 / 72) : matchedSize;
         measuredSizeCount += 1;
       }
     });
@@ -587,23 +628,33 @@
     if (!principleRows.length) return;
 
     principleRows.forEach((row, index) => {
-      const englishProgress = fillProgress(p, index * 0.065, 0.085);
+      const englishProgress = fillProgress(p, index * 0.065, 0.11);
       const morphProgress = phaseProgress(
         p,
-        0.30 + index * 0.10,
-        0.43 + index * 0.10
+        0.28 + index * 0.12,
+        0.47 + index * 0.12
       );
 
-      setChars(principleRowEnglish[index], englishProgress, '255,255,255', 0.16);
+      renderThreeCycleReveal(
+        principleRowEnglish[index],
+        englishProgress,
+        '255,255,255',
+        0.16,
+        1,
+        0.82
+      );
       renderScrambleSource(
         principleRowEnglish[index],
         morphProgress,
         '255,255,255'
       );
-      renderScrambleToTarget(
+      renderThreeCycleReveal(
         principleRowKorean[index],
         phaseProgress(morphProgress, 0.08, 1),
-        '255,255,255'
+        '255,255,255',
+        0,
+        1,
+        0.82
       );
     });
   };
@@ -624,14 +675,71 @@
 
       setStyle(card, 'opacity', enterProgress.toFixed(4));
       setStyle(card, 'transform', `translate3d(0, ${(24 * (1 - enterProgress)).toFixed(2)}px, 0)`);
-      renderScrambleToTarget(
+      renderThreeCycleReveal(
         principleCardKorean[index],
         phaseProgress(p, phase.titleStart, phase.titleEnd),
-        '255,255,255'
+        '255,255,255',
+        0,
+        1,
+        0.82
       );
-      setChars(principleCardEnglish[index], fill, '255,255,255');
+      setChars(principleCardEnglish[index], fill, '255,255,255', 0.05, 0.7);
     });
   };
+
+  const entryScrambleTargets = $$('.showcase-project h3');
+  const animateEntryScramble = target => {
+    if (!target || target.dataset.scrambleDone === '1') return;
+    target.dataset.scrambleDone = '1';
+    splitChars(target);
+    const chars = $$('.fill-char', target);
+    rememberFinalChars(chars);
+    const entries = visibleCharEntries(chars).filter(entry => entry.index >= 0);
+    const startedAt = performance.now();
+    const staggerMs = 24;
+    const cycleMs = 92;
+
+    const frame = now => {
+      let complete = true;
+      entries.forEach(({ char, index }) => {
+        const elapsed = now - startedAt - index * staggerMs;
+        if (elapsed < 0) {
+          complete = false;
+          clearScrambleOverlay(char);
+          setStyle(char, 'color', 'rgba(17,17,17,0)');
+          return;
+        }
+        const cycle = Math.floor(elapsed / cycleMs);
+        if (cycle < 3) {
+          complete = false;
+          setStyle(char, 'color', 'rgba(17,17,17,0)');
+          setScrambleOverlay(char, randomGlyph(index, cycle), 1, '17,17,17');
+        } else {
+          clearScrambleOverlay(char);
+          setStyle(char, 'color', 'rgba(17,17,17,1)');
+        }
+      });
+      if (!complete) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    entryScrambleTargets.forEach(animateEntryScramble);
+  } else {
+    entryScrambleTargets.forEach(target => {
+      splitChars(target);
+      $$('.fill-char', target).forEach(char => setStyle(char, 'color', 'rgba(17,17,17,0)'));
+    });
+    const entryObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        animateEntryScramble(entry.target);
+        entryObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    entryScrambleTargets.forEach(target => entryObserver.observe(target));
+  }
 
   const metrics = {
     viewportHeight: innerHeight,
