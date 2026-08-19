@@ -37,6 +37,14 @@
   font-size:11.55px!important;
 }
 
+/* SUBTRACTIVE / DESIGN: fixed two-line lockup, 10% more leading than .79. */
+.home-test .subtractive-title{
+  line-height:.869!important;
+}
+.home-test .subtractive-title>span{
+  display:block!important;
+}
+
 /* DESIGN PRINCIPLES */
 .home-test .principles-section{
   --principles-lock-top:12vh;
@@ -141,6 +149,11 @@
   .home-test .definition-copy{
     font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
     line-height:1.083!important;
+  }
+
+  /* Mobile source value is .82; add the same 10% leading increase. */
+  .home-test .subtractive-title{
+    line-height:.902!important;
   }
 
   /*
