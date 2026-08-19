@@ -16,13 +16,17 @@
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
 
   /*
-    Principles timing master.
-    The former 20% slowdown was barely perceptible because the intro stage had
-    only 30vh of effective sticky travel. CSS v9 expands that travel to 45vh.
-    These values then add a modest timing stretch without making the sequence
-    feel stalled.
+    Principles intro timeline.
+    English completes first, then holds, then Korean morphs, then holds again.
+    The enlarged CSS sticky stage converts these progress holds into real scroll
+    distance, giving the viewer time to read each completed state.
   */
-  const PRINCIPLES_INTRO_SLOWDOWN = 1.25;
+  const PRINCIPLES_TIMING = Object.freeze({
+    englishRevealEnd: 0.34,
+    englishHoldEnd: 0.48,
+    koreanMorphEnd: 0.82,
+    koreanHoldEnd: 1.00
+  });
   const PRINCIPLES_CARD_SLOWDOWN = 1.20;
   const slowEnd = (start, end, factor) =>
     Math.min(1, start + (end - start) * factor);
@@ -199,41 +203,56 @@
     const p = getIntroProgress();
 
     introRows.forEach((row, index) => {
-      const englishStart = index * 0.065;
-      const englishProgress = fillProgress(
-        p,
-        englishStart,
-        0.11 * PRINCIPLES_INTRO_SLOWDOWN
-      );
-      const morphStart = 0.28 + index * 0.12;
-      const morphBaseEnd = 0.47 + index * 0.12;
-      const morphProgress = phaseProgress(
-        p,
-        morphStart,
-        slowEnd(morphStart, morphBaseEnd, PRINCIPLES_INTRO_SLOWDOWN)
-      );
+      /* Force every LESS row to stay at its authored coordinates. */
+      row.style.setProperty('transform', 'none');
+      const enNode = row.querySelector('.principles-intro-en');
+      const koNode = row.querySelector('.principles-intro-ko');
+      enNode?.style.setProperty('transform', 'none');
+      koNode?.style.setProperty('transform', 'none');
 
-      if (morphProgress <= 0) {
+      /* All English rows finish before the first Korean row starts. */
+      const englishStart = index * 0.055;
+      const englishEnd = 0.23 + index * 0.055;
+      const englishProgress = phaseProgress(p, englishStart, englishEnd);
+
+      /* Korean morph starts only after the English hold has finished. */
+      const morphStart = PRINCIPLES_TIMING.englishHoldEnd + index * 0.055;
+      const morphEnd = 0.70 + index * 0.06;
+      const morphProgress = phaseProgress(p, morphStart, morphEnd);
+
+      if (p < PRINCIPLES_TIMING.englishHoldEnd) {
         paintProgressiveReveal(introEnglish[index], englishProgress, '255,255,255', {
-          span: 2.25,
+          span: 2.35,
           cycles: 3
         });
         paintProgressiveReveal(introKorean[index], 0, '255,255,255', {
+          span: 2.4,
+          cycles: 3
+        });
+        return;
+      }
+
+      if (p < PRINCIPLES_TIMING.koreanMorphEnd) {
+        paintProgressiveErase(introEnglish[index], morphProgress, '255,255,255', {
           span: 2.2,
           cycles: 3
         });
-      } else {
-        paintProgressiveErase(introEnglish[index], morphProgress, '255,255,255', {
-          span: 2.1,
+        paintProgressiveReveal(introKorean[index], morphProgress, '255,255,255', {
+          span: 2.75,
           cycles: 3
         });
-        paintProgressiveReveal(
-          introKorean[index],
-          phaseProgress(morphProgress, 0.04, 1),
-          '255,255,255',
-          { span: 2.65, cycles: 3 }
-        );
+        return;
       }
+
+      /* Final Korean hold: no further glyph changes until the sticky stage ends. */
+      paintProgressiveErase(introEnglish[index], 1, '255,255,255', {
+        span: 2.2,
+        cycles: 3
+      });
+      paintProgressiveReveal(introKorean[index], 1, '255,255,255', {
+        span: 2.75,
+        cycles: 3
+      });
     });
   };
 
