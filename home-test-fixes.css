@@ -1,4 +1,4 @@
-/* Isolated overrides for home-test.html only. Production index.html is untouched. */
+/* Shared home overrides used by the production and test home. */
 .home-test:not(.home-test-ready) .hero-quote{visibility:hidden}
 
 .home-test .principle-ko .fill-char.test-space,
@@ -142,16 +142,25 @@
     font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
     line-height:1.083!important;
   }
+
+  /*
+    Keep the section label below the GNB, but place all actual principle content
+    lower than the label. The content top scales gently with device width so
+    the first LESS line and subsequent card copy never collide with the label.
+  */
   .home-test .principles-section{
-    --principles-lock-top:70px;
+    --principles-label-top:70px;
+    --principles-content-top:clamp(118px,30vw,132px);
     --principles-edge-space:clamp(84px,20vw,120px);
     padding-top:var(--principles-edge-space)!important;
     padding-bottom:var(--principles-edge-space)!important;
   }
-  .home-test .principles-persistent-label,
+  .home-test .principles-persistent-label{
+    top:var(--principles-label-top)!important;
+  }
   .home-test .principles-head,
   .home-test .principles-grid{
-    top:var(--principles-lock-top)!important;
+    top:var(--principles-content-top)!important;
   }
   .home-test .principles-head{padding-top:0!important}
   .home-test .principles-intro-stage{height:180vh!important}
@@ -174,7 +183,12 @@
     margin:0!important;
     padding:0!important;
   }
-  .home-test .principle-ko{line-height:1.228!important}
+
+  /* Responsive mobile card copy: ~17px on compact phones to 21px on wide phones. */
+  .home-test .principle-ko{
+    font-size:clamp(17px,4.8vw,21px)!important;
+    line-height:1.22!important;
+  }
   .home-test .principle-copy-stage{margin-bottom:16.2px!important}
 }
 
