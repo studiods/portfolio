@@ -15,7 +15,12 @@
   <style>
     html,body{margin:0;min-height:100%;background:#fff}
     body{background:#fff}
-    .about-home-scramble-test{position:relative;height:260vh;background:#fff}
+
+    .about-home-scramble-test{
+      position:relative;
+      height:420vh;
+      background:#fff;
+    }
     .about-home-scramble-test .hero-sticky{
       position:sticky!important;
       top:0!important;
@@ -25,17 +30,28 @@
       width:100%;
       height:100vh;
       min-height:100svh;
+      overflow:hidden;
     }
-    .about-home-scramble-test .hero-state-quote{
-      opacity:1!important;
-      visibility:visible!important;
+    .about-home-scramble-test .test-state{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      pointer-events:none;
+      opacity:0;
+      visibility:hidden;
       transform:none!important;
     }
-    .about-home-scramble-test .hero-quote{
-      visibility:visible!important;
-      color:rgba(17,17,17,0)!important;
+    .about-home-scramble-test .test-state.is-visible{
+      visibility:visible;
+    }
+
+    .about-home-scramble-test .hero-quote,
+    .about-home-scramble-test .definition-copy{
       --scramble-rgb:17,17,17;
       --scramble-alpha:1;
+      color:rgba(17,17,17,0)!important;
     }
     .about-home-scramble-test .about-scramble-char{
       color:rgba(17,17,17,0);
@@ -46,10 +62,44 @@
       --live-scramble-color:rgba(17,17,17,1)!important;
       color:rgba(17,17,17,1)!important;
     }
-    .about-home-scramble-test .quote-source-only{
+
+    .about-home-scramble-test .hero-quote{
+      visibility:visible!important;
+    }
+    .about-home-scramble-test .definition-copy{
+      width:100%;
+      font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-weight:100;
+      font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
+      line-height:1.0374!important;
+      letter-spacing:-.025em;
+      word-break:keep-all;
+    }
+    .about-home-scramble-test .definition-copy p{
+      margin:0;
+      padding:0;
+      white-space:nowrap;
+    }
+
+    .about-home-scramble-test .test-source{
+      margin-top:18px;
       color:rgba(17,17,17,0)!important;
       opacity:1!important;
     }
+    .about-home-scramble-test .quote-source-only{
+      font-family:'Averta PE',sans-serif;
+      font-weight:400;
+      font-size:11px;
+      line-height:1.2;
+    }
+    .about-home-scramble-test .definition-source{
+      font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      font-weight:300;
+      font-size:11.55px!important;
+      line-height:1.2;
+      letter-spacing:-.01em;
+    }
+
     .test-progress{
       position:fixed;
       right:24px;
@@ -63,6 +113,13 @@
       color:rgba(17,17,17,.38);
       pointer-events:none;
     }
+
+    @media(max-width:850px){
+      .about-home-scramble-test .definition-copy{
+        font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
+        line-height:1.083!important;
+      }
+    }
     @media(max-width:768px){.test-progress{right:18px;bottom:18px}}
   </style>
 </head>
@@ -70,20 +127,30 @@
   <main>
     <section class="about-home-scramble-test" id="scrambleTest">
       <div class="hero-sticky">
-        <div class="hero-state hero-state-quote">
-          <div class="hero-quote" aria-label="THE ABILITY TO SIMPLIFY MEANS TO ELIMINATE THE UNNECESSARY SO THAT THE NECESSARY MAY SPEAK.">
+        <div class="test-state test-state-en" id="stateEn">
+          <div class="hero-quote" id="quoteEn" aria-label="THE ABILITY TO SIMPLIFY MEANS TO ELIMINATE THE UNNECESSARY SO THAT THE NECESSARY MAY SPEAK.">
             <span>THE ABILITY TO SIMPLIFY</span>
             <span>MEANS TO ELIMINATE</span>
             <span>THE UNNECESSARY SO THAT</span>
             <span>THE NECESSARY MAY SPEAK.</span>
           </div>
-          <div class="quote-source-only">HANS HOFMANN</div>
+          <div class="quote-source-only test-source" id="sourceEn">HANS HOFMANN</div>
+        </div>
+
+        <div class="test-state test-state-ko" id="stateKo">
+          <div class="definition-copy" id="quoteKo" aria-label="단순화란, 필요한 것이 명확히 드러날 수 있도록 불필요한 것을 덜어내는 능력을 말합니다.">
+            <p>단순화란, 필요한 것이</p>
+            <p>명확히 드러날 수 있도록</p>
+            <p>불필요한 것을 덜어내는</p>
+            <p>능력을 말합니다.</p>
+          </div>
+          <div class="definition-source test-source" id="sourceKo">한스 호프만</div>
         </div>
       </div>
     </section>
   </main>
 
-  <p class="test-progress" aria-hidden="true">SCROLL 0%</p>
+  <p class="test-progress" aria-hidden="true">EN 0%</p>
 
   <script src="./scramble-enhancements.js?v=9"></script>
   <script>
@@ -96,18 +163,32 @@
       const CYCLES = 3;
 
       const stage = document.querySelector('#scrambleTest');
-      const quote = stage?.querySelector('.hero-quote');
-      const source = stage?.querySelector('.quote-source-only');
+      const stateEn = document.querySelector('#stateEn');
+      const stateKo = document.querySelector('#stateKo');
+      const quoteEn = document.querySelector('#quoteEn');
+      const quoteKo = document.querySelector('#quoteKo');
+      const sourceEn = document.querySelector('#sourceEn');
+      const sourceKo = document.querySelector('#sourceKo');
       const progressLabel = document.querySelector('.test-progress');
-      if (!stage || !quote) return;
-
-      quote.style.setProperty('--scramble-rgb','17,17,17');
-      quote.style.setProperty('--scramble-alpha','1');
+      if (!stage || !stateEn || !stateKo || !quoteEn || !quoteKo) return;
 
       const clamp = (value) => Math.max(0, Math.min(1, value));
+      const mapRange = (value, start, end) => clamp((value - start) / Math.max(.0001, end - start));
 
-      const splitChars = () => {
-        quote.querySelectorAll(':scope > span').forEach((line) => {
+      const forceScrambleBlack = (el) => {
+        el.style.setProperty('--scramble-rgb','17,17,17');
+        el.style.setProperty('--scramble-alpha','1');
+      };
+
+      forceScrambleBlack(quoteEn);
+      forceScrambleBlack(quoteKo);
+
+      const splitChars = (root) => {
+        const leaves = root.matches('.hero-quote')
+          ? root.querySelectorAll(':scope > span')
+          : root.querySelectorAll(':scope > p');
+
+        leaves.forEach((line) => {
           Array.from(line.childNodes).forEach((node) => {
             if (node.nodeType !== Node.TEXT_NODE) return;
             const fragment = document.createDocumentFragment();
@@ -116,26 +197,29 @@
               span.className = 'about-scramble-char';
               span.textContent = character;
               span.dataset.finalChar = character;
-              span.style.setProperty('--scramble-rgb','17,17,17');
-              span.style.setProperty('--scramble-alpha','1');
+              forceScrambleBlack(span);
               fragment.appendChild(span);
             });
             node.replaceWith(fragment);
           });
         });
-        return Array.from(quote.querySelectorAll('.about-scramble-char'))
+
+        return Array.from(root.querySelectorAll('.about-scramble-char'))
           .filter((char) => char.textContent.trim());
       };
 
-      const chars = splitChars();
-      const totalVirtualMs = Math.max(
+      const enChars = splitChars(quoteEn);
+      const koChars = splitChars(quoteKo);
+
+      const virtualDuration = (chars) => Math.max(
         1,
         (Math.max(0, chars.length - 1) * STAGGER_MS) + (CYCLE_MS * CYCLES)
       );
+      const enVirtualMs = virtualDuration(enChars);
+      const koVirtualMs = virtualDuration(koChars);
 
-      const render = (progress) => {
-        const p = clamp(progress);
-        const virtualNow = p * totalVirtualMs;
+      const renderChars = (chars, progress, totalVirtualMs) => {
+        const virtualNow = clamp(progress) * totalVirtualMs;
 
         chars.forEach((char, index) => {
           const elapsed = virtualNow - index * STAGGER_MS;
@@ -149,8 +233,7 @@
 
           const cycle = Math.floor(elapsed / CYCLE_MS);
           if (cycle < CYCLES) {
-            char.style.setProperty('--scramble-rgb','17,17,17');
-            char.style.setProperty('--scramble-alpha','1');
+            forceScrambleBlack(char);
             char.style.color = 'transparent';
             char.dataset.scramble = SCRAMBLE_POOL[(index * 17 + cycle * 13) % SCRAMBLE_POOL.length];
             char.classList.add('is-scrambling');
@@ -160,18 +243,53 @@
             char.style.color = 'rgba(17,17,17,1)';
           }
         });
+      };
 
-        if (source) {
-          const sourceStart = chars.length * STAGGER_MS * 0.62;
-          const sourceProgress = clamp((virtualNow - sourceStart) / 320);
-          source.style.setProperty(
-            'color',
-            `rgba(17,17,17,${sourceProgress.toFixed(3)})`,
-            'important'
-          );
+      const renderSource = (source, progress) => {
+        if (!source) return;
+        source.style.setProperty(
+          'color',
+          `rgba(17,17,17,${clamp(progress).toFixed(3)})`,
+          'important'
+        );
+      };
+
+      const setStateOpacity = (state, opacity) => {
+        const value = clamp(opacity);
+        state.style.opacity = value.toFixed(3);
+        state.classList.toggle('is-visible', value > .001);
+      };
+
+      const render = (progress) => {
+        const p = clamp(progress);
+
+        /*
+          0.00—0.34  English scramble reveal
+          0.34—0.42  English hold
+          0.42—0.50  English out / Korean handoff
+          0.50—0.88  Korean scramble reveal
+          0.88—1.00  Korean hold
+        */
+        const enReveal = mapRange(p, 0.00, 0.34);
+        const enOut = mapRange(p, 0.42, 0.50);
+        const koReveal = mapRange(p, 0.50, 0.88);
+
+        setStateOpacity(stateEn, 1 - enOut);
+        setStateOpacity(stateKo, mapRange(p, 0.47, 0.52));
+
+        renderChars(enChars, enReveal, enVirtualMs);
+        renderChars(koChars, koReveal, koVirtualMs);
+
+        renderSource(sourceEn, mapRange(enReveal, .72, .96) * (1 - enOut));
+        renderSource(sourceKo, mapRange(koReveal, .72, .96));
+
+        if (progressLabel) {
+          if (p < .50) {
+            progressLabel.textContent = `EN ${Math.round(enReveal * 100)}%`;
+          } else {
+            progressLabel.textContent = `KO ${Math.round(koReveal * 100)}%`;
+          }
         }
-
-        if (progressLabel) progressLabel.textContent = `SCROLL ${Math.round(p * 100)}%`;
       };
 
       const getProgress = () => {
