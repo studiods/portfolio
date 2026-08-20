@@ -31,11 +31,24 @@
       const ENGLISH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       const DIGITS = '0123456789';
       const SYMBOLS = Array.from('!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~±×÷°§¶•–—…');
-      const SCRAMBLE_CYCLES = 3;
 
-      /* Current production dwell x 1.10 exactly. */
-      const QUOTE_SCRAMBLE_DWELL = 0.936 * 1.10;
-      const DEFINITION_SCRAMBLE_DWELL = 0.864 * 1.10;
+      /*
+        Three visible states per authored glyph:
+        language -> symbol -> number.
+        The authored glyph's total scramble dwell is 10% longer than 3 states.
+      */
+      const SCRAMBLE_CYCLES = 3;
+      const CYCLE_UNITS = 1;
+      const SCRAMBLE_DWELL = SCRAMBLE_CYCLES * CYCLE_UNITS * 1.10; // 3.3
+      const STAGGER_UNITS = 26 / 96; // same overlap rhythm used by the existing title scramble
+
+      /*
+        Fast wheel / trackpad jumps can skip scroll-scrubbed intermediate states.
+        Only the scramble painter is rate-limited; Home layout/state timing stays production-identical.
+        A full skipped reveal catches up in about 1.2s, making every state perceptible.
+      */
+      const CATCHUP_MS = 1200;
+      const MAX_PROGRESS_PER_MS = 1 / CATCHUP_MS;
 
       const HERO = Object.freeze({
         quoteFillStart: 0,
@@ -48,8 +61,12 @@
       const quoteFinalChars = quoteChars.map(char => char.dataset.finalChar ?? char.textContent);
       const definitionFinalChars = definitionChars.map(char => char.dataset.finalChar ?? char.textContent);
       let widths = new WeakMap();
-      let quoteWindowWasActive = false;
-      let definitionWindowWasActive = false;
+      let targetQuote = 0;
+      let targetDefinition = 0;
+      let paintedQuote = 0;
+      let paintedDefinition = 0;
+      let raf = 0;
+      let lastFrame = performance.now();
 
       const style = document.createElement('style');
       style.id = 'hero-language-scramble-test-style';
@@ -91,17 +108,11 @@
         return ENGLISH[Math.abs(seed) % ENGLISH.length];
       };
 
-      /*
-        Every glyph gets all three categories across its 3 random states.
-        The starting category is rotated by character index so the sweep does
-        not look mechanically patterned.
-      */
       const scrambleGlyph = (finalChar, visibleIndex, cycle) => {
         const seed = visibleIndex * 37 + cycle * 53 + (finalChar?.codePointAt?.(0) || 0);
-        const category = (cycle + visibleIndex) % 3;
-        if (category === 0) return languageGlyph(finalChar, seed);
-        if (category === 1) return DIGITS[Math.abs(seed) % DIGITS.length];
-        return SYMBOLS[Math.abs(seed) % SYMBOLS.length];
+        if (cycle === 0) return languageGlyph(finalChar, seed);
+        if (cycle === 1) return SYMBOLS[Math.abs(seed) % SYMBOLS.length];
+        return DIGITS[Math.abs(seed) % DIGITS.length];
       };
 
       const measureFinalWidth = (char, finalChar) => {
@@ -137,84 +148,108 @@
         chars.forEach((char, index) => restore(char, finalChars[index]));
       };
 
-      /*
-        Production uses one local slot per glyph. Here the random-state dwell is
-        10% longer. Sweep length includes the expanded dwell, so the final glyph
-        still resolves exactly at the end of the existing production reveal window.
-      */
-      const paintSequence = (chars, finalChars, progress, scrambleDwell) => {
+      const paintSequence = (chars, finalChars, progress) => {
         const visible = chars
           .map((char, domIndex) => ({ char, finalChar: finalChars[domIndex] }))
           .filter(entry => entry.finalChar.trim().length > 0);
 
-        const sweepEnd = Math.max(scrambleDwell, (visible.length - 1) + scrambleDwell);
-        const sweep = easeInOut(clamp(progress)) * sweepEnd;
+        const totalUnits = Math.max(
+          SCRAMBLE_DWELL,
+          Math.max(0, visible.length - 1) * STAGGER_UNITS + SCRAMBLE_DWELL
+        );
+        const sweep = easeInOut(clamp(progress)) * totalUnits;
 
         visible.forEach(({ char, finalChar }, visibleIndex) => {
-          const local = sweep - visibleIndex;
-          if (local <= 0 || local >= scrambleDwell) {
+          const elapsed = sweep - visibleIndex * STAGGER_UNITS;
+
+          if (elapsed <= 0) {
+            restore(char, finalChar);
+            return;
+          }
+          if (elapsed >= SCRAMBLE_DWELL) {
             restore(char, finalChar);
             return;
           }
 
           const cycle = Math.min(
             SCRAMBLE_CYCLES - 1,
-            Math.floor((local / scrambleDwell) * SCRAMBLE_CYCLES)
+            Math.floor((elapsed / SCRAMBLE_DWELL) * SCRAMBLE_CYCLES)
           );
           showGlyph(char, finalChar, scrambleGlyph(finalChar, visibleIndex, cycle));
         });
       };
 
-      const render = () => {
+      const readTargets = () => {
         const travel = Math.max(1, hero.offsetHeight - innerHeight);
         const heroTop = hero.getBoundingClientRect().top + scrollY;
         const p = clamp((scrollY - heroTop) / travel);
 
-        const quoteProgress = phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd);
-        const quoteWindowIsActive = quoteProgress > 0 && quoteProgress < 1;
-        if (quoteWindowIsActive) {
-          quoteWindowWasActive = true;
-          paintSequence(quoteChars, quoteFinalChars, quoteProgress, QUOTE_SCRAMBLE_DWELL);
-        } else if (quoteWindowWasActive) {
-          restoreAll(quoteChars, quoteFinalChars);
-          quoteWindowWasActive = false;
-        }
-
+        targetQuote = phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd);
         const quoteMorph = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteMorphEnd);
-        const definitionProgress = phaseProgress(
+        targetDefinition = phaseProgress(
           quoteMorph,
           HERO.definitionRevealStartInMorph,
           1
         );
-        const definitionWindowIsActive = definitionProgress > 0 && definitionProgress < 1;
-        if (definitionWindowIsActive) {
-          definitionWindowWasActive = true;
-          paintSequence(definitionChars, definitionFinalChars, definitionProgress, DEFINITION_SCRAMBLE_DWELL);
-        } else if (definitionWindowWasActive) {
-          restoreAll(definitionChars, definitionFinalChars);
-          definitionWindowWasActive = false;
+      };
+
+      const approach = (current, target, maxStep) => {
+        const delta = target - current;
+        if (Math.abs(delta) <= maxStep) return target;
+        return current + Math.sign(delta) * maxStep;
+      };
+
+      const frameRender = now => {
+        raf = 0;
+        const dt = Math.min(48, Math.max(1, now - lastFrame));
+        lastFrame = now;
+        const maxStep = dt * MAX_PROGRESS_PER_MS;
+
+        paintedQuote = approach(paintedQuote, targetQuote, maxStep);
+        paintedDefinition = approach(paintedDefinition, targetDefinition, maxStep);
+
+        if (paintedQuote > 0 && paintedQuote < 1) {
+          paintSequence(quoteChars, quoteFinalChars, paintedQuote);
+        } else {
+          restoreAll(quoteChars, quoteFinalChars);
         }
+
+        if (paintedDefinition > 0 && paintedDefinition < 1) {
+          paintSequence(definitionChars, definitionFinalChars, paintedDefinition);
+        } else {
+          restoreAll(definitionChars, definitionFinalChars);
+        }
+
+        const quoteMoving = Math.abs(paintedQuote - targetQuote) > 0.0001;
+        const definitionMoving = Math.abs(paintedDefinition - targetDefinition) > 0.0001;
+        if (quoteMoving || definitionMoving) requestFrame();
       };
 
-      let raf = 0;
-      const requestRender = () => {
+      const requestFrame = () => {
         if (raf) return;
-        raf = requestAnimationFrame(() => {
-          raf = 0;
-          render();
-        });
+        raf = requestAnimationFrame(frameRender);
       };
 
-      addEventListener('scroll', requestRender, { passive: true });
+      const onScroll = () => {
+        readTargets();
+        requestFrame();
+      };
+
+      addEventListener('scroll', onScroll, { passive: true });
       addEventListener('resize', () => {
         widths = new WeakMap();
-        requestRender();
+        readTargets();
+        requestFrame();
       }, { passive: true });
-      requestRender();
+
+      readTargets();
+      paintedQuote = targetQuote;
+      paintedDefinition = targetDefinition;
+      requestFrame();
     }
 
     const boot = async () => {
-      const response = await fetch('./index.html?home-language-test=1', { cache:'no-store' });
+      const response = await fetch('./index.html?home-language-test=2', { cache:'no-store' });
       if (!response.ok) throw new Error(`index ${response.status}`);
       let html = await response.text();
 
