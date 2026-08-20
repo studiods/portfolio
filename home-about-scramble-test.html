@@ -31,8 +31,21 @@
       visibility:visible!important;
       transform:none!important;
     }
-    .about-home-scramble-test .hero-quote{visibility:visible!important}
-    .about-home-scramble-test .about-scramble-char{color:rgba(17,17,17,0)}
+    .about-home-scramble-test .hero-quote{
+      visibility:visible!important;
+      color:rgba(17,17,17,0)!important;
+      --scramble-rgb:17,17,17;
+      --scramble-alpha:1;
+    }
+    .about-home-scramble-test .about-scramble-char{
+      color:rgba(17,17,17,0);
+      --scramble-rgb:17,17,17;
+      --scramble-alpha:1;
+    }
+    .about-home-scramble-test .about-scramble-char.live-scramble-glyph{
+      --live-scramble-color:rgba(17,17,17,1)!important;
+      color:rgba(17,17,17,1)!important;
+    }
     .about-home-scramble-test .quote-source-only{
       color:rgba(17,17,17,0)!important;
       opacity:1!important;
@@ -88,6 +101,9 @@
       const progressLabel = document.querySelector('.test-progress');
       if (!stage || !quote) return;
 
+      quote.style.setProperty('--scramble-rgb','17,17,17');
+      quote.style.setProperty('--scramble-alpha','1');
+
       const clamp = (value) => Math.max(0, Math.min(1, value));
 
       const splitChars = () => {
@@ -100,6 +116,8 @@
               span.className = 'about-scramble-char';
               span.textContent = character;
               span.dataset.finalChar = character;
+              span.style.setProperty('--scramble-rgb','17,17,17');
+              span.style.setProperty('--scramble-alpha','1');
               fragment.appendChild(span);
             });
             node.replaceWith(fragment);
@@ -131,6 +149,8 @@
 
           const cycle = Math.floor(elapsed / CYCLE_MS);
           if (cycle < CYCLES) {
+            char.style.setProperty('--scramble-rgb','17,17,17');
+            char.style.setProperty('--scramble-alpha','1');
             char.style.color = 'transparent';
             char.dataset.scramble = SCRAMBLE_POOL[(index * 17 + cycle * 13) % SCRAMBLE_POOL.length];
             char.classList.add('is-scrambling');
