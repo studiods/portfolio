@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About ASCII Test — Random Regions</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="./style.css?v=17">
+  <link rel="stylesheet" href="./typography.css?v=7">
+  <link rel="stylesheet" href="./type-overrides.css?v=17">
+  <link rel="stylesheet" href="./about-page.css?v=33">
+  <link rel="stylesheet" href="./about-fixes.css?v=11">
+  <style>
+    .about-ascii-canvas{position:relative;z-index:1}
+    .about-ascii-blackout{z-index:2}
+    .ascii-test-info{min-height:72vh;padding:72px clamp(24px,4vw,64px);background:#000;color:rgba(244,242,237,.62);font-family:var(--font-ui,"Averta PE",sans-serif)}
+    .ascii-test-info p{margin:0;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+  </style>
+</head>
+<body>
+<nav class="top">
+  <div class="top-center">
+    <a href="./index.html">Home</a>
+    <a href="./about.html" aria-current="page">About</a>
+    <a href="./works.html">Works</a>
+    <a href="./index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<main class="about-page">
+  <section class="about-stack">
+    <div class="about-ascii-stage" id="about-top">
+      <div class="about-ascii-hero" aria-label="현재 About의 질감을 유지하면서 여러 랜덤 영역이 서로 다른 시점에 변화하는 ASCII 전환 테스트">
+        <canvas class="about-ascii-canvas" aria-hidden="true"></canvas>
+        <div class="about-ascii-blackout" aria-hidden="true"></div>
+        <div class="about-ascii-title" aria-hidden="true">ABOUT</div>
+      </div>
+    </div>
+    <section class="ascii-test-info">
+      <p>TEST — CURRENT MORPH + RANDOM LOCAL REGIONS / NO WAVE / NO EXTRA SCRAMBLE</p>
+    </section>
+  </section>
+</main>
+
+<script src="./about-ascii-photo-meta.js?v=3"></script>
+<script src="./about-ascii-photo-frame-1.js?v=3"></script>
+<script src="./about-ascii-photo-frame-2.js?v=3"></script>
+<script src="./about-ascii-photo-frame-3.js?v=3"></script>
+<script src="./about-ascii-photo-frame-4.js?v=3"></script>
+<script src="./about-ascii-photo-frame-5.js?v=3"></script>
+<script src="./about-ascii-photo-frame-6.js?v=3"></script>
+<script src="./about-ascii-photo-frame-7.js?v=3"></script>
+<script src="./about-ascii-random-region-test.js?v=1"></script>
+<script src="./scramble-enhancements.js?v=4"></script>
+</body>
+</html>
