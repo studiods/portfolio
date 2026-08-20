@@ -28,34 +28,39 @@
       const definitionChars = definition ? [...definition.querySelectorAll('.fill-char')] : [];
       if (!hero || !quote || !definition || !quoteChars.length || !definitionChars.length) return;
 
-      const ENGLISH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      /*
+        Language-specific, deliberately familiar pools only.
+        EN: A-Z + digits + common keyboard symbols.
+        KO: common modern Hangul syllables + digits + the same common symbols.
+        No archaic/rare Hangul syllables and no extended/exotic symbols.
+      */
+      const ENGLISH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const KOREAN = Array.from(
+        '가나다라마바사아자차카타파하' +
+        '거너더러머버서어저처커터퍼허' +
+        '고노도로모보소오조초코토포호' +
+        '구누두루무부수우주추쿠투푸후' +
+        '기니디리미비시이지치키티피히'
+      );
       const DIGITS = '0123456789';
-      const SYMBOLS = Array.from('!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~±×÷°§¶•–—…');
+      const SYMBOLS = Array.from('!@#₩%&*+-_=?:;,.()/[]{}<>~');
 
-      /*
-        Three visible states per authored glyph:
-        language -> symbol -> number.
-        The authored glyph's total scramble dwell is 10% longer than 3 states.
-      */
+      /* Each glyph keeps three visible random states, 10% longer in total. */
       const SCRAMBLE_CYCLES = 3;
-      const CYCLE_UNITS = 1;
-      const SCRAMBLE_DWELL = SCRAMBLE_CYCLES * CYCLE_UNITS * 1.10; // 3.3
-      const STAGGER_UNITS = 26 / 96; // same overlap rhythm used by the existing title scramble
+      const SCRAMBLE_DWELL = SCRAMBLE_CYCLES * 1.10; // 3.3 units
+      const STAGGER_UNITS = 26 / 96;
 
-      /*
-        Fast wheel / trackpad jumps can skip scroll-scrubbed intermediate states.
-        Only the scramble painter is rate-limited; Home layout/state timing stays production-identical.
-        A full skipped reveal catches up in about 1.2s, making every state perceptible.
-      */
+      /* Scramble painting follows fast scroll instead of skipping intermediate states. */
       const CATCHUP_MS = 1200;
       const MAX_PROGRESS_PER_MS = 1 / CATCHUP_MS;
 
       const HERO = Object.freeze({
-        quoteFillStart: 0,
+        /* Small dead-zone before the first Hero scramble begins. */
+        quoteFillStart: 0.014,
         quoteFillEnd: 0.095,
         quoteHoldEnd: 0.245,
         quoteMorphEnd: 0.395,
-        definitionRevealStartInMorph: 0.08
+        definitionRevealStartInMorph: 0.10
       });
 
       const quoteFinalChars = quoteChars.map(char => char.dataset.finalChar ?? char.textContent);
@@ -71,7 +76,10 @@
       const style = document.createElement('style');
       style.id = 'hero-language-scramble-test-style';
       style.textContent = `
-        #heroSequence .fill-char[data-hero-direct-scramble="1"]{
+        #heroSequence .fill-char[data-hero-test-state="pending"]{
+          color:rgba(17,17,17,0)!important;
+        }
+        #heroSequence .fill-char[data-hero-test-state="scramble"]{
           color:rgba(17,17,17,1)!important;
           display:inline!important;
           position:static!important;
@@ -80,8 +88,10 @@
           transform:none!important;
           translate:none!important;
         }
-        #heroSequence .fill-char[data-hero-direct-scramble="1"]::before,
-        #heroSequence .fill-char[data-hero-direct-scramble="1"]::after{
+        #heroSequence .fill-char[data-hero-test-state="pending"]::before,
+        #heroSequence .fill-char[data-hero-test-state="pending"]::after,
+        #heroSequence .fill-char[data-hero-test-state="scramble"]::before,
+        #heroSequence .fill-char[data-hero-test-state="scramble"]::after{
           content:none!important;
           display:none!important;
         }
@@ -100,14 +110,12 @@
       const isKorean = char => /[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(char || '');
 
       const languageGlyph = (finalChar, seed) => {
-        if (isKorean(finalChar)) {
-          const HANGUL_START = 0xAC00;
-          const HANGUL_COUNT = 11172;
-          return String.fromCodePoint(HANGUL_START + (Math.abs(seed) % HANGUL_COUNT));
-        }
-        return ENGLISH[Math.abs(seed) % ENGLISH.length];
+        const n = Math.abs(seed);
+        if (isKorean(finalChar)) return KOREAN[n % KOREAN.length];
+        return ENGLISH[n % ENGLISH.length];
       };
 
+      /* Every authored glyph visibly passes language -> symbol -> number. */
       const scrambleGlyph = (finalChar, visibleIndex, cycle) => {
         const seed = visibleIndex * 37 + cycle * 53 + (finalChar?.codePointAt?.(0) || 0);
         if (cycle === 0) return languageGlyph(finalChar, seed);
@@ -128,24 +136,40 @@
         return width;
       };
 
+      const setPending = (char, finalChar) => {
+        char.textContent = finalChar;
+        char.style.removeProperty('letter-spacing');
+        char.removeAttribute('data-hero-direct-scramble');
+        char.setAttribute('data-hero-test-state', 'pending');
+      };
+
       const showGlyph = (char, finalChar, glyph) => {
         const finalWidth = measureFinalWidth(char, finalChar);
         char.style.letterSpacing = '0px';
         char.textContent = glyph;
         const glyphWidth = Math.max(0, char.getBoundingClientRect().width);
-        char.style.letterSpacing = `${(finalWidth - glyphWidth).toFixed(3)}px`;
-        char.setAttribute('data-hero-direct-scramble', '1');
+        if (finalWidth > 0) {
+          char.style.letterSpacing = `${(finalWidth - glyphWidth).toFixed(3)}px`;
+        }
+        char.removeAttribute('data-hero-direct-scramble');
+        char.setAttribute('data-hero-test-state', 'scramble');
       };
 
       const restore = (char, finalChar) => {
-        if (!char.hasAttribute('data-hero-direct-scramble')) return;
         char.textContent = finalChar;
+        char.removeAttribute('data-hero-test-state');
         char.removeAttribute('data-hero-direct-scramble');
         char.style.removeProperty('letter-spacing');
       };
 
       const restoreAll = (chars, finalChars) => {
         chars.forEach((char, index) => restore(char, finalChars[index]));
+      };
+
+      const pendingAll = (chars, finalChars) => {
+        chars.forEach((char, index) => {
+          if ((finalChars[index] || '').trim()) setPending(char, finalChars[index]);
+        });
       };
 
       const paintSequence = (chars, finalChars, progress) => {
@@ -163,7 +187,7 @@
           const elapsed = sweep - visibleIndex * STAGGER_UNITS;
 
           if (elapsed <= 0) {
-            restore(char, finalChar);
+            setPending(char, finalChar);
             return;
           }
           if (elapsed >= SCRAMBLE_DWELL) {
@@ -208,17 +232,13 @@
         paintedQuote = approach(paintedQuote, targetQuote, maxStep);
         paintedDefinition = approach(paintedDefinition, targetDefinition, maxStep);
 
-        if (paintedQuote > 0 && paintedQuote < 1) {
-          paintSequence(quoteChars, quoteFinalChars, paintedQuote);
-        } else {
-          restoreAll(quoteChars, quoteFinalChars);
-        }
+        if (paintedQuote <= 0) pendingAll(quoteChars, quoteFinalChars);
+        else if (paintedQuote < 1) paintSequence(quoteChars, quoteFinalChars, paintedQuote);
+        else restoreAll(quoteChars, quoteFinalChars);
 
-        if (paintedDefinition > 0 && paintedDefinition < 1) {
-          paintSequence(definitionChars, definitionFinalChars, paintedDefinition);
-        } else {
-          restoreAll(definitionChars, definitionFinalChars);
-        }
+        if (paintedDefinition <= 0) pendingAll(definitionChars, definitionFinalChars);
+        else if (paintedDefinition < 1) paintSequence(definitionChars, definitionFinalChars, paintedDefinition);
+        else restoreAll(definitionChars, definitionFinalChars);
 
         const quoteMoving = Math.abs(paintedQuote - targetQuote) > 0.0001;
         const definitionMoving = Math.abs(paintedDefinition - targetDefinition) > 0.0001;
@@ -242,14 +262,17 @@
         requestFrame();
       }, { passive: true });
 
+      /* Start completely clean; the first random glyph waits for the dead-zone. */
+      pendingAll(quoteChars, quoteFinalChars);
+      pendingAll(definitionChars, definitionFinalChars);
       readTargets();
-      paintedQuote = targetQuote;
-      paintedDefinition = targetDefinition;
+      paintedQuote = 0;
+      paintedDefinition = 0;
       requestFrame();
     }
 
     const boot = async () => {
-      const response = await fetch('./index.html?home-language-test=2', { cache:'no-store' });
+      const response = await fetch('./index.html?home-language-test=3', { cache:'no-store' });
       if (!response.ok) throw new Error(`index ${response.status}`);
       let html = await response.text();
 
