@@ -3,627 +3,121 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Shin Dong Sik — UX Design Lead</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
-  <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
-  <link rel="preload" href="./fonts/Averta-PE-Bold.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="./style.css?v=17">
-  <link rel="stylesheet" href="./typography.css?v=7">
-  <link rel="stylesheet" href="./type-overrides.css?v=18">
-  <link rel="stylesheet" href="./home-fixes.css?v=52">
-  <link rel="stylesheet" href="./home-test-fixes.css?v=18">
+  <title>Shin Dong Sik — Home Scramble Symbols Test</title>
+  <style>
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#fff}
+    #homeFrame{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:#fff}
+  </style>
 </head>
-<body class="home-test">
-<nav class="top">
-  <div class="top-center">
-    <a href="./index.html" aria-current="page">Home</a>
-    <a href="./about.html">About</a>
-    <a href="./works.html">Works</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+<body>
+  <iframe id="homeFrame" src="./index.html?scramble-test=symbols" title="Home scramble symbols test"></iframe>
 
-<main class="shell">
-  <section class="hero-sequence" id="heroSequence">
-    <div class="hero-sticky">
-      <div class="hero-state hero-state-quote">
-        <div class="hero-quote hero-load-mask js-char-fill">
-          <span>THE ABILITY TO SIMPLIFY</span>
-          <span>MEANS TO ELIMINATE</span>
-          <span>THE UNNECESSARY SO THAT</span>
-          <span>THE NECESSARY MAY SPEAK.</span>
-        </div>
-        <div class="quote-source-only fill-line">HANS HOFMANN</div>
-      </div>
+  <script>
+  (() => {
+    'use strict';
 
-      <div class="hero-state hero-state-definition" aria-hidden="true">
-        <div class="definition-copy definition-mask js-char-fill">
-          <p class="fill-line">단순화란, 필요한 것이</p>
-          <p class="fill-line">명확히 드러날 수 있도록</p>
-          <p class="fill-line">불필요한 것을 덜어내는</p>
-          <p class="fill-line">능력을 말합니다.</p>
-        </div>
-        <div class="definition-source js-char-fill">한스 호프만</div>
-      </div>
-
-      <div class="hero-state hero-state-subtractive" aria-hidden="true">
-        <div class="subtractive-title js-char-fill">
-          <span>SUBTRACTIVE</span>
-          <span>DESIGN</span>
-        </div>
-        <div class="subtractive-korean line-fill-target">
-          <p class="fill-line">불필요한 것을 덜어내고, 필요한 경험만 남깁니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="intro-block section-focus" id="philosophy">
-    <div class="philosophy-sticky">
-      <div class="mini-label">Design philosophy</div>
-      <div class="philosophy-statements">
-        <p>할 수 있는 디자인이 아닌</p>
-        <p>필요한 디자인을 합니다.</p>
-        <p class="philosophy-group-start">필요한 디자인은</p>
-        <p>문제를 정확히 이해하는 것에서 시작합니다.</p>
-        <p class="philosophy-group-start">문제의 본질을 다시 정의하고,</p>
-        <p>무엇을 해결해야 하는지 명확히 합니다.</p>
-        <p class="philosophy-group-start">그리고 모든 디자인은</p>
-        <p>명확성과 효율성을 향합니다.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="philosophy-tail-space" aria-hidden="true"></div>
-
-  <section class="principles-section section-focus" id="principles">
-    <div class="principles-persistent-label">
-      <div class="mini-label light-ui">Design principles</div>
-    </div>
-
-    <div class="principles-intro-stage">
-      <div class="principles-head">
-        <h2 class="principles-intro">
-          <span class="principles-intro-row">
-            <span class="principles-intro-en js-char-fill">LESS ASSUMPTION</span>
-            <span class="principles-intro-mask" aria-hidden="true"></span>
-            <span class="principles-intro-ko">가정을 줄이고</span>
-          </span>
-          <span class="principles-intro-row">
-            <span class="principles-intro-en js-char-fill">LESS CONVENTION</span>
-            <span class="principles-intro-mask" aria-hidden="true"></span>
-            <span class="principles-intro-ko">관습에 얽매이지 않으며</span>
-          </span>
-          <span class="principles-intro-row">
-            <span class="principles-intro-en js-char-fill">LESS BIAS</span>
-            <span class="principles-intro-mask" aria-hidden="true"></span>
-            <span class="principles-intro-ko">선입견을 덜어냅니다.</span>
-          </span>
-        </h2>
-      </div>
-    </div>
-
-    <div class="principles-after-intro" aria-hidden="true"></div>
-
-    <div class="principles-cards-stage">
-      <div class="principles-grid">
-        <article class="principle-card">
-          <div class="principle-card-inner">
-            <div class="principle-copy">
-              <div class="principle-copy-stage">
-                <p class="principle-ko">왜 필요한지, 왜 개선해야 하는지<br>핵심 이유부터 파악합니다.</p>
-              </div>
-              <p class="principle-en js-char-fill">REMOVE ASSUMPTIONS</p>
-            </div>
-          </div>
-        </article>
-        <article class="principle-card">
-          <div class="principle-card-inner">
-            <div class="principle-copy">
-              <div class="principle-copy-stage">
-                <p class="principle-ko">모두가 당연하다고 여기는<br>부분부터 고민을 시작합니다.</p>
-              </div>
-              <p class="principle-en js-char-fill">REMOVE CONVENTIONS</p>
-            </div>
-          </div>
-        </article>
-        <article class="principle-card">
-          <div class="principle-card-inner">
-            <div class="principle-copy">
-              <div class="principle-copy-stage">
-                <p class="principle-ko">어떤 상황에서도 근거를 바탕으로<br>판단하고 결정합니다.</p>
-              </div>
-              <p class="principle-en js-char-fill">REMOVE BIAS</p>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="selected-work section-focus" id="work">
-    <header class="selected-work-header"><div class="mini-label">Works</div></header>
-    <div class="project-stack">
-      <article class="showcase-project" id="project-himart"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">RETHINKING</span> <span class="work-word">THE</span> <span class="work-word">COMMERCE</span> <span class="work-word">JOURNEY</span></h3></a><div class="showcase-meta"><span>LOTTE HIMART</span></div></div><a class="project-visual" href="#" aria-label="Rethinking the commerce journey"><div class="placeholder wide"></div></a></article>
-      <article class="showcase-project" id="project-aimmo"><div class="project-copy"><a class="project-title-link" href="./aimmo.html"><h3><span class="work-word">BUILDING</span> <span class="work-word">A</span> <span class="work-word">SYSTEM</span> <span class="work-word">WITHOUT</span> <span class="work-word">STOPPING</span> <span class="work-word">THE</span> <span class="work-word">PRODUCT</span></h3></a><div class="showcase-meta"><span>AIMMO</span></div></div><a class="project-visual" href="./aimmo.html" aria-label="Building a system without stopping the product"><div class="placeholder"></div></a></article>
-      <article class="showcase-project" id="project-nbt"><div class="project-copy"><a class="project-title-link" href="./stepup.html"><h3><span class="work-word">DESIGNING</span> <span class="work-word">A</span> <span class="work-word">HABIT,</span> <span class="work-word">NOT</span> <span class="work-word">A</span> <span class="work-word">PEDOMETER</span></h3></a><div class="showcase-meta"><span>NBT</span></div></div><a class="project-visual" href="./stepup.html" aria-label="Designing a habit, not a pedometer"><div class="placeholder wide"></div></a></article>
-      <article class="showcase-project" id="project-trenbe"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">CREATING</span> <span class="work-word">ONE</span> <span class="work-word">SHARED</span> <span class="work-word">MODEL</span> <span class="work-word">OF</span> <span class="work-word">THE</span> <span class="work-word">CUSTOMER</span></h3></a><div class="showcase-meta"><span>TRENBE</span></div></div><a class="project-visual" href="#" aria-label="Creating one shared model of the customer"><div class="placeholder"></div></a></article>
-      <article class="showcase-project" id="project-yanolja"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">DESIGNING</span> <span class="work-word">FOR</span> <span class="work-word">THE</span> <span class="work-word">REAL</span> <span class="work-word">WORKING</span> <span class="work-word">ENVIRONMENT</span></h3></a><div class="showcase-meta"><span>YANOLJA</span></div></div><a class="project-visual" href="#" aria-label="Designing for the real working environment"><div class="placeholder wide"></div></a></article>
-      <article class="showcase-project" id="project-coupang"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">MAKING</span> <span class="work-word">A</span> <span class="work-word">GROWING</span> <span class="work-word">CATALOG</span> <span class="work-word">EASIER</span> <span class="work-word">TO</span> <span class="work-word">SEARCH</span></h3></a><div class="showcase-meta"><span>COUPANG</span></div></div><a class="project-visual" href="#" aria-label="Making a growing catalog easier to search"><div class="placeholder"></div></a></article>
-      <article class="showcase-project" id="project-vinyl"><div class="project-copy"><a class="project-title-link" href="./about.html#vinyl"><h3><span class="work-word">VINYL</span></h3></a><div class="showcase-meta"><span>2009—2013</span></div></div><a class="project-visual" href="./about.html#vinyl" aria-label="VINYL archive"><div class="placeholder wide"></div></a></article>
-    </div>
-  </section>
-
-  <footer class="footer filip-footer footer-contact-only" id="contact"><div class="footer-grid"><div><h3>Contact</h3><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></div></div></footer>
-</main>
-
-<script>
-(() => {
-  'use strict';
-
-  /*
-    TEST ONLY — full Averta PE Thin cmap scramble pool.
-    The production Home is untouched. Invisible/control/combining Unicode
-    codepoints are excluded because they cannot act as standalone scramble glyphs.
-  */
-  const FALLBACK_POOL = Array.from(
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789' +
-    '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~' +
-    '¡¿¢£¥€©®™°±×÷§¶•–—…“”‘’‹›«»'
-  );
-
-  let glyphPool = FALLBACK_POOL.slice();
-
-  const isStandaloneVisible = (cp) => {
-    if (cp < 0x21 || cp > 0x10FFFF) return false;
-    if (cp >= 0xD800 && cp <= 0xDFFF) return false;
-    if ((cp & 0xFFFF) === 0xFFFE || (cp & 0xFFFF) === 0xFFFF) return false;
-    const ch = String.fromCodePoint(cp);
-    try {
-      if (/[\p{Cc}\p{Cf}\p{Cs}\p{Z}\p{M}]/u.test(ch)) return false;
-    } catch (_) {
-      if (/\s/.test(ch)) return false;
-    }
-    return ch.trim().length > 0;
-  };
-
-  const parseCmap = (buffer) => {
-    const view = new DataView(buffer);
-    const u16 = (o) => view.getUint16(o, false);
-    const i16 = (o) => view.getInt16(o, false);
-    const u32 = (o) => view.getUint32(o, false);
-    const tagAt = (o) => String.fromCharCode(
-      view.getUint8(o), view.getUint8(o + 1), view.getUint8(o + 2), view.getUint8(o + 3)
+    const frame = document.querySelector('#homeFrame');
+    const SYMBOL_POOL = Array.from(
+      '0123456789' +
+      '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~' +
+      '¡¿¢£¥€©®™°±×÷§¶•–—…“”‘’‹›«»'
     );
 
-    const tableCount = u16(4);
-    let cmapOffset = -1;
-    let cmapLength = 0;
-    for (let i = 0; i < tableCount; i += 1) {
-      const record = 12 + i * 16;
-      if (tagAt(record) !== 'cmap') continue;
-      cmapOffset = u32(record + 8);
-      cmapLength = u32(record + 12);
-      break;
-    }
-    if (cmapOffset < 0) return [];
+    frame.addEventListener('load', () => {
+      const win = frame.contentWindow;
+      const doc = frame.contentDocument;
+      if (!win || !doc) return;
 
-    const cmapEnd = Math.min(buffer.byteLength, cmapOffset + cmapLength);
-    const subtableCount = u16(cmapOffset + 2);
-    const subtables = [];
-    for (let i = 0; i < subtableCount; i += 1) {
-      const record = cmapOffset + 4 + i * 8;
-      if (record + 8 > cmapEnd) break;
-      const platform = u16(record);
-      const encoding = u16(record + 2);
-      const offset = u32(record + 4);
-      const start = cmapOffset + offset;
-      if (start + 2 > cmapEnd) continue;
-      const format = u16(start);
-      if (format === 4 || format === 12) subtables.push({ platform, encoding, start, format });
-    }
+      const states = new WeakMap();
+      const widths = new WeakMap();
+      const ACTIVE_SELECTOR = '.live-scramble-glyph,[data-hero-direct-scramble="1"]';
 
-    /* Prefer Unicode/full-repertoire tables, but union all usable Unicode cmaps. */
-    subtables.sort((a, b) => {
-      const score = (item) =>
-        (item.format === 12 ? 100 : 0) +
-        (item.platform === 0 ? 20 : 0) +
-        (item.platform === 3 && item.encoding === 10 ? 15 : 0) +
-        (item.platform === 3 && item.encoding === 1 ? 10 : 0);
-      return score(b) - score(a);
-    });
+      const charCode = (text) => {
+        const cp = text?.codePointAt?.(0);
+        return Number.isFinite(cp) ? cp : 0;
+      };
 
-    const codepoints = new Set();
-
-    const readFormat12 = (start) => {
-      if (start + 16 > cmapEnd) return;
-      const length = u32(start + 4);
-      const end = Math.min(cmapEnd, start + length);
-      const groups = u32(start + 12);
-      let pos = start + 16;
-      for (let g = 0; g < groups && pos + 12 <= end; g += 1, pos += 12) {
-        const first = u32(pos);
-        const last = u32(pos + 4);
-        const firstGlyph = u32(pos + 8);
-        if (last < first) continue;
-        for (let cp = first; cp <= last; cp += 1) {
-          const glyphId = firstGlyph + (cp - first);
-          if (glyphId !== 0) codepoints.add(cp);
+      const ensureState = (el) => {
+        let state = states.get(el);
+        if (!state) {
+          state = { count: 0, lastOutput: '' };
+          states.set(el, state);
         }
-      }
-    };
+        return state;
+      };
 
-    const readFormat4 = (start) => {
-      if (start + 16 > cmapEnd) return;
-      const length = u16(start + 2);
-      const end = Math.min(cmapEnd, start + length);
-      const segCount = u16(start + 6) / 2;
-      const endCodeBase = start + 14;
-      const startCodeBase = endCodeBase + segCount * 2 + 2;
-      const deltaBase = startCodeBase + segCount * 2;
-      const rangeBase = deltaBase + segCount * 2;
-      if (rangeBase + segCount * 2 > end) return;
+      const finalWidth = (el) => {
+        if (widths.has(el)) return widths.get(el);
+        const finalChar = el.dataset.finalChar;
+        if (!finalChar) return 0;
 
-      for (let i = 0; i < segCount; i += 1) {
-        const first = u16(startCodeBase + i * 2);
-        const last = u16(endCodeBase + i * 2);
-        const delta = i16(deltaBase + i * 2);
-        const rangeOffsetPos = rangeBase + i * 2;
-        const rangeOffset = u16(rangeOffsetPos);
-        if (first === 0xFFFF && last === 0xFFFF) continue;
-        if (last < first) continue;
+        const previousText = el.textContent;
+        const previousSpacing = el.style.letterSpacing;
+        el.style.letterSpacing = '0px';
+        el.textContent = finalChar;
+        const width = Math.max(0, el.getBoundingClientRect().width);
+        el.textContent = previousText;
+        el.style.letterSpacing = previousSpacing;
+        widths.set(el, width);
+        return width;
+      };
 
-        for (let cp = first; cp <= last; cp += 1) {
-          let glyphId = 0;
-          if (rangeOffset === 0) {
-            glyphId = (cp + delta) & 0xFFFF;
-          } else {
-            const glyphPos = rangeOffsetPos + rangeOffset + (cp - first) * 2;
-            if (glyphPos + 2 > end) continue;
-            glyphId = u16(glyphPos);
-            if (glyphId !== 0) glyphId = (glyphId + delta) & 0xFFFF;
+      const pickSymbol = (raw, state) => {
+        state.count += 1;
+        const seed = charCode(raw) + state.count * 29;
+        return SYMBOL_POOL[Math.abs(seed) % SYMBOL_POOL.length];
+      };
+
+      const adapt = (el) => {
+        if (!(el instanceof win.Element) || !el.matches(ACTIVE_SELECTOR)) return;
+
+        const state = ensureState(el);
+        const raw = el.textContent || '';
+        if (!raw || raw === state.lastOutput) return;
+
+        const output = pickSymbol(raw, state);
+        state.lastOutput = output;
+
+        if (el.hasAttribute('data-hero-direct-scramble')) {
+          const width = finalWidth(el);
+          el.style.letterSpacing = '0px';
+          el.textContent = output;
+          const glyphWidth = Math.max(0, el.getBoundingClientRect().width);
+          if (width > 0) {
+            el.style.letterSpacing = `${(width - glyphWidth).toFixed(3)}px`;
           }
-          if (glyphId !== 0) codepoints.add(cp);
+        } else {
+          el.textContent = output;
         }
-      }
-    };
+      };
 
-    subtables.forEach((table) => {
-      if (table.format === 12) readFormat12(table.start);
-      else if (table.format === 4) readFormat4(table.start);
-    });
-
-    return [...codepoints]
-      .filter(isStandaloneVisible)
-      .sort((a, b) => a - b)
-      .map((cp) => String.fromCodePoint(cp));
-  };
-
-  const ready = (async () => {
-    try {
-      await document.fonts.load('300 64px "Averta PE"');
-      const response = await fetch('./fonts/Averta-PE-Thin.otf');
-      if (!response.ok) throw new Error(`font ${response.status}`);
-      const parsed = parseCmap(await response.arrayBuffer());
-      if (parsed.length) glyphPool = parsed;
-    } catch (error) {
-      console.warn('[full-glyph-test] cmap fallback pool used', error);
-    }
-    document.documentElement.dataset.fullGlyphPoolSize = String(glyphPool.length);
-    return glyphPool;
-  })();
-
-  const pick = (seed) => {
-    const pool = glyphPool.length ? glyphPool : FALLBACK_POOL;
-    const normalized = Math.abs(Math.trunc(seed || 0));
-    return pool[normalized % pool.length] || 'A';
-  };
-
-  window.__HOME_FULL_GLYPH_TEST__ = {
-    ready,
-    pick,
-    get size(){ return glyphPool.length; }
-  };
-
-  /* Shared live-node scramble renderer: same production geometry, expanded pool. */
-  const style = document.createElement('style');
-  style.id = 'live-scramble-style';
-  style.textContent = `
-    .fill-char.is-scrambling::before,
-    .fill-char.is-scrambling::after,
-    .test-managed-char.test-progressive-scramble::before,
-    .test-managed-char.test-progressive-scramble::after{
-      content:none!important;
-      display:none!important;
-    }
-    html body .live-scramble-glyph{
-      display:inline-block!important;
-      width:var(--live-scramble-width)!important;
-      min-width:var(--live-scramble-width)!important;
-      max-width:var(--live-scramble-width)!important;
-      position:static!important;
-      top:auto!important;
-      bottom:auto!important;
-      left:auto!important;
-      right:auto!important;
-      vertical-align:baseline!important;
-      line-height:inherit!important;
-      transform:none!important;
-      translate:none!important;
-      margin:0!important;
-      padding:0!important;
-      overflow:visible!important;
-      color:var(--live-scramble-color)!important;
-    }
-    html body.home-test .live-scramble-glyph.test-managed-char.test-progressive-scramble,
-    html body .live-scramble-glyph.fill-char.is-scrambling{
-      color:var(--live-scramble-color)!important;
-    }
-  `;
-  document.head.appendChild(style);
-
-  const states = new WeakMap();
-  const counters = new WeakMap();
-  const isScrambling = (el) =>
-    el.classList.contains('is-scrambling') ||
-    el.classList.contains('test-progressive-scramble');
-
-  const ensureState = (el) => {
-    let state = states.get(el);
-    if (state) return state;
-    state = {
-      finalChar: el.dataset.finalChar || el.textContent,
-      width: Math.max(0, el.getBoundingClientRect().width),
-      active: false
-    };
-    states.set(el, state);
-    return state;
-  };
-
-  const scrambleColor = (el, attr) => {
-    const computed = getComputedStyle(el);
-    const rgb = (
-      attr === 'data-test-scramble'
-        ? computed.getPropertyValue('--test-rgb')
-        : computed.getPropertyValue('--scramble-rgb')
-    ).trim();
-    const alpha = (
-      attr === 'data-test-scramble'
-        ? computed.getPropertyValue('--test-scramble-alpha')
-        : computed.getPropertyValue('--scramble-alpha')
-    ).trim();
-    if (rgb) return `rgba(${rgb},${alpha || '1'})`;
-    const parentColor = el.parentElement ? getComputedStyle(el.parentElement).color : '';
-    return parentColor || '#fff';
-  };
-
-  const expandedGlyph = (el, raw) => {
-    const count = (counters.get(el) || 0) + 1;
-    counters.set(el, count);
-    const state = ensureState(el);
-    const finalCode = state.finalChar?.codePointAt?.(0) || 0;
-    const rawCode = raw?.codePointAt?.(0) || 0;
-    return pick(finalCode * 131 + rawCode * 17 + count * 104729);
-  };
-
-  const activate = (el, rawGlyph, attr) => {
-    if (!(el instanceof Element) || !rawGlyph) return;
-    const state = ensureState(el);
-    if (!state.active) {
-      el.textContent = state.finalChar;
-      state.width = Math.max(0, el.getBoundingClientRect().width);
-      el.style.setProperty('--live-scramble-width', `${state.width.toFixed(3)}px`);
-      el.classList.add('live-scramble-glyph');
-      state.active = true;
-    }
-    el.style.setProperty('--live-scramble-color', scrambleColor(el, attr));
-    el.textContent = expandedGlyph(el, rawGlyph);
-  };
-
-  const restore = (el) => {
-    const state = states.get(el);
-    if (!state || !state.active) return;
-    state.active = false;
-    el.textContent = state.finalChar;
-    el.classList.remove('live-scramble-glyph');
-    el.style.removeProperty('--live-scramble-width');
-    el.style.removeProperty('--live-scramble-color');
-  };
-
-  const syncElement = (el, attr) => {
-    if (!(el instanceof Element)) return;
-    if (!isScrambling(el)) {
-      restore(el);
-      return;
-    }
-    const dataAttr = attr === 'data-test-scramble' || el.hasAttribute('data-test-scramble')
-      ? 'data-test-scramble'
-      : 'data-scramble';
-    const glyph = el.getAttribute(dataAttr);
-    if (glyph) activate(el, glyph, dataAttr);
-  };
-
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      const el = mutation.target;
-      if (!(el instanceof Element)) return;
-      if (mutation.type !== 'attributes') return;
-      const attr = mutation.attributeName;
-      if (attr === 'data-scramble' || attr === 'data-test-scramble' || attr === 'class') {
-        syncElement(el, attr);
-      }
-    });
-  });
-
-  observer.observe(document.documentElement, {
-    subtree:true,
-    attributes:true,
-    attributeFilter:['data-scramble','data-test-scramble','class']
-  });
-
-  /* Production Hero timing, with only the random glyph source replaced. */
-  addEventListener('DOMContentLoaded', () => {
-    const hero = document.querySelector('#heroSequence');
-    const quote = hero?.querySelector('.hero-quote');
-    const definition = hero?.querySelector('.definition-copy');
-    const quoteChars = quote ? [...quote.querySelectorAll('.fill-char')] : [];
-    const definitionChars = definition ? [...definition.querySelectorAll('.fill-char')] : [];
-    if (!hero || !quote || !definition || !quoteChars.length || !definitionChars.length) return;
-
-    const SCRAMBLE_CYCLES = 3;
-    const SCRAMBLE_DWELL_MULTIPLIER = 1.20;
-    const QUOTE_BASE_DWELL = 0.78;
-    const DEFINITION_BASE_DWELL = 0.72;
-    const QUOTE_SCRAMBLE_DWELL = Math.min(0.98, QUOTE_BASE_DWELL * SCRAMBLE_DWELL_MULTIPLIER);
-    const DEFINITION_SCRAMBLE_DWELL = Math.min(0.98, DEFINITION_BASE_DWELL * SCRAMBLE_DWELL_MULTIPLIER);
-
-    const HERO = Object.freeze({
-      quoteFillStart:0,
-      quoteFillEnd:0.095,
-      quoteHoldEnd:0.245,
-      quoteMorphEnd:0.395,
-      definitionRevealStartInMorph:0.08
-    });
-
-    const quoteFinalChars = quoteChars.map((char) => char.dataset.finalChar ?? char.textContent);
-    const definitionFinalChars = definitionChars.map((char) => char.dataset.finalChar ?? char.textContent);
-    let widths = new WeakMap();
-    let quoteWindowWasActive = false;
-    let definitionWindowWasActive = false;
-
-    const heroStyle = document.createElement('style');
-    heroStyle.id = 'hero-full-glyph-test-style';
-    heroStyle.textContent = `
-      #heroSequence .fill-char[data-hero-direct-scramble="1"]{
-        color:rgba(17,17,17,1)!important;
-        display:inline!important;
-        position:static!important;
-        vertical-align:baseline!important;
-        line-height:inherit!important;
-        transform:none!important;
-        translate:none!important;
-      }
-      #heroSequence .fill-char[data-hero-direct-scramble="1"]::before,
-      #heroSequence .fill-char[data-hero-direct-scramble="1"]::after{
-        content:none!important;
-        display:none!important;
-      }
-    `;
-    document.head.appendChild(heroStyle);
-
-    const clamp = (value) => Math.max(0, Math.min(1, value));
-    const phaseProgress = (value, start, end) => {
-      if (end <= start) return value >= end ? 1 : 0;
-      return clamp((value - start) / (end - start));
-    };
-    const easeInOut = (value) => {
-      const t = clamp(value);
-      return t * t * (3 - 2 * t);
-    };
-
-    const measureFinalWidth = (char, finalChar) => {
-      if (widths.has(char)) return widths.get(char);
-      const previousText = char.textContent;
-      const previousSpacing = char.style.letterSpacing;
-      char.textContent = finalChar;
-      char.style.letterSpacing = '0px';
-      const width = Math.max(0, char.getBoundingClientRect().width);
-      char.textContent = previousText;
-      char.style.letterSpacing = previousSpacing;
-      widths.set(char, width);
-      return width;
-    };
-
-    const showGlyph = (char, finalChar, glyph) => {
-      const finalWidth = measureFinalWidth(char, finalChar);
-      char.style.letterSpacing = '0px';
-      char.textContent = glyph;
-      const glyphWidth = Math.max(0, char.getBoundingClientRect().width);
-      char.style.letterSpacing = `${(finalWidth - glyphWidth).toFixed(3)}px`;
-      char.setAttribute('data-hero-direct-scramble', '1');
-    };
-
-    const restoreChar = (char, finalChar) => {
-      if (!char.hasAttribute('data-hero-direct-scramble')) return;
-      char.textContent = finalChar;
-      char.removeAttribute('data-hero-direct-scramble');
-      char.style.removeProperty('letter-spacing');
-    };
-
-    const restoreAll = (chars, finalChars) => {
-      chars.forEach((char, index) => restoreChar(char, finalChars[index]));
-    };
-
-    const paintSequence = (chars, finalChars, progress, scrambleDwell) => {
-      const visible = chars
-        .map((char, domIndex) => ({ char, finalChar:finalChars[domIndex] }))
-        .filter((entry) => entry.finalChar.trim().length > 0);
-      const sweep = easeInOut(clamp(progress)) * visible.length;
-
-      visible.forEach(({ char, finalChar }, visibleIndex) => {
-        const local = clamp(sweep - visibleIndex);
-        if (local <= 0 || local >= scrambleDwell) {
-          restoreChar(char, finalChar);
+      const scanMutationTarget = (target) => {
+        if (target instanceof win.Element) {
+          adapt(target);
+          if (target.querySelectorAll) {
+            target.querySelectorAll(ACTIVE_SELECTOR).forEach(adapt);
+          }
           return;
         }
-        const cycle = Math.min(
-          SCRAMBLE_CYCLES - 1,
-          Math.floor((local / scrambleDwell) * SCRAMBLE_CYCLES)
-        );
-        const finalCode = finalChar.codePointAt(0) || 0;
-        const glyph = pick(finalCode * 131 + visibleIndex * 977 + cycle * 7919);
-        showGlyph(char, finalChar, glyph);
+        if (target?.parentElement) adapt(target.parentElement);
+      };
+
+      const observer = new win.MutationObserver((mutations) => {
+        mutations.forEach((mutation) => scanMutationTarget(mutation.target));
       });
-    };
 
-    const render = () => {
-      const travel = Math.max(1, hero.offsetHeight - innerHeight);
-      const heroTop = hero.getBoundingClientRect().top + scrollY;
-      const p = clamp((scrollY - heroTop) / travel);
-
-      const quoteProgress = phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd);
-      const quoteWindowIsActive = quoteProgress > 0 && quoteProgress < 1;
-      if (quoteWindowIsActive) {
-        quoteWindowWasActive = true;
-        paintSequence(quoteChars, quoteFinalChars, quoteProgress, QUOTE_SCRAMBLE_DWELL);
-      } else if (quoteWindowWasActive) {
-        restoreAll(quoteChars, quoteFinalChars);
-        quoteWindowWasActive = false;
-      }
-
-      const quoteMorph = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteMorphEnd);
-      const definitionProgress = phaseProgress(quoteMorph, HERO.definitionRevealStartInMorph, 1);
-      const definitionWindowIsActive = definitionProgress > 0 && definitionProgress < 1;
-      if (definitionWindowIsActive) {
-        definitionWindowWasActive = true;
-        paintSequence(definitionChars, definitionFinalChars, definitionProgress, DEFINITION_SCRAMBLE_DWELL);
-      } else if (definitionWindowWasActive) {
-        restoreAll(definitionChars, definitionFinalChars);
-        definitionWindowWasActive = false;
-      }
-    };
-
-    let raf = 0;
-    const requestRender = () => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        render();
+      observer.observe(doc.documentElement, {
+        subtree:true,
+        attributes:true,
+        childList:true,
+        characterData:true,
+        attributeFilter:['class','data-scramble','data-test-scramble','data-hero-direct-scramble']
       });
-    };
 
-    addEventListener('scroll', requestRender, { passive:true });
-    addEventListener('resize', () => {
-      widths = new WeakMap();
-      requestRender();
-    }, { passive:true });
-    requestRender();
-  });
-})();
-</script>
-<script src="./home-interactions.js?v=50" defer></script>
-<script src="./home-idle-v2.js?v=15" defer></script>
-<script src="./home-test-patch.js?v=10" defer></script>
+      doc.querySelectorAll(ACTIVE_SELECTOR).forEach(adapt);
+      doc.documentElement.dataset.scrambleTestPool = 'numbers-symbols';
+    });
+  })();
+  </script>
 </body>
 </html>
