@@ -32,9 +32,9 @@
       transform:none!important;
     }
     .about-home-scramble-test .hero-quote{visibility:visible!important}
-    .about-home-scramble-test .about-scramble-char{color:rgba(17,17,17,1)}
+    .about-home-scramble-test .about-scramble-char{color:rgba(17,17,17,0)}
     .about-home-scramble-test .quote-source-only{
-      color:rgba(17,17,17,1)!important;
+      color:rgba(17,17,17,0)!important;
       opacity:1!important;
     }
     .test-progress{
@@ -84,6 +84,7 @@
 
       const stage = document.querySelector('#scrambleTest');
       const quote = stage?.querySelector('.hero-quote');
+      const source = stage?.querySelector('.quote-source-only');
       const progressLabel = document.querySelector('.test-progress');
       if (!stage || !quote) return;
 
@@ -124,7 +125,7 @@
           if (elapsed < 0) {
             char.classList.remove('is-scrambling');
             char.removeAttribute('data-scramble');
-            char.style.color = 'rgba(17,17,17,1)';
+            char.style.color = 'rgba(17,17,17,0)';
             return;
           }
 
@@ -139,6 +140,16 @@
             char.style.color = 'rgba(17,17,17,1)';
           }
         });
+
+        if (source) {
+          const sourceStart = chars.length * STAGGER_MS * 0.62;
+          const sourceProgress = clamp((virtualNow - sourceStart) / 320);
+          source.style.setProperty(
+            'color',
+            `rgba(17,17,17,${sourceProgress.toFixed(3)})`,
+            'important'
+          );
+        }
 
         if (progressLabel) progressLabel.textContent = `SCROLL ${Math.round(p * 100)}%`;
       };
