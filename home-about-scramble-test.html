@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Home Hero — About Scramble Test</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="stylesheet" href="./style.css?v=17">
+  <link rel="stylesheet" href="./typography.css?v=7">
+  <link rel="stylesheet" href="./type-overrides.css?v=18">
+  <link rel="stylesheet" href="./home-fixes.css?v=52">
+  <link rel="stylesheet" href="./home-test-fixes.css?v=18">
+  <style>
+    html,body{min-height:100%;background:#fff}
+    body{margin:0;overflow:hidden}
+    .about-home-scramble-test{
+      position:relative;
+      width:100%;
+      height:100vh;
+      min-height:100svh;
+      background:#fff;
+    }
+    .about-home-scramble-test .hero-sticky{
+      position:relative!important;
+      inset:auto!important;
+      width:100%;
+      height:100%;
+      min-height:100svh;
+    }
+    .about-home-scramble-test .hero-state-quote{
+      opacity:1!important;
+      visibility:visible!important;
+      transform:none!important;
+    }
+    .about-home-scramble-test .hero-quote{
+      visibility:visible!important;
+    }
+    .about-home-scramble-test .about-scramble-char{
+      color:rgba(17,17,17,.05);
+    }
+    .about-home-scramble-test .quote-source-only{
+      color:rgba(17,17,17,.05);
+      opacity:1!important;
+    }
+    .test-refresh{
+      position:fixed;
+      right:24px;
+      bottom:20px;
+      z-index:20;
+      appearance:none;
+      border:0;
+      padding:0;
+      background:transparent;
+      font-family:var(--font-ui,"Averta PE",sans-serif);
+      font-size:10px;
+      line-height:1;
+      letter-spacing:.04em;
+      color:rgba(17,17,17,.42);
+      cursor:pointer;
+    }
+    @media(max-width:768px){
+      .test-refresh{right:18px;bottom:18px}
+    }
+  </style>
+</head>
+<body class="home-test">
+  <main class="about-home-scramble-test">
+    <div class="hero-sticky">
+      <div class="hero-state hero-state-quote">
+        <div class="hero-quote" aria-label="THE ABILITY TO SIMPLIFY MEANS TO ELIMINATE THE UNNECESSARY SO THAT THE NECESSARY MAY SPEAK.">
+          <span>THE ABILITY TO SIMPLIFY</span>
+          <span>MEANS TO ELIMINATE</span>
+          <span>THE UNNECESSARY SO THAT</span>
+          <span>THE NECESSARY MAY SPEAK.</span>
+        </div>
+        <div class="quote-source-only">HANS HOFMANN</div>
+      </div>
+    </div>
+  </main>
+
+  <button class="test-refresh" type="button" aria-label="애니메이션 다시 보기">REPLAY</button>
+
+  <script src="./scramble-enhancements.js?v=9"></script>
+  <script>
+    (() => {
+      'use strict';
+
+      const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const quote = document.querySelector('.hero-quote');
+      const source = document.querySelector('.quote-source-only');
+      const replay = document.querySelector('.test-refresh');
+      if (!quote) return;
+
+      const splitChars = () => {
+        quote.querySelectorAll(':scope > span').forEach((line) => {
+          Array.from(line.childNodes).forEach((node) => {
+            if (node.nodeType !== Node.TEXT_NODE) return;
+            const fragment = document.createDocumentFragment();
+            Array.from(node.textContent).forEach((character) => {
+              const span = document.createElement('span');
+              span.className = 'about-scramble-char';
+              span.textContent = character;
+              span.dataset.finalChar = character;
+              fragment.appendChild(span);
+            });
+            node.replaceWith(fragment);
+          });
+        });
+        return Array.from(quote.querySelectorAll('.about-scramble-char'))
+          .filter((char) => char.textContent.trim());
+      };
+
+      const chars = splitChars();
+      let raf = 0;
+      let runId = 0;
+
+      const reset = () => {
+        if (raf) cancelAnimationFrame(raf);
+        runId += 1;
+        chars.forEach((char) => {
+          char.classList.remove('is-scrambling');
+          char.removeAttribute('data-scramble');
+          char.style.color = 'rgba(17,17,17,.05)';
+        });
+        if (source) source.style.color = 'rgba(17,17,17,.05)';
+      };
+
+      const animate = () => {
+        reset();
+        const thisRun = runId;
+        const startedAt = performance.now();
+        const staggerMs = 26;
+        const cycleMs = 96;
+
+        const frame = (now) => {
+          if (thisRun !== runId) return;
+          let complete = true;
+
+          chars.forEach((char, index) => {
+            const elapsed = now - startedAt - index * staggerMs;
+            if (elapsed < 0) {
+              complete = false;
+              return;
+            }
+
+            const cycle = Math.floor(elapsed / cycleMs);
+            if (cycle < 3) {
+              complete = false;
+              char.style.color = 'transparent';
+              char.dataset.scramble = SCRAMBLE_POOL[(index * 17 + cycle * 13) % SCRAMBLE_POOL.length];
+              char.classList.add('is-scrambling');
+            } else {
+              char.classList.remove('is-scrambling');
+              char.style.color = '';
+            }
+          });
+
+          if (source) {
+            const sourceStart = chars.length * staggerMs * 0.62;
+            const sourceProgress = Math.max(0, Math.min(1, (now - startedAt - sourceStart) / 320));
+            const alpha = .05 + .95 * sourceProgress;
+            source.style.color = `rgba(17,17,17,${alpha.toFixed(3)})`;
+          }
+
+          if (!complete) raf = requestAnimationFrame(frame);
+        };
+
+        raf = requestAnimationFrame(frame);
+      };
+
+      replay?.addEventListener('click', animate);
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        chars.forEach((char) => { char.style.color = ''; });
+        if (source) source.style.color = '';
+      } else {
+        requestAnimationFrame(() => requestAnimationFrame(animate));
+      }
+    })();
+  </script>
+</body>
+</html>
