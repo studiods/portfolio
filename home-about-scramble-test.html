@@ -3,317 +3,164 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Home Hero — About Scramble Scroll Test</title>
+  <title>Shin Dong Sik — UX Design Lead</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="./fonts/Averta-PE-Bold.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="./style.css?v=17">
   <link rel="stylesheet" href="./typography.css?v=7">
   <link rel="stylesheet" href="./type-overrides.css?v=18">
   <link rel="stylesheet" href="./home-fixes.css?v=52">
   <link rel="stylesheet" href="./home-test-fixes.css?v=18">
-  <style>
-    html,body{margin:0;min-height:100%;background:#fff}
-    body{background:#fff}
-
-    .about-home-scramble-test{
-      position:relative;
-      height:420vh;
-      background:#fff;
-    }
-    .about-home-scramble-test .hero-sticky{
-      position:sticky!important;
-      top:0!important;
-      right:auto!important;
-      bottom:auto!important;
-      left:auto!important;
-      width:100%;
-      height:100vh;
-      min-height:100svh;
-      overflow:hidden;
-    }
-    .about-home-scramble-test .test-state{
-      position:absolute;
-      inset:0;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      pointer-events:none;
-      opacity:0;
-      visibility:hidden;
-      transform:none!important;
-    }
-    .about-home-scramble-test .test-state.is-visible{
-      visibility:visible;
-    }
-
-    .about-home-scramble-test .hero-quote,
-    .about-home-scramble-test .definition-copy{
-      --scramble-rgb:17,17,17;
-      --scramble-alpha:1;
-      color:rgba(17,17,17,0)!important;
-    }
-    .about-home-scramble-test .about-scramble-char{
-      color:rgba(17,17,17,0);
-      --scramble-rgb:17,17,17;
-      --scramble-alpha:1;
-    }
-    .about-home-scramble-test .about-scramble-char.live-scramble-glyph{
-      --live-scramble-color:rgba(17,17,17,1)!important;
-      color:rgba(17,17,17,1)!important;
-    }
-
-    .about-home-scramble-test .hero-quote{
-      visibility:visible!important;
-    }
-    .about-home-scramble-test .definition-copy{
-      width:100%;
-      font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      font-weight:100;
-      font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
-      line-height:1.0374!important;
-      letter-spacing:-.025em;
-      word-break:keep-all;
-    }
-    .about-home-scramble-test .definition-copy p{
-      margin:0;
-      padding:0;
-      white-space:nowrap;
-    }
-
-    .about-home-scramble-test .test-source{
-      margin-top:18px;
-      color:rgba(17,17,17,0)!important;
-      opacity:1!important;
-    }
-    .about-home-scramble-test .quote-source-only{
-      font-family:'Averta PE',sans-serif;
-      font-weight:400;
-      font-size:11px;
-      line-height:1.2;
-    }
-    .about-home-scramble-test .definition-source{
-      font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      font-weight:300;
-      font-size:11.55px!important;
-      line-height:1.2;
-      letter-spacing:-.01em;
-    }
-
-    .test-progress{
-      position:fixed;
-      right:24px;
-      bottom:20px;
-      z-index:20;
-      margin:0;
-      font-family:var(--font-ui,"Averta PE",sans-serif);
-      font-size:10px;
-      line-height:1;
-      letter-spacing:.04em;
-      color:rgba(17,17,17,.38);
-      pointer-events:none;
-    }
-
-    @media(max-width:850px){
-      .about-home-scramble-test .definition-copy{
-        font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
-        line-height:1.083!important;
-      }
-    }
-    @media(max-width:768px){.test-progress{right:18px;bottom:18px}}
-  </style>
 </head>
 <body class="home-test">
-  <main>
-    <section class="about-home-scramble-test" id="scrambleTest">
-      <div class="hero-sticky">
-        <div class="test-state test-state-en" id="stateEn">
-          <div class="hero-quote" id="quoteEn" aria-label="THE ABILITY TO SIMPLIFY MEANS TO ELIMINATE THE UNNECESSARY SO THAT THE NECESSARY MAY SPEAK.">
-            <span>THE ABILITY TO SIMPLIFY</span>
-            <span>MEANS TO ELIMINATE</span>
-            <span>THE UNNECESSARY SO THAT</span>
-            <span>THE NECESSARY MAY SPEAK.</span>
-          </div>
-          <div class="quote-source-only test-source" id="sourceEn">HANS HOFMANN</div>
-        </div>
+<nav class="top">
+  <div class="top-center">
+    <a href="./index.html" aria-current="page">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./works.html">Works</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
 
-        <div class="test-state test-state-ko" id="stateKo">
-          <div class="definition-copy" id="quoteKo" aria-label="단순화란, 필요한 것이 명확히 드러날 수 있도록 불필요한 것을 덜어내는 능력을 말합니다.">
-            <p>단순화란, 필요한 것이</p>
-            <p>명확히 드러날 수 있도록</p>
-            <p>불필요한 것을 덜어내는</p>
-            <p>능력을 말합니다.</p>
-          </div>
-          <div class="definition-source test-source" id="sourceKo">한스 호프만</div>
+<main class="shell">
+  <section class="hero-sequence" id="heroSequence">
+    <div class="hero-sticky">
+      <div class="hero-state hero-state-quote">
+        <div class="hero-quote hero-load-mask js-char-fill">
+          <span>THE ABILITY TO SIMPLIFY</span>
+          <span>MEANS TO ELIMINATE</span>
+          <span>THE UNNECESSARY SO THAT</span>
+          <span>THE NECESSARY MAY SPEAK.</span>
+        </div>
+        <div class="quote-source-only fill-line">HANS HOFMANN</div>
+      </div>
+
+      <div class="hero-state hero-state-definition" aria-hidden="true">
+        <div class="definition-copy definition-mask js-char-fill">
+          <p class="fill-line">단순화란, 필요한 것이</p>
+          <p class="fill-line">명확히 드러날 수 있도록</p>
+          <p class="fill-line">불필요한 것을 덜어내는</p>
+          <p class="fill-line">능력을 말합니다.</p>
+        </div>
+        <div class="definition-source js-char-fill">한스 호프만</div>
+      </div>
+
+      <div class="hero-state hero-state-subtractive" aria-hidden="true">
+        <div class="subtractive-title js-char-fill">
+          <span>SUBTRACTIVE</span>
+          <span>DESIGN</span>
+        </div>
+        <div class="subtractive-korean line-fill-target">
+          <p class="fill-line">불필요한 것을 덜어내고, 필요한 경험만 남깁니다.</p>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <p class="test-progress" aria-hidden="true">EN 0%</p>
+  <section class="intro-block section-focus" id="philosophy">
+    <div class="philosophy-sticky">
+      <div class="mini-label">Design philosophy</div>
+      <div class="philosophy-statements">
+        <p>할 수 있는 디자인이 아닌</p>
+        <p>필요한 디자인을 합니다.</p>
+        <p class="philosophy-group-start">필요한 디자인은</p>
+        <p>문제를 정확히 이해하는 것에서 시작합니다.</p>
+        <p class="philosophy-group-start">문제의 본질을 다시 정의하고,</p>
+        <p>무엇을 해결해야 하는지 명확히 합니다.</p>
+        <p class="philosophy-group-start">그리고 모든 디자인은</p>
+        <p>명확성과 효율성을 향합니다.</p>
+      </div>
+    </div>
+  </section>
 
-  <script src="./scramble-enhancements.js?v=9"></script>
-  <script>
-    (() => {
-      'use strict';
+  <div class="philosophy-tail-space" aria-hidden="true"></div>
 
-      const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      const STAGGER_MS = 26;
-      const CYCLE_MS = 96;
-      const CYCLES = 3;
+  <section class="principles-section section-focus" id="principles">
+    <div class="principles-persistent-label">
+      <div class="mini-label light-ui">Design principles</div>
+    </div>
 
-      const stage = document.querySelector('#scrambleTest');
-      const stateEn = document.querySelector('#stateEn');
-      const stateKo = document.querySelector('#stateKo');
-      const quoteEn = document.querySelector('#quoteEn');
-      const quoteKo = document.querySelector('#quoteKo');
-      const sourceEn = document.querySelector('#sourceEn');
-      const sourceKo = document.querySelector('#sourceKo');
-      const progressLabel = document.querySelector('.test-progress');
-      if (!stage || !stateEn || !stateKo || !quoteEn || !quoteKo) return;
+    <div class="principles-intro-stage">
+      <div class="principles-head">
+        <h2 class="principles-intro">
+          <span class="principles-intro-row">
+            <span class="principles-intro-en js-char-fill">LESS ASSUMPTION</span>
+            <span class="principles-intro-mask" aria-hidden="true"></span>
+            <span class="principles-intro-ko">가정을 줄이고</span>
+          </span>
+          <span class="principles-intro-row">
+            <span class="principles-intro-en js-char-fill">LESS CONVENTION</span>
+            <span class="principles-intro-mask" aria-hidden="true"></span>
+            <span class="principles-intro-ko">관습에 얽매이지 않으며</span>
+          </span>
+          <span class="principles-intro-row">
+            <span class="principles-intro-en js-char-fill">LESS BIAS</span>
+            <span class="principles-intro-mask" aria-hidden="true"></span>
+            <span class="principles-intro-ko">선입견을 덜어냅니다.</span>
+          </span>
+        </h2>
+      </div>
+    </div>
 
-      const clamp = (value) => Math.max(0, Math.min(1, value));
-      const mapRange = (value, start, end) => clamp((value - start) / Math.max(.0001, end - start));
+    <div class="principles-after-intro" aria-hidden="true"></div>
 
-      const forceScrambleBlack = (el) => {
-        el.style.setProperty('--scramble-rgb','17,17,17');
-        el.style.setProperty('--scramble-alpha','1');
-      };
+    <div class="principles-cards-stage">
+      <div class="principles-grid">
+        <article class="principle-card">
+          <div class="principle-card-inner">
+            <div class="principle-copy">
+              <div class="principle-copy-stage">
+                <p class="principle-ko">왜 필요한지, 왜 개선해야 하는지<br>핵심 이유부터 파악합니다.</p>
+              </div>
+              <p class="principle-en js-char-fill">REMOVE ASSUMPTIONS</p>
+            </div>
+          </div>
+        </article>
+        <article class="principle-card">
+          <div class="principle-card-inner">
+            <div class="principle-copy">
+              <div class="principle-copy-stage">
+                <p class="principle-ko">모두가 당연하다고 여기는<br>부분부터 고민을 시작합니다.</p>
+              </div>
+              <p class="principle-en js-char-fill">REMOVE CONVENTIONS</p>
+            </div>
+          </div>
+        </article>
+        <article class="principle-card">
+          <div class="principle-card-inner">
+            <div class="principle-copy">
+              <div class="principle-copy-stage">
+                <p class="principle-ko">어떤 상황에서도 근거를 바탕으로<br>판단하고 결정합니다.</p>
+              </div>
+              <p class="principle-en js-char-fill">REMOVE BIAS</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
-      forceScrambleBlack(quoteEn);
-      forceScrambleBlack(quoteKo);
+  <section class="selected-work section-focus" id="work">
+    <header class="selected-work-header"><div class="mini-label">Works</div></header>
+    <div class="project-stack">
+      <article class="showcase-project" id="project-himart"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">RETHINKING</span> <span class="work-word">THE</span> <span class="work-word">COMMERCE</span> <span class="work-word">JOURNEY</span></h3></a><div class="showcase-meta"><span>LOTTE HIMART</span></div></div><a class="project-visual" href="#" aria-label="Rethinking the commerce journey"><div class="placeholder wide"></div></a></article>
+      <article class="showcase-project" id="project-aimmo"><div class="project-copy"><a class="project-title-link" href="./aimmo.html"><h3><span class="work-word">BUILDING</span> <span class="work-word">A</span> <span class="work-word">SYSTEM</span> <span class="work-word">WITHOUT</span> <span class="work-word">STOPPING</span> <span class="work-word">THE</span> <span class="work-word">PRODUCT</span></h3></a><div class="showcase-meta"><span>AIMMO</span></div></div><a class="project-visual" href="./aimmo.html" aria-label="Building a system without stopping the product"><div class="placeholder"></div></a></article>
+      <article class="showcase-project" id="project-nbt"><div class="project-copy"><a class="project-title-link" href="./stepup.html"><h3><span class="work-word">DESIGNING</span> <span class="work-word">A</span> <span class="work-word">HABIT,</span> <span class="work-word">NOT</span> <span class="work-word">A</span> <span class="work-word">PEDOMETER</span></h3></a><div class="showcase-meta"><span>NBT</span></div></div><a class="project-visual" href="./stepup.html" aria-label="Designing a habit, not a pedometer"><div class="placeholder wide"></div></a></article>
+      <article class="showcase-project" id="project-trenbe"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">CREATING</span> <span class="work-word">ONE</span> <span class="work-word">SHARED</span> <span class="work-word">MODEL</span> <span class="work-word">OF</span> <span class="work-word">THE</span> <span class="work-word">CUSTOMER</span></h3></a><div class="showcase-meta"><span>TRENBE</span></div></div><a class="project-visual" href="#" aria-label="Creating one shared model of the customer"><div class="placeholder"></div></a></article>
+      <article class="showcase-project" id="project-yanolja"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">DESIGNING</span> <span class="work-word">FOR</span> <span class="work-word">THE</span> <span class="work-word">REAL</span> <span class="work-word">WORKING</span> <span class="work-word">ENVIRONMENT</span></h3></a><div class="showcase-meta"><span>YANOLJA</span></div></div><a class="project-visual" href="#" aria-label="Designing for the real working environment"><div class="placeholder wide"></div></a></article>
+      <article class="showcase-project" id="project-coupang"><div class="project-copy"><a class="project-title-link" href="#"><h3><span class="work-word">MAKING</span> <span class="work-word">A</span> <span class="work-word">GROWING</span> <span class="work-word">CATALOG</span> <span class="work-word">EASIER</span> <span class="work-word">TO</span> <span class="work-word">SEARCH</span></h3></a><div class="showcase-meta"><span>COUPANG</span></div></div><a class="project-visual" href="#" aria-label="Making a growing catalog easier to search"><div class="placeholder"></div></a></article>
+      <article class="showcase-project" id="project-vinyl"><div class="project-copy"><a class="project-title-link" href="./about.html#vinyl"><h3><span class="work-word">VINYL</span></h3></a><div class="showcase-meta"><span>2009—2013</span></div></div><a class="project-visual" href="./about.html#vinyl" aria-label="VINYL archive"><div class="placeholder wide"></div></a></article>
+    </div>
+  </section>
 
-      const splitChars = (root) => {
-        const leaves = root.matches('.hero-quote')
-          ? root.querySelectorAll(':scope > span')
-          : root.querySelectorAll(':scope > p');
-
-        leaves.forEach((line) => {
-          Array.from(line.childNodes).forEach((node) => {
-            if (node.nodeType !== Node.TEXT_NODE) return;
-            const fragment = document.createDocumentFragment();
-            Array.from(node.textContent).forEach((character) => {
-              const span = document.createElement('span');
-              span.className = 'about-scramble-char';
-              span.textContent = character;
-              span.dataset.finalChar = character;
-              forceScrambleBlack(span);
-              fragment.appendChild(span);
-            });
-            node.replaceWith(fragment);
-          });
-        });
-
-        return Array.from(root.querySelectorAll('.about-scramble-char'))
-          .filter((char) => char.textContent.trim());
-      };
-
-      const enChars = splitChars(quoteEn);
-      const koChars = splitChars(quoteKo);
-
-      const virtualDuration = (chars) => Math.max(
-        1,
-        (Math.max(0, chars.length - 1) * STAGGER_MS) + (CYCLE_MS * CYCLES)
-      );
-      const enVirtualMs = virtualDuration(enChars);
-      const koVirtualMs = virtualDuration(koChars);
-
-      const renderChars = (chars, progress, totalVirtualMs) => {
-        const virtualNow = clamp(progress) * totalVirtualMs;
-
-        chars.forEach((char, index) => {
-          const elapsed = virtualNow - index * STAGGER_MS;
-
-          if (elapsed < 0) {
-            char.classList.remove('is-scrambling');
-            char.removeAttribute('data-scramble');
-            char.style.color = 'rgba(17,17,17,0)';
-            return;
-          }
-
-          const cycle = Math.floor(elapsed / CYCLE_MS);
-          if (cycle < CYCLES) {
-            forceScrambleBlack(char);
-            char.style.color = 'transparent';
-            char.dataset.scramble = SCRAMBLE_POOL[(index * 17 + cycle * 13) % SCRAMBLE_POOL.length];
-            char.classList.add('is-scrambling');
-          } else {
-            char.classList.remove('is-scrambling');
-            char.removeAttribute('data-scramble');
-            char.style.color = 'rgba(17,17,17,1)';
-          }
-        });
-      };
-
-      const renderSource = (source, progress) => {
-        if (!source) return;
-        source.style.setProperty(
-          'color',
-          `rgba(17,17,17,${clamp(progress).toFixed(3)})`,
-          'important'
-        );
-      };
-
-      const setStateOpacity = (state, opacity) => {
-        const value = clamp(opacity);
-        state.style.opacity = value.toFixed(3);
-        state.classList.toggle('is-visible', value > .001);
-      };
-
-      const render = (progress) => {
-        const p = clamp(progress);
-
-        /*
-          0.00—0.34  English scramble reveal
-          0.34—0.42  English hold
-          0.42—0.50  English out / Korean handoff
-          0.50—0.88  Korean scramble reveal
-          0.88—1.00  Korean hold
-        */
-        const enReveal = mapRange(p, 0.00, 0.34);
-        const enOut = mapRange(p, 0.42, 0.50);
-        const koReveal = mapRange(p, 0.50, 0.88);
-
-        setStateOpacity(stateEn, 1 - enOut);
-        setStateOpacity(stateKo, mapRange(p, 0.47, 0.52));
-
-        renderChars(enChars, enReveal, enVirtualMs);
-        renderChars(koChars, koReveal, koVirtualMs);
-
-        renderSource(sourceEn, mapRange(enReveal, .72, .96) * (1 - enOut));
-        renderSource(sourceKo, mapRange(koReveal, .72, .96));
-
-        if (progressLabel) {
-          if (p < .50) {
-            progressLabel.textContent = `EN ${Math.round(enReveal * 100)}%`;
-          } else {
-            progressLabel.textContent = `KO ${Math.round(koReveal * 100)}%`;
-          }
-        }
-      };
-
-      const getProgress = () => {
-        const rect = stage.getBoundingClientRect();
-        const travel = Math.max(1, stage.offsetHeight - window.innerHeight);
-        return clamp(-rect.top / travel);
-      };
-
-      let ticking = false;
-      const update = () => {
-        render(getProgress());
-        ticking = false;
-      };
-
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(update);
-      };
-
-      render(getProgress());
-      addEventListener('scroll', requestUpdate, { passive:true });
-      addEventListener('resize', requestUpdate, { passive:true });
-    })();
-  </script>
+  <footer class="footer filip-footer footer-contact-only" id="contact"><div class="footer-grid"><div><h3>Contact</h3><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></div></div></footer>
+</main>
+<script src="./scramble-enhancements.js?v=9" defer></script>
+<script src="./home-interactions.js?v=50" defer></script>
+<script src="./home-idle-v2.js?v=15" defer></script>
+<script src="./home-test-patch.js?v=10" defer></script>
+<script src="./home-hero-about-scramble-test.js?v=1" defer></script>
 </body>
 </html>
