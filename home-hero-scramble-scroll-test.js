@@ -41,10 +41,10 @@
 
   /*
     Physical input tuning.
-    Reveal input was 0.56. This test reduces that to 0.19, roughly one-third,
+    Reveal input is now 0.57, exactly 3x faster than the prior 0.19 test,
     without changing random count, ordering, or the rest of the Hero timeline.
   */
-  const REVEAL_INPUT_RESISTANCE = 0.19;
+  const REVEAL_INPUT_RESISTANCE = 0.57;
   const NORMAL_INPUT_RESISTANCE = 0.76;
   const REVEAL_TARGET_LEAD_PX = 42;
   const NORMAL_TARGET_LEAD_PX = 150;
