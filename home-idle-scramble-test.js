@@ -14,7 +14,6 @@
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const RANDOM_STATES = 6;
-  const STATE_MS = 10;
   const GAP_MS = 3000;
   const BASE_ALPHA = 0.05;
 
@@ -27,9 +26,12 @@
     .filter(entry => entry.finalChar.trim().length > 0);
 
   let disabled = false;
-  let timer = 0;
+  let gapTimer = 0;
+  let sequenceRaf = 0;
   let token = 0;
   let widths = new WeakMap();
+  let entryIndex = 0;
+  let activeState = 0;
 
   const style = document.createElement('style');
   style.id = 'home-idle-scramble-test-style';
@@ -49,7 +51,8 @@
   document.head.appendChild(style);
 
   const atTop = () => scrollY <= 8;
-  const canRun = runToken => !disabled && runToken === token && atTop() && !document.hidden;
+  const canRun = runToken =>
+    !disabled && runToken === token && atTop() && !document.hidden;
 
   const clearLegacy = char => {
     char.classList.remove('is-scrambling', 'live-scramble-glyph');
@@ -94,52 +97,75 @@
 
   const restoreAll = () => entries.forEach(rest);
 
-  const wait = (ms, runToken) => new Promise(resolve => {
-    if (!canRun(runToken)) {
-      resolve(false);
+  const cancelScheduled = () => {
+    if (gapTimer) clearTimeout(gapTimer);
+    if (sequenceRaf) cancelAnimationFrame(sequenceRaf);
+    gapTimer = 0;
+    sequenceRaf = 0;
+  };
+
+  const scheduleGap = runToken => {
+    if (!canRun(runToken)) return;
+    if (gapTimer) clearTimeout(gapTimer);
+    gapTimer = setTimeout(() => {
+      gapTimer = 0;
+      if (!canRun(runToken)) return;
+      entryIndex = 0;
+      activeState = 0;
+      sequenceRaf = requestAnimationFrame(() => sequenceFrame(runToken));
+    }, GAP_MS);
+  };
+
+  const sequenceFrame = runToken => {
+    sequenceRaf = 0;
+    if (!canRun(runToken)) return;
+
+    if (entryIndex >= entries.length) {
+      restoreAll();
+      scheduleGap(runToken);
       return;
     }
-    timer = setTimeout(() => {
-      timer = 0;
-      resolve(canRun(runToken));
-    }, ms);
-  });
 
-  const run = async runToken => {
-    restoreAll();
-    if (!(await wait(GAP_MS, runToken))) return;
+    const entry = entries[entryIndex];
 
-    while (canRun(runToken)) {
-      for (let i = 0; i < entries.length; i += 1) {
-        const entry = entries[i];
-        for (let state = 0; state < RANDOM_STATES; state += 1) {
-          if (!canRun(runToken)) return;
-          show(entry, state);
-          if (!(await wait(STATE_MS, runToken))) return;
-        }
-        rest(entry);
-      }
+    /* One random state per real display frame. */
+    if (activeState < RANDOM_STATES) {
+      show(entry, activeState);
+      activeState += 1;
+      sequenceRaf = requestAnimationFrame(() => sequenceFrame(runToken));
+      return;
+    }
 
-      if (!(await wait(GAP_MS, runToken))) return;
+    /* The sixth state was visible during the previous display frame. */
+    rest(entry);
+    entryIndex += 1;
+    activeState = 0;
+
+    if (entryIndex < entries.length) {
+      show(entries[entryIndex], 0);
+      activeState = 1;
+      sequenceRaf = requestAnimationFrame(() => sequenceFrame(runToken));
+    } else {
+      restoreAll();
+      scheduleGap(runToken);
     }
   };
 
   const start = () => {
     if (disabled || !atTop() || document.hidden) return;
+    cancelScheduled();
+    restoreAll();
+    entryIndex = 0;
+    activeState = 0;
     const runToken = ++token;
-    run(runToken).catch(error => {
-      console.error('Home idle scramble test failed.', error);
-      disabled = true;
-      restoreAll();
-    });
+    scheduleGap(runToken);
   };
 
   const stopFromUser = event => {
     if (event && event.isTrusted === false) return;
     disabled = true;
     token += 1;
-    if (timer) clearTimeout(timer);
-    timer = 0;
+    cancelScheduled();
     entries.forEach(entry => {
       clearLegacy(entry.char);
       entry.char.textContent = entry.finalChar;
@@ -160,8 +186,7 @@
   document.addEventListener('visibilitychange', () => {
     if (disabled) return;
     token += 1;
-    if (timer) clearTimeout(timer);
-    timer = 0;
+    cancelScheduled();
     if (!document.hidden) start();
   });
 
