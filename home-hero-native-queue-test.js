@@ -7,20 +7,20 @@
   if (!hero || !quote || !chars.length) return;
 
   /*
-    TEST ONLY.
-    Native scrolling and production Hero progress remain untouched.
-    This module owns only the first English quote's visible scramble pass.
+    TEST ONLY — native scroll + frame-guaranteed Hero scramble.
 
-    A scroll jump only changes the target character count. The visible queue
-    still resolves authored positions one-by-one, and each active position is
-    assigned six random A-Z / 0-9 states before the final character is restored.
+    The production Home timeline and native scroll position are untouched.
+    Scroll only decides how many authored positions are requested. The visible
+    queue resolves positions one by one, and each active position is painted as
+    six separate A-Z / 0-9 browser frames before its authored glyph is restored.
 
-    The queue does NOT slow, clamp, prevent, or synthesize scrolling.
+    No setTimeout cadence is used. One requestAnimationFrame callback paints one
+    random state, so a fast scroll cannot collapse six logical state changes into
+    a single visual frame.
   */
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const RANDOM_STATES = 6;
-  const STATE_MS = 10;
   const QUOTE_FILL_START = 0;
   const QUOTE_FILL_END = 0.095;
 
@@ -50,7 +50,7 @@
   let resolved = 0;
   let target = 0;
   let activeState = 0;
-  let timer = 0;
+  let sequenceRaf = 0;
   let paintRaf = 0;
   let widths = new WeakMap();
   let userStarted = false;
@@ -152,42 +152,61 @@
     });
   };
 
-  const schedule = () => {
-    if (timer || resolved >= target || resolved >= visible.length) return;
+  const stopSequence = () => {
+    if (sequenceRaf) cancelAnimationFrame(sequenceRaf);
+    sequenceRaf = 0;
+  };
 
-    const step = () => {
-      timer = 0;
-      if (resolved >= target || resolved >= visible.length) {
-        paintAll();
-        return;
-      }
+  const sequenceFrame = () => {
+    sequenceRaf = 0;
 
-      const entry = visible[resolved];
+    if (resolved >= target || resolved >= visible.length) {
+      paintAll();
+      return;
+    }
+
+    const entry = visible[resolved];
+
+    /*
+      Each callback paints exactly one random glyph. Because the next callback is
+      requested for the next animation frame, this state is presented by the
+      browser before any following random state can replace it.
+    */
+    if (activeState < RANDOM_STATES) {
       showRandom(entry, resolved, activeState);
       activeState += 1;
+      sequenceRaf = requestAnimationFrame(sequenceFrame);
+      return;
+    }
 
-      if (activeState >= RANDOM_STATES) {
-        setFinal(entry);
-        resolved += 1;
-        activeState = 0;
-        paintAll();
-      }
+    /* The sixth random state was painted during the previous display frame. */
+    setFinal(entry);
+    resolved += 1;
+    activeState = 0;
 
-      if (resolved < target && resolved < visible.length) {
-        timer = window.setTimeout(step, STATE_MS);
-      }
-    };
+    /* Start the next glyph immediately in this frame to avoid an empty delay. */
+    if (resolved < target && resolved < visible.length) {
+      const nextEntry = visible[resolved];
+      showRandom(nextEntry, resolved, 0);
+      activeState = 1;
+      sequenceRaf = requestAnimationFrame(sequenceFrame);
+    } else {
+      paintAll();
+    }
+  };
 
-    timer = window.setTimeout(step, 0);
+  const schedule = () => {
+    if (sequenceRaf || resolved >= target || resolved >= visible.length) return;
+    sequenceRaf = requestAnimationFrame(sequenceFrame);
   };
 
   const syncTarget = () => {
     if (!userStarted) return;
     const nextTarget = targetFromScroll();
 
-    if (nextTarget < resolved) {
-      if (timer) clearTimeout(timer);
-      timer = 0;
+    /* Backward scrolling cancels any in-flight glyph and follows native scroll. */
+    if (nextTarget < resolved || (nextTarget <= resolved && activeState > 0)) {
+      stopSequence();
       resolved = nextTarget;
       target = nextTarget;
       activeState = 0;
@@ -213,7 +232,10 @@
   addEventListener('wheel', startFromUser, { passive: true, once: true });
   addEventListener('touchstart', startFromUser, { passive: true, once: true });
   addEventListener('keydown', startFromUser, { once: true });
-  addEventListener('scroll', syncTarget, { passive: true });
+  addEventListener('scroll', () => {
+    if (!userStarted && scrollY > 0) startFromUser();
+    syncTarget();
+  }, { passive: true });
   addEventListener('resize', () => {
     widths = new WeakMap();
     syncTarget();
