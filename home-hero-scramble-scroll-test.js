@@ -39,8 +39,12 @@
     definitionFillEnd: 0.465
   });
 
-  /* Physical input tuning. */
-  const REVEAL_INPUT_RESISTANCE = 0.56;
+  /*
+    Physical input tuning.
+    Reveal input was 0.56. This test reduces that to 0.19, roughly one-third,
+    without changing random count, ordering, or the rest of the Hero timeline.
+  */
+  const REVEAL_INPUT_RESISTANCE = 0.19;
   const NORMAL_INPUT_RESISTANCE = 0.76;
   const REVEAL_TARGET_LEAD_PX = 42;
   const NORMAL_TARGET_LEAD_PX = 150;
