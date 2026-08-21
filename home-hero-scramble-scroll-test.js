@@ -10,19 +10,22 @@
 
   /*
     TEST ONLY
-    This version stays 100% scroll-scrubbed. There is no time-based easing,
-    catch-up, or delayed playback.
 
-    Production: 3 random states in shorter reveal windows.
-    Test:       4 random states + larger physical Hero scroll distance +
-                wider reveal windows.
+    The reveal is strictly serial now:
+      glyph 01 -> 15 random states -> authored glyph
+      glyph 02 -> 15 random states -> authored glyph
+      glyph 03 -> ...
 
-    The result is that a user must physically scroll farther for each glyph to
-    advance to its next random state, so a fast wheel / trackpad gesture is less
-    likely to skip the visible scramble process.
+    No two authored positions scramble at the same time. The next glyph cannot
+    start until the current glyph has consumed all 15 scroll-driven random states.
+
+    This remains 100% scroll-scrubbed. There is no timer, autoplay, catch-up,
+    or time-based easing. The test page already gives the Hero +20% physical
+    scroll runway and wider reveal windows, so each glyph also requires more
+    real scroll distance before the sequence advances.
   */
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const SCRAMBLE_CYCLES = 4;
+  const RANDOM_STATES_PER_GLYPH = 15;
 
   const HERO = Object.freeze({
     quoteFillStart: 0,
@@ -31,19 +34,18 @@
     definitionFillEnd: 0.437
   });
 
-  const STAGGER_UNITS = 26;
-  const CYCLE_UNITS = 96;
-
   const quoteFinalChars = quoteChars.map(char => char.dataset.finalChar ?? char.textContent);
   const definitionFinalChars = definitionChars.map(char => char.dataset.finalChar ?? char.textContent);
   let widths = new WeakMap();
-  let quoteWindowWasActive = false;
-  let definitionWindowWasActive = false;
 
   const style = document.createElement('style');
   style.id = 'hero-scramble-scroll-test-style';
   style.textContent = `
-    #heroSequence .fill-char[data-hero-direct-scramble="1"]{
+    #heroSequence .fill-char[data-scroll-test-state="pending"]{
+      color:rgba(17,17,17,.05)!important;
+    }
+    #heroSequence .fill-char[data-scroll-test-state="active"],
+    #heroSequence .fill-char[data-scroll-test-state="final"]{
       color:rgba(17,17,17,1)!important;
       display:inline!important;
       position:static!important;
@@ -52,8 +54,8 @@
       transform:none!important;
       translate:none!important;
     }
-    #heroSequence .fill-char[data-hero-direct-scramble="1"]::before,
-    #heroSequence .fill-char[data-hero-direct-scramble="1"]::after{
+    #heroSequence .fill-char[data-scroll-test-state]::before,
+    #heroSequence .fill-char[data-scroll-test-state]::after{
       content:none!important;
       display:none!important;
     }
@@ -79,54 +81,88 @@
     return width;
   };
 
+  const setPending = (char, finalChar) => {
+    char.textContent = finalChar;
+    char.style.removeProperty('letter-spacing');
+    char.removeAttribute('data-hero-direct-scramble');
+    char.setAttribute('data-scroll-test-state', 'pending');
+  };
+
+  const setFinal = (char, finalChar) => {
+    char.textContent = finalChar;
+    char.style.removeProperty('letter-spacing');
+    char.removeAttribute('data-hero-direct-scramble');
+    char.setAttribute('data-scroll-test-state', 'final');
+  };
+
   const showGlyph = (char, finalChar, glyph) => {
     const finalWidth = measureFinalWidth(char, finalChar);
     char.style.letterSpacing = '0px';
     char.textContent = glyph;
     const glyphWidth = Math.max(0, char.getBoundingClientRect().width);
-    char.style.letterSpacing = `${(finalWidth - glyphWidth).toFixed(3)}px`;
-    char.setAttribute('data-hero-direct-scramble', '1');
-  };
-
-  const restore = (char, finalChar) => {
-    if (!char.hasAttribute('data-hero-direct-scramble')) return;
-    char.textContent = finalChar;
+    if (finalWidth > 0) {
+      char.style.letterSpacing = `${(finalWidth - glyphWidth).toFixed(3)}px`;
+    }
     char.removeAttribute('data-hero-direct-scramble');
-    char.style.removeProperty('letter-spacing');
+    char.setAttribute('data-scroll-test-state', 'active');
   };
 
-  const restoreAll = (chars, finalChars) => {
-    chars.forEach((char, index) => restore(char, finalChars[index]));
+  const releaseAll = (chars, finalChars) => {
+    chars.forEach((char, index) => {
+      char.textContent = finalChars[index];
+      char.style.removeProperty('letter-spacing');
+      char.removeAttribute('data-scroll-test-state');
+      char.removeAttribute('data-hero-direct-scramble');
+    });
   };
 
-  const paintSequence = (chars, finalChars, progress) => {
+  const paintSequential = (chars, finalChars, progress) => {
     const visible = chars
       .map((char, domIndex) => ({ char, finalChar: finalChars[domIndex] }))
       .filter(entry => entry.finalChar.trim().length > 0);
 
-    const totalUnits = Math.max(
-      1,
-      Math.max(0, visible.length - 1) * STAGGER_UNITS +
-      SCRAMBLE_CYCLES * CYCLE_UNITS
+    if (!visible.length) return;
+
+    const p = clamp(progress);
+    if (p >= 1) {
+      visible.forEach(({ char, finalChar }) => setFinal(char, finalChar));
+      return;
+    }
+
+    if (p <= 0) {
+      visible.forEach(({ char, finalChar }) => setPending(char, finalChar));
+      return;
+    }
+
+    /*
+      One authored position owns one full slot. That slot is divided into exactly
+      15 scroll-controlled random states. Only after state 15 does the next glyph
+      receive control.
+    */
+    const position = p * visible.length;
+    const activeIndex = Math.min(visible.length - 1, Math.floor(position));
+    const local = clamp(position - activeIndex);
+    const randomState = Math.min(
+      RANDOM_STATES_PER_GLYPH - 1,
+      Math.floor(local * RANDOM_STATES_PER_GLYPH)
     );
-    const virtualNow = clamp(progress) * totalUnits;
 
-    visible.forEach(({ char, finalChar }, visibleIndex) => {
-      const elapsed = virtualNow - visibleIndex * STAGGER_UNITS;
-
-      if (elapsed <= 0) {
-        restore(char, finalChar);
+    visible.forEach(({ char, finalChar }, index) => {
+      if (index < activeIndex) {
+        setFinal(char, finalChar);
+        return;
+      }
+      if (index > activeIndex) {
+        setPending(char, finalChar);
         return;
       }
 
-      const cycle = Math.floor(elapsed / CYCLE_UNITS);
-      if (cycle < SCRAMBLE_CYCLES) {
-        const poolIndex = (visibleIndex * 17 + cycle * 13) % POOL.length;
-        showGlyph(char, finalChar, POOL[poolIndex]);
-        return;
-      }
-
-      restore(char, finalChar);
+      const poolIndex = (
+        activeIndex * 17 +
+        randomState * 13 +
+        (finalChar.codePointAt(0) || 0)
+      ) % POOL.length;
+      showGlyph(char, finalChar, POOL[poolIndex]);
     });
   };
 
@@ -136,13 +172,10 @@
     const p = clamp((scrollY - heroTop) / travel);
 
     const quoteProgress = phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd);
-    const quoteWindowIsActive = quoteProgress > 0 && quoteProgress < 1;
-    if (quoteWindowIsActive) {
-      quoteWindowWasActive = true;
-      paintSequence(quoteChars, quoteFinalChars, quoteProgress);
-    } else if (quoteWindowWasActive) {
-      restoreAll(quoteChars, quoteFinalChars);
-      quoteWindowWasActive = false;
+    if (p <= HERO.quoteFillEnd) {
+      paintSequential(quoteChars, quoteFinalChars, quoteProgress);
+    } else {
+      releaseAll(quoteChars, quoteFinalChars);
     }
 
     const definitionProgress = phaseProgress(
@@ -150,13 +183,12 @@
       HERO.definitionFillStart,
       HERO.definitionFillEnd
     );
-    const definitionWindowIsActive = definitionProgress > 0 && definitionProgress < 1;
-    if (definitionWindowIsActive) {
-      definitionWindowWasActive = true;
-      paintSequence(definitionChars, definitionFinalChars, definitionProgress);
-    } else if (definitionWindowWasActive) {
-      restoreAll(definitionChars, definitionFinalChars);
-      definitionWindowWasActive = false;
+    if (p < HERO.definitionFillStart) {
+      paintSequential(definitionChars, definitionFinalChars, 0);
+    } else if (p <= HERO.definitionFillEnd) {
+      paintSequential(definitionChars, definitionFinalChars, definitionProgress);
+    } else {
+      releaseAll(definitionChars, definitionFinalChars);
     }
   };
 
