@@ -51,6 +51,7 @@
   let target = 0;
   let activeState = 0;
   let timer = 0;
+  let paintRaf = 0;
   let widths = new WeakMap();
   let userStarted = false;
 
@@ -129,8 +130,25 @@
 
   const paintAll = () => {
     visible.forEach((entry, index) => {
-      if (index < resolved) setFinal(entry);
-      else if (index > resolved || resolved >= visible.length) setPending(entry);
+      if (index < resolved) {
+        setFinal(entry);
+        return;
+      }
+
+      const isCurrentActive =
+        index === resolved &&
+        resolved < target &&
+        activeState > 0;
+
+      if (!isCurrentActive) setPending(entry);
+    });
+  };
+
+  const requestAfterProductionPaint = () => {
+    if (paintRaf) return;
+    paintRaf = requestAnimationFrame(() => {
+      paintRaf = 0;
+      paintAll();
     });
   };
 
@@ -173,12 +191,12 @@
       resolved = nextTarget;
       target = nextTarget;
       activeState = 0;
-      paintAll();
+      requestAfterProductionPaint();
       return;
     }
 
     target = nextTarget;
-    paintAll();
+    requestAfterProductionPaint();
     schedule();
   };
 
