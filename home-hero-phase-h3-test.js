@@ -12,14 +12,9 @@
 
     Production home-interactions.js still owns the full Hero timeline.
     This test paints only the FIRST English reveal after production has painted,
-    using six scramble states with the validated 2x reveal window:
+    using the exact same three-state scramble vocabulary but a 2x reveal window:
       0.000 -> 0.095  (production)
       0.000 -> 0.190  (this diagnostic)
-
-    H5 isolates progression easing as the only new variable. Scramble dwell is
-    restored to the original 78%, while the reveal sweep changes from smoothstep
-    easeInOut(reveal) to linear reveal. This removes the faster middle section
-    without changing reveal distance, cycle count or the later Hero timeline.
 
     Once p > 0.190 this module stops touching the Hero entirely, so the later
     quote hold, English -> Korean morph, Subtractive Design and lower sections
@@ -30,7 +25,7 @@
   const START = 0;
   const END = 0.190;
   const SCRAMBLE_RATIO = 0.78;
-  const CYCLES = 6;
+  const CYCLES = 3;
   const BASE_ALPHA = 0.05;
 
   const entries = [];
@@ -89,7 +84,7 @@
     if (p > END + 0.001) return;
 
     const reveal = phaseProgress(p, START, END);
-    const sweep = reveal * count;
+    const sweep = easeInOut(reveal) * count;
 
     entries.forEach(({ char, index }) => {
       if (index < 0) {
