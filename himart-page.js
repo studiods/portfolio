@@ -10,7 +10,6 @@
       if(el.dataset.scramblePrepared==='1')return;
       el.dataset.scramblePrepared='1';
       const text=el.textContent;
-      const finalColor=getComputedStyle(el).color;
       el.textContent='';
       const frag=document.createDocumentFragment();
       [...text].forEach(ch=>{
@@ -22,7 +21,6 @@
         span.className='scramble-char';
         span.dataset.final=ch;
         span.textContent=ch;
-        span.style.setProperty('--scramble-color',finalColor);
         frag.appendChild(span);
       });
       el.appendChild(frag);
@@ -42,15 +40,13 @@
         const base=index*12;
         for(let cycle=0;cycle<4;cycle++){
           setTimeout(()=>{
-            ch.classList.add('is-live','is-scrambling');
-            ch.dataset.scramble=POOL[(index*17+cycle*13+Math.floor(performance.now()/47))%POOL.length];
+            ch.classList.add('is-live');
+            ch.textContent=POOL[(index*17+cycle*13+Math.floor(performance.now()/47))%POOL.length];
           },base+cycle*34);
         }
         setTimeout(()=>{
-          ch.classList.remove('is-scrambling');
           ch.classList.add('is-live');
           ch.textContent=final;
-          ch.removeAttribute('data-scramble');
         },base+148);
       });
     };
@@ -119,22 +115,16 @@
     });
     progress.forEach((link,index)=>link.classList.toggle('is-active',index===active));
   };
-  const requestProgress=()=>{
-    if(ticking)return;
-    ticking=true;
-    requestAnimationFrame(updateProgress);
-  };
+  const requestProgress=()=>{if(ticking)return;ticking=true;requestAnimationFrame(updateProgress)};
   addEventListener('scroll',requestProgress,{passive:true});
   addEventListener('resize',requestProgress,{passive:true});
   progress.forEach(link=>link.addEventListener('click',event=>{
     if(reduced)return;
-    const id=link.getAttribute('href');
-    const target=id?document.querySelector(id):null;
+    const target=document.querySelector(link.getAttribute('href')||'');
     if(!target)return;
     event.preventDefault();
     target.scrollIntoView({behavior:'smooth',block:'start'});
   }));
-
   updateProgress();
   prepareScramble();
 })();
