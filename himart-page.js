@@ -4,34 +4,19 @@
   const POOL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const isHangul=value=>/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(value||'');
 
-  const sizeGlyph=span=>{
-    const final=span.dataset.final||'';
-    if(isHangul(final)){
-      span.style.width='1em';
-      return;
-    }
-    const live=span.textContent;
-    span.textContent=final;
-    span.style.width='auto';
-    const width=span.getBoundingClientRect().width;
-    if(width>0)span.style.width=`${Math.ceil(width*100)/100}px`;
-    span.textContent=live;
-  };
-
-  const resizePreparedGlyphs=()=>{
-    document.querySelectorAll('.scramble-char').forEach(sizeGlyph);
-  };
-
   const prepareScramble=async()=>{
     try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}
     const targets=[...document.querySelectorAll('.js-scramble')];
+
     targets.forEach(el=>{
       if(el.dataset.scramblePrepared==='1')return;
       el.dataset.scramblePrepared='1';
-      const text=el.textContent;
+      const originalText=el.textContent;
+      el.dataset.originalText=originalText;
       el.textContent='';
       const frag=document.createDocumentFragment();
-      [...text].forEach(ch=>{
+
+      [...originalText].forEach(ch=>{
         if(ch===' '||ch==='\n'||ch==='\t'){
           frag.appendChild(document.createTextNode(ch));
           return;
@@ -40,20 +25,30 @@
         span.className='scramble-char';
         span.dataset.final=ch;
         span.textContent=ch;
+        if(isHangul(ch))span.style.width='1em';
         frag.appendChild(span);
       });
       el.appendChild(frag);
-      el.querySelectorAll('.scramble-char').forEach(sizeGlyph);
     });
+
+    const finalize=el=>{
+      const original=el.dataset.originalText;
+      if(typeof original!=='string')return;
+      el.textContent=original;
+      el.classList.add('is-scramble-complete');
+    };
 
     const play=el=>{
       if(el.dataset.scramblePlayed==='1')return;
       el.dataset.scramblePlayed='1';
       const chars=[...el.querySelectorAll('.scramble-char')];
-      if(reduced){chars.forEach(ch=>{ch.textContent=ch.dataset.final;ch.classList.add('is-live')});return;}
+      if(!chars.length){finalize(el);return;}
+      if(reduced){finalize(el);return;}
+
+      let completed=0;
       chars.forEach((ch,index)=>{
         const final=ch.dataset.final;
-        const base=index*12;
+        const base=index*14;
         for(let cycle=0;cycle<4;cycle++){
           setTimeout(()=>{
             ch.classList.add('is-live');
@@ -63,17 +58,19 @@
         setTimeout(()=>{
           ch.classList.add('is-live');
           ch.textContent=final;
-        },base+148);
+          completed+=1;
+          if(completed===chars.length)setTimeout(()=>finalize(el),34);
+        },base+156);
       });
     };
 
-    if(reduced){targets.forEach(play);return;}
+    if(reduced){targets.forEach(finalize);return;}
     if(!('IntersectionObserver' in window)){targets.forEach(play);return;}
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-      if(!entry.isIntersecting||entry.intersectionRatio<.28)return;
+      if(!entry.isIntersecting||entry.intersectionRatio<.24)return;
       play(entry.target);
       observer.unobserve(entry.target);
-    }),{threshold:[.12,.28,.55],rootMargin:'0px 0px -8% 0px'});
+    }),{threshold:[.12,.24,.5],rootMargin:'0px 0px -10% 0px'});
     targets.forEach(el=>observer.observe(el));
   };
 
@@ -132,14 +129,8 @@
     progress.forEach((link,index)=>link.classList.toggle('is-active',index===active));
   };
   const requestProgress=()=>{if(ticking)return;ticking=true;requestAnimationFrame(updateProgress)};
-
-  let resizeTimer=0;
   addEventListener('scroll',requestProgress,{passive:true});
-  addEventListener('resize',()=>{
-    requestProgress();
-    clearTimeout(resizeTimer);
-    resizeTimer=setTimeout(resizePreparedGlyphs,120);
-  },{passive:true});
+  addEventListener('resize',requestProgress,{passive:true});
 
   progress.forEach(link=>link.addEventListener('click',event=>{
     if(reduced)return;
@@ -149,6 +140,7 @@
     event.preventDefault();
     target.scrollIntoView({behavior:'smooth',block:'start'});
   }));
+
   updateProgress();
   prepareScramble();
 })();
