@@ -1,26 +1,57 @@
 (() => {
   'use strict';
+
   const grid=document.querySelector('.works-grid');
   const filter=document.querySelector('.works-test-filter');
   const trigger=document.querySelector('.works-filter-trigger');
   const options=[...document.querySelectorAll('.works-filter-option')];
   if(!grid||!filter||!trigger||!options.length)return;
+
   const cards=[...grid.querySelectorAll('.works-card')];
   const original=new Map(cards.map((card,index)=>[card,index]));
-  const comparators={recent:(a,b)=>Number(b.dataset.date)-Number(a.dataset.date)||Number(a.dataset.recentRank)-Number(b.dataset.recentRank)||original.get(a)-original.get(b),company:(a,b)=>(a.dataset.company||'').localeCompare(b.dataset.company||'','en')||Number(a.dataset.companyRank)-Number(b.dataset.companyRank)||original.get(a)-original.get(b),past:(a,b)=>Number(a.dataset.date)-Number(b.dataset.date)||Number(a.dataset.recentRank)-Number(b.dataset.recentRank)||original.get(a)-original.get(b)};
+  const comparators={
+    recent:(a,b)=>Number(b.dataset.date)-Number(a.dataset.date)||Number(a.dataset.recentRank)-Number(b.dataset.recentRank)||original.get(a)-original.get(b),
+    company:(a,b)=>(a.dataset.company||'').localeCompare(b.dataset.company||'','en')||Number(a.dataset.companyRank)-Number(b.dataset.companyRank)||original.get(a)-original.get(b),
+    past:(a,b)=>Number(a.dataset.date)-Number(b.dataset.date)||Number(a.dataset.recentRank)-Number(b.dataset.recentRank)||original.get(a)-original.get(b)
+  };
+
   const close=()=>{filter.classList.remove('is-open');trigger.setAttribute('aria-expanded','false')};
-  trigger.addEventListener('click',()=>{const open=!filter.classList.contains('is-open');filter.classList.toggle('is-open',open);trigger.setAttribute('aria-expanded',open?'true':'false')});
+  trigger.addEventListener('click',()=>{
+    const open=!filter.classList.contains('is-open');
+    filter.classList.toggle('is-open',open);
+    trigger.setAttribute('aria-expanded',open?'true':'false');
+  });
   addEventListener('click',e=>{if(!filter.contains(e.target))close()});
-  const markCompanyStarts=ordered=>{cards.forEach(card=>card.classList.remove('is-company-first'));let last='';ordered.forEach(card=>{const company=card.dataset.company||'';if(company!==last){card.classList.add('is-company-first');last=company;}})};
-  const sortCards=mode=>{const comparator=comparators[mode]||comparators.recent;const ordered=[...cards].sort(comparator);grid.classList.add('is-reordering');document.body.classList.toggle('works-company-mode',mode==='company');if(mode==='company')markCompanyStarts(ordered);else cards.forEach(card=>card.classList.remove('is-company-first'));ordered.forEach(card=>grid.appendChild(card));options.forEach(option=>option.classList.toggle('is-active',option.dataset.mode===mode));const selected=options.find(option=>option.dataset.mode===mode);if(selected)trigger.querySelector('span').textContent=selected.textContent.trim();close();requestAnimationFrame(()=>requestAnimationFrame(()=>grid.classList.remove('is-reordering')))};
+
+  const markCompanyStarts=ordered=>{
+    cards.forEach(card=>card.classList.remove('is-company-first'));
+    let last='';
+    ordered.forEach(card=>{
+      const company=card.dataset.company||'';
+      if(company!==last){card.classList.add('is-company-first');last=company;}
+    });
+  };
+
+  const sortCards=mode=>{
+    const ordered=[...cards].sort(comparators[mode]||comparators.recent);
+    grid.classList.add('is-reordering');
+    document.body.classList.toggle('works-company-mode',mode==='company');
+    if(mode==='company')markCompanyStarts(ordered);else cards.forEach(card=>card.classList.remove('is-company-first'));
+    ordered.forEach(card=>grid.appendChild(card));
+    options.forEach(option=>option.classList.toggle('is-active',option.dataset.mode===mode));
+    const selected=options.find(option=>option.dataset.mode===mode);
+    if(selected)trigger.querySelector('span').textContent=selected.textContent.trim();
+    close();
+    requestAnimationFrame(()=>requestAnimationFrame(()=>grid.classList.remove('is-reordering')));
+  };
+
   options.forEach(option=>option.addEventListener('click',()=>sortCards(option.dataset.mode)));
-  const POOL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const targets=[...document.querySelectorAll('[data-card-scramble]')];
-  const prepared=new WeakSet();
-  const GLYPH_MS=135;
-  const prepare=el=>{if(prepared.has(el))return;prepared.add(el);const text=el.textContent;el.textContent='';const frag=document.createDocumentFragment();[...text].forEach(ch=>{if(ch===' '||ch==='\n'){frag.appendChild(document.createTextNode(ch));return;}const span=document.createElement('span');span.className='works-scramble-char';span.dataset.final=ch;span.textContent=ch;frag.appendChild(span);});el.appendChild(frag);[...el.querySelectorAll('.works-scramble-char')].forEach(ch=>{const w=ch.getBoundingClientRect().width;if(w>0)ch.style.width=`${Math.ceil(w*100)/100}px`;});el.classList.add('scramble-ready');};
-  const animate=el=>{const chars=[...el.querySelectorAll('.works-scramble-char')];chars.forEach((ch,index)=>{const final=ch.dataset.final;const start=index*GLYPH_MS;for(let cycle=0;cycle<3;cycle++)setTimeout(()=>{ch.textContent=POOL[(index*13+cycle*7+Math.floor(performance.now()/29))%POOL.length];},start+cycle*40);setTimeout(()=>{ch.textContent=final;},start+128);});};
-  const initScramble=async()=>{try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}targets.forEach(prepare);document.body.classList.add('scramble-font-ready');const seen=new WeakSet();const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting&&entry.intersectionRatio>.35&&!seen.has(entry.target)){seen.add(entry.target);animate(entry.target);}}),{threshold:[.2,.35,.6]});targets.forEach(el=>observer.observe(el));};
+
+  /* Cross-document transition: only the selected card owns the transition name. */
+  cards.forEach(card=>card.addEventListener('click',()=>{
+    cards.forEach(item=>item.classList.remove('is-transition-source'));
+    card.classList.add('is-transition-source');
+  }));
+
   sortCards('recent');
-  initScramble();
 })();
