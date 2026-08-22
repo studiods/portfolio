@@ -4,6 +4,17 @@
   const POOL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const isHangul=value=>/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(value||'');
 
+  const repairOperatingPresentation=()=>{
+    const benchmark=document.querySelector('.hm-benchmark-title h3');
+    if(benchmark&&benchmark.textContent.includes('익쌙한')){
+      benchmark.textContent=benchmark.textContent.replace('익쌙한','익숙한');
+    }
+    const style=document.createElement('style');
+    style.setAttribute('data-himart-runtime-fix','1');
+    style.textContent=".hm-confidential-card{border:1px solid var(--local-minor)!important}.hm-preview-blur::after{content:'PRE-OPEN / BLURRED'!important}";
+    document.head.appendChild(style);
+  };
+
   const prepareScramble=async()=>{
     try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}
     const targets=[...document.querySelectorAll('.js-scramble')];
@@ -141,6 +152,7 @@
     target.scrollIntoView({behavior:'smooth',block:'start'});
   }));
 
+  repairOperatingPresentation();
   updateProgress();
   prepareScramble();
 })();
