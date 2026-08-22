@@ -38,16 +38,52 @@
   options.forEach(option=>option.addEventListener('click',()=>sortCards(option.dataset.mode)));
 
   const POOL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const targets=[...document.querySelectorAll('[data-card-scramble]')];
   const prepared=new WeakSet();
   const prepare=el=>{
     if(prepared.has(el))return;prepared.add(el);
-    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-    nodes.forEach(node=>{const frag=document.createDocumentFragment();[...node.nodeValue].forEach(ch=>{if(ch===' '||ch==='\n'){frag.appendChild(document.createTextNode(ch));return;}const span=document.createElement('span');span.className='works-scramble-char';span.dataset.final=ch;span.textContent=ch;frag.appendChild(span);});node.replaceWith(frag);});
-    requestAnimationFrame(()=>el.querySelectorAll('.works-scramble-char').forEach(ch=>{const w=ch.getBoundingClientRect().width;if(w>0)ch.style.width=`${w.toFixed(2)}px`;}));
+    const text=el.textContent;
+    el.textContent='';
+    const frag=document.createDocumentFragment();
+    [...text].forEach(ch=>{
+      if(ch===' '||ch==='\n'){frag.appendChild(document.createTextNode(ch));return;}
+      const span=document.createElement('span');
+      span.className='works-scramble-char';
+      span.dataset.final=ch;
+      span.textContent=ch;
+      frag.appendChild(span);
+    });
+    el.appendChild(frag);
+    [...el.querySelectorAll('.works-scramble-char')].forEach(ch=>{
+      const w=ch.getBoundingClientRect().width;
+      if(w>0)ch.style.width=`${Math.ceil(w*100)/100}px`;
+    });
+    el.classList.add('scramble-ready');
   };
-  const animate=el=>{prepare(el);const chars=[...el.querySelectorAll('.works-scramble-char')];chars.forEach((ch,index)=>{const final=ch.dataset.final;for(let cycle=0;cycle<3;cycle++)setTimeout(()=>{ch.textContent=POOL[(index*13+cycle*7+Math.floor(performance.now()/29))%POOL.length];},index*7+cycle*32);setTimeout(()=>{ch.textContent=final;},index*7+105);});};
-  const seen=new WeakSet();
-  const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting&&entry.intersectionRatio>.35&&!seen.has(entry.target)){seen.add(entry.target);animate(entry.target);}}),{threshold:[.2,.35,.6]});
-  document.querySelectorAll('[data-card-scramble]').forEach(el=>observer.observe(el));
+
+  const animate=el=>{
+    const chars=[...el.querySelectorAll('.works-scramble-char')];
+    chars.forEach((ch,index)=>{
+      const final=ch.dataset.final;
+      const base=index*8;
+      for(let cycle=0;cycle<3;cycle++)setTimeout(()=>{ch.textContent=POOL[(index*13+cycle*7+Math.floor(performance.now()/29))%POOL.length];},base+cycle*34);
+      setTimeout(()=>{ch.textContent=final;},base+112);
+    });
+  };
+
+  const initScramble=async()=>{
+    try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}
+    targets.forEach(prepare);
+    document.body.classList.add('scramble-font-ready');
+    const seen=new WeakSet();
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.isIntersecting&&entry.intersectionRatio>.35&&!seen.has(entry.target)){
+        seen.add(entry.target);animate(entry.target);
+      }
+    }),{threshold:[.2,.35,.6]});
+    targets.forEach(el=>observer.observe(el));
+  };
+
   sortCards('recent');
+  initScramble();
 })();
