@@ -1,12 +1,14 @@
-@media (min-width:1001px){
+@media (min-width:761px){
   .case-hero{
     display:block!important;
     position:relative!important;
     min-height:0!important;
     height:auto!important;
-    padding:clamp(112px,9vh,138px) var(--case-pad) clamp(112px,8vw,150px)!important;
+    padding:clamp(104px,8vh,128px) var(--case-pad) clamp(112px,8vw,150px)!important;
     grid-template-columns:none!important;
+    grid-template-rows:none!important;
     align-items:initial!important;
+    justify-items:initial!important;
   }
 
   .case-hero-title-wrap{
@@ -21,18 +23,21 @@
     margin:0 auto!important;
     padding:0!important;
     grid-column:auto!important;
+    grid-row:auto!important;
     transform:none!important;
   }
 
   .case-kicker{
-    margin-bottom:20px!important;
+    display:block!important;
+    margin:0 0 20px!important;
   }
 
   .case-title{
+    display:block!important;
     width:min(1320px,100%)!important;
     max-width:none!important;
     margin:0!important;
-    font-size:clamp(54px,4.7vw,82px)!important;
+    font-size:clamp(50px,4.7vw,82px)!important;
     line-height:1!important;
   }
 
@@ -48,10 +53,12 @@
     margin:clamp(124px,9vw,170px) auto 0!important;
     padding:0!important;
     grid-column:auto!important;
+    grid-row:auto!important;
     transform:none!important;
   }
 
   .case-lead{
+    display:block!important;
     width:min(980px,100%)!important;
     max-width:980px!important;
     margin:0!important;
