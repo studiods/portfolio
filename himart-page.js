@@ -1,100 +1,140 @@
 (() => {
   'use strict';
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const POOL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
-  const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const targets = Array.from(document.querySelectorAll('.js-scramble'));
-
-  const splitChars = (element) => {
-    if (!element || element.dataset.split === '1') return [];
-    element.dataset.split = '1';
-    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-    const textNodes = [];
-    while (walker.nextNode()) textNodes.push(walker.currentNode);
-
-    textNodes.forEach((node) => {
-      const fragment = document.createDocumentFragment();
-      Array.from(node.textContent).forEach((character) => {
-        const span = document.createElement('span');
-        span.className = 'hm-scramble-char';
-        span.textContent = character;
-        fragment.appendChild(span);
-      });
-      node.replaceWith(fragment);
-    });
-    return Array.from(element.querySelectorAll('.hm-scramble-char'))
-      .filter((character) => character.textContent.trim());
-  };
-
-  const targetCharacters = new Map();
-  targets.forEach((target) => {
-    const characters = splitChars(target);
-    targetCharacters.set(target, characters);
-    if (!reducedMotion) characters.forEach((character) => {
-      character.style.color = 'transparent';
-    });
-  });
-
-  const animate = (target) => {
-    if (!target || target.dataset.scrambleDone === '1') return;
-    target.dataset.scrambleDone = '1';
-    const characters = targetCharacters.get(target) || [];
-    const startedAt = performance.now();
-    const stagger = target.matches('.case-title-v2,.chapter-head h2') ? 24 : 18;
-    const cycleDuration = 92;
-
-    const render = (now) => {
-      let complete = true;
-      characters.forEach((character, index) => {
-        const elapsed = now - startedAt - index * stagger;
-        if (elapsed < 0) {
-          complete = false;
+  const prepareScramble=async()=>{
+    try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}
+    const targets=[...document.querySelectorAll('.js-scramble')];
+    targets.forEach(el=>{
+      if(el.dataset.scramblePrepared==='1')return;
+      el.dataset.scramblePrepared='1';
+      const text=el.textContent;
+      const finalColor=getComputedStyle(el).color;
+      el.textContent='';
+      const frag=document.createDocumentFragment();
+      [...text].forEach(ch=>{
+        if(ch===' '||ch==='\n'||ch==='\t'){
+          frag.appendChild(document.createTextNode(ch));
           return;
         }
-        const cycle = Math.floor(elapsed / cycleDuration);
-        if (cycle < 3) {
-          complete = false;
-          character.dataset.scramble = POOL[(index * 17 + cycle * 13) % POOL.length];
-          character.classList.add('is-scrambling');
-        } else {
-          character.classList.remove('is-scrambling');
-          character.style.color = '';
-        }
+        const span=document.createElement('span');
+        span.className='scramble-char';
+        span.dataset.final=ch;
+        span.textContent=ch;
+        span.style.setProperty('--scramble-color',finalColor);
+        frag.appendChild(span);
       });
-      if (!complete) requestAnimationFrame(render);
+      el.appendChild(frag);
+      [...el.querySelectorAll('.scramble-char')].forEach(span=>{
+        const width=span.getBoundingClientRect().width;
+        if(width>0)span.style.width=`${Math.ceil(width*100)/100}px`;
+      });
+    });
+
+    const play=el=>{
+      if(el.dataset.scramblePlayed==='1')return;
+      el.dataset.scramblePlayed='1';
+      const chars=[...el.querySelectorAll('.scramble-char')];
+      if(reduced){chars.forEach(ch=>{ch.textContent=ch.dataset.final;ch.classList.add('is-live')});return;}
+      chars.forEach((ch,index)=>{
+        const final=ch.dataset.final;
+        const base=index*12;
+        for(let cycle=0;cycle<4;cycle++){
+          setTimeout(()=>{
+            ch.classList.add('is-live','is-scrambling');
+            ch.dataset.scramble=POOL[(index*17+cycle*13+Math.floor(performance.now()/47))%POOL.length];
+          },base+cycle*34);
+        }
+        setTimeout(()=>{
+          ch.classList.remove('is-scrambling');
+          ch.classList.add('is-live');
+          ch.textContent=final;
+          ch.removeAttribute('data-scramble');
+        },base+148);
+      });
     };
-    requestAnimationFrame(render);
+
+    if(reduced){targets.forEach(play);return;}
+    if(!('IntersectionObserver' in window)){targets.forEach(play);return;}
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(!entry.isIntersecting||entry.intersectionRatio<.28)return;
+      play(entry.target);
+      observer.unobserve(entry.target);
+    }),{threshold:[.12,.28,.55],rootMargin:'0px 0px -8% 0px'});
+    targets.forEach(el=>observer.observe(el));
   };
 
-  if (!reducedMotion) {
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          animate(entry.target);
-          observer.unobserve(entry.target);
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
-      targets.forEach((target) => observer.observe(target));
-    } else {
-      targets.forEach(animate);
-    }
-  }
+  const revealTargets=[...document.querySelectorAll('.hm-reveal,.hm-metric')];
+  if(reduced){revealTargets.forEach(el=>el.classList.add('is-in'));}
+  else if('IntersectionObserver' in window){
+    const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      entry.target.classList.add('is-in');
+      revealObserver.unobserve(entry.target);
+    }),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    revealTargets.forEach(el=>revealObserver.observe(el));
+  }else revealTargets.forEach(el=>el.classList.add('is-in'));
 
-  const links = Array.from(document.querySelectorAll('.case-local-nav a'));
-  const chapters = links
-    .map((link) => document.querySelector(link.getAttribute('href')))
-    .filter(Boolean);
+  const metricCards=[...document.querySelectorAll('.hm-metric[data-value]')];
+  const playMetric=card=>{
+    if(card.dataset.metricPlayed==='1')return;
+    card.dataset.metricPlayed='1';
+    card.classList.add('is-in');
+    const strong=card.querySelector('strong');
+    const target=Number(card.dataset.value)||0;
+    if(!strong||reduced)return;
+    const start=performance.now();
+    const duration=780;
+    const tick=now=>{
+      const p=Math.min(1,(now-start)/duration);
+      const eased=1-Math.pow(1-p,3);
+      strong.textContent=`${Math.round(target*eased)}%+`;
+      if(p<1)requestAnimationFrame(tick);
+    };
+    strong.textContent='0%+';
+    requestAnimationFrame(tick);
+  };
+  if(reduced)metricCards.forEach(playMetric);
+  else if('IntersectionObserver' in window){
+    const metricObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(!entry.isIntersecting)return;
+      playMetric(entry.target);
+      metricObserver.unobserve(entry.target);
+    }),{threshold:.35});
+    metricCards.forEach(card=>metricObserver.observe(card));
+  }else metricCards.forEach(playMetric);
 
-  if ('IntersectionObserver' in window && chapters.length) {
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        links.forEach((link) => {
-          link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`);
-        });
-      });
-    }, { rootMargin: '-28% 0px -62% 0px', threshold: 0 });
-    chapters.forEach((chapter) => sectionObserver.observe(chapter));
-  }
+  const sections=[...document.querySelectorAll('.hm-section[data-chapter]')];
+  const progress=[...document.querySelectorAll('.hm-progress a')];
+  let ticking=false;
+  const updateProgress=()=>{
+    ticking=false;
+    const y=(innerHeight||1)*.32;
+    let active=0;
+    let best=Infinity;
+    sections.forEach((section,index)=>{
+      const distance=Math.abs(section.getBoundingClientRect().top-y);
+      if(distance<best){best=distance;active=index;}
+    });
+    progress.forEach((link,index)=>link.classList.toggle('is-active',index===active));
+  };
+  const requestProgress=()=>{
+    if(ticking)return;
+    ticking=true;
+    requestAnimationFrame(updateProgress);
+  };
+  addEventListener('scroll',requestProgress,{passive:true});
+  addEventListener('resize',requestProgress,{passive:true});
+  progress.forEach(link=>link.addEventListener('click',event=>{
+    if(reduced)return;
+    const id=link.getAttribute('href');
+    const target=id?document.querySelector(id):null;
+    if(!target)return;
+    event.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+  }));
+
+  updateProgress();
+  prepareScramble();
 })();
