@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="./typography.css?v=7">
   <link rel="stylesheet" href="./type-overrides.css?v=17">
   <link rel="stylesheet" href="./works-page.css?v=8">
-  <link rel="stylesheet" href="./works-projects-test.css?v=1">
+  <link rel="stylesheet" href="./works-projects-test.css?v=2">
 </head>
 <body class="works-page-body works-test-body">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works-projects-test.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -20,16 +20,20 @@
     <h1 class="works-page-title works-title-scramble-ready" data-card-scramble>WORKS</h1>
     <div class="works-hero-bottom">
       <div><p class="works-intro ko">직접 참여하고 리드한 주요 프로젝트를 모았습니다.<br>불필요한 것을 덜어내며, 문제의 본질과 목표에 더 가까운 경험을 만드는 데 집중했습니다.</p><p class="works-test-note">PROJECT INDEX TEST / INDIVIDUAL HIMART CASE STUDIES</p></div>
-      <div class="works-test-filter">
-        <button class="works-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false"><span>최신순</span></button>
-        <div class="works-filter-menu" role="menu">
-          <button class="works-filter-option is-active ko" type="button" data-mode="recent" role="menuitem">최신순</button>
-          <button class="works-filter-option ko" type="button" data-mode="company" role="menuitem">회사순</button>
-          <button class="works-filter-option ko" type="button" data-mode="past" role="menuitem">과거순</button>
-        </div>
-      </div>
     </div>
   </header>
+
+  <div class="works-list-toolbar" aria-label="프로젝트 정렬">
+    <div class="works-test-filter">
+      <button class="works-filter-trigger ko" type="button" aria-haspopup="true" aria-expanded="false"><span>최신순</span></button>
+      <div class="works-filter-menu" role="menu">
+        <button class="works-filter-option is-active ko" type="button" data-mode="recent" role="menuitem">최신순</button>
+        <button class="works-filter-option ko" type="button" data-mode="company" role="menuitem">회사순</button>
+        <button class="works-filter-option ko" type="button" data-mode="past" role="menuitem">과거순</button>
+      </div>
+    </div>
+  </div>
+
   <section class="works-grid" aria-label="주요 프로젝트">
     <a class="works-card" href="./himart-journey-test.html" data-date="202407" data-recent-rank="1" data-company="LOTTE HIMART" data-company-rank="1"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko" data-card-scramble>온라인 구매 여정 다시 설계하기</h2><p class="works-card-meta">LOTTE HIMART · COMMERCE JOURNEY</p></a>
     <a class="works-card" href="./himart-reuse-test.html" data-date="202407" data-recent-rank="2" data-company="LOTTE HIMART" data-company-rank="2"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko" data-card-scramble>중고 가전의 신뢰 기준 만들기</h2><p class="works-card-meta">LOTTE HIMART · REUSE</p></a>
@@ -46,5 +50,5 @@
   </section>
   <footer class="works-footer"><h3>Contact</h3><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></footer>
 </main>
-<script src="./works-projects-test.js?v=1" defer></script>
+<script src="./works-projects-test.js?v=2" defer></script>
 </body></html>
