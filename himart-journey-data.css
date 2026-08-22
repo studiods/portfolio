@@ -1,4 +1,7 @@
 /* Scoped to the Himart commerce-journey case only. */
+/* Keep the kicker, hero title and following content on one shared 1440px start line. */
+.hm-hero .hm-title{width:100%!important;max-width:var(--hm-max)!important;margin-left:auto!important;margin-right:auto!important}
+
 .hm-journey-evidence{width:min(var(--hm-max),100%);margin:clamp(70px,8vw,118px) auto 0;display:grid;gap:clamp(42px,5vw,72px)}
 .hm-data-panel{min-width:0;border-top:1px solid var(--local-major);padding-top:18px}
 .hm-data-panel-head{display:grid;grid-template-columns:minmax(120px,.45fr) minmax(0,1.55fr);gap:clamp(24px,4vw,68px);align-items:start;margin-bottom:34px}
