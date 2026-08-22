@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./style.css?v=17">
   <link rel="stylesheet" href="./typography.css?v=7">
   <link rel="stylesheet" href="./type-overrides.css?v=17">
-  <link rel="stylesheet" href="./works-page.css?v=7">
+  <link rel="stylesheet" href="./works-page.css?v=8">
 </head>
 <body class="works-page-body">
 <nav class="top">
@@ -25,42 +25,66 @@
 <main class="works-page">
   <header class="works-hero">
     <h1 class="works-page-title">WORKS</h1>
+
+    <div class="works-hero-bottom">
+      <p class="works-intro ko">
+        직접 참여하고 리드한 주요 프로젝트를 모았습니다.<br>
+        불필요한 것을 덜어내며, 문제의 본질과 목표에 더 가까운 경험을 만드는 데 집중했습니다.
+      </p>
+
+      <nav class="works-sort-index" aria-label="작업 정렬">
+        <span class="works-sort-label">SORT</span>
+        <div class="works-sort-options">
+          <button type="button" class="works-sort-button is-active" data-works-sort="project" aria-pressed="true"><span>01</span><strong class="ko">프로젝트순</strong></button>
+          <button type="button" class="works-sort-button" data-works-sort="company" aria-pressed="false"><span>02</span><strong class="ko">회사순</strong></button>
+          <button type="button" class="works-sort-button" data-works-sort="recent" aria-pressed="false"><span>03</span><strong class="ko">최근순</strong></button>
+          <button type="button" class="works-sort-button" data-works-sort="past" aria-pressed="false"><span>04</span><strong class="ko">과거순</strong></button>
+        </div>
+      </nav>
+    </div>
   </header>
 
-  <section class="works-grid" aria-label="Works">
-    <a class="works-card" href="./himart.html">
+  <section class="works-grid" aria-label="주요 프로젝트">
+    <a class="works-card" href="./himart.html" data-project-rank="1" data-company="LOTTE HIMART" data-start="202407">
+      <p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Rethinking the commerce journey</h2>
-      <p class="works-card-meta">LOTTE HIMART · 2024—NOW</p>
+      <h2 class="works-card-title ko">온라인 구매 여정 다시 설계하기</h2>
+      <p class="works-card-meta">LOTTE HIMART · 2024.07—NOW</p>
     </a>
-    <a class="works-card" href="./aimmo.html">
+    <a class="works-card" href="./aimmo.html" data-project-rank="2" data-company="AIMMO" data-start="202202">
+      <p class="works-card-company">AIMMO <span>2022.02—2024.06</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Building a system without stopping the product</h2>
-      <p class="works-card-meta">AIMMO · 2022—2024</p>
+      <h2 class="works-card-title ko">서비스를 멈추지 않고 디자인 시스템 만들기</h2>
+      <p class="works-card-meta">AIMMO · 2022.02—2024.06</p>
     </a>
-    <a class="works-card" href="./stepup.html">
+    <a class="works-card" href="./stepup.html" data-project-rank="3" data-company="NBT" data-start="201701">
+      <p class="works-card-company">NBT <span>2017—2020</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Designing a habit, not a pedometer</h2>
+      <h2 class="works-card-title ko">만보기보다 습관을 만드는 경험</h2>
       <p class="works-card-meta">NBT · 2017—2020</p>
     </a>
-    <a class="works-card" href="./index.html#project-trenbe">
+    <a class="works-card" href="./index.html#project-trenbe" data-project-rank="4" data-company="TRENBE" data-start="202101">
+      <p class="works-card-company">TRENBE <span>2021.01—2022.02</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Creating one shared model of the customer</h2>
-      <p class="works-card-meta">TRENBE · 2021—2022</p>
+      <h2 class="works-card-title ko">하나의 고객 기준 만들기</h2>
+      <p class="works-card-meta">TRENBE · 2021.01—2022.02</p>
     </a>
-    <a class="works-card" href="./index.html#project-yanolja">
+    <a class="works-card" href="./index.html#project-yanolja" data-project-rank="5" data-company="YANOLJA" data-start="202007">
+      <p class="works-card-company">YANOLJA <span>2020.07—2021.01</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Designing for the real working environment</h2>
-      <p class="works-card-meta">YANOLJA · 2020—2021</p>
+      <h2 class="works-card-title ko">실제 업무 환경에 맞는 경험 설계하기</h2>
+      <p class="works-card-meta">YANOLJA · 2020.07—2021.01</p>
     </a>
-    <a class="works-card" href="./index.html#project-coupang">
+    <a class="works-card" href="./index.html#project-coupang" data-project-rank="6" data-company="COUPANG" data-start="201301">
+      <p class="works-card-company">COUPANG <span>2013—2016</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Making a growing catalog easier to search</h2>
+      <h2 class="works-card-title ko">늘어나는 상품을 더 쉽게 찾게 만들기</h2>
       <p class="works-card-meta">COUPANG · 2013—2016</p>
     </a>
-    <a class="works-card" href="./index.html#project-vinyl">
+    <a class="works-card" href="./index.html#project-vinyl" data-project-rank="7" data-company="VINYL" data-start="200901">
+      <p class="works-card-company">VINYL <span>2009—2013</span></p>
       <div class="works-card-media" aria-hidden="true"></div>
-      <h2 class="works-card-title">Vinyl</h2>
+      <h2 class="works-card-title ko">초기 디지털 프로젝트 모음</h2>
       <p class="works-card-meta">VINYL · 2009—2013</p>
     </a>
   </section>
@@ -71,5 +95,6 @@
   </footer>
 </main>
 <script src="./scramble-enhancements.js?v=4"></script>
+<script src="./works-page.js?v=1" defer></script>
 </body>
 </html>
