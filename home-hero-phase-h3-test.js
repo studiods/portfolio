@@ -8,16 +8,18 @@
   if (!hero || !quote || !chars.length) return;
 
   /*
-    H6 TEST — time-driven scramble tick only.
+    H7 TEST — ordered character-step spacing only.
 
-    The validated first-reveal geometry remains unchanged:
+    Restores the first validated scroll-driven scramble baseline:
       0.000 -> 0.190
       scramble ratio 0.78
+      three scramble states
       smoothstep reveal progression
 
-    Scroll position still decides pending / scramble / final. While a glyph is
-    inside the scramble state, its random character now advances by real time
-    every 60ms instead of deriving the random step from scroll progress.
+    The only new variable is CHAR_STEP. Production used an effective step of 1.0.
+    Here the next authored glyph starts at 0.78, exactly when the previous glyph
+    leaves its scramble range. This preserves strict left-to-right order with no
+    overlap while giving each glyph about 28% more scroll distance to scramble.
   */
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -25,7 +27,7 @@
   const END = 0.190;
   const SCRAMBLE_RATIO = 0.78;
   const CYCLES = 3;
-  const TICK_MS = 60;
+  const CHAR_STEP = 0.78;
   const BASE_ALPHA = 0.05;
 
   const entries = [];
@@ -39,7 +41,6 @@
     entries.push({ char, finalChar, index: visibleIndex++ });
   });
   const count = Math.max(1, visibleIndex);
-  const activeSince = new WeakMap();
 
   const clamp = value => Math.max(0, Math.min(1, value));
   const easeInOut = value => {
@@ -55,31 +56,24 @@
     return clamp((scrollY - top) / travel);
   };
 
-  const glyphFor = (index, step) =>
-    POOL[(index * 17 + step * 13) % POOL.length];
+  const glyphFor = (index, cycle) =>
+    POOL[(index * 17 + cycle * 13) % POOL.length];
 
   const clearScramble = char => {
     if (char.classList.contains('is-scrambling')) char.classList.remove('is-scrambling');
   };
 
   const setPending = char => {
-    activeSince.delete(char);
     clearScramble(char);
     char.style.color = `rgba(17,17,17,${BASE_ALPHA})`;
   };
 
   const setFinal = char => {
-    activeSince.delete(char);
     clearScramble(char);
     char.style.color = 'rgba(17,17,17,1)';
   };
 
-  const setScramble = (char, index, now) => {
-    if (!activeSince.has(char)) activeSince.set(char, now);
-    const elapsed = Math.max(0, now - activeSince.get(char));
-    const step = Math.floor(elapsed / TICK_MS) % CYCLES;
-    const glyph = glyphFor(index, step);
-
+  const setScramble = (char, glyph) => {
     char.style.color = 'rgba(17,17,17,0)';
     char.style.setProperty('--scramble-alpha', '1');
     char.style.setProperty('--scramble-rgb', '17,17,17');
@@ -87,27 +81,29 @@
     if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
   };
 
-  const paint = now => {
+  const paint = () => {
     const p = heroProgress();
-    if (p > END + 0.001) return false;
+    if (p > END + 0.001) return;
 
     const reveal = phaseProgress(p, START, END);
-    const sweep = easeInOut(reveal) * count;
-    let hasActiveScramble = false;
+    const sweepMax = Math.max(1, (count - 1) * CHAR_STEP + 1);
+    const sweep = easeInOut(reveal) * sweepMax;
 
     entries.forEach(({ char, index }) => {
       if (index < 0) {
-        activeSince.delete(char);
         clearScramble(char);
         return;
       }
 
-      const local = clamp(sweep - index);
+      const local = clamp(sweep - index * CHAR_STEP);
       if (local <= 0) {
         setPending(char);
       } else if (local < SCRAMBLE_RATIO) {
-        hasActiveScramble = true;
-        setScramble(char, index, now);
+        const cycle = Math.min(
+          CYCLES - 1,
+          Math.floor((local / SCRAMBLE_RATIO) * CYCLES)
+        );
+        setScramble(char, glyphFor(index, cycle));
       } else {
         setFinal(char);
       }
@@ -120,19 +116,15 @@
       source.style.color = `rgba(17,17,17,${alpha.toFixed(3)})`;
       source.style.opacity = '1';
     }
-
-    return hasActiveScramble;
   };
 
   let raf = 0;
-  const frame = now => {
-    raf = 0;
-    const keepTicking = paint(now);
-    if (keepTicking) raf = requestAnimationFrame(frame);
-  };
-
   const requestPaint = () => {
-    if (!raf) raf = requestAnimationFrame(frame);
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      paint();
+    });
   };
 
   addEventListener('scroll', requestPaint, { passive: true });
