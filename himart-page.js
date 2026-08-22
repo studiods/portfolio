@@ -9,6 +9,9 @@
     if(benchmark&&benchmark.textContent.includes('익쌙한')){
       benchmark.textContent=benchmark.textContent.replace('익쌙한','익숙한');
     }
+    document.querySelectorAll('.hm-meta b').forEach(el=>{
+      if(el.textContent.includes('»'))el.textContent=el.textContent.replaceAll('»','·');
+    });
     const style=document.createElement('style');
     style.setAttribute('data-himart-runtime-fix','1');
     style.textContent=".hm-confidential-card{border:1px solid var(--local-minor)!important}.hm-preview-blur::after{content:'PRE-OPEN / BLURRED'!important}";
