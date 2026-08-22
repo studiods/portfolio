@@ -16,9 +16,10 @@
       0.000 -> 0.095  (production)
       0.000 -> 0.190  (this diagnostic)
 
-    H4 isolates scramble dwell as the only new variable. Each authored glyph
-    now stays in its random state for 94% of its local slot instead of 78%,
-    while the reveal window, easing and six-state vocabulary remain unchanged.
+    H5 isolates progression easing as the only new variable. Scramble dwell is
+    restored to the original 78%, while the reveal sweep changes from smoothstep
+    easeInOut(reveal) to linear reveal. This removes the faster middle section
+    without changing reveal distance, cycle count or the later Hero timeline.
 
     Once p > 0.190 this module stops touching the Hero entirely, so the later
     quote hold, English -> Korean morph, Subtractive Design and lower sections
@@ -28,7 +29,7 @@
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const START = 0;
   const END = 0.190;
-  const SCRAMBLE_RATIO = 0.94;
+  const SCRAMBLE_RATIO = 0.78;
   const CYCLES = 6;
   const BASE_ALPHA = 0.05;
 
@@ -88,7 +89,7 @@
     if (p > END + 0.001) return;
 
     const reveal = phaseProgress(p, START, END);
-    const sweep = easeInOut(reveal) * count;
+    const sweep = reveal * count;
 
     entries.forEach(({ char, index }) => {
       if (index < 0) {
