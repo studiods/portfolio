@@ -2,6 +2,25 @@
   'use strict';
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const POOL='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const isHangul=value=>/[가-힣ㄱ-ㅎㅏ-ㅣ]/.test(value||'');
+
+  const sizeGlyph=span=>{
+    const final=span.dataset.final||'';
+    if(isHangul(final)){
+      span.style.width='1em';
+      return;
+    }
+    const live=span.textContent;
+    span.textContent=final;
+    span.style.width='auto';
+    const width=span.getBoundingClientRect().width;
+    if(width>0)span.style.width=`${Math.ceil(width*100)/100}px`;
+    span.textContent=live;
+  };
+
+  const resizePreparedGlyphs=()=>{
+    document.querySelectorAll('.scramble-char').forEach(sizeGlyph);
+  };
 
   const prepareScramble=async()=>{
     try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}
@@ -24,10 +43,7 @@
         frag.appendChild(span);
       });
       el.appendChild(frag);
-      [...el.querySelectorAll('.scramble-char')].forEach(span=>{
-        const width=span.getBoundingClientRect().width;
-        if(width>0)span.style.width=`${Math.ceil(width*100)/100}px`;
-      });
+      el.querySelectorAll('.scramble-char').forEach(sizeGlyph);
     });
 
     const play=el=>{
@@ -116,11 +132,19 @@
     progress.forEach((link,index)=>link.classList.toggle('is-active',index===active));
   };
   const requestProgress=()=>{if(ticking)return;ticking=true;requestAnimationFrame(updateProgress)};
+
+  let resizeTimer=0;
   addEventListener('scroll',requestProgress,{passive:true});
-  addEventListener('resize',requestProgress,{passive:true});
+  addEventListener('resize',()=>{
+    requestProgress();
+    clearTimeout(resizeTimer);
+    resizeTimer=setTimeout(resizePreparedGlyphs,120);
+  },{passive:true});
+
   progress.forEach(link=>link.addEventListener('click',event=>{
     if(reduced)return;
-    const target=document.querySelector(link.getAttribute('href')||'');
+    const selector=link.getAttribute('href');
+    const target=selector?document.querySelector(selector):null;
     if(!target)return;
     event.preventDefault();
     target.scrollIntoView({behavior:'smooth',block:'start'});
