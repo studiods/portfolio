@@ -12,7 +12,7 @@
 
     Production home-interactions.js still owns the full Hero timeline.
     This test paints only the FIRST English reveal after production has painted,
-    using six scramble states with the validated 2x reveal window:
+    using nine scramble states with the validated 2x reveal window:
       0.000 -> 0.095  (production)
       0.000 -> 0.190  (this diagnostic)
 
@@ -25,7 +25,7 @@
   const START = 0;
   const END = 0.190;
   const SCRAMBLE_RATIO = 0.78;
-  const CYCLES = 6;
+  const CYCLES = 9;
   const BASE_ALPHA = 0.05;
 
   const entries = [];
