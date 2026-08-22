@@ -8,25 +8,25 @@
   if (!hero || !quote || !chars.length) return;
 
   /*
-    H7 TEST — ordered character-step spacing only.
+    H8 TEST — direct text renderer.
 
-    Restores the first validated scroll-driven scramble baseline:
+    Keep the validated scroll geometry from H7:
       0.000 -> 0.190
       scramble ratio 0.78
-      three scramble states
+      character step 0.78
       smoothstep reveal progression
 
-    The only new variable is CHAR_STEP. Production used an effective step of 1.0.
-    Here the next authored glyph starts at 0.78, exactly when the previous glyph
-    leaves its scramble range. This preserves strict left-to-right order with no
-    overlap while giving each glyph about 28% more scroll distance to scramble.
+    The new variable is the renderer. Instead of writing data-scramble and
+    waiting for MutationObserver to copy it into textContent, this test writes
+    the random glyph directly into each .fill-char. Six scramble states are used
+    so we can see whether the observer/adapter was collapsing intermediate states.
   */
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const START = 0;
   const END = 0.190;
   const SCRAMBLE_RATIO = 0.78;
-  const CYCLES = 3;
+  const CYCLES = 6;
   const CHAR_STEP = 0.78;
   const BASE_ALPHA = 0.05;
 
@@ -34,10 +34,19 @@
   let visibleIndex = 0;
   chars.forEach(char => {
     const finalChar = char.dataset.finalChar ?? char.textContent;
+    if (!char.dataset.h8FinalChar) char.dataset.h8FinalChar = finalChar;
+
     if (!finalChar.trim()) {
       entries.push({ char, finalChar, index: -1 });
       return;
     }
+
+    const width = char.getBoundingClientRect().width;
+    if (width > 0) {
+      char.style.display = 'inline-block';
+      char.style.width = `${width.toFixed(3)}px`;
+    }
+
     entries.push({ char, finalChar, index: visibleIndex++ });
   });
   const count = Math.max(1, visibleIndex);
@@ -59,26 +68,17 @@
   const glyphFor = (index, cycle) =>
     POOL[(index * 17 + cycle * 13) % POOL.length];
 
-  const clearScramble = char => {
-    if (char.classList.contains('is-scrambling')) char.classList.remove('is-scrambling');
+  const clearLegacyScramble = char => {
+    char.classList.remove('is-scrambling');
+    char.removeAttribute('data-scramble');
+    char.style.removeProperty('--scramble-alpha');
+    char.style.removeProperty('--scramble-rgb');
   };
 
-  const setPending = char => {
-    clearScramble(char);
-    char.style.color = `rgba(17,17,17,${BASE_ALPHA})`;
-  };
-
-  const setFinal = char => {
-    clearScramble(char);
-    char.style.color = 'rgba(17,17,17,1)';
-  };
-
-  const setScramble = (char, glyph) => {
-    char.style.color = 'rgba(17,17,17,0)';
-    char.style.setProperty('--scramble-alpha', '1');
-    char.style.setProperty('--scramble-rgb', '17,17,17');
-    if (char.dataset.scramble !== glyph) char.dataset.scramble = glyph;
-    if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
+  const writeGlyph = (char, value, alpha) => {
+    clearLegacyScramble(char);
+    if (char.textContent !== value) char.textContent = value;
+    char.style.color = `rgba(17,17,17,${alpha})`;
   };
 
   const paint = () => {
@@ -89,23 +89,24 @@
     const sweepMax = Math.max(1, (count - 1) * CHAR_STEP + 1);
     const sweep = easeInOut(reveal) * sweepMax;
 
-    entries.forEach(({ char, index }) => {
+    entries.forEach(({ char, finalChar, index }) => {
       if (index < 0) {
-        clearScramble(char);
+        clearLegacyScramble(char);
+        if (char.textContent !== finalChar) char.textContent = finalChar;
         return;
       }
 
       const local = clamp(sweep - index * CHAR_STEP);
       if (local <= 0) {
-        setPending(char);
+        writeGlyph(char, finalChar, BASE_ALPHA);
       } else if (local < SCRAMBLE_RATIO) {
         const cycle = Math.min(
           CYCLES - 1,
           Math.floor((local / SCRAMBLE_RATIO) * CYCLES)
         );
-        setScramble(char, glyphFor(index, cycle));
+        writeGlyph(char, glyphFor(index, cycle), 1);
       } else {
-        setFinal(char);
+        writeGlyph(char, finalChar, 1);
       }
     });
 
