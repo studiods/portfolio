@@ -32,15 +32,11 @@
   pointer-events:none;
 }
 
-/*
-  The ASCII portrait always begins with a 30% black veil. The existing scroll
-  blackout remains active; once it exceeds 30%, that stronger value takes over.
-*/
+/* The ASCII portrait always begins with a 30% black veil. */
 .about-ascii-blackout{
   opacity:max(.3,var(--ascii-blackout,0))!important;
 }
 
-/* ABOUT is hidden only until the first alphanumeric scramble frame is prepared. */
 .about-ascii-title{
   visibility:hidden;
 }
@@ -48,24 +44,12 @@
   visibility:visible;
 }
 
-/*
-  The ASCII stage intentionally continues behind Profile while the sticky
-  portrait is being covered. All content that follows Profile must therefore
-  establish a higher stacking level so it can never sit underneath the tail
-  of the sticky ASCII layer.
-*/
 .about-section,
 .about-footer{
   position:relative;
   z-index:5;
 }
 
-/*
-  Section labels use their own one-way reveal state instead of the generic
-  reveal-item observer. This prevents small labels from being skipped when a
-  fast scroll or browser scroll restoration jumps past their intersection
-  window. Default state is visible, so a JS failure can never hide a label.
-*/
 .thinking-section > .about-section-label,
 .interview-section > .about-section-label,
 .career-section > .about-section-label{
@@ -89,13 +73,11 @@
   transform:translate3d(0,0,0);
 }
 
-/* Keep the distance from the horizontal rule to its headline identical. */
 .about-hero-main,
 .about-section-rule{
   padding-top:30px;
 }
 
-/* Editorial spacing shared by Profile, Good UX and Interview. */
 .about-hero-bottom{
   margin-top:150px!important;
 }
@@ -104,7 +86,6 @@
   margin-top:150px!important;
 }
 
-/* Requested type sizes and compact paragraph rhythm. */
 .about-lead{
   font-size:18px!important;
 }
@@ -122,11 +103,6 @@
   content:'Q. ';
 }
 
-/*
-  Divider hierarchy: Good UX uses four 7% white lines (one list top + three
-  row bottoms), Interview uses five 7% row dividers, and Career keeps its
-  first/top rule while every row divider below it is reduced to 7% white.
-*/
 .thinking-section .principles-list{
   border-top-color:rgba(255,255,255,.07)!important;
 }
@@ -136,7 +112,12 @@
   border-bottom-color:rgba(255,255,255,.07)!important;
 }
 
-/* Mobile uses a centered square crop while retaining the same ASCII source. */
+/* Keep About navigation typography identical to Home. */
+.top .top-center a{
+  font-size:12px!important;
+  line-height:1.25!important;
+}
+
 @media(max-width:780px){
   :root{
     --ascii-hero-height:100vw;
@@ -161,12 +142,6 @@
   .about-section-rule{
     padding-top:24px;
   }
-
-  /*
-    Match Career's mobile section opening to Interview: the section label is
-    followed immediately by the top rule using the shared mobile row gap.
-    Desktop spacing stays untouched.
-  */
   .career-section .career-list{
     margin-top:0!important;
   }
