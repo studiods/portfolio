@@ -8,17 +8,16 @@
   if (!hero || !quote || !chars.length) return;
 
   /*
-    H3 TEST — phase-window hypothesis only.
+    H6 TEST — time-driven scramble tick only.
 
-    Production home-interactions.js still owns the full Hero timeline.
-    This test paints only the FIRST English reveal after production has painted,
-    using the exact same three-state scramble vocabulary but a 2x reveal window:
-      0.000 -> 0.095  (production)
-      0.000 -> 0.190  (this diagnostic)
+    The validated first-reveal geometry remains unchanged:
+      0.000 -> 0.190
+      scramble ratio 0.78
+      smoothstep reveal progression
 
-    Once p > 0.190 this module stops touching the Hero entirely, so the later
-    quote hold, English -> Korean morph, Subtractive Design and lower sections
-    remain on the production timeline.
+    Scroll position still decides pending / scramble / final. While a glyph is
+    inside the scramble state, its random character now advances by real time
+    every 60ms instead of deriving the random step from scroll progress.
   */
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -26,6 +25,7 @@
   const END = 0.190;
   const SCRAMBLE_RATIO = 0.78;
   const CYCLES = 3;
+  const TICK_MS = 60;
   const BASE_ALPHA = 0.05;
 
   const entries = [];
@@ -39,6 +39,7 @@
     entries.push({ char, finalChar, index: visibleIndex++ });
   });
   const count = Math.max(1, visibleIndex);
+  const activeSince = new WeakMap();
 
   const clamp = value => Math.max(0, Math.min(1, value));
   const easeInOut = value => {
@@ -54,24 +55,31 @@
     return clamp((scrollY - top) / travel);
   };
 
-  const glyphFor = (index, cycle) =>
-    POOL[(index * 17 + cycle * 13) % POOL.length];
+  const glyphFor = (index, step) =>
+    POOL[(index * 17 + step * 13) % POOL.length];
 
   const clearScramble = char => {
     if (char.classList.contains('is-scrambling')) char.classList.remove('is-scrambling');
   };
 
   const setPending = char => {
+    activeSince.delete(char);
     clearScramble(char);
     char.style.color = `rgba(17,17,17,${BASE_ALPHA})`;
   };
 
   const setFinal = char => {
+    activeSince.delete(char);
     clearScramble(char);
     char.style.color = 'rgba(17,17,17,1)';
   };
 
-  const setScramble = (char, glyph) => {
+  const setScramble = (char, index, now) => {
+    if (!activeSince.has(char)) activeSince.set(char, now);
+    const elapsed = Math.max(0, now - activeSince.get(char));
+    const step = Math.floor(elapsed / TICK_MS) % CYCLES;
+    const glyph = glyphFor(index, step);
+
     char.style.color = 'rgba(17,17,17,0)';
     char.style.setProperty('--scramble-alpha', '1');
     char.style.setProperty('--scramble-rgb', '17,17,17');
@@ -79,15 +87,17 @@
     if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
   };
 
-  const paint = () => {
+  const paint = now => {
     const p = heroProgress();
-    if (p > END + 0.001) return;
+    if (p > END + 0.001) return false;
 
     const reveal = phaseProgress(p, START, END);
     const sweep = easeInOut(reveal) * count;
+    let hasActiveScramble = false;
 
     entries.forEach(({ char, index }) => {
       if (index < 0) {
+        activeSince.delete(char);
         clearScramble(char);
         return;
       }
@@ -96,11 +106,8 @@
       if (local <= 0) {
         setPending(char);
       } else if (local < SCRAMBLE_RATIO) {
-        const cycle = Math.min(
-          CYCLES - 1,
-          Math.floor((local / SCRAMBLE_RATIO) * CYCLES)
-        );
-        setScramble(char, glyphFor(index, cycle));
+        hasActiveScramble = true;
+        setScramble(char, index, now);
       } else {
         setFinal(char);
       }
@@ -113,16 +120,19 @@
       source.style.color = `rgba(17,17,17,${alpha.toFixed(3)})`;
       source.style.opacity = '1';
     }
+
+    return hasActiveScramble;
   };
 
   let raf = 0;
+  const frame = now => {
+    raf = 0;
+    const keepTicking = paint(now);
+    if (keepTicking) raf = requestAnimationFrame(frame);
+  };
+
   const requestPaint = () => {
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      raf = 0;
-      /* Registered after home-interactions.js, so this is the final quote paint. */
-      paint();
-    });
+    if (!raf) raf = requestAnimationFrame(frame);
   };
 
   addEventListener('scroll', requestPaint, { passive: true });
