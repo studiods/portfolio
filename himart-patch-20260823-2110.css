@@ -63,6 +63,9 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 #data .flow-group:nth-child(1){--line-left:0px!important;--line-width:852px!important}
 #data .flow-group:nth-child(2){--line-left:0px!important;--line-width:552px!important}
 
+/* AS-IS card labels are problem-state red */
+#data .flow-groups .flow-node .hm-card-no{color:var(--hm-red)!important}
+
 /* TO-BE group rules remain aligned to the full grouped card range */
 #journey .flow-group:nth-child(1){--line-left:0px!important;--line-width:1152px!important}
 #journey .flow-group:nth-child(2){--line-left:0px!important;--line-width:852px!important}
