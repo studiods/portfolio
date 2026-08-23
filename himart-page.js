@@ -62,13 +62,14 @@
       #brand.hm-section{padding-top:clamp(60px,7vh,95px)}
       #brand .hm-perception{gap:clamp(24px,2.8vw,44px)}
       #brand .hm-perception-group{
-        padding:clamp(22px,2.1vw,32px);
-        border:1px solid;
-        border-radius:8px;
-        background:rgba(255,255,255,.012);
+        padding:clamp(22px,2.1vw,32px) 0 0;
+        border:0;
+        border-top:1px solid;
+        border-radius:0;
+        background:transparent;
       }
-      #brand .hm-perception-positive{border-color:var(--hm-blue)}
-      #brand .hm-perception-negative{border-color:var(--hm-red)}
+      #brand .hm-perception-positive{border-top-color:var(--hm-blue)}
+      #brand .hm-perception-negative{border-top-color:var(--hm-red)}
       #brand .hm-insight-label{
         justify-content:flex-start;
         padding-bottom:18px;
@@ -102,7 +103,7 @@
         color:var(--hm-blue);
       }
       @media(max-width:900px){
-        #brand .hm-perception-group{padding:20px}
+        #brand .hm-perception-group{padding:20px 0 0}
       }
     `;
     document.head.appendChild(style);
