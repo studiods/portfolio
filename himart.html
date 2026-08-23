@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="./typography.css?v=8">
   <link rel="stylesheet" href="./type-overrides.css?v=18">
   <link rel="stylesheet" href="./global-gnb.css?v=1">
-  <link rel="stylesheet" href="./himart-commerce.css?v=1">
+  <link rel="stylesheet" href="./himart-commerce.css?v=2">
 </head>
 <body class="himart-commerce-body">
 <nav class="top">
@@ -66,9 +66,9 @@
         <div class="hm3-story-backdrops" aria-hidden="true">
           <div class="hm3-scene hm3-scene-perception is-active" data-scene="0">
             <svg viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice">
-              <path d="M88 144C330 32 385 308 584 207S874 98 1110 203" />
-              <path d="M64 568C290 678 394 423 604 517S930 673 1141 521" />
-              <path d="M177 86C359 248 383 486 594 359S817 193 1058 88" />
+              <path pathLength="1" d="M88 144 H310 V207 H584 V144 H840 V203 H1110" />
+              <path pathLength="1" d="M64 568 H292 V517 H604 V568 H868 V521 H1141" />
+              <path pathLength="1" d="M177 86 V248 H390 V359 H594 V193 H817 V88 H1058" />
               <circle cx="88" cy="144" r="7"/><circle cx="584" cy="207" r="7"/><circle cx="1110" cy="203" r="7"/>
               <circle cx="64" cy="568" r="7"/><circle cx="604" cy="517" r="7"/><circle cx="1141" cy="521" r="7"/>
             </svg>
@@ -89,8 +89,8 @@
           <div class="hm3-scene hm3-scene-demand" data-scene="2">
             <svg class="hm3-trend-lines" viewBox="0 0 1200 720" preserveAspectRatio="none">
               <line x1="66" y1="600" x2="1140" y2="600"/>
-              <polyline class="is-2025" points="66,385 270,360 474,348 678,372 882,394 1086,388"/>
-              <polyline class="is-2026" points="66,365 270,405 474,390 678,365 882,352 1086,320"/>
+              <polyline class="is-2025" pathLength="1" points="66,385 270,360 474,348 678,372 882,394 1086,388"/>
+              <polyline class="is-2026" pathLength="1" points="66,365 270,405 474,390 678,365 882,352 1086,320"/>
               <circle cx="1086" cy="388" r="7"/><circle class="is-blue" cx="1086" cy="320" r="9"/>
             </svg>
             <div class="hm3-demand-main"><span>SEARCH ATTEMPT · H1</span><strong>+1.0%</strong><b>264만 → 267만</b></div>
@@ -111,7 +111,7 @@
 
           <div class="hm3-scene hm3-scene-reframe" data-scene="4">
             <svg viewBox="0 0 1200 720" preserveAspectRatio="none">
-              <path d="M32 365C172 365 187 170 332 170S486 365 611 365 739 536 872 536 1007 365 1168 365"/>
+              <path pathLength="1" d="M32 365 H210 V170 H332 V365 H611 V536 H872 V365 H1168"/>
               <circle cx="32" cy="365" r="8"/><circle cx="332" cy="170" r="8"/><circle cx="611" cy="365" r="8"/><circle cx="872" cy="536" r="8"/><circle cx="1168" cy="365" r="8"/>
             </svg>
             <span class="hm3-flow-label is-1">유입</span><span class="hm3-flow-label is-2">탐색</span>
@@ -159,8 +159,8 @@
 
       <div class="hm3-journey-canvas">
         <svg class="hm3-journey-curve" viewBox="0 0 1100 650" preserveAspectRatio="none" aria-hidden="true">
-          <path class="is-base" d="M46 520C166 520 126 143 272 143S378 488 520 488 639 183 773 183 879 426 1050 426"/>
-          <path class="is-progress" pathLength="1" d="M46 520C166 520 126 143 272 143S378 488 520 488 639 183 773 183 879 426 1050 426"/>
+          <path class="is-base" pathLength="1" d="M46 520 H166 V143 H272 V488 H520 V183 H773 V426 H1050"/>
+          <path class="is-progress" pathLength="1" d="M46 520 H166 V143 H272 V488 H520 V183 H773 V426 H1050"/>
         </svg>
         <ol class="hm3-journey-nodes">
           <li class="is-1"><span>01</span><b>유입 · 랜딩</b><p>홈보다 강한 외부 목적지</p></li>
@@ -192,7 +192,7 @@
 
     <div class="hm3-benchmark-stage hm3-expand" data-expand>
       <div class="hm3-benchmark-orbit" aria-hidden="true">
-        <svg viewBox="0 0 1200 760" preserveAspectRatio="none"><path d="M53 600C235 362 247 99 523 170S763 662 1142 457"/><path d="M45 280C295 440 381 546 619 387S885 110 1155 247"/></svg>
+        <svg viewBox="0 0 1200 760" preserveAspectRatio="none"><path pathLength="1" d="M53 600 H235 V170 H523 V457 H1142"/><path pathLength="1" d="M45 280 H295 V440 H619 V247 H1155"/></svg>
       </div>
       <div class="hm3-source is-naver"><span>NAVER</span><strong>탐색</strong><p>검색 중심 홈<br>목적형 카테고리<br>추천 검색 · 지속형 필터</p></div>
       <div class="hm3-source is-coupang"><span>COUPANG</span><strong>전환</strong><p>정보 우선순위<br>결정 요약<br>간결한 장바구니 · 결제</p></div>
@@ -210,8 +210,8 @@
 
     <div class="hm3-strategy-map" data-strategy-map>
       <svg viewBox="0 0 1200 760" preserveAspectRatio="none" aria-hidden="true">
-        <path class="is-base" d="M60 115C271 115 167 314 386 314S507 530 666 530 766 252 937 252 1000 610 1160 610"/>
-        <path class="is-progress" pathLength="1" d="M60 115C271 115 167 314 386 314S507 530 666 530 766 252 937 252 1000 610 1160 610"/>
+        <path class="is-base" pathLength="1" d="M60 115 H250 V314 H386 V530 H666 V252 H937 V610 H1160"/>
+        <path class="is-progress" pathLength="1" d="M60 115 H250 V314 H386 V530 H666 V252 H937 V610 H1160"/>
       </svg>
       <ol>
         <li class="is-1"><span>01 / START</span><h3>랜딩 맥락을<br>그대로 이어주기</h3><p>상품·이벤트·홈 어디로 들어와도 현재 관심에서 다음 탐색을 시작합니다.</p></li>
@@ -252,6 +252,6 @@
   </footer>
 </main>
 
-<script src="./himart-commerce.js?v=1" defer></script>
+<script src="./himart-commerce.js?v=2" defer></script>
 </body>
 </html>
