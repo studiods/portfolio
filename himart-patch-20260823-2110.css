@@ -1,0 +1,65 @@
+/* 2026-08-23 21:10 refinement patch — himart.html only */
+body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
+
+/* Hero: requested 200px gap between hero title and lower content */
+.hm-hero-bottom{padding-top:200px!important}
+.hm-title{font-size:82px!important;line-height:1.03}
+
+/* Shared title scale */
+.hm-section-title{font-size:58px!important;line-height:1.08!important;white-space:pre-line!important}
+.hm-subtitle{font-size:42px!important;line-height:1.18!important}
+
+/* Keyword tablets */
+.keyword-pill,.keyword-pill b{color:rgba(255,255,255,.65)!important}
+
+/* UX point rows: number + title kept close, whole row vertically centered */
+.direction-card{row-gap:12px!important;align-items:center!important}
+.direction-card .hm-card-no{align-self:end!important;margin:0!important}
+.direction-card h4{align-self:start!important;margin:0!important}
+.direction-card p{align-self:center!important}
+
+/* Data section heading is an intentional two-line title */
+#data .hm-section-title{white-space:pre-line!important}
+
+/* Data cards: headline stays on one line and body may use the full content width */
+.data-card h3{font-size:42px!important;max-width:none!important;white-space:nowrap!important}
+.data-card .desc{max-width:none!important;width:100%!important}
+
+/* Entry pie center emphasis reduced by 15% */
+.pie-center::before{font-size:52px!important}
+
+/* Traffic legend sits immediately below the graph, filling from the left */
+.chart-wrap>.chart-legend{display:grid!important;grid-template-columns:repeat(3,max-content)!important;justify-content:start!important;column-gap:28px!important;row-gap:0!important;margin-top:14px!important;padding-left:90px!important}
+
+/* PDP comparison legend: correct labels and tight 14px spacing */
+.landing-chart .chart-legend{display:flex!important;grid-template-columns:none!important;justify-content:flex-start!important;gap:14px!important;margin-top:14px!important;padding-left:0!important}
+.landing-chart .chart-legend span:first-child{font-size:13px!important}
+.landing-chart .chart-legend span:first-child::after{content:none!important}
+
+/* Flow issue/solution lines align exactly to the cards below */
+#data .flow-group:nth-child(1){--line-left:0px!important;--line-width:1152px!important}
+#data .flow-group:nth-child(2){--line-left:0px!important;--line-width:852px!important}
+#journey .flow-group:nth-child(1){--line-left:0px!important;--line-width:1152px!important}
+#journey .flow-group:nth-child(2){--line-left:0px!important;--line-width:852px!important}
+
+/* Role cards: all text sits flush to the left edge; top rule remains blue */
+.role-card{padding:30px 0!important}
+.role-card .hm-role-name,.role-card h4,.role-card p,.role-card strong{margin-left:0!important;padding-left:0!important;text-align:left!important}
+
+@media(max-width:1100px){
+  body.himart-page-body{--hm-hero:72px;--hm-section:52px;--hm-subsection:38px}
+  .hm-title{font-size:72px!important}
+  .hm-section-title{font-size:52px!important}
+  .hm-subtitle,.data-card h3{font-size:38px!important}
+  .data-card h3{white-space:normal!important}
+  .chart-wrap>.chart-legend{padding-left:0!important}
+  #data .flow-group:nth-child(n),#journey .flow-group:nth-child(n){--line-left:0px!important;--line-width:100%!important}
+}
+
+@media(max-width:780px){
+  .hm-hero-bottom{padding-top:72px!important}
+  .hm-title{font-size:52px!important}
+  .hm-section-title{font-size:42px!important}
+  .hm-subtitle,.data-card h3{font-size:32px!important}
+  .chart-wrap>.chart-legend{grid-template-columns:1fr!important;gap:12px!important}
+}
