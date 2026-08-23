@@ -1,352 +1,103 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다. — Shin Dong Sik</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
-  <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="./style.css?v=17">
-  <link rel="stylesheet" href="./typography.css?v=8">
-  <link rel="stylesheet" href="./type-overrides.css?v=18">
-  <link rel="stylesheet" href="./himart-page.css?v=4">
-  <link rel="stylesheet" href="./himart-journey-data.css?v=2">
-  <link rel="stylesheet" href="./himart-accent.css?v=3">
-  <link rel="stylesheet" href="./global-gnb.css?v=1">
-  <style>
-    body.himart-page-body #brand .hm-cross-card,
-    body.himart-page-body #brand .hm-cross-card.hm-cross-point,
-    body.himart-page-body #brand .hm-cross-card.hm-cross-second,
-    body.himart-page-body #brand .hm-cross-card.hm-cross-special{
-      background:linear-gradient(155deg,rgba(0,166,237,.06),rgba(0,166,237,.012) 52%,transparent)!important;
-      border-color:rgba(0,166,237,.16)!important;
-    }
-    body.himart-page-body #brand .hm-cross-card::before,
-    body.himart-page-body #brand .hm-cross-card.hm-cross-point::before,
-    body.himart-page-body #brand .hm-cross-card.hm-cross-second::before,
-    body.himart-page-body #brand .hm-cross-card.hm-cross-special::before{
-      height:3px!important;
-      background:#00A6ED!important;
-    }
-    body.himart-page-body #brand .hm-cross-graphic,
-    body.himart-page-body #brand .hm-cross-stack,
-    body.himart-page-body #brand .hm-cross-nodes,
-    body.himart-page-body #brand .hm-cross-blocks{display:none!important}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다. — Shin Dong Sik</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="./style.css?v=17">
+<link rel="stylesheet" href="./typography.css?v=8">
+<link rel="stylesheet" href="./type-overrides.css?v=18">
+<link rel="stylesheet" href="./himart-page.css?v=4">
+<link rel="stylesheet" href="./global-gnb.css?v=1">
+<style id="himart-case-2027">
+body.himart-page-body{--hm-blue:#00A6ED;--hm-newblue:#00B4E3;--hm-aqua:#00C7D8;--hm-mintblue:#00D9CB;--hm-green:#00EDBD;--hm-red:#FA481B;--hm-black:#050505;--hm-paper:#F3F4F1;--hm-ink:#101112;--hm-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif}
+body.himart-page-body .hm-v2-section{position:relative;padding:clamp(96px,10vw,150px) var(--hm-pad,clamp(20px,5vw,80px));overflow:hidden}
+body.himart-page-body .hm-v2-dark{--v2-bg:#050505;--v2-text:#fff;--v2-copy:rgba(255,255,255,.68);--v2-dim:rgba(255,255,255,.46);--v2-line:rgba(255,255,255,.15);--v2-line-strong:rgba(255,255,255,.28);background:var(--v2-bg);color:var(--v2-text)}
+body.himart-page-body .hm-v2-light{--v2-bg:#F3F4F1;--v2-text:#101112;--v2-copy:rgba(16,17,18,.68);--v2-dim:rgba(16,17,18,.46);--v2-line:rgba(16,17,18,.14);--v2-line-strong:rgba(16,17,18,.28);background:var(--v2-bg);color:var(--v2-text)}
+.hm-v2-section-head{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:clamp(36px,5vw,88px);align-items:end;margin-bottom:clamp(72px,7vw,112px)}
+.hm-v2-section-head .hm-section-no{display:block;color:var(--hm-blue);margin-bottom:18px}.hm-v2-section-head h2{white-space:pre-line;margin:0;max-width:980px;color:var(--v2-text);font:300 clamp(42px,4.7vw,76px)/1.04 var(--hm-ko);letter-spacing:-.055em}.hm-v2-section-head p{margin:0;max-width:620px;color:var(--v2-copy);font:400 clamp(15px,1.12vw,18px)/1.86 var(--hm-ko);letter-spacing:-.025em}
+.hm-v2-kicker{color:var(--v2-dim);font:400 11px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}.hm-v2-intro-title{margin:0;color:var(--v2-text);font:300 clamp(30px,3.2vw,52px)/1.18 var(--hm-ko);letter-spacing:-.045em}.hm-v2-intro-title strong{font-weight:500}
+.hm-voice-intro{padding-top:28px;border-top:3px solid var(--hm-blue);margin-bottom:clamp(48px,5vw,74px)}.hm-voice-intro .hm-v2-kicker{margin-bottom:16px}
+.hm-keyword-columns{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px)}.hm-keyword-group{padding-top:22px;border-top:3px solid var(--hm-blue)}.hm-keyword-group.is-negative{border-top-color:var(--hm-red)}.hm-keyword-group h3{margin:0 0 26px;color:var(--hm-blue);font:400 clamp(23px,2vw,32px)/1.2 var(--hm-ko);letter-spacing:-.035em}.hm-keyword-group.is-negative h3{color:var(--hm-red)}.hm-keyword-cloud{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}.hm-keyword-pill{display:inline-flex;align-items:center;gap:7px;min-height:42px;padding:9px 14px;border:1px solid #fff;border-radius:999px;color:#fff;background:transparent;font:400 13px/1.25 var(--hm-ko);letter-spacing:-.018em}.hm-keyword-pill strong{font-weight:400}.hm-keyword-pill.is-major strong{font-weight:550}.hm-keyword-pill em{font-style:normal;color:rgba(255,255,255,.66)}
+.hm-voice-conclusion{margin-top:clamp(86px,8vw,130px);padding-top:30px;border-top:1px solid var(--v2-line-strong)}.hm-voice-board-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,4vw,62px);margin-top:34px}.hm-voice-board{min-width:0;padding-top:22px;border-top:3px solid var(--hm-blue)}.hm-voice-board.is-negative{border-top-color:var(--hm-red)}.hm-voice-board h3{margin:0 0 36px;max-width:620px;color:#fff;font:350 clamp(26px,2.45vw,40px)/1.25 var(--hm-ko);letter-spacing:-.043em}.hm-voice-board h3 strong{font-weight:500;color:var(--hm-blue)}.hm-voice-board.is-negative h3 strong{color:var(--hm-red)}
+.hm-voice-rings{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.hm-voice-ring-card{position:relative;aspect-ratio:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:18px;border:1px solid rgba(255,255,255,.22);border-radius:50%;text-align:center}.hm-voice-ring-card::before{content:"";position:absolute;inset:-1px;border-radius:inherit;background:conic-gradient(var(--ring-color) calc(var(--pct)*1%),transparent 0);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));opacity:.95}.hm-voice-ring-card b{position:relative;display:block;color:#fff;font:500 clamp(17px,1.4vw,23px)/1.18 var(--hm-ko);letter-spacing:-.035em}.hm-voice-ring-card p{position:relative;margin:12px 0 0;max-width:180px;color:rgba(255,255,255,.67);font:400 12px/1.55 var(--hm-ko)}.hm-voice-ring-card span{position:absolute;right:7%;bottom:8%;color:var(--ring-color);font:500 12px/1 var(--hm-ko)}
+.hm-sentiment{margin-top:clamp(72px,7vw,110px);padding-top:28px;border-top:1px solid var(--v2-line)}.hm-sentiment h3{margin:0 0 24px;color:#fff;font:350 clamp(26px,2.25vw,38px)/1.2 var(--hm-ko)}.hm-sentiment-bar{display:grid;grid-template-columns:65fr 35fr;min-height:158px;overflow:hidden}.hm-sentiment-part{padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between}.hm-sentiment-part.is-positive{background:var(--hm-blue)}.hm-sentiment-part.is-negative{background:var(--hm-red)}.hm-sentiment-part strong{font:500 clamp(38px,4vw,68px)/1 var(--hm-ko);color:#fff}.hm-sentiment-part p{margin:28px 0 0;color:#fff;font:500 14px/1.55 var(--hm-ko)}
+.hm-feedback-split{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:1px;background:rgba(255,255,255,.16)}.hm-feedback-card{min-height:300px;padding:32px;background:#080808}.hm-feedback-card.is-positive{box-shadow:inset 0 3px 0 var(--hm-blue)}.hm-feedback-card.is-negative{box-shadow:inset 0 3px 0 var(--hm-red)}.hm-feedback-card h4{margin:0 0 76px;max-width:500px;color:#fff;font:500 clamp(28px,2.45vw,42px)/1.18 var(--hm-ko);letter-spacing:-.045em}.hm-feedback-card ul{list-style:none;margin:0;padding:0}.hm-feedback-card li{color:rgba(255,255,255,.72);font:400 15px/1.7 var(--hm-ko)}.hm-feedback-card li+li{margin-top:4px}
+.hm-voice-points{margin-top:clamp(96px,9vw,145px);padding-top:30px;border-top:1px solid var(--v2-line-strong)}.hm-voice-points-head{display:grid;grid-template-columns:minmax(260px,.6fr) minmax(0,1.4fr);gap:clamp(30px,5vw,80px);align-items:start}.hm-voice-points-head h3{margin:14px 0 0;color:#fff;font:350 clamp(31px,3.4vw,55px)/1.13 var(--hm-ko);letter-spacing:-.05em}.hm-voice-points-head p{margin:0;max-width:730px;color:rgba(255,255,255,.66);font:400 16px/1.8 var(--hm-ko)}.hm-voice-points-list{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:46px}.hm-voice-point{min-height:268px;padding:22px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.018)}.hm-voice-point span{color:var(--hm-newblue);font:500 11px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-voice-point h4{margin:44px 0 14px;color:#fff;font:500 20px/1.35 var(--hm-ko);letter-spacing:-.035em}.hm-voice-point p{margin:0;color:rgba(255,255,255,.6);font:400 13px/1.7 var(--hm-ko)}.hm-voice-method{display:grid;grid-template-columns:180px 1fr;gap:28px;margin-top:28px;padding-top:18px;border-top:1px solid var(--v2-line);color:rgba(255,255,255,.44);font:400 12px/1.7 var(--hm-ko)}.hm-voice-method b{color:var(--hm-green);font-weight:500}
+.hm-behavior-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.hm-behavior-card{min-height:430px;padding:28px;border:1px solid var(--v2-line);background:rgba(255,255,255,.28);display:flex;flex-direction:column}.hm-v2-light .hm-behavior-card{background:rgba(255,255,255,.55)}.hm-behavior-card.is-wide{grid-column:1/-1;min-height:480px}.hm-card-head{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:start}.hm-card-head span{color:var(--hm-blue);font:500 11px/1.25 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-card-head em{font-style:normal;color:var(--v2-dim);font:400 11px/1.4 var(--hm-ko)}.hm-behavior-card h3{margin:22px 0 8px;max-width:680px;color:var(--v2-text);font:450 clamp(23px,2vw,32px)/1.3 var(--hm-ko);letter-spacing:-.04em}.hm-behavior-card .hm-data-copy{margin:0 0 28px;max-width:720px;color:var(--v2-copy);font:400 14px/1.72 var(--hm-ko)}.hm-data-viz{margin-top:auto}
+.hm-pie-layout{display:grid;grid-template-columns:210px 1fr;gap:28px;align-items:center}.hm-pie{width:210px;aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--hm-blue) 0 52%,var(--hm-newblue) 52% 83%,var(--hm-aqua) 83% 93%,var(--hm-mintblue) 93% 99%,var(--hm-green) 99% 100%);position:relative;transform:scale(.92);transition:transform .8s cubic-bezier(.2,.8,.2,1)}.is-in .hm-pie{transform:scale(1)}.hm-pie::after{content:"";position:absolute;inset:28%;border-radius:50%;background:var(--v2-bg)}.hm-pie-center{position:absolute;inset:0;display:grid;place-items:center;z-index:1;text-align:center;font:500 22px/1.1 var(--hm-ko);color:var(--v2-text)}.hm-pie-center small{display:block;margin-top:5px;font:400 10px/1.2 var(--hm-ko);color:var(--v2-dim)}.hm-pie-legend{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px}.hm-pie-legend div{display:grid;grid-template-columns:10px 1fr auto;gap:8px;align-items:center;color:var(--v2-copy);font:400 12px/1.4 var(--hm-ko)}.hm-pie-legend i{width:8px;height:8px;border-radius:50%;background:var(--c)}.hm-pie-legend b{color:var(--v2-text);font-weight:500}
+.hm-svg-chart{width:100%;height:230px;display:block;overflow:visible}.hm-svg-chart .grid{stroke:var(--v2-line);stroke-width:1}.hm-svg-chart .bar{fill:var(--hm-blue);transform:scaleY(0);transform-origin:center bottom;transform-box:fill-box;transition:transform .9s cubic-bezier(.2,.8,.2,1)}.is-in .hm-svg-chart .bar{transform:scaleY(1)}.hm-svg-chart .line-a{fill:none;stroke:var(--hm-newblue);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.2s ease .2s}.hm-svg-chart .line-b{fill:none;stroke:var(--hm-green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.2s ease .35s}.is-in .hm-svg-chart .line-a,.is-in .hm-svg-chart .line-b{stroke-dashoffset:0}.hm-svg-chart text{fill:var(--v2-dim);font:400 10px var(--hm-ko)}.hm-chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;color:var(--v2-dim);font:400 11px/1.3 var(--hm-ko)}.hm-chart-legend span{display:flex;align-items:center;gap:6px}.hm-chart-legend i{width:16px;height:3px;background:var(--c)}
+.hm-device-start{display:grid;grid-template-columns:1fr 1fr;gap:18px}.hm-device-box{padding:18px;border-top:3px solid var(--hm-blue)}.hm-device-box:nth-child(2){border-top-color:var(--hm-newblue)}.hm-device-box span{color:var(--v2-dim);font:500 10px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-device-box strong{display:block;margin-top:18px;color:var(--v2-text);font:350 clamp(38px,4vw,60px)/1 var(--hm-ko)}.hm-device-box b{display:block;margin-top:10px;color:var(--v2-text);font:500 16px/1.35 var(--hm-ko)}.hm-device-box p{margin:8px 0 0;color:var(--v2-copy);font:400 12px/1.6 var(--hm-ko)}.hm-month-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:22px}.hm-month-strip i{height:12px;background:var(--hm-blue);transform:scaleX(0);transform-origin:left;transition:transform .55s ease}.hm-device-box:nth-child(2) .hm-month-strip i{background:var(--hm-newblue)}.is-in .hm-month-strip i{transform:scaleX(1)}
+.hm-slope{position:relative;display:grid;grid-template-columns:1fr 80px 1fr;gap:18px;align-items:center;min-height:180px}.hm-slope-point strong{display:block;color:var(--v2-text);font:350 clamp(34px,3.3vw,54px)/1 var(--hm-ko)}.hm-slope-point span{display:block;margin-top:8px;color:var(--v2-dim);font:400 11px/1.4 var(--hm-ko)}.hm-slope-arrow{height:1px;background:var(--hm-newblue);position:relative}.hm-slope-arrow::after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border-top:1px solid var(--hm-newblue);border-right:1px solid var(--hm-newblue);transform:rotate(45deg)}.hm-slope-sub{margin-top:18px;color:var(--hm-blue);font:500 13px/1.5 var(--hm-ko)}
+.hm-hbars{display:grid;gap:12px}.hm-hbar-row{display:grid;grid-template-columns:110px 1fr 60px;gap:12px;align-items:center}.hm-hbar-row span,.hm-hbar-row b{font:400 12px/1.2 var(--hm-ko);color:var(--v2-copy)}.hm-hbar-row b{text-align:right;color:var(--v2-text);font-weight:500}.hm-hbar-track{height:13px;background:var(--v2-line);overflow:hidden}.hm-hbar-fill{height:100%;background:var(--hm-blue);transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.8,.2,1)}.hm-hbar-row:nth-child(2) .hm-hbar-fill{background:var(--hm-newblue)}.hm-hbar-row:nth-child(3) .hm-hbar-fill{background:var(--hm-aqua)}.hm-hbar-row:nth-child(4) .hm-hbar-fill{background:var(--hm-mintblue)}.hm-hbar-row:nth-child(n+5) .hm-hbar-fill{background:var(--hm-green);opacity:.55}.is-in .hm-hbar-fill{transform:scaleX(1)}
+.hm-split-viz{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:auto}.hm-mini-chart{padding-top:18px;border-top:1px solid var(--v2-line)}.hm-mini-chart h4{margin:0 0 18px;color:var(--v2-text);font:500 15px/1.35 var(--hm-ko)}.hm-stackbar{display:flex;height:42px;overflow:hidden}.hm-stackbar i{height:100%;display:block;transform:scaleX(0);transform-origin:left;transition:transform .75s ease}.is-in .hm-stackbar i{transform:scaleX(1)}.hm-stack-labels{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.hm-stack-labels span{color:var(--v2-copy);font:400 11px/1.5 var(--hm-ko)}.hm-stack-labels b{color:var(--v2-text);font-weight:500}.hm-pdp-bars{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-items:end;height:140px}.hm-pdp-col{display:flex;flex-direction:column;justify-content:flex-end;height:100%}.hm-pdp-col .pair{display:flex;gap:4px;align-items:flex-end;height:100%}.hm-pdp-col i{width:50%;background:var(--hm-blue);transform:scaleY(0);transform-origin:bottom;transition:transform .8s ease}.hm-pdp-col i:nth-child(2){background:var(--hm-newblue)}.is-in .hm-pdp-col i{transform:scaleY(1)}.hm-pdp-col span{margin-top:8px;color:var(--v2-dim);font:400 10px/1.3 var(--hm-ko);text-align:center}.hm-data-source{margin-top:20px;padding-top:12px;border-top:1px solid var(--v2-line);color:var(--v2-dim);font:400 9.5px/1.55 "Averta PE",var(--hm-ko);letter-spacing:.02em}
+.hm-journey-diagnosis{margin-top:clamp(90px,9vw,140px);padding-top:30px;border-top:1px solid var(--v2-line-strong)}.hm-journey-diagnosis-head{display:grid;grid-template-columns:minmax(260px,.7fr) minmax(0,1.3fr);gap:clamp(28px,5vw,74px);align-items:start}.hm-journey-diagnosis-head h3{margin:12px 0 0;color:var(--v2-text);font:400 clamp(30px,3vw,50px)/1.17 var(--hm-ko);letter-spacing:-.05em}.hm-journey-diagnosis-head p{margin:0;color:var(--v2-copy);font:400 15px/1.8 var(--hm-ko)}.hm-flow-scroll{overflow-x:auto;padding:58px 0 12px;margin-top:32px}.hm-flow-map{min-width:1160px;position:relative}.hm-flow-risk-row{display:grid;grid-template-columns:repeat(13,1fr);gap:0;margin-bottom:22px}.hm-risk-band{position:relative;padding-top:14px;border-top:2px solid var(--hm-red)}.hm-risk-band::before,.hm-risk-band::after{content:"";position:absolute;top:-2px;width:2px;height:12px;background:var(--hm-red)}.hm-risk-band::before{left:0}.hm-risk-band::after{right:0}.hm-risk-band span{display:inline-flex;align-items:center;padding:7px 11px;border:1px solid var(--hm-red);border-radius:999px;color:var(--hm-red);font:500 11px/1.25 var(--hm-ko)}.hm-flow-row{display:grid;grid-template-columns:repeat(13,1fr);align-items:stretch}.hm-flow-node{min-height:150px;padding:18px 14px;border:1px solid var(--v2-line-strong);background:rgba(255,255,255,.55);display:flex;flex-direction:column}.hm-v2-dark .hm-flow-node{background:rgba(255,255,255,.02)}.hm-flow-node span{color:var(--hm-blue);font:500 10px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-flow-node b{margin-top:20px;color:var(--v2-text);font:500 17px/1.35 var(--hm-ko)}.hm-flow-node em{margin-top:auto;color:var(--v2-copy);font:400 11px/1.5 var(--hm-ko);font-style:normal}.hm-flow-arrow{align-self:center;height:1px;background:var(--v2-line-strong);position:relative}.hm-flow-arrow::after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border-top:1px solid var(--v2-line-strong);border-right:1px solid var(--v2-line-strong);transform:rotate(45deg)}.hm-flow-conclusion{margin-top:30px;max-width:980px;color:var(--v2-text);font:400 clamp(25px,2.2vw,36px)/1.42 var(--hm-ko);letter-spacing:-.04em}.hm-flow-conclusion strong{color:var(--hm-red);font-weight:500}
+.hm-tobe-flow{margin-top:10px}.hm-tobe-flow .hm-flow-node{border-top:3px solid var(--hm-blue)}.hm-tobe-flow .hm-flow-node:nth-of-type(5){border-top-color:var(--hm-newblue)}.hm-tobe-flow .hm-flow-node:nth-of-type(7){border-top-color:var(--hm-aqua)}.hm-tobe-flow .hm-flow-node:nth-of-type(9){border-top-color:var(--hm-mintblue)}.hm-tobe-flow .hm-flow-node:nth-of-type(11),.hm-tobe-flow .hm-flow-node:nth-of-type(13){border-top-color:var(--hm-green)}.hm-role-redefine{margin-top:clamp(72px,7vw,112px)}.hm-role-redefine-head{display:grid;grid-template-columns:.6fr 1.4fr;gap:48px;padding-top:24px;border-top:1px solid var(--v2-line-strong)}.hm-role-redefine-head h3{margin:0;color:#fff;font:400 clamp(28px,2.5vw,42px)/1.25 var(--hm-ko)}.hm-role-redefine-head p{margin:0;color:var(--v2-copy);font:400 15px/1.75 var(--hm-ko)}.hm-role-grid-v2{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}.hm-role-card-v2{min-height:245px;padding:22px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.02)}.hm-role-card-v2 span{color:var(--hm-newblue);font:500 10px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-role-card-v2 h4{margin:34px 0 12px;color:#fff;font:500 21px/1.3 var(--hm-ko)}.hm-role-card-v2 p{margin:0;color:rgba(255,255,255,.62);font:400 13px/1.7 var(--hm-ko)}.hm-role-card-v2 strong{display:block;margin-top:18px;color:var(--hm-green);font:500 12px/1.5 var(--hm-ko)}
+.hm-prototype-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:clamp(30px,5vw,80px);align-items:start;margin-bottom:46px}.hm-prototype-intro h3{margin:0;color:var(--v2-text);font:400 clamp(29px,2.8vw,46px)/1.22 var(--hm-ko);letter-spacing:-.045em}.hm-prototype-intro p{margin:0;color:var(--v2-copy);font:400 15px/1.82 var(--hm-ko)}.hm-prototype-status{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:38px}.hm-prototype-status article{padding:18px;border-top:3px solid var(--hm-blue);border-bottom:1px solid var(--v2-line)}.hm-prototype-status article:nth-child(2){border-top-color:var(--hm-newblue)}.hm-prototype-status article:nth-child(3){border-top-color:var(--hm-green)}.hm-prototype-status span{color:var(--v2-dim);font:500 10px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-prototype-status b{display:block;margin-top:16px;color:var(--v2-text);font:500 16px/1.4 var(--hm-ko)}.hm-prototype-status p{margin:7px 0 0;color:var(--v2-copy);font:400 12px/1.6 var(--hm-ko)}.hm-phone-gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.hm-phone-card{min-width:0}.hm-phone-blur{aspect-ratio:9/16;position:relative;overflow:hidden;border:1px solid var(--v2-line-strong);border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.08)),repeating-linear-gradient(180deg,rgba(0,166,237,.16) 0 9%,transparent 9% 16%);filter:blur(4px);transform:scale(.985)}.hm-phone-blur::before{content:"";position:absolute;left:10%;right:10%;top:7%;height:4%;border-radius:999px;background:rgba(0,0,0,.34)}.hm-phone-blur::after{content:"PRE-OPEN";position:absolute;inset:0;display:grid;place-items:center;color:rgba(16,17,18,.52);font:500 11px/1 "Averta PE",Arial,sans-serif;letter-spacing:.12em}.hm-phone-card span{display:block;margin-top:12px;color:var(--hm-blue);font:500 10px/1.2 "Averta PE",Arial,sans-serif;letter-spacing:.08em}.hm-phone-card b{display:block;margin-top:5px;color:var(--v2-text);font:500 13px/1.35 var(--hm-ko)}.hm-phone-card p{margin:3px 0 0;color:var(--v2-dim);font:400 11px/1.45 var(--hm-ko)}
+.hm-reveal{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1)}.hm-reveal.is-in{opacity:1;transform:none}
+@media(max-width:1180px){.hm-voice-points-list{grid-template-columns:repeat(3,1fr)}.hm-role-grid-v2{grid-template-columns:repeat(3,1fr)}.hm-phone-gallery{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){.hm-v2-section{padding:88px 20px}.hm-v2-section-head,.hm-voice-points-head,.hm-journey-diagnosis-head,.hm-role-redefine-head,.hm-prototype-intro{grid-template-columns:1fr}.hm-keyword-columns,.hm-voice-board-grid,.hm-behavior-grid,.hm-feedback-split{grid-template-columns:1fr}.hm-behavior-card.is-wide{grid-column:auto}.hm-voice-rings{grid-template-columns:repeat(3,1fr)}.hm-voice-points-list{grid-template-columns:repeat(2,1fr)}.hm-role-grid-v2{grid-template-columns:repeat(2,1fr)}.hm-prototype-status{grid-template-columns:1fr}.hm-phone-gallery{grid-template-columns:repeat(3,1fr)}.hm-pie-layout,.hm-split-viz{grid-template-columns:1fr}}
+@media(max-width:620px){.hm-v2-section{padding:72px 16px}.hm-v2-section-head{margin-bottom:64px}.hm-v2-section-head h2{font-size:40px}.hm-v2-intro-title{font-size:30px}.hm-keyword-pill{width:100%;justify-content:space-between;border-radius:12px}.hm-voice-rings{grid-template-columns:1fr}.hm-voice-ring-card{max-width:280px;margin:0 auto;width:100%}.hm-sentiment-bar{grid-template-columns:1fr}.hm-feedback-card{min-height:260px}.hm-feedback-card h4{margin-bottom:50px}.hm-voice-points-list,.hm-role-grid-v2{grid-template-columns:1fr}.hm-voice-method{grid-template-columns:1fr}.hm-behavior-card{padding:22px;min-height:0}.hm-pie-layout{justify-items:center}.hm-pie-legend{grid-template-columns:1fr;width:100%}.hm-device-start{grid-template-columns:1fr}.hm-slope{grid-template-columns:1fr}.hm-slope-arrow{width:100%;margin:4px 0 8px}.hm-phone-gallery{grid-template-columns:repeat(2,1fr);gap:12px}}
+</style>
 </head>
 <body class="himart-page-body">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
-
 <main class="hm-case">
-  <header class="hm-hero" id="top">
-    <div class="hm-kicker">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div>
-    <h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을
+<header class="hm-hero" id="top">
+<div class="hm-kicker">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div>
+<h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을
 처음부터 재설계했습니다.</h1>
-    <div class="hm-hero-flow">
-      <p class="hm-lead">하이마트 온라인 전체 개편을 단순한 요구사항 반영으로 시작하지 않았습니다. 브랜드가 어떻게 인식되는지, 고객은 무엇을 기대하고 불편해하는지, 실제 온라인 이용은 어디에서 시작되고 끊기는지를 함께 확인한 뒤 UX 전략부터 다시 수립했습니다.</p>
-      <div class="hm-meta">
-        <div><span>ROLE</span><b>UX STRATEGY » UX PLANNING » EXPERIENCE DESIGN » UX DIRECTION</b></div>
-        <div><span>FOCUS</span><b>COMMERCE JOURNEY » HOME » SEARCH » PDP</b></div>
-        <div><span>SCOPE</span><b>RESEARCH » STRATEGY » DESIGN DIRECTION</b></div>
-        <div><span>TEAM</span><b>UX DESIGN » PO » BUSINESS</b></div>
-      </div>
-    </div>
-  </header>
-
-  <nav class="hm-progress" aria-label="Case study chapters">
-    <a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a>
-  </nav>
-
-  <section class="hm-section hm-dark" id="brand" data-chapter="01">
-    <div class="hm-section-head hm-reveal">
-      <span class="hm-section-no">01</span>
-      <h2 class="js-scramble">홈 개편 요청을 받았지만, 먼저 하이마트가
-어떤 브랜드로 인식되고 있는지부터 확인했습니다.</h2>
-      <p>입사 후 처음 진행하는 대규모 개편이었기 때문에 화면을 바로 고치지 않았습니다. 블로그·카페·앱 리뷰·YouTube·소비자 자료에서 고객이 기대하는 강점과 온라인의 간극을 먼저 정리하고, 이후 검색·홈·PDP·구매 로그에서 같은 문제가 실제 행동으로도 나타나는지 다시 교차검증했습니다.</p>
-    </div>
-
-    <div class="hm-perception hm-reveal">
-      <div class="hm-perception-group">
-        <div class="hm-insight-label"><span>POSITIVE EXPERIENCE</span><b>고객이 이미 기대하고 있던 하이마트의 강점</b></div>
-        <div class="hm-insight-grid hm-interactive-group">
-          <article class="hm-insight-card hm-interactive hm-card-point"><span>OFFLINE EXPERIENCE</span><h3>매장에서 직접 보고 비교할 수 있다는 점</h3><ul><li>대형가전을 실제 크기와 질감으로 확인할 수 있음</li><li>여러 제조사 제품을 한 공간에서 비교할 수 있음</li><li>온라인만으로 결정하기 어려운 구매 불안을 매장에서 해소</li></ul></article>
-          <article class="hm-insight-card hm-interactive"><span>PROFESSIONAL CONSULTING</span><h3>복잡한 가전 선택을 설명해 주는 전문 상담</h3><ul><li>용량·기능·설치 조건처럼 어려운 기준을 설명받을 수 있음</li><li>가족 구성과 공간 조건에 맞춰 제품을 추천받는 경험</li><li>제품 차이를 이해하고 구매 확신을 높이는 역할</li></ul></article>
-          <article class="hm-insight-card hm-interactive hm-card-second"><span>INSTALL & CARE</span><h3>구매 이후까지 이어지는 설치·회수·A/S</h3><ul><li>대형가전 특성상 중요한 배송·설치에 대한 신뢰</li><li>폐가전 회수와 설치 이후 A/S까지 이어지는 서비스</li><li>안심케어 등 구매 이후 관리 서비스에 대한 기대</li></ul></article>
-          <article class="hm-insight-card hm-interactive"><span>RETAIL TRUST</span><h3>가전 전문 유통사라는 오랜 신뢰</h3><ul><li>가전을 전문적으로 판매해 온 브랜드라는 인식</li><li>가격 외에도 상담·설치·사후관리까지 책임질 것이라는 기대</li><li>오프라인 매장이 주는 안정감과 문제 발생 시 대응 가능성</li></ul></article>
-        </div>
-      </div>
-
-      <div class="hm-perception-group">
-        <div class="hm-insight-label"><span>ONLINE GAP</span><b>온라인 경험에서 충분히 전달되지 못한 부분</b></div>
-        <div class="hm-insight-grid hm-interactive-group">
-          <article class="hm-insight-card hm-interactive"><span>PRICE & BENEFIT</span><h3>가격과 혜택을 이해하는 데 드는 높은 비용</h3><ul><li>쿠폰·카드·행사 조건이 여러 위치에 분산되어 있음</li><li>최종적으로 얼마에 살 수 있는지 한 번에 판단하기 어려움</li><li>중요한 혜택과 부가 정보의 우선순위가 불명확함</li></ul></article>
-          <article class="hm-insight-card hm-interactive hm-card-point"><span>SEARCH & COMPARISON</span><h3>찾고 비교하는 기본 경험이 충분히 효율적이지 않음</h3><ul><li>검색·카테고리에서 목적에 맞는 상품군으로 빠르게 좁히기 어려움</li><li>목록에서 가격·스펙·혜택·설치 조건의 비교 기준이 분산됨</li><li>필터와 탐색 맥락이 다음 화면까지 자연스럽게 이어지지 않음</li></ul></article>
-          <article class="hm-insight-card hm-interactive"><span>HIMART DIFFERENCE</span><h3>온라인에서는 하이마트만의 이유가 약하게 보임</h3><ul><li>전문 상담·매장 체험·설치·케어 강점이 상품 탐색과 분리됨</li><li>일반 종합몰과 다른 가전 전문점의 역할이 충분히 드러나지 않음</li><li>가격 경쟁 외에 하이마트를 선택해야 할 이유가 약해짐</li></ul></article>
-          <article class="hm-insight-card hm-interactive hm-card-special"><span>ONLINE × OFFLINE</span><h3>온라인과 매장·서비스가 하나의 여정으로 연결되지 않음</h3><ul><li>온라인 탐색 중 매장 확인이나 전문 상담으로 넘어가는 연결이 약함</li><li>설치·회수·A/S가 구매 과정의 핵심 정보보다 사후 영역처럼 분리됨</li><li>외부에서 바로 유입된 고객에게 다음 행동을 제안하는 구조가 부족함</li></ul></article>
-        </div>
-      </div>
-
-      <div class="hm-brand-data-cross hm-interactive-group">
-        <div class="hm-cross-head">
-          <span>QUALITATIVE → DATA CROSS-CHECK</span>
-          <h3>정성적으로 보였던 간극은 실제 이용 행동에서도 반복됐습니다.</h3>
-          <p>브랜드 인식만으로 문제를 단정하지 않았습니다. 같은 시기의 검색·홈·PDP·구매 로그를 겹쳐 보며 고객이 실제로 어디에서 탐색하고, 무엇을 많이 누르고, 어느 구간에서 다음 행동으로 이어지지 않는지 확인했습니다.</p>
-        </div>
-        <div class="hm-cross-grid">
-          <article class="hm-cross-card hm-cross-point hm-interactive">
-            <span>SEARCH DEMAND · 2026 H1</span>
-            <strong>2,670,682</strong>
-            <b>검색 시도</b>
-            <p>전체 세션의 9.34%가 검색을 시도했습니다. 검색은 보조 기능이 아니라 실제 구매 탐색의 핵심 경로였습니다.</p>
-          </article>
-          <article class="hm-cross-card hm-cross-second hm-interactive">
-            <span>HOME BEHAVIOR</span>
-            <strong>49.6% / 33.8%</strong>
-            <b>주요서비스 / 퀵메뉴 계열</b>
-            <p>홈 클릭은 배너보다 서비스·목적지 이동에 집중됐습니다. 홈이 ‘보여주는 곳’보다 ‘보내주는 곳’이어야 한다는 행동 근거였습니다.</p>
-          </article>
-          <article class="hm-cross-card hm-cross-special hm-interactive">
-            <span>PDP → NEXT ACTION · H1</span>
-            <strong>10,867,894</strong>
-            <b>2026 H1 PDP</b>
-            <p>PDP 이용은 2025 H1 10,088,394보다 늘었지만 장바구니는 227,462→181,913, 구매는 333,664→277,167로 줄었습니다.</p>
-          </article>
-          <article class="hm-cross-card hm-cross-point hm-interactive">
-            <span>START POINT · ANNUAL PATTERN</span>
-            <strong>10 / 12</strong>
-            <b>2025 PC · 이벤트/기획전 시작 1위</b>
-            <p>2026 H1에는 PC 6개월 모두 ‘상품’, Mobile 6개월 중 5개월 ‘메인’이 시작 1위였습니다. 하나의 정상 진입 경로가 없었습니다.</p>
-          </article>
-        </div>
-      </div>
-
-      <div class="hm-research-note"><span>RESEARCH SOURCES</span><p>블로그·카페·앱 리뷰·YouTube·소비자 자료와 기존 서비스 분석을 통해 가설을 만들고, 실제 검색·홈·PDP·구매 데이터를 교차검증했습니다. 정성 자료에서 확인되지 않은 비율은 만들지 않았고, 위 수치는 원본 로그와 보고서에 존재하는 값 또는 동일 기간 집계값만 사용했습니다.</p></div>
-    </div>
-
-    <div class="hm-action-split hm-reveal">
-      <div class="hm-action-side hm-interactive"><span>STRENGTHEN</span><h3>강점은 구매 판단 과정에서 더 먼저 체감하게</h3><ul><li>전문 상담과 매장 실물 확인을 PDP와 탐색 과정에 적극 연결</li><li>설치·회수·A/S·안심케어를 구매 이후가 아닌 구매 전 판단 정보로 노출</li><li>가전 전문 유통사라는 신뢰를 정보 구조와 서비스 연결로 증명</li></ul></div>
-      <div class="hm-action-side hm-interactive"><span>IMPROVE</span><h3>온라인의 기본은 더 익숙하고 단순하게</h3><ul><li>복잡한 가격·혜택 구조와 정보 우선순위를 단순화</li><li>검색·카테고리·비교의 탐색 문법을 시장에서 이미 익숙한 방식으로 정리</li><li>외부 유입부터 매장·상담·설치까지 다음 행동을 끊김 없이 연결</li></ul></div>
-    </div>
-  </section>
-
-  <section class="hm-section hm-light" id="data" data-chapter="02">
-    <div class="hm-section-head hm-reveal">
-      <span class="hm-section-no">02</span>
-      <h2 class="js-scramble">홈이 출발점이라는 가정부터
-실제 이용 데이터와 맞지 않았습니다.</h2>
-      <p>월별 숫자를 그대로 나열하기보다 2025년과 2026년 상반기에 반복된 행동을 묶어 봤습니다. 2025년 PC는 이벤트·기획전 중심의 시작이 연중 반복됐고, 2026년 상반기는 모바일과 PC의 대표 시작점이 명확하게 달랐습니다. 동시에 검색과 PDP 이용 규모는 유지되거나 커졌지만 이후 행동으로 이어지는 힘은 약했습니다. 그래서 문제를 ‘홈 개편’이 아니라 어디로 들어와도 다음 탐색과 구매 판단을 이어주는 전체 여정의 문제로 다시 정의했습니다.</p>
-    </div>
-
-    <div class="hm-journey-evidence hm-summary-evidence">
-      <article class="hm-data-panel hm-reveal">
-        <div class="hm-data-panel-head">
-          <span>2025 PC · ANNUAL START PATTERN</span>
-          <h3>2025년 PC에서는 이벤트·기획전이 사실상 가장 강한 시작점이었습니다.</h3>
-          <p>12개월의 시작페이지 1위를 연간 패턴으로 묶어보면 이벤트·기획전이 10개월에서 1위였습니다. 월별 비중은 27.18%에서 최대 88.38%까지 나타났고, 상품이 1위였던 달은 2개월뿐이었습니다. 즉 하이마트 쇼핑은 홈에서 순서대로 시작된다는 전제보다 프로모션과 개별 목적지로 바로 들어오는 행동을 먼저 설명해야 했습니다.</p>
-        </div>
-        <div class="hm-year-pattern" aria-label="2025년 PC 시작페이지 연간 패턴">
-          <div class="hm-year-stat">
-            <span>EVENT / PROMOTION · #1 START</span>
-            <strong>10 / 12</strong>
-            <p>12개월 중 이벤트·기획전이 시작페이지 1위였던 기간</p>
-          </div>
-          <div class="hm-pattern-visual">
-            <div class="hm-pattern-strip" aria-hidden="true">
-              <i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-second"></i><i class="is-point"></i><i class="is-second"></i>
-            </div>
-            <div class="hm-pattern-legend"><span><i class="is-point"></i>이벤트·기획전 1위 · 10</span><span><i class="is-second"></i>상품 1위 · 2</span></div>
-            <div class="hm-range-line"><span>이벤트·기획전 시작 비중 범위</span><b>27.18% — 88.38%</b></div>
-          </div>
-        </div>
-        <div class="hm-data-source">SOURCE · 하이마트 쇼핑몰 이용 현황_PC_2025_01-12 · 12개월 시작페이지 비중 / METHOD · 각 월 1위 시작페이지를 연간 패턴으로 요약</div>
-      </article>
-
-      <article class="hm-data-panel hm-reveal">
-        <div class="hm-data-panel-head">
-          <span>2026 H1 · START POINT BY DEVICE</span>
-          <h3>같은 하이마트라도 모바일과 PC는 쇼핑을 시작하는 방식부터 달랐습니다.</h3>
-          <p>2026년 상반기 6개월을 묶어 보면 PC는 6개월 모두 ‘상품’이 시작페이지 1위였습니다. 반대로 Mobile은 ‘메인’이 5개월에서 1위였고 나머지 1개월은 하트TV가 1위였습니다. 한 화면을 모든 고객의 공통 출발점으로 설계하기보다 디바이스와 랜딩 맥락에 맞춰 다음 행동을 이어주는 구조가 필요했습니다.</p>
-        </div>
-        <div class="hm-device-summary">
-          <div class="hm-device-card">
-            <div class="hm-device-copy"><span>MOBILE · 2026 H1</span><strong>5 / 6</strong><b>메인이 시작 1위</b><p>나머지 1개월은 하트TV가 1위. 상품은 상반기 어느 달에도 시작 1위가 아니었습니다.</p></div>
-            <div class="hm-device-blocks" aria-hidden="true"><i class="is-point"></i><i class="is-point"></i><i class="is-point"></i><i class="is-special"></i><i class="is-point"></i><i class="is-point"></i></div>
-          </div>
-          <div class="hm-device-card">
-            <div class="hm-device-copy"><span>PC · 2026 H1</span><strong>6 / 6</strong><b>상품이 시작 1위</b><p>상품 시작 비중은 상반기 내내 44.79%~80.08% 범위에서 가장 큰 시작점이었습니다.</p></div>
-            <div class="hm-device-blocks" aria-hidden="true"><i class="is-second"></i><i class="is-second"></i><i class="is-second"></i><i class="is-second"></i><i class="is-second"></i><i class="is-second"></i></div>
-          </div>
-        </div>
-        <div class="hm-data-source">SOURCE · 하이마트 쇼핑몰 이용 현황_Mobile_2026_01-06 / PC_2026_01-06 · 상반기 6개월 시작페이지 비중</div>
-      </article>
-
-      <article class="hm-data-panel hm-reveal">
-        <div class="hm-data-panel-head">
-          <span>SEARCH · H1 COMPARISON</span>
-          <h3>전체 방문 규모가 줄어도 검색 사용량은 거의 줄지 않았습니다.</h3>
-          <p>2025년 상반기 검색 시도는 2,644,012세션, 2026년 상반기는 2,670,682세션이었습니다. 같은 기간 전체 세션은 81,058,842에서 28,593,467로 크게 달라졌지만 검색 시도 비중은 3.26%에서 9.34%로 높아졌습니다. 검색은 부가 기능이 아니라 목적을 구체화하고 상품 후보를 좁히는 핵심 여정으로 봐야 했습니다.</p>
-        </div>
-        <div class="hm-period-compare">
-          <div class="hm-period-card">
-            <span>2025 H1 · SEARCH ATTEMPT</span><strong>2,644,012</strong>
-            <div class="hm-compare-track"><i class="is-point" style="--w:99%"></i></div>
-            <dl><div><dt>전체 세션</dt><dd>81,058,842</dd></div><div><dt>검색 시도 비중</dt><dd>3.26%</dd></div></dl>
-          </div>
-          <div class="hm-period-card">
-            <span>2026 H1 · SEARCH ATTEMPT</span><strong>2,670,682</strong>
-            <div class="hm-compare-track"><i class="is-second" style="--w:100%"></i></div>
-            <dl><div><dt>전체 세션</dt><dd>28,593,467</dd></div><div><dt>검색 시도 비중</dt><dd>9.34%</dd></div></dl>
-          </div>
-        </div>
-        <div class="hm-data-source">SOURCE · [온라인 백데이터] 퍼널_1_MAU_DAU.xlsx / 퍼널_2_검색.xlsx · 2025 H1 vs 2026 H1</div>
-      </article>
-
-      <article class="hm-data-panel hm-reveal">
-        <div class="hm-data-panel-head">
-          <span>HOME · AGGREGATED BEHAVIOR</span>
-          <h3>홈에서 가장 많이 쓰인 것은 배너보다 ‘목적지로 바로 가는 기능’이었습니다.</h3>
-          <p>홈 클릭 데이터를 기간 단위로 묶으면 ‘주요서비스’가 2,517,285회로 전체 클릭의 49.6%를 차지했고, 퀵메뉴 계열은 33.8%였습니다. 반면 팝업배너 8.3%, 빌보드배너 3.4%, 상단띠배너 1.2%, 이벤트배너 0.3%였습니다. 홈의 역할을 프로모션을 많이 보여주는 화면보다 원하는 상품·서비스·탐색으로 빠르게 보내는 허브로 재정의한 근거였습니다.</p>
-        </div>
-        <div class="hm-home-bars" aria-label="홈 주요 클릭 유형 비중">
-          <div class="hm-home-row"><span>주요서비스</span><div><i class="is-point" style="--w:49.6%"></i></div><b>49.6%</b><em>2,517,285</em></div>
-          <div class="hm-home-row"><span>퀵메뉴 계열</span><div><i class="is-second" style="--w:33.8%"></i></div><b>33.8%</b><em>목적지 이동</em></div>
-          <div class="hm-home-row"><span>팝업배너</span><div><i class="is-special" style="--w:8.3%"></i></div><b>8.3%</b><em>프로모션</em></div>
-          <div class="hm-home-row"><span>빌보드배너</span><div><i class="is-neutral" style="--w:3.4%"></i></div><b>3.4%</b><em>프로모션</em></div>
-          <div class="hm-home-row"><span>상단띠배너</span><div><i class="is-neutral" style="--w:1.2%"></i></div><b>1.2%</b><em>프로모션</em></div>
-          <div class="hm-home-row"><span>이벤트배너</span><div><i class="is-neutral" style="--w:.3%"></i></div><b>0.3%</b><em>프로모션</em></div>
-        </div>
-        <div class="hm-data-source">SOURCE · [온라인 백데이터] 홈메인.xlsx · 주요서비스 / 퀵메뉴 / 주요메뉴 / 배너 클릭 집계</div>
-      </article>
-
-      <article class="hm-data-panel hm-reveal">
-        <div class="hm-data-panel-head">
-          <span>PDP → CART / PURCHASE · H1 COMPARISON</span>
-          <h3>상품을 보는 규모는 유지됐지만, 그 다음 행동은 더 약해졌습니다.</h3>
-          <p>2025년 상반기 PDP 집계는 10,088,394, 2026년 상반기는 10,867,894로 더 많았습니다. 반면 장바구니는 227,462에서 181,913으로, 전자상거래 구매는 333,664에서 277,167로 줄었습니다. 이를 하나의 직선형 퍼널로 보지는 않았지만, 상품을 본 뒤 비교와 확신을 만들고 다음 구매 행동으로 연결하는 구간을 다시 설계해야 한다는 신호는 분명했습니다.</p>
-        </div>
-        <div class="hm-funnel-compare">
-          <div class="hm-funnel-year">
-            <span>2025 H1</span>
-            <div class="hm-funnel-node"><i class="is-point"></i><b>PDP</b><strong>10,088,394</strong></div>
-            <div class="hm-funnel-link"></div>
-            <div class="hm-funnel-node"><i class="is-second"></i><b>장바구니</b><strong>227,462</strong></div>
-            <div class="hm-funnel-link"></div>
-            <div class="hm-funnel-node"><i class="is-special"></i><b>전자상거래 구매</b><strong>333,664</strong></div>
-          </div>
-          <div class="hm-funnel-year">
-            <span>2026 H1</span>
-            <div class="hm-funnel-node"><i class="is-point"></i><b>PDP</b><strong>10,867,894</strong></div>
-            <div class="hm-funnel-link"></div>
-            <div class="hm-funnel-node"><i class="is-second"></i><b>장바구니</b><strong>181,913</strong></div>
-            <div class="hm-funnel-link"></div>
-            <div class="hm-funnel-node"><i class="is-special"></i><b>전자상거래 구매</b><strong>277,167</strong></div>
-          </div>
-        </div>
-        <p class="hm-event-note">장바구니와 구매 이벤트는 바로구매 등 서로 다른 경로를 포함하므로 숫자의 크기를 순차 전환율로 해석하지 않았습니다. 여기서는 동일 정의의 기간 간 규모 변화만 비교했습니다.</p>
-        <div class="hm-data-source">SOURCE · [온라인 백데이터] 퍼널_3_PDP 장바구니 구매완료.xlsx · 2025 H1 vs 2026 H1</div>
-      </article>
-
-      <div class="hm-data-takeaway hm-reveal">
-        <span>DATA → PROBLEM REDEFINITION</span>
-        <strong>하이마트의 실제 행동은 ‘홈 → 검색 → 상품 → 구매’ 한 줄로 움직이지 않았습니다. 그래서 어디서 시작해도 탐색과 판단을 이어갈 수 있는 전체 구매여정이 필요했습니다.</strong>
-      </div>
-    </div>
-  </section>
-
-  <section class="hm-section hm-dark" id="journey" data-chapter="03">
-    <div class="hm-section-head hm-reveal">
-      <span class="hm-section-no">03</span>
-      <h2 class="js-scramble">현재 구매 여정을 펼쳐보니,
-단계마다 다른 이유로 흐름이 끊기고 있었습니다.</h2>
-      <p>기존 화면을 개별 페이지가 아니라 하나의 가전 구매 과정으로 다시 놓고 봤습니다. 유입과 랜딩부터 탐색·비교·결제까지 실제 데이터가 보여준 단절을 각 단계의 역할과 함께 다시 정의하고, 그 뒤 설치와 케어까지 하나의 경험으로 연결했습니다.</p>
-    </div>
-
-    <div class="hm-current-flow hm-reveal hm-interactive-group" aria-label="현재 구매 여정과 문제점">
-      <div class="hm-flow-step hm-interactive"><span>유입</span><b>홈보다 강한 외부 목적지</b><em>2025 PC · 12개월 중 10개월 이벤트·기획전 시작 1위</em></div>
-      <div class="hm-flow-step hm-interactive"><span>홈</span><b>디바이스별 역할 차이</b><em>2026 H1 · Mobile 메인 5/6 · PC 상품 6/6 시작 1위</em></div>
-      <div class="hm-flow-step hm-interactive"><span>카테고리 · 검색</span><b>핵심 탐색 경로</b><em>검색 시도 · 2025 H1 264만 → 2026 H1 267만</em></div>
-      <div class="hm-flow-step hm-interactive"><span>SRP · PLP</span><b>비교 피로</b><em>가격·혜택·설치 조건의 우선순위가 분산</em></div>
-      <div class="hm-flow-step hm-interactive"><span>PDP</span><b>관심은 충분함</b><em>PDP · 2025 H1 1,009만 → 2026 H1 1,087만</em></div>
-      <div class="hm-flow-step hm-interactive"><span>장바구니 · 결제</span><b>다음 행동 연결 약화</b><em>장바구니 · 22.7만 → 18.2만 / 구매 · 33.4만 → 27.7만</em></div>
-      <div class="hm-flow-step hm-interactive"><span>설치 · 케어</span><b>구매 후 단절</b><em>설치·회수·보증·A/S가 관계로 이어지지 않음</em></div>
-    </div>
-
-    <div class="hm-benchmark hm-reveal">
-      <div class="hm-benchmark-title"><span>BENCHMARK → DIRECTION</span><h3>시장에 이미 익쌙한 문법과 하이마트가 잘할 수 있는 일을 분리해 봤습니다.</h3></div>
-      <div class="hm-venn hm-interactive-group">
-        <div class="hm-source-circle hm-source-naver hm-interactive"><span>NAVER</span><b>탐색</b><p>검색 중심 홈<br>목적형 카테고리<br>추천 검색<br>지속형 필터</p></div>
-        <div class="hm-source-circle hm-source-coupang hm-interactive"><span>COUPANG</span><b>전환</b><p>상품 정보 위계<br>구매 결정 요약<br>장바구니 총액<br>간결한 결제</p></div>
-        <div class="hm-source-circle hm-source-himart hm-interactive"><span>HIMART</span><b>전문성</b><p>매장 실물 확인<br>전문 상담<br>설치·회수<br>안심케어·A/S</p></div>
-        <div class="hm-venn-center"><span>COMBINED</span><b>익숙한 UX 위에<br>하이마트의 전문성을 연결</b></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="hm-section hm-light" id="direction" data-chapter="04">
-    <div class="hm-section-head hm-reveal">
-      <span class="hm-section-no">04</span>
-      <h2 class="js-scramble">탐색·전환·하이마트의 강점을 합쳐,
-구매 여정의 역할을 다시 정의했습니다.</h2>
-      <p>네이버의 탐색 구조, 쿠팡의 전환 장치, 하이마트의 설치·상담·케어 특성을 종합해 전체 흐름을 다시 구성했습니다. 홈은 모든 고객을 되돌려 보내는 출발점이 아니라 필요한 탐색을 빠르게 시작하거나 다시 이어주는 허브로 정의하고, 상품·이벤트처럼 직접 랜딩한 화면에서도 다음 행동을 이어갈 수 있게 각 단계의 역할을 분명히 했습니다.</p>
-    </div>
-
-    <div class="hm-optimized-flow hm-reveal hm-interactive-group" aria-label="최적화된 구매 여정">
-      <article class="hm-opt-step hm-interactive"><span>01</span><h3>랜딩 맥락 이어주기</h3><p>상품·이벤트·홈 어디로 들어와도 현재 관심에서 다음 탐색을 시작</p><small>PDP · EVENT · HOME</small></article>
-      <article class="hm-opt-step hm-interactive"><span>02</span><h3>빠른 탐색 시작</h3><p>검색과 목적형 카테고리로 후보 영역을 빠르게 선택</p><small>NAVER 탐색 구조</small></article>
-      <article class="hm-opt-step hm-interactive"><span>03</span><h3>탐색 보조 강화</h3><p>추천 검색·가이드·필터로 모호한 니즈를 구체화</p><small>조건 유지 · 가이드 연결</small></article>
-      <article class="hm-opt-step hm-interactive"><span>04</span><h3>후보 압축</h3><p>대표 가격·리뷰·설치 조건으로 비교를 끝냄</p><small>COUPANG 정보 위계</small></article>
-      <article class="hm-opt-step hm-interactive"><span>05</span><h3>확신 형성</h3><p>PDP 상단에서 가격·설치·매장·케어를 함께 판단</p><small>상담 · 매장 · 설치</small></article>
-      <article class="hm-opt-step hm-interactive"><span>06</span><h3>주문 단순화</h3><p>장바구니는 총액과 조건, 결제는 필수 입력에 집중</p><small>빠른 전환</small></article>
-      <article class="hm-opt-step hm-interactive"><span>07</span><h3>설치·케어 강화</h3><p>설치 일정·회수·보증·A/S를 구매 이후 관계로 연결</p><small>HIMART 서비스 자산</small></article>
-    </div>
-
-    <div class="hm-role-map hm-reveal">
-      <div class="hm-role-item hm-interactive"><span>HOME</span><h3>탐색 허브</h3><p>보여주는 곳이 아니라 원하는 곳으로 보내주는 곳</p></div>
-      <div class="hm-role-item hm-interactive"><span>SEARCH</span><h3>니즈 구체화</h3><p>모호한 요구를 실제 상품 후보로 바꾸는 도구</p></div>
-      <div class="hm-role-item hm-interactive"><span>SRP / PLP</span><h3>비교 완료</h3><p>가격·혜택·배송·설치 조건으로 후보를 압축</p></div>
-      <div class="hm-role-item hm-interactive"><span>PDP</span><h3>결정 완료</h3><p>가격·리뷰·스펙·설치·상담을 한 구간에서 판단</p></div>
-      <div class="hm-role-item hm-interactive"><span>CART / PAY</span><h3>쉽게 확정</h3><p>총액과 설치 조건을 확인하고 입력은 최소화</p></div>
-      <div class="hm-role-item hm-interactive"><span>INSTALL / CARE</span><h3>관계 지속</h3><p>설치·회수·보증·A/S·안심케어로 구매 이후까지 연결</p></div>
-    </div>
-
-    <div class="hm-next-step hm-reveal">
-      <div class="hm-next-step-head">
-        <span>NEXT STEP · PRE-OPEN DESIGN</span>
-        <div>
-          <h3>전략 이후에는 실제 화면 설계 단계로 이어졌습니다.</h3>
-          <p>위에서 정의한 역할을 기준으로 홈, 검색, SRP/PLP, PDP, 장바구니·결제, 설치·케어까지 실제 화면 시안으로 구체화했습니다. 다만 현재는 아직 오픈 전 단계이기 때문에 포트폴리오에서는 세부 화면을 블러 처리한 상태로만 제한적으로 공개합니다. 따라서 아래 영역은 실제 설계가 진행된 범위를 보여주되, 서비스가 정식 오픈되기 전까지는 실제 화면과 인터랙션을 그대로 확인할 수는 없습니다.</p>
-        </div>
-      </div>
-
-      <div class="hm-confidential-strip hm-interactive-group" aria-label="오픈 전 화면 공개 조건">
-        <article class="hm-confidential-card hm-interactive"><span>STATUS</span><b>아직 오픈 전 단계</b><p>실제 서비스에 반영되기 전인 디자인 단계의 결과물입니다.</p></article>
-        <article class="hm-confidential-card hm-interactive"><span>DISCLOSURE</span><b>화면은 블러 처리 후 제한 공개</b><p>10장 이상의 설계 화면을 보유하고 있지만 포트폴리오에서는 블러 처리해 공개합니다.</p></article>
-        <article class="hm-confidential-card hm-interactive"><span>VIEWING LIMIT</span><b>실제 화면은 아직 확인 불가</b><p>현재는 비공개 과제이기 때문에 오픈 전 실제 화면과 세부 인터랙션은 확인할 수 없습니다.</p></article>
-      </div>
-
-      <div class="hm-preview-gallery hm-interactive-group" aria-label="오픈 전 블러 처리 화면 미리보기">
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>01</span><b>HOME MAIN</b><p>탐색 허브 구조</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>02</span><b>HOME SERVICE</b><p>서비스 바로가기</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>03</span><b>SEARCH ENTRY</b><p>검색 진입과 보조</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>04</span><b>SEARCH RESULT</b><p>니즈 구체화 결과</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>05</span><b>SRP / PLP</b><p>후보 압축과 비교</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>06</span><b>COMPARISON</b><p>대표 정보 위계</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>07</span><b>PDP KEY INFO</b><p>확신 형성 정보</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>08</span><b>PDP SERVICE</b><p>매장·설치·케어 연결</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>09</span><b>CART</b><p>총액과 조건 재정리</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>10</span><b>CHECKOUT</b><p>입력 최소화 구조</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>11</span><b>INSTALLATION</b><p>설치 일정 안내</p></article>
-        <article class="hm-preview-item hm-interactive"><div class="hm-preview-blur" aria-hidden="true"><i></i><i></i><i></i></div><span>12</span><b>CARE FLOW</b><p>구매 이후 관계 설계</p></article>
-      </div>
-    </div>
-  </section>
-
-  <footer class="hm-footer" id="contact">
-    <a href="./works.html">← Works</a>
-    <div><span>NEXT HIMART CASE</span><a href="./himart-reuse.html">중고 가전의 신뢰 기준 만들기 →</a></div>
-  </footer>
+<div class="hm-hero-flow"><p class="hm-lead">하이마트 온라인 전체 개편을 단순한 화면 개선으로 시작하지 않았습니다. 고객이 하이마트를 어떻게 인식하는지, 실제로 어디서 들어와 무엇을 찾고 어디에서 멈추는지부터 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p><div class="hm-meta"><div><span>ROLE</span><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div><div><span>FOCUS</span><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div><div><span>SCOPE</span><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div><div><span>TEAM</span><b>UX DESIGN · PO · BUSINESS</b></div></div></div>
+</header>
+<nav class="hm-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
+<section class="hm-v2-section hm-v2-dark" id="brand" data-chapter="01">
+<div class="hm-v2-section-head hm-reveal"><div><span class="hm-section-no">01</span><h2 class="js-scramble">홈 개편 요청을 받았지만, 먼저 하이마트가
+어떤 브랜드로 인식되고 있는지부터 확인했습니다.</h2></div><p>입사 후 처음 진행하는 대규모 개편이었기 때문에 화면부터 고치지 않았습니다. AI를 활용해 다양한 채널에서 고객의 목소리를 폭넓게 수집하고 유사한 의견을 묶어, 하이마트를 선택하게 하는 기대와 경험을 깨뜨리는 불편을 먼저 분리했습니다.</p></div>
+<div class="hm-voice-intro hm-reveal"><div class="hm-v2-kicker">VOICE RESEARCH / KEYWORD CLUSTERING</div><h3 class="hm-v2-intro-title">하이마트를 이용한 고객들이 느끼는<br><strong>긍정과 부정 키워드를 먼저 확인했습니다.</strong></h3></div>
+<div class="hm-keyword-columns hm-reveal">
+<section class="hm-keyword-group"><h3>하이마트에 대한 긍정 키워드</h3><div class="hm-keyword-cloud"><span class="hm-keyword-pill is-major"><strong>설치 서비스</strong><em>안심·빠른 설치</em></span><span class="hm-keyword-pill is-major"><strong>매장 체험</strong><em>직접 보고 비교</em></span><span class="hm-keyword-pill is-major"><strong>A/S 접근성</strong><em>수리접수·보증</em></span><span class="hm-keyword-pill is-major"><strong>결제·픽업</strong><em>스마트픽·즉시수령</em></span><span class="hm-keyword-pill"><strong>통합 앱·온라인 연동</strong><em>쿠폰·포인트·홈서비스</em></span><span class="hm-keyword-pill"><strong>전시특가</strong><em>전시재고 혜택</em></span><span class="hm-keyword-pill"><strong>포인트·쿠폰</strong><em>구매 혜택</em></span><span class="hm-keyword-pill"><strong>전문 상담</strong><em>방문 컨설팅</em></span><span class="hm-keyword-pill"><strong>제품 다양성</strong><em>여러 브랜드 비교</em></span><span class="hm-keyword-pill"><strong>디지털 체험</strong><em>AR·3D·라이브</em></span></div></section>
+<section class="hm-keyword-group is-negative"><h3>하이마트에 대한 부정 키워드</h3><div class="hm-keyword-cloud"><span class="hm-keyword-pill is-major"><strong>앱/UX 불편</strong><em>느림·오류</em></span><span class="hm-keyword-pill is-major"><strong>설치·배송</strong><em>지연·간극</em></span><span class="hm-keyword-pill is-major"><strong>A/S</strong><em>지연·불만</em></span><span class="hm-keyword-pill is-major"><strong>반품·환불</strong><em>복잡한 절차</em></span><span class="hm-keyword-pill"><strong>직원 응대</strong><em>불친절·강매</em></span><span class="hm-keyword-pill"><strong>재고관리</strong><em>품절·전시품 문제</em></span><span class="hm-keyword-pill"><strong>가격·혜택</strong><em>경쟁력 부족</em></span><span class="hm-keyword-pill"><strong>온·오프라인</strong><em>경험 불균형</em></span><span class="hm-keyword-pill"><strong>고객센터</strong><em>문의 응답 지연</em></span><span class="hm-keyword-pill"><strong>프로모션·할인</strong><em>복잡성·실효성 부족</em></span></div></section>
+</div>
+<div class="hm-voice-conclusion hm-reveal"><div class="hm-v2-kicker">WHAT THE KEYWORDS MEAN</div><div class="hm-voice-board-grid">
+<article class="hm-voice-board"><h3>오프라인 인프라를 기반으로 한<br><strong>가전 전문 유통사로서의 본질</strong>에 긍정이 집중됐습니다.</h3><div class="hm-voice-rings"><div class="hm-voice-ring-card" style="--pct:45;--ring-color:var(--hm-blue)"><b>믿고 맡길 수<br>있는 신뢰</b><p>설치·A/S망이 주는 강한 심리적 안정감</p><span>45%</span></div><div class="hm-voice-ring-card" style="--pct:35;--ring-color:var(--hm-newblue)"><b>직접 확인·비교하는<br>현실적인 경험</b><p>매장 체험과 전문가 상담으로 실패를 줄이는 구매</p><span>35%</span></div><div class="hm-voice-ring-card" style="--pct:20;--ring-color:var(--hm-green)"><b>온·오프라인을<br>넘나드는 경험</b><p>스마트픽·전시 특가처럼 채널 경계를 넘는 편의</p><span>20%</span></div></div></article>
+<article class="hm-voice-board is-negative"><h3>긍정의 기대가 충족되지 않을 때<br><strong>답답한 앱, 불안한 배송, 따로 노는 경험</strong>으로 반전됐습니다.</h3><div class="hm-voice-rings"><div class="hm-voice-ring-card" style="--pct:45;--ring-color:var(--hm-red)"><b>답답하고 어려운<br>쇼핑 경험</b><p>앱 구동부터 결제까지 시스템 불편과 인지 피로</p><span>45%</span></div><div class="hm-voice-ring-card" style="--pct:40;--ring-color:var(--hm-red)"><b>서비스 지연과<br>불확실성</b><p>언제 오고 해결될지 모르는 기다림이 불신으로 전환</p><span>40%</span></div><div class="hm-voice-ring-card" style="--pct:15;--ring-color:var(--hm-red)"><b>경험의<br>불일치</b><p>전문성·가격에 대한 기대와 실제 접점의 차이</p><span>15%</span></div></div></article>
+</div>
+<div class="hm-sentiment"><h3>긍정과 부정 키워드의 비율</h3><div class="hm-sentiment-bar"><div class="hm-sentiment-part is-positive"><strong>65%</strong><p>오프라인 체험 · 전문가 상담 · 제품 다양성 · 토탈 케어 · 편리한 A/S · 접근성/편의성 · 가격/혜택 · 배송/설치 · 통합 쇼핑 · 신뢰</p></div><div class="hm-sentiment-part is-negative"><strong>35%</strong><p>온/오프라인 격차 · 가격/혜택 복잡성 · 직원 부담/불친절 · 배송/설치 지연 · 환불/교환 불편 · A/S 및 문의 지연 · 앱/UI/UX 불편 · 재고/상품 문제 · 매장/접근성 문제 · 전문성 부족</p></div></div><div class="hm-feedback-split"><article class="hm-feedback-card is-positive"><h4>믿고 맡길 수 있는<br>검증된 가전 전문가</h4><ul><li>설치와 A/S는 역시 하이마트</li><li>가전은 직접 보고 물어봐야 한다</li><li>온라인 혜택으로 사고 매장에서 바로 받는다</li></ul></article><article class="hm-feedback-card is-negative"><h4>느리고 복잡한,<br>약속이 불확실한 쇼핑몰</h4><ul><li>앱이 너무 느리고 절차가 복잡하다</li><li>언제 올지, 언제 고쳐질지 알 수 없다</li><li>매장과 온라인의 말이 다르다</li></ul></article></div></div></div>
+<div class="hm-voice-points hm-reveal"><div class="hm-voice-points-head"><div><div class="hm-v2-kicker">VOICE → UX POINTS / BEFORE MASTER STRATEGY</div><h3>우리는 어떤 전략으로 개선된 UX를 사용자들에게 전달할 것인가?</h3></div><p>이 단계에서 최종 UX 전략을 확정하지는 않았습니다. 고객이 하이마트에 기대하는 강점과 반복해서 말한 불편을 기준으로, 이후 설계에서 반드시 반영해야 할 포인트를 먼저 정리했습니다.</p></div><div class="hm-voice-points-list"><article class="hm-voice-point"><span>01 / EXPERTISE</span><h4>전문성을 24시간 디지털 경험으로</h4><p>전문 상담과 방문 컨설팅의 신뢰를 AI Agent와 데이터 기반 안내로 확장합니다.</p></article><article class="hm-voice-point"><span>02 / CARE</span><h4>구매를 케어의 시작으로</h4><p>설치·A/S에 대한 신뢰를 구매 이후 관리와 중고판매까지 이어지는 관계로 연결합니다.</p></article><article class="hm-voice-point"><span>03 / OMNI</span><h4>온라인과 매장을 하나의 맥락으로</h4><p>스마트픽, 단골매장, 매장 혜택과 상담을 온라인 여정 속에서 자연스럽게 이어줍니다.</p></article><article class="hm-voice-point"><span>04 / BASICS + α</span><h4>검색·탐색의 기본기를 먼저</h4><p>속도, 동적 필터, 정보 위계와 AI 요약으로 고관여 가전의 탐색 부담을 낮춥니다.</p></article><article class="hm-voice-point"><span>05 / TRANSPARENCY</span><h4>약속과 상태를 눈에 보이게</h4><p>주문·결제·배송·설치·케어 상태를 한눈에 보여주고 개인별 관리 정보를 선제적으로 제공합니다.</p></article></div><div class="hm-voice-method"><b>RESEARCH METHOD</b><span>AI 기반 심층 검색과 다양한 채널의 사용자 목소리를 수집해 유사 키워드를 묶고, 긍정·부정 경험의 반복 패턴을 대표화했습니다. 이 결과는 최종 전략이 아니라 이후 UX 방향을 세우기 위한 고객 관점의 입력값으로 사용했습니다.</span></div></div>
+</section>
+<section class="hm-v2-section hm-v2-light" id="data" data-chapter="02">
+<div class="hm-v2-section-head hm-reveal"><div><span class="hm-section-no">02</span><h2 class="js-scramble">그리고 실제로 고객들이 서비스를 어떻게
+이용하고 있는지도 살펴봤습니다.</h2></div><p>고객의 말만으로 문제를 단정하지 않았습니다. 실제 이용 데이터에서 어디로 들어오고, 어떤 기능을 쓰고, 어떤 랜딩에서 다음 행동이 약해지는지를 확인해 ‘고객이 하이마트를 실제로 쓰는 방식’을 먼저 정리했습니다.</p></div>
+<div class="hm-behavior-grid">
+<article class="hm-behavior-card hm-reveal"><div class="hm-card-head"><span>01 / ENTRY CHANNEL</span><em>2026 H1 · ALL</em></div><h3>홈보다 먼저, 이미 외부에서 만들어진 맥락을 가지고 들어왔습니다.</h3><p class="hm-data-copy">유입 채널에서 AD가 52%로 가장 컸고 Direct 31%, CPS 10%, CRM 6%가 뒤를 이었습니다. 하나의 ‘홈 시작’을 전제하기보다 유입 맥락을 다음 탐색으로 이어주는 랜딩 설계가 필요했습니다.</p><div class="hm-data-viz hm-pie-layout"><div class="hm-pie"><div class="hm-pie-center">52%<small>AD</small></div></div><div class="hm-pie-legend"><div><i style="--c:var(--hm-blue)"></i><span>AD</span><b>52%</b></div><div><i style="--c:var(--hm-newblue)"></i><span>Direct</span><b>31%</b></div><div><i style="--c:var(--hm-aqua)"></i><span>CPS</span><b>10%</b></div><div><i style="--c:var(--hm-mintblue)"></i><span>CRM</span><b>6%</b></div><div><i style="--c:var(--hm-green)"></i><span>기타</span><b>1%</b></div></div></div><div class="hm-data-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 · 2026 H1 유입 채널 구조</div></article>
+<article class="hm-behavior-card hm-reveal"><div class="hm-card-head"><span>02 / TRAFFIC ≠ INTENT</span><em>2026 JAN—JUN</em></div><h3>트래픽이 커진 달과 구매전환이 좋아진 달은 같지 않았습니다.</h3><p class="hm-data-copy">첨부 분석의 첫 그래프처럼 세션·구매건수·구매전환율을 같은 시간축에 놓았습니다. 방문 규모만으로 UX 성과를 설명하지 않고 실제 구매 의도와 함께 읽었습니다.</p><div class="hm-data-viz"><svg class="hm-svg-chart" viewBox="0 0 600 225" role="img" aria-label="2026년 1월부터 6월까지 세션, 구매건수, 구매전환율 비교"><line class="grid" x1="25" y1="190" x2="575" y2="190"/><line class="grid" x1="25" y1="120" x2="575" y2="120"/><line class="grid" x1="25" y1="50" x2="575" y2="50"/><rect class="bar" x="34" y="75" width="32" height="115"/><rect class="bar" x="134" y="103" width="32" height="87"/><rect class="bar" x="234" y="80" width="32" height="110"/><rect class="bar" x="334" y="50" width="32" height="140"/><rect class="bar" x="434" y="52" width="32" height="138"/><rect class="bar" x="534" y="76" width="32" height="114"/><polyline class="line-a" pathLength="1" points="50,35 150,181 250,185 350,183 450,96 550,69"/><polyline class="line-b" pathLength="1" points="50,106 150,35 250,119 350,185 450,170 550,108"/><text x="42" y="211">1월</text><text x="142" y="211">2월</text><text x="242" y="211">3월</text><text x="342" y="211">4월</text><text x="442" y="211">5월</text><text x="542" y="211">6월</text></svg><div class="hm-chart-legend"><span><i style="--c:var(--hm-blue)"></i>세션</span><span><i style="--c:var(--hm-newblue)"></i>구매건수</span><span><i style="--c:var(--hm-green)"></i>구매전환율</span></div></div><div class="hm-data-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 · 2026 H1 월별 세션 / 구매 / CVR</div></article>
+<article class="hm-behavior-card hm-reveal"><div class="hm-card-head"><span>03 / START POINT BY DEVICE</span><em>2026 H1</em></div><h3>같은 하이마트라도 Mobile과 PC는 시작하는 화면부터 달랐습니다.</h3><p class="hm-data-copy">PC는 상반기 6개월 모두 상품이 시작페이지 1위였고, Mobile은 6개월 중 5개월 메인이 1위였습니다. 기기별로 같은 출발점을 강요할 수 없었습니다.</p><div class="hm-data-viz hm-device-start"><div class="hm-device-box"><span>MOBILE</span><strong>5 / 6</strong><b>메인이 시작 1위</b><p>나머지 1개월은 하트TV가 1위</p><div class="hm-month-strip"><i></i><i></i><i></i><i style="opacity:.35"></i><i></i><i></i></div></div><div class="hm-device-box"><span>PC</span><strong>6 / 6</strong><b>상품이 시작 1위</b><p>상반기 전체에서 상품 랜딩이 가장 강함</p><div class="hm-month-strip"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div><div class="hm-data-source">SOURCE · 하이마트 쇼핑몰 이용 현황 Mobile / PC 2026.01—06 · 시작페이지 비중</div></article>
+<article class="hm-behavior-card hm-reveal"><div class="hm-card-head"><span>04 / SEARCH BEHAVIOR</span><em>2025 H1 → 2026 H1</em></div><h3>전체 방문 규모가 달라져도 검색 사용량은 거의 줄지 않았습니다.</h3><p class="hm-data-copy">검색 시도는 264만에서 267만으로 유지됐고, 전체 세션 대비 비중은 3.26%에서 9.34%로 높아졌습니다. 검색은 보조 기능이 아니라 구매 후보를 좁히는 핵심 행동이었습니다.</p><div class="hm-data-viz"><div class="hm-slope"><div class="hm-slope-point"><strong>2,644,012</strong><span>2025 H1 · 검색 시도 / 3.26%</span></div><div class="hm-slope-arrow"></div><div class="hm-slope-point"><strong>2,670,682</strong><span>2026 H1 · 검색 시도 / 9.34%</span></div></div><div class="hm-slope-sub">검색 시도 +1.0% · 전체 세션 대비 검색 비중은 약 2.9배</div></div><div class="hm-data-source">SOURCE · 온라인 백데이터 퍼널_1 MAU_DAU / 퍼널_2 검색 · 2025 H1 vs 2026 H1</div></article>
+<article class="hm-behavior-card hm-reveal"><div class="hm-card-head"><span>05 / HOME BEHAVIOR</span><em>AGGREGATED CLICK</em></div><h3>홈에서는 배너보다 ‘목적지로 바로 가는 기능’을 훨씬 많이 사용했습니다.</h3><p class="hm-data-copy">주요서비스 49.6%, 퀵메뉴 계열 33.8%에 클릭이 집중됐습니다. 홈의 역할은 많이 보여주는 화면보다 원하는 곳으로 빠르게 보내주는 허브에 가까웠습니다.</p><div class="hm-data-viz hm-hbars"><div class="hm-hbar-row"><span>주요서비스</span><div class="hm-hbar-track"><div class="hm-hbar-fill" style="width:99.2%"></div></div><b>49.6%</b></div><div class="hm-hbar-row"><span>퀵메뉴 계열</span><div class="hm-hbar-track"><div class="hm-hbar-fill" style="width:67.6%"></div></div><b>33.8%</b></div><div class="hm-hbar-row"><span>팝업배너</span><div class="hm-hbar-track"><div class="hm-hbar-fill" style="width:16.6%"></div></div><b>8.3%</b></div><div class="hm-hbar-row"><span>빌보드배너</span><div class="hm-hbar-track"><div class="hm-hbar-fill" style="width:6.8%"></div></div><b>3.4%</b></div><div class="hm-hbar-row"><span>상단띠배너</span><div class="hm-hbar-track"><div class="hm-hbar-fill" style="width:2.4%"></div></div><b>1.2%</b></div><div class="hm-hbar-row"><span>이벤트배너</span><div class="hm-hbar-track"><div class="hm-hbar-fill" style="width:.6%"></div></div><b>0.3%</b></div></div><div class="hm-data-source">SOURCE · 온라인 백데이터 홈메인 · 주요서비스 / 퀵메뉴 / 배너 클릭 집계</div></article>
+<article class="hm-behavior-card is-wide hm-reveal"><div class="hm-card-head"><span>06 / LANDING → NEXT ACTION</span><em>2026 H1 + H1 COMPARISON</em></div><h3>랜딩은 만들어졌지만, 그 다음 행동으로 넘어가는 구간에서 단절이 컸습니다.</h3><p class="hm-data-copy">기획전 시작 후 첫 다음 행동의 52.2%가 종료였고, PDP 이용은 전년보다 늘었지만 장바구니와 구매는 오히려 줄었습니다. 랜딩 자체보다 ‘다음 행동을 이어주는 힘’이 핵심 문제였습니다.</p><div class="hm-split-viz"><div class="hm-mini-chart"><h4>기획전 시작 후 첫 다음 행동</h4><div class="hm-stackbar"><i style="width:52.2%;background:var(--hm-red)"></i><i style="width:33.8%;background:var(--hm-blue)"></i><i style="width:5%;background:var(--hm-newblue)"></i><i style="width:4.4%;background:var(--hm-aqua)"></i><i style="width:3.1%;background:var(--hm-mintblue)"></i><i style="width:1.5%;background:var(--hm-green)"></i></div><div class="hm-stack-labels"><span><b style="color:var(--hm-red)">52.2%</b> 바로 종료</span><span><b>33.8%</b> 기획전 재탐색</span><span><b>5.0%</b> 상품</span><span><b>4.4%</b> 검색/카테고리</span></div></div><div class="hm-mini-chart"><h4>PDP 이후 행동 · 2025 H1 vs 2026 H1</h4><div class="hm-pdp-bars"><div class="hm-pdp-col"><div class="pair"><i style="height:92.8%"></i><i style="height:100%"></i></div><span>PDP<br>10.09M → 10.87M</span></div><div class="hm-pdp-col"><div class="pair"><i style="height:100%"></i><i style="height:80%"></i></div><span>장바구니<br>227,462 → 181,913</span></div><div class="hm-pdp-col"><div class="pair"><i style="height:100%"></i><i style="height:83%"></i></div><span>구매<br>333,664 → 277,167</span></div></div></div></div><div class="hm-data-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 · 기획전 동선 / 온라인 백데이터 퍼널_3 PDP·장바구니·구매완료</div></article>
+</div>
+<div class="hm-journey-diagnosis hm-reveal"><div class="hm-journey-diagnosis-head"><div><div class="hm-v2-kicker">AS-IS JOURNEY / WHERE IT BREAKS</div><h3>데이터를 하나의 여정으로 놓고 보니, 끊기는 위치가 더 명확해졌습니다.</h3></div><p>고객은 홈에서 순서대로 이동하지 않았습니다. 외부에서 이벤트·상품으로 바로 들어오기도 하고, 검색과 비교를 반복한 뒤 PDP에 도달했습니다. 이 흐름을 기준으로 실제로 다음 행동이 약해지는 구간을 다시 표시했습니다.</p></div><div class="hm-flow-scroll"><div class="hm-flow-map"><div class="hm-flow-risk-row"><div class="hm-risk-band" style="grid-column:1/5"><span>외부 랜딩 이후 다음 탐색이 끊김 · 기획전 바로 종료 52.2%</span></div><div class="hm-risk-band" style="grid-column:5/9"><span>검색·목록에서 비교 기준이 분산돼 후보 압축이 느림</span></div><div class="hm-risk-band" style="grid-column:9/14"><span>PDP 관심은 유지됐지만 장바구니·구매 행동은 약화</span></div></div><div class="hm-flow-row"><div class="hm-flow-node" style="grid-column:1"><span>01 / ENTRY</span><b>외부 유입</b><em>AD · CRM · CPS · Direct</em></div><div class="hm-flow-arrow" style="grid-column:2"></div><div class="hm-flow-node" style="grid-column:3"><span>02 / LANDING</span><b>홈·서브홈<br>이벤트·PDP</b><em>출발점이 하나가 아님</em></div><div class="hm-flow-arrow" style="grid-column:4"></div><div class="hm-flow-node" style="grid-column:5"><span>03 / EXPLORE</span><b>검색·카테고리</b><em>핵심 탐색 행동</em></div><div class="hm-flow-arrow" style="grid-column:6"></div><div class="hm-flow-node" style="grid-column:7"><span>04 / COMPARE</span><b>SRP·PLP</b><em>가격·혜택·설치 조건 분산</em></div><div class="hm-flow-arrow" style="grid-column:8"></div><div class="hm-flow-node" style="grid-column:9"><span>05 / DECIDE</span><b>PDP</b><em>관심은 높지만 확신 형성 부담</em></div><div class="hm-flow-arrow" style="grid-column:10"></div><div class="hm-flow-node" style="grid-column:11"><span>06 / CONVERT</span><b>장바구니·결제</b><em>다음 구매 행동 약화</em></div><div class="hm-flow-arrow" style="grid-column:12"></div><div class="hm-flow-node" style="grid-column:13"><span>07 / RELATION</span><b>설치·케어</b><em>구매 이후 서비스 맥락 분리</em></div></div></div></div><p class="hm-flow-conclusion">결국 문제는 특정 한 화면이 아니라, <strong>유입 맥락 → 탐색 → 비교 → 구매 확신 → 설치·케어</strong>가 다음 단계로 자연스럽게 이어지지 않는 데 있었습니다.</p></div>
+</section>
+<section class="hm-v2-section hm-v2-dark" id="journey" data-chapter="03">
+<div class="hm-v2-section-head hm-reveal"><div><span class="hm-section-no">03</span><h2 class="js-scramble">그래서 끊어진 여정을,
+어디서 시작해도 다음 행동으로 이어지는 구조로 다시 설계했습니다.</h2></div><p>AS-IS에서 확인한 단절을 화면별 과제로 쪼개지 않고 하나의 구매 흐름으로 다시 연결했습니다. 각 단계가 무엇을 보여줄지가 아니라, 고객의 다음 판단을 어디까지 완료시켜야 하는지로 역할을 바꿨습니다.</p></div>
+<div class="hm-flow-scroll hm-reveal"><div class="hm-flow-map hm-tobe-flow"><div class="hm-flow-row"><div class="hm-flow-node" style="grid-column:1"><span>01 / ENTRY</span><b>외부·직접 유입</b><em>어디서 시작해도 맥락을 유지</em></div><div class="hm-flow-arrow" style="grid-column:2"></div><div class="hm-flow-node" style="grid-column:3"><span>02 / CONTEXT</span><b>맥락을 이어주는 랜딩</b><em>최근 관심·혜택·다음 목적지 연결</em></div><div class="hm-flow-arrow" style="grid-column:4"></div><div class="hm-flow-node" style="grid-column:5"><span>03 / EXPLORE</span><b>빠른 탐색 시작</b><em>검색·목적형 카테고리</em></div><div class="hm-flow-arrow" style="grid-column:6"></div><div class="hm-flow-node" style="grid-column:7"><span>04 / NARROW</span><b>후보 압축·비교</b><em>지속 필터와 핵심 비교 기준</em></div><div class="hm-flow-arrow" style="grid-column:8"></div><div class="hm-flow-node" style="grid-column:9"><span>05 / CONFIDENCE</span><b>구매 확신 형성</b><em>가격·설치·매장·케어를 함께 판단</em></div><div class="hm-flow-arrow" style="grid-column:10"></div><div class="hm-flow-node" style="grid-column:11"><span>06 / CONFIRM</span><b>조건이 명확한 주문</b><em>총액·혜택·설치 조건을 고정</em></div><div class="hm-flow-arrow" style="grid-column:12"></div><div class="hm-flow-node" style="grid-column:13"><span>07 / CARE</span><b>설치·케어 관계</b><em>구매 이후까지 상태와 관리 연결</em></div></div></div></div>
+<div class="hm-role-redefine hm-reveal"><div class="hm-role-redefine-head"><h3>그리고 각 화면의 역할을 다시 정의했습니다.</h3><p>홈부터 결제까지 화면을 개별 산출물로 보지 않고, 앞 단계에서 받은 맥락을 다음 판단으로 넘기는 역할로 정의했습니다. 이 정의가 이후 프로토타입의 화면 구조와 정보 우선순위를 결정하는 기준이 됐습니다.</p></div><div class="hm-role-grid-v2"><article class="hm-role-card-v2"><span>HOME</span><h4>탐색 허브</h4><p>최근 행동과 유입 맥락을 기억하고 검색·카테고리·혜택·서비스로 빠르게 보냅니다.</p><strong>보여주는 홈 → 보내주는 홈</strong></article><article class="hm-role-card-v2"><span>SUBHOME / CATEGORY</span><h4>구매 목적 구체화</h4><p>상품 분류만 나열하지 않고 사용 상황·공간·가구 형태를 기준으로 탐색 방향을 잡아줍니다.</p><strong>분류 체계 → 목적 중심 탐색</strong></article><article class="hm-role-card-v2"><span>SEARCH</span><h4>니즈 구체화</h4><p>추천검색·가이드·동적 필터로 모호한 요구를 실제 상품 후보로 바꿉니다.</p><strong>검색창 → 후보 생성 도구</strong></article><article class="hm-role-card-v2"><span>SRP / PLP</span><h4>후보 압축</h4><p>대표 가격·리뷰·설치 조건과 지속 필터를 중심으로 비교를 빠르게 끝냅니다.</p><strong>상품 나열 → 비교 완료</strong></article><article class="hm-role-card-v2"><span>PDP</span><h4>구매 확신 완료</h4><p>가격·혜택·리뷰·설치·매장 확인·상담·케어를 한 구간에서 판단하게 합니다.</p><strong>정보 상세 → 결정 완료</strong></article><article class="hm-role-card-v2"><span>CART / PAY</span><h4>조건 확인과 확정</h4><p>총액, 혜택 적용, 배송·설치 조건을 고정해서 보여주고 필수 입력만 남깁니다.</p><strong>입력 과정 → 불확실성 제거</strong></article><article class="hm-role-card-v2"><span>INSTALL / CARE</span><h4>구매 이후 관계</h4><p>설치 일정·회수·보증·A/S·케어 상태를 연결해 구매가 끝난 뒤에도 관리가 이어지게 합니다.</p><strong>사후 처리 → 관계 지속</strong></article></div></div>
+</section>
+<section class="hm-v2-section hm-v2-light" id="direction" data-chapter="04">
+<div class="hm-v2-section-head hm-reveal"><div><span class="hm-section-no">04</span><h2 class="js-scramble">UX 전략을 바탕으로 빠르게 프로토타입을 만들고,
+내부 검증을 반복하고 있습니다.</h2></div><p>정의한 역할을 실제 화면과 인터랙션으로 빠르게 옮기고, 내부 리뷰와 검증을 통해 정보 위계와 연결 방식을 반복해서 조정하고 있습니다. 현재는 서비스 오픈 전 단계이므로 세부 설계 화면은 제한적으로만 공개합니다.</p></div>
+<div class="hm-prototype-intro hm-reveal"><h3>전략 문서에서 끝내지 않고, 실제로 검증 가능한 화면으로 전환했습니다.</h3><p>홈·서브홈·검색·SRP/PLP·PDP·장바구니·결제·설치/케어까지 핵심 흐름을 프로토타입으로 연결하고 있습니다. 공개 가능한 범위에서는 구조와 진행 범위를 보여주되, 오픈 전 세부 UI는 블러 처리했습니다.</p></div>
+<div class="hm-prototype-status hm-reveal"><article><span>STATUS</span><b>프로토타입 제작 및 내부 검증 진행 중</b><p>핵심 구매 흐름을 우선 연결하고 반복 리뷰하고 있습니다.</p></article><article><span>DISCLOSURE</span><b>오픈 전 화면은 블러 처리</b><p>실제 화면과 세부 인터랙션은 현재 제한 공개합니다.</p></article><article><span>FORMAT</span><b>모바일 9:16 기준으로 설계 범위 표시</b><p>각 화면은 실제 모바일 화면 비율에 맞춰 정리했습니다.</p></article></div>
+<div class="hm-phone-gallery hm-reveal"><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>01</span><b>HOME MAIN</b><p>탐색 허브</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>02</span><b>SUBHOME</b><p>목적형 탐색</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>05</span><b>SRP / PLP</b><p>후보 압축</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>06</span><b>COMPARISON</b><p>핵심 정보 비교</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>07</span><b>PDP KEY INFO</b><p>확신 형성</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>09</span><b>CART</b><p>총액·조건 확인</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>10</span><b>CHECKOUT</b><p>입력 최소화</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>11</span><b>INSTALLATION</b><p>설치 일정</p></article><article class="hm-phone-card"><div class="hm-phone-blur"></div><span>12</span><b>CARE FLOW</b><p>구매 이후 관리</p></article></div>
+</section>
+<footer class="hm-footer" id="contact"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart-reuse.html">중고 가전의 신뢰 기준 만들기 →</a></div></footer>
 </main>
-<script src="./himart-page.js?v=20260823-1552" defer></script>
+<script>
+(()=>{'use strict';const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';const scramble=()=>{document.querySelectorAll('.js-scramble').forEach(el=>{const original=el.textContent;if(reduced)return;let played=false;const play=()=>{if(played)return;played=true;const chars=[...original],start=performance.now(),duration=Math.min(1500,560+chars.length*12);const tick=now=>{const p=Math.min(1,(now-start)/duration),resolved=Math.floor(chars.length*Math.pow(p,.72));el.textContent=chars.map((ch,i)=>ch===' '||ch==='\n'||ch==='\t'?ch:i<resolved?ch:pool[(i*17+Math.floor(now/46))%pool.length]).join('');p<1?requestAnimationFrame(tick):el.textContent=original};requestAnimationFrame(tick)};if(!('IntersectionObserver'in window)){play();return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){play();io.disconnect()}}),{threshold:.34,rootMargin:'0px 0px -12% 0px'});io.observe(el)})};const reveal=()=>{const nodes=[...document.querySelectorAll('.hm-reveal')];if(reduced||!('IntersectionObserver'in window)){nodes.forEach(e=>e.classList.add('is-in'));return}const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});nodes.forEach(e=>io.observe(e))};const progress=()=>{const sections=[...document.querySelectorAll('[data-chapter]')],links=[...document.querySelectorAll('.hm-progress a')];if(!sections.length||!links.length)return;let ticking=false;const update=()=>{ticking=false;const line=(innerHeight||1)*.34;let active=0,best=Infinity;sections.forEach((s,i)=>{const d=Math.abs(s.getBoundingClientRect().top-line);if(d<best){best=d;active=i}});links.forEach((l,i)=>l.classList.toggle('is-active',i===active))},request=()=>{if(ticking)return;ticking=true;requestAnimationFrame(update)};addEventListener('scroll',request,{passive:true});addEventListener('resize',request,{passive:true});links.forEach(l=>l.addEventListener('click',e=>{const t=document.querySelector(l.getAttribute('href'));if(!t||reduced)return;e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}));update()};scramble();reveal();progress()})();
+</script>
 </body>
 </html>
