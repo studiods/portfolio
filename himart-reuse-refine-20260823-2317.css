@@ -35,9 +35,14 @@
 .reuse-page .reuse-360-live iframe{position:absolute!important;inset:0 auto auto 0!important;width:100%!important;height:760px!important;border:0!important;background:#fff!important;display:block!important}
 .reuse-page .reuse-360-live-fallback{display:none!important}
 
-/* Journey: AS-IS red, TO-BE blue. Rules are synced to actual target card geometry. */
-.reuse-page .reuse-journey-block::before{left:var(--flow-line-left,0)!important;width:var(--flow-line-width,100%)!important}
-.reuse-page .reuse-journey-block .flow-label{left:var(--flow-line-left,0)!important}
+/* Journey: use a fluid 4-card grid so rule endpoints stay exact at every desktop/tablet width. */
+@media(min-width:781px){
+  .reuse-page .reuse-journey-block .flow-row.row4{display:grid!important;grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr) 48px minmax(0,1fr) 48px minmax(0,1fr)!important;justify-content:stretch!important}
+  .reuse-page .reuse-journey-block .flow-node{width:100%!important}
+  .reuse-page .reuse-journey-block .flow-arrow{width:48px!important}
+  .reuse-page .reuse-journey-block:nth-child(odd)::before{left:0!important;width:calc(75% - 12px)!important}
+  .reuse-page .reuse-journey-block:nth-child(even)::before{left:0!important;width:calc(50% - 24px)!important}
+}
 .reuse-page .reuse-journey-block.asis::before{background:var(--hm-red)!important}
 .reuse-page .reuse-journey-block.tobe::before,
 .reuse-page .reuse-journey-block.blue::before{background:var(--hm-blue)!important}
@@ -63,4 +68,5 @@
   .reuse-page .reuse-360-live{height:460px!important}
   .reuse-page .reuse-360-stage.is-live{min-height:480px!important}
   .reuse-page .reuse-360-live iframe{width:116%!important;left:-8%!important;height:700px!important}
+  .reuse-page .reuse-journey-block::before{left:0!important;width:100%!important}
 }
