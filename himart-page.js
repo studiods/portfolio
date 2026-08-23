@@ -58,6 +58,7 @@
         --hm-point:var(--hm-blue);
         --hm-second:var(--hm-blue);
         --hm-special:var(--hm-blue);
+        --hm-sub:var(--hm-green);
       }
       #brand.hm-section{padding-top:clamp(60px,7vh,95px)}
       #brand .hm-perception{gap:clamp(24px,2.8vw,44px)}
@@ -90,6 +91,21 @@
       }
       #brand .hm-insight-card::before{display:none!important}
       #brand .hm-insight-card>span{color:rgba(255,255,255,.60)!important}
+
+      /* Green is a subordinate accent only: micro graphics / secondary cues, never primary headings or section rules. */
+      #brand .hm-cross-card.hm-cross-second{
+        background:linear-gradient(155deg,rgba(0,237,189,.055),rgba(0,237,189,.012) 52%,transparent)!important;
+        border-color:rgba(0,237,189,.15)!important;
+      }
+      #brand .hm-cross-card.hm-cross-second::before{
+        height:1px!important;
+        background:rgba(0,237,189,.72)!important;
+      }
+      #brand .hm-cross-stack .is-quick{background:rgba(0,237,189,.68)!important}
+      #brand .hm-cross-nodes i:nth-child(2){background:rgba(0,237,189,.68)!important}
+      #brand .hm-cross-blocks i.alt{background:rgba(0,237,189,.62)!important}
+      #brand .hm-research-note span{color:rgba(0,237,189,.68)!important}
+
       #brand .hm-action-split{gap:clamp(20px,2.8vw,44px)}
       #brand .hm-action-side.hm-action-emphasis{
         padding:clamp(26px,2.6vw,38px);
@@ -102,6 +118,7 @@
         margin:32px 0 22px;
         color:var(--hm-blue);
       }
+      #brand .hm-action-side.hm-action-emphasis:nth-child(2)>span{color:rgba(0,237,189,.72)}
       @media(max-width:900px){
         #brand .hm-perception-group{padding:20px 0 0}
       }
