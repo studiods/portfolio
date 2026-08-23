@@ -1,0 +1,65 @@
+/* 2026-08-23 23:17 — reuse refinement only */
+
+/* Trust architecture: all three circles use the same blue language */
+.reuse-page .reuse-trust-ring{border:1px solid var(--hm-blue)!important}
+.reuse-page .reuse-trust-ring::before{display:none!important}
+.reuse-page .reuse-trust-ring span,
+.reuse-page .reuse-trust-ring h4,
+.reuse-page .reuse-trust-ring:nth-child(2) span,
+.reuse-page .reuse-trust-ring:nth-child(3) span{color:var(--hm-blue)!important}
+
+/* Anxiety / Trust summary: restore the two-column line structure, no arrow */
+.reuse-page .reuse-summary{display:grid!important;grid-template-columns:1fr 1fr!important;align-items:stretch!important;border-top:1px solid var(--hm-line)!important;border-bottom:1px solid var(--hm-line)!important}
+.reuse-page .reuse-summary-arrow{display:none!important}
+.reuse-page .reuse-summary article{min-height:310px!important;padding:34px 34px 36px 0!important}
+.reuse-page .reuse-summary article+article{border-left:1px solid var(--hm-line)!important;padding-left:34px!important}
+.reuse-page .reuse-summary article:first-child span,
+.reuse-page .reuse-summary article:first-child h4{color:var(--hm-red)!important}
+.reuse-page .reuse-summary article:last-child span,
+.reuse-page .reuse-summary article:last-child h4{color:var(--hm-blue)!important}
+
+/* Six principle cards: blue top rule and all copy anchored to the left */
+.reuse-page #market .direction-card{border-top:1px solid var(--hm-blue)!important;border-bottom:1px solid var(--hm-line)!important}
+.reuse-page #market .direction-card p{align-self:flex-start!important;margin:auto 0 0 0!important;max-width:100%!important;text-align:left!important}
+
+/* 360° section: left copy and interactive viewer share exactly the same top rule */
+.reuse-page .reuse-360-layout{align-items:start!important}
+.reuse-page .reuse-360-copy,
+.reuse-page .reuse-360-stage.is-live{border-top:1px solid var(--hm-line)!important;padding-top:24px!important}
+.reuse-page .reuse-360-copy{padding-bottom:0!important}
+.reuse-page .reuse-360-copy h4{margin:0!important}
+.reuse-page .reuse-360-conclusion{margin:24px 0 0!important;color:rgba(255,255,255,.78)!important;font-size:17px!important;line-height:1.6!important}
+.reuse-page .reuse-360-conclusion strong{font-weight:500!important;color:#fff!important}
+.reuse-page .reuse-360-stage.is-live{min-height:560px!important;display:block!important;overflow:hidden!important}
+.reuse-page .reuse-360-live{position:relative;width:100%!important;height:536px!important;border:0!important;overflow:hidden!important;background:#fff!important}
+.reuse-page .reuse-360-live iframe{position:absolute!important;inset:0 auto auto 0!important;width:100%!important;height:760px!important;border:0!important;background:#fff!important;display:block!important}
+.reuse-page .reuse-360-live-fallback{display:none!important}
+
+/* Journey: AS-IS red, TO-BE blue. Every rule fills the content width. */
+.reuse-page .reuse-journey-block::before{width:100%!important}
+.reuse-page .reuse-journey-block.asis::before{background:var(--hm-red)!important}
+.reuse-page .reuse-journey-block.tobe::before,
+.reuse-page .reuse-journey-block.blue::before{background:var(--hm-blue)!important}
+.reuse-page .reuse-journey-block.asis .flow-label,
+.reuse-page .reuse-journey-block.asis .flow-node .hm-card-no{color:var(--hm-red)!important}
+.reuse-page .reuse-journey-block.tobe .flow-label,
+.reuse-page .reuse-journey-block.tobe .flow-node .hm-card-no,
+.reuse-page .reuse-journey-block.blue .flow-label,
+.reuse-page .reuse-journey-block.blue .flow-node .hm-card-no{color:var(--hm-blue)!important}
+
+@media(max-width:1100px){
+  .reuse-page .reuse-360-live{height:496px!important}
+  .reuse-page .reuse-360-stage.is-live{min-height:520px!important}
+  .reuse-page .reuse-360-live iframe{height:720px!important}
+}
+
+@media(max-width:780px){
+  .reuse-page .reuse-summary{grid-template-columns:1fr!important}
+  .reuse-page .reuse-summary article,.reuse-page .reuse-summary article+article{padding:28px 0!important;border-left:0!important}
+  .reuse-page .reuse-summary article+article{border-top:1px solid var(--hm-line)!important}
+  .reuse-page .reuse-360-copy,.reuse-page .reuse-360-stage.is-live{padding-top:20px!important}
+  .reuse-page .reuse-360-conclusion{font-size:15px!important;margin-top:18px!important}
+  .reuse-page .reuse-360-live{height:460px!important}
+  .reuse-page .reuse-360-stage.is-live{min-height:480px!important}
+  .reuse-page .reuse-360-live iframe{width:116%!important;left:-8%!important;height:700px!important}
+}
