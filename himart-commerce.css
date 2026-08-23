@@ -394,6 +394,83 @@ body.himart-commerce-body{
 .hm3-scramble-char{display:inline-block;position:relative;min-width:.05em;vertical-align:baseline;white-space:pre;opacity:0;font:inherit;line-height:inherit;letter-spacing:inherit}
 .hm3-scramble-char.is-live{opacity:1}
 
+
+/* SCROLL-LINKED MOTION — straight geometry, continuous wheel response */
+.hm3-story-frame{
+  border-radius:var(--hm3-frame-radius,16px);
+  transform:translateZ(0) scale(var(--hm3-frame-scale,.985));
+  will-change:width,height,border-radius,transform;
+}
+.hm3-scene,.hm3-scene.is-active{
+  --scene-opacity:0;
+  --scene-y:7svh;
+  --scene-scale:.955;
+  --scene-line:0;
+  opacity:var(--scene-opacity);
+  transform:translate3d(0,var(--scene-y),0) scale(var(--scene-scale));
+  transform-origin:50% 50%;
+  filter:blur(calc((1 - var(--scene-opacity)) * 4px));
+  transition:none;
+  will-change:opacity,transform,filter;
+  pointer-events:none;
+}
+.hm3-scene.is-active{pointer-events:auto}
+.hm3-story-heading{
+  transform:translate(-50%,-50%) translate3d(0,var(--hm3-heading-y,0px),0);
+  opacity:var(--hm3-heading-opacity,1);
+  will-change:transform,opacity;
+}
+.hm3-story-counter i::after{transition:none}
+.hm3-scene-perception path,
+.hm3-scene-reframe path,
+.hm3-trend-lines polyline{
+  stroke-dasharray:1;
+  stroke-dashoffset:calc(1 - var(--scene-line));
+  transition:none;
+}
+.hm3-scene-perception .hm3-orbit-label,
+.hm3-scene-reframe .hm3-flow-label{
+  opacity:var(--scene-line);
+  transform:translate3d(0,calc((1 - var(--scene-line)) * 18px),0);
+}
+.hm3-month-rail i,
+.hm3-home-split i{
+  transform:scaleX(var(--scene-line));
+  transform-origin:left center;
+}
+.hm3-ring circle.is-value{stroke-dashoffset:calc((1 - var(--scene-line)) * 83.4)}
+.hm3-demand-main,.hm3-demand-side,.hm3-entry-stat,.hm3-home-total,.hm3-home-split{
+  will-change:transform,opacity;
+}
+.hm3-mosaic,.hm3-benchmark-stage,.hm3-output-mosaic{
+  transform:translate3d(0,var(--expand-y,38px),0) scale(var(--expand-scale,.965));
+  transform-origin:50% 20%;
+  will-change:width,transform;
+}
+.hm3-benchmark-orbit path{
+  stroke-dasharray:1;
+  stroke-dashoffset:calc(1 - var(--line-progress,0));
+}
+.hm3-journey-nodes li,.hm3-source{
+  opacity:var(--item-opacity,1);
+  transform:translate3d(0,var(--item-y,0px),0);
+  will-change:opacity,transform;
+}
+.hm3-strategy-map li{
+  opacity:calc(.22 + var(--item-progress,.0) * .78);
+  transform:translate3d(0,calc((1 - var(--item-progress,.0)) * 34px),0);
+  will-change:opacity,transform;
+}
+.hm3-strategy-map li::after{
+  content:'';
+  position:absolute;
+  left:0;
+  top:-1px;
+  width:var(--item-progress-width,0%);
+  height:2px;
+  background:var(--hm3-blue);
+}
+
 @media(max-width:1100px){
   .hm3-progress{display:none}
   .hm3-hero-bottom{grid-template-columns:1fr;gap:58px}
@@ -486,7 +563,7 @@ body.himart-commerce-body{
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .hm3-scroll-cue i::after{animation:none;transform:none}
-  .hm3-scene{transition:none}.hm3-scramble-char{opacity:1!important}
+  .hm3-scene{transition:none}.hm3-scene.is-active{opacity:1;transform:none;filter:none}.hm3-scramble-char{opacity:1!important}
   .hm3-story{height:auto;padding:80px var(--hm3-pad)}
   .hm3-story-sticky{position:relative;height:auto;padding:0}.hm3-story-frame{width:100%;height:auto;min-height:70svh}
   .hm3-story-steps{position:relative}.hm3-story-step{height:auto;opacity:1;padding:34px 0;border-bottom:1px solid var(--hm3-line-soft)}
