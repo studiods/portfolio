@@ -18,6 +18,117 @@
     document.head.appendChild(style);
   };
 
+  const applyBrandPresentation=()=>{
+    const brand=document.querySelector('#brand');
+    if(!brand)return;
+
+    const intro=brand.querySelector('.hm-section-head p');
+    if(intro){
+      intro.textContent='입사 후 처음 진행하는 대규모 개편이었기 때문에 화면을 바로 고치지 않았습니다. 먼저 AI를 활용해 다양한 채널에서 하이마트에 대한 고객들의 목소리를 폭넓게 수집하고, 고객이 기대하는 강점과 온라인 경험의 간극을 정리했습니다. 이후 검색·홈·PDP·구매 로그에서 같은 문제가 실제 행동으로도 나타나는지 다시 교차검증했습니다.';
+    }
+
+    const groups=[...brand.querySelectorAll('.hm-perception-group')];
+    groups.forEach((group,index)=>{
+      group.classList.add(index===0?'hm-perception-positive':'hm-perception-negative');
+      const label=group.querySelector('.hm-insight-label');
+      const eyebrow=label?.querySelector('span');
+      if(eyebrow)eyebrow.remove();
+      const title=label?.querySelector('b');
+      if(title)title.textContent=index===0?'고객들이 생각하는 강점':'고객들이 아쉽다고 느끼는 부분';
+    });
+
+    const researchNote=brand.querySelector('.hm-research-note');
+    if(researchNote){
+      const label=researchNote.querySelector('span');
+      const copy=researchNote.querySelector('p');
+      if(label)label.textContent='AI VOICE COLLECTION → DATA CROSS-CHECK';
+      if(copy)copy.textContent='AI를 활용해 다양한 외부 채널과 소비자 자료에서 하이마트에 대한 고객의 목소리를 수집해 가설을 만들고, 실제 검색·홈·PDP·구매 데이터를 교차검증했습니다. 정성 자료에서 확인되지 않은 비율은 만들지 않았고, 위 수치는 원본 로그와 보고서에 존재하는 값 또는 동일 기간 집계값만 사용했습니다.';
+    }
+
+    brand.querySelectorAll('.hm-action-side').forEach(side=>side.classList.add('hm-action-emphasis'));
+
+    const style=document.createElement('style');
+    style.setAttribute('data-himart-brand-refine','1');
+    style.textContent=`
+      .himart-page-body{
+        --hm-blue:#00A6ED;
+        --hm-green:#00EDBD;
+        --hm-yellow:#F3EB01;
+        --hm-red:#FA481B;
+        --hm-point:var(--hm-blue);
+        --hm-second:var(--hm-blue);
+        --hm-special:var(--hm-blue);
+      }
+      #brand.hm-section{padding-top:clamp(60px,7vh,95px)}
+      #brand .hm-perception{gap:clamp(24px,2.8vw,44px)}
+      #brand .hm-perception-group{
+        padding:clamp(22px,2.1vw,32px);
+        border:1px solid;
+        border-radius:8px;
+        background:rgba(255,255,255,.012);
+      }
+      #brand .hm-perception-positive{border-color:var(--hm-blue)}
+      #brand .hm-perception-negative{border-color:var(--hm-red)}
+      #brand .hm-insight-label{
+        justify-content:flex-start;
+        padding-bottom:18px;
+      }
+      #brand .hm-insight-label b{
+        font:300 clamp(24px,1.75vw,30px)/1.2 var(--hm-ko);
+        letter-spacing:-.025em;
+      }
+      #brand .hm-perception-positive .hm-insight-label{border-bottom-color:rgba(0,166,237,.38)}
+      #brand .hm-perception-negative .hm-insight-label{border-bottom-color:rgba(250,72,27,.38)}
+      #brand .hm-perception-positive .hm-insight-label b{color:var(--hm-blue)}
+      #brand .hm-perception-negative .hm-insight-label b{color:var(--hm-red)}
+      #brand .hm-insight-grid{padding-top:20px}
+      #brand .hm-insight-card{
+        height:100%;
+        background:rgba(255,255,255,.018)!important;
+        border-color:rgba(255,255,255,.13)!important;
+      }
+      #brand .hm-insight-card::before{display:none!important}
+      #brand .hm-insight-card>span{color:rgba(255,255,255,.60)!important}
+      #brand .hm-action-split{gap:clamp(20px,2.8vw,44px)}
+      #brand .hm-action-side.hm-action-emphasis{
+        padding:clamp(26px,2.6vw,38px);
+        border:1px solid rgba(0,166,237,.62);
+        border-radius:8px;
+        background:linear-gradient(145deg,rgba(0,166,237,.105),rgba(0,166,237,.018) 52%,transparent);
+      }
+      #brand .hm-action-side.hm-action-emphasis>span{color:rgba(255,255,255,.60)}
+      #brand .hm-action-side.hm-action-emphasis h3{
+        margin:32px 0 22px;
+        color:var(--hm-blue);
+      }
+      @media(max-width:900px){
+        #brand .hm-perception-group{padding:20px}
+      }
+    `;
+    document.head.appendChild(style);
+
+    const equalizeInsightCards=()=>{
+      const cards=[...brand.querySelectorAll('.hm-insight-card')];
+      if(!cards.length)return;
+      cards.forEach(card=>{card.style.minHeight='';});
+      if(innerWidth<=900)return;
+      const maxHeight=Math.max(...cards.map(card=>Math.ceil(card.getBoundingClientRect().height)));
+      cards.forEach(card=>{card.style.minHeight=`${maxHeight}px`;});
+    };
+
+    const runEqualize=()=>requestAnimationFrame(equalizeInsightCards);
+    try{
+      if(document.fonts?.ready)document.fonts.ready.then(runEqualize);
+      else runEqualize();
+    }catch(e){runEqualize();}
+
+    let resizeTimer=0;
+    addEventListener('resize',()=>{
+      clearTimeout(resizeTimer);
+      resizeTimer=setTimeout(equalizeInsightCards,120);
+    },{passive:true});
+  };
+
   const prepareScramble=async()=>{
     try{if(document.fonts?.ready)await document.fonts.ready;}catch(e){}
     const targets=[...document.querySelectorAll('.js-scramble')];
@@ -156,6 +267,7 @@
   }));
 
   repairOperatingPresentation();
+  applyBrandPresentation();
   updateProgress();
   prepareScramble();
 })();
