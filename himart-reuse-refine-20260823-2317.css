@@ -35,8 +35,9 @@
 .reuse-page .reuse-360-live iframe{position:absolute!important;inset:0 auto auto 0!important;width:100%!important;height:760px!important;border:0!important;background:#fff!important;display:block!important}
 .reuse-page .reuse-360-live-fallback{display:none!important}
 
-/* Journey: AS-IS red, TO-BE blue. Every rule fills the content width. */
-.reuse-page .reuse-journey-block::before{width:100%!important}
+/* Journey: AS-IS red, TO-BE blue. Rules are synced to actual target card geometry. */
+.reuse-page .reuse-journey-block::before{left:var(--flow-line-left,0)!important;width:var(--flow-line-width,100%)!important}
+.reuse-page .reuse-journey-block .flow-label{left:var(--flow-line-left,0)!important}
 .reuse-page .reuse-journey-block.asis::before{background:var(--hm-red)!important}
 .reuse-page .reuse-journey-block.tobe::before,
 .reuse-page .reuse-journey-block.blue::before{background:var(--hm-blue)!important}
