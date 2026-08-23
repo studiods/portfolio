@@ -126,27 +126,25 @@
       #brand .hm-insight-card::before{display:none!important}
       #brand .hm-insight-card>span{color:rgba(255,255,255,.60)!important}
 
-      /* New Blue is the secondary accent; Green is reduced to micro / tertiary cues. */
-      #brand .hm-cross-card.hm-cross-second{
-        background:linear-gradient(155deg,rgba(0,180,227,.07),rgba(0,180,227,.014) 52%,transparent)!important;
-        border-color:rgba(0,180,227,.18)!important;
-      }
-      #brand .hm-cross-card.hm-cross-second::before{
-        height:1px!important;
-        background:rgba(0,180,227,.82)!important;
-      }
+      /* Cross-check cards use one consistent primary treatment. */
+      #brand .hm-cross-card,
+      #brand .hm-cross-card.hm-cross-point,
+      #brand .hm-cross-card.hm-cross-second,
       #brand .hm-cross-card.hm-cross-special{
-        background:linear-gradient(155deg,rgba(0,237,189,.035),rgba(0,237,189,.006) 52%,transparent)!important;
-        border-color:rgba(0,237,189,.12)!important;
+        background:linear-gradient(155deg,rgba(0,166,237,.06),rgba(0,166,237,.012) 52%,transparent)!important;
+        border-color:rgba(0,166,237,.16)!important;
       }
+      #brand .hm-cross-card::before,
+      #brand .hm-cross-card.hm-cross-point::before,
+      #brand .hm-cross-card.hm-cross-second::before,
       #brand .hm-cross-card.hm-cross-special::before{
-        height:1px!important;
-        background:rgba(0,237,189,.54)!important;
+        height:3px!important;
+        background:var(--hm-blue)!important;
       }
-      #brand .hm-cross-stack .is-quick{background:rgba(0,180,227,.76)!important}
-      #brand .hm-cross-nodes i:nth-child(2){background:rgba(0,180,227,.76)!important}
-      #brand .hm-cross-nodes i:nth-child(3){background:rgba(0,237,189,.54)!important}
-      #brand .hm-cross-blocks i.alt{background:rgba(0,180,227,.70)!important}
+      #brand .hm-cross-graphic,
+      #brand .hm-cross-stack,
+      #brand .hm-cross-nodes,
+      #brand .hm-cross-blocks{display:none!important}
       #brand .hm-research-note span{color:rgba(0,237,189,.60)!important}
 
       #brand .hm-action-split{gap:clamp(20px,2.8vw,44px)}
