@@ -52,14 +52,48 @@
     style.textContent=`
       .himart-page-body{
         --hm-blue:#00A6ED;
+        --hm-newblue:#00B4E3;
         --hm-green:#00EDBD;
         --hm-yellow:#F3EB01;
         --hm-red:#FA481B;
         --hm-point:var(--hm-blue);
-        --hm-second:var(--hm-blue);
-        --hm-special:var(--hm-blue);
-        --hm-sub:var(--hm-green);
+        --hm-second:rgba(0,180,227,.82);
+        --hm-special:rgba(0,237,189,.58);
+        --hm-sub:var(--hm-newblue);
+        --hm-micro:var(--hm-green);
       }
+
+      /* Accent hierarchy: Blue > New Blue > Green. */
+      .himart-page-body .hm-source-naver{border-color:var(--hm-blue)!important}
+      .himart-page-body .hm-source-coupang{border-color:rgba(0,180,227,.78)!important}
+      .himart-page-body .hm-source-himart{border-color:rgba(0,237,189,.55)!important}
+      .himart-page-body .hm-flow-step:nth-child(3n+1),
+      .himart-page-body .hm-opt-step:nth-child(3n+1),
+      .himart-page-body .hm-role-item:nth-child(3n+1){box-shadow:inset 0 2px 0 var(--hm-blue)!important}
+      .himart-page-body .hm-flow-step:nth-child(3n+2),
+      .himart-page-body .hm-opt-step:nth-child(3n+2),
+      .himart-page-body .hm-role-item:nth-child(3n+2){box-shadow:inset 0 1px 0 rgba(0,180,227,.78)!important}
+      .himart-page-body .hm-flow-step:nth-child(3n),
+      .himart-page-body .hm-opt-step:nth-child(3n),
+      .himart-page-body .hm-role-item:nth-child(3n){box-shadow:inset 0 1px 0 rgba(0,237,189,.52)!important}
+      .himart-page-body .hm-data-panel::before{background:var(--hm-blue)!important}
+      .himart-page-body .hm-data-panel:nth-of-type(3n+2)::before{background:rgba(0,180,227,.78)!important;height:1px!important}
+      .himart-page-body .hm-data-panel:nth-of-type(3n)::before{background:rgba(0,237,189,.52)!important;height:1px!important}
+      .himart-page-body .hm-pattern-strip .is-second,
+      .himart-page-body .hm-device-blocks .is-second,
+      .himart-page-body .hm-compare-track .is-second,
+      .himart-page-body .hm-home-row>div .is-second,
+      .himart-page-body .hm-funnel-node i.is-second{background:rgba(0,180,227,.78)!important}
+      .himart-page-body .hm-device-blocks .is-special,
+      .himart-page-body .hm-home-row>div .is-special,
+      .himart-page-body .hm-funnel-node i.is-special{background:rgba(0,237,189,.55)!important}
+      .himart-page-body .hm-preview-blur{
+        background:linear-gradient(135deg,rgba(0,166,237,.18),rgba(0,180,227,.12) 48%,rgba(0,237,189,.085))!important;
+      }
+      .himart-page-body .hm-preview-blur i:nth-child(1){background:rgba(0,166,237,.52)!important}
+      .himart-page-body .hm-preview-blur i:nth-child(2){background:rgba(0,180,227,.38)!important}
+      .himart-page-body .hm-preview-blur i:nth-child(3){background:rgba(0,237,189,.26)!important}
+
       #brand.hm-section{padding-top:clamp(60px,7vh,95px)}
       #brand .hm-perception{gap:clamp(24px,2.8vw,44px)}
       #brand .hm-perception-group{
@@ -92,19 +126,28 @@
       #brand .hm-insight-card::before{display:none!important}
       #brand .hm-insight-card>span{color:rgba(255,255,255,.60)!important}
 
-      /* Green is a subordinate accent only: micro graphics / secondary cues, never primary headings or section rules. */
+      /* New Blue is the secondary accent; Green is reduced to micro / tertiary cues. */
       #brand .hm-cross-card.hm-cross-second{
-        background:linear-gradient(155deg,rgba(0,237,189,.055),rgba(0,237,189,.012) 52%,transparent)!important;
-        border-color:rgba(0,237,189,.15)!important;
+        background:linear-gradient(155deg,rgba(0,180,227,.07),rgba(0,180,227,.014) 52%,transparent)!important;
+        border-color:rgba(0,180,227,.18)!important;
       }
       #brand .hm-cross-card.hm-cross-second::before{
         height:1px!important;
-        background:rgba(0,237,189,.72)!important;
+        background:rgba(0,180,227,.82)!important;
       }
-      #brand .hm-cross-stack .is-quick{background:rgba(0,237,189,.68)!important}
-      #brand .hm-cross-nodes i:nth-child(2){background:rgba(0,237,189,.68)!important}
-      #brand .hm-cross-blocks i.alt{background:rgba(0,237,189,.62)!important}
-      #brand .hm-research-note span{color:rgba(0,237,189,.68)!important}
+      #brand .hm-cross-card.hm-cross-special{
+        background:linear-gradient(155deg,rgba(0,237,189,.035),rgba(0,237,189,.006) 52%,transparent)!important;
+        border-color:rgba(0,237,189,.12)!important;
+      }
+      #brand .hm-cross-card.hm-cross-special::before{
+        height:1px!important;
+        background:rgba(0,237,189,.54)!important;
+      }
+      #brand .hm-cross-stack .is-quick{background:rgba(0,180,227,.76)!important}
+      #brand .hm-cross-nodes i:nth-child(2){background:rgba(0,180,227,.76)!important}
+      #brand .hm-cross-nodes i:nth-child(3){background:rgba(0,237,189,.54)!important}
+      #brand .hm-cross-blocks i.alt{background:rgba(0,180,227,.70)!important}
+      #brand .hm-research-note span{color:rgba(0,237,189,.60)!important}
 
       #brand .hm-action-split{gap:clamp(20px,2.8vw,44px)}
       #brand .hm-action-side.hm-action-emphasis{
@@ -118,7 +161,7 @@
         margin:32px 0 22px;
         color:var(--hm-blue);
       }
-      #brand .hm-action-side.hm-action-emphasis:nth-child(2)>span{color:rgba(0,237,189,.72)}
+      #brand .hm-action-side.hm-action-emphasis:nth-child(2)>span{color:rgba(0,180,227,.74)}
       @media(max-width:900px){
         #brand .hm-perception-group{padding:20px 0 0}
       }
