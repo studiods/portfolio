@@ -148,12 +148,31 @@
       const rect = story.getBoundingClientRect();
       const distance = Math.max(1, rect.height - viewport);
       const overall = clamp(-rect.top / distance);
-      const sceneFloat = (-rect.top + viewport * .48) / viewport;
-      setStoryScene(Math.floor(sceneFloat));
-      const growth = clamp(overall * 1.15);
+      const scenePosition = overall * (storySteps.length - 1);
+      const nextScene = Math.round(scenePosition);
+      setStoryScene(nextScene);
+
+      storyScenes.forEach((scene, index) => {
+        const signedDistance = index - scenePosition;
+        const visibility = clamp(1 - Math.abs(signedDistance));
+        const easedVisibility = 1 - Math.pow(1 - visibility, 2);
+        scene.style.setProperty('--scene-opacity', visibility.toFixed(3));
+        scene.style.setProperty('--scene-y', `${(signedDistance * 9).toFixed(2)}svh`);
+        scene.style.setProperty('--scene-scale', (.95 + easedVisibility * .05).toFixed(4));
+        scene.style.setProperty('--scene-line', easedVisibility.toFixed(3));
+      });
+
+      const growth = clamp(overall * 1.28);
       const mobile = innerWidth <= 780;
-      storyFrame.style.setProperty('--hm3-story-width', `${(mobile ? 94 : 86) + growth * (mobile ? 4 : 8)}vw`);
-      storyFrame.style.setProperty('--hm3-story-height', `${(mobile ? 91 : 78) + growth * (mobile ? 5 : 12)}svh`);
+      storyFrame.style.setProperty('--hm3-story-width', `${(mobile ? 93 : 84) + growth * (mobile ? 6 : 12)}vw`);
+      storyFrame.style.setProperty('--hm3-story-height', `${(mobile ? 90 : 76) + growth * (mobile ? 7 : 18)}svh`);
+      storyFrame.style.setProperty('--hm3-frame-radius', `${(16 - growth * 14).toFixed(2)}px`);
+      storyFrame.style.setProperty('--hm3-frame-scale', (.985 + growth * .015).toFixed(4));
+      storyFrame.style.setProperty('--hm3-story-progress', `${Math.max(1, overall * 100).toFixed(2)}%`);
+
+      const phase = Math.abs(scenePosition - nextScene);
+      storyFrame.style.setProperty('--hm3-heading-y', `${(-phase * 8).toFixed(2)}px`);
+      storyFrame.style.setProperty('--hm3-heading-opacity', (1 - phase * .18).toFixed(3));
     }
 
     expandElements.forEach(element => {
@@ -161,11 +180,17 @@
       const progress = clamp((viewport * .92 - rect.top) / (viewport * .72));
       const widthGrowth = element.classList.contains('hm3-benchmark-stage') ? 12 : 10;
       const lift = element.classList.contains('hm3-mosaic') ? 38 : 36;
-      element.style.setProperty('--expand-width', `${82 + progress * widthGrowth}vw`);
+      element.style.setProperty('--expand-width', `${78 + progress * (widthGrowth + 6)}vw`);
       element.style.setProperty('--expand-y', `${(1 - progress) * lift}px`);
-      if (element.classList.contains('hm3-mosaic')) {
-        element.style.setProperty('--line-progress', clamp(progress * 1.08).toFixed(3));
-      }
+      element.style.setProperty('--expand-scale', (.955 + progress * .045).toFixed(4));
+      element.style.setProperty('--line-progress', clamp(progress * 1.12).toFixed(3));
+
+      const stagedItems = element.querySelectorAll('.hm3-journey-nodes li, .hm3-source');
+      stagedItems.forEach((item, index) => {
+        const itemProgress = clamp(progress * 1.45 - index * .11);
+        item.style.setProperty('--item-opacity', (.12 + itemProgress * .88).toFixed(3));
+        item.style.setProperty('--item-y', `${((1 - itemProgress) * 34).toFixed(2)}px`);
+      });
     });
 
     if (strategyMap) {
@@ -174,6 +199,7 @@
       strategyMap.style.setProperty('--line-progress', progress.toFixed(3));
       [...strategyMap.querySelectorAll('li')].forEach((item, index, items) => {
         const itemProgress = clamp(progress * items.length - index);
+        item.style.setProperty('--item-progress', itemProgress.toFixed(3));
         item.style.setProperty('--item-progress-width', `${itemProgress * 100}%`);
       });
     }
