@@ -247,3 +247,59 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
   .search-slope strong{font-size:34px!important}
   .data-viz.chart-wrap>.chart-legend{grid-template-columns:1fr 1fr!important;row-gap:10px!important}
 }
+
+/* 2026-08-23 23:48 — requested title rhythm + prototype gallery */
+#journey .hm-section-title{max-width:none!important;width:1500px!important;white-space:normal!important}
+#journey .hm-section-title{font-size:0!important;line-height:0!important}
+#journey .hm-section-title::before{content:"그래서 끊어진 여정을, 어디서 시작해도 다음 행동으로\A이어지는 구조로 다시 설계했습니다.";display:block;white-space:pre-line;font-family:var(--hm-ko);font-weight:100;font-size:58px;line-height:1.08;letter-spacing:-.055em;color:#fff}
+
+#direction .phone-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:58px 42px!important}
+#direction .phone-card{display:grid!important;grid-template-columns:minmax(0,42%) minmax(0,58%)!important;gap:26px!important;align-items:stretch!important;min-width:0!important}
+#direction .phone-frame{width:100%!important;border-radius:15px!important}
+#direction .phone-frame::before{border-radius:11px!important}
+#direction .phone-meta{margin:0!important;padding:18px 0!important;border-top:1px solid var(--hm-line)!important;border-bottom:1px solid var(--hm-line)!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;min-width:0!important}
+#direction .phone-meta span{font-size:11px!important;color:var(--hm-blue)!important}
+#direction .phone-meta b{margin-top:8px!important;font-size:16px!important;line-height:1.25!important}
+#direction .phone-meta p{margin:auto 0 0!important;font-size:0!important;max-width:95%!important;line-height:1.6!important;color:rgba(255,255,255,.68)!important;word-break:keep-all!important}
+#direction .phone-meta p::before{font-family:var(--hm-ko);font-weight:300;font-size:15px;line-height:1.6;letter-spacing:-.02em;color:rgba(255,255,255,.68)}
+#direction .phone-card:nth-child(1) .phone-meta p::before{content:"최근 행동과 유입 맥락을 이어받아 검색·카테고리·혜택·주요 서비스로 빠르게 이동시키는 탐색 허브입니다."}
+#direction .phone-card:nth-child(2) .phone-meta p::before{content:"품목 나열보다 사용 상황과 공간, 설치 조건을 중심으로 구매 목적을 더 구체화하는 탐색 화면입니다."}
+#direction .phone-card:nth-child(3) .phone-meta p::before{content:"추천검색과 탐색 가이드로 막연한 요구를 실제 검색 행동으로 자연스럽게 전환하는 시작 화면입니다."}
+#direction .phone-card:nth-child(4) .phone-meta p::before{content:"검색 맥락과 필터를 유지하면서 사용자가 원하는 조건을 빠르게 좁힐 수 있도록 결과 구조를 정리했습니다."}
+#direction .phone-card:nth-child(5) .phone-meta p::before{content:"가격·혜택·핵심 스펙과 설치 조건을 같은 기준으로 비교해 구매 후보를 빠르게 압축하는 목록 경험입니다."}
+#direction .phone-card:nth-child(6) .phone-meta p::before{content:"선택한 상품들의 차이를 한눈에 확인하고 사용자의 우선순위에 맞는 후보를 남기도록 비교 기준을 단순화했습니다."}
+#direction .phone-card:nth-child(7) .phone-meta p::before{content:"가격과 혜택, 상품의 핵심 정보와 리뷰를 구매 판단 순서에 맞춰 배치해 결정에 필요한 근거를 먼저 보여줍니다."}
+#direction .phone-card:nth-child(8) .phone-meta p::before{content:"매장 실물 확인, 전문 상담, 배송·설치와 케어 정보를 PDP 안에서 이어 구매 전 불확실성을 줄입니다."}
+#direction .phone-card:nth-child(9) .phone-meta p::before{content:"선택한 상품의 최종 금액과 적용 혜택, 배송·설치 조건을 다시 확인해 결제 직전의 조건 변경을 줄입니다."}
+#direction .phone-card:nth-child(10) .phone-meta p::before{content:"필수 입력만 남기고 총 결제금액과 혜택을 고정해 보여주어 마지막 단계의 인지 부담을 최소화합니다."}
+#direction .phone-card:nth-child(11) .phone-meta p::before{content:"설치 일정과 준비 사항, 폐가전 회수 등 구매 이후 필요한 정보를 하나의 진행 상태로 확인하게 합니다."}
+#direction .phone-card:nth-child(12) .phone-meta p::before{content:"보증·A/S·평생Care까지 구매 이력을 기반으로 이어 관리 관계가 구매 완료 뒤에도 끊기지 않도록 합니다."}
+
+@media(max-width:1100px){
+  #journey .hm-section-title{width:100%!important;font-size:0!important;line-height:0!important}
+  #journey .hm-section-title::before{font-size:52px!important;line-height:1.08!important}
+  #direction .phone-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:42px 26px!important}
+  #direction .phone-card{grid-template-columns:minmax(0,44%) minmax(0,56%)!important;gap:20px!important}
+  #direction .phone-meta b{font-size:15px!important}
+  #direction .phone-meta p::before{font-size:14px!important}
+}
+
+@media(max-width:780px){
+  #journey .hm-section-title{width:100%!important}
+  #journey .hm-section-title::before{content:"그래서 끊어진 여정을,\A어디서 시작해도 다음 행동으로\A이어지는 구조로 다시 설계했습니다.";font-size:36px!important;line-height:1.1!important}
+  #direction .phone-gallery{grid-template-columns:1fr!important;gap:34px!important}
+  #direction .phone-card{grid-template-columns:minmax(0,42%) minmax(0,58%)!important;gap:16px!important}
+  #direction .phone-frame{border-radius:15px!important}
+  #direction .phone-frame::before{border-radius:11px!important}
+  #direction .phone-meta{padding:12px 0!important}
+  #direction .phone-meta span{font-size:9px!important}
+  #direction .phone-meta b{font-size:13px!important}
+  #direction .phone-meta p::before{font-size:12px!important;line-height:1.55!important}
+}
+
+@media(max-width:430px){
+  #journey .hm-section-title::before{font-size:33px!important}
+  #direction .phone-card{grid-template-columns:minmax(0,43%) minmax(0,57%)!important;gap:14px!important}
+  #direction .phone-meta b{font-size:12px!important}
+  #direction .phone-meta p::before{font-size:11.5px!important}
+}
