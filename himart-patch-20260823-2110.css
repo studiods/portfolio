@@ -46,6 +46,33 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 .role-card{padding:30px 0!important}
 .role-card .hm-role-name,.role-card h4,.role-card p,.role-card strong{margin-left:0!important;padding-left:0!important;text-align:left!important}
 
+/* 2026-08-23 21:29 refinement */
+/* Align sentiment keyword baselines and give both sides a controlled 3-line rhythm */
+.sentiment-keywords{min-height:112px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;line-height:1.62!important}
+.sentiment-keywords b{display:block!important;margin-bottom:8px!important}
+
+/* Data descriptions keep the requested manual break and use the full width */
+.data-card .desc{line-height:1.52!important}
+
+/* Traffic graph: expand horizontally and keep the legend 20px below, left aligned */
+.chart-wrap{width:100%!important;overflow:visible!important}
+.chart-wrap::before{width:106%!important;margin-left:-3%!important;background-size:100% auto!important}
+.chart-wrap>.chart-legend{margin-top:20px!important;padding-left:0!important;column-gap:30px!important}
+
+/* AS-IS problem rules stop exactly at the affected card's right edge */
+#data .flow-group:nth-child(1){--line-left:0px!important;--line-width:852px!important}
+#data .flow-group:nth-child(2){--line-left:0px!important;--line-width:552px!important}
+
+/* TO-BE group rules remain aligned to the full grouped card range */
+#journey .flow-group:nth-child(1){--line-left:0px!important;--line-width:1152px!important}
+#journey .flow-group:nth-child(2){--line-left:0px!important;--line-width:852px!important}
+
+/* Role cards: increase card-to-card spacing by 1.5x and let copy reflow naturally */
+.role-grid{gap:27px!important}
+.role-card{padding:32px 0!important}
+.role-card h4{max-width:90%!important}
+.role-card p,.role-card strong{max-width:92%!important}
+
 @media(max-width:1100px){
   body.himart-page-body{--hm-hero:72px;--hm-section:52px;--hm-subsection:38px}
   .hm-title{font-size:72px!important}
@@ -53,6 +80,7 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
   .hm-subtitle,.data-card h3{font-size:38px!important}
   .data-card h3{white-space:normal!important}
   .chart-wrap>.chart-legend{padding-left:0!important}
+  .chart-wrap::before{width:100%!important;margin-left:0!important}
   #data .flow-group:nth-child(n),#journey .flow-group:nth-child(n){--line-left:0px!important;--line-width:100%!important}
 }
 
