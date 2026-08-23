@@ -10,7 +10,7 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 .hm-subtitle{font-size:42px!important;line-height:1.18!important}
 
 /* Keyword tablets */
-.keyword-pill,.keyword-pill b{color:rgba(255,255,255,.65)!important}
+.keyword-pill,.keyword-pill b{color:rgba(255,255,255,.70)!important}
 
 /* UX point rows: number + title kept close, whole row vertically centered */
 .direction-card{row-gap:12px!important;align-items:center!important}
@@ -28,9 +28,6 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 /* Entry pie center emphasis reduced by 15% */
 .pie-center::before{font-size:52px!important}
 
-/* Traffic legend sits immediately below the graph, filling from the left */
-.chart-wrap>.chart-legend{display:grid!important;grid-template-columns:repeat(3,max-content)!important;justify-content:start!important;column-gap:28px!important;row-gap:0!important;margin-top:14px!important;padding-left:90px!important}
-
 /* PDP comparison legend: correct labels and tight 14px spacing */
 .landing-chart .chart-legend{display:flex!important;grid-template-columns:none!important;justify-content:flex-start!important;gap:14px!important;margin-top:14px!important;padding-left:0!important}
 .landing-chart .chart-legend span:first-child{font-size:13px!important}
@@ -47,17 +44,20 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 .role-card .hm-role-name,.role-card h4,.role-card p,.role-card strong{margin-left:0!important;padding-left:0!important;text-align:left!important}
 
 /* 2026-08-23 21:29 refinement */
-/* Align sentiment keyword baselines and give both sides a controlled 3-line rhythm */
-.sentiment-keywords{min-height:112px!important;display:flex!important;flex-direction:column!important;justify-content:flex-start!important;line-height:1.62!important}
-.sentiment-keywords b{display:block!important;margin-bottom:8px!important}
+/* Restore previous keyword-summary rhythm */
+.sentiment-keywords{min-height:0!important;display:block!important;line-height:1.65!important}
+.sentiment-keywords b{display:inline!important;margin-bottom:0!important}
+.sentiment-keywords br:nth-of-type(n+2){display:none!important}
 
 /* Data descriptions keep the requested manual break and use the full width */
 .data-card .desc{line-height:1.52!important}
 
-/* Traffic graph: expand horizontally and keep the legend 20px below, left aligned */
-.chart-wrap{width:100%!important;overflow:visible!important}
-.chart-wrap::before{width:106%!important;margin-left:-3%!important;background-size:100% auto!important}
-.chart-wrap>.chart-legend{margin-top:20px!important;padding-left:0!important;column-gap:30px!important}
+/* Traffic graph: true full-width plot with legend forced underneath, left-aligned */
+.data-viz.chart-wrap{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;align-items:stretch!important;width:100%!important;min-height:0!important;overflow:visible!important;margin-top:50px!important}
+.data-viz.chart-wrap::before{content:""!important;display:block!important;grid-column:1!important;grid-row:1!important;width:100%!important;max-width:none!important;margin:0!important;aspect-ratio:1280/330!important;background:url('./himart-traffic-v6.svg') center/100% 100% no-repeat!important}
+.data-viz.chart-wrap>.chart-legend{grid-column:1!important;grid-row:2!important;display:flex!important;width:100%!important;justify-content:flex-start!important;align-items:center!important;gap:30px!important;margin:20px 0 0!important;padding:0!important;position:static!important;transform:none!important}
+.data-viz.chart-wrap>.chart-legend span{display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;gap:9px!important;white-space:nowrap!important}
+.data-viz.chart-wrap>.chart-legend span:nth-child(4){display:none!important}
 
 /* AS-IS problem rules stop exactly at the affected card's right edge */
 #data .flow-group:nth-child(1){--line-left:0px!important;--line-width:852px!important}
@@ -72,6 +72,7 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 .role-card{padding:32px 0!important}
 .role-card h4{max-width:90%!important}
 .role-card p,.role-card strong{max-width:92%!important}
+.role-card strong{color:#fff!important}
 
 @media(max-width:1100px){
   body.himart-page-body{--hm-hero:72px;--hm-section:52px;--hm-subsection:38px}
@@ -79,8 +80,8 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
   .hm-section-title{font-size:52px!important}
   .hm-subtitle,.data-card h3{font-size:38px!important}
   .data-card h3{white-space:normal!important}
-  .chart-wrap>.chart-legend{padding-left:0!important}
-  .chart-wrap::before{width:100%!important;margin-left:0!important}
+  .data-viz.chart-wrap::before{width:100%!important;margin:0!important}
+  .data-viz.chart-wrap>.chart-legend{gap:22px!important}
   #data .flow-group:nth-child(n),#journey .flow-group:nth-child(n){--line-left:0px!important;--line-width:100%!important}
 }
 
@@ -89,5 +90,5 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
   .hm-title{font-size:52px!important}
   .hm-section-title{font-size:42px!important}
   .hm-subtitle,.data-card h3{font-size:32px!important}
-  .chart-wrap>.chart-legend{grid-template-columns:1fr!important;gap:12px!important}
+  .data-viz.chart-wrap>.chart-legend{flex-wrap:wrap!important;gap:12px 20px!important}
 }
