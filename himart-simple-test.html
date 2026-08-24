@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="./himart-wide-spacing-300.css?v=fe380cd">
 <link rel="stylesheet" href="./himart-simple-test.css?v=2272a84">
 <link rel="stylesheet" href="./himart-simple-context-v2.css?v=25843e3">
+<link rel="stylesheet" href="./himart-simple-research-v3.css?v=2b43576">
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-simple-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -78,10 +79,15 @@
         const contextTransform=document.createElement('script');
         contextTransform.src='./himart-simple-context-v2.js?v=4013be6';
         contextTransform.onload=()=>{
-          mountHeroMotion();
-          const boot=document.createElement('script');
-          boot.src='./himart-live-boot.js?v=9f74114';
-          document.body.appendChild(boot);
+          const researchTransform=document.createElement('script');
+          researchTransform.src='./himart-simple-research-v3.js?v=e61bb10';
+          researchTransform.onload=()=>{
+            mountHeroMotion();
+            const boot=document.createElement('script');
+            boot.src='./himart-live-boot.js?v=9f74114';
+            document.body.appendChild(boot);
+          };
+          document.body.appendChild(researchTransform);
         };
         document.body.appendChild(contextTransform);
       };
