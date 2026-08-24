@@ -12,7 +12,7 @@ body.himart-page-body.himart-test-page{background:#050505}
 
 /* 02.7 / four concise signal cells with vertical dividers. */
 .himart-test-page .data-bridge{margin-top:72px;padding:30px 0 34px;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line)}
-.himart-test-page .data-bridge>.hm-card-no{display:block;margin-bottom:22px;color:var(--hm-blue)}
+.himart-test-page .data-bridge>.hm-card-no{display:block;margin-bottom:22px;color:var(--hm-blue)!important;font-size:12px!important;font-weight:300!important;line-height:1.3!important;letter-spacing:.04em!important}
 .himart-test-page .data-bridge-title{margin:0 0 42px;max-width:900px;font-size:42px;font-weight:100;line-height:1.2;letter-spacing:-.045em}
 .himart-test-page .data-bridge-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
 .himart-test-page .data-bridge article{min-height:220px;display:flex;flex-direction:column;padding:0 28px}
@@ -45,45 +45,50 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page #journey>.hm-wrap>.hm-section-head .hm-section-no{margin-bottom:22px!important}
 .himart-test-page #journey>.hm-wrap>.hm-section-head .hm-section-title{max-width:1060px!important}
 
-/* 03.1 / Journey Signals and 03.2 / Journey Redesign use the regular subsection scale. */
+/* 03.x / use blue numbering throughout the journey chapter. */
+.himart-test-page #journey .hm-subsection .hm-subno{color:var(--hm-blue)!important}
 .himart-test-page #journey .journey-signal-subsection{margin-top:0!important}
 .himart-test-page #journey .journey-redesign-subsection{margin-top:112px!important}
 .himart-test-page #journey .journey-signal-subsection>.flow-area,
 .himart-test-page #journey .journey-redesign-subsection>.flow-area{margin-top:0!important;padding-top:0!important;border-top:0!important}
 .himart-test-page #journey .journey-signal-subsection .hm-subhead,
 .himart-test-page #journey .journey-redesign-subsection .hm-subhead{margin-bottom:56px!important}
-.himart-test-page #journey .journey-signal-subsection .hm-subtitle,
-.himart-test-page #journey .journey-redesign-subsection .hm-subtitle{font-size:var(--hm-subsection)!important;line-height:1.18!important}
+.himart-test-page #journey .journey-signal-subsection .hm-subtitle{font-size:var(--hm-subsection)!important;line-height:1.18!important}
+.himart-test-page #journey .journey-redesign-subsection .hm-subtitle{font-size:0!important;line-height:1!important}
+.himart-test-page #journey .journey-redesign-subsection .hm-subtitle::before{content:"그래서 끊어진 여정을, 어디서 시작해도\A다음 행동으로 이어지는 구조로\A다시 설계했습니다.";display:block;white-space:pre-line;font-size:42px;line-height:1.18;letter-spacing:-.045em;color:#fff}
 .himart-test-page #journey .journey-signal-subsection .hm-subcopy,
 .himart-test-page #journey .journey-redesign-subsection .hm-subcopy{margin-top:20px!important}
+
+/* AS-IS journey is a problem-state story, so every small stage label is red. */
+.himart-test-page #journey .journey-signal-subsection .flow-node .hm-card-no{color:var(--hm-red)!important}
 
 /* 03.3 / eight compact role cards, four per row. */
 .himart-test-page #journey .role-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important}
 .himart-test-page #journey .role-card{min-height:258px!important;padding:22px!important;border:1px solid var(--hm-line)!important;border-top-color:var(--hm-blue)!important;display:flex!important;flex-direction:column!important;background:transparent!important}
 .himart-test-page #journey .role-card .hm-role-name{font-size:10px!important;letter-spacing:.07em!important}
 .himart-test-page #journey .role-card h4{margin:24px 0 0!important;font-size:23px!important;line-height:1.28!important;letter-spacing:-.035em!important}
-.himart-test-page #journey .role-card p{margin:22px 0 0!important;max-width:none!important;font-size:13px!important;line-height:1.58!important;color:rgba(255,255,255,.68)!important}
+.himart-test-page #journey .role-card p{margin:11px 0 0!important;max-width:none!important;font-size:13px!important;line-height:1.29!important;color:rgba(255,255,255,.68)!important}
 .himart-test-page #journey .role-card strong{margin-top:auto!important;padding-top:24px!important;font-size:11px!important;line-height:1.5!important;font-weight:400!important;color:rgba(255,255,255,.6)!important;opacity:.6!important}
 
-/* Final prototype section: four actual screens, one proof point per row. */
+/* Final prototype section: four actual screens, two cases per row on desktop. */
 .himart-test-page .prototype-intro{display:none!important}
-.himart-test-page .prototype-case-list{display:grid;gap:124px;margin-top:86px}
-.himart-test-page .prototype-case{display:grid;grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr);gap:84px;align-items:stretch;padding-top:30px;border-top:1px solid var(--hm-line)}
-.himart-test-page .prototype-case-visual{height:760px;display:flex;align-items:flex-start;justify-content:center;padding:0;background:#080808;border-radius:15px;overflow:hidden}
+.himart-test-page .prototype-case-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:38px;row-gap:88px;margin-top:86px}
+.himart-test-page .prototype-case{display:grid;grid-template-columns:minmax(190px,.82fr) minmax(0,1.18fr);gap:28px;align-items:stretch;padding-top:26px;border-top:1px solid var(--hm-line);min-width:0}
+.himart-test-page .prototype-case-visual{height:620px;display:flex;align-items:flex-start;justify-content:center;padding:0;background:#080808;border-radius:15px;overflow:hidden;min-width:0}
 .himart-test-page .prototype-case-visual>img{display:block;width:auto;max-width:100%;height:100%;max-height:100%;object-fit:contain;border-radius:0;image-rendering:auto;filter:blur(2.2px);transform:scale(1.012);opacity:.94}
-.himart-test-page .prototype-case-copy{display:flex;flex-direction:column;align-self:stretch;padding:6px 0 0}
+.himart-test-page .prototype-case-copy{display:flex;flex-direction:column;align-self:stretch;padding:4px 0 0;min-width:0}
 .himart-test-page .prototype-case-copy .hm-card-no{color:var(--hm-blue)}
-.himart-test-page .prototype-case-copy h3{margin:24px 0 0;max-width:680px;font-size:23px!important;font-weight:100;line-height:1.28;letter-spacing:-.035em}
-.himart-test-page .prototype-case-copy p{margin:24px 0 0;max-width:620px;color:rgba(255,255,255,.68);font-size:15px;line-height:1.68}
-.himart-test-page .prototype-case-copy strong{margin-top:auto;padding-top:30px;border-top:1px solid var(--hm-line);font-size:13px;font-weight:400;line-height:1.55;color:rgba(255,255,255,.72)}
-.himart-test-page .prototype-case-copy strong b{font-family:inherit;font-size:11px;letter-spacing:0;color:var(--hm-blue);font-weight:400;display:block;margin-bottom:9px}
+.himart-test-page .prototype-case-copy h3{margin:18px 0 0;max-width:100%;font-size:23px!important;font-weight:100;line-height:1.16!important;letter-spacing:-.035em}
+.himart-test-page .prototype-case-copy p{margin:20px 0 0;max-width:100%;color:rgba(255,255,255,.68);font-size:14px;line-height:1.54}
+.himart-test-page .prototype-case-copy strong{margin-top:auto;padding-top:22px;border-top:1px solid var(--hm-line);font-size:12px;font-weight:400;line-height:1.45;color:rgba(255,255,255,.72)}
+.himart-test-page .prototype-case-copy strong b{font-family:inherit;font-size:10px;letter-spacing:0;color:var(--hm-blue);font-weight:400;display:block;margin-bottom:8px}
 
 /* Hi Check: actual screen mounted inside a Galaxy Ultra-style line drawing. */
 .himart-test-page .prototype-case.hicheck .prototype-case-visual{align-items:center;background:#050505}
-.himart-test-page .galaxy-ultra-mockup{position:relative;width:min(350px,82%);aspect-ratio:9/19.5;border:1px solid rgba(255,255,255,.72);border-radius:36px;padding:8px;background:#050505;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
-.himart-test-page .galaxy-ultra-mockup::before{content:"";position:absolute;z-index:3;left:50%;top:13px;width:9px;height:9px;border-radius:50%;background:#050505;border:1px solid rgba(255,255,255,.45);transform:translateX(-50%)}
-.himart-test-page .galaxy-ultra-mockup::after{content:"";position:absolute;right:-3px;top:126px;width:2px;height:86px;border-radius:2px;background:rgba(255,255,255,.56);box-shadow:0 104px 0 rgba(255,255,255,.4)}
-.himart-test-page .galaxy-ultra-screen{width:100%;height:100%;overflow:hidden;border-radius:29px;background:#fff}
+.himart-test-page .galaxy-ultra-mockup{position:relative;width:min(270px,84%);aspect-ratio:9/19.5;border:1px solid rgba(255,255,255,.72);border-radius:34px;padding:7px;background:#050505;box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.himart-test-page .galaxy-ultra-mockup::before{content:"";position:absolute;z-index:3;left:50%;top:12px;width:8px;height:8px;border-radius:50%;background:#050505;border:1px solid rgba(255,255,255,.45);transform:translateX(-50%)}
+.himart-test-page .galaxy-ultra-mockup::after{content:"";position:absolute;right:-3px;top:112px;width:2px;height:72px;border-radius:2px;background:rgba(255,255,255,.56);box-shadow:0 88px 0 rgba(255,255,255,.4)}
+.himart-test-page .galaxy-ultra-screen{width:100%;height:100%;overflow:hidden;border-radius:28px;background:#fff}
 .himart-test-page .galaxy-ultra-screen img{display:block;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;filter:none!important;transform:none!important;opacity:1!important}
 
 @media(max-width:1100px){
@@ -91,10 +96,12 @@ body.himart-page-body.himart-test-page{background:#050505}
   .himart-test-page .data-bridge-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .himart-test-page .data-bridge article{padding:26px!important;border-left:0!important;border-bottom:1px solid var(--hm-line)}
   .himart-test-page .data-bridge article:nth-child(even){border-left:1px solid var(--hm-line)!important}
+  .himart-test-page #journey .journey-redesign-subsection .hm-subtitle::before{font-size:38px}
   .himart-test-page #journey .role-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  .himart-test-page .prototype-case{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);gap:54px}
-  .himart-test-page .prototype-case-visual{height:680px}
-  .himart-test-page .galaxy-ultra-mockup{width:min(310px,84%)}
+  .himart-test-page .prototype-case-list{column-gap:28px;row-gap:72px}
+  .himart-test-page .prototype-case{grid-template-columns:minmax(160px,.8fr) minmax(0,1.2fr);gap:22px}
+  .himart-test-page .prototype-case-visual{height:560px}
+  .himart-test-page .galaxy-ultra-mockup{width:min(238px,86%)}
 }
 
 @media(max-width:780px){
@@ -113,14 +120,15 @@ body.himart-page-body.himart-test-page{background:#050505}
   .himart-test-page #journey .journey-redesign-subsection{margin-top:78px!important}
   .himart-test-page #journey .journey-signal-subsection .hm-subhead,
   .himart-test-page #journey .journey-redesign-subsection .hm-subhead{margin-bottom:38px!important}
+  .himart-test-page #journey .journey-redesign-subsection .hm-subtitle::before{font-size:29px;line-height:1.18}
   .himart-test-page #journey .role-grid{grid-template-columns:1fr!important;gap:12px!important}
   .himart-test-page #journey .role-card{min-height:220px!important}
-  .himart-test-page .prototype-case-list{gap:82px;margin-top:58px}
+  .himart-test-page .prototype-case-list{grid-template-columns:1fr;gap:82px;margin-top:58px}
   .himart-test-page .prototype-case{grid-template-columns:1fr;gap:32px;padding-top:24px}
   .himart-test-page .prototype-case-visual{height:640px}
   .himart-test-page .prototype-case-copy{min-height:0;padding:0}
-  .himart-test-page .prototype-case-copy h3{margin-top:22px;font-size:22px!important}
-  .himart-test-page .prototype-case-copy p{margin-top:20px;font-size:14px}
+  .himart-test-page .prototype-case-copy h3{margin-top:18px;font-size:22px!important;line-height:1.16!important}
+  .himart-test-page .prototype-case-copy p{margin-top:16px;font-size:14px}
   .himart-test-page .prototype-case-copy strong{margin-top:28px;padding-top:20px}
   .himart-test-page .galaxy-ultra-mockup{width:min(294px,78%)}
 }
