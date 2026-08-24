@@ -7,6 +7,7 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page .signal-tag{display:block;margin-bottom:18px;font-family:var(--hm-en);font-size:11px;letter-spacing:.07em;color:var(--hm-blue)}
 .himart-test-page .data-card h3{white-space:normal!important}
 .himart-test-page .data-card .desc{max-width:1120px!important}
+.himart-test-page .data-card .desc strong{font-weight:500;color:#fff}
 .himart-test-page .data-bridge{margin-top:108px;padding:36px 0 38px;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line)}
 .himart-test-page .data-bridge .hm-card-no{display:block;margin-bottom:22px;color:var(--hm-blue)}
 .himart-test-page .data-bridge-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:42px}
@@ -19,25 +20,25 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page .data-reframe h4{margin:0;max-width:1120px;font-size:30px;font-weight:100;line-height:1.45;letter-spacing:-.04em}
 .himart-test-page .data-reframe strong{font-weight:500;color:#fff}
 
-/* Traffic graph: keep legend attached to the graph, left aligned. */
-.himart-test-page .chart-wrap{display:grid!important;grid-template-columns:1fr!important;width:100%!important;overflow:visible!important}
-.himart-test-page .chart-wrap::before{width:100%!important;max-width:none!important;background-size:contain!important;background-position:left top!important}
-.himart-test-page .chart-wrap>.chart-legend{position:static!important;display:flex!important;grid-template-columns:none!important;justify-content:flex-start!important;align-items:center!important;gap:28px!important;width:100%!important;margin:20px 0 0!important;padding:0!important;transform:none!important}
-.himart-test-page .chart-wrap>.chart-legend span{width:auto!important;min-width:0!important}
+/* Traffic graph: legend belongs directly below the plotting area, not at the far right. */
+.himart-test-page .chart-wrap{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;overflow:visible!important}
+.himart-test-page .chart-wrap::before{display:block!important;width:100%!important;max-width:none!important;background-size:100% auto!important;background-position:left top!important;background-repeat:no-repeat!important}
+.himart-test-page .chart-wrap>.chart-legend{position:static!important;display:flex!important;grid-template-columns:none!important;justify-content:flex-start!important;align-items:center!important;align-self:start!important;gap:28px!important;width:100%!important;margin:20px 0 0!important;padding:0!important;transform:none!important;inset:auto!important}
+.himart-test-page .chart-wrap>.chart-legend span{display:inline-flex!important;align-items:center!important;width:auto!important;min-width:0!important;margin:0!important}
 
-/* Landing stacked bar: labels use the exact same fractional columns as the bar. */
+/* Landing stacked bar: every label uses the same fractional track as its segment. */
 .himart-test-page .landing-chart .stackbar.signal-stack,
 .himart-test-page .landing-chart .stacklabels.signal-stack-labels{display:grid!important;grid-template-columns:52.2fr 27.6fr 9.3fr 6.6fr 4.3fr!important;width:100%!important;gap:0!important}
-.himart-test-page .landing-chart .stackbar.signal-stack i{display:block!important;width:100%!important}
+.himart-test-page .landing-chart .stackbar.signal-stack i{display:block!important;width:100%!important;min-width:0!important}
 .himart-test-page .landing-chart .stacklabels.signal-stack-labels{margin-top:14px!important;align-items:start!important}
-.himart-test-page .landing-chart .stacklabels.signal-stack-labels>div{width:auto!important;min-width:0!important;padding:0 12px 0 0!important;text-align:left!important}
+.himart-test-page .landing-chart .stacklabels.signal-stack-labels>div{width:auto!important;min-width:0!important;padding:0 12px 0 0!important;text-align:left!important;transform:none!important}
 .himart-test-page .landing-chart .stacklabels.signal-stack-labels b{display:block;margin-bottom:6px}
 
 /* Data conclusion should feel like a bridge into the journey, not a seventh dashboard card. */
 .himart-test-page .flow-area.signal-flow{margin-top:100px!important}
 .himart-test-page .flow-area.signal-flow .flow-head{margin-bottom:54px}
 
-/* Final prototype section: four actual screens, one case per row. */
+/* Final prototype section: four actual screens, one proof point per row. */
 .himart-test-page .prototype-intro{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;margin-bottom:96px!important}
 .himart-test-page .prototype-case-list{display:grid;gap:132px}
 .himart-test-page .prototype-case{display:grid;grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr);gap:84px;align-items:start;padding-top:30px;border-top:1px solid var(--hm-line)}
