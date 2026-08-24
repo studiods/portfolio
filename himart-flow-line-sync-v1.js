@@ -36,6 +36,15 @@
     raf = requestAnimationFrame(syncAll);
   };
 
+  const enforceRoleCopyOpacity = () => {
+    if (!document.body.classList.contains('himart-test-page')) return;
+    document.querySelectorAll('#journey .role-grid .role-card > p').forEach((copy) => {
+      copy.classList.add('role-card-copy-50');
+      copy.style.setProperty('color', '#fff', 'important');
+      copy.style.setProperty('opacity', '0.5', 'important');
+    });
+  };
+
   const mountOriginalTrafficChart = async () => {
     const wrap = document.querySelector('.himart-test-page .chart-wrap');
     if (!wrap || wrap.querySelector('.traffic-v5-live')) return wrap;
@@ -203,6 +212,9 @@
   const tuneTestPage = async () => {
     if (!document.body.classList.contains('himart-test-page')) return;
 
+    enforceRoleCopyOpacity();
+    setTimeout(enforceRoleCopyOpacity, 120);
+    setTimeout(enforceRoleCopyOpacity, 500);
     mountSubtitleScramble();
 
     const trafficWrap = await mountOriginalTrafficChart();
@@ -248,6 +260,7 @@
 
   const boot = () => {
     queueSync();
+    enforceRoleCopyOpacity();
     tuneTestPage();
   };
 
@@ -256,6 +269,7 @@
 
   addEventListener('load', () => {
     queueSync();
+    enforceRoleCopyOpacity();
     tuneTestPage();
   }, { once: true });
   addEventListener('resize', queueSync, { passive: true });
