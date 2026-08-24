@@ -94,20 +94,18 @@ body.himart-wide-test-page{
   body.himart-wide-test-page{--hm-wrap:1100px!important}
 }
 
-/* Alternating chapter treatment: 02 / 04 are full white editorial fields. */
+/* Alternating chapter treatment: 02 / 04 use a subtle charcoal field, keeping the dark-theme visual system intact. */
 body.himart-wide-test-page #data,
 body.himart-wide-test-page #direction{
-  --hm-local-text:#050505;
-  --hm-local-copy:rgba(5,5,5,.52);
-  --hm-local-dim:rgba(5,5,5,.38);
-  --hm-local-line:rgba(5,5,5,.14);
-  background:#fff!important;
+  --hm-local-text:#fff;
+  --hm-local-copy:rgba(255,255,255,.50);
+  --hm-local-dim:rgba(255,255,255,.38);
+  --hm-local-line:rgba(255,255,255,.14);
+  background:#111315!important;
   color:var(--hm-local-text)!important;
 }
 body.himart-wide-test-page #data .hm-wrap,
-body.himart-wide-test-page #direction .hm-wrap{
-  color:var(--hm-local-text)!important;
-}
+body.himart-wide-test-page #direction .hm-wrap{color:var(--hm-local-text)!important}
 body.himart-wide-test-page #data .hm-section-title,
 body.himart-wide-test-page #data .data-card h3,
 body.himart-wide-test-page #data .data-bridge-title,
@@ -118,9 +116,7 @@ body.himart-wide-test-page #data .landing-chart h4,
 body.himart-wide-test-page #direction .hm-section-title,
 body.himart-wide-test-page #direction .hm-subtitle,
 body.himart-wide-test-page #direction .direction-card h4,
-body.himart-wide-test-page #direction .prototype-case-copy h3{
-  color:var(--hm-local-text)!important;
-}
+body.himart-wide-test-page #direction .prototype-case-copy h3{color:#fff!important}
 body.himart-wide-test-page #data .hm-section-desc,
 body.himart-wide-test-page #data .data-card .desc,
 body.himart-wide-test-page #data .data-bridge-grid p,
@@ -133,15 +129,11 @@ body.himart-wide-test-page #data .hm-source,
 body.himart-wide-test-page #direction .hm-section-desc,
 body.himart-wide-test-page #direction .hm-subcopy,
 body.himart-wide-test-page #direction .direction-card p,
-body.himart-wide-test-page #direction .prototype-case-copy p{
-  color:var(--hm-local-copy)!important;
-}
+body.himart-wide-test-page #direction .prototype-case-copy p{color:var(--hm-local-copy)!important}
 body.himart-wide-test-page #data .data-emphasis,
 body.himart-wide-test-page #data .legend-row b,
 body.himart-wide-test-page #data .stacklabels b,
-body.himart-wide-test-page #direction .prototype-case-copy strong{
-  color:rgba(5,5,5,.80)!important;
-}
+body.himart-wide-test-page #direction .prototype-case-copy strong{color:rgba(255,255,255,.80)!important}
 body.himart-wide-test-page #data .data-card,
 body.himart-wide-test-page #data .data-bridge,
 body.himart-wide-test-page #data .data-bridge article+article,
@@ -150,46 +142,30 @@ body.himart-wide-test-page #data .hm-source,
 body.himart-wide-test-page #direction .hm-subsection,
 body.himart-wide-test-page #direction .direction-card,
 body.himart-wide-test-page #direction .prototype-case,
-body.himart-wide-test-page #direction .prototype-case-copy strong{
-  border-color:var(--hm-local-line)!important;
-}
+body.himart-wide-test-page #direction .prototype-case-copy strong{border-color:var(--hm-local-line)!important}
 body.himart-wide-test-page #data .number-panel{
   border-color:var(--hm-local-line)!important;
-  border-top-color:rgba(5,5,5,.40)!important;
+  border-top-color:rgba(255,255,255,.40)!important;
 }
-body.himart-wide-test-page #data .legend-row{
-  border-bottom-color:rgba(5,5,5,.08)!important;
-}
+body.himart-wide-test-page #data .legend-row{border-bottom-color:rgba(255,255,255,.08)!important}
 body.himart-wide-test-page #data .track,
-body.himart-wide-test-page #data .pdp-col i{
-  background:rgba(5,5,5,.08)!important;
-}
-body.himart-wide-test-page #data .pie::after{
-  background:#fff!important;
-}
-body.himart-wide-test-page #data .pie-center{
-  color:#050505!important;
-}
-body.himart-wide-test-page #data .pie-center::after{
-  color:var(--hm-local-dim)!important;
-}
+body.himart-wide-test-page #data .pdp-col i{background:rgba(255,255,255,.08)!important}
+body.himart-wide-test-page #data .pie::after{background:#111315!important}
+body.himart-wide-test-page #data .pie-center{color:#fff!important}
+body.himart-wide-test-page #data .pie-center::after{color:var(--hm-local-dim)!important}
 body.himart-wide-test-page #direction .direction-card,
-body.himart-wide-test-page #direction .prototype-case{
-  background:transparent!important;
-}
-body.himart-wide-test-page #direction .prototype-case-visual{
-  background:#f5f5f5!important;
-}
+body.himart-wide-test-page #direction .prototype-case{background:transparent!important}
+body.himart-wide-test-page #direction .prototype-case-visual{background:#0c0e10!important}
 body.himart-wide-test-page #direction .galaxy-ultra-mockup{
-  background:#fff!important;
-  border-color:rgba(5,5,5,.32)!important;
-  box-shadow:inset 0 0 0 1px rgba(5,5,5,.04)!important;
+  background:#111315!important;
+  border-color:rgba(255,255,255,.42)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
 }
 body.himart-wide-test-page #direction .galaxy-ultra-mockup::before{
-  background:#fff!important;
-  border-color:rgba(5,5,5,.28)!important;
+  background:#111315!important;
+  border-color:rgba(255,255,255,.34)!important;
 }
 body.himart-wide-test-page #direction .galaxy-ultra-mockup::after{
-  background:rgba(5,5,5,.42)!important;
-  box-shadow:0 88px 0 rgba(5,5,5,.30)!important;
+  background:rgba(255,255,255,.46)!important;
+  box-shadow:0 88px 0 rgba(255,255,255,.34)!important;
 }
