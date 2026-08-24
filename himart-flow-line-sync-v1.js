@@ -110,8 +110,100 @@
     [...svg.querySelectorAll('.c-dot')].forEach((dot) => { dot.style.opacity = '1'; });
   };
 
+  const mountSubtitleScramble = () => {
+    if (!document.body.classList.contains('himart-test-page')) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const selectors = [
+      '.hm-subtitle',
+      '.data-card h3',
+      '.data-bridge-title',
+      '.forced-redesign-title',
+      '.prototype-case-copy h3',
+      '.voice-group-title',
+      '.sentiment-conclusion > h4'
+    ].join(',');
+
+    const targets = [...document.querySelectorAll(selectors)].filter((el) => {
+      if (el.dataset.subtitleScrambleMounted === '1') return false;
+      if (el.classList.contains('js-scramble')) return false;
+      return el.textContent.trim().length > 0;
+    });
+
+    const collectTextNodes = (el) => {
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+          return node.nodeValue && node.nodeValue.trim().length
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      });
+      const nodes = [];
+      let node;
+      while ((node = walker.nextNode())) nodes.push(node);
+      return nodes;
+    };
+
+    const play = (el) => {
+      if (el.dataset.subtitleScramblePlayed === '1') return;
+      el.dataset.subtitleScramblePlayed = '1';
+
+      const nodes = collectTextNodes(el);
+      const parts = nodes.map((node) => ({ node, original: node.nodeValue }));
+      const total = parts.reduce((sum, part) => sum + [...part.original].filter((ch) => !/\s/.test(ch)).length, 0);
+      if (!total) return;
+
+      const started = performance.now();
+      const duration = Math.min(1350, 620 + total * 14);
+
+      const tick = (now) => {
+        const progress = Math.min(1, (now - started) / duration);
+        const resolved = Math.floor(total * Math.pow(progress, 0.72));
+        let cursor = 0;
+
+        parts.forEach((part, partIndex) => {
+          part.node.nodeValue = [...part.original].map((ch, charIndex) => {
+            if (/\s/.test(ch)) return ch;
+            const globalIndex = cursor++;
+            if (globalIndex < resolved || progress >= 1) return ch;
+            const salt = partIndex * 23 + charIndex * 17 + Math.floor(now / 46);
+            return pool[salt % pool.length];
+          }).join('');
+        });
+
+        if (progress < 1) requestAnimationFrame(tick);
+        else parts.forEach((part) => { part.node.nodeValue = part.original; });
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          play(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.28, rootMargin: '0px 0px -8% 0px' });
+
+      targets.forEach((el) => {
+        el.dataset.subtitleScrambleMounted = '1';
+        observer.observe(el);
+      });
+    } else {
+      targets.forEach((el, index) => {
+        el.dataset.subtitleScrambleMounted = '1';
+        setTimeout(() => play(el), 80 + index * 60);
+      });
+    }
+  };
+
   const tuneTestPage = async () => {
     if (!document.body.classList.contains('himart-test-page')) return;
+
+    mountSubtitleScramble();
 
     const trafficWrap = await mountOriginalTrafficChart();
     if (trafficWrap) prepareTraffic(trafficWrap);
