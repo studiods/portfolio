@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="./himart-test-20260824.css?v=5142406">
 <link rel="stylesheet" href="./himart-test-refine-v2.css?v=6654c80">
 <link rel="stylesheet" href="./himart-test-fix-20260824.css?v=4e4c6f0">
-<link rel="stylesheet" href="./himart-wide-test.css?v=33bd836">
+<link rel="stylesheet" href="./himart-wide-test.css?v=0841b3e">
 <style>
 .himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
@@ -56,7 +56,6 @@
   };
 
   const prepareWideMotion=()=>{
-    /* Only hero and chapter-level large titles keep scramble. All numbered sub titles and flow labels are pre-marked as already played. */
     main.querySelectorAll('.hm-section-no').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');
     main.querySelectorAll('.data-card-head .hm-card-no,.data-card-head h3,.hm-subhead .hm-subno,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .hm-card-no,.data-bridge > .data-bridge-title').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');
     main.querySelectorAll('.flow-label').forEach(el=>el.dataset.flowLabelScramblePlayed='1');
