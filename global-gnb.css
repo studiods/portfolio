@@ -30,7 +30,7 @@
 .himart-page-body .hm-perception-label span{
   font:400 10px/1.3 'Averta PE',Arial,sans-serif;
   letter-spacing:.045em;
-  color:var(--local-copy,rgba(255,255,255,.70));
+  color:var(--local-copy,rgba(255,255,255,.60));
   text-transform:uppercase;
 }
 .himart-page-body .hm-perception-label b{
@@ -63,7 +63,35 @@
   font-weight:100!important;
 }
 
-/* Normalize the remaining ~80% visual treatment to 70%. */
+/* Shared 70% body-copy treatment is reduced to 60% across Himart case pages. */
+.himart-page-body{
+  --hm-copy:rgba(255,255,255,.60)!important;
+}
+.himart-page-body .hm-lead,
+.himart-page-body .hm-section-desc,
+.himart-page-body .hm-subcopy,
+.himart-page-body .ring-card p,
+.himart-page-body .sentiment-keywords,
+.himart-page-body .conclusion-card p,
+.himart-page-body .direction-card p,
+.himart-page-body .data-card .desc,
+.himart-page-body .legend-row,
+.himart-page-body .chart-legend,
+.himart-page-body .number-panel p,
+.himart-page-body .search-slope span,
+.himart-page-body .hbar span,
+.himart-page-body .stacklabels div,
+.himart-page-body .pdp-col span,
+.himart-page-body .flow-head p,
+.himart-page-body .flow-node p,
+.himart-page-body .role-card p,
+.himart-page-body .prototype-intro p,
+.himart-page-body .keyword-pill,
+.himart-page-body .keyword-pill b{
+  color:rgba(255,255,255,.60)!important;
+}
+
+/* Normalize the remaining ~80% visual treatment to 70% (non-text visual only). */
 .himart-page-body .phone-frame::before{
   opacity:.70!important;
 }
