@@ -72,8 +72,7 @@
     if (!svg || svg.dataset.prepared === '1') return;
     svg.dataset.prepared = '1';
 
-    const sessions = [...svg.querySelectorAll('.session')];
-    sessions.forEach((shape, index) => {
+    [...svg.querySelectorAll('.session')].forEach((shape, index) => {
       const length = Math.max(1, shape.getTotalLength());
       shape.style.strokeDasharray = String(length);
       shape.style.strokeDashoffset = String(length);
@@ -126,34 +125,60 @@
     style.textContent = `
       .himart-test-page .title-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
       .himart-test-page .title-rise-target.is-title-rise-in{opacity:1;transform:translateY(0)}
-      @media (prefers-reduced-motion:reduce){.himart-test-page .title-rise-target{opacity:1!important;transform:none!important;transition:none!important}}
+      .himart-test-page .flow-node{border-top-color:rgba(255,255,255,.20)!important}
+      .himart-test-page .flow-group.flow-label-motion::before{transform:scaleX(0)!important;transform-origin:left center!important;transition:transform .9s cubic-bezier(.2,.8,.2,1) .12s!important;will-change:transform}
+      .himart-test-page .flow-group.flow-label-motion.is-flow-label-in::before{transform:scaleX(1)!important}
+      @media (prefers-reduced-motion:reduce){
+        .himart-test-page .title-rise-target{opacity:1!important;transform:none!important;transition:none!important}
+        .himart-test-page .flow-group.flow-label-motion::before{transform:scaleX(1)!important;transition:none!important}
+      }
     `;
     document.head.appendChild(style);
   };
 
-  const playNumberedScramble = (el) => {
-    if (el.dataset.numberedScramblePlayed === '1') return;
-    el.dataset.numberedScramblePlayed = '1';
-    const original = el.textContent;
-    const chars = [...original];
+  const textNodesFor = (el) => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        return node.nodeValue && node.nodeValue.trim().length
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      }
+    });
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) nodes.push(node);
+    return nodes;
+  };
+
+  const playTextScramble = (el, dataKey = 'scramblePlayed') => {
+    if (!el || el.dataset[dataKey] === '1') return;
+    el.dataset[dataKey] = '1';
+
     const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const mutable = chars.map((ch, index) => /[A-Za-z0-9]/.test(ch) ? index : -1).filter((index) => index >= 0);
-    if (!mutable.length) return;
+    const parts = textNodesFor(el).map((node) => ({ node, original: node.nodeValue }));
+    const isMutable = (ch) => /[\p{L}\p{N}]/u.test(ch);
+    const total = parts.reduce((sum, part) => sum + [...part.original].filter(isMutable).length, 0);
+    if (!total) return;
 
     const started = performance.now();
-    const duration = Math.min(980, 500 + mutable.length * 24);
+    const duration = Math.min(1350, 600 + total * 13);
     const tick = (now) => {
       const progress = Math.min(1, (now - started) / duration);
-      const resolved = Math.floor(mutable.length * Math.pow(progress, .72));
-      let rank = 0;
-      el.textContent = chars.map((ch, index) => {
-        if (!/[A-Za-z0-9]/.test(ch)) return ch;
-        const currentRank = rank++;
-        if (currentRank < resolved || progress >= 1) return ch;
-        return pool[(index * 19 + Math.floor(now / 42)) % pool.length];
-      }).join('');
+      const resolved = Math.floor(total * Math.pow(progress, .72));
+      let cursor = 0;
+
+      parts.forEach((part, partIndex) => {
+        part.node.nodeValue = [...part.original].map((ch, charIndex) => {
+          if (!isMutable(ch)) return ch;
+          const globalIndex = cursor++;
+          if (globalIndex < resolved || progress >= 1) return ch;
+          const salt = partIndex * 29 + charIndex * 17 + Math.floor(now / 44);
+          return pool[salt % pool.length];
+        }).join('');
+      });
+
       if (progress < 1) requestAnimationFrame(tick);
-      else el.textContent = original;
+      else parts.forEach((part) => { part.node.nodeValue = part.original; });
     };
     requestAnimationFrame(tick);
   };
@@ -163,15 +188,27 @@
     ensureTitleMotionStyle();
 
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const numberedSelector = [
-      '.hm-section-no',
-      '.hm-subno',
-      '.hm-card-no',
-      '.data-bridge-grid article > span'
-    ].join(',');
-    const numbered = [...document.querySelectorAll(numberedSelector)].filter((el) => /^\s*\d{1,2}(?:\.\d+)?(?:\s*\/|\s*$)/.test(el.textContent));
+    const numberPattern = /^\s*\d{1,2}(?:\.\d+)?(?:\s*\/|\s*$)/;
+    const groups = [];
+    const titleSet = new Set();
+
+    const registerGroup = (container, numberSelector, titleSelector) => {
+      if (!container || container.dataset.numberedTitleGroupMounted === '1') return;
+      const number = container.querySelector(numberSelector);
+      const title = container.querySelector(titleSelector);
+      if (!number || !title || !numberPattern.test(number.textContent)) return;
+      container.dataset.numberedTitleGroupMounted = '1';
+      groups.push({ container, number, title });
+      titleSet.add(title);
+    };
+
+    document.querySelectorAll('.hm-section-head').forEach((container) => registerGroup(container, '.hm-section-no', '.hm-section-title'));
+    document.querySelectorAll('.data-card-head').forEach((container) => registerGroup(container, '.hm-card-no', 'h3'));
+    document.querySelectorAll('.hm-subhead').forEach((container) => registerGroup(container, '.hm-subno', '.hm-subtitle, .forced-redesign-title'));
+    document.querySelectorAll('.data-bridge').forEach((container) => registerGroup(container, ':scope > .hm-card-no', ':scope > .data-bridge-title'));
 
     const riseSelector = [
+      '.hm-title',
       '.hm-section-title',
       '.hm-subtitle',
       '.data-card h3',
@@ -188,12 +225,13 @@
       '.direction-card h4',
       '.conclusion-card h5'
     ].join(',');
-    const riseTargets = [...document.querySelectorAll(riseSelector)].filter((el) => !el.closest('.hm-progress'));
 
-    numbered.forEach((el) => {
-      if (el.dataset.numberedScrambleMounted === '1') return;
-      el.dataset.numberedScrambleMounted = '1';
+    const riseTargets = [...document.querySelectorAll(riseSelector)].filter((el) => {
+      if (titleSet.has(el)) return false;
+      if (el.closest('.hm-progress')) return false;
+      return true;
     });
+
     riseTargets.forEach((el) => {
       if (el.dataset.titleRiseMounted === '1') return;
       el.dataset.titleRiseMounted = '1';
@@ -205,15 +243,22 @@
       return;
     }
 
+    const playGroup = (group) => {
+      playTextScramble(group.number, 'numberedGroupScramblePlayed');
+      playTextScramble(group.title, 'numberedGroupScramblePlayed');
+    };
+
     if ('IntersectionObserver' in window) {
+      const groupMap = new Map(groups.map((group) => [group.container, group]));
       const scrambleObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          playNumberedScramble(entry.target);
+          const group = groupMap.get(entry.target);
+          if (group) playGroup(group);
           scrambleObserver.unobserve(entry.target);
         });
-      }, { threshold: .35, rootMargin: '0px 0px -8% 0px' });
-      numbered.forEach((el) => scrambleObserver.observe(el));
+      }, { threshold: .28, rootMargin: '0px 0px -8% 0px' });
+      groups.forEach((group) => scrambleObserver.observe(group.container));
 
       const riseObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -224,8 +269,42 @@
       }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
       riseTargets.forEach((el) => riseObserver.observe(el));
     } else {
-      numbered.forEach((el, index) => setTimeout(() => playNumberedScramble(el), 60 + index * 35));
+      groups.forEach((group, index) => setTimeout(() => playGroup(group), 70 + index * 55));
       riseTargets.forEach((el, index) => setTimeout(() => el.classList.add('is-title-rise-in'), 80 + index * 30));
+    }
+  };
+
+  const mountFlowLabelMotion = () => {
+    if (!document.body.classList.contains('himart-test-page')) return;
+    ensureTitleMotionStyle();
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const groups = [...document.querySelectorAll('.flow-group')].filter((group) => group.querySelector('.flow-label'));
+
+    groups.forEach((group) => group.classList.add('flow-label-motion'));
+    if (reduced) {
+      groups.forEach((group) => group.classList.add('is-flow-label-in'));
+      return;
+    }
+
+    const activate = (group) => {
+      if (group.dataset.flowLabelMotionPlayed === '1') return;
+      group.dataset.flowLabelMotionPlayed = '1';
+      const label = group.querySelector('.flow-label');
+      playTextScramble(label, 'flowLabelScramblePlayed');
+      requestAnimationFrame(() => group.classList.add('is-flow-label-in'));
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          activate(entry.target);
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: .22, rootMargin: '0px 0px -8% 0px' });
+      groups.forEach((group) => observer.observe(group));
+    } else {
+      groups.forEach((group, index) => setTimeout(() => activate(group), 90 + index * 90));
     }
   };
 
@@ -297,6 +376,7 @@
     setTimeout(enforceRoleCopyOpacity, 120);
     setTimeout(enforceRoleCopyOpacity, 500);
     mountTitleMotion();
+    mountFlowLabelMotion();
     mountDigitRoll();
 
     const trafficWrap = await mountOriginalTrafficChart();
