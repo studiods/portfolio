@@ -57,15 +57,43 @@
   letter-spacing:-.012em;
 }
 
-/* UX point titles use Pretendard Thin throughout Himart case pages. */
-.himart-page-body .direction-card h4{
+/* Unified Himart title language: Pretendard Thin across all case-study levels. */
+.himart-page-body .hm-title,
+.himart-page-body .hm-section-title,
+.himart-page-body .hm-subtitle,
+.himart-page-body .data-card h3,
+.himart-page-body .flow-head h3,
+.himart-page-body .flow-node h4,
+.himart-page-body .role-card h4,
+.himart-page-body .direction-card h4,
+.himart-page-body .secondary-card h4,
+.himart-page-body .secondary-principle h4,
+.himart-page-body .secondary-step h4,
+.himart-page-body .secondary-compare h4,
+.himart-page-body .secondary-conclusion h4,
+.himart-page-body .secondary-placeholder h4,
+.himart-page-body .reuse-summary h4,
+.himart-page-body .reuse-trust-ring h4{
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:100!important;
 }
 
-/* Shared 70% body-copy treatment is reduced to 60% across Himart case pages. */
+/* Unified card top rule: white 40% throughout the Himart portfolio family. */
+.himart-page-body .role-card,
+.himart-page-body .flow-node,
+.himart-page-body .direction-card,
+.himart-page-body .secondary-card,
+.himart-page-body .secondary-principle,
+.himart-page-body .secondary-step,
+.himart-page-body .secondary-placeholder,
+.himart-page-body .reuse-summary article,
+.himart-page-body .reuse-trust-ring{
+  border-top-color:rgba(255,255,255,.40)!important;
+}
+
+/* Shared body-copy treatment: 50% white across all Himart cases. */
 .himart-page-body{
-  --hm-copy:rgba(255,255,255,.60)!important;
+  --hm-copy:rgba(255,255,255,.50)!important;
 }
 .himart-page-body .hm-lead,
 .himart-page-body .hm-section-desc,
@@ -87,8 +115,16 @@
 .himart-page-body .role-card p,
 .himart-page-body .prototype-intro p,
 .himart-page-body .keyword-pill,
-.himart-page-body .keyword-pill b{
-  color:rgba(255,255,255,.60)!important;
+.himart-page-body .keyword-pill b,
+.himart-page-body .secondary-card p,
+.himart-page-body .secondary-principle p,
+.himart-page-body .secondary-step p,
+.himart-page-body .secondary-compare p,
+.himart-page-body .secondary-placeholder p,
+.himart-page-body .secondary-result-strip span,
+.himart-page-body .reuse-summary p,
+.himart-page-body .reuse-trust-ring p{
+  color:rgba(255,255,255,.50)!important;
 }
 
 /* Normalize the remaining ~80% visual treatment to 70% (non-text visual only). */
