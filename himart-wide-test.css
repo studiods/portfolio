@@ -94,6 +94,13 @@ body.himart-wide-test-page{
   body.himart-wide-test-page{--hm-wrap:1100px!important}
 }
 
+/* 03.3 role labels: current 10px -> 25px (2.5x). */
+body.himart-wide-test-page #journey .role-card .hm-role-name{
+  font-size:25px!important;
+  line-height:1!important;
+  letter-spacing:.04em!important;
+}
+
 /* Alternating chapter treatment: 02 / 04 use black mixed with 5% white, keeping the dark-theme visual system intact. */
 body.himart-wide-test-page #data,
 body.himart-wide-test-page #direction{
