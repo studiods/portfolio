@@ -94,14 +94,14 @@ body.himart-wide-test-page{
   body.himart-wide-test-page{--hm-wrap:1100px!important}
 }
 
-/* Alternating chapter treatment: 02 / 04 use a slightly brighter charcoal field, keeping the dark-theme visual system intact. */
+/* Alternating chapter treatment: 02 / 04 use black mixed with 5% white, keeping the dark-theme visual system intact. */
 body.himart-wide-test-page #data,
 body.himart-wide-test-page #direction{
   --hm-local-text:#fff;
   --hm-local-copy:rgba(255,255,255,.50);
   --hm-local-dim:rgba(255,255,255,.38);
   --hm-local-line:rgba(255,255,255,.14);
-  background:#181A1C!important;
+  background:#0D0D0D!important;
   color:var(--hm-local-text)!important;
 }
 body.himart-wide-test-page #data .hm-wrap,
@@ -150,19 +150,19 @@ body.himart-wide-test-page #data .number-panel{
 body.himart-wide-test-page #data .legend-row{border-bottom-color:rgba(255,255,255,.08)!important}
 body.himart-wide-test-page #data .track,
 body.himart-wide-test-page #data .pdp-col i{background:rgba(255,255,255,.08)!important}
-body.himart-wide-test-page #data .pie::after{background:#181A1C!important}
+body.himart-wide-test-page #data .pie::after{background:#0D0D0D!important}
 body.himart-wide-test-page #data .pie-center{color:#fff!important}
 body.himart-wide-test-page #data .pie-center::after{color:var(--hm-local-dim)!important}
 body.himart-wide-test-page #direction .direction-card,
 body.himart-wide-test-page #direction .prototype-case{background:transparent!important}
-body.himart-wide-test-page #direction .prototype-case-visual{background:#111315!important}
+body.himart-wide-test-page #direction .prototype-case-visual{background:#0D0D0D!important}
 body.himart-wide-test-page #direction .galaxy-ultra-mockup{
-  background:#181A1C!important;
+  background:#0D0D0D!important;
   border-color:rgba(255,255,255,.42)!important;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
 }
 body.himart-wide-test-page #direction .galaxy-ultra-mockup::before{
-  background:#181A1C!important;
+  background:#0D0D0D!important;
   border-color:rgba(255,255,255,.34)!important;
 }
 body.himart-wide-test-page #direction .galaxy-ultra-mockup::after{
