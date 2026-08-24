@@ -57,6 +57,17 @@
   letter-spacing:-.012em;
 }
 
+/* UX point titles use Pretendard Thin throughout Himart case pages. */
+.himart-page-body .direction-card h4{
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
+  font-weight:100!important;
+}
+
+/* Normalize the remaining ~80% visual treatment to 70%. */
+.himart-page-body .phone-frame::before{
+  opacity:.70!important;
+}
+
 /* Shared Himart case footer rhythm. */
 .himart-page-body .hm-footer{
   min-height:168px!important;
