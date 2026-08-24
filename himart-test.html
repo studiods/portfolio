@@ -149,6 +149,113 @@ try{
     }
   }
 
+  /* Editorial trim: preserve titles/data, shorten explanatory body copy by ~20%. */
+  const subByNo=(root,no)=>[...(root||main).querySelectorAll('.hm-subsection')].find(s=>s.querySelector('.hm-subno')?.textContent.includes(no));
+  const setList=(selector,values,root=main)=>{[...root.querySelectorAll(selector)].forEach((el,i)=>{if(values[i]!==undefined)el.textContent=values[i]});};
+
+  setText(main.querySelector('.hm-hero .hm-lead'),'화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.');
+  setText(main.querySelector('#brand .hm-section-desc'),'하이마트에 기대하는 전문성과 실제 온라인 경험의 간극을 먼저 확인했습니다.');
+  setText(main.querySelector('#data .hm-section-desc'),'유입·탐색·이탈 지점을 실제 이용 데이터로 확인했습니다.');
+  setText(main.querySelector('#journey .hm-section-desc'),'데이터에서 확인한 단절을 구매 흐름에 놓고, 다음 행동이 약해지는 지점과 단계별 역할을 다시 연결했습니다.');
+  setText(main.querySelector('#direction .hm-section-desc'),'정의한 역할을 화면으로 옮기고 내부 검증으로 정보 위계와 연결 방식을 조정하고 있습니다.');
+
+  const summary=subByNo(main.querySelector('#brand'),'01.3');
+  if(summary)setText(summary.querySelector('.hm-subcopy'),'긍정은 전문성과 오프라인 자산에, 부정은 그 강점이 온라인에서 끊기는 순간에 집중됐습니다.');
+  setList('#brand .conclusion-card p',[
+    '설치·A/S·매장 체험·전문가 상담처럼 실패 가능성을 낮추는 경험이 선택의 핵심 이유였습니다.',
+    '앱 속도·복잡한 혜택·배송·설치 불확실성과 정보 차이가 전문성에 대한 기대를 불신으로 바꿨습니다.'
+  ]);
+
+  const uxPoints=subByNo(main.querySelector('#brand'),'01.4');
+  if(uxPoints){
+    setText(uxPoints.querySelector('.hm-subcopy'),'고객이 반복해서 말한 기대와 불편을 이후 설계에서 놓치지 않도록 핵심 원칙으로 정리했습니다.');
+    setList('.direction-card p',[
+      '매장 상담의 신뢰를 온라인에서도 이어가고, 필요한 순간 AI Agent와 데이터 가이드가 개입하도록 확장합니다.',
+      '설치·보증·A/S·관리·중고판매를 한 흐름으로 연결해 구매 이후 관계가 이어지도록 설계합니다.',
+      '온라인의 관심·비교 맥락이 매장까지 이어지고, 매장 경험이 다시 온라인 구매로 돌아오게 합니다.',
+      '추천검색·동적 필터·핵심 정보 위계와 AI 요약으로 탐색 비용을 줄이고 후보를 빠르게 압축합니다.',
+      '총액·혜택·설치 가능일·진행 상태를 명확히 보여줘 다시 문의하지 않아도 현재 상태를 이해하게 합니다.'
+    ],uxPoints);
+  }
+
+  const c21t=cardByNo('02.1');
+  if(c21t)setHTML(c21t.querySelector('.desc'),'AD 52%, Direct 31%, CPS 10%, CRM 6%. 시작점이 하나가 아니므로 <span class="data-emphasis">유입 맥락을 다음 탐색까지 이어주는 것</span>이 중요했습니다.');
+  const c22t=cardByNo('02.2');
+  if(c22t)setHTML(c22t.querySelector('.desc'),'4~5월 방문 규모가 컸지만 전환 효율은 2월이 가장 높았습니다. <span class="data-emphasis">볼륨과 구매 의도는 함께 봐야 했습니다.</span>');
+  const c23t=cardByNo('02.3');
+  if(c23t){
+    setText(c23t.querySelector('.desc'),'PC는 6개월 모두 상품이 시작 1위, Mobile은 6개월 중 5개월 메인이 1위였습니다. 기기마다 기대하는 시작 역할이 달랐습니다.');
+    setList('.number-panel p',[
+      '6개월 중 5개월 메인이 가장 강한 시작점이었고, 1개월은 하트TV가 1위였습니다.',
+      '6개월 모두 상품 랜딩이 1위였습니다. PC에서는 비교·구매 의도가 더 직접적이었습니다.'
+    ],c23t);
+  }
+  const c24t=cardByNo('02.4');
+  if(c24t)setHTML(c24t.querySelector('.desc'),'검색 비중은 3.26%에서 9.34%로 높아졌습니다. <span class="data-emphasis">검색은 후보를 구체화하는 핵심 행동</span>이었습니다.');
+  const c25t=cardByNo('02.5');
+  if(c25t)setHTML(c25t.querySelector('.desc'),'주요서비스 49.6%, 퀵메뉴 33.8%에 클릭이 집중됐습니다. 홈은 <span class="data-emphasis">다음 목적지 연결</span> 역할이 강했습니다.');
+  const c26t=cardByNo('02.6');
+  if(c26t)setHTML(c26t.querySelector('.desc'),'기획전 바로 종료 52.2%, PDP 이용은 늘었지만 장바구니·구매는 감소했습니다. <span class="data-emphasis">단절 구간의 신호</span>로 봤습니다.');
+
+  setList('.data-bridge-grid article p',[
+    '원인을 하나로 묶지 않고 행동 특성을 따로 읽었습니다.',
+    '다른 맥락으로 들어와 검색·비교를 반복하며 후보를 만들었습니다.',
+    '앞 단계의 관심과 판단 기준이 다음 화면까지 이어지지 않았습니다.',
+    '특정 화면보다 판단 기준이 이어지는 전체 구매 흐름을 설계 과제로 삼았습니다.'
+  ]);
+
+  const signalsSub=main.querySelector('#journey .journey-signal-subsection');
+  if(signalsSub){
+    setText(signalsSub.querySelector('.hm-subcopy'),'신호를 구매 흐름에 놓고 다음 행동이 약해지는 위치를 표시했습니다.');
+    setList('.flow-node p',[
+      'AD·CRM·CPS·Direct로 각기 다른 맥락에서 진입',
+      '랜딩마다 출발점과 다음 행동의 맥락이 달라짐',
+      '검색·카테고리를 반복하며 구매 후보를 만듦',
+      '가격·혜택·설치 조건이 분산돼 후보 압축이 느려짐',
+      '관심은 유지되지만 구매 확신 정보가 분산됨',
+      '혜택·설치 조건을 재확인하며 구매 행동이 약해짐',
+      '결제 후 배송·설치 조건을 다시 확인하며 맥락이 끊김',
+      '보증·A/S·케어가 앞선 구매 맥락과 분리됨'
+    ],signalsSub);
+  }
+
+  const redesignSub=main.querySelector('#journey .journey-redesign-subsection');
+  if(redesignSub){
+    setText(redesignSub.querySelector('.hm-subcopy'),'앞 단계의 맥락과 판단 기준이 다음 화면까지 이어지도록 역할을 연결했습니다.');
+    setList('.flow-node p',[
+      '유입된 관심과 혜택 맥락을 유지',
+      '최근 관심·혜택·다음 목적지를 바로 제시',
+      '검색·목적형 카테고리로 니즈를 빠르게 구체화',
+      '지속 필터와 비교 기준으로 후보를 빠르게 줄임',
+      '가격·혜택·설치·매장·케어를 한 번에 판단',
+      '총액·혜택·배송·설치 조건을 고정해 명확히 제시',
+      '설치 일정·조건·폐가전 회수를 주문 맥락에서 확인',
+      '진행 상태와 보증·A/S·케어를 하나의 관계로 연결'
+    ],redesignSub);
+  }
+
+  const roleSub=subByNo(main.querySelector('#journey'),'03.3');
+  if(roleSub){
+    setText(roleSub.querySelector('.hm-subcopy'),'각 화면이 앞선 맥락을 받아 다음 판단으로 넘기도록 역할을 정리했습니다.');
+    setList('.role-card p',[
+      '유입과 최근 행동을 기억하고 검색·카테고리·혜택으로 연결합니다.',
+      '상황·공간·설치 조건 중심으로 탐색 방향을 잡아줍니다.',
+      '추천검색과 필터로 모호한 요구를 상품 후보로 구체화합니다.',
+      '가격·혜택·핵심 스펙을 같은 기준으로 비교합니다.',
+      '가격·혜택·설치·리뷰를 한 흐름에서 판단하게 합니다.',
+      '총액·혜택·배송·설치 조건을 명확히 보여 최종 불확실성을 줄입니다.',
+      '설치 일정·조건·폐가전 회수를 주문 흐름 안에서 이어 확인합니다.',
+      '보증·A/S·케어를 구매 이후에도 하나의 관계로 이어갑니다.'
+    ],roleSub);
+  }
+
+  setList('#direction .prototype-case-copy p',[
+    '검색·카테고리·혜택과 주요 서비스를 이어 유입 맥락을 다시 탐색하지 않게 했습니다.',
+    '검색 조건을 유지하고 핵심 필터·상품 정보로 후보를 빠르게 압축했습니다.',
+    '가격·혜택·배송·설치를 우선순위로 연결해 구매 직전 재확인 부담을 줄였습니다.',
+    '용량·전기료·설치 크기 같은 수치를 생활 기준으로 풀어 이해 부담을 낮췄습니다.'
+  ]);
+
   const kicker=main.querySelector('.hm-kicker');
   if(kicker)kicker.textContent='LOTTE HIMART / COMMERCE JOURNEY / TEST NARRATIVE / 2026-08-24';
 
