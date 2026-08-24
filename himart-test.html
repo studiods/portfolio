@@ -9,10 +9,10 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./style.css?v=17">
 <link rel="stylesheet" href="./typography.css?v=8">
-<link rel="stylesheet" href="./global-gnb.css?v=d8ccd4f">
+<link rel="stylesheet" href="./global-gnb.css?v=4212617">
 <link rel="stylesheet" href="./himart-case-v4.css?v=920a015">
 <link rel="stylesheet" href="./himart-patch-20260823-2110.css?v=84951c2">
-<link rel="stylesheet" href="./himart-test-20260824.css?v=a7dc273">
+<link rel="stylesheet" href="./himart-test-20260824.css?v=fd3c880">
 </head>
 <body class="himart-page-body himart-test-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -23,7 +23,7 @@
 'use strict';
 const main=document.getElementById('test-main');
 try{
-  const html=await fetch('./himart.html?test-source=20260824-1256',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source load failed');return r.text()});
+  const html=await fetch('./himart.html?test-source=20260824-1310',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source load failed');return r.text()});
   const doc=new DOMParser().parseFromString(html,'text/html');
   const sourceMain=doc.querySelector('main');
   if(!sourceMain)throw new Error('main not found');
@@ -110,7 +110,7 @@ try{
       if(tobeFlow){
         const redesign=document.createElement('div');
         redesign.className='hm-subsection hm-reveal journey-redesign-subsection';
-        redesign.innerHTML=`<div class="hm-subhead"><span class="hm-subno">03.2 / JOURNEY REDESIGN</span><div><h3 class="hm-subtitle">그래서 끊어진 여정을,<br>어디서 시작해도 다음 행동으로 이어지는 구조로 다시 설계했습니다.</h3><p class="hm-subcopy">앞 단계의 맥락과 판단 기준이 다음 화면까지 이어지도록 각 단계의 역할을 다시 연결했습니다.</p></div></div>`;
+        redesign.innerHTML=`<div class="hm-subhead"><span class="hm-subno">03.2 / JOURNEY REDESIGN</span><div><h3 class="hm-subtitle">그래서 끊어진 여정을, 어디서 시작해도<br>다음 행동으로 이어지는 구조로<br>다시 설계했습니다.</h3><p class="hm-subcopy">앞 단계의 맥락과 판단 기준이 다음 화면까지 이어지도록 각 단계의 역할을 다시 연결했습니다.</p></div></div>`;
         redesign.appendChild(tobeFlow);
         signals.insertAdjacentElement('afterend',redesign);
       }
