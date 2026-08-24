@@ -11,18 +11,18 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page .data-card .desc strong{font-weight:500;color:#fff}
 
 /* 02.7 / four concise signal cells with vertical dividers. */
-.himart-test-page .data-bridge{margin-top:108px;padding:36px 0 38px;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line)}
+.himart-test-page .data-bridge{margin-top:72px;padding:30px 0 34px;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line)}
 .himart-test-page .data-bridge>.hm-card-no{display:block;margin-bottom:22px;color:var(--hm-blue)}
-.himart-test-page .data-bridge-title{margin:0 0 46px;max-width:900px;font-size:42px;font-weight:100;line-height:1.2;letter-spacing:-.045em}
+.himart-test-page .data-bridge-title{margin:0 0 42px;max-width:900px;font-size:42px;font-weight:100;line-height:1.2;letter-spacing:-.045em}
 .himart-test-page .data-bridge-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}
-.himart-test-page .data-bridge article{min-height:238px;display:flex;flex-direction:column;padding:0 28px}
+.himart-test-page .data-bridge article{min-height:220px;display:flex;flex-direction:column;padding:0 28px}
 .himart-test-page .data-bridge article:first-child{padding-left:0}
 .himart-test-page .data-bridge article:last-child{padding-right:0}
 .himart-test-page .data-bridge article+article{border-left:1px solid var(--hm-line)}
 .himart-test-page .data-bridge article span{font-family:var(--hm-en);font-size:11px;color:rgba(255,255,255,.42);letter-spacing:.06em}
 .himart-test-page .data-bridge article h4{margin:20px 0 0;font-size:24px;font-weight:100;line-height:1.36;letter-spacing:-.035em}
 .himart-test-page .data-bridge article p{margin:auto 0 0;color:rgba(255,255,255,.64);font-size:14px;line-height:1.62}
-.himart-test-page .data-bridge .journey-emphasis{display:block;margin:0 0 7px;font-family:inherit;font-size:14px;letter-spacing:0;color:var(--hm-blue);font-weight:500}
+.himart-test-page .journey-title-emphasis{color:var(--hm-blue);font-weight:400}
 
 /* Traffic graph: legend belongs directly below the plotting area. */
 .himart-test-page .chart-wrap{display:grid!important;grid-template-columns:minmax(0,1fr)!important;width:100%!important;overflow:visible!important}
@@ -38,12 +38,22 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page .landing-chart .stacklabels.signal-stack-labels>div{width:auto!important;min-width:0!important;padding:0 12px 0 0!important;text-align:left!important;transform:none!important}
 .himart-test-page .landing-chart .stacklabels.signal-stack-labels b{display:block;margin-bottom:6px}
 
-/* 02.8 / journey signal number restored above the flow title. */
-.himart-test-page .flow-area.signal-flow{margin-top:100px!important}
-.himart-test-page .flow-area.signal-flow .flow-head{margin-bottom:54px}
-.himart-test-page .journey-signal-no{display:block;margin-bottom:22px;color:var(--hm-blue)}
+/* 03 / Journey Signals becomes the third main narrative chapter. */
+.himart-test-page .flow-area.signal-flow{margin-top:92px!important}
+.himart-test-page .flow-area.signal-flow .flow-head{margin-bottom:66px}
+.himart-test-page .flow-area.signal-flow .journey-signal-no{display:block;margin-bottom:22px;font-family:var(--hm-en);font-size:24px;letter-spacing:.03em;color:rgba(255,255,255,.38)}
+.himart-test-page .flow-area.signal-flow .flow-head h3{margin:0;max-width:1080px;font-family:var(--hm-ko);font-weight:100;font-size:var(--hm-section);line-height:1.08;letter-spacing:-.055em}
+.himart-test-page .flow-area.signal-flow .flow-head p{margin-top:28px;max-width:780px}
 
-/* 03.1 / eight compact role cards, four per row. */
+/* Existing journey section is now the 03.1 subsection, not another main chapter headline. */
+.himart-test-page #journey{padding-top:88px}
+.himart-test-page #journey>.hm-wrap>.hm-section-head.journey-redesign-head{padding-top:34px;border-top:1px solid var(--hm-line);margin-bottom:62px}
+.himart-test-page #journey .journey-redesign-head .hm-section-no{margin:0 0 18px;font-size:12px;color:rgba(255,255,255,.42)}
+.himart-test-page #journey .journey-redesign-head .hm-section-title{max-width:980px;font-size:var(--hm-subsection);line-height:1.18;letter-spacing:-.045em}
+.himart-test-page #journey .journey-redesign-head .hm-section-desc{margin-top:20px;max-width:760px}
+.himart-test-page #journey .journey-redesign-head+.flow-area{margin-top:0!important}
+
+/* 03.2 / eight compact role cards, four per row. */
 .himart-test-page #journey .role-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important}
 .himart-test-page #journey .role-card{min-height:258px!important;padding:22px!important;border:1px solid var(--hm-line)!important;border-top-color:var(--hm-blue)!important;display:flex!important;flex-direction:column!important;background:transparent!important}
 .himart-test-page #journey .role-card .hm-role-name{font-size:10px!important;letter-spacing:.07em!important}
@@ -55,8 +65,8 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page .prototype-intro{display:none!important}
 .himart-test-page .prototype-case-list{display:grid;gap:124px;margin-top:86px}
 .himart-test-page .prototype-case{display:grid;grid-template-columns:minmax(360px,.82fr) minmax(0,1.18fr);gap:84px;align-items:stretch;padding-top:30px;border-top:1px solid var(--hm-line)}
-.himart-test-page .prototype-case-visual{display:flex;align-items:flex-start;justify-content:center;padding:0;background:#080808;border-radius:15px;overflow:hidden}
-.himart-test-page .prototype-case-visual img{display:block;width:auto;max-width:100%;height:auto;max-height:none;object-fit:contain;border-radius:0;image-rendering:auto;filter:blur(2.2px);transform:scale(1.012);opacity:.94}
+.himart-test-page .prototype-case-visual{height:760px;display:flex;align-items:flex-start;justify-content:center;padding:0;background:#080808;border-radius:15px;overflow:hidden}
+.himart-test-page .prototype-case-visual img{display:block;width:auto;max-width:100%;height:100%;max-height:100%;object-fit:contain;border-radius:0;image-rendering:auto;filter:blur(2.2px);transform:scale(1.012);opacity:.94}
 .himart-test-page .prototype-case-copy{display:flex;flex-direction:column;align-self:stretch;padding:6px 0 0}
 .himart-test-page .prototype-case-copy .hm-card-no{color:var(--hm-blue)}
 .himart-test-page .prototype-case-copy h3{margin:30px 0 0;max-width:680px;font-size:34px;font-weight:100;line-height:1.24;letter-spacing:-.043em}
@@ -64,7 +74,7 @@ body.himart-page-body.himart-test-page{background:#050505}
 .himart-test-page .prototype-case-copy strong{margin-top:auto;padding-top:30px;border-top:1px solid var(--hm-line);font-size:13px;font-weight:400;line-height:1.55;color:rgba(255,255,255,.72)}
 .himart-test-page .prototype-case-copy strong b{font-family:inherit;font-size:11px;letter-spacing:0;color:var(--hm-blue);font-weight:400;display:block;margin-bottom:9px}
 .himart-test-page .prototype-case.hicheck .prototype-case-visual{background:#f5f5f5}
-.himart-test-page .prototype-case.hicheck .prototype-case-visual img{filter:none!important;transform:none!important;opacity:1!important;width:100%;max-width:100%}
+.himart-test-page .prototype-case.hicheck .prototype-case-visual img{filter:none!important;transform:none!important;opacity:1!important;width:auto!important;max-width:100%!important;height:100%!important;max-height:100%!important;object-fit:contain!important}
 
 @media(max-width:1100px){
   .himart-test-page .data-bridge-title{font-size:36px}
@@ -73,11 +83,12 @@ body.himart-page-body.himart-test-page{background:#050505}
   .himart-test-page .data-bridge article:nth-child(even){border-left:1px solid var(--hm-line)!important}
   .himart-test-page #journey .role-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   .himart-test-page .prototype-case{grid-template-columns:minmax(280px,.8fr) minmax(0,1.2fr);gap:54px}
+  .himart-test-page .prototype-case-visual{height:680px}
   .himart-test-page .prototype-case-copy h3{font-size:30px}
 }
 
 @media(max-width:780px){
-  .himart-test-page .data-bridge{margin-top:72px}
+  .himart-test-page .data-bridge{margin-top:58px;padding-top:26px}
   .himart-test-page .data-bridge-title{font-size:30px;margin-bottom:34px}
   .himart-test-page .data-bridge-grid{grid-template-columns:1fr}
   .himart-test-page .data-bridge article,.himart-test-page .data-bridge article:nth-child(even){min-height:0;padding:26px 0!important;border-left:0!important;border-bottom:1px solid var(--hm-line)}
@@ -86,12 +97,14 @@ body.himart-page-body.himart-test-page{background:#050505}
   .himart-test-page .landing-chart .stackbar.signal-stack{grid-template-columns:52.2fr 27.6fr 9.3fr 6.6fr 4.3fr!important}
   .himart-test-page .landing-chart .stacklabels.signal-stack-labels{display:grid!important;grid-template-columns:1fr 1fr!important;gap:16px 18px!important;margin-top:18px!important}
   .himart-test-page .landing-chart .stacklabels.signal-stack-labels>div{padding:0!important}
+  .himart-test-page .flow-area.signal-flow{margin-top:72px!important}
+  .himart-test-page .flow-area.signal-flow .journey-signal-no{font-size:18px}
+  .himart-test-page #journey{padding-top:64px}
   .himart-test-page #journey .role-grid{grid-template-columns:1fr!important;gap:12px!important}
   .himart-test-page #journey .role-card{min-height:220px!important}
   .himart-test-page .prototype-case-list{gap:82px;margin-top:58px}
   .himart-test-page .prototype-case{grid-template-columns:1fr;gap:32px;padding-top:24px}
-  .himart-test-page .prototype-case-visual{min-height:0}
-  .himart-test-page .prototype-case-visual img{max-width:100%}
+  .himart-test-page .prototype-case-visual{height:640px}
   .himart-test-page .prototype-case-copy{min-height:0;padding:0}
   .himart-test-page .prototype-case-copy h3{margin-top:22px;font-size:27px}
   .himart-test-page .prototype-case-copy p{margin-top:20px;font-size:14px}
