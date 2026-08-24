@@ -1,0 +1,15 @@
+/* Wide test — 02 / 04 background: black + 3% white */
+body.himart-wide-test-page #data,
+body.himart-wide-test-page #direction{
+  background:#080808!important;
+}
+body.himart-wide-test-page #data .pie::after{
+  background:#080808!important;
+}
+body.himart-wide-test-page #direction .prototype-case-visual{
+  background:#080808!important;
+}
+body.himart-wide-test-page #direction .galaxy-ultra-mockup,
+body.himart-wide-test-page #direction .galaxy-ultra-mockup::before{
+  background:#080808!important;
+}
