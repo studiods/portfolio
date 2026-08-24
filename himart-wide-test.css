@@ -1,0 +1,95 @@
+/* Himart wide-layout experiment — 2026-08-25
+   Keep the 1440px master canvas, but let titles, data visualizations, cards and journey flows use it more assertively.
+   Reading-width body copy remains intentionally constrained. */
+
+body.himart-wide-test-page{
+  --hm-wrap:1440px!important;
+}
+
+@media(min-width:1201px){
+  /* Editorial hierarchy: wider display type, readable body copy. */
+  body.himart-wide-test-page .hm-title{max-width:1280px!important}
+  body.himart-wide-test-page .hm-section-title{max-width:1220px!important}
+  body.himart-wide-test-page .hm-subtitle{max-width:1160px!important}
+  body.himart-wide-test-page .hm-lead{max-width:980px!important}
+  body.himart-wide-test-page .hm-section-desc{max-width:820px!important}
+  body.himart-wide-test-page .hm-subcopy{max-width:840px!important}
+  body.himart-wide-test-page .data-card h3{max-width:1160px!important}
+  body.himart-wide-test-page .data-card .desc{max-width:960px!important}
+  body.himart-wide-test-page .flow-head h3{max-width:1100px!important}
+  body.himart-wide-test-page .flow-head p{max-width:860px!important}
+
+  /* Use the full canvas for visual systems. */
+  body.himart-wide-test-page .data-viz,
+  body.himart-wide-test-page .chart-wrap,
+  body.himart-wide-test-page .landing-stack,
+  body.himart-wide-test-page .pdp-columns,
+  body.himart-wide-test-page .direction-list,
+  body.himart-wide-test-page .flow-area,
+  body.himart-wide-test-page .role-grid,
+  body.himart-wide-test-page .prototype-case-list{width:100%!important;max-width:none!important}
+
+  /* Entry-channel chart gets more breathing room without widening prose. */
+  body.himart-wide-test-page .pie-layout{
+    grid-template-columns:420px minmax(0,1fr)!important;
+    gap:88px!important;
+  }
+  body.himart-wide-test-page .pie{width:420px!important}
+
+  /* UX direction rows: more confident left/right composition on the wider canvas. */
+  body.himart-wide-test-page .direction-card{
+    grid-template-columns:minmax(390px,.76fr) minmax(0,1.24fr)!important;
+    column-gap:88px!important;
+  }
+
+  /* Journey cards expand with the canvas instead of staying at the old fixed 252px width. */
+  body.himart-wide-test-page .flow-row.row4{
+    grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr) 56px minmax(0,1fr) 56px minmax(0,1fr)!important;
+    justify-content:stretch!important;
+  }
+  body.himart-wide-test-page .flow-row.row3{
+    grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr) 56px minmax(0,1fr)!important;
+    justify-content:stretch!important;
+  }
+  body.himart-wide-test-page .flow-node{
+    width:100%!important;
+    min-width:0!important;
+    height:276px!important;
+    padding:26px!important;
+  }
+  body.himart-wide-test-page .flow-arrow{width:56px!important}
+
+  /* Keep journey rule endpoints tied to card geometry at any desktop width. */
+  body.himart-wide-test-page #data .flow-group:nth-child(1),
+  body.himart-wide-test-page #journey .flow-group:nth-child(1){
+    --line-left:0px!important;
+    --line-width:calc(((100% - 168px) / 4) * 3 + 112px)!important;
+  }
+  body.himart-wide-test-page #data .flow-group:nth-child(2),
+  body.himart-wide-test-page #journey .flow-group:nth-child(2){
+    --line-left:0px!important;
+    --line-width:calc(((100% - 168px) / 4) * 2 + 56px)!important;
+  }
+
+  /* Larger visual cards, while keeping 2-up reading rhythm. */
+  body.himart-wide-test-page .prototype-case-list{
+    column-gap:48px!important;
+    row-gap:96px!important;
+  }
+  body.himart-wide-test-page .prototype-case{
+    grid-template-columns:minmax(220px,.84fr) minmax(0,1.16fr)!important;
+    gap:34px!important;
+  }
+  body.himart-wide-test-page .prototype-case-visual,
+  body.himart-wide-test-page .prototype-case-copy{height:660px!important}
+
+  /* Numeric/data comparisons benefit from the added horizontal room. */
+  body.himart-wide-test-page .number-pair{gap:30px!important}
+  body.himart-wide-test-page .hbar{grid-template-columns:160px minmax(0,1fr) 84px!important;gap:20px!important}
+  body.himart-wide-test-page .pdp-col{grid-template-columns:205px minmax(0,1fr)!important;gap:10px 24px!important}
+}
+
+/* Avoid an abrupt desktop/tablet jump. */
+@media(min-width:781px) and (max-width:1200px){
+  body.himart-wide-test-page{--hm-wrap:1100px!important}
+}
