@@ -119,93 +119,174 @@
     [...svg.querySelectorAll('.c-dot')].forEach((dot) => { dot.style.opacity = '1'; });
   };
 
-  const mountSubtitleScramble = () => {
-    if (!document.body.classList.contains('himart-test-page')) return;
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ensureTitleMotionStyle = () => {
+    if (document.getElementById('himart-test-title-motion-style')) return;
+    const style = document.createElement('style');
+    style.id = 'himart-test-title-motion-style';
+    style.textContent = `
+      .himart-test-page .title-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
+      .himart-test-page .title-rise-target.is-title-rise-in{opacity:1;transform:translateY(0)}
+      @media (prefers-reduced-motion:reduce){.himart-test-page .title-rise-target{opacity:1!important;transform:none!important;transition:none!important}}
+    `;
+    document.head.appendChild(style);
+  };
 
+  const playNumberedScramble = (el) => {
+    if (el.dataset.numberedScramblePlayed === '1') return;
+    el.dataset.numberedScramblePlayed = '1';
+    const original = el.textContent;
+    const chars = [...original];
     const pool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    const selectors = [
+    const mutable = chars.map((ch, index) => /[A-Za-z0-9]/.test(ch) ? index : -1).filter((index) => index >= 0);
+    if (!mutable.length) return;
+
+    const started = performance.now();
+    const duration = Math.min(980, 500 + mutable.length * 24);
+    const tick = (now) => {
+      const progress = Math.min(1, (now - started) / duration);
+      const resolved = Math.floor(mutable.length * Math.pow(progress, .72));
+      let rank = 0;
+      el.textContent = chars.map((ch, index) => {
+        if (!/[A-Za-z0-9]/.test(ch)) return ch;
+        const currentRank = rank++;
+        if (currentRank < resolved || progress >= 1) return ch;
+        return pool[(index * 19 + Math.floor(now / 42)) % pool.length];
+      }).join('');
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = original;
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const mountTitleMotion = () => {
+    if (!document.body.classList.contains('himart-test-page')) return;
+    ensureTitleMotionStyle();
+
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const numberedSelector = [
+      '.hm-section-no',
+      '.hm-subno',
+      '.hm-card-no',
+      '.data-bridge-grid article > span'
+    ].join(',');
+    const numbered = [...document.querySelectorAll(numberedSelector)].filter((el) => /^\s*\d{1,2}(?:\.\d+)?(?:\s*\/|\s*$)/.test(el.textContent));
+
+    const riseSelector = [
+      '.hm-section-title',
       '.hm-subtitle',
       '.data-card h3',
       '.data-bridge-title',
+      '.data-bridge-grid article h4',
       '.forced-redesign-title',
       '.prototype-case-copy h3',
       '.voice-group-title',
-      '.sentiment-conclusion > h4'
+      '.sentiment-title',
+      '.sentiment-conclusion > h4',
+      '.keyword-group h3',
+      '.role-card h4',
+      '.flow-node h4',
+      '.direction-card h4',
+      '.conclusion-card h5'
     ].join(',');
+    const riseTargets = [...document.querySelectorAll(riseSelector)].filter((el) => !el.closest('.hm-progress'));
 
-    const targets = [...document.querySelectorAll(selectors)].filter((el) => {
-      if (el.dataset.subtitleScrambleMounted === '1') return false;
-      if (el.classList.contains('js-scramble')) return false;
-      return el.textContent.trim().length > 0;
+    numbered.forEach((el) => {
+      if (el.dataset.numberedScrambleMounted === '1') return;
+      el.dataset.numberedScrambleMounted = '1';
+    });
+    riseTargets.forEach((el) => {
+      if (el.dataset.titleRiseMounted === '1') return;
+      el.dataset.titleRiseMounted = '1';
+      el.classList.add('title-rise-target');
     });
 
-    const collectTextNodes = (el) => {
-      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
-        acceptNode(node) {
-          return node.nodeValue && node.nodeValue.trim().length
-            ? NodeFilter.FILTER_ACCEPT
-            : NodeFilter.FILTER_REJECT;
-        }
-      });
-      const nodes = [];
-      let node;
-      while ((node = walker.nextNode())) nodes.push(node);
-      return nodes;
-    };
+    if (reduced) {
+      riseTargets.forEach((el) => el.classList.add('is-title-rise-in'));
+      return;
+    }
 
-    const play = (el) => {
-      if (el.dataset.subtitleScramblePlayed === '1') return;
-      el.dataset.subtitleScramblePlayed = '1';
-
-      const nodes = collectTextNodes(el);
-      const parts = nodes.map((node) => ({ node, original: node.nodeValue }));
-      const total = parts.reduce((sum, part) => sum + [...part.original].filter((ch) => !/\s/.test(ch)).length, 0);
-      if (!total) return;
-
-      const started = performance.now();
-      const duration = Math.min(1350, 620 + total * 14);
-
-      const tick = (now) => {
-        const progress = Math.min(1, (now - started) / duration);
-        const resolved = Math.floor(total * Math.pow(progress, 0.72));
-        let cursor = 0;
-
-        parts.forEach((part, partIndex) => {
-          part.node.nodeValue = [...part.original].map((ch, charIndex) => {
-            if (/\s/.test(ch)) return ch;
-            const globalIndex = cursor++;
-            if (globalIndex < resolved || progress >= 1) return ch;
-            const salt = partIndex * 23 + charIndex * 17 + Math.floor(now / 46);
-            return pool[salt % pool.length];
-          }).join('');
+    if ('IntersectionObserver' in window) {
+      const scrambleObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          playNumberedScramble(entry.target);
+          scrambleObserver.unobserve(entry.target);
         });
+      }, { threshold: .35, rootMargin: '0px 0px -8% 0px' });
+      numbered.forEach((el) => scrambleObserver.observe(el));
 
-        if (progress < 1) requestAnimationFrame(tick);
-        else parts.forEach((part) => { part.node.nodeValue = part.original; });
-      };
+      const riseObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-title-rise-in');
+          riseObserver.unobserve(entry.target);
+        });
+      }, { threshold: .18, rootMargin: '0px 0px -6% 0px' });
+      riseTargets.forEach((el) => riseObserver.observe(el));
+    } else {
+      numbered.forEach((el, index) => setTimeout(() => playNumberedScramble(el), 60 + index * 35));
+      riseTargets.forEach((el, index) => setTimeout(() => el.classList.add('is-title-rise-in'), 80 + index * 30));
+    }
+  };
 
-      requestAnimationFrame(tick);
+  const playDigitRoll = (el) => {
+    if (el.dataset.digitRollPlayed === '1') return;
+    el.dataset.digitRollPlayed = '1';
+    const original = el.textContent.trim();
+    if (!/^[-+]?\d[\d,.]*%?$/.test(original)) return;
+    const chars = [...original];
+    const digitIndexes = chars.map((ch, index) => /\d/.test(ch) ? index : -1).filter((index) => index >= 0);
+    if (!digitIndexes.length) return;
+
+    el.style.fontVariantNumeric = 'tabular-nums';
+    const started = performance.now();
+    const duration = 860;
+    const settleStart = .48;
+
+    const tick = (now) => {
+      const progress = Math.min(1, (now - started) / duration);
+      const settleProgress = Math.max(0, (progress - settleStart) / (1 - settleStart));
+      const settled = Math.floor(digitIndexes.length * Math.pow(settleProgress, .82));
+      let digitRank = 0;
+      el.textContent = chars.map((ch, index) => {
+        if (!/\d/.test(ch)) return ch;
+        const rank = digitRank++;
+        if (rank < settled || progress >= 1) return ch;
+        return String((index * 7 + Math.floor(now / 38) + rank * 3) % 10);
+      }).join('');
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = original;
     };
+    requestAnimationFrame(tick);
+  };
+
+  const mountDigitRoll = () => {
+    if (!document.body.classList.contains('himart-test-page')) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const selector = [
+      '.search-slope strong',
+      '.number-panel strong',
+      '.sentiment-number',
+      '.ring-card .pct',
+      '.hbar b',
+      '.stacklabels b',
+      '.pdp-col b'
+    ].join(',');
+    const targets = [...document.querySelectorAll(selector)].filter((el) => /^[-+]?\d[\d,.]*%?$/.test(el.textContent.trim()));
+    targets.forEach((el) => { el.dataset.digitRollMounted = '1'; });
+    if (reduced) return;
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          play(entry.target);
+          playDigitRoll(entry.target);
           observer.unobserve(entry.target);
         });
-      }, { threshold: 0.28, rootMargin: '0px 0px -8% 0px' });
-
-      targets.forEach((el) => {
-        el.dataset.subtitleScrambleMounted = '1';
-        observer.observe(el);
-      });
+      }, { threshold: .35, rootMargin: '0px 0px -8% 0px' });
+      targets.forEach((el) => observer.observe(el));
     } else {
-      targets.forEach((el, index) => {
-        el.dataset.subtitleScrambleMounted = '1';
-        setTimeout(() => play(el), 80 + index * 60);
-      });
+      targets.forEach((el, index) => setTimeout(() => playDigitRoll(el), 80 + index * 45));
     }
   };
 
@@ -215,7 +296,8 @@
     enforceRoleCopyOpacity();
     setTimeout(enforceRoleCopyOpacity, 120);
     setTimeout(enforceRoleCopyOpacity, 500);
-    mountSubtitleScramble();
+    mountTitleMotion();
+    mountDigitRoll();
 
     const trafficWrap = await mountOriginalTrafficChart();
     if (trafficWrap) prepareTraffic(trafficWrap);
@@ -236,7 +318,7 @@
 
     const visible = (chart) => {
       const rect = chart.getBoundingClientRect();
-      return rect.top < innerHeight * 0.94 && rect.bottom > innerHeight * 0.06;
+      return rect.top < innerHeight * .94 && rect.bottom > innerHeight * .06;
     };
 
     charts.filter(visible).forEach((chart, index) => setTimeout(() => activate(chart), 80 + index * 45));
@@ -249,7 +331,7 @@
             observer.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      }, { threshold: .12, rootMargin: '0px 0px -6% 0px' });
       charts.forEach((chart) => observer.observe(chart));
     } else {
       charts.forEach(activate);
@@ -260,7 +342,6 @@
 
   const boot = () => {
     queueSync();
-    enforceRoleCopyOpacity();
     tuneTestPage();
   };
 
@@ -269,7 +350,6 @@
 
   addEventListener('load', () => {
     queueSync();
-    enforceRoleCopyOpacity();
     tuneTestPage();
   }, { once: true });
   addEventListener('resize', queueSync, { passive: true });
