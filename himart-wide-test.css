@@ -93,3 +93,103 @@ body.himart-wide-test-page{
 @media(min-width:781px) and (max-width:1200px){
   body.himart-wide-test-page{--hm-wrap:1100px!important}
 }
+
+/* Alternating chapter treatment: 02 / 04 are full white editorial fields. */
+body.himart-wide-test-page #data,
+body.himart-wide-test-page #direction{
+  --hm-local-text:#050505;
+  --hm-local-copy:rgba(5,5,5,.52);
+  --hm-local-dim:rgba(5,5,5,.38);
+  --hm-local-line:rgba(5,5,5,.14);
+  background:#fff!important;
+  color:var(--hm-local-text)!important;
+}
+body.himart-wide-test-page #data .hm-wrap,
+body.himart-wide-test-page #direction .hm-wrap{
+  color:var(--hm-local-text)!important;
+}
+body.himart-wide-test-page #data .hm-section-title,
+body.himart-wide-test-page #data .data-card h3,
+body.himart-wide-test-page #data .data-bridge-title,
+body.himart-wide-test-page #data .data-bridge-grid h4,
+body.himart-wide-test-page #data .number-panel strong,
+body.himart-wide-test-page #data .number-panel h4,
+body.himart-wide-test-page #data .landing-chart h4,
+body.himart-wide-test-page #direction .hm-section-title,
+body.himart-wide-test-page #direction .hm-subtitle,
+body.himart-wide-test-page #direction .direction-card h4,
+body.himart-wide-test-page #direction .prototype-case-copy h3{
+  color:var(--hm-local-text)!important;
+}
+body.himart-wide-test-page #data .hm-section-desc,
+body.himart-wide-test-page #data .data-card .desc,
+body.himart-wide-test-page #data .data-bridge-grid p,
+body.himart-wide-test-page #data .number-panel p,
+body.himart-wide-test-page #data .legend-row,
+body.himart-wide-test-page #data .hbar span,
+body.himart-wide-test-page #data .stacklabels div,
+body.himart-wide-test-page #data .pdp-col span,
+body.himart-wide-test-page #data .hm-source,
+body.himart-wide-test-page #direction .hm-section-desc,
+body.himart-wide-test-page #direction .hm-subcopy,
+body.himart-wide-test-page #direction .direction-card p,
+body.himart-wide-test-page #direction .prototype-case-copy p{
+  color:var(--hm-local-copy)!important;
+}
+body.himart-wide-test-page #data .data-emphasis,
+body.himart-wide-test-page #data .legend-row b,
+body.himart-wide-test-page #data .stacklabels b,
+body.himart-wide-test-page #direction .prototype-case-copy strong{
+  color:rgba(5,5,5,.80)!important;
+}
+body.himart-wide-test-page #data .data-card,
+body.himart-wide-test-page #data .data-bridge,
+body.himart-wide-test-page #data .data-bridge article+article,
+body.himart-wide-test-page #data .landing-chart,
+body.himart-wide-test-page #data .hm-source,
+body.himart-wide-test-page #direction .hm-subsection,
+body.himart-wide-test-page #direction .direction-card,
+body.himart-wide-test-page #direction .prototype-case,
+body.himart-wide-test-page #direction .prototype-case-copy strong{
+  border-color:var(--hm-local-line)!important;
+}
+body.himart-wide-test-page #data .number-panel{
+  border-color:var(--hm-local-line)!important;
+  border-top-color:rgba(5,5,5,.40)!important;
+}
+body.himart-wide-test-page #data .legend-row{
+  border-bottom-color:rgba(5,5,5,.08)!important;
+}
+body.himart-wide-test-page #data .track,
+body.himart-wide-test-page #data .pdp-col i{
+  background:rgba(5,5,5,.08)!important;
+}
+body.himart-wide-test-page #data .pie::after{
+  background:#fff!important;
+}
+body.himart-wide-test-page #data .pie-center{
+  color:#050505!important;
+}
+body.himart-wide-test-page #data .pie-center::after{
+  color:var(--hm-local-dim)!important;
+}
+body.himart-wide-test-page #direction .direction-card,
+body.himart-wide-test-page #direction .prototype-case{
+  background:transparent!important;
+}
+body.himart-wide-test-page #direction .prototype-case-visual{
+  background:#f5f5f5!important;
+}
+body.himart-wide-test-page #direction .galaxy-ultra-mockup{
+  background:#fff!important;
+  border-color:rgba(5,5,5,.32)!important;
+  box-shadow:inset 0 0 0 1px rgba(5,5,5,.04)!important;
+}
+body.himart-wide-test-page #direction .galaxy-ultra-mockup::before{
+  background:#fff!important;
+  border-color:rgba(5,5,5,.28)!important;
+}
+body.himart-wide-test-page #direction .galaxy-ultra-mockup::after{
+  background:rgba(5,5,5,.42)!important;
+  box-shadow:0 88px 0 rgba(5,5,5,.30)!important;
+}
