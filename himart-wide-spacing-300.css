@@ -1,0 +1,7 @@
+/* Wide test — fixed chapter-head to first divider spacing (01–04) */
+body.himart-wide-test-page #brand > .hm-wrap > .hm-section-head,
+body.himart-wide-test-page #data > .hm-wrap > .hm-section-head,
+body.himart-wide-test-page #journey > .hm-wrap > .hm-section-head,
+body.himart-wide-test-page #direction > .hm-wrap > .hm-section-head{
+  margin-bottom:300px!important;
+}
