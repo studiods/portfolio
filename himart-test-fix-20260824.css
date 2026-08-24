@@ -8,12 +8,14 @@
   white-space:normal!important;
 }
 
-/* Role cards: white 40% top rule across the full module family. */
+/* Role cards: force white 40% top rule across the full module family. */
 body.himart-test-page .role-card{
-  border-top-color:rgba(255,255,255,.40)!important;
+  border-top:1px solid rgba(255,255,255,.40)!important;
+  box-shadow:none!important;
 }
 
-/* Journey flow cards: white 40% top rule across every identical card. */
+/* Journey flow cards: force white 40% top rule across every identical card. */
 body.himart-test-page .flow-node{
-  border-top-color:rgba(255,255,255,.40)!important;
+  border-top:1px solid rgba(255,255,255,.40)!important;
+  box-shadow:none!important;
 }
