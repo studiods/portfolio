@@ -70,3 +70,9 @@
   .reuse-page .reuse-360-live iframe{width:116%!important;left:-8%!important;height:700px!important}
   .reuse-page .reuse-journey-block::before{left:0!important;width:100%!important}
 }
+
+/* Approved purchase-journey visual language */
+.reuse-page .hm-title,.reuse-page .hm-section-title,.reuse-page .hm-subtitle,.reuse-page .direction-card h4,.reuse-page .flow-node h4{font-family:var(--hm-ko)!important;font-weight:100!important}
+.reuse-page .hm-lead,.reuse-page .hm-section-desc,.reuse-page .hm-subcopy,.reuse-page .direction-card p,.reuse-page .flow-node p,.reuse-page .reuse-360-conclusion{color:rgba(255,255,255,.50)!important;font-weight:300!important}
+.reuse-page #market .direction-card,.reuse-page .flow-node{border-top-color:rgba(255,255,255,.40)!important}
+.reuse-page .hm-section-no,.reuse-page .hm-subno,.reuse-page .hm-card-no{color:var(--hm-blue)!important}
