@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>하이마트 온라인 구매여정 — Simple Lead Case Test</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="./style.css?v=17">
+<link rel="stylesheet" href="./typography.css?v=8">
+<link rel="stylesheet" href="./global-gnb.css?v=e853f2e">
+<link rel="stylesheet" href="./himart-case-v4.css?v=abf3cda">
+<link rel="stylesheet" href="./himart-patch-20260823-2110.css?v=84951c2">
+<link rel="stylesheet" href="./himart-test-20260824.css?v=5142406">
+<link rel="stylesheet" href="./himart-test-refine-v2.css?v=6654c80">
+<link rel="stylesheet" href="./himart-test-fix-20260824.css?v=4e4c6f0">
+<link rel="stylesheet" href="./himart-wide-test.css?v=0260f55">
+<link rel="stylesheet" href="./himart-wide-spacing-300.css?v=fe380cd">
+<link rel="stylesheet" href="./himart-simple-test.css?v=2272a84">
+</head>
+<body class="himart-page-body himart-test-page himart-wide-test-page himart-simple-page">
+<nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
+<main id="live-main"><div class="hm-wrap" style="padding-top:180px;min-height:100vh"><p style="color:rgba(255,255,255,.55)">CASE LOADING…</p></div></main>
+<script>
+(async()=>{
+  'use strict';
+  const main=document.getElementById('live-main');
+  const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  const textNodesFor=(el)=>{
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.nodeValue&&node.nodeValue.trim().length?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
+    const nodes=[];let node;while((node=walker.nextNode()))nodes.push(node);return nodes;
+  };
+  const scrambleLargeTitle=(el)=>{
+    if(!el||el.dataset.simpleLargeScramblePlayed==='1')return;
+    el.dataset.simpleLargeScramblePlayed='1';
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const parts=textNodesFor(el).map(node=>({node,original:node.nodeValue}));
+    const mutable=(ch)=>/[\p{L}\p{N}]/u.test(ch);
+    const total=parts.reduce((sum,part)=>sum+[...part.original].filter(mutable).length,0);
+    if(!total)return;
+    const started=performance.now();
+    const duration=Math.min(1350,620+total*12);
+    const tick=(now)=>{
+      const p=Math.min(1,(now-started)/duration),resolved=Math.floor(total*Math.pow(p,.72));
+      let cursor=0;
+      parts.forEach((part,pi)=>{part.node.nodeValue=[...part.original].map((ch,ci)=>{if(!mutable(ch))return ch;const idx=cursor++;if(idx<resolved||p>=1)return ch;return pool[(pi*29+ci*17+Math.floor(now/44))%pool.length]}).join('')});
+      if(p<1)requestAnimationFrame(tick);else parts.forEach(part=>part.node.nodeValue=part.original);
+    };
+    requestAnimationFrame(tick);
+  };
+  const mountHeroMotion=()=>{
+    const hero=main.querySelector('.hm-title');
+    if(!hero)return;
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){scrambleLargeTitle(entry.target);io.disconnect()}}),{threshold:.2});
+      io.observe(hero);
+    }else scrambleLargeTitle(hero);
+  };
+
+  try{
+    const html=await fetch('https://api.github.com/repos/studiods/portfolio/git/blobs/6824a76b15854f4608498951bd3f909373cc407b',{cache:'no-store'})
+      .then(r=>{if(!r.ok)throw new Error('source load failed');return r.json()})
+      .then(j=>{const bin=atob(j.content.replace(/\s/g,''));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder('utf-8').decode(bytes)});
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const sourceMain=doc.querySelector('main');
+    if(!sourceMain)throw new Error('main not found');
+    main.innerHTML=sourceMain.innerHTML;
+
+    const liveTransform=document.createElement('script');
+    liveTransform.src='./himart-live-transform.js?v=d8f97ef';
+    liveTransform.onload=()=>{
+      const simpleTransform=document.createElement('script');
+      simpleTransform.src='./himart-simple-transform.js?v=020587a';
+      simpleTransform.onload=()=>{
+        mountHeroMotion();
+        const boot=document.createElement('script');
+        boot.src='./himart-live-boot.js?v=9f74114';
+        document.body.appendChild(boot);
+      };
+      document.body.appendChild(simpleTransform);
+    };
+    document.body.appendChild(liveTransform);
+  }catch(err){
+    main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>
