@@ -9,16 +9,37 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./style.css?v=17">
 <link rel="stylesheet" href="./typography.css?v=8">
-<link rel="stylesheet" href="./global-gnb.css?v=4d2e4ed">
+<link rel="stylesheet" href="./global-gnb.css?v=e853f2e">
 <link rel="stylesheet" href="./himart-case-v4.css?v=920a015">
 <link rel="stylesheet" href="./himart-patch-20260823-2110.css?v=84951c2">
 <link rel="stylesheet" href="./himart-test-20260824.css?v=5142406">
 <link rel="stylesheet" href="./himart-test-refine-v2.css?v=6654c80">
-<link rel="stylesheet" href="./himart-test-fix-20260824.css?v=1fe4ca9">
+<link rel="stylesheet" href="./himart-test-fix-20260824.css?v=182d674">
 </head>
-<body class="himart-page-body himart-test-page production-himart-page">
+<body class="himart-page-body himart-test-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
-<main id="himart-main"><div class="hm-wrap" style="padding-top:180px;min-height:100vh"><p style="color:rgba(255,255,255,.5)">LOADING…</p></div></main>
-<script src="./himart-journey-current-v1.js?v=35b064d"></script>
+<main id="live-main"><div class="hm-wrap" style="padding-top:180px;min-height:100vh"><p style="color:rgba(255,255,255,.55)">CASE LOADING…</p></div></main>
+<script>
+(async()=>{
+  'use strict';
+  const main=document.getElementById('live-main');
+  try{
+    const html=await fetch('https://api.github.com/repos/studiods/portfolio/git/blobs/6824a76b15854f4608498951bd3f909373cc407b',{cache:'no-store'})
+      .then(r=>{if(!r.ok)throw new Error('source load failed');return r.json()})
+      .then(j=>{const bin=atob(j.content.replace(/\s/g,''));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder('utf-8').decode(bytes)});
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const sourceMain=doc.querySelector('main');
+    if(!sourceMain)throw new Error('main not found');
+    main.innerHTML=sourceMain.innerHTML;
+    const transform=document.createElement('script');
+    transform.src='./himart-live-transform.js?v=d8f97ef';
+    transform.onload=()=>{const boot=document.createElement('script');boot.src='./himart-live-boot.js?v=9f74114';document.body.appendChild(boot)};
+    document.body.appendChild(transform);
+  }catch(err){
+    main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';
+    console.error(err);
+  }
+})();
+</script>
 </body>
 </html>
