@@ -16,6 +16,11 @@
 <link rel="stylesheet" href="./himart-test-refine-v2.css?v=6654c80">
 <link rel="stylesheet" href="./himart-test-fix-20260824.css?v=4e4c6f0">
 <link rel="stylesheet" href="./himart-wide-test.css?v=d9ec508">
+<style>
+.himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
+.himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.himart-wide-test-page .wide-rise-target{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -24,6 +29,55 @@
 (async()=>{
   'use strict';
   const main=document.getElementById('live-main');
+  const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  const textNodesFor=(el)=>{
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.nodeValue&&node.nodeValue.trim().length?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
+    const nodes=[];let node;while((node=walker.nextNode()))nodes.push(node);return nodes;
+  };
+
+  const scrambleLargeTitle=(el)=>{
+    if(!el||el.dataset.wideLargeScramblePlayed==='1')return;
+    el.dataset.wideLargeScramblePlayed='1';
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    const parts=textNodesFor(el).map(node=>({node,original:node.nodeValue}));
+    const mutable=(ch)=>/[\p{L}\p{N}]/u.test(ch);
+    const total=parts.reduce((sum,part)=>sum+[...part.original].filter(mutable).length,0);
+    if(!total)return;
+    const started=performance.now();
+    const duration=Math.min(1450,650+total*13);
+    const tick=(now)=>{
+      const p=Math.min(1,(now-started)/duration),resolved=Math.floor(total*Math.pow(p,.72));
+      let cursor=0;
+      parts.forEach((part,pi)=>{part.node.nodeValue=[...part.original].map((ch,ci)=>{if(!mutable(ch))return ch;const idx=cursor++;if(idx<resolved||p>=1)return ch;return pool[(pi*29+ci*17+Math.floor(now/44))%pool.length]}).join('')});
+      if(p<1)requestAnimationFrame(tick);else parts.forEach(part=>part.node.nodeValue=part.original);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const prepareWideMotion=()=>{
+    /* Only hero and chapter-level large titles keep scramble. All numbered sub titles and flow labels are pre-marked as already played. */
+    main.querySelectorAll('.hm-section-no').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');
+    main.querySelectorAll('.data-card-head .hm-card-no,.data-card-head h3,.hm-subhead .hm-subno,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .hm-card-no,.data-bridge > .data-bridge-title').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');
+    main.querySelectorAll('.flow-label').forEach(el=>el.dataset.flowLabelScramblePlayed='1');
+
+    const riseTargets=[...main.querySelectorAll('.data-card-head h3,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .data-bridge-title')];
+    riseTargets.forEach(el=>el.classList.add('wide-rise-target'));
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));}
+    else if('IntersectionObserver' in window){
+      const rio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-wide-rise-in');rio.unobserve(entry.target)}}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
+      riseTargets.forEach(el=>rio.observe(el));
+    }else riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));
+
+    const hero=main.querySelector('.hm-title');
+    if(hero){
+      if('IntersectionObserver' in window){
+        const hio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){scrambleLargeTitle(entry.target);hio.disconnect()}}),{threshold:.2});
+        hio.observe(hero);
+      }else scrambleLargeTitle(hero);
+    }
+  };
+
   try{
     const html=await fetch('https://api.github.com/repos/studiods/portfolio/git/blobs/6824a76b15854f4608498951bd3f909373cc407b',{cache:'no-store'})
       .then(r=>{if(!r.ok)throw new Error('source load failed');return r.json()})
@@ -34,7 +88,12 @@
     main.innerHTML=sourceMain.innerHTML;
     const transform=document.createElement('script');
     transform.src='./himart-live-transform.js?v=d8f97ef';
-    transform.onload=()=>{const boot=document.createElement('script');boot.src='./himart-live-boot.js?v=9f74114';document.body.appendChild(boot)};
+    transform.onload=()=>{
+      prepareWideMotion();
+      const boot=document.createElement('script');
+      boot.src='./himart-live-boot.js?v=9f74114';
+      document.body.appendChild(boot);
+    };
     document.body.appendChild(transform);
   }catch(err){
     main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';
