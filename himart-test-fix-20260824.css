@@ -19,3 +19,24 @@ body.himart-test-page .flow-node{
   border-top:1px solid rgba(255,255,255,.40)!important;
   box-shadow:none!important;
 }
+
+/* UX direction rows: reduce vertical footprint by 30% and vertically center both columns. */
+body.himart-test-page .direction-card{
+  min-height:154px!important;
+  padding:24px 8px 26px!important;
+  row-gap:10px!important;
+  align-content:center!important;
+  align-items:center!important;
+}
+body.himart-test-page .direction-card .hm-card-no{
+  align-self:end!important;
+  margin:0!important;
+}
+body.himart-test-page .direction-card h4{
+  align-self:start!important;
+  margin:0!important;
+}
+body.himart-test-page .direction-card p{
+  align-self:center!important;
+  margin:0!important;
+}
