@@ -9,7 +9,7 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./style.css?v=17">
 <link rel="stylesheet" href="./typography.css?v=8">
-<link rel="stylesheet" href="./global-gnb.css?v=ada24f0">
+<link rel="stylesheet" href="./global-gnb.css?v=c5061f2">
 <link rel="stylesheet" href="./himart-case-v4.css?v=920a015">
 <link rel="stylesheet" href="./himart-patch-20260823-2110.css?v=84951c2">
 <link rel="stylesheet" href="./himart-test-20260824.css?v=5142406">
@@ -33,7 +33,6 @@ try{
   const setText=(el,value)=>{if(el)el.textContent=value};
   const cardByNo=no=>[...main.querySelectorAll('#data .data-card')].find(card=>card.querySelector('.hm-card-no')?.textContent.includes(no));
 
-  /* HERO — keep the exact requested line break and exclude the title from scramble. */
   const heroTitle=main.querySelector('.hm-title');
   if(heroTitle){heroTitle.classList.remove('js-scramble');heroTitle.innerHTML='하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.';}
 
@@ -41,7 +40,6 @@ try{
   setText(main.querySelector('#data .hm-section-desc'),'어디서 시작하고 무엇을 탐색하며, 어느 순간 다음 행동이 약해지는지를 실제 이용 데이터로 확인했습니다.');
   setText(main.querySelector('#direction .hm-section-desc'),'정의한 역할을 실제 화면으로 옮기고, 내부 검증을 통해 정보 위계와 연결 방식을 조정하고 있습니다.');
 
-  /* 02 / DATA */
   const data=main.querySelector('#data');
   let asisFlow=null;
   if(data){
@@ -85,7 +83,6 @@ try{
     }
   }
 
-  /* 03 / JOURNEY — one main title, then two subsection-level narratives. */
   const journey=main.querySelector('#journey');
   if(journey){
     const wrap=journey.querySelector('.hm-wrap');
@@ -95,7 +92,7 @@ try{
 
     if(journeyHead){
       setText(journeyHead.querySelector('.hm-section-no'),'03');
-      setHTML(journeyHead.querySelector('.hm-section-title'),'흩어진 행동 신호를 연결해,<br>전체 구매 여정을 다시 정의했습니다.');
+      setHTML(journeyHead.querySelector('.hm-section-title'),'그래서 끊어진 여정을, 어디서 시작해도<br>다음 행동으로 이어지는 구조로<br>다시 설계했습니다.');
       setText(journeyHead.querySelector('.hm-section-desc'),'데이터에서 확인한 단절을 실제 구매 흐름 위에 놓고, 다음 행동이 약해지는 지점과 각 단계의 역할을 다시 연결했습니다.');
     }
 
@@ -110,7 +107,7 @@ try{
       if(tobeFlow){
         const redesign=document.createElement('div');
         redesign.className='hm-subsection hm-reveal journey-redesign-subsection';
-        redesign.innerHTML=`<div class="hm-subhead"><span class="hm-subno">03.2 / JOURNEY REDESIGN</span><div><h3 class="forced-redesign-title" style="margin:0;max-width:100%;font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(29px,3vw,42px);font-weight:100;line-height:1.18;letter-spacing:-.045em;color:#fff;word-break:keep-all"><span style="display:block;white-space:nowrap">그래서 끊어진 여정을, 어디서 시작해도</span><span style="display:block;white-space:nowrap">다음 행동으로 이어지는 구조로</span><span style="display:block;white-space:nowrap">다시 설계했습니다.</span></h3><p class="hm-subcopy">앞 단계의 맥락과 판단 기준이 다음 화면까지 이어지도록 각 단계의 역할을 다시 연결했습니다.</p></div></div>`;
+        redesign.innerHTML=`<div class="hm-subhead"><span class="hm-subno">03.2 / JOURNEY REDESIGN</span><div><h3 class="forced-redesign-title" style="margin:0;max-width:100%;font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:clamp(29px,3vw,42px);font-weight:100;line-height:1.18;letter-spacing:-.045em;color:#fff;word-break:keep-all"><span style="display:block;white-space:nowrap">끊어진 지점을 기준으로, 각 단계가</span><span style="display:block;white-space:nowrap">다음 행동을 이어주도록 다시 연결했습니다.</span></h3><p class="hm-subcopy">앞 단계의 맥락과 판단 기준이 다음 화면까지 이어지도록 각 단계의 역할을 다시 연결했습니다.</p></div></div>`;
         redesign.appendChild(tobeFlow);
         signals.insertAdjacentElement('afterend',redesign);
       }
@@ -132,7 +129,6 @@ try{
     }
   }
 
-  /* 04 / PROTOTYPE */
   const direction=main.querySelector('#direction');
   if(direction){
     direction.querySelector('.prototype-intro')?.remove();
