@@ -23,7 +23,7 @@
 'use strict';
 const main=document.getElementById('test-main');
 try{
-  const html=await fetch('./himart.html?test-source=20260824-1109',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source load failed');return r.text()});
+  const html=await fetch('./himart.html?test-source=20260824-1118',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('source load failed');return r.text()});
   const doc=new DOMParser().parseFromString(html,'text/html');
   const sourceMain=doc.querySelector('main');
   if(!sourceMain)throw new Error('main not found');
@@ -33,14 +33,17 @@ try{
   const setText=(el,value)=>{if(el)el.textContent=value};
   const cardByNo=no=>[...main.querySelectorAll('#data .data-card')].find(card=>card.querySelector('.hm-card-no')?.textContent.includes(no));
 
-  /* Keep every section description concise: conclusion first, detail second. */
+  /* HERO — force the requested two-line title on the TEST page regardless of source cache. */
+  setHTML(main.querySelector('.hm-title'),'하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.');
+
+  /* Keep every section description concise. */
   setText(main.querySelector('#brand .hm-section-desc'),'고객이 하이마트에 기대하는 전문성과 실제 온라인 경험의 간극을 먼저 확인했습니다.');
   setText(main.querySelector('#data .hm-section-desc'),'어디서 시작하고 무엇을 탐색하며, 어느 순간 다음 행동이 약해지는지를 실제 이용 데이터로 확인했습니다.');
-  setText(main.querySelector('#journey .hm-section-desc'),'확인한 단절을 화면별 과제가 아니라 하나의 구매 흐름으로 다시 연결했습니다.');
   setText(main.querySelector('#direction .hm-section-desc'),'정의한 역할을 실제 화면으로 옮기고, 내부 검증을 통해 정보 위계와 연결 방식을 조정하고 있습니다.');
 
-  /* 02 / Data: use each number as a behavioral signal, not a proof statement. */
+  /* 02 / DATA — behavioral signals, not proof statements. */
   const data=main.querySelector('#data');
+  let asisFlow=null;
   if(data){
     setHTML(data.querySelector('.hm-section-title'),'정성적으로 보였던 간극이 실제 이용 행동에서는<br>어떻게 나타나는지 확인했습니다.');
 
@@ -76,9 +79,9 @@ try{
       c26.querySelector('.stacklabels')?.classList.add('signal-stack-labels');
     }
 
-    const flow=data.querySelector('.flow-area');
-    if(flow){
-      flow.classList.add('signal-flow');
+    asisFlow=data.querySelector('.flow-area');
+    if(asisFlow){
+      asisFlow.classList.add('signal-flow');
       const bridge=document.createElement('div');
       bridge.className='data-bridge hm-reveal';
       bridge.innerHTML=`
@@ -90,22 +93,38 @@ try{
           <article><span>03 / CONTINUITY GAP</span><h4>화면이 바뀔 때마다 맥락이 약해졌습니다.</h4><p>앞 단계의 관심과 판단 기준이 다음 화면까지 충분히 이어지지 않았습니다.</p></article>
           <article><span>04 / PROBLEM REFRAME</span><h4>그래서 문제를 전체 여정으로 다시 정의했습니다.</h4><p><strong class="journey-emphasis">유입 맥락 → 탐색 → 비교 → 구매 확신 → 설치·케어</strong>가 연결되는 경험을 설계 과제로 삼았습니다.</p></article>
         </div>`;
-      flow.parentNode.insertBefore(bridge,flow);
-
-      const flowHead=flow.querySelector('.flow-head');
-      if(flowHead){
-        flowHead.insertAdjacentHTML('afterbegin','<span class="hm-subno journey-signal-no">02.8 / JOURNEY SIGNALS</span>');
-        setHTML(flowHead.querySelector('h3'),'데이터를 하나의 여정으로 연결해 보니,<br>다음 행동이 약해지는 위치가 더 명확해졌습니다.');
-        setText(flowHead.querySelector('p'),'각 신호를 실제 구매 흐름 위에 다시 놓고, 다음 행동이 약해지는 위치를 표시했습니다.');
-      }
+      asisFlow.parentNode.insertBefore(bridge,asisFlow);
     }
   }
 
-  /* 03.1 / Role definition: eight smaller boxed responsibilities, four per row. */
+  /* 03 / JOURNEY — this is the real third chapter. The redesign title becomes a subsection. */
   const journey=main.querySelector('#journey');
   if(journey){
-    const roleSection=[...journey.querySelectorAll('.hm-subsection')].find(s=>s.querySelector('.hm-subno')?.textContent.includes('03.1'));
+    const journeyHead=journey.querySelector('.hm-section-head');
+    const originalTobeFlow=[...journey.children].find(el=>el.classList?.contains('flow-area'));
+
+    setText(journeyHead?.querySelector('.hm-section-no'),'03');
+    setHTML(journeyHead?.querySelector('.hm-section-title'),'데이터를 하나의 여정으로 연결해 보니,<br>다음 행동이 약해지는 위치가 더 명확해졌습니다.');
+    setText(journeyHead?.querySelector('.hm-section-desc'),'각 신호를 실제 구매 흐름 위에 다시 놓고, 다음 행동이 약해지는 위치를 표시했습니다.');
+
+    if(asisFlow){
+      asisFlow.querySelector('.flow-head')?.remove();
+      asisFlow.style.marginTop='0';
+      journeyHead?.insertAdjacentElement('afterend',asisFlow);
+    }
+
+    if(originalTobeFlow){
+      const redesign=document.createElement('div');
+      redesign.className='hm-subsection hm-reveal journey-redesign-subsection';
+      redesign.innerHTML=`<div class="hm-subhead"><span class="hm-subno">03.1 / JOURNEY REDESIGN</span><div><h3 class="hm-subtitle">그래서 끊어진 여정을,<br>어디서 시작해도 다음 행동으로 이어지는 구조로 다시 설계했습니다.</h3><p class="hm-subcopy">앞 단계의 맥락과 판단 기준이 다음 화면에서도 이어지도록 각 단계의 역할을 다시 연결했습니다.</p></div></div>`;
+      originalTobeFlow.style.marginTop='58px';
+      redesign.appendChild(originalTobeFlow);
+      if(asisFlow)asisFlow.insertAdjacentElement('afterend',redesign);else journeyHead?.insertAdjacentElement('afterend',redesign);
+    }
+
+    const roleSection=[...journey.querySelectorAll('.hm-subsection')].find(s=>s.querySelector('.hm-subno')?.textContent.includes('ROLE DEFINITION'));
     if(roleSection){
+      setText(roleSection.querySelector('.hm-subno'),'03.2 / ROLE DEFINITION');
       setText(roleSection.querySelector('.hm-subcopy'),'각 화면이 앞선 맥락을 받아 다음 판단으로 넘기는 역할을 기준으로 정리했습니다.');
       const roleGrid=roleSection.querySelector('.role-grid');
       if(roleGrid){
@@ -122,7 +141,7 @@ try{
     }
   }
 
-  /* 04 / Prototype: no intro block, only four impact screens and the strategy applied to each. */
+  /* 04 / Prototype — four impact screens only. */
   const direction=main.querySelector('#direction');
   if(direction){
     direction.querySelector('.prototype-intro')?.remove();
