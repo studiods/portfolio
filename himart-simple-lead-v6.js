@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const reveal=[...document.querySelectorAll('.reveal,.bridge,.data-card,.journey-track')];
+  const reveal=[...document.querySelectorAll('.reveal,.case-bridge,.data-card,.journey-track')];
   if(reduced) reveal.forEach(el=>el.classList.add('is-in'));
   else{
     const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-in');io.unobserve(entry.target)}}),{threshold:.14,rootMargin:'0px 0px -8%'});
