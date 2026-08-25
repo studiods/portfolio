@@ -1,0 +1,190 @@
+/* HIMART WIDE — FLOATING / JOURNEY / CHART REFINE v2
+   Loaded after floating-header-v1.css. Explicitly overrides the active test only. */
+
+body.himart-wide-sticky-test-page{
+  --hm-floating-height:160px;
+  --hm-floating-bg:rgba(0,0,0,.30);
+}
+
+/* ---------- FLOATING CHAPTER BAR ---------- */
+body.himart-wide-sticky-test-page .hm-floating-chapter{
+  height:160px!important;
+  background:rgba(0,0,0,.30)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+  backdrop-filter:blur(18px)!important;
+}
+body.himart-wide-sticky-test-page .hm-floating-chapter-inner{
+  width:min(calc(100% - 64px),1440px)!important;
+  height:130px!important;
+  margin:30px auto 0!important;
+  display:grid!important;
+  grid-template-columns:56px minmax(0,1fr)!important;
+  column-gap:20px!important;
+  align-items:center!important;
+  box-sizing:border-box!important;
+}
+body.himart-wide-sticky-test-page .hm-floating-chapter-no{
+  color:var(--hm-blue)!important;
+}
+
+/* ---------- 03 / JOURNEY : USE THE FULL 1440 CANVAS ---------- */
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection,
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-area,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-area,
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-group,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-group,
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
+  width:100%!important;
+  max-width:none!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
+  justify-content:space-between!important;
+  gap:24px!important;
+}
+
+/* Larger circles; width/height stay locked so they can never become ovals. */
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node,
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster .flow-node{
+  flex:0 0 220px!important;
+  width:220px!important;
+  min-width:220px!important;
+  max-width:220px!important;
+  height:220px!important;
+  min-height:220px!important;
+  max-height:220px!important;
+  aspect-ratio:1/1!important;
+  border-radius:50%!important;
+  flex-shrink:0!important;
+}
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster{
+  flex:1 1 auto!important;
+  min-width:0!important;
+  min-height:268px!important;
+  padding:24px 34px!important;
+  border-radius:9999px!important;
+  justify-content:center!important;
+}
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster-inner{
+  width:100%!important;
+  justify-content:space-evenly!important;
+  gap:20px!important;
+}
+
+/* ---------- 03.3 ROLE CARDS ---------- */
+/* Remove top-edge emphasis: all four edges use the exact same neutral line. */
+body.himart-wide-sticky-test-page #journey .role-card{
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-top-color:rgba(255,255,255,.14)!important;
+  box-shadow:none!important;
+}
+body.himart-wide-sticky-test-page #journey .role-card::before,
+body.himart-wide-sticky-test-page #journey .role-card::after{
+  border-top:0!important;
+  box-shadow:none!important;
+}
+
+/* ---------- SEGMENTED BAR TYPOGRAPHY ---------- */
+/* Both bar systems are vertical: label on top, number below. */
+body.himart-wide-sticky-test-page #data .wide-entry-bar .wide-segment,
+body.himart-wide-sticky-test-page #data .wide-action-bar .wide-segment{
+  align-items:center!important;
+}
+body.himart-wide-sticky-test-page #data .wide-entry-bar .wide-segment span,
+body.himart-wide-sticky-test-page #data .wide-action-bar .wide-segment span{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:8px!important;
+  font-size:22px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+/* Entry channel labels: Averta Light / values Averta Regular. */
+body.himart-wide-sticky-test-page #data .wide-entry-bar .wide-segment span{
+  font-family:var(--hm-en)!important;
+  font-weight:300!important;
+}
+body.himart-wide-sticky-test-page #data .wide-entry-bar .wide-segment small{
+  display:block!important;
+  margin:0!important;
+  font-family:var(--hm-en)!important;
+  font-size:22px!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
+/* Landing-action labels: Pretendard Light / values Averta Regular. */
+body.himart-wide-sticky-test-page #data .wide-action-bar .wide-segment span{
+  font-family:var(--hm-ko)!important;
+  font-weight:300!important;
+}
+body.himart-wide-sticky-test-page #data .wide-action-bar .wide-segment small{
+  display:block!important;
+  margin:0!important;
+  font-family:var(--hm-en)!important;
+  font-size:22px!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
+
+/* ---------- VOICE RING FOCUS ANIMATION ---------- */
+@property --hm-focus-ring-angle{
+  syntax:'<angle>';
+  inherits:false;
+  initial-value:0deg;
+}
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card::after{
+  content:''!important;
+  position:absolute!important;
+  inset:-2px!important;
+  z-index:4!important;
+  border-radius:50%!important;
+  pointer-events:none!important;
+  background:conic-gradient(var(--hm-blue) var(--hm-focus-ring-angle),transparent 0)!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px))!important;
+  opacity:0!important;
+}
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card.is-focus-drawing::after{
+  opacity:1!important;
+  animation:hm-focus-ring-draw .9s cubic-bezier(.2,.8,.2,1) forwards!important;
+}
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card:nth-child(2).is-focus-drawing::after{animation-delay:.08s!important}
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card:nth-child(3).is-focus-drawing::after{animation-delay:.16s!important}
+@keyframes hm-focus-ring-draw{
+  from{--hm-focus-ring-angle:0deg}
+  to{--hm-focus-ring-angle:360deg}
+}
+
+/* Preserve the existing mobile breakpoint and proportions. */
+@media(max-width:780px){
+  body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node,
+  body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node,
+  body.himart-wide-sticky-test-page #journey .wide-flow-cluster .flow-node{
+    flex-basis:150px!important;
+    width:150px!important;
+    min-width:150px!important;
+    max-width:150px!important;
+    height:150px!important;
+    min-height:150px!important;
+    max-height:150px!important;
+  }
+  body.himart-wide-sticky-test-page #data .wide-entry-bar .wide-segment span,
+  body.himart-wide-sticky-test-page #data .wide-entry-bar .wide-segment small,
+  body.himart-wide-sticky-test-page #data .wide-action-bar .wide-segment span,
+  body.himart-wide-sticky-test-page #data .wide-action-bar .wide-segment small{
+    font-size:15px!important;
+    gap:5px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.himart-wide-sticky-test-page #brand .voice-group .ring-card::after{
+    animation:none!important;
+    opacity:0!important;
+  }
+}
