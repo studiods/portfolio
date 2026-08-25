@@ -1,17 +1,16 @@
 /* HIMART WIDE — STICKY CHAPTER RAIL TEST v2
-   Ultra-wide only: the existing 1440px content canvas stays intact on the right.
+   Wide desktop: the existing 1440px content canvas stays intact on the right.
    The 600px chapter title rail lives outside that canvas on the left.
-   Below the ultra-wide breakpoint the DOM is restored to the original Wide layout. */
+   At narrower widths the DOM is restored to the original Wide layout. */
 
 body.himart-wide-sticky-test-page{
   --hm-sticky-content:1440px;
   --hm-sticky-rail:600px;
-  --hm-sticky-gap:64px;
-  --hm-sticky-total:2104px;
+  --hm-sticky-gap:8px;
+  --hm-sticky-total:2048px;
   --hm-sticky-top:112px;
 }
 
-/* Sticky requires visible overflow through its ancestor chain. */
 body.himart-wide-sticky-test-page .hm-section,
 body.himart-wide-sticky-test-page .hm-section>.hm-wrap,
 body.himart-wide-sticky-test-page .hm-sticky-layout,
@@ -19,8 +18,8 @@ body.himart-wide-sticky-test-page .hm-sticky-rail{
   overflow:visible!important;
 }
 
-/* 600 + 64 + 1440 = 2104px. Give the composition breathing room before enabling float. */
-@media(min-width:2160px){
+/* 600 + 8 + 1440 = 2048px. At 2048+ the full composition fits without shrinking the 1440 canvas. */
+@media(min-width:2048px){
   body.himart-wide-sticky-test-page .hm-section>.hm-wrap{
     width:var(--hm-sticky-content)!important;
     max-width:none!important;
@@ -50,14 +49,14 @@ body.himart-wide-sticky-test-page .hm-sticky-rail{
     width:600px!important;
     max-width:600px!important;
     margin:0!important;
-    padding:0 0 48px!important;
+    padding:0 48px 48px 0!important;
     align-self:start!important;
   }
 
   body.himart-wide-sticky-test-page .hm-sticky-rail .hm-section-title,
   body.himart-wide-sticky-test-page .hm-sticky-rail .hm-section-desc{
     width:100%!important;
-    max-width:600px!important;
+    max-width:552px!important;
   }
 
   body.himart-wide-sticky-test-page .hm-sticky-content{
@@ -73,20 +72,16 @@ body.himart-wide-sticky-test-page .hm-sticky-rail{
     margin-top:0!important;
   }
 
-  body.himart-wide-sticky-test-page .hm-sticky-chapter{
-    position:relative!important;
-  }
+  body.himart-wide-sticky-test-page .hm-sticky-chapter{position:relative!important}
 }
 
-/* Below 2160 the v2 JS restores the original DOM/layout. Keep these as safety fallbacks. */
-@media(max-width:2159px){
+@media(max-width:2047px){
   body.himart-wide-sticky-test-page .hm-sticky-layout{display:block!important;width:100%!important;margin:0!important}
   body.himart-wide-sticky-test-page .hm-sticky-rail>.hm-section-head{position:relative!important;top:auto!important;width:auto!important;max-width:none!important}
   body.himart-wide-sticky-test-page .hm-sticky-content{width:100%!important;min-width:0!important;max-width:none!important}
 }
 
 /* ---------- 03 / JOURNEY VISUAL LANGUAGE ---------- */
-/* Descriptive rules above the flow groups are removed. */
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-group,
 body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-group{
   border-top:0!important;
@@ -104,7 +99,6 @@ body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-la
   display:none!important;
 }
 
-/* Rows remain horizontal on desktop and never stretch circles into ovals. */
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
 body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
   display:flex!important;
@@ -137,21 +131,15 @@ body.himart-wide-sticky-test-page #journey .wide-flow-cluster .flow-node{
   flex-shrink:0!important;
 }
 
-body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node{
-  border:1px solid rgba(255,255,255,.24)!important;
-}
-body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node{
-  border:1px solid rgba(0,166,237,.62)!important;
-}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node{border:1px solid rgba(255,255,255,.24)!important}
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node{border:1px solid rgba(0,166,237,.62)!important}
 
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node .hm-card-no,
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node h4,
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node p,
 body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node .hm-card-no,
 body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node h4,
-body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node p{
-  text-align:center!important;
-}
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node p{text-align:center!important}
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node h4,
 body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node h4{margin-top:12px!important}
 body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node p,
@@ -166,7 +154,7 @@ body.himart-wide-sticky-test-page #journey .flow-arrow{
   min-width:24px!important;
 }
 
-/* Capsule/tablet cluster: side ends remain perfectly round regardless of row width. */
+/* Capsule/tablet cluster: fully rounded ends and centered border label. */
 body.himart-wide-sticky-test-page #journey .wide-flow-cluster{
   position:relative!important;
   display:flex!important;
@@ -197,28 +185,14 @@ body.himart-wide-sticky-test-page #journey .wide-flow-cluster-label{
   text-align:center!important;
 }
 
-/* AS-IS clusters: both interruption capsules are red. */
-body.himart-wide-sticky-test-page #journey .journey-signal-subsection .wide-flow-cluster{
-  border:1px solid var(--hm-red)!important;
-}
-body.himart-wide-sticky-test-page #journey .journey-signal-subsection .wide-flow-cluster-label{
-  color:var(--hm-red)!important;
-}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .wide-flow-cluster{border:1px solid var(--hm-red)!important}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .wide-flow-cluster-label{color:var(--hm-red)!important}
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .wide-flow-cluster{border:1px solid var(--hm-blue)!important}
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .wide-flow-cluster-label{color:var(--hm-blue)!important}
 
-/* TO-BE clusters: same geometry, current blue language. */
-body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .wide-flow-cluster{
-  border:1px solid var(--hm-blue)!important;
-}
-body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .wide-flow-cluster-label{
-  color:var(--hm-blue)!important;
-}
-
-/* On narrow layouts keep the original mobile breakpoint behavior, but never distort circles. */
 @media(max-width:1100px){
   body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
-  body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
-    flex-wrap:wrap!important;
-  }
+  body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{flex-wrap:wrap!important}
 }
 @media(max-width:780px){
   body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node,
