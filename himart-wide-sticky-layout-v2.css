@@ -1,0 +1,248 @@
+/* HIMART WIDE — STICKY CHAPTER RAIL TEST v2
+   Ultra-wide only: the existing 1440px content canvas stays intact on the right.
+   The 600px chapter title rail lives outside that canvas on the left.
+   Below the ultra-wide breakpoint the DOM is restored to the original Wide layout. */
+
+body.himart-wide-sticky-test-page{
+  --hm-sticky-content:1440px;
+  --hm-sticky-rail:600px;
+  --hm-sticky-gap:64px;
+  --hm-sticky-total:2104px;
+  --hm-sticky-top:112px;
+}
+
+/* Sticky requires visible overflow through its ancestor chain. */
+body.himart-wide-sticky-test-page .hm-section,
+body.himart-wide-sticky-test-page .hm-section>.hm-wrap,
+body.himart-wide-sticky-test-page .hm-sticky-layout,
+body.himart-wide-sticky-test-page .hm-sticky-rail{
+  overflow:visible!important;
+}
+
+/* 600 + 64 + 1440 = 2104px. Give the composition breathing room before enabling float. */
+@media(min-width:2160px){
+  body.himart-wide-sticky-test-page .hm-section>.hm-wrap{
+    width:var(--hm-sticky-content)!important;
+    max-width:none!important;
+    margin-left:calc((100vw - var(--hm-sticky-total))/2 + var(--hm-sticky-rail) + var(--hm-sticky-gap))!important;
+    margin-right:0!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-layout{
+    display:grid!important;
+    grid-template-columns:var(--hm-sticky-rail) var(--hm-sticky-content)!important;
+    column-gap:var(--hm-sticky-gap)!important;
+    align-items:start!important;
+    width:var(--hm-sticky-total)!important;
+    margin-left:calc(-1 * (var(--hm-sticky-rail) + var(--hm-sticky-gap)))!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-rail{
+    position:relative!important;
+    width:var(--hm-sticky-rail)!important;
+    min-width:var(--hm-sticky-rail)!important;
+    align-self:stretch!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-rail>.hm-section-head{
+    position:sticky!important;
+    top:var(--hm-sticky-top)!important;
+    width:600px!important;
+    max-width:600px!important;
+    margin:0!important;
+    padding:0 0 48px!important;
+    align-self:start!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-rail .hm-section-title,
+  body.himart-wide-sticky-test-page .hm-sticky-rail .hm-section-desc{
+    width:100%!important;
+    max-width:600px!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-content{
+    width:1440px!important;
+    min-width:1440px!important;
+    max-width:1440px!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-content>.hm-subsection:first-child,
+  body.himart-wide-sticky-test-page .hm-sticky-content>.data-list:first-child,
+  body.himart-wide-sticky-test-page .hm-sticky-content>.data-card:first-child,
+  body.himart-wide-sticky-test-page .hm-sticky-content>.journey-signal-subsection:first-child{
+    margin-top:0!important;
+  }
+
+  body.himart-wide-sticky-test-page .hm-sticky-chapter{
+    position:relative!important;
+  }
+}
+
+/* Below 2160 the v2 JS restores the original DOM/layout. Keep these as safety fallbacks. */
+@media(max-width:2159px){
+  body.himart-wide-sticky-test-page .hm-sticky-layout{display:block!important;width:100%!important;margin:0!important}
+  body.himart-wide-sticky-test-page .hm-sticky-rail>.hm-section-head{position:relative!important;top:auto!important;width:auto!important;max-width:none!important}
+  body.himart-wide-sticky-test-page .hm-sticky-content{width:100%!important;min-width:0!important;max-width:none!important}
+}
+
+/* ---------- 03 / JOURNEY VISUAL LANGUAGE ---------- */
+/* Descriptive rules above the flow groups are removed. */
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-group,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-group{
+  border-top:0!important;
+  padding-top:0!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-group::before,
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-group::after,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-group::before,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-group::after{
+  display:none!important;
+  content:none!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-label,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-label{
+  display:none!important;
+}
+
+/* Rows remain horizontal on desktop and never stretch circles into ovals. */
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:16px!important;
+  width:100%!important;
+}
+
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node,
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster .flow-node{
+  flex:0 0 180px!important;
+  width:180px!important;
+  min-width:180px!important;
+  max-width:180px!important;
+  height:180px!important;
+  min-height:180px!important;
+  max-height:180px!important;
+  aspect-ratio:1/1!important;
+  border-radius:50%!important;
+  box-sizing:border-box!important;
+  padding:24px 20px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:#050505!important;
+  flex-shrink:0!important;
+}
+
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node{
+  border:1px solid rgba(255,255,255,.24)!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node{
+  border:1px solid rgba(0,166,237,.62)!important;
+}
+
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node .hm-card-no,
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node h4,
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node p,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node .hm-card-no,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node h4,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node p{
+  text-align:center!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node h4,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node h4{margin-top:12px!important}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node p,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node p{
+  margin-top:12px!important;
+  font-size:13px!important;
+  line-height:1.42!important;
+}
+body.himart-wide-sticky-test-page #journey .flow-arrow{
+  flex:0 0 24px!important;
+  width:24px!important;
+  min-width:24px!important;
+}
+
+/* Capsule/tablet cluster: side ends remain perfectly round regardless of row width. */
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  flex:0 0 auto!important;
+  min-height:224px!important;
+  padding:22px 30px!important;
+  border-radius:9999px!important;
+  box-sizing:border-box!important;
+  background:transparent!important;
+}
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster-inner{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+}
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster-label{
+  position:absolute!important;
+  left:50%!important;
+  top:0!important;
+  transform:translate(-50%,-50%)!important;
+  padding:0 14px!important;
+  background:#050505!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.4!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+}
+
+/* AS-IS clusters: both interruption capsules are red. */
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .wide-flow-cluster{
+  border:1px solid var(--hm-red)!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .wide-flow-cluster-label{
+  color:var(--hm-red)!important;
+}
+
+/* TO-BE clusters: same geometry, current blue language. */
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .wide-flow-cluster{
+  border:1px solid var(--hm-blue)!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .wide-flow-cluster-label{
+  color:var(--hm-blue)!important;
+}
+
+/* On narrow layouts keep the original mobile breakpoint behavior, but never distort circles. */
+@media(max-width:1100px){
+  body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
+  body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
+    flex-wrap:wrap!important;
+  }
+}
+@media(max-width:780px){
+  body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node,
+  body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node,
+  body.himart-wide-sticky-test-page #journey .wide-flow-cluster .flow-node{
+    flex-basis:150px!important;
+    width:150px!important;
+    min-width:150px!important;
+    max-width:150px!important;
+    height:150px!important;
+    min-height:150px!important;
+    max-height:150px!important;
+  }
+  body.himart-wide-sticky-test-page #journey .wide-flow-cluster{
+    min-height:194px!important;
+    padding:22px 18px!important;
+    border-radius:9999px!important;
+  }
+  body.himart-wide-sticky-test-page #journey .wide-flow-cluster-inner{
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+  }
+  body.himart-wide-sticky-test-page #journey .wide-flow-cluster-label{
+    max-width:82vw!important;
+    white-space:normal!important;
+  }
+}
