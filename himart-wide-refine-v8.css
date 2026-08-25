@@ -1,0 +1,248 @@
+/* Wide Himart refinement v8 — 2026-08-26
+   Latest visual corrections. Loaded after the system lock and v7. */
+
+/* ---------- 01 / QUALITATIVE ---------- */
+/* Sentiment ratio + feedback synthesis use the same restrained gradient language.
+   Gradient opacity is reduced by 10%; glow radius/intensity is lifted about 30%. */
+body.himart-wide-test-page #brand .sentiment-graph,
+body.himart-wide-test-page #brand .conclusion-grid{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+  box-shadow:
+    0 0 31px rgba(5,114,203,.16),
+    0 0 55px rgba(0,184,222,.08)!important;
+}
+body.himart-wide-test-page #brand .sentiment-block,
+body.himart-wide-test-page #brand .conclusion-card{
+  background:
+    linear-gradient(112deg,
+      rgba(5,114,203,.162) 0%,
+      rgba(0,166,237,.126) 34%,
+      rgba(0,184,222,.090) 66%,
+      rgba(0,237,189,.045) 100%),
+    #050505!important;
+  box-shadow:
+    inset 0 0 26px rgba(5,114,203,.055),
+    0 0 13px rgba(0,166,237,.11)!important;
+}
+body.himart-wide-test-page #brand .sentiment-block.negative,
+body.himart-wide-test-page #brand .conclusion-card.negative{
+  background:
+    linear-gradient(112deg,
+      rgba(5,114,203,.126) 0%,
+      rgba(0,184,222,.081) 58%,
+      rgba(250,72,27,.072) 100%),
+    #050505!important;
+}
+
+/* Ring charts must always shrink proportionally instead of stretching into ovals. */
+body.himart-wide-test-page #brand .ring-row{
+  align-items:start!important;
+  justify-items:center!important;
+}
+body.himart-wide-test-page #brand .ring-card{
+  box-sizing:border-box!important;
+  width:min(85%,300px)!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:1 / 1!important;
+  align-self:start!important;
+  justify-self:center!important;
+  flex:none!important;
+}
+
+/* 4. UX principles adopts the same card grammar as role-definition cards. */
+body.himart-wide-test-page #brand .direction-list{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  border:0!important;
+  background:transparent!important;
+}
+body.himart-wide-test-page #brand .direction-card,
+body.himart-wide-test-page #brand .direction-card:nth-child(odd),
+body.himart-wide-test-page #brand .direction-card:nth-last-child(-n+2){
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  min-height:260px!important;
+  height:auto!important;
+  padding:26px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:transparent!important;
+}
+body.himart-wide-test-page #brand .direction-card h4,
+body.himart-wide-test-page #brand .direction-card h4 .wide-title-index{
+  color:#fff!important;
+  font-size:22px!important;
+  line-height:1.28!important;
+  font-weight:300!important;
+}
+body.himart-wide-test-page #brand .direction-card p{
+  margin:12px 0 0!important;
+  color:rgba(255,255,255,.58)!important;
+  font-size:16px!important;
+  line-height:1.55!important;
+}
+
+/* ---------- 02 / QUANTITATIVE ---------- */
+/* Traffic chart is rendered once as one proportional SVG image. */
+body.himart-wide-test-page #data .wide-unified-traffic{
+  display:block!important;
+  width:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  overflow:visible!important;
+}
+body.himart-wide-test-page #data .wide-unified-traffic::before{
+  display:none!important;
+  content:none!important;
+}
+body.himart-wide-test-page #data .wide-traffic-image{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:auto!important;
+  aspect-ratio:1160 / 330!important;
+  object-fit:contain!important;
+}
+body.himart-wide-test-page #data .wide-traffic-legend{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:16px 28px!important;
+  margin-top:18px!important;
+  color:rgba(255,255,255,.46)!important;
+  font-size:12px!important;
+}
+body.himart-wide-test-page #data .wide-traffic-legend span{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+}
+body.himart-wide-test-page #data .wide-traffic-legend i{
+  display:inline-block!important;
+  width:22px!important;
+  height:2px!important;
+  background:var(--c)!important;
+}
+
+/* HOME graph is rebuilt as explicit bars so it remains visible at every viewport. */
+body.himart-wide-test-page #data .wide-home-bars{
+  display:grid!important;
+  width:100%!important;
+  gap:18px!important;
+  margin:0!important;
+}
+body.himart-wide-test-page #data .wide-home-bar{
+  display:grid!important;
+  grid-template-columns:110px minmax(0,1fr) 62px!important;
+  gap:16px!important;
+  align-items:center!important;
+  min-height:28px!important;
+}
+body.himart-wide-test-page #data .wide-home-bar-label,
+body.himart-wide-test-page #data .wide-home-bar-value{
+  font-size:16px!important;
+  line-height:1.3!important;
+  color:rgba(255,255,255,.58)!important;
+}
+body.himart-wide-test-page #data .wide-home-bar-value{
+  text-align:right!important;
+  color:#fff!important;
+  font-family:var(--hm-en)!important;
+  font-weight:300!important;
+}
+body.himart-wide-test-page #data .wide-home-bar-track{
+  position:relative!important;
+  width:100%!important;
+  height:10px!important;
+  overflow:hidden!important;
+  background:rgba(255,255,255,.08)!important;
+}
+body.himart-wide-test-page #data .wide-home-bar-fill{
+  display:block!important;
+  height:100%!important;
+  min-width:2px!important;
+  background:var(--wide-bar-color,var(--hm-blue))!important;
+  box-shadow:0 0 13px color-mix(in srgb,var(--wide-bar-color,var(--hm-blue)) 26%,transparent)!important;
+}
+
+/* ---------- 03 / JOURNEY ---------- */
+/* All circular journey nodes keep a true 1:1 ratio and shrink before they distort. */
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node,
+body.himart-wide-test-page #journey .wide-flow-cluster .flow-node{
+  box-sizing:border-box!important;
+  width:clamp(118px,13.2vw,190px)!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:1 / 1!important;
+  flex:0 1 clamp(118px,13.2vw,190px)!important;
+  border-radius:50%!important;
+}
+body.himart-wide-test-page #journey .wide-flow-cluster{
+  max-width:100%!important;
+}
+body.himart-wide-test-page #journey .wide-flow-cluster-inner{
+  min-width:0!important;
+}
+
+/* TO-BE / redesign inner circles use the same white rule as the AS-IS circles. */
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node{
+  border:1px solid rgba(255,255,255,.55)!important;
+  box-shadow:none!important;
+}
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node::before,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node::after{
+  border-color:rgba(255,255,255,.55)!important;
+}
+
+@media(max-width:1100px){
+  body.himart-wide-test-page #brand .direction-list{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+  body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node,
+  body.himart-wide-test-page #journey .wide-flow-cluster .flow-node{
+    width:clamp(112px,18vw,160px)!important;
+    flex-basis:clamp(112px,18vw,160px)!important;
+  }
+}
+
+@media(max-width:780px){
+  body.himart-wide-test-page #brand .ring-card{
+    width:min(76vw,280px)!important;
+    height:auto!important;
+    aspect-ratio:1 / 1!important;
+  }
+  body.himart-wide-test-page #brand .direction-list{
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+  body.himart-wide-test-page #brand .direction-card,
+  body.himart-wide-test-page #brand .direction-card:nth-child(odd),
+  body.himart-wide-test-page #brand .direction-card:nth-last-child(-n+2){
+    min-height:220px!important;
+    padding:24px!important;
+  }
+  body.himart-wide-test-page #data .wide-home-bar{
+    grid-template-columns:92px minmax(0,1fr) 52px!important;
+    gap:10px!important;
+  }
+  body.himart-wide-test-page #data .wide-home-bar-label,
+  body.himart-wide-test-page #data .wide-home-bar-value{
+    font-size:13px!important;
+  }
+  body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+  body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node,
+  body.himart-wide-test-page #journey .wide-flow-cluster .flow-node{
+    width:min(38vw,146px)!important;
+    flex-basis:min(38vw,146px)!important;
+    aspect-ratio:1 / 1!important;
+  }
+}
