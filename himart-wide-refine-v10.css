@@ -1,6 +1,6 @@
 /* Wide Himart refinement v10 — 2026-08-26
-   03 JOURNEY ONLY: restore the tablet-wrapped circle treatment for both 1 and 2 subsections.
-   No other page area is changed by this layer. */
+   03 JOURNEY ONLY: restore the earlier tablet-wrapped circle treatment.
+   The tablet outline itself carries the signal color, and its label is embedded directly in the top rule. */
 
 body.himart-wide-test-page #journey .journey-signal-subsection .flow-label,
 body.himart-wide-test-page #journey .journey-redesign-subsection .flow-label{
@@ -16,7 +16,7 @@ body.himart-wide-test-page #journey .journey-redesign-subsection .flow-row{
   width:100%!important;
 }
 
-/* Circles: white only. Tablet shells remain the previous neutral gray. */
+/* Inner nodes stay true circles with white outlines. */
 body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
 body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node{
   box-sizing:border-box!important;
@@ -64,7 +64,7 @@ body.himart-wide-test-page #journey .journey-redesign-subsection .flow-arrow{
   color:rgba(255,255,255,.46)!important;
 }
 
-/* Tablet directly wraps the circles, matching the earlier 03 treatment. */
+/* Earlier tablet treatment: the colored rule wraps the circles directly. */
 body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet{
   position:relative!important;
   display:flex!important;
@@ -72,10 +72,11 @@ body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet{
   flex:0 0 auto!important;
   max-width:100%!important;
   padding:30px 24px 22px!important;
-  border:1px solid rgba(255,255,255,.24)!important;
+  border:1px solid var(--v10-tablet-color,rgba(255,255,255,.24))!important;
   border-radius:999px!important;
   background:transparent!important;
   box-shadow:none!important;
+  color:var(--v10-tablet-color,rgba(255,255,255,.72))!important;
 }
 body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-inner{
   display:flex!important;
@@ -83,21 +84,39 @@ body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-
   gap:14px!important;
   min-width:0!important;
 }
+
+/* The label sits inside the top border rather than floating above the tablet. */
 body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-label{
   position:absolute!important;
+  z-index:2!important;
   left:30px!important;
   top:0!important;
   transform:translateY(-50%)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:18px!important;
   padding:0 10px!important;
+  margin:0!important;
   background:#050505!important;
+  color:inherit!important;
   font-size:12px!important;
   font-weight:400!important;
-  line-height:1.4!important;
+  line-height:18px!important;
   white-space:nowrap!important;
 }
-body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--alert .wide-flow-cluster-label{color:var(--hm-red)!important}
-body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--focus .wide-flow-cluster-label{color:var(--hm-blue)!important}
-body.himart-wide-test-page #journey .journey-redesign-subsection .v10-journey-tablet .wide-flow-cluster-label{color:var(--hm-blue)!important}
+
+/* Broken-journey signal tablets: red alert line first, blue focus line second — matching the earlier state. */
+body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--alert{
+  --v10-tablet-color:var(--hm-red)!important;
+}
+body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--focus{
+  --v10-tablet-color:var(--hm-blue)!important;
+}
+/* Connected/redesign journey remains blue. */
+body.himart-wide-test-page #journey .journey-redesign-subsection .v10-journey-tablet{
+  --v10-tablet-color:var(--hm-blue)!important;
+}
+
 body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-node{
   flex-basis:168px!important;
   width:168px!important;
@@ -136,5 +155,7 @@ body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-
   body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-label{
     white-space:normal!important;
     max-width:80vw!important;
+    line-height:1.35!important;
+    min-height:0!important;
   }
 }
