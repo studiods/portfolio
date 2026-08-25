@@ -12,6 +12,11 @@
     el.innerHTML=`${n}. ${html}`;
   };
 
+  /* The prior shared stylesheet renders this one title with ::before. Override that copy locally. */
+  const localStyle=document.createElement('style');
+  localStyle.textContent=`body.himart-wide-test-page #journey .journey-redesign-subsection .forced-redesign-title::before{content:"2. 끊어진 지점을 기준으로, 각 단계가\\A다음 행동을 이어주도록 다시 연결했습니다."!important;}`;
+  document.head.appendChild(localStyle);
+
   /* 01 / qualitative synthesis */
   const brand=main.querySelector('#brand');
   const summary=subByNo(brand,'01.3');
