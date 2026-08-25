@@ -43,7 +43,10 @@ body.himart-wide-sticky-test-page #brand .sentiment-block>*{
   z-index:1!important;
 }
 
-/* Voice-ring focus animation: draw only the measured share, using the original ring thickness. */
+/* Voice-ring focus animation: hide the pre-drawn segment, then draw only the measured share using the original thickness. */
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card::before{
+  opacity:0!important;
+}
 body.himart-wide-sticky-test-page #brand .voice-group .ring-card::after{
   inset:-1px!important;
   background:conic-gradient(var(--ring) var(--hm-focus-ring-angle),transparent 0)!important;
