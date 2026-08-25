@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="./himart-wide-test.css?v=0260f55">
 <link rel="stylesheet" href="./himart-wide-spacing-300.css?v=fe380cd">
 <link rel="stylesheet" href="./himart-wide-role-v2.css?v=55f6131">
+<link rel="stylesheet" href="./himart-wide-content-v4.css?v=eb5b4b6">
 <style>
 .himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
@@ -90,10 +91,15 @@
     const transform=document.createElement('script');
     transform.src='./himart-live-transform.js?v=d8f97ef';
     transform.onload=()=>{
-      prepareWideMotion();
-      const boot=document.createElement('script');
-      boot.src='./himart-live-boot.js?v=9f74114';
-      document.body.appendChild(boot);
+      const refine=document.createElement('script');
+      refine.src='./himart-wide-content-v4.js?v=c2283bd';
+      refine.onload=()=>{
+        prepareWideMotion();
+        const boot=document.createElement('script');
+        boot.src='./himart-live-boot.js?v=9f74114';
+        document.body.appendChild(boot);
+      };
+      document.body.appendChild(refine);
     };
     document.body.appendChild(transform);
   }catch(err){
