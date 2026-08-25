@@ -1,0 +1,140 @@
+/* Wide Himart refinement v10 — 2026-08-26
+   03 JOURNEY ONLY: restore the tablet-wrapped circle treatment for both 1 and 2 subsections.
+   No other page area is changed by this layer. */
+
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-label,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-label{
+  display:none!important;
+}
+
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-row,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:16px!important;
+  width:100%!important;
+}
+
+/* Circles: white only. Tablet shells remain the previous neutral gray. */
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node{
+  box-sizing:border-box!important;
+  flex:0 1 clamp(118px,13.2vw,190px)!important;
+  width:clamp(118px,13.2vw,190px)!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:1 / 1!important;
+  border:1px solid #fff!important;
+  border-radius:50%!important;
+  padding:28px 22px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:#050505!important;
+  box-shadow:none!important;
+}
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node .hm-card-no,
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node h4,
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node p,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node .hm-card-no,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node h4,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node p{
+  text-align:center!important;
+}
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node h4,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node h4{margin-top:14px!important}
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node p,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node p{
+  margin-top:14px!important;
+  font-size:14px!important;
+  line-height:1.48!important;
+}
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-arrow,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-arrow{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 28px!important;
+  width:28px!important;
+  color:rgba(255,255,255,.46)!important;
+}
+
+/* Tablet directly wraps the circles, matching the earlier 03 treatment. */
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  flex:0 0 auto!important;
+  max-width:100%!important;
+  padding:30px 24px 22px!important;
+  border:1px solid rgba(255,255,255,.24)!important;
+  border-radius:999px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-inner{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  min-width:0!important;
+}
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-label{
+  position:absolute!important;
+  left:30px!important;
+  top:0!important;
+  transform:translateY(-50%)!important;
+  padding:0 10px!important;
+  background:#050505!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.4!important;
+  white-space:nowrap!important;
+}
+body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--alert .wide-flow-cluster-label{color:var(--hm-red)!important}
+body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--focus .wide-flow-cluster-label{color:var(--hm-blue)!important}
+body.himart-wide-test-page #journey .journey-redesign-subsection .v10-journey-tablet .wide-flow-cluster-label{color:var(--hm-blue)!important}
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-node{
+  flex-basis:168px!important;
+  width:168px!important;
+}
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-arrow{
+  flex-basis:22px!important;
+  width:22px!important;
+}
+
+@media(max-width:1100px){
+  body.himart-wide-test-page #journey .journey-signal-subsection .flow-row,
+  body.himart-wide-test-page #journey .journey-redesign-subsection .flow-row{flex-wrap:wrap!important}
+  body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+  body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node{
+    width:clamp(112px,18vw,160px)!important;
+    flex-basis:clamp(112px,18vw,160px)!important;
+  }
+}
+
+@media(max-width:780px){
+  body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+  body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node,
+  body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-node{
+    width:min(38vw,146px)!important;
+    flex-basis:min(38vw,146px)!important;
+    aspect-ratio:1 / 1!important;
+  }
+  body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet{
+    border-radius:44px!important;
+    padding:34px 16px 18px!important;
+  }
+  body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-inner{
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+  }
+  body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-label{
+    white-space:normal!important;
+    max-width:80vw!important;
+  }
+}
