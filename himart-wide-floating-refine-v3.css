@@ -1,0 +1,166 @@
+/* HIMART WIDE — FLOATING / DATA / JOURNEY REFINE v3
+   Loaded last on the floating-header test page. */
+
+body.himart-wide-sticky-test-page{
+  --hm-journey-circle:286px;
+  --hm-journey-gap:32px;
+}
+
+/* ---------- 01 / QUALITATIVE ---------- */
+/* 04. UX points uses the same subsection-heading grammar as the role-definition block. */
+body.himart-wide-sticky-test-page #brand .wide-ux-role-heading .hm-subhead{
+  margin-bottom:50px!important;
+}
+body.himart-wide-sticky-test-page #brand .wide-ux-role-heading .hm-subtitle{
+  font-size:22px!important;
+  line-height:1.28!important;
+  font-weight:300!important;
+}
+
+/* Sentiment blocks: top-line color softly blooms into the card and fades to zero. */
+body.himart-wide-sticky-test-page #brand .sentiment-block{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+}
+body.himart-wide-sticky-test-page #brand .sentiment-block::before{
+  content:''!important;
+  position:absolute!important;
+  z-index:-1!important;
+  left:-3%!important;
+  right:-3%!important;
+  top:-18px!important;
+  height:62%!important;
+  pointer-events:none!important;
+  background:linear-gradient(180deg,rgba(0,166,237,.34) 0%,rgba(0,166,237,.16) 30%,rgba(0,166,237,.05) 58%,rgba(0,166,237,0) 100%)!important;
+  filter:blur(18px)!important;
+}
+body.himart-wide-sticky-test-page #brand .sentiment-block.negative::before{
+  background:linear-gradient(180deg,rgba(250,72,27,.34) 0%,rgba(250,72,27,.16) 30%,rgba(250,72,27,.05) 58%,rgba(250,72,27,0) 100%)!important;
+}
+body.himart-wide-sticky-test-page #brand .sentiment-block>*{
+  position:relative!important;
+  z-index:1!important;
+}
+
+/* Voice-ring focus animation: draw only the measured share, using the original ring thickness. */
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card::after{
+  inset:-1px!important;
+  background:conic-gradient(var(--ring) var(--hm-focus-ring-angle),transparent 0)!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px))!important;
+}
+body.himart-wide-sticky-test-page #brand .voice-group .ring-card.is-focus-drawing::after{
+  opacity:1!important;
+  animation-duration:.9s!important;
+  animation-timing-function:cubic-bezier(.2,.8,.2,1)!important;
+  animation-fill-mode:forwards!important;
+}
+body.himart-wide-sticky-test-page #brand .voice-group:not(.negative) .ring-card:nth-child(1).is-focus-drawing::after{animation-name:hm-ring-p45!important}
+body.himart-wide-sticky-test-page #brand .voice-group:not(.negative) .ring-card:nth-child(2).is-focus-drawing::after{animation-name:hm-ring-p35!important}
+body.himart-wide-sticky-test-page #brand .voice-group:not(.negative) .ring-card:nth-child(3).is-focus-drawing::after{animation-name:hm-ring-p20!important}
+body.himart-wide-sticky-test-page #brand .voice-group.negative .ring-card:nth-child(1).is-focus-drawing::after{animation-name:hm-ring-p45!important}
+body.himart-wide-sticky-test-page #brand .voice-group.negative .ring-card:nth-child(2).is-focus-drawing::after{animation-name:hm-ring-p40!important}
+body.himart-wide-sticky-test-page #brand .voice-group.negative .ring-card:nth-child(3).is-focus-drawing::after{animation-name:hm-ring-p15!important}
+@keyframes hm-ring-p45{from{--hm-focus-ring-angle:0deg}to{--hm-focus-ring-angle:162deg}}
+@keyframes hm-ring-p40{from{--hm-focus-ring-angle:0deg}to{--hm-focus-ring-angle:144deg}}
+@keyframes hm-ring-p35{from{--hm-focus-ring-angle:0deg}to{--hm-focus-ring-angle:126deg}}
+@keyframes hm-ring-p20{from{--hm-focus-ring-angle:0deg}to{--hm-focus-ring-angle:72deg}}
+@keyframes hm-ring-p15{from{--hm-focus-ring-angle:0deg}to{--hm-focus-ring-angle:54deg}}
+
+/* ---------- 02 / QUANTITATIVE ---------- */
+/* Roll back the duplicate traffic image: only the original 3-level SVG remains. */
+body.himart-wide-sticky-test-page #data .chart-wrap::before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+body.himart-wide-sticky-test-page #data .chart-wrap .chart-svg{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+
+/* Shared graph focus language. */
+body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar .wide-segment{
+  transform:scaleX(0);
+  transform-origin:left center;
+  opacity:.18;
+}
+body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar.is-graph-focus .wide-segment{
+  animation:hm-segment-grow .62s cubic-bezier(.2,.8,.2,1) forwards;
+}
+body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar.is-graph-focus .wide-segment:nth-child(2){animation-delay:.06s}
+body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar.is-graph-focus .wide-segment:nth-child(3){animation-delay:.12s}
+body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar.is-graph-focus .wide-segment:nth-child(4){animation-delay:.18s}
+body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar.is-graph-focus .wide-segment:nth-child(5){animation-delay:.24s}
+@keyframes hm-segment-grow{to{transform:scaleX(1);opacity:1}}
+
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate .fill{
+  transform:scaleX(0)!important;
+  transform-origin:left center!important;
+  opacity:.25!important;
+}
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate.is-graph-focus .fill{
+  animation:hm-hbar-grow .68s cubic-bezier(.2,.8,.2,1) forwards!important;
+}
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate.is-graph-focus .hbar:nth-child(2) .fill{animation-delay:.05s!important}
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate.is-graph-focus .hbar:nth-child(3) .fill{animation-delay:.10s!important}
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate.is-graph-focus .hbar:nth-child(4) .fill{animation-delay:.15s!important}
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate.is-graph-focus .hbar:nth-child(5) .fill{animation-delay:.20s!important}
+body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate.is-graph-focus .hbar:nth-child(6) .fill{animation-delay:.25s!important}
+@keyframes hm-hbar-grow{to{transform:scaleX(1);opacity:1}}
+
+/* ---------- 03 / JOURNEY ---------- */
+/* 30% larger than v2 (220px -> 286px). Capsule padding and internal gap share one token. */
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-node,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-node,
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster .flow-node{
+  flex:0 0 var(--hm-journey-circle)!important;
+  width:var(--hm-journey-circle)!important;
+  min-width:var(--hm-journey-circle)!important;
+  max-width:var(--hm-journey-circle)!important;
+  height:var(--hm-journey-circle)!important;
+  min-height:var(--hm-journey-circle)!important;
+  max-height:var(--hm-journey-circle)!important;
+  aspect-ratio:1/1!important;
+  border-radius:50%!important;
+  flex-shrink:0!important;
+}
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster{
+  padding:var(--hm-journey-gap)!important;
+  min-height:calc(var(--hm-journey-circle) + (var(--hm-journey-gap) * 2))!important;
+  border-radius:9999px!important;
+  box-sizing:border-box!important;
+}
+body.himart-wide-sticky-test-page #journey .wide-flow-cluster-inner{
+  gap:var(--hm-journey-gap)!important;
+  justify-content:center!important;
+}
+body.himart-wide-sticky-test-page #journey .journey-signal-subsection .flow-row,
+body.himart-wide-sticky-test-page #journey .journey-redesign-subsection .flow-row{
+  gap:var(--hm-journey-gap)!important;
+}
+
+@media(max-width:1100px){
+  body.himart-wide-sticky-test-page{
+    --hm-journey-circle:220px;
+    --hm-journey-gap:24px;
+  }
+}
+@media(max-width:780px){
+  body.himart-wide-sticky-test-page{
+    --hm-journey-circle:150px;
+    --hm-journey-gap:18px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.himart-wide-sticky-test-page #data .hm-graph-animate.wide-segmented-bar .wide-segment,
+  body.himart-wide-sticky-test-page #data .hbars.hm-graph-animate .fill{
+    transform:none!important;
+    opacity:1!important;
+    animation:none!important;
+  }
+}
