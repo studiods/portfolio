@@ -178,3 +178,15 @@
     if(trafficSvg)trafficSvg.dataset.v9Prepared='1';
   }
 })();
+
+/* Isolated rollback loader: affects only the 03 journey treatment. */
+(() => {
+  'use strict';
+  const css=document.createElement('link');
+  css.rel='stylesheet';
+  css.href='./himart-wide-refine-v10.css?v=9013c72';
+  document.head.appendChild(css);
+  const script=document.createElement('script');
+  script.src='./himart-wide-refine-v10.js?v=8850f1d';
+  document.body.appendChild(script);
+})();
