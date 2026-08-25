@@ -22,6 +22,7 @@
 <link rel="stylesheet" href="./himart-wide-refine-v5.css?v=2e5bf36">
 <link rel="stylesheet" href="./himart-wide-refine-v6.css?v=e6457f7">
 <link rel="stylesheet" href="./himart-wide-system-lock-v1.css?v=00d5f45">
+<link rel="stylesheet" href="./himart-wide-refine-v7.css?v=d343a2a">
 <style>
 .himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
@@ -103,10 +104,15 @@
           const refineV6=document.createElement('script');
           refineV6.src='./himart-wide-refine-v6.js?v=dd39321';
           refineV6.onload=()=>{
-            prepareWideMotion();
-            const boot=document.createElement('script');
-            boot.src='./himart-live-boot.js?v=9f74114';
-            document.body.appendChild(boot);
+            const refineV7=document.createElement('script');
+            refineV7.src='./himart-wide-refine-v7.js?v=61d2503';
+            refineV7.onload=()=>{
+              prepareWideMotion();
+              const boot=document.createElement('script');
+              boot.src='./himart-live-boot.js?v=9f74114';
+              document.body.appendChild(boot);
+            };
+            document.body.appendChild(refineV7);
           };
           document.body.appendChild(refineV6);
         };
