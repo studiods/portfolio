@@ -3,7 +3,7 @@
   const main=document.querySelector('main');
   if(!main)return;
 
-  const BREAKPOINT=2160;
+  const BREAKPOINT=2048;
   const ids=['brand','data','journey','direction'];
 
   const mountSection=id=>{
@@ -57,7 +57,6 @@
     ids.forEach(id=>shouldStick?mountSection(id):unmountSection(id));
   };
 
-  /* ---------- Journey tablet/circle treatment ---------- */
   const buildCluster=(group,nodeCount,label,klass)=>{
     if(!group)return;
     if(group.querySelector(':scope .wide-flow-cluster'))return;
