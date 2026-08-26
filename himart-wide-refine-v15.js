@@ -5,59 +5,47 @@
   document.body.classList.add('himart-v15');
 
   /* ---------- 01 / RING DRAWING ----------
-     Use one physical SVG circumference instead of pathLength-normalized dash values.
-     Some mobile Chromium builds repeat normalized CSS dashes around the circle; using the
-     measured circumference plus dashoffset guarantees one uninterrupted 5px stroke.
-     The circle is rotated -90deg, so drawing starts at 12 o'clock and proceeds clockwise. */
+     SVG dash patterns can fragment at the path seam on mobile Chromium.
+     Draw a single conic sector instead: 0deg is 12 o'clock, angles increase clockwise,
+     and a radial mask leaves an exact 5px continuous ring. */
   const rings=[...main.querySelectorAll('#brand .ring-card')];
   rings.forEach(ring=>{
-    ring.querySelector('.v14-ring-svg')?.remove();
-    ring.querySelector('.v15-ring-svg')?.remove();
+    ring.querySelectorAll('.v14-ring-svg,.v15-ring-svg,.v15-ring-arc').forEach(el=>el.remove());
 
     const pct=Math.max(0,Math.min(100,parseFloat(ring.style.getPropertyValue('--pct'))||0));
     ring.dataset.v15Pct=String(pct);
     ring.dataset.v15RingPlayed='0';
 
-    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
-    svg.setAttribute('class','v15-ring-svg');
-    svg.setAttribute('viewBox','0 0 100 100');
-    svg.setAttribute('aria-hidden','true');
-
-    const circle=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    circle.setAttribute('class','v15-ring-progress');
-    circle.setAttribute('cx','50');
-    circle.setAttribute('cy','50');
-    circle.setAttribute('r','49');
-    circle.setAttribute('transform','rotate(-90 50 50)');
-
-    const circumference=2*Math.PI*49;
-    circle.dataset.circumference=String(circumference);
-    circle.style.strokeDasharray=`${circumference} ${circumference}`;
-    circle.style.strokeDashoffset=String(circumference);
-
-    svg.appendChild(circle);
-    ring.appendChild(svg);
+    const arc=document.createElement('span');
+    arc.className='v15-ring-arc';
+    arc.setAttribute('aria-hidden','true');
+    arc.style.setProperty('--v15-ring-angle','0deg');
+    ring.appendChild(arc);
   });
 
   const playRing=ring=>{
     if(!ring||ring.dataset.v15RingPlayed==='1')return;
     ring.dataset.v15RingPlayed='1';
-    const circle=ring.querySelector('.v15-ring-progress');
-    if(!circle)return;
+    const arc=ring.querySelector('.v15-ring-arc');
+    if(!arc)return;
+
     const pct=Math.max(0,Math.min(100,parseFloat(ring.dataset.v15Pct)||0));
-    const circumference=parseFloat(circle.dataset.circumference)||2*Math.PI*49;
-    const finalOffset=circumference*(1-pct/100);
+    const finalAngle=pct*3.6;
     if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-      circle.style.strokeDashoffset=String(finalOffset);
+      arc.style.setProperty('--v15-ring-angle',`${finalAngle}deg`);
       return;
     }
-    circle.animate(
-      [
-        {strokeDashoffset:String(circumference)},
-        {strokeDashoffset:String(finalOffset)}
-      ],
-      {duration:1200,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}
-    );
+
+    const start=performance.now();
+    const duration=1200;
+    const frame=now=>{
+      const t=Math.min(1,(now-start)/duration);
+      const eased=1-Math.pow(1-t,3);
+      arc.style.setProperty('--v15-ring-angle',`${finalAngle*eased}deg`);
+      if(t<1)requestAnimationFrame(frame);
+      else arc.style.setProperty('--v15-ring-angle',`${finalAngle}deg`);
+    };
+    requestAnimationFrame(frame);
   };
 
   if(matchMedia('(prefers-reduced-motion: reduce)').matches){
