@@ -24,8 +24,10 @@ html body.himart-wide-test-page.himart-v15 #brand .v15-ring-progress{
   stroke-width:5px!important;
   stroke-linecap:butt!important;
   vector-effect:non-scaling-stroke!important;
-  stroke-dasharray:0 100;
-  stroke-dashoffset:0;
+  /* r=49 circumference: one full dash + one full gap prevents any repeated segments. */
+  stroke-dasharray:307.876080 307.876080;
+  stroke-dashoffset:307.876080;
+  shape-rendering:geometricPrecision;
 }
 html body.himart-wide-test-page.himart-v15 #brand .voice-group.negative .v15-ring-progress{
   stroke:var(--hm-red)!important;
