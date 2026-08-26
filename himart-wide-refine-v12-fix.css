@@ -1,0 +1,12 @@
+/* Wide v12 fine-tune */
+html body.himart-wide-test-page.himart-v12 #brand .wide-keyword-list{
+  color:#fff!important;
+}
+html body.himart-wide-test-page.himart-v12 #brand .ring-row{
+  justify-items:center!important;
+}
+html body.himart-wide-test-page.himart-v12 #brand .ring-card{
+  width:min(100%,390px)!important;
+  max-width:390px!important;
+  justify-self:center!important;
+}
