@@ -26,6 +26,7 @@
 <link rel="stylesheet" href="./himart-wide-refine-v8.css?v=4754d07">
 <link rel="stylesheet" href="./himart-wide-refine-v9.css?v=9ba15fe">
 <link rel="stylesheet" href="./himart-wide-refine-v11.css?v=daf1ed2">
+<link rel="stylesheet" href="./himart-wide-refine-v12.css?v=2886842">
 <style>
 .himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
@@ -116,10 +117,15 @@
                 const refineV9=document.createElement('script');
                 refineV9.src='./himart-wide-refine-v9.js?v=4fc8b91';
                 refineV9.onload=()=>{
-                  prepareWideMotion();
-                  const boot=document.createElement('script');
-                  boot.src='./himart-live-boot.js?v=9f74114';
-                  document.body.appendChild(boot);
+                  const refineV12=document.createElement('script');
+                  refineV12.src='./himart-wide-refine-v12.js?v=d30d68c';
+                  refineV12.onload=()=>{
+                    prepareWideMotion();
+                    const boot=document.createElement('script');
+                    boot.src='./himart-live-boot.js?v=9f74114';
+                    document.body.appendChild(boot);
+                  };
+                  document.body.appendChild(refineV12);
                 };
                 document.body.appendChild(refineV9);
               };
