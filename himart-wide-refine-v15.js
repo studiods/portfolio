@@ -5,9 +5,10 @@
   document.body.classList.add('himart-v15');
 
   /* ---------- 01 / RING DRAWING ----------
-     Use a single SVG circle whose pathLength is 100. The circle itself is rotated -90deg,
-     so 0 always starts at 12 o'clock and the positive stroke direction is clockwise.
-     Animate only stroke-dasharray from 0 to the exact percentage; no dashoffset segmentation. */
+     Use one physical SVG circumference instead of pathLength-normalized dash values.
+     Some mobile Chromium builds repeat normalized CSS dashes around the circle; using the
+     measured circumference plus dashoffset guarantees one uninterrupted 5px stroke.
+     The circle is rotated -90deg, so drawing starts at 12 o'clock and proceeds clockwise. */
   const rings=[...main.querySelectorAll('#brand .ring-card')];
   rings.forEach(ring=>{
     ring.querySelector('.v14-ring-svg')?.remove();
@@ -27,10 +28,12 @@
     circle.setAttribute('cx','50');
     circle.setAttribute('cy','50');
     circle.setAttribute('r','49');
-    circle.setAttribute('pathLength','100');
     circle.setAttribute('transform','rotate(-90 50 50)');
-    circle.style.strokeDasharray='0 100';
-    circle.style.strokeDashoffset='0';
+
+    const circumference=2*Math.PI*49;
+    circle.dataset.circumference=String(circumference);
+    circle.style.strokeDasharray=`${circumference} ${circumference}`;
+    circle.style.strokeDashoffset=String(circumference);
 
     svg.appendChild(circle);
     ring.appendChild(svg);
@@ -42,15 +45,16 @@
     const circle=ring.querySelector('.v15-ring-progress');
     if(!circle)return;
     const pct=Math.max(0,Math.min(100,parseFloat(ring.dataset.v15Pct)||0));
-    const finalDash=`${pct} ${100-pct}`;
+    const circumference=parseFloat(circle.dataset.circumference)||2*Math.PI*49;
+    const finalOffset=circumference*(1-pct/100);
     if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-      circle.style.strokeDasharray=finalDash;
+      circle.style.strokeDashoffset=String(finalOffset);
       return;
     }
     circle.animate(
       [
-        {strokeDasharray:'0 100'},
-        {strokeDasharray:finalDash}
+        {strokeDashoffset:String(circumference)},
+        {strokeDashoffset:String(finalOffset)}
       ],
       {duration:1200,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'}
     );
