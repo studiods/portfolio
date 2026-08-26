@@ -40,8 +40,24 @@
     }
   }
 
-  /* ---------- 04 / PROTOTYPE: 3 images + text per row, 4 rows ---------- */
+  /* ---------- 04 / PROTOTYPE: 3 wireframes + text per row, 4 rows ---------- */
   const direction=main.querySelector('#direction');
+  const caseList=direction?.querySelector('.prototype-case-list');
+  if(caseList){
+    caseList.classList.add('production-prototype-case-list');
+    [...caseList.querySelectorAll(':scope > .prototype-case')].forEach((item,rowIndex)=>{
+      const visual=item.querySelector('.prototype-case-visual');
+      const original=visual?.querySelector('.galaxy-ultra-mockup');
+      if(!visual||!original||visual.dataset.productionTripleMounted==='1')return;
+      visual.dataset.productionTripleMounted='1';
+      original.setAttribute('aria-label',`Prototype row ${rowIndex+1}, screen 1`);
+      for(let screenIndex=2;screenIndex<=3;screenIndex+=1){
+        const clone=original.cloneNode(true);
+        clone.setAttribute('aria-label',`Prototype row ${rowIndex+1}, screen ${screenIndex}`);
+        visual.appendChild(clone);
+      }
+    });
+  }
   const gallery=direction?.querySelector('.phone-gallery');
   if(gallery&&!gallery.classList.contains('production-prototype-gallery')){
     const cards=[...gallery.querySelectorAll(':scope > .phone-card')];
