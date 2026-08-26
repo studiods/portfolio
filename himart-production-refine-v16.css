@@ -1,0 +1,205 @@
+/* Himart production refinement v16 — 2026-08-26
+   Production-only adjustments for summary cards, data bars, journey conclusion and prototype gallery. */
+
+/* ---------- 01 / QUALITATIVE ---------- */
+/* Meaning-source line under the negative ring group. */
+html body.himart-wide-test-page.himart-prod-v16 #brand .production-meaning-source{
+  margin:30px 0 0!important;
+  padding:14px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.14)!important;
+  color:rgba(255,255,255,.38)!important;
+  font-family:var(--hm-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #brand .production-summary-after-source{
+  margin-top:100px!important;
+}
+
+/* Summary boxes keep horizontal rules only: no outer verticals and no center divider. */
+html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-graph{
+  border-left:0!important;
+  border-right:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-block.negative{
+  border-left:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-grid{
+  border-left:0!important;
+  border-right:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-card.negative{
+  border-left:0!important;
+}
+
+/* 10% softer than the current v15 gradients. */
+html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-block::before,
+html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-card::before{
+  background:linear-gradient(to bottom,
+    rgba(0,166,237,.1152) 0%,
+    rgba(0,166,237,.06912) 44%,
+    rgba(0,166,237,.0288) 70%,
+    transparent 100%)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-block.negative::before,
+html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-card.negative::before{
+  background:linear-gradient(to bottom,
+    rgba(250,72,27,.1152) 0%,
+    rgba(250,72,27,.06912) 44%,
+    rgba(250,72,27,.0288) 70%,
+    transparent 100%)!important;
+}
+
+/* Principle title/copy are explicitly left-aligned inside the 32px card inset. */
+html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card{
+  align-items:flex-start!important;
+  text-align:left!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card h4,
+html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card p{
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  text-align:left!important;
+}
+
+/* ---------- 02 / QUANTITATIVE ---------- */
+/* Entry and landing→action bars use one 160px production height. */
+html body.himart-wide-test-page.himart-prod-v16 #data .wide-entry-bar,
+html body.himart-wide-test-page.himart-prod-v16 #data .wide-action-bar{
+  height:160px!important;
+  min-height:160px!important;
+}
+
+/* Remove the rule directly above '기획전 시작 후 첫 다음 행동' and tighten the residual top space. */
+html body.himart-wide-test-page.himart-prod-v16 #data .landing-chart{
+  border-top:0!important;
+  padding-top:0!important;
+  margin-top:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #data .landing-chart>h4{
+  border-top:0!important;
+  padding-top:0!important;
+  margin-top:0!important;
+  margin-bottom:24px!important;
+}
+
+/* ---------- 03 / JOURNEY ---------- */
+html body.himart-wide-test-page.himart-prod-v16 #journey .production-tobe-conclusion{
+  margin:48px 0 0!important;
+  padding:24px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.14)!important;
+  max-width:1120px!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.65!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #journey .production-tobe-conclusion strong{
+  color:var(--hm-blue)!important;
+  font-weight:400!important;
+}
+
+/* ---------- 04 / PROTOTYPE ---------- */
+/* Four rows. Each row presents three screens plus their text panel. */
+html body.himart-wide-test-page.himart-prod-v16 #direction .phone-gallery.production-prototype-gallery{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:100px!important;
+  width:100%!important;
+  margin-top:72px!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,3fr) minmax(240px,1fr)!important;
+  gap:48px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  padding-top:32px!important;
+  border-top:1px solid rgba(255,255,255,.14)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-phones{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  align-items:start!important;
+  min-width:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-phones .phone-card{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  gap:22px!important;
+  min-width:0!important;
+  padding-bottom:2px!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy .phone-meta{
+  display:grid!important;
+  grid-template-columns:34px minmax(0,1fr)!important;
+  column-gap:12px!important;
+  row-gap:5px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:14px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.10)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy .phone-meta span{
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy .phone-meta b{
+  grid-column:2!important;
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--hm-en)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.25!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy .phone-meta p{
+  grid-column:2!important;
+  margin:0!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:1000px){
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-row{
+    grid-template-columns:1fr!important;
+    gap:28px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:18px!important;
+  }
+}
+@media(max-width:780px){
+  html body.himart-wide-test-page.himart-prod-v16 #data .wide-entry-bar,
+  html body.himart-wide-test-page.himart-prod-v16 #data .wide-action-bar{
+    height:128px!important;
+    min-height:128px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-phones,
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy{
+    grid-template-columns:1fr!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .phone-gallery.production-prototype-gallery{
+    gap:72px!important;
+  }
+}
