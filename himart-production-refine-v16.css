@@ -209,7 +209,7 @@ html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype
    Desktop values above 1180px remain untouched. */
 @media(min-width:781px) and (max-width:1180px){
   html body.himart-wide-test-page.himart-prod-v16 #journey{
-    --v13-node-size:clamp(164px,17.2vw,190px)!important;
+    --v13-node-size:clamp(168px,17.2vw,190px)!important;
     --v13-arrow-size:clamp(18px,2vw,24px)!important;
   }
   html body.himart-wide-test-page.himart-prod-v16 #journey .journey-signal-subsection .flow-row,
@@ -300,12 +300,12 @@ html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype
   }
   html body.himart-wide-test-page.himart-prod-v16 #journey .flow-node h4{
     margin-top:10px!important;
-    font-size:17px!important;
+    font-size:clamp(16px,4.6vw,18px)!important;
     line-height:1.22!important;
   }
   html body.himart-wide-test-page.himart-prod-v16 #journey .flow-node p{
     margin-top:10px!important;
-    font-size:12px!important;
+    font-size:clamp(11px,3.1vw,12px)!important;
     line-height:1.42!important;
   }
   html body.himart-wide-test-page.himart-prod-v16 #journey .flow-arrow,
