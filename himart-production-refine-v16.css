@@ -1,12 +1,12 @@
-/* Himart production refinement v16 — 2026-08-26
-   Production-only adjustments for summary cards, data bars, journey conclusion and prototype gallery. */
+/* Himart production refinement v16 — 2026-08-27
+   Production-only adjustments for qualitative synthesis, data evidence, journey conclusion and prototype rows. */
 
 /* ---------- 01 / QUALITATIVE ---------- */
 /* Meaning-source line under the negative ring group. */
 html body.himart-wide-test-page.himart-prod-v16 #brand .production-meaning-source{
   margin:30px 0 0!important;
-  padding:14px 0 0!important;
-  border-top:1px solid rgba(255,255,255,.14)!important;
+  padding:0!important;
+  border-top:0!important;
   color:rgba(255,255,255,.38)!important;
   font-family:var(--hm-ko)!important;
   font-size:12px!important;
@@ -63,6 +63,18 @@ html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card p{
   margin-right:0!important;
   text-align:left!important;
 }
+@media(min-width:781px){
+  html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card:nth-child(1),
+  html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card:nth-child(4){
+    padding-left:0!important;
+  }
+  /* The desktop circles keep their responsive columns but render at exactly 90%. */
+  html body.himart-wide-test-page.himart-prod-v16 #brand .ring-card{
+    width:90%!important;
+    max-width:none!important;
+    justify-self:center!important;
+  }
+}
 
 /* ---------- 02 / QUANTITATIVE ---------- */
 /* Entry and landing→action bars use one 160px production height. */
@@ -84,12 +96,24 @@ html body.himart-wide-test-page.himart-prod-v16 #data .landing-chart>h4{
   margin-top:0!important;
   margin-bottom:24px!important;
 }
+/* Only this synthesis heading uses the requested 22px hierarchy. */
+html body.himart-wide-test-page.himart-prod-v16 #data .data-bridge-grid>article:first-child>h4{
+  font-size:22px!important;
+  line-height:1.3!important;
+}
+/* Remove only the two specified source rules and pull them toward their charts. */
+html body.himart-wide-test-page.himart-prod-v16 #data .data-card:first-child .hm-source,
+html body.himart-wide-test-page.himart-prod-v16 #data .data-card:last-child .hm-source{
+  margin-top:14px!important;
+  padding-top:0!important;
+  border-top:0!important;
+}
 
 /* ---------- 03 / JOURNEY ---------- */
 html body.himart-wide-test-page.himart-prod-v16 #journey .production-tobe-conclusion{
-  margin:48px 0 0!important;
-  padding:24px 0 0!important;
-  border-top:1px solid rgba(255,255,255,.14)!important;
+  margin:18px 0 0!important;
+  padding:0!important;
+  border-top:0!important;
   max-width:1120px!important;
   color:rgba(255,255,255,.50)!important;
   font-family:var(--hm-ko)!important;
@@ -103,7 +127,55 @@ html body.himart-wide-test-page.himart-prod-v16 #journey .production-tobe-conclu
 }
 
 /* ---------- 04 / PROTOTYPE ---------- */
-/* Four rows. Each row presents three screens plus their text panel. */
+/* Current production DOM: four full-width rows, each with three wireframes and one copy panel. */
+html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-list{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:112px!important;
+  width:100%!important;
+  margin-top:86px!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case{
+  display:grid!important;
+  grid-template-columns:minmax(0,3fr) minmax(280px,1fr)!important;
+  gap:48px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  padding:0!important;
+  border-top:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-visual{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+  align-items:start!important;
+  justify-items:stretch!important;
+  width:100%!important;
+  height:auto!important;
+  min-width:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-visual .galaxy-ultra-mockup{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:9/19.5!important;
+  margin:0!important;
+}
+html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-copy{
+  height:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  justify-content:flex-end!important;
+  align-self:stretch!important;
+}
+
+/* Legacy source fallback. */
+ /* Four rows. Each row presents three screens plus their text panel. */
 html body.himart-wide-test-page.himart-prod-v16 #direction .phone-gallery.production-prototype-gallery{
   display:grid!important;
   grid-template-columns:1fr!important;
@@ -179,6 +251,13 @@ html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype
 }
 
 @media(max-width:1000px){
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case{
+    grid-template-columns:1fr!important;
+    gap:32px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-copy{
+    justify-content:flex-start!important;
+  }
   html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-row{
     grid-template-columns:1fr!important;
     gap:28px!important;
@@ -194,6 +273,14 @@ html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype
   html body.himart-wide-test-page.himart-prod-v16 #data .wide-action-bar{
     height:128px!important;
     min-height:128px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-list{
+    gap:78px!important;
+    margin-top:58px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-visual{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px!important;
   }
   html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-phones,
   html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy{
@@ -236,23 +323,18 @@ html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype
 }
 
 @media(max-width:780px){
-  /* Voice-group hierarchy and circles: exactly 90% of the existing mobile scale. */
+  /* Voice-group hierarchy. Mobile circle sizing is inherited from the approved pre-v16 rule. */
   html body.himart-wide-test-page.himart-prod-v16 #brand .voice-group-title,
   html body.himart-wide-test-page.himart-prod-v16 #brand .voice-group-title .v12-voice-accent,
   html body.himart-wide-test-page.himart-prod-v16 #brand .voice-group-title .v12-voice-rest{
     font-size:20px!important;
     line-height:1.36!important;
   }
+  /* Explicit rollback to the approved mobile circle size. */
   html body.himart-wide-test-page.himart-prod-v16 #brand .ring-card{
-    width:min(73.8vw,351px)!important;
-    max-width:min(73.8vw,351px)!important;
+    width:min(82vw,320px)!important;
+    max-width:320px!important;
     justify-self:center!important;
-  }
-
-  /* All chart-level headings that share this typographic role use the requested 22px. */
-  html body.himart-wide-test-page.himart-prod-v16 #data h4.title-rise-target{
-    font-size:22px!important;
-    line-height:1.3!important;
   }
 
   /* Mobile journey: one vertical reading path instead of wrapped desktop rows. */
