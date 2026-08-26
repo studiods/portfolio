@@ -1,0 +1,325 @@
+/* Wide Himart refinement v13 — 2026-08-26
+   GNB centering, keyword-pill rollback, ring motion, connected principle/role grids,
+   chart label grammar, and journey tablet spacing. Loaded last for Wide Layout Test. */
+
+/* ---------- GNB / viewport centering ---------- */
+html body.himart-wide-test-page.himart-v13 .top{
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  grid-template-columns:none!important;
+}
+html body.himart-wide-test-page.himart-v13 .top .top-center{
+  display:flex!important;
+  position:static!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  margin:0 auto!important;
+  justify-content:center!important;
+}
+
+/* ---------- 01 / KEYWORDS ---------- */
+html body.himart-wide-test-page.himart-v13 #brand .keyword-group h3{
+  margin:0 0 26px!important;
+  font-size:22px!important;
+  line-height:1.35!important;
+  font-weight:300!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .keyword-cloud{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:10px!important;
+  padding:0!important;
+  margin:0!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .keyword-pill{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:42px!important;
+  padding:9px 15px!important;
+  border:1px solid rgba(255,255,255,.40)!important;
+  border-radius:999px!important;
+  background:transparent!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-ko)!important;
+  font-size:13px!important;
+  font-weight:300!important;
+  line-height:1.25!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .keyword-pill.major b{font-weight:500!important}
+
+html body.himart-wide-test-page.himart-v13 #brand .voice-group-title{
+  margin-bottom:42px!important;
+  font-size:22px!important;
+  line-height:1.38!important;
+  font-weight:300!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .voice-group-title .v12-voice-accent,
+html body.himart-wide-test-page.himart-v13 #brand .voice-group-title .v12-voice-rest{
+  font-size:22px!important;
+  line-height:1.38!important;
+}
+
+/* Ring charts: exact 5px draw, 12 o'clock start, and proportional circles. */
+html body.himart-wide-test-page.himart-v13 #brand .ring-row{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:24px!important;
+  width:100%!important;
+  align-items:start!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .ring-card{
+  position:relative!important;
+  width:100%!important;
+  max-width:none!important;
+  aspect-ratio:1/1!important;
+  height:auto!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  border-radius:50%!important;
+  --v13-ring-pct:0;
+  --v13-ring-color:var(--hm-blue);
+}
+html body.himart-wide-test-page.himart-v13 #brand .voice-group.negative .ring-card{--v13-ring-color:var(--hm-red)}
+@property --v13-ring-pct{
+  syntax:'<number>';
+  inherits:false;
+  initial-value:0;
+}
+html body.himart-wide-test-page.himart-v13 #brand .ring-card::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-1px!important;
+  border-radius:50%!important;
+  background:conic-gradient(from -90deg,var(--v13-ring-color) 0 calc(var(--v13-ring-pct)*1%),transparent calc(var(--v13-ring-pct)*1%) 100%)!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px))!important;
+  transition:--v13-ring-pct 1.18s cubic-bezier(.2,.8,.2,1)!important;
+  pointer-events:none!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .ring-card.is-v13-ring-active{--v13-ring-pct:var(--pct)}
+
+/* I / II gradient is 20% more transparent than v12. */
+html body.himart-wide-test-page.himart-v13 #brand .sentiment-block::before,
+html body.himart-wide-test-page.himart-v13 #brand .conclusion-card::before{
+  background:linear-gradient(to bottom,rgba(0,166,237,.16) 0%,rgba(0,166,237,.096) 44%,rgba(0,166,237,.04) 70%,transparent 100%)!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .sentiment-block.negative::before,
+html body.himart-wide-test-page.himart-v13 #brand .conclusion-card.negative::before{
+  background:linear-gradient(to bottom,rgba(250,72,27,.16) 0%,rgba(250,72,27,.096) 44%,rgba(250,72,27,.04) 70%,transparent 100%)!important;
+}
+
+/* ---------- 4. UX POINTS / connected horizontal rule grammar ---------- */
+html body.himart-wide-test-page.himart-v13 #brand .direction-list{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  border-top:1px solid rgba(255,255,255,.40)!important;
+  border-bottom:1px solid rgba(255,255,255,.14)!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .direction-card,
+html body.himart-wide-test-page.himart-v13 #brand .direction-card:nth-child(odd),
+html body.himart-wide-test-page.himart-v13 #brand .direction-card:nth-last-child(-n+2){
+  position:relative!important;
+  min-height:280px!important;
+  padding:28px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .direction-card:nth-child(n+4){
+  border-top:1px solid rgba(255,255,255,.14)!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .direction-card:not(:nth-child(3n))::after{
+  content:""!important;
+  position:absolute!important;
+  right:0!important;
+  top:20%!important;
+  width:1px!important;
+  height:60%!important;
+  background:rgba(255,255,255,.16)!important;
+}
+html body.himart-wide-test-page.himart-v13 #brand .direction-card h4,
+html body.himart-wide-test-page.himart-v13 #brand .direction-card h4 .wide-title-index{
+  font-size:28px!important;
+  line-height:1.22!important;
+  font-weight:300!important;
+  color:#fff!important;
+}
+
+/* ---------- ENTRY / ACTION segmented chart label grammar ---------- */
+html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment,
+html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment{
+  justify-content:flex-start!important;
+  align-items:flex-end!important;
+  text-align:left!important;
+  padding:0 0 18px 18px!important;
+}
+html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment>span,
+html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment>span{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-end!important;
+  gap:3px!important;
+  margin:0!important;
+  font-size:22px!important;
+  line-height:1.04!important;
+  white-space:nowrap!important;
+}
+html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment>span{
+  font-family:var(--hm-en)!important;
+  font-weight:300!important;
+}
+html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment>span{
+  font-family:var(--hm-ko)!important;
+  font-weight:300!important;
+}
+html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment small,
+html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment small{
+  display:block!important;
+  margin:0!important;
+  font-family:inherit!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:400!important;
+  opacity:1!important;
+}
+
+/* ---------- 03 / JOURNEY ---------- */
+/* Remove the separate flow-group top rules; colored tablet is the only group rule. */
+html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .flow-group,
+html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .flow-group{
+  border-top:0!important;
+  padding-top:0!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .flow-group::before,
+html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .flow-group::before{
+  display:none!important;
+  content:none!important;
+}
+
+/* 1440 desktop: four equal circle widths + arrows + tablet padding fit the full row. */
+html body.himart-wide-test-page.himart-v13 #journey{
+  --v13-node-size:clamp(210px,20vw,292px);
+  --v13-arrow-size:24px;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .flow-row,
+html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .flow-row{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:16px!important;
+  width:100%!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .flow-node,
+html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .flow-node,
+html body.himart-wide-test-page.himart-v13 #journey .wide-flow-cluster.v12-journey-tablet .flow-node{
+  flex:0 0 var(--v13-node-size)!important;
+  width:var(--v13-node-size)!important;
+  min-width:var(--v13-node-size)!important;
+  max-width:var(--v13-node-size)!important;
+  height:var(--v13-node-size)!important;
+  min-height:var(--v13-node-size)!important;
+  max-height:var(--v13-node-size)!important;
+  aspect-ratio:1/1!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  border-radius:50%!important;
+  background:#050505!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .flow-arrow,
+html body.himart-wide-test-page.himart-v13 #journey .wide-flow-cluster.v12-journey-tablet .flow-arrow{
+  flex:0 0 var(--v13-arrow-size)!important;
+  width:var(--v13-arrow-size)!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .wide-flow-cluster.v12-journey-tablet{
+  padding:18px!important;
+  border-radius:999px!important;
+  box-shadow:none!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-inner{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:16px!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .wide-flow-cluster.v12-journey-tablet{
+  border-color:var(--hm-red)!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label{
+  color:var(--hm-red)!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .wide-flow-cluster.v12-journey-tablet{
+  border-color:var(--hm-blue)!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label{
+  color:var(--hm-blue)!important;
+}
+/* Label sits in the tablet rule. */
+html body.himart-wide-test-page.himart-v13 #journey .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label{
+  top:0!important;
+  left:30px!important;
+  transform:translateY(-50%)!important;
+  padding:0 10px!important;
+  background:#050505!important;
+  white-space:nowrap!important;
+}
+
+/* ---------- 3. ROLE DEFINITION / connected top rules + 60% dividers ---------- */
+html body.himart-wide-test-page.himart-v13 #journey .role-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  border-top:1px solid rgba(255,255,255,.40)!important;
+  border-bottom:1px solid rgba(255,255,255,.14)!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .role-card{
+  position:relative!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .role-card:nth-child(n+5){
+  border-top:1px solid rgba(255,255,255,.14)!important;
+}
+html body.himart-wide-test-page.himart-v13 #journey .role-card:not(:nth-child(4n))::after{
+  content:""!important;
+  position:absolute!important;
+  right:0!important;
+  top:20%!important;
+  width:1px!important;
+  height:60%!important;
+  background:rgba(255,255,255,.16)!important;
+}
+
+@media(max-width:1180px){
+  html body.himart-wide-test-page.himart-v13 #journey{--v13-node-size:190px}
+  html body.himart-wide-test-page.himart-v13 #journey .journey-signal-subsection .flow-row,
+  html body.himart-wide-test-page.himart-v13 #journey .journey-redesign-subsection .flow-row{flex-wrap:wrap!important;justify-content:flex-start!important}
+}
+@media(max-width:900px){
+  html body.himart-wide-test-page.himart-v13 #brand .direction-list{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.himart-wide-test-page.himart-v13 #brand .direction-card:not(:nth-child(3n))::after{display:none!important}
+  html body.himart-wide-test-page.himart-v13 #brand .direction-card:not(:nth-child(2n))::after{display:block!important}
+  html body.himart-wide-test-page.himart-v13 #journey .role-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.himart-wide-test-page.himart-v13 #journey .role-card:not(:nth-child(4n))::after{display:none!important}
+  html body.himart-wide-test-page.himart-v13 #journey .role-card:not(:nth-child(2n))::after{display:block!important}
+}
+@media(max-width:780px){
+  html body.himart-wide-test-page.himart-v13 #brand .ring-row{grid-template-columns:1fr!important}
+  html body.himart-wide-test-page.himart-v13 #brand .ring-card{width:min(82vw,390px)!important;justify-self:center!important}
+  html body.himart-wide-test-page.himart-v13 #brand .direction-list,
+  html body.himart-wide-test-page.himart-v13 #journey .role-grid{grid-template-columns:1fr!important}
+  html body.himart-wide-test-page.himart-v13 #brand .direction-card::after,
+  html body.himart-wide-test-page.himart-v13 #journey .role-card::after{display:none!important}
+  html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment,
+  html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment{padding:0 0 12px 10px!important}
+  html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment>span,
+  html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment>span,
+  html body.himart-wide-test-page.himart-v13 #data .wide-entry-bar .wide-segment small,
+  html body.himart-wide-test-page.himart-v13 #data .wide-action-bar .wide-segment small{font-size:14px!important}
+}
