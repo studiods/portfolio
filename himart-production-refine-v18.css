@@ -13,6 +13,12 @@ html body.himart-wide-test-page.himart-v18-ready #live-main{
   visibility:visible!important;
 }
 
+/* ---------- SHARED SUBTITLE SPACING ---------- */
+/* All subsection title-to-description spacing uses 8px. */
+html body.himart-wide-test-page .hm-subhead .hm-subcopy{
+  margin-top:8px!important;
+}
+
 /* ---------- V / DATA SYNTHESIS COPY ---------- */
 html body.himart-wide-test-page.himart-prod-v18 #data .data-bridge-grid article h4{
   word-break:keep-all!important;
