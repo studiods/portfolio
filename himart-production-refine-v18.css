@@ -32,12 +32,13 @@ html body.himart-wide-test-page.himart-prod-v18 #journey .role-card{
   align-items:flex-start!important;
   justify-content:flex-start!important;
   text-align:left!important;
+  container-type:inline-size;
 }
 html body.himart-wide-test-page.himart-prod-v18 #journey .role-card .hm-role-name{
   display:block!important;
   width:100%!important;
   margin:0!important;
-  color:var(--hm-blue)!important;
+  color:#fff!important;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif!important;
   font-size:28px!important;
   font-weight:300!important;
@@ -114,13 +115,20 @@ html body.himart-wide-test-page.himart-prod-v18 #direction .production-v18-copy 
     overflow-wrap:break-word!important;
     hyphens:none!important;
   }
+
+  /* Role-card typography scales with the actual mobile card width.
+     vw is the fallback; cqw takes over in browsers that support container-query units. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card .hm-role-name{
-    font-size:28px!important;
+    font-size:clamp(18px,5.8vw,26px)!important;
+    font-size:clamp(18px,7.2cqw,26px)!important;
     line-height:1.3!important;
   }
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card p{
-    padding-top:28px!important;
+    font-size:clamp(14px,4vw,16px)!important;
+    font-size:clamp(14px,4.6cqw,16px)!important;
+    padding-top:clamp(18px,6cqw,28px)!important;
   }
+
   /* Preserve the previously approved large mobile prototype treatment. */
   html body.himart-wide-test-page.himart-prod-v18 #direction .prototype-case,
   html body.himart-wide-test-page.himart-prod-v18 #direction .production-v18-row{
