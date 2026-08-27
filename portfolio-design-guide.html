@@ -8,7 +8,7 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./typography.css?v=8">
-<link rel="stylesheet" href="./portfolio-design-system.css?v=1">
+<link rel="stylesheet" href="./portfolio-design-system.css?v=2">
 </head>
 <body class="ds-guide-page">
 <main class="ds-guide">
@@ -62,7 +62,7 @@
   </section>
 
   <section class="ds-guide-section" id="type">
-    <header class="ds-guide-section-head"><span class="ds-token">03 / TYPOGRAPHY</span><div><h2>여섯 개의 본문 계층과<br>두 개의 데이터 예외만 사용합니다.</h2><p>현재 페이지의 82 / 42 / 28 / 22 / 16 / 12px 구조를 유지합니다. 10px는 번호·영문 라벨 전용이며, 원형·차트·숫자는 컨테이너 크기에 반응하는 예외 토큰을 사용합니다.</p></div></header>
+    <header class="ds-guide-section-head"><span class="ds-token">03 / TYPOGRAPHY</span><div><h2>크기와 명도를 함께 바꿔<br>제목과 설명의 역할을 분리합니다.</h2><p>현재 페이지의 82 / 42 / 28 / 22 / 16 / 12px 구조를 유지하되, 제목은 White 100%, 제목에 직접 종속되는 설명은 White 56%로 통일합니다. 크기만 줄이거나 색상만 낮추지 않고 두 차이를 동시에 적용합니다.</p></div></header>
     <div class="ds-type-list">
       <div class="ds-type-row"><span class="ds-token">DISPLAY</span><p class="ds-type-sample ds-display">전체 구매 여정을 재설계했습니다.</p><span class="ds-type-meta">PC 82 / Mobile 32–38<br>LH 1.04 · Weight 100</span></div>
       <div class="ds-type-row"><span class="ds-token">MAJOR</span><p class="ds-type-sample ds-major">고객 인식부터 확인했습니다.</p><span class="ds-type-meta">PC 42 / Mobile 29–34<br>LH 1.12 · Weight 100</span></div>
@@ -71,6 +71,10 @@
       <div class="ds-type-row"><span class="ds-token">BODY</span><p class="ds-type-sample ds-body">유입 맥락과 판단 기준을 다음 화면까지 유지해 사용자가 같은 정보를 다시 찾지 않도록 합니다.</p><span class="ds-type-meta">PC 16 / Mobile 15–16<br>LH 1.62 · Weight 300</span></div>
       <div class="ds-type-row"><span class="ds-token">CAPTION</span><p class="ds-type-sample ds-caption">SOURCE · HIMART ONLINE BEHAVIOR REPORT · 2026 H1</p><span class="ds-type-meta">PC 12 / Mobile 11–12<br>LH 1.50 · Weight 300–400</span></div>
     </div>
+    <div class="ds-hierarchy-grid" aria-label="제목과 설명 위계 예시">
+      <article class="ds-hierarchy-card"><span class="ds-token">MID TITLE → SUPPORTING COPY</span><h3>데이터를 하나의 여정으로 연결해 보니,<br>다음 행동이 약해지는 위치가 명확해졌습니다.</h3><p>신호를 구매 흐름에 놓고 다음 행동이 약해지는 위치를 표시했습니다.</p><span class="ds-hierarchy-note">28px / White 100% → 16px / White 56% · 20px 간격</span></article>
+      <article class="ds-hierarchy-card compact"><span class="ds-token" style="color:var(--ds-accent-negative)">01 / ENTRY</span><h3>외부 유입</h3><p>AD·CRM·CPS·Direct로 각기 다른 맥락에서 진입</p><span class="ds-hierarchy-note">22px / White 100% → 15px / White 56% · 16px 간격</span></article>
+    </div>
     <table class="ds-table" style="margin-top:64px"><thead><tr><th>역할</th><th>사용 위치</th><th>금지</th></tr></thead><tbody>
       <tr><td>Display</td><td>페이지당 한 번, 히어로 핵심 문장</td><td>본문 5줄 이상, 카드 내부 사용</td></tr>
       <tr><td>Major</td><td>장 단위 대타이틀</td><td>같은 화면에 3개 이상 경쟁</td></tr>
@@ -78,6 +82,12 @@
       <tr><td>Small</td><td>카드명·그룹명·결론 제목</td><td>긴 설명 문장 전체 사용</td></tr>
       <tr><td>Body</td><td>모든 핵심 설명과 해석</td><td>14px 미만 축소</td></tr>
       <tr><td>Caption</td><td>출처·메타·보조 정보</td><td>핵심 결론 전달</td></tr>
+    </tbody></table>
+    <table class="ds-table" style="margin-top:64px"><thead><tr><th>제목–설명 조합</th><th>제목</th><th>설명</th><th>최소 크기 비율</th></tr></thead><tbody>
+      <tr><td>대타이틀</td><td>42px · White 100%</td><td>16px · White 56%</td><td>2.6 : 1</td></tr>
+      <tr><td>중타이틀</td><td>28px · White 100%</td><td>16px · White 56%</td><td>1.75 : 1</td></tr>
+      <tr><td>소타이틀·카드</td><td>22px · White 100%</td><td>15px · White 56%</td><td>1.45 : 1</td></tr>
+      <tr><td>원형·여정 노드</td><td>최소 16px · White 100%</td><td>최소 11px · White 56%</td><td>1.4 : 1 이상</td></tr>
     </tbody></table>
   </section>
 
@@ -116,7 +126,8 @@
       <article class="ds-swatch" style="--swatch:#00edbd"><b>Secondary accent</b><span>#00EDBD · 성공·자동화, 제한적</span></article>
       <article class="ds-swatch" style="--swatch:#fa481b"><b>Negative</b><span>#FA481B · 부정·이탈·단절</span></article>
       <article class="ds-swatch" style="--swatch:#f3eb01"><b>Warning</b><span>#F3EB01 · 경고·프로모션 전용</span></article>
-      <article class="ds-swatch" style="--swatch:rgba(255,255,255,.70)"><b>Secondary text</b><span>White 70% · 핵심 본문</span></article>
+      <article class="ds-swatch" style="--swatch:rgba(255,255,255,.72)"><b>Body text</b><span>White 72% · 독립적으로 읽는 본문</span></article>
+      <article class="ds-swatch" style="--swatch:rgba(255,255,255,.56)"><b>Supporting text</b><span>White 56% · 제목에 종속된 설명</span></article>
       <article class="ds-swatch" style="--swatch:rgba(255,255,255,.50)"><b>Muted text</b><span>White 50% · 출처·보조 설명</span></article>
     </div>
   </section>
@@ -139,6 +150,7 @@
     <ul class="ds-checklist">
       <li>페이지 제목은 Display 한 번만 사용했는가</li><li>대·중·소 제목의 역할이 서로 뒤바뀌지 않았는가</li>
       <li>제목→설명 간격은 20/16 또는 16/12 토큰인가</li><li>중단락 간격은 120/80 토큰인가</li>
+      <li>제목은 White 100%, 직접 설명은 White 56%로 통일됐는가</li><li>제목과 설명의 크기 비율이 최소 1.4:1 이상인가</li>
       <li>본문은 16px·1.62, 모바일 최소 15px 이상인가</li><li>한 줄 본문이 44em 또는 약 75자를 넘지 않는가</li>
       <li>출처는 11–12px이며 핵심 정보를 담지 않는가</li><li>구분선은 10·14·30% 중 의미에 맞는가</li>
       <li>3px 컬러 라인은 실제 강조 의미가 있는가</li><li>블루 외 컬러가 장식 목적으로 남용되지 않았는가</li>

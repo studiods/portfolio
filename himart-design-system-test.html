@@ -33,7 +33,9 @@
 <link rel="stylesheet" href="./himart-wide-refine-v15.css?v=a28fa24">
 <link rel="stylesheet" href="./himart-production-refine-v16.css?v=571c0a5">
 <link rel="stylesheet" href="./himart-mobile-v17.css?v=mobile-title-overflow-v18">
-<link rel="stylesheet" href="./portfolio-design-system.css?v=1">
+<link rel="stylesheet" href="./himart-production-mobile-v17.css?v=51767b2">
+<link rel="stylesheet" href="./himart-production-refine-v18.css?v=1bb7bb8">
+<link rel="stylesheet" href="./portfolio-design-system.css?v=2">
 <style>
 .himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
@@ -41,7 +43,7 @@
 
 </style>
 </head>
-<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-design-system-test">
+<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-design-system-test">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
 <main id="live-main"><div class="hm-wrap" style="padding-top:180px;min-height:100vh"><p style="color:rgba(255,255,255,.55)">CASE LOADING…</p></div></main>
 <script>
@@ -140,10 +142,15 @@
                           const prodV16=document.createElement('script');
                           prodV16.src='./himart-production-refine-v16.js?v=e8c6650';
                           prodV16.onload=()=>{
-                            prepareWideMotion();
-                            const boot=document.createElement('script');
-                            boot.src='./himart-live-boot.js?v=9f74114';
-                            document.body.appendChild(boot);
+                            const prodV18=document.createElement('script');
+                            prodV18.src='./himart-production-refine-v18.js?v=09abf12';
+                            prodV18.onload=()=>{
+                              prepareWideMotion();
+                              const boot=document.createElement('script');
+                              boot.src='./himart-live-boot.js?v=9f74114';
+                              document.body.appendChild(boot);
+                            };
+                            document.body.appendChild(prodV18);
                           };
                           document.body.appendChild(prodV16);
                         };
@@ -169,6 +176,8 @@
     };
     document.body.appendChild(transform);
   }catch(err){
+    document.body.classList.remove('himart-v18-loading');
+    document.body.classList.add('himart-v18-ready');
     main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';
     console.error(err);
   }
