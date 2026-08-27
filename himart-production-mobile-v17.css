@@ -1,0 +1,277 @@
+/* Himart production mobile refinement v17 — 2026-08-27
+   Mobile-only geometry normalization. Desktop remains untouched. */
+
+@media(max-width:780px){
+  /* ---------- MOBILE FRAME ---------- */
+  html body.himart-wide-test-page.himart-prod-v16{
+    overflow-x:hidden!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 .hm-wrap{
+    width:100%!important;
+    max-width:100%!important;
+    padding-left:24px!important;
+    padding-right:24px!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Give line + title combinations enough air on narrow screens. */
+  html body.himart-wide-test-page.himart-prod-v16 .hm-subsection,
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-card,
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-bridge,
+  html body.himart-wide-test-page.himart-prod-v16 #journey .journey-signal-subsection,
+  html body.himart-wide-test-page.himart-prod-v16 #journey .journey-redesign-subsection{
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 .hm-subhead{
+    padding-top:36px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 .hm-subhead .hm-subtitle + .hm-subcopy,
+  html body.himart-wide-test-page.himart-prod-v16 .hm-subhead .forced-redesign-title + .hm-subcopy,
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-card-head .desc{
+    margin-top:20px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 .hm-source{
+    margin-top:20px!important;
+    padding-top:18px!important;
+  }
+
+  /* ---------- 01 / CIRCULAR EVIDENCE ---------- */
+  /* One proportional circle per row. The wrap supplies 24px side gutters. */
+  html body.himart-wide-test-page.himart-prod-v16 #brand .ring-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:32px!important;
+    width:100%!important;
+    justify-items:stretch!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .ring-card{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    height:auto!important;
+    aspect-ratio:1/1!important;
+    justify-self:stretch!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .ring-card .inner{
+    width:72%!important;
+    max-width:none!important;
+    margin:auto!important;
+  }
+
+  /* Summary / feedback geometry becomes true full-width mobile blocks. */
+  html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-graph,
+  html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-grid{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    gap:0!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-block,
+  html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-card{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    min-height:0!important;
+    height:auto!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .sentiment-block + .sentiment-block,
+  html body.himart-wide-test-page.himart-prod-v16 #brand .conclusion-card + .conclusion-card{
+    border-top:1px solid rgba(255,255,255,.10)!important;
+  }
+
+  /* Principle cards fill the available mobile width. */
+  html body.himart-wide-test-page.himart-prod-v16 #brand .direction-list{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    padding:32px 0!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card::after{
+    display:none!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #brand .direction-card + .direction-card{
+    border-top:1px solid rgba(255,255,255,.05)!important;
+  }
+
+  /* ---------- 02 / DATA SHAPES ---------- */
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-viz,
+  html body.himart-wide-test-page.himart-prod-v16 #data .chart-wrap,
+  html body.himart-wide-test-page.himart-prod-v16 #data .landing-chart,
+  html body.himart-wide-test-page.himart-prod-v16 #data .wide-segmented-chart,
+  html body.himart-wide-test-page.himart-prod-v16 #data .wide-segmented-bar{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-bridge-grid{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-bridge-grid article{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    height:auto!important;
+    min-height:240px!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #data .data-bridge-grid article::after{
+    display:none!important;
+  }
+
+  /* ---------- 03 / JOURNEY GEOMETRY ---------- */
+  html body.himart-wide-test-page.himart-prod-v16 #journey{
+    --v13-node-size:auto!important;
+    --v13-arrow-size:auto!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .journey-signal-subsection .flow-row,
+  html body.himart-wide-test-page.himart-prod-v16 #journey .journey-redesign-subsection .flow-row,
+  html body.himart-wide-test-page.himart-prod-v16 #journey .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-inner{
+    display:flex!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    align-items:stretch!important;
+    justify-content:flex-start!important;
+    gap:32px!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  /* Tablet wrappers scale to the viewport instead of preserving desktop node widths. */
+  html body.himart-wide-test-page.himart-prod-v16 #journey .wide-flow-cluster.v12-journey-tablet{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:42px 18px 24px!important;
+    border-radius:42px!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label{
+    max-width:calc(100% - 40px)!important;
+    padding:0 12px!important;
+    line-height:1.45!important;
+  }
+
+  /* Every circular journey node occupies the full safe inner width and stays perfectly proportional. */
+  html body.himart-wide-test-page.himart-prod-v16 #journey .journey-signal-subsection .flow-node,
+  html body.himart-wide-test-page.himart-prod-v16 #journey .journey-redesign-subsection .flow-node,
+  html body.himart-wide-test-page.himart-prod-v16 #journey .wide-flow-cluster.v12-journey-tablet .flow-node{
+    position:relative!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:1/1!important;
+    margin:0!important;
+    padding:clamp(30px,9vw,44px)!important;
+    box-sizing:border-box!important;
+  }
+
+  /* DOM arrows are hidden on mobile. One controlled downward arrow is generated between nodes instead. */
+  html body.himart-wide-test-page.himart-prod-v16 #journey .flow-arrow{
+    display:none!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .flow-node::after{
+    display:none!important;
+    content:none!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .flow-node:not(:last-of-type)::after{
+    display:block!important;
+    content:'›'!important;
+    position:absolute!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:-28px!important;
+    width:auto!important;
+    height:auto!important;
+    border:0!important;
+    background:transparent!important;
+    color:rgba(255,255,255,.44)!important;
+    font-family:var(--hm-en)!important;
+    font-size:28px!important;
+    font-weight:300!important;
+    line-height:1!important;
+    transform:translateX(-50%) rotate(90deg)!important;
+    transform-origin:center!important;
+    z-index:6!important;
+  }
+  /* A single connector is also shown between a tablet group and the following standalone node/group. */
+  html body.himart-wide-test-page.himart-prod-v16 #journey .wide-flow-cluster.v12-journey-tablet:not(:last-child)::after{
+    content:'›'!important;
+    display:block!important;
+    position:absolute!important;
+    left:50%!important;
+    bottom:-28px!important;
+    color:rgba(255,255,255,.44)!important;
+    font-family:var(--hm-en)!important;
+    font-size:28px!important;
+    font-weight:300!important;
+    line-height:1!important;
+    transform:translateX(-50%) rotate(90deg)!important;
+    z-index:6!important;
+  }
+
+  /* Role cards become a stable one-column mobile system. */
+  html body.himart-wide-test-page.himart-prod-v16 #journey .role-grid{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .role-card{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    min-height:0!important;
+    height:auto!important;
+    padding:32px 0!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .role-card::after{
+    display:none!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #journey .role-card + .role-card{
+    border-top:1px solid rgba(255,255,255,.05)!important;
+  }
+
+  /* ---------- 04 / PROTOTYPE ---------- */
+  /* Desktop keeps three screens per row; mobile gives each visual enough width to be legible. */
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case,
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-row{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    gap:32px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-visual,
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-phones,
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    max-width:100%!important;
+    gap:20px!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-visual .galaxy-ultra-mockup,
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-phones .phone-card{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+  }
+
+  /* Avoid narrow, squeezed labels alongside rules in the prototype area. */
+  html body.himart-wide-test-page.himart-prod-v16 #direction .prototype-case-copy,
+  html body.himart-wide-test-page.himart-prod-v16 #direction .production-prototype-copy{
+    padding-top:24px!important;
+    border-top:1px solid rgba(255,255,255,.10)!important;
+  }
+}
