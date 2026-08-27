@@ -295,6 +295,69 @@ body.himart-design-system-test .flow-node{container-type:inline-size}
 body.himart-design-system-test .flow-node h4{font-size:clamp(16px,7cqi,20px)!important;color:var(--ds-text-primary)!important}
 body.himart-design-system-test .flow-node p{font-size:clamp(11px,5cqi,13px)!important;color:var(--ds-text-supporting)!important}
 
+/* Final semantic hierarchy lock.
+   Existing Himart refinements use highly specific selectors, so the test layer
+   repeats semantic roles with #live-main to keep the guide authoritative. */
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .hm-title,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .hm-section-title,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .hm-subtitle,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .data-card h3,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .flow-head h3,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .ring-card h4,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .direction-card h4,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .data-bridge-grid article h4,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .flow-node h4,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .prototype-case-copy h3{
+  color:var(--ds-text-primary)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .hm-lead,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .hm-section-desc,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .hm-subcopy,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #data .data-card .desc,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .flow-head>p,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main .prototype-intro>p{
+  color:var(--ds-text-supporting)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #brand .ring-card p{
+  color:var(--ds-text-supporting)!important;
+  font-size:clamp(12px,4cqi,15px)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #brand .direction-card p,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #brand .conclusion-card p,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #data .data-bridge-grid article p,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #direction .prototype-case-copy p{
+  color:var(--ds-text-supporting)!important;
+  font-size:var(--ds-type-supporting)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #data .flow-node p,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #journey .flow-node p{
+  color:var(--ds-text-supporting)!important;
+  font-size:clamp(11px,5cqi,13px)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #data .flow-node h4,
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #journey .flow-node h4{
+  color:var(--ds-text-primary)!important;
+  font-size:clamp(16px,7cqi,20px)!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #data .number-panel h4{
+  color:var(--ds-text-primary)!important;
+  font-size:20px!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #data .number-panel p{
+  color:var(--ds-text-supporting)!important;
+  font-size:14px!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #journey .role-card .hm-role-name{
+  color:var(--ds-accent-primary)!important;
+  font-size:var(--ds-type-mid)!important;
+  line-height:1.28!important;
+}
+html body.himart-wide-test-page.himart-prod-v16.himart-design-system-test #live-main #journey .role-card p{
+  color:var(--ds-text-supporting)!important;
+  font-size:var(--ds-type-supporting)!important;
+  line-height:1.62!important;
+}
+
 /* Accessibility defaults for reusable pages. */
 body.himart-design-system-test a:focus-visible{
   outline:var(--ds-stroke-focus) solid var(--ds-line-focus)!important;
