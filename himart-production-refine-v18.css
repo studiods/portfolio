@@ -37,7 +37,7 @@ html body.himart-wide-test-page.himart-prod-v18 #journey .role-card .hm-role-nam
   display:block!important;
   width:100%!important;
   margin:0!important;
-  color:var(--hm-blue)!important;
+  color:#fff!important;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif!important;
   font-size:28px!important;
   font-weight:300!important;
