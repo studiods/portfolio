@@ -1,12 +1,14 @@
 /* Himart production role-grid refinement v19 — 2026-08-28
-   Two-up role-definition rows with consistent horizontal rules and diagonal title/copy placement. */
+   Two-up role-definition rows with strict 50:50 columns and fixed 400px desktop row height. */
 
 @media(min-width:781px){
-  /* 8 cards = 2 per row / 4 rows. The first rule matches every subsequent row rule. */
+  /* 8 cards = 2 per row / 4 rows. Each card occupies exactly half the row. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-grid{
     display:grid!important;
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:400px!important;
     gap:0!important;
+    width:100%!important;
     border-top:1px solid rgba(255,255,255,.14)!important;
     border-bottom:1px solid rgba(255,255,255,.14)!important;
   }
@@ -14,32 +16,36 @@
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card,
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card:nth-child(n){
     position:relative!important;
-    display:grid!important;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
-    grid-template-rows:auto 1fr auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:space-between!important;
+    width:100%!important;
+    min-width:0!important;
     min-height:400px!important;
     height:400px!important;
+    max-height:400px!important;
     padding:32px!important;
+    box-sizing:border-box!important;
     border:0!important;
     border-radius:0!important;
     background:transparent!important;
-    align-items:start!important;
     text-align:left!important;
-    box-sizing:border-box!important;
+    overflow:hidden!important;
   }
 
-  /* Same horizontal rule above every row, including the first card row. */
+  /* Same horizontal rule above every row after the first. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card:nth-child(n+3){
     border-top:1px solid rgba(255,255,255,.14)!important;
   }
 
-  /* Clear older 4-column divider logic first. */
+  /* Clear all older divider rules first. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card::after{
     display:none!important;
     content:none!important;
   }
 
-  /* One full-height divider splits each row into equal halves. */
+  /* One full-height 8% divider in the exact middle of each row. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card:nth-child(odd)::after{
     display:block!important;
     content:""!important;
@@ -51,35 +57,32 @@
     background:rgba(255,255,255,.08)!important;
   }
 
-  /* Title: upper-left. Existing size, weight and color remain untouched. */
+  /* Title stays at upper-left of its 50% cell. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card .hm-role-name{
-    grid-column:1!important;
-    grid-row:1!important;
-    align-self:start!important;
-    justify-self:start!important;
+    display:block!important;
     width:100%!important;
     max-width:100%!important;
     margin:0!important;
+    align-self:flex-start!important;
   }
 
-  /* Description: lower-right while preserving the existing typography/color. */
+  /* Description sits in the lower-right area of the same 50% cell. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card p{
-    grid-column:2!important;
-    grid-row:3!important;
-    align-self:end!important;
-    justify-self:end!important;
-    width:100%!important;
-    max-width:100%!important;
-    margin:0!important;
+    display:block!important;
+    width:62%!important;
+    max-width:62%!important;
+    margin:auto 0 0 auto!important;
     padding-top:0!important;
+    align-self:flex-end!important;
     text-align:left!important;
   }
 }
 
 @media(max-width:780px){
-  /* Keep the mobile cards stable: one card per row, preserving the existing responsive type scale. */
+  /* Mobile remains one card per row with the existing responsive type scale. */
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-grid{
     grid-template-columns:1fr!important;
+    grid-auto-rows:auto!important;
   }
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card,
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card:nth-child(n){
@@ -87,6 +90,14 @@
     flex-direction:column!important;
     min-height:0!important;
     height:auto!important;
+    max-height:none!important;
+  }
+  html body.himart-wide-test-page.himart-prod-v18 #journey .role-card p{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding-top:clamp(18px,6cqw,28px)!important;
+    align-self:stretch!important;
   }
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card::after{
     display:none!important;
