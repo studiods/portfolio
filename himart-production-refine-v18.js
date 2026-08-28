@@ -27,6 +27,11 @@
       .find(section=>section.querySelector('.hm-subtitle')?.textContent.includes('각 화면의 역할'));
     const roleGrid=roleSection?.querySelector('.role-grid') || journey?.querySelector('.role-grid');
     if(roleSection){
+      const title=roleSection.querySelector('.hm-subtitle');
+      if(title){
+        const prefix=/^\s*(?:0?3|3)\.\s*/.test(title.textContent||'')?'3. ':'';
+        title.textContent=`${prefix}그리고 각 여정의 역할을 다시 정의했습니다.`;
+      }
       const subcopy=roleSection.querySelector('.hm-subcopy');
       if(subcopy)subcopy.textContent='앞서 정리한 내용을 바탕으로 여정별, 화면별 역할을 정의했습니다.';
     }
