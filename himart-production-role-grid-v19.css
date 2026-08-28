@@ -17,14 +17,15 @@
     display:grid!important;
     grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
     grid-template-rows:auto 1fr auto!important;
-    min-height:330px!important;
-    height:auto!important;
+    min-height:400px!important;
+    height:400px!important;
     padding:32px!important;
     border:0!important;
     border-radius:0!important;
     background:transparent!important;
     align-items:start!important;
     text-align:left!important;
+    box-sizing:border-box!important;
   }
 
   /* Same horizontal rule above every row, including the first card row. */
@@ -85,6 +86,7 @@
     display:flex!important;
     flex-direction:column!important;
     min-height:0!important;
+    height:auto!important;
   }
   html body.himart-wide-test-page.himart-prod-v18 #journey .role-card::after{
     display:none!important;
