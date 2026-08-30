@@ -137,7 +137,6 @@ strong,b{font-weight:500}
 
 .behavior-stack{margin-top:var(--s-16);border-top:1px solid var(--line)}
 .behavior-panel{min-height:80svh;display:grid;grid-template-columns:minmax(320px,.72fr) minmax(0,1.28fr);gap:var(--s-20);align-content:center;padding:var(--s-24) 0;border-bottom:1px solid var(--line)}
-.behavior-panel.reverse .behavior-copy,.behavior-panel.reverse>div:not(.behavior-copy){order:initial}
 .behavior-copy>span{font-size:var(--type-note);font-weight:500;color:var(--title)}
 .behavior-copy h3{margin-top:var(--s-4);font-size:var(--type-section);line-height:1.05;letter-spacing:-.05em;font-weight:200;word-break:keep-all}
 .behavior-copy p{max-width:560px;margin-top:var(--s-4);font-size:var(--type-body);line-height:1.75;color:var(--body);word-break:keep-all}
@@ -333,7 +332,6 @@ strong,b{font-weight:500}
   .perception-stats article+article{border-left:0;border-top:1px solid var(--line)}
   .channel-row{grid-template-columns:1fr;gap:var(--s-5)}
   .behavior-panel{min-height:auto;grid-template-columns:1fr;gap:var(--s-12)}
-  .behavior-panel.reverse .behavior-copy,.behavior-panel.reverse>div:not(.behavior-copy){order:initial}
   .metric-pair{order:initial}
   .behavior-conclusion{grid-column:auto}
   .journey-band{grid-template-columns:repeat(2,1fr)}
