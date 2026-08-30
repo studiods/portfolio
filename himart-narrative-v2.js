@@ -1,85 +1,116 @@
 (()=>{
   'use strict';
+
   const wait=()=>{
     const main=document.getElementById('live-main');
     const brand=main?.querySelector('#brand');
     const problem=brand?.querySelector('.narrative-problem');
     const reality=brand?.querySelector('.narrative-reality');
     const signals=main?.querySelector('#data .narrative-signals');
-    if(!main||!brand||!problem||!reality||!signals){setTimeout(wait,60);return;}
+    const journey=main?.querySelector('#journey');
+    const direction=main?.querySelector('#direction');
 
+    if(!main||!brand||!problem||!reality||!signals||!journey||!direction){
+      setTimeout(wait,60);
+      return;
+    }
+
+    /* 01 / PROBLEM DEFINITION */
     const brandHead=brand.querySelector(':scope > .hm-wrap > .hm-section-head');
-    const title=brandHead?.querySelector('.hm-section-title');
-    const desc=brandHead?.querySelector('.hm-section-desc');
-    if(title)title.innerHTML='홈 개편 요청을 받았지만,<br>화면보다 먼저 문제가 어디에 있는지 확인했습니다.';
-    if(desc)desc.innerHTML='고객 조사와 실제 이용 데이터를 따로 본 뒤, <strong>두 결과가 동시에 가리키는 단절</strong>만 문제로 남겼습니다.';
+    const brandTitle=brandHead?.querySelector('.hm-section-title');
+    const brandDesc=brandHead?.querySelector('.hm-section-desc');
+    if(brandTitle)brandTitle.innerHTML='구매 여정을 개선하기 전에,<br>왜 고객이 온라인에서 하이마트를 선택하지 않는지부터 정의했습니다.';
+    if(brandDesc)brandDesc.innerHTML='고객의 인식과 실제 행동을 나눠 보고, <strong>두 결과가 함께 가리키는 단절</strong>만 문제로 남겼습니다.';
 
-    const diagnosis=document.createElement('div');
-    diagnosis.className='narrative-block hm-reveal narrative-diagnosis';
-    diagnosis.innerHTML=`
-      <span class="narrative-subno">01.1 / PROBLEM DEFINITION</span>
-      <h3 class="narrative-title">인지가 약해서가 아니었습니다.<br>알고도 다음 행동으로 이어지지 않는 구간이 문제였습니다.</h3>
-      <div class="diagnosis-grid">
-        <article class="diagnosis-panel">
-          <small>AWARENESS</small>
-          <h4>‘가전 살 곳’ 하면<br>하이마트가 가장 먼저 떠올랐습니다.</h4>
-          <div class="diagnosis-big"><b>32.6</b><span>%</span></div>
-          <div class="compare-bars">
-            <div class="compare-row"><span>하이마트</span><div class="compare-track"><i style="--w:100%"></i></div><b>32.6%</b></div>
-            <div class="compare-row muted"><span>쿠팡</span><div class="compare-track"><i style="--w:40.2%"></i></div><b>13.1%</b></div>
-          </div>
-        </article>
-        <article class="diagnosis-panel">
-          <small>EXPERIENCE GAP</small>
-          <h4>서비스는 알고 있었지만<br>실제 경험으로 이어지지 않았습니다.</h4>
-          <div class="diagnosis-big"><b>54.7</b><span>%p GAP</span></div>
-          <div class="compare-bars">
-            <div class="compare-row"><span>Care 인지</span><div class="compare-track"><i style="--w:100%"></i></div><b>72.3%</b></div>
-            <div class="compare-row muted"><span>Care 경험</span><div class="compare-track"><i style="--w:24.3%"></i></div><b>17.6%</b></div>
-          </div>
-        </article>
-        <article class="diagnosis-panel">
-          <small>CHOICE → RELATION</small>
-          <h4>경험 전환과 반복 관계에서<br>다시 한 번 큰 폭으로 이탈했습니다.</h4>
-          <div class="choice-stack">
-            <div class="choice-metric"><strong>52.9<span>%</span> : 12.6<span>%</span></strong><p>서비스 미경험 고객의 선택 · 제조사 vs 하이마트</p></div>
-            <div class="choice-metric"><strong>76.7<span>%</span></strong><p>지난 5개년 구매 고객 중 1회 구매 후 이탈</p></div>
-          </div>
-        </article>
-      </div>
-      <div class="asset-strip"><span>멀티 브랜드 비교·상담</span><span>전국 매장</span><span>직영 서비스 인력</span><span>설치·A/S 신뢰</span></div>
-      <div class="diagnosis-conclusion"><p>즉 하이마트는 <strong>‘모르는 브랜드’가 아니라, 강한 자산이 온라인에서 경험·선택·관계로 전환되지 않는 브랜드</strong>였습니다.</p></div>
-      <div class="hm-source">SOURCE · Deloitte Consulting Korea, 평생Care서비스 멤버십 설계 소비자 조사 · 2026.07 / CRM 770명, 일반 소비자 900명 + 정성 조사 · 구매데이터 분석</div>`;
-    problem.parentElement.insertBefore(diagnosis,problem);
-    problem.remove();
-    reality.remove();
-    requestAnimationFrame(()=>diagnosis.classList.add('is-in'));
+    const problemTitle=problem.querySelector('.narrative-title');
+    const problemCopy=problem.querySelector('.narrative-copy');
+    if(problemTitle)problemTitle.innerHTML='표면적인 데이터 분석만으로는<br>무엇을 바꿔야 할지 알 수 없었습니다.';
+    if(problemCopy)problemCopy.innerHTML='고객이 말하는 인식과 실제 행동을 따로 본 뒤, <strong>같은 방향을 가리키는 문제만</strong> 남겼습니다.';
 
+    const problemItems=[...problem.querySelectorAll('.problem-item')];
+    if(problemItems[0]){
+      const p=problemItems[0].querySelector('p');
+      if(p)p.textContent='하이마트를 떠올리는지, 매장과 온라인에 어떤 기대를 갖는지 확인했습니다.';
+    }
+    if(problemItems[1]){
+      const p=problemItems[1].querySelector('p');
+      if(p)p.textContent='어디서 들어와 무엇을 보고, 어느 지점에서 다음 행동이 끊기는지 이용 데이터를 따라갔습니다.';
+    }
+    if(problemItems[2]){
+      const h=problemItems[2].querySelector('h4');
+      const p=problemItems[2].querySelector('p');
+      if(h)h.innerHTML='두 이야기가<br>겹치는 지점만 남겼습니다.';
+      if(p)p.textContent='고객 의견과 행동 데이터가 함께 지지하는 문제만 우선순위로 남겼습니다.';
+    }
+
+    const realityTitle=reality.querySelector('.narrative-title');
+    const realityCopy=reality.querySelector('.narrative-copy');
+    if(realityTitle)realityTitle.innerHTML='하이마트는 잊혀진 브랜드가 아니었습니다.<br>다만 강한 전문성이 온라인 경험으로 이어지지 않는 것이 문제였습니다.';
+    if(realityCopy)realityCopy.innerHTML='최초 상기, 멀티 브랜드 비교, 직영 서비스는 강했습니다. 문제는 이 강점이 <strong>실제 경험과 선택, 반복 관계</strong>로 이어지지 않는 데 있었습니다.';
+
+    const synthesis=reality.querySelector('.brand-synthesis');
+    if(synthesis)synthesis.classList.add('narrative-blue-synthesis');
+
+    /* 02 / BEHAVIOR */
     const dataHead=main.querySelector('#data .hm-section-head');
+    const dataTitle=dataHead?.querySelector('.hm-section-title');
     const dataDesc=dataHead?.querySelector('.hm-section-desc');
-    if(dataDesc)dataDesc.innerHTML='고객의 말만으로 문제를 단정하지 않았습니다. 실제 이용 행동에서도 <strong>다음 탐색과 구매 행동이 약해지는 구간</strong>이 반복되는지 확인했습니다.';
-    signals.innerHTML=`
-      <span class="narrative-subno">02.1 / BEHAVIOR SIGNALS</span>
-      <h3 class="narrative-title">행동 데이터도 같은 방향을 가리켰습니다.<br>유입은 있었지만 다음 탐색과 구매 확신으로 이어지는 힘이 약했습니다.</h3>
-      <div class="behavior-grid">
-        <article class="behavior-card"><small>ENTRY</small><h4>홈부터 시작하지 않았습니다.</h4><div class="behavior-value">68<span>%</span></div><p class="behavior-note">2026 H1 · AD·CPS·CRM 기반 외부 맥락 유입</p></article>
-        <article class="behavior-card"><small>CAMPAIGN → NEXT</small><h4>기획전에서 다음 행동이 크게 끊겼습니다.</h4><div class="behavior-value">52.2<span>%</span></div><div class="behavior-mini"><div><span>바로 종료</span><b>52.2%</b></div><div><span>상품 도달</span><b>9.3%</b></div><div><span>검색/카테고리 도달</span><b>6.6%</b></div></div></article>
-        <article class="behavior-card"><small>SEARCH</small><h4>검색은 오히려 더 중요해졌습니다.</h4><div class="behavior-slope"><div><strong>3.26%</strong><span>2025 H1</span></div><i>→</i><div><strong style="color:var(--hm-blue)">9.34%</strong><span>2026 H1</span></div></div><p class="behavior-note">전체 세션 대비 검색 비중</p></article>
-        <article class="behavior-card"><small>PDP → PURCHASE</small><h4>상품 관심은 유지됐지만 구매 행동은 약해졌습니다.</h4><div class="behavior-mini"><div><span>PDP 이용</span><b>10.09M → 10.87M</b></div><div><span>장바구니</span><b>227K → 182K</b></div><div><span>구매</span><b>334K → 277K</b></div></div></article>
-      </div>
-      <div class="behavior-end"><p>그래서 목표를 <strong>‘홈을 새로 만든다’가 아니라, 어디서 들어와도 탐색 → 비교 → 구매 → 설치·케어가 이어지는 여정을 만든다</strong>로 바꿨습니다.</p></div>
-      <div class="hm-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 / 하이마트 쇼핑몰 이용 현황 Mobile·PC 2026.01—06 / 온라인 백데이터 검색·PDP·장바구니·구매완료</div>`;
+    if(dataTitle)dataTitle.innerHTML='고객의 목소리에서 드러난 문제는<br>실제 이용 패턴에서도 반복됐습니다.';
+    if(dataDesc)dataDesc.innerHTML='유입부터 구매까지 실제 행동을 따라가며, <strong>같은 단절이 반복되는지</strong> 확인했습니다.';
 
-    const direction=main.querySelector('#direction');
-    direction?.querySelectorAll('details.hm-more').forEach(details=>{
-      if(!details.querySelector('.prototype-case,.production-v18-row,.production-prototype-row,.phone-card'))return;
+    const signalTitle=signals.querySelector('.narrative-title');
+    if(signalTitle)signalTitle.innerHTML='고객은 찾아왔지만<br>그 다음으로 연결되지 못했습니다.';
+
+    const firstSignalRule=signals.querySelector('.signal-item:first-child .signal-rule');
+    if(firstSignalRule)firstSignalRule.remove();
+
+    const bridge=signals.querySelector('.narrative-bridge p');
+    if(bridge)bridge.innerHTML='사용자 의견에서는 <strong>“온라인몰이 잘 떠오르지 않는다”</strong>는 이야기가 반복됐고, 실제 이용 데이터에서는 <strong>“들어와도 다음 단계로 이어지지 않는다”</strong>는 행동이 확인됐습니다. 두 결과가 같은 방향을 가리켰기 때문에 목표를 <strong>‘화면을 새로 만든다’가 아니라 ‘고객의 구매 여정 안에 자리를 만든다’</strong>로 다시 정의했습니다.';
+
+    /* 03 / PRINCIPLES */
+    const journeyHead=journey.querySelector(':scope > .hm-wrap > .hm-section-head');
+    const journeyTitle=journeyHead?.querySelector('.hm-section-title');
+    const journeyDesc=journeyHead?.querySelector('.hm-section-desc');
+    if(journeyTitle)journeyTitle.innerHTML='그래서 화면보다 먼저,<br>여정을 설계하는 여섯 가지 원칙을 정했습니다.';
+    if(journeyDesc)journeyDesc.textContent='모든 화면이 같은 방향으로 움직이도록, 구매 여정 전체의 원칙부터 정했습니다.';
+
+    const principles=journey.querySelector('.principle-grid');
+    if(principles){
+      principles.innerHTML=`
+        <article class="principle-item"><small>01 / FAMILIARITY</small><h4>익숙함이<br>먼저입니다.</h4><p>검색·필터·상품카드·결제처럼 이미 학습한 커머스 문법은 그대로 활용합니다.</p></article>
+        <article class="principle-item"><small>02 / NEXT STEP</small><h4>두 번째 걸음을<br>만듭니다.</h4><p>각 화면의 역할을 ‘머무르게 하는 것’이 아니라 다음 판단으로 자연스럽게 보내는 데 둡니다.</p></article>
+        <article class="principle-item"><small>03 / OMNI</small><h4>매장과 사람을<br>잇습니다.</h4><p>실물 확인과 전문가 상담이 필요한 순간 온라인에서 자연스럽게 오프라인 강점으로 연결합니다.</p></article>
+        <article class="principle-item"><small>04 / NARROW</small><h4>고민의 시간을<br>줄입니다.</h4><p>카테고리 안에서는 많이 찾는 상품과 선택 기준을 먼저 보여 후보를 빠르게 좁힙니다.</p></article>
+        <article class="principle-item"><small>05 / CONFIDENCE</small><h4>불확실성을<br>확신으로 바꿉니다.</h4><p>검색과 비교 과정에서 모호한 니즈를 구체적인 상품 후보와 판단 기준으로 바꿉니다.</p></article>
+        <article class="principle-item"><small>06 / DECISION</small><h4>결정을 끝낼 수<br>있게 합니다.</h4><p>상세페이지에서 가격·혜택·설치·상담·케어를 함께 판단해 구매 결정을 완료하도록 돕습니다.</p></article>`;
+    }
+
+    /* 04 / PROTOTYPE */
+    const directionHead=direction.querySelector(':scope > .hm-wrap > .hm-section-head');
+    const directionTitle=directionHead?.querySelector('.hm-section-title');
+    const directionDesc=directionHead?.querySelector('.hm-section-desc');
+    if(directionTitle)directionTitle.innerHTML='앞서 정의한 UX 전략을 바탕으로 빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.';
+    if(directionDesc)directionDesc.textContent='정의한 원칙을 화면과 인터랙션으로 옮기고, 내부 검증을 반복했습니다.';
+
+    const standardRule=direction.querySelector('.design-rule article:first-child h4');
+    if(standardRule)standardRule.innerHTML='익숙함은 적극적으로<br>가져옵니다.';
+
+    /* Prototype cases stay fully expanded. */
+    direction.querySelectorAll('details.hm-more').forEach(details=>{
+      if(!details.querySelector('.prototype-case,.production-v18-row,.production-prototype-row,.phone-card,.phone-gallery'))return;
       const body=details.querySelector('.hm-more-body');
       if(body){[...body.children].forEach(child=>details.parentElement.insertBefore(child,details));}
       details.remove();
+    });
+    direction.querySelectorAll('.prototype-case,.production-v18-row,.production-prototype-row,.phone-gallery').forEach(el=>{
+      el.hidden=false;
+      el.style.removeProperty('display');
+      el.classList.add('narrative-prototype-visible');
     });
 
     document.body.classList.add('narrative-v2-ready');
     window.dispatchEvent(new Event('scroll'));
   };
+
   wait();
 })();
