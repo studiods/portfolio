@@ -7,7 +7,7 @@
   <title>Himart Case Framework Guide</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./typography.css?v=8">
-  <link rel="stylesheet" href="./himart-lead-story-test.css?v=3">
+  <link rel="stylesheet" href="./himart-lead-story-test.css?v=4">
 </head>
 <body class="guide-page">
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -24,9 +24,9 @@
   <main id="main">
     <section class="guide-hero" id="top">
       <div class="wrap">
-        <p class="eyebrow">하이마트 UX 사례 디자인·콘텐츠 가이드 · V2.0</p>
-        <h1>다섯 가지 글자 크기와<br>4px 간격 체계로<br>모든 사례를 정리합니다.</h1>
-        <p>타이틀은 흰색 100%, 본문은 흰색 70%로 구분하고 블루·그린을 중심으로 사용합니다. 핵심 내용은 먼저 보이고 세부 근거는 관련 섹션의 ‘더 알아보기’에서 확인할 수 있게 구성합니다.</p>
+        <p class="eyebrow">하이마트 UX 사례 디자인·콘텐츠 가이드 · V3.0</p>
+        <h1>다섯 가지 글자 크기와<br>1440px 화면 기준으로<br>모든 사례를 정리합니다.</h1>
+        <p>글자 크기는 다섯 역할로 고정하고, PC는 1440px 기준선에 맞춥니다. 제목은 한 위치에서만 읽히게 두고, 그래프와 수치는 스크롤 진입 시 그려지도록 구성합니다.</p>
         <nav class="guide-links" aria-label="가이드 목차">
           <a href="#type">01 글자</a>
           <a href="#spacing">02 간격</a>
@@ -51,15 +51,15 @@
           <table class="guide-table">
             <thead><tr><th>역할</th><th>PC</th><th>모바일</th><th>사용 범위</th></tr></thead>
             <tbody>
-              <tr><td>첫 타이틀</td><td>84–152px</td><td>48–64px</td><td>페이지 첫 화면의 프로젝트 핵심 문장 1개</td></tr>
-              <tr><td>대타이틀</td><td>56–88px</td><td>40px</td><td>각 장의 결론형 제목, 핵심 데이터 숫자</td></tr>
-              <tr><td>중·소타이틀</td><td>28px</td><td>24px</td><td>카드 제목, 소결론, 상세 콘텐츠 제목</td></tr>
+              <tr><td>첫 타이틀</td><td>88px</td><td>64px</td><td>페이지 첫 화면의 프로젝트 핵심 문장 1개</td></tr>
+              <tr><td>대타이틀</td><td>48px</td><td>40px</td><td>각 장의 결론형 제목, 핵심 데이터 숫자</td></tr>
+              <tr><td>중·소타이틀</td><td>24px</td><td>24px</td><td>카드 제목, 소결론, 상세 콘텐츠 제목</td></tr>
               <tr><td>본문</td><td>16px</td><td>16px</td><td>설명, 카드 본문, 버튼, 표 본문</td></tr>
               <tr><td>주석</td><td>12px</td><td>12px</td><td>단계 라벨, 출처 성격, 범례, 보조 정보</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="formula-note"><strong>가변 원칙:</strong> 원형·카드처럼 외형과 함께 줄어드는 텍스트는 해당 역할의 모바일 최솟값까지만 축소합니다. 그 이하 폭에서는 외형을 더 줄이지 않고 한 열 구조로 전환합니다.</p>
+        <p class="formula-note"><strong>고정 원칙:</strong> PC에서는 뷰포트에 따라 제목을 키우거나 줄이지 않습니다. 1440px 기준의 88/48/24/16/12px을 유지하고, 모바일만 64/40/24/16/12px로 한 번 전환합니다.</p>
       </div>
     </section>
 
@@ -119,6 +119,7 @@
               <tr><td>강조선</td><td>4px · 블루/그린/레드</td><td>핵심 결론이나 실제 부정 데이터의 시작</td></tr>
               <tr><td>비율 막대</td><td>8px 이상</td><td>정성 분류 비중처럼 짧은 비교</td></tr>
               <tr><td>주요 그래프</td><td>12–16px</td><td>유입 구성, 전후 변화, 단계별 증감</td></tr>
+              <tr><td>그래프 진입 모션</td><td>0→100% · 900ms</td><td>스크롤로 해당 그래프가 보일 때 막대와 수치를 순서대로 노출</td></tr>
               <tr><td>표</td><td>가로선만 사용</td><td>열은 정렬과 여백으로 구분하고 세로선은 제거</td></tr>
             </tbody>
           </table>
@@ -136,12 +137,13 @@
           <table class="guide-table">
             <thead><tr><th>영역</th><th>규칙</th><th>적용 방식</th></tr></thead>
             <tbody>
-              <tr><td>기본 컨테이너</td><td>최대 폭 제한 없음</td><td>화면 폭 100%에서 좌우 여백만 제외</td></tr>
-              <tr><td>좌우 안전 여백</td><td>PC 64px · 태블릿 32px · 모바일 20px</td><td>모든 장의 시작선과 끝선을 동일하게 유지</td></tr>
+              <tr><td>기본 컨테이너</td><td>1440px 고정 기준</td><td>PC에서는 1440px 캔버스에 정렬하고, 더 넓은 화면에서는 중앙에 배치</td></tr>
+              <tr><td>좌우 안전 여백</td><td>PC 64px · 태블릿 32px · 모바일 20px</td><td>캔버스 안에서 모든 장의 시작선과 끝선을 동일하게 유지</td></tr>
               <tr><td>첫 화면</td><td>최소 화면 높이 100%</td><td>첫 타이틀과 프로젝트 재정의가 한 화면의 중심이 되게 구성</td></tr>
               <tr><td>핵심 발견</td><td>화면 높이 약 80%</td><td>발견 하나를 큰 제목과 그래프 하나로 구성</td></tr>
               <tr><td>읽기 문장</td><td>폭 제한 유지</td><td>본문은 너무 길어지지 않도록 약 55자 안팎의 행 길이 유지</td></tr>
               <tr><td>데이터·이미지</td><td>가용 폭 전체 사용</td><td>다열 비교와 큰 숫자가 화면을 넓게 점유하도록 배치</td></tr>
+              <tr><td>제목 위치</td><td>모든 장 왼쪽 시작선</td><td>데이터 패널의 좌우 순서를 바꾸지 않고 제목 위치를 고정</td></tr>
             </tbody>
           </table>
         </div>
@@ -195,10 +197,10 @@
           <div><h2>숫자는 지표명이 아니라<br>사용자 행동으로 번역합니다.</h2><p>데이터를 많이 보여주는 것이 데이터 드리븐이 아닙니다. 숫자가 무엇을 의미하고 어떤 결정을 바꿨는지까지 연결될 때 의사결정 근거가 됩니다.</p></div>
         </header>
         <div class="formula">
-          <article><span>01 · FACT</span><h3>무엇이 일어났는가</h3><p>“PDP +7.7%, 장바구니 −20.0%”처럼 계산 기준과 기간이 분명한 사실을 제시합니다.</p></article>
-          <article><span>02 · BEHAVIOR</span><h3>고객은 무엇을 했는가</h3><p>“상품은 더 봤지만 다음 단계로 덜 이동했다”처럼 누구나 이해하는 행동으로 바꿉니다.</p></article>
-          <article><span>03 · INTERPRETATION</span><h3>어떤 가능성을 시사하는가</h3><p>“관심 부족보다 구매 확신과 화면 연결을 점검할 신호”처럼 단정과 해석을 구분합니다.</p></article>
-          <article><span>04 · DECISION</span><h3>무엇을 바꿨는가</h3><p>“PDP 상단에 가격·리뷰·설치·매장 확인을 결정 요약으로 배치”처럼 설계 결정으로 끝냅니다.</p></article>
+          <article><span>01 · 사실</span><h3>무엇이 일어났는가</h3><p>“PDP +7.7%, 장바구니 −20.0%”처럼 계산 기준과 기간이 분명한 사실을 제시합니다.</p></article>
+          <article><span>02 · 행동</span><h3>고객은 무엇을 했는가</h3><p>“상품은 더 봤지만 다음 단계로 덜 이동했다”처럼 누구나 이해하는 행동으로 바꿉니다.</p></article>
+          <article><span>03 · 해석</span><h3>어떤 가능성을 시사하는가</h3><p>“관심 부족보다 구매 확신과 화면 연결을 점검할 신호”처럼 단정과 해석을 구분합니다.</p></article>
+          <article><span>04 · 결정</span><h3>무엇을 바꿨는가</h3><p>“PDP 상단에 가격·리뷰·설치·매장 확인을 결정 요약으로 배치”처럼 설계 결정으로 끝냅니다.</p></article>
         </div>
         <p class="formula-note"><strong>권장 문장:</strong> “2026년 상반기 PDP 이용은 늘었지만 장바구니와 구매는 감소했습니다. 상품 관심이 사라진 것이 아니라 다음 판단을 끝내지 못했을 가능성을 확인했고, PDP의 역할을 ‘설명’에서 ‘결정 완료’로 바꿨습니다.”</p>
         <div class="guide-table-wrap">
