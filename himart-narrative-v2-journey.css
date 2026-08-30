@@ -43,10 +43,10 @@ html body.himart-wide-test-page #journey .journey-block-copy{
 }
 html body.himart-wide-test-page #journey .journey-block-copy span{color:#fff!important;font-weight:300!important}
 
-/* 03.1 — existing circular node + arrow grammar */
+/* 03.1 — circular flow borrowed from the existing broken-point diagram */
 html body.himart-wide-test-page #journey .journey-stage-flow{
   display:grid!important;
-  gap:20px!important;
+  gap:24px!important;
   margin-top:64px!important;
 }
 html body.himart-wide-test-page #journey .journey-flow-row{
@@ -67,9 +67,9 @@ html body.himart-wide-test-page #journey .journey-flow-row .flow-node{
   min-height:218px!important;
   max-height:218px!important;
   aspect-ratio:1/1!important;
-  border:1px solid #fff!important;
+  border:1px solid rgba(255,255,255,.40)!important;
   border-radius:50%!important;
-  padding:28px 22px!important;
+  padding:26px 22px!important;
   display:flex!important;
   flex-direction:column!important;
   align-items:center!important;
@@ -88,7 +88,7 @@ html body.himart-wide-test-page #journey .journey-flow-row .flow-node .hm-card-n
   line-height:1!important;
 }
 html body.himart-wide-test-page #journey .journey-flow-row .flow-node h4{
-  margin:16px 0 0!important;
+  margin:14px 0 0!important;
   color:#fff!important;
   font-size:28px!important;
   line-height:1.25!important;
@@ -96,18 +96,17 @@ html body.himart-wide-test-page #journey .journey-flow-row .flow-node h4{
   text-align:center!important;
 }
 html body.himart-wide-test-page #journey .journey-flow-row .flow-node p{
-  margin:14px 0 0!important;
-  max-width:168px!important;
-  color:rgba(255,255,255,.54)!important;
+  margin:10px 0 0!important;
+  max-width:150px!important;
+  color:rgba(255,255,255,.52)!important;
   font-family:var(--hm-ko)!important;
-  font-size:14px!important;
+  font-size:13px!important;
   font-weight:300!important;
-  line-height:1.48!important;
+  line-height:1.42!important;
   text-align:center!important;
   word-break:keep-all!important;
 }
-html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow,
-html body.himart-wide-test-page #journey .journey-flow-down{
+html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow{
   position:relative!important;
   display:block!important;
   flex:0 0 24px!important;
@@ -116,22 +115,18 @@ html body.himart-wide-test-page #journey .journey-flow-down{
   font-size:0!important;
   color:transparent!important;
 }
-html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow::before,
-html body.himart-wide-test-page #journey .journey-flow-down::before{
+html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow::before{
   content:""!important;
   position:absolute!important;
   left:50%!important;
   top:50%!important;
   width:17px!important;
   height:17px!important;
-  border-top:1px solid rgba(255,255,255,.56)!important;
-  border-right:1px solid rgba(255,255,255,.56)!important;
+  border-top:1px solid rgba(255,255,255,.46)!important;
+  border-right:1px solid rgba(255,255,255,.46)!important;
   transform:translate(-62%,-50%) rotate(45deg)!important;
 }
-html body.himart-wide-test-page #journey .journey-flow-down{
-  margin:0 auto!important;
-  transform:rotate(90deg)!important;
-}
+html body.himart-wide-test-page #journey .journey-flow-down{display:none!important}
 
 /* 03.2 */
 html body.himart-wide-test-page #journey .journey-role-grid{
@@ -203,7 +198,6 @@ html body.himart-wide-test-page #journey .journey-principle-block .principle-ite
   html body.himart-wide-test-page #journey .journey-flow-row{flex-direction:column!important;gap:12px!important}
   html body.himart-wide-test-page #journey .journey-flow-row .flow-node{width:min(76vw,280px)!important;min-width:min(76vw,280px)!important;max-width:min(76vw,280px)!important;height:auto!important;min-height:min(76vw,280px)!important;max-height:none!important;flex-basis:auto!important}
   html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow{width:48px!important;height:46px!important;flex-basis:46px!important;transform:rotate(90deg)!important}
-  html body.himart-wide-test-page #journey .journey-flow-down{display:none!important}
   html body.himart-wide-test-page #journey .journey-role-grid article{grid-template-columns:1fr!important;grid-template-rows:auto auto auto!important;min-height:220px!important}
   html body.himart-wide-test-page #journey .journey-role-grid h4{grid-column:1!important;grid-row:2!important}
   html body.himart-wide-test-page #journey .journey-role-grid p{grid-column:1!important;grid-row:3!important;margin-top:30px!important;align-self:auto!important}
