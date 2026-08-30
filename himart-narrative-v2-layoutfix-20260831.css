@@ -1,30 +1,96 @@
 /* Final layout adjustments — 2026-08-31 */
 
-/* Only the main chapter numbers 01–04 use 16px. */
+:root{
+  --hm-body-60:rgba(255,255,255,.60);
+}
+
+/* Body copy opacity: use 60% white consistently. */
+html body.himart-wide-test-page #live-main p{
+  color:var(--hm-body-60)!important;
+}
+
+/* Only the main chapter numbers 01–04 use 16px and a 16px gap below. */
 html body.himart-wide-test-page #live-main > section > .hm-wrap > .hm-section-head > .hm-section-no,
-html body.himart-wide-test-page #live-main > section > .hm-section-head > .hm-section-no{
+html body.himart-wide-test-page #live-main > section > .hm-section-head > .hm-section-no,
+html body.himart-wide-test-page #brand > .hm-wrap > .hm-section-head > .hm-section-no,
+html body.himart-wide-test-page #data > .hm-wrap > .hm-section-head > .hm-section-no,
+html body.himart-wide-test-page #journey > .hm-wrap > .hm-section-head > .hm-section-no,
+html body.himart-wide-test-page #direction > .hm-wrap > .hm-section-head > .hm-section-no{
+  display:block!important;
+  margin:0 0 16px!important;
+  font-family:var(--hm-en)!important;
   font-size:16px!important;
+  font-weight:300!important;
   line-height:1.2!important;
+  letter-spacing:.02em!important;
   color:var(--hm-blue)!important;
 }
 
 /* Sub-section labels such as 01.1 / 02.1 / 03.1 remain at 12px. */
 html body.himart-wide-test-page :is(
   .narrative-subno,
+  .synthesis-subno,
   .hm-subno,
+  .hm-card-no,
   .problem-item small,
   .proof-label,
   .proof-compare,
   .signal-item small,
   .principle-item small,
   .design-rule small,
-  .behavior-card > small
+  .behavior-card > small,
+  .journey-deep-kicker,
+  .journey-diagram-node small
 ){
   font-size:12px!important;
   line-height:1.5!important;
 }
 
-/* 02.1 behavior metrics return to a single four-column row on desktop. */
+/* 01.1 three-column reasoning cards: align the body-copy start line. */
+html body.himart-wide-test-page .problem-grid{
+  align-items:stretch!important;
+}
+html body.himart-wide-test-page .problem-item{
+  display:grid!important;
+  grid-template-rows:auto minmax(118px,auto) auto!important;
+  align-content:start!important;
+  min-height:330px!important;
+}
+html body.himart-wide-test-page .problem-item h4{
+  align-self:start!important;
+}
+html body.himart-wide-test-page .problem-item p{
+  margin:40px 0 0!important;
+  padding-top:0!important;
+  align-self:start!important;
+}
+
+/* 01.3: fade gradients naturally to 0 instead of cutting off. */
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card::before{
+  background:linear-gradient(
+    to bottom,
+    rgba(0,166,237,.14) 0%,
+    rgba(0,166,237,.11) 18%,
+    rgba(0,166,237,.08) 40%,
+    rgba(0,166,237,.045) 66%,
+    rgba(0,166,237,.018) 84%,
+    rgba(0,166,237,0) 100%
+  )!important;
+  filter:none!important;
+}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative::before{
+  background:linear-gradient(
+    to bottom,
+    rgba(250,72,27,.14) 0%,
+    rgba(250,72,27,.11) 18%,
+    rgba(250,72,27,.08) 40%,
+    rgba(250,72,27,.045) 66%,
+    rgba(250,72,27,.018) 84%,
+    rgba(250,72,27,0) 100%
+  )!important;
+}
+
+/* 02.1 behavior metrics: one four-column row on desktop and aligned body-copy start. */
 html body.himart-wide-test-page #data .narrative-signals .behavior-grid,
 html body.himart-wide-test-page #data .narrative-signals .signal-grid{
   display:grid!important;
@@ -33,13 +99,243 @@ html body.himart-wide-test-page #data .narrative-signals .signal-grid{
   gap:28px!important;
   width:100%!important;
 }
-
-/* Replace the previous auto-resolved vertical gap with a fixed 40px margin. */
+html body.himart-wide-test-page #data .narrative-signals .behavior-card,
+html body.himart-wide-test-page #data .narrative-signals .signal-item{
+  display:grid!important;
+  grid-template-rows:auto auto minmax(92px,auto) auto!important;
+  align-content:start!important;
+  min-height:400px!important;
+}
+html body.himart-wide-test-page #data .narrative-signals .behavior-card h4,
+html body.himart-wide-test-page #data .narrative-signals .signal-item h4{
+  min-height:92px!important;
+}
 html body.himart-wide-test-page #data .narrative-signals .behavior-note,
 html body.himart-wide-test-page #data .narrative-signals .signal-item p{
   margin:40px 0 0!important;
   padding-top:0!important;
   max-width:100%!important;
+  align-self:start!important;
+}
+
+/* 03.1 journey flow: circle lines stay white 20%; blue outlines highlight critical continuity zones. */
+html body.himart-wide-test-page #journey .journey-stage-flow{
+  margin-top:58px!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:32px!important;
+  align-items:stretch!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row + .journey-flow-row{
+  margin-top:34px!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row .flow-node{
+  position:relative!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  background:transparent!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row .journey-row-group{
+  position:absolute!important;
+  top:-16px!important;
+  height:calc(100% + 32px)!important;
+  border:1px solid var(--hm-blue)!important;
+  border-radius:999px!important;
+  pointer-events:none!important;
+  z-index:0!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row.row-top .journey-row-group{
+  left:-12px!important;
+  width:calc(75% + 20px)!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row.row-bottom .journey-row-group{
+  left:calc(25% - 12px)!important;
+  width:calc(75% + 20px)!important;
+}
+html body.himart-wide-test-page #journey .journey-row-group .group-label{
+  position:absolute!important;
+  top:-7px!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  padding:0 10px!important;
+  background:#050505!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-ko)!important;
+  font-size:10px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+}
+
+/* 03.2 role cards: align body-copy start across each row. */
+html body.himart-wide-test-page #journey .journey-role-grid article{
+  display:grid!important;
+  grid-template-rows:auto minmax(112px,auto) auto!important;
+  align-content:start!important;
+  min-height:280px!important;
+}
+html body.himart-wide-test-page #journey .journey-role-grid article h4{
+  min-height:112px!important;
+}
+html body.himart-wide-test-page #journey .journey-role-grid article p{
+  margin:40px 0 0!important;
+  padding-top:0!important;
+  align-self:start!important;
+}
+
+/* Expandable 03.3/03.4 journey analysis. */
+html body.himart-wide-test-page #journey .journey-more-wrap{
+  display:block!important;
+  margin-top:110px!important;
+  padding-top:34px!important;
+  border-top:1px solid rgba(255,255,255,.16)!important;
+}
+html body.himart-wide-test-page #journey details.journey-more{
+  border-top:1px solid rgba(255,255,255,.14)!important;
+  border-bottom:1px solid rgba(255,255,255,.14)!important;
+}
+html body.himart-wide-test-page #journey details.journey-more > summary{
+  list-style:none!important;
+  cursor:pointer!important;
+  padding:28px 0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  color:#fff!important;
+}
+html body.himart-wide-test-page #journey details.journey-more > summary::-webkit-details-marker{
+  display:none!important;
+}
+html body.himart-wide-test-page #journey .journey-more-title{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+}
+html body.himart-wide-test-page #journey .journey-more-title .plus{
+  color:var(--hm-blue)!important;
+  font-size:22px!important;
+  line-height:1!important;
+}
+html body.himart-wide-test-page #journey .journey-more-label{
+  color:rgba(255,255,255,.42)!important;
+  font-family:var(--hm-en)!important;
+  font-size:12px!important;
+  letter-spacing:.06em!important;
+}
+html body.himart-wide-test-page #journey .journey-more-inner{
+  padding:34px 0 22px!important;
+}
+html body.himart-wide-test-page #journey .journey-deep-block + .journey-deep-block{
+  margin-top:104px!important;
+}
+html body.himart-wide-test-page #journey .journey-deep-kicker{
+  display:block!important;
+  margin:0 0 16px!important;
+  color:var(--hm-blue)!important;
+}
+html body.himart-wide-test-page #journey .journey-deep-title{
+  margin:0!important;
+  max-width:1120px!important;
+  color:#fff!important;
+  font-family:var(--hm-ko)!important;
+  font-size:42px!important;
+  font-weight:100!important;
+  line-height:1.18!important;
+  letter-spacing:-.045em!important;
+}
+html body.himart-wide-test-page #journey .journey-deep-copy{
+  margin:18px 0 0!important;
+  font-size:16px!important;
+  line-height:1.58!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram{
+  margin-top:52px!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-row{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:34px!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-row + .journey-diagram-row{
+  margin-top:40px!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-node{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  aspect-ratio:1/1!important;
+  padding:18px 16px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:50%!important;
+  text-align:center!important;
+  box-sizing:border-box!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-node h5{
+  margin:14px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-ko)!important;
+  font-size:20px!important;
+  font-weight:100!important;
+  line-height:1.3!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-node p{
+  margin:14px 0 0!important;
+  max-width:82%!important;
+  font-size:13px!important;
+  line-height:1.45!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-group{
+  position:absolute!important;
+  top:-18px!important;
+  height:calc(100% + 36px)!important;
+  border:1px solid currentColor!important;
+  border-radius:999px!important;
+  pointer-events:none!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-group.top{
+  left:-14px!important;
+  width:calc(75% + 24px)!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-group.bottom{
+  left:-14px!important;
+  width:calc(50% + 12px)!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram--red{
+  color:var(--hm-red)!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram--blue{
+  color:var(--hm-blue)!important;
+}
+html body.himart-wide-test-page #journey .journey-diagram-group-label{
+  position:absolute!important;
+  top:-7px!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  padding:0 10px!important;
+  background:#050505!important;
+  color:inherit!important;
+  font-family:var(--hm-ko)!important;
+  font-size:10px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  white-space:nowrap!important;
+}
+html body.himart-wide-test-page #journey .journey-deep-endnote{
+  margin:34px 0 0!important;
+  font-size:16px!important;
+  line-height:1.58!important;
+}
+html body.himart-wide-test-page #journey .journey-deep-endnote b{
+  color:var(--hm-blue)!important;
+  font-weight:400!important;
 }
 
 @media(max-width:1180px){
@@ -47,11 +343,25 @@ html body.himart-wide-test-page #data .narrative-signals .signal-item p{
   html body.himart-wide-test-page #data .narrative-signals .signal-grid{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
+  html body.himart-wide-test-page #journey .journey-role-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:860px){
+  html body.himart-wide-test-page #journey .journey-row-group,
+  html body.himart-wide-test-page #journey .journey-diagram-group{
+    display:none!important;
+  }
+  html body.himart-wide-test-page #journey .journey-diagram-row{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
 }
 
 @media(max-width:780px){
   html body.himart-wide-test-page #data .narrative-signals .behavior-grid,
-  html body.himart-wide-test-page #data .narrative-signals .signal-grid{
+  html body.himart-wide-test-page #data .narrative-signals .signal-grid,
+  html body.himart-wide-test-page #journey .journey-role-grid{
     grid-template-columns:1fr!important;
   }
 }
