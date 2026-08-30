@@ -8,22 +8,24 @@
 </head>
 <body><div class="boot">CASE LOADING…</div>
 <script>
-fetch('./himart-narrative-test.html?v=20260830-10',{cache:'no-store'})
+fetch('./himart-narrative-test.html?v=20260830-11',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw new Error('base test load failed');return r.text()})
   .then(html=>{
-    html=html.replace('</head>',
-      '<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260830-10">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-journey.css?v=20260830-10">'+
-      '</head>'
-    );
-    html=html.replace('</body>',
-      '<script src="./himart-narrative-v2.js?v=20260830-10"><\\/script>'+
-      '<script src="./himart-narrative-v2-journey.js?v=20260830-10"><\\/script>'+
-      '</body>'
-    );
+    const styles=
+      '<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260830-11">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-journey.css?v=20260830-11">'+
+      '<style>html body.himart-narrative-test:not(.v2-visibility-guard) #live-main{opacity:1!important;visibility:visible!important}</style>';
+    const scripts=
+      '<script src="./himart-narrative-v2.js?v=20260830-11"><' + '/script>'+
+      '<script src="./himart-narrative-v2-journey.js?v=20260830-11"><' + '/script>';
+    html=html.replace('</head>',styles+'</head>');
+    html=html.replace('</body>',scripts+'</body>');
     document.open();document.write(html);document.close();
   })
-  .catch(()=>{document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>'});
+  .catch(err=>{
+    console.error(err);
+    document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';
+  });
 </script>
 </body>
 </html>
