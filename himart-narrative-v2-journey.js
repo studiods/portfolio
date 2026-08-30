@@ -1,16 +1,34 @@
 (()=>{
   'use strict';
 
-  const wait=()=>{
+  const forceVisible=(el)=>{
+    if(!el)return;
+    el.classList.remove('hm-reveal','wide-rise-target');
+    el.classList.add('is-in','is-wide-rise-in');
+    el.hidden=false;
+    el.style.setProperty('display','block','important');
+    el.style.setProperty('opacity','1','important');
+    el.style.setProperty('visibility','visible','important');
+    el.style.setProperty('transform','none','important');
+  };
+
+  const mount=()=>{
     const journey=document.querySelector('#journey');
-    const wrap=journey?.querySelector(':scope > .hm-wrap');
-    const head=wrap?.querySelector(':scope > .hm-section-head');
-    const principles=wrap?.querySelector(':scope > .principle-grid');
-    if(!journey||!wrap||!head||!principles){
-      setTimeout(wait,80);
+    const wrap=journey?.querySelector('.hm-wrap');
+    const head=wrap?.querySelector('.hm-section-head');
+
+    if(!journey||!wrap||!head){
+      setTimeout(mount,80);
       return;
     }
-    if(wrap.querySelector('.journey-flow-block'))return;
+
+    const existingFlow=wrap.querySelector('.journey-flow-block');
+    const existingRoles=wrap.querySelector('.journey-role-block');
+    if(existingFlow&&existingRoles){
+      forceVisible(existingFlow);
+      forceVisible(existingRoles);
+      return;
+    }
 
     const title=head.querySelector('.hm-section-title');
     const desc=head.querySelector('.hm-section-desc');
@@ -18,7 +36,7 @@
     if(desc)desc.textContent='어디에서 시작해도 다음 행동으로 이어지도록, 먼저 고객의 판단 흐름을 만들고 그 흐름 안에서 각 화면이 맡아야 할 역할을 정했습니다.';
 
     const flow=document.createElement('section');
-    flow.className='journey-flow-block hm-reveal';
+    flow.className='journey-flow-block';
     flow.innerHTML=`
       <span class="narrative-subno">03.1 / JOURNEY FLOW</span>
       <h3 class="journey-block-title">화면 순서가 아니라,<br>고객의 판단이 깊어지는 순서로 재구성했습니다.</h3>
@@ -34,7 +52,7 @@
       </div>`;
 
     const roles=document.createElement('section');
-    roles.className='journey-role-block hm-reveal';
+    roles.className='journey-role-block';
     roles.innerHTML=`
       <span class="narrative-subno">03.2 / ROLE DEFINITION</span>
       <h3 class="journey-block-title">그리고 각 화면은,<br>다음 행동을 만드는 역할로 다시 정의했습니다.</h3>
@@ -50,21 +68,34 @@
         <article><small>MY · CARE</small><h4>구매 이후 관계를<br>이어가는 곳</h4><p>안심케어·수리·이전설치·정기점검을 상품 이력과 연결해 관리받고 있다는 경험을 이어갑니다.</p></article>
       </div>`;
 
-    principles.replaceWith(flow);
+    const principles=wrap.querySelector('.principle-grid');
+    if(principles){
+      principles.replaceWith(flow);
+    }else{
+      head.insertAdjacentElement('afterend',flow);
+    }
     flow.insertAdjacentElement('afterend',roles);
 
-    /* 기존 역할 정의 상세는 중복 노출하지 않습니다. */
+    forceVisible(flow);
+    forceVisible(roles);
+
+    /* 기존 역할 정의 상세는 새 03.2와 중복되므로 제거합니다. */
     wrap.querySelectorAll('details.hm-more').forEach(details=>{
       const text=details.querySelector('summary')?.textContent||'';
-      if(text.includes('여정별 역할 정의'))details.remove();
+      if(text.includes('여정별 역할 정의')||text.includes('ROLE DEFINITION'))details.remove();
     });
-    wrap.querySelectorAll(':scope > .hm-subsection').forEach(section=>{
+    wrap.querySelectorAll('.hm-subsection').forEach(section=>{
       const t=section.querySelector('.hm-subtitle')?.textContent||'';
       if(t.includes('각 여정의 역할')||t.includes('각 화면의 역할'))section.remove();
     });
 
-    window.dispatchEvent(new Event('scroll'));
+    document.body.classList.add('narrative-journey-ready');
+    requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')));
   };
 
-  wait();
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',mount,{once:true});
+  }else{
+    mount();
+  }
 })();
