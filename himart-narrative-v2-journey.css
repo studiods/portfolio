@@ -230,3 +230,13 @@ html body.himart-wide-test-page #journey .principle-grid{
   html body.himart-wide-test-page #journey .journey-block-title{font-size:36px!important}
   html body.himart-wide-test-page #journey .journey-role-grid{grid-template-columns:1fr!important}
 }
+
+/* ===== UNIFIED SUBSECTION RHYTHM =====
+   All narrative blocks that begin with labels such as 01.1 / 01.2 / 01.3 / 02.1 / 03.1 / 03.2
+   use the same 110px spacing from the preceding content. */
+html body.himart-wide-test-page :is(#brand,#data,#journey,#direction) .narrative-block,
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis,
+html body.himart-wide-test-page #journey .journey-flow-block,
+html body.himart-wide-test-page #journey .journey-role-block{
+  margin-top:110px!important;
+}
