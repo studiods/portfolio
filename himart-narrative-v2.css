@@ -14,7 +14,7 @@ html body.himart-wide-test-page :is(.problem-item h4,.signal-item h4,.principle-
   font-size:28px!important;
   line-height:1.32!important;
 }
-html body.himart-wide-test-page :is(.hm-section-desc,.narrative-copy,.problem-item p,.proof-item p,.synthesis-col p,.signal-item p,.principle-item p,.design-rule p,.role-card p,.data-card .desc,.prototype-case-copy p){
+html body.himart-wide-test-page :is(.hm-section-desc,.narrative-copy,.problem-item p,.proof-item p,.synthesis-card p,.signal-item p,.principle-item p,.design-rule p,.role-card p,.data-card .desc,.prototype-case-copy p){
   font-size:16px!important;
   line-height:1.58!important;
 }
@@ -25,42 +25,68 @@ html body.himart-wide-test-page :is(.hm-source,.narrative-subno,.problem-item sm
 html body.himart-wide-test-page .hm-section-desc{max-width:760px!important;margin-top:24px!important}
 html body.himart-wide-test-page .narrative-copy{max-width:820px!important;margin-top:16px!important}
 
-/* ===== 01 / BLUE SYNTHESIS ===== */
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis{
-  margin-top:64px!important;
-  padding:38px 40px 40px!important;
-  border:0!important;
-  background:var(--hm-blue)!important;
-  grid-template-columns:minmax(300px,.78fr) minmax(0,1.22fr)!important;
-  gap:64px!important;
+/* ===== 01.3 / TRANSITION TOUCHPOINT ===== */
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis{
+  display:block!important;
+  margin-top:88px!important;
+  padding:34px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.22)!important;
+  background:transparent!important;
 }
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis h4{
-  color:#050505!important;
-  font-size:36px!important;
-  line-height:1.28!important;
-  font-weight:400!important;
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-subno{
+  display:block!important;
+  margin:0 0 18px!important;
+  color:var(--hm-blue)!important;
 }
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis h4 strong{
-  color:#050505!important;
-  font-weight:750!important;
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{
+  max-width:980px!important;
+  margin:0!important;
+  color:#fff!important;
+  font-size:42px!important;
+  line-height:1.18!important;
+  font-weight:100!important;
+  letter-spacing:-.045em!important;
+  word-break:keep-all!important;
 }
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis .synthesis-list{
-  gap:24px!important;
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4 strong{
+  color:#fff!important;
+  font-weight:500!important;
 }
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis .synthesis-col{
-  padding-top:0!important;
-  border-top:0!important;
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-list{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:28px!important;
+  margin-top:58px!important;
 }
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis .synthesis-col b{
-  color:#050505!important;
-  font-size:24px!important;
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card{
+  min-height:280px!important;
+  padding:28px 0 0!important;
+  border-top:2px solid var(--hm-blue)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  background:transparent!important;
+}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative{
+  border-top-color:var(--hm-red)!important;
+}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card b{
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font-size:28px!important;
   line-height:1.32!important;
-  font-weight:700!important;
-  margin-bottom:14px!important;
+  font-weight:500!important;
+  letter-spacing:-.035em!important;
+  word-break:keep-all!important;
 }
-html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis .synthesis-col p{
-  color:rgba(5,5,5,.76)!important;
-  font-size:16px!important;
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative b{
+  color:var(--hm-red)!important;
+}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card p{
+  margin:auto 0 0!important;
+  padding-top:34px!important;
+  color:rgba(255,255,255,.60)!important;
+  word-break:keep-all!important;
 }
 
 /* ===== 02 / SIGNALS ===== */
@@ -83,11 +109,11 @@ html body.himart-wide-test-page #direction .narrative-prototype-visible{
 
 @media(max-width:1000px){
   html body.himart-wide-test-page .principle-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-  html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis{grid-template-columns:1fr!important;gap:34px!important}
+  html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-list{grid-template-columns:1fr!important}
 }
 @media(max-width:780px){
   html body.himart-wide-test-page .hm-section-title{font-size:44px!important}
   html body.himart-wide-test-page :is(.narrative-title,.hm-subtitle,.forced-redesign-title){font-size:36px!important}
   html body.himart-wide-test-page .principle-grid{grid-template-columns:1fr!important}
-  html body.himart-wide-test-page .brand-synthesis.narrative-blue-synthesis{padding:30px 24px 32px!important}
+  html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{font-size:36px!important}
 }
