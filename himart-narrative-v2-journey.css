@@ -1,6 +1,14 @@
-/* 03 / JOURNEY FLOW + ROLE DEFINITION */
+/* 03 / JOURNEY FLOW + ROLE DEFINITION + UX PRINCIPLES */
+html body.himart-wide-test-page #live-main #journey>.hm-wrap>.hm-section-head .hm-section-title{
+  font-family:var(--hm-ko)!important;
+  font-size:52px!important;
+  line-height:1.12!important;
+  font-weight:100!important;
+  letter-spacing:-.045em!important;
+}
 html body.himart-wide-test-page #journey .journey-flow-block,
-html body.himart-wide-test-page #journey .journey-role-block{
+html body.himart-wide-test-page #journey .journey-role-block,
+html body.himart-wide-test-page #journey .journey-principle-block{
   display:block!important;
   opacity:1!important;
   visibility:visible!important;
@@ -10,10 +18,7 @@ html body.himart-wide-test-page #journey .journey-role-block{
   border-top:1px solid rgba(255,255,255,.22)!important;
 }
 html body.himart-wide-test-page #journey .journey-flow-block{margin-top:92px!important}
-html body.himart-wide-test-page #journey .hm-section-title,
-html body.himart-wide-test-page #journey .journey-block-title,
-html body.himart-wide-test-page #journey .journey-stage h4,
-html body.himart-wide-test-page #journey .journey-role-grid h4{
+html body.himart-wide-test-page #journey :is(.journey-block-title,.journey-flow-row .flow-node h4,.journey-role-grid h4,.journey-principle-block .principle-item h4){
   font-family:var(--hm-ko)!important;
   font-weight:100!important;
 }
@@ -28,77 +33,107 @@ html body.himart-wide-test-page #journey .journey-block-title{
 }
 html body.himart-wide-test-page #journey .journey-block-copy{
   margin:20px 0 0!important;
-  max-width:900px!important;
-  color:rgba(255,255,255,.62)!important;
+  max-width:840px!important;
+  color:rgba(255,255,255,.60)!important;
   font-family:var(--hm-ko)!important;
   font-size:16px!important;
   font-weight:300!important;
-  line-height:1.65!important;
+  line-height:1.58!important;
   word-break:keep-all!important;
 }
 html body.himart-wide-test-page #journey .journey-block-copy span{color:#fff!important;font-weight:300!important}
+
+/* 03.1 — existing circular node + arrow grammar */
 html body.himart-wide-test-page #journey .journey-stage-flow{
-  position:relative!important;
   display:grid!important;
-  grid-template-columns:repeat(7,minmax(0,1fr))!important;
-  gap:22px!important;
-  margin-top:72px!important;
-  padding-top:0!important;
+  gap:20px!important;
+  margin-top:64px!important;
 }
-html body.himart-wide-test-page #journey .journey-stage-flow::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:4px;
-  height:1px;
-  background:rgba(255,255,255,.16);
+html body.himart-wide-test-page #journey .journey-flow-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:18px!important;
+  width:100%!important;
+  flex-wrap:nowrap!important;
 }
-html body.himart-wide-test-page #journey .journey-stage{
-  position:relative!important;
-  min-height:250px!important;
-  padding-top:30px!important;
+html body.himart-wide-test-page #journey .journey-flow-row .flow-node{
+  box-sizing:border-box!important;
+  flex:0 0 218px!important;
+  width:218px!important;
+  min-width:218px!important;
+  max-width:218px!important;
+  height:218px!important;
+  min-height:218px!important;
+  max-height:218px!important;
+  aspect-ratio:1/1!important;
+  border:1px solid #fff!important;
+  border-radius:50%!important;
+  padding:28px 22px!important;
   display:flex!important;
   flex-direction:column!important;
-  opacity:1!important;
-  visibility:visible!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:#050505!important;
+  box-shadow:none!important;
 }
-html body.himart-wide-test-page #journey .journey-stage>i{
-  position:absolute!important;
-  left:0!important;
-  top:0!important;
-  width:9px!important;
-  height:9px!important;
-  border-radius:50%!important;
-  background:var(--hm-blue)!important;
-  box-shadow:0 0 0 5px #050505!important;
-}
-html body.himart-wide-test-page #journey .journey-stage small,
-html body.himart-wide-test-page #journey .journey-role-grid small{
+html body.himart-wide-test-page #journey .journey-flow-row .flow-node .hm-card-no{
+  display:block!important;
+  margin:0!important;
   color:var(--hm-blue)!important;
   font-family:var(--hm-en)!important;
   font-size:11px!important;
   font-weight:300!important;
-  line-height:1.4!important;
-  letter-spacing:.06em!important;
+  line-height:1!important;
 }
-html body.himart-wide-test-page #journey .journey-stage h4{
+html body.himart-wide-test-page #journey .journey-flow-row .flow-node h4{
   margin:16px 0 0!important;
   color:#fff!important;
   font-size:28px!important;
   line-height:1.25!important;
   letter-spacing:-.04em!important;
+  text-align:center!important;
 }
-html body.himart-wide-test-page #journey .journey-stage p{
-  margin:auto 0 0!important;
-  padding-top:26px!important;
-  color:rgba(255,255,255,.56)!important;
+html body.himart-wide-test-page #journey .journey-flow-row .flow-node p{
+  margin:14px 0 0!important;
+  max-width:168px!important;
+  color:rgba(255,255,255,.54)!important;
   font-family:var(--hm-ko)!important;
-  font-size:15px!important;
+  font-size:14px!important;
   font-weight:300!important;
-  line-height:1.6!important;
+  line-height:1.48!important;
+  text-align:center!important;
   word-break:keep-all!important;
 }
+html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow,
+html body.himart-wide-test-page #journey .journey-flow-down{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 24px!important;
+  width:24px!important;
+  height:48px!important;
+  font-size:0!important;
+  color:transparent!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow::before,
+html body.himart-wide-test-page #journey .journey-flow-down::before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:17px!important;
+  height:17px!important;
+  border-top:1px solid rgba(255,255,255,.56)!important;
+  border-right:1px solid rgba(255,255,255,.56)!important;
+  transform:translate(-62%,-50%) rotate(45deg)!important;
+}
+html body.himart-wide-test-page #journey .journey-flow-down{
+  margin:0 auto!important;
+  transform:rotate(90deg)!important;
+}
+
+/* 03.2 */
 html body.himart-wide-test-page #journey .journey-role-grid{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
@@ -117,47 +152,60 @@ html body.himart-wide-test-page #journey .journey-role-grid article{
   opacity:1!important;
   visibility:visible!important;
 }
-html body.himart-wide-test-page #journey .journey-role-grid small{grid-column:1!important;grid-row:1!important}
+html body.himart-wide-test-page #journey .journey-role-grid small{
+  grid-column:1!important;grid-row:1!important;color:var(--hm-blue)!important;font-family:var(--hm-en)!important;font-size:11px!important;font-weight:300!important;letter-spacing:.06em!important;
+}
 html body.himart-wide-test-page #journey .journey-role-grid h4{
-  grid-column:1!important;
-  grid-row:2!important;
-  margin:16px 0 0!important;
-  color:#fff!important;
-  font-size:28px!important;
-  line-height:1.28!important;
-  letter-spacing:-.04em!important;
-  word-break:keep-all!important;
+  grid-column:1!important;grid-row:2!important;margin:16px 0 0!important;color:#fff!important;font-size:28px!important;line-height:1.28!important;letter-spacing:-.04em!important;word-break:keep-all!important;
 }
 html body.himart-wide-test-page #journey .journey-role-grid p{
-  grid-column:2!important;
-  grid-row:1 / span 2!important;
-  align-self:end!important;
-  margin:0!important;
-  max-width:430px!important;
-  color:rgba(255,255,255,.58)!important;
-  font-family:var(--hm-ko)!important;
-  font-size:16px!important;
-  font-weight:300!important;
-  line-height:1.62!important;
-  word-break:keep-all!important;
+  grid-column:2!important;grid-row:1/span 2!important;align-self:end!important;margin:0!important;max-width:430px!important;color:rgba(255,255,255,.58)!important;font-family:var(--hm-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.62!important;word-break:keep-all!important;
 }
+
+/* 03.3 */
+html body.himart-wide-test-page #journey .journey-principle-block .principle-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:34px!important;
+  margin:72px 0 0!important;
+}
+html body.himart-wide-test-page #journey .journey-principle-block .principle-item{
+  min-height:250px!important;
+  padding-top:24px!important;
+  border-top:1px solid rgba(255,255,255,.22)!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+html body.himart-wide-test-page #journey .journey-principle-block .principle-item small{
+  color:var(--hm-blue)!important;font-family:var(--hm-en)!important;font-size:11px!important;font-weight:300!important;letter-spacing:.06em!important;
+}
+html body.himart-wide-test-page #journey .journey-principle-block .principle-item h4{
+  margin:20px 0 0!important;color:#fff!important;font-size:28px!important;line-height:1.3!important;letter-spacing:-.04em!important;word-break:keep-all!important;
+}
+html body.himart-wide-test-page #journey .journey-principle-block .principle-item p{
+  margin:auto 0 0!important;padding-top:34px!important;color:rgba(255,255,255,.56)!important;font-family:var(--hm-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.62!important;word-break:keep-all!important;
+}
+
 @media(max-width:1200px){
-  html body.himart-wide-test-page #journey .journey-stage-flow{grid-template-columns:repeat(4,minmax(0,1fr))!important;row-gap:48px!important}
-  html body.himart-wide-test-page #journey .journey-stage-flow::before{display:none!important}
-  html body.himart-wide-test-page #journey .journey-stage{border-top:1px solid rgba(255,255,255,.16)!important;padding-top:30px!important}
-  html body.himart-wide-test-page #journey .journey-stage>i{top:-5px!important}
+  html body.himart-wide-test-page #journey .journey-flow-row{flex-wrap:wrap!important}
+  html body.himart-wide-test-page #journey .journey-flow-row .flow-node{flex-basis:190px!important;width:190px!important;min-width:190px!important;max-width:190px!important;height:190px!important;min-height:190px!important;max-height:190px!important}
+  html body.himart-wide-test-page #journey .journey-principle-block .principle-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 @media(max-width:900px){
-  html body.himart-wide-test-page #journey .journey-stage-flow{grid-template-columns:repeat(2,minmax(0,1fr))!important}
   html body.himart-wide-test-page #journey .journey-role-grid{grid-template-columns:1fr!important}
 }
 @media(max-width:780px){
+  html body.himart-wide-test-page #live-main #journey>.hm-wrap>.hm-section-head .hm-section-title{font-size:44px!important}
   html body.himart-wide-test-page #journey .journey-flow-block,
-  html body.himart-wide-test-page #journey .journey-role-block{margin-top:88px!important}
+  html body.himart-wide-test-page #journey .journey-role-block,
+  html body.himart-wide-test-page #journey .journey-principle-block{margin-top:88px!important}
   html body.himart-wide-test-page #journey .journey-block-title{font-size:36px!important}
-  html body.himart-wide-test-page #journey .journey-stage-flow{grid-template-columns:1fr!important;gap:30px!important;margin-top:56px!important}
-  html body.himart-wide-test-page #journey .journey-stage{min-height:190px!important}
+  html body.himart-wide-test-page #journey .journey-flow-row{flex-direction:column!important;gap:12px!important}
+  html body.himart-wide-test-page #journey .journey-flow-row .flow-node{width:min(76vw,280px)!important;min-width:min(76vw,280px)!important;max-width:min(76vw,280px)!important;height:auto!important;min-height:min(76vw,280px)!important;max-height:none!important;flex-basis:auto!important}
+  html body.himart-wide-test-page #journey .journey-flow-row .flow-arrow{width:48px!important;height:46px!important;flex-basis:46px!important;transform:rotate(90deg)!important}
+  html body.himart-wide-test-page #journey .journey-flow-down{display:none!important}
   html body.himart-wide-test-page #journey .journey-role-grid article{grid-template-columns:1fr!important;grid-template-rows:auto auto auto!important;min-height:220px!important}
   html body.himart-wide-test-page #journey .journey-role-grid h4{grid-column:1!important;grid-row:2!important}
   html body.himart-wide-test-page #journey .journey-role-grid p{grid-column:1!important;grid-row:3!important;margin-top:30px!important;align-self:auto!important}
+  html body.himart-wide-test-page #journey .journey-principle-block .principle-grid{grid-template-columns:1fr!important}
 }
