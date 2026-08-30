@@ -7,7 +7,7 @@
   <title>Himart Case Framework Guide</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./typography.css?v=8">
-  <link rel="stylesheet" href="./himart-lead-story-test.css?v=1">
+  <link rel="stylesheet" href="./himart-lead-story-test.css?v=2">
 </head>
 <body class="guide-page">
   <a class="skip-link" href="#main">본문 바로가기</a>
@@ -24,26 +24,111 @@
   <main id="main">
     <section class="guide-hero" id="top">
       <div class="wrap">
-        <p class="eyebrow">HIMART CASE STUDY FRAMEWORK · V1.0</p>
-        <h1>결과 화면보다 먼저,<br>어떤 근거로 무엇을 결정했는지<br>보이게 합니다.</h1>
-        <p>하이마트 프로젝트의 성격이 달라도 `문제 재정의 → 증거 → 해석 → 설계 결정 → 검증`의 흐름은 유지합니다. 처음 보는 사람은 빠르게 핵심만 이해하고, 필요한 사람은 상세 근거를 펼쳐볼 수 있게 만드는 사례 작성 기준입니다.</p>
+        <p class="eyebrow">하이마트 UX 사례 디자인·콘텐츠 가이드 · V2.0</p>
+        <h1>다섯 가지 글자 크기와<br>4px 간격 체계로<br>모든 사례를 정리합니다.</h1>
+        <p>타이틀은 흰색 100%, 본문은 흰색 70%로 구분하고 블루·그린을 중심으로 사용합니다. 핵심 내용은 먼저 보이고 세부 근거는 관련 섹션의 ‘더 알아보기’에서 확인할 수 있게 구성합니다.</p>
         <nav class="guide-links" aria-label="가이드 목차">
-          <a href="#structure">01 Structure</a>
-          <a href="#screen-rule">02 One-screen rule</a>
-          <a href="#evidence">03 Evidence</a>
-          <a href="#visual">04 Visual</a>
-          <a href="#disclosure">05 Detail</a>
-          <a href="#leadership">06 Leadership</a>
-          <a href="#copy">07 Copy</a>
-          <a href="#checklist">08 Checklist</a>
+          <a href="#type">01 글자</a>
+          <a href="#spacing">02 간격</a>
+          <a href="#color">03 색상</a>
+          <a href="#line">04 선·그래프</a>
+          <a href="#structure">05 사례 구조</a>
+          <a href="#screen-rule">06 화면 구성</a>
+          <a href="#evidence">07 근거</a>
+          <a href="#disclosure">09 상세</a>
         </nav>
+      </div>
+    </section>
+
+    <section class="guide-section" id="type">
+      <div class="wrap">
+        <header class="guide-section-head">
+          <span>01 / 타이포그래피</span>
+          <div><h2>글자 크기는 다섯 가지 역할로만<br>구분합니다.</h2><p>크기를 계속 추가하지 않고 정보 위계에 맞는 역할을 선택합니다. 본문은 PC와 모바일 모두 16px을 유지하고, 주석만 12px을 허용합니다.</p></div>
+        </header>
+        <div class="guide-table-wrap">
+          <table class="guide-table">
+            <thead><tr><th>역할</th><th>PC</th><th>모바일</th><th>사용 범위</th></tr></thead>
+            <tbody>
+              <tr><td>첫 타이틀</td><td>72–96px</td><td>44–56px</td><td>페이지 첫 화면의 프로젝트 핵심 문장 1개</td></tr>
+              <tr><td>대타이틀</td><td>48–56px</td><td>36px</td><td>각 장의 결론형 제목, 핵심 데이터 숫자</td></tr>
+              <tr><td>중·소타이틀</td><td>28px</td><td>24px</td><td>카드 제목, 소결론, 상세 콘텐츠 제목</td></tr>
+              <tr><td>본문</td><td>16px</td><td>16px</td><td>설명, 카드 본문, 버튼, 표 본문</td></tr>
+              <tr><td>주석</td><td>12px</td><td>12px</td><td>단계 라벨, 출처 성격, 범례, 보조 정보</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="formula-note"><strong>가변 원칙:</strong> 원형·카드처럼 외형과 함께 줄어드는 텍스트는 해당 역할의 모바일 최솟값까지만 축소합니다. 그 이하 폭에서는 외형을 더 줄이지 않고 한 열 구조로 전환합니다.</p>
+      </div>
+    </section>
+
+    <section class="guide-section" id="spacing">
+      <div class="wrap">
+        <header class="guide-section-head">
+          <span>02 / 간격</span>
+          <div><h2>모든 간격은 4px의 배수로<br>같은 리듬을 만듭니다.</h2><p>타이틀과 설명의 간격은 기존 20–24px에서 16px로 줄였습니다. 가까운 정보는 가깝게, 다른 논리 단계는 충분히 떨어뜨려 묶음이 먼저 보이게 합니다.</p></div>
+        </header>
+        <div class="guide-table-wrap">
+          <table class="guide-table">
+            <thead><tr><th>관계</th><th>PC</th><th>모바일</th><th>적용 예시</th></tr></thead>
+            <tbody>
+              <tr><td>라벨 → 타이틀</td><td>16px</td><td>16px</td><td>‘03 / 실제 이용 행동’과 장 제목</td></tr>
+              <tr><td>타이틀 → 설명</td><td>16px</td><td>16px</td><td>장 제목과 한두 문장 설명</td></tr>
+              <tr><td>소타이틀 → 본문</td><td>16px</td><td>16px</td><td>카드 제목과 설명</td></tr>
+              <tr><td>설명 → 첫 콘텐츠</td><td>64px</td><td>48px</td><td>장 도입부와 그래프·카드</td></tr>
+              <tr><td>관련 모듈 사이</td><td>48px</td><td>32px</td><td>그래프와 결론, 결론과 상세 버튼</td></tr>
+              <tr><td>큰 하위 묶음 사이</td><td>80–96px</td><td>48–64px</td><td>원칙 카드와 화면 예시</td></tr>
+              <tr><td>장과 장 사이</td><td>160px</td><td>96px</td><td>01에서 02로 넘어가는 구간</td></tr>
+              <tr><td>카드 안쪽</td><td>32–40px</td><td>24px</td><td>텍스트 카드와 데이터 카드</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-section" id="color">
+      <div class="wrap">
+        <header class="guide-section-head">
+          <span>03 / 색상</span>
+          <div><h2>흰색의 명도 차이와<br>세 가지 강조색만 사용합니다.</h2><p>색을 장식으로 늘리지 않습니다. 타이틀과 본문의 명도 차이를 먼저 만들고, 블루·그린은 정보와 진행을, 레드는 실제 부정 신호만 표시합니다.</p></div>
+        </header>
+        <div class="guide-rule-grid">
+          <article><span>흰색 100%</span><h3>타이틀</h3><p>첫 타이틀, 장 제목, 카드 제목, 단계 라벨에 사용합니다.</p></article>
+          <article><span>흰색 70%</span><h3>본문</h3><p>제목 아래 설명, 카드 본문, 표 본문, 출처 성격에 사용합니다.</p></article>
+          <article><span>블루</span><h3>정보·탐색</h3><p>데이터 비교, 링크, 펼침 상태와 정보 흐름을 표시합니다.</p></article>
+          <article><span>그린</span><h3>강점·연결</h3><p>긍정 신호, 하이마트 강점, 개선 방향과 다음 단계를 표시합니다.</p></article>
+          <article><span>레드</span><h3>부정 신호만</h3><p>이탈·감소·불안과 같이 실제로 부정적인 값에만 좁게 사용합니다.</p></article>
+          <article><span>배경</span><h3>검정 계열</h3><p>검정과 짙은 회색 면만 사용해 정보의 밝기와 강조색이 먼저 보이게 합니다.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="guide-section" id="line">
+      <div class="wrap">
+        <header class="guide-section-head">
+          <span>04 / 선과 그래프</span>
+          <div><h2>구분선은 얇게,<br>데이터 선은 분명하게 만듭니다.</h2><p>콘텐츠를 나누는 선과 데이터를 보여주는 선의 역할을 구분합니다. 표는 세로선을 사용하지 않아 행 단위로 읽히게 합니다.</p></div>
+        </header>
+        <div class="guide-table-wrap">
+          <table class="guide-table">
+            <thead><tr><th>종류</th><th>규칙</th><th>용도</th></tr></thead>
+            <tbody>
+              <tr><td>기본 구분선</td><td>1px · 흰색 14%</td><td>섹션, 카드, 표의 행 구분</td></tr>
+              <tr><td>강한 구분선</td><td>1px · 흰색 28%</td><td>상단 메타 정보, 주요 구조의 시작</td></tr>
+              <tr><td>강조선</td><td>4px · 블루/그린/레드</td><td>핵심 결론이나 실제 부정 데이터의 시작</td></tr>
+              <tr><td>비율 막대</td><td>8px 이상</td><td>정성 분류 비중처럼 짧은 비교</td></tr>
+              <tr><td>주요 그래프</td><td>12–16px</td><td>유입 구성, 전후 변화, 단계별 증감</td></tr>
+              <tr><td>표</td><td>가로선만 사용</td><td>열은 정렬과 여백으로 구분하고 세로선은 제거</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
     <section class="guide-section" id="structure">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>01 / CASE STRUCTURE</span>
+          <span>05 / 사례 구조</span>
           <div><h2>모든 사례는 같은 일곱 단계로<br>의사결정의 흐름을 보여줍니다.</h2><p>프로젝트에 없는 단계를 억지로 채우지 않습니다. 다만 ‘왜 이 일을 했는가’와 ‘근거가 무엇이었는가’가 없는 결과 화면만 나열하지 않습니다.</p></div>
         </header>
         <div class="framework-flow">
@@ -61,14 +146,14 @@
     <section class="guide-section" id="screen-rule">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>02 / ONE-SCREEN RULE</span>
+          <span>06 / 한 화면 구성</span>
           <div><h2>한 화면에는 결론 하나,<br>근거 하나, 결정 하나만 둡니다.</h2><p>채용 담당자나 리더가 제목과 그래프만 훑어도 사례의 논리가 이어져야 합니다. 세부 과정은 핵심 이해를 방해하지 않는 위치로 보냅니다.</p></div>
         </header>
         <div class="guide-table-wrap">
           <table class="guide-table">
             <thead><tr><th>요소</th><th>기본 분량</th><th>역할</th><th>작성 기준</th></tr></thead>
             <tbody>
-              <tr><td>섹션 라벨</td><td>1줄</td><td>현재 논리 단계 안내</td><td><code>03 / QUANTITATIVE SIGNAL</code>처럼 일관된 영문 체계 사용</td></tr>
+              <tr><td>섹션 라벨</td><td>1줄</td><td>현재 논리 단계 안내</td><td><code>03 / 실제 이용 행동</code>처럼 한글로 명확하게 표기</td></tr>
               <tr><td>결론형 제목</td><td>PC 2줄, Mobile 3줄 이내</td><td>스크롤을 멈추게 하는 핵심 주장</td><td>“분석했습니다”가 아니라 “다음 행동이 끊겼습니다”처럼 결과를 먼저 씀</td></tr>
               <tr><td>직접 설명</td><td>2문장, 120자 안팎</td><td>제목의 범위와 의미 보완</td><td>새로운 주장 추가 금지. 제목을 해석하는 내용만 둠</td></tr>
               <tr><td>핵심 시각화</td><td>1개, 최대 4신호</td><td>주장을 빠르게 확인</td><td>축·범례를 읽어야만 이해되는 복합 그래프는 상세로 이동</td></tr>
@@ -83,7 +168,7 @@
     <section class="guide-section" id="evidence">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>03 / EVIDENCE TO DECISION</span>
+          <span>07 / 근거에서 결정까지</span>
           <div><h2>숫자는 지표명이 아니라<br>사용자 행동으로 번역합니다.</h2><p>데이터를 많이 보여주는 것이 데이터 드리븐이 아닙니다. 숫자가 무엇을 의미하고 어떤 결정을 바꿨는지까지 연결될 때 의사결정 근거가 됩니다.</p></div>
         </header>
         <div class="formula">
@@ -110,16 +195,16 @@
     <section class="guide-section" id="visual">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>04 / VISUAL SELECTION</span>
+          <span>08 / 시각화 선택</span>
           <div><h2>그래프는 분석의 난이도가 아니라<br>판단의 속도를 보여줘야 합니다.</h2><p>한 그래프에서 한 질문만 답합니다. 고급 차트보다 비교 대상·방향·결론이 즉시 보이는 단순한 형태를 우선합니다.</p></div>
         </header>
         <div class="guide-rule-grid">
-          <article><span>COMPOSITION</span><h3>유입 구성</h3><p>100% 누적 막대로 표현합니다. 채널은 4개 이내로 묶고 숫자는 직접 표기합니다.</p></article>
-          <article><span>BEFORE / AFTER</span><h3>기간 변화</h3><p>두 시점의 막대 또는 큰 숫자를 사용합니다. 작은 월별 변동은 상세로 이동합니다.</p></article>
-          <article><span>HANDOFF</span><h3>다음 단계 연결</h3><p>단계별 증감 또는 짧은 퍼널을 사용합니다. 서로 다른 모집단이면 퍼널 전환율처럼 보이지 않게 합니다.</p></article>
-          <article><span>DEVICE ROLE</span><h3>기기별 차이</h3><p>동일한 기준을 좌우로 비교하고 “모바일=탐색, PC=비교”처럼 역할 차이를 함께 씁니다.</p></article>
-          <article><span>QUALITATIVE</span><h3>의견 묶음</h3><p>키워드 클러스터와 짧은 막대를 사용합니다. 워드클라우드는 단어 크기 의미가 명확할 때만 씁니다.</p></article>
-          <article><span>AVOID</span><h3>복잡한 Sankey·다중축</h3><p>핵심 본문에서는 피합니다. 반드시 필요하면 단순 결론을 먼저 두고 원본을 상세에 제공합니다.</p></article>
+          <article><span>구성 비율</span><h3>유입 구성</h3><p>100% 누적 막대로 표현합니다. 채널은 4개 이내로 묶고 숫자는 직접 표기합니다.</p></article>
+          <article><span>전후 비교</span><h3>기간 변화</h3><p>두 시점의 막대 또는 큰 숫자를 사용합니다. 작은 월별 변동은 상세로 이동합니다.</p></article>
+          <article><span>다음 단계</span><h3>다음 단계 연결</h3><p>단계별 증감 또는 짧은 퍼널을 사용합니다. 서로 다른 모집단이면 퍼널 전환율처럼 보이지 않게 합니다.</p></article>
+          <article><span>기기별 역할</span><h3>기기별 차이</h3><p>동일한 기준을 좌우로 비교하고 “모바일=탐색, PC=비교”처럼 역할 차이를 함께 씁니다.</p></article>
+          <article><span>고객 의견</span><h3>의견 묶음</h3><p>키워드 클러스터와 짧은 막대를 사용합니다. 워드클라우드는 단어 크기 의미가 명확할 때만 씁니다.</p></article>
+          <article><span>사용 지양</span><h3>복잡한 흐름·다중축</h3><p>핵심 본문에서는 피합니다. 반드시 필요하면 단순 결론을 먼저 두고 원본을 상세에 제공합니다.</p></article>
         </div>
       </div>
     </section>
@@ -127,7 +212,7 @@
     <section class="guide-section" id="disclosure">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>05 / PROGRESSIVE DISCLOSURE</span>
+          <span>09 / 단계적 상세</span>
           <div><h2>먼저 이해시키고,<br>원하는 사람에게 깊이를 제공합니다.</h2><p>긴 내용을 삭제하는 대신 우선순위를 정합니다. 핵심 결론은 항상 보이고, 검증 과정과 원자료는 해당 결론 바로 아래에서 펼쳐봅니다.</p></div>
         </header>
         <div class="guide-table-wrap">
@@ -148,14 +233,14 @@
     <section class="guide-section" id="leadership">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>06 / UX LEADERSHIP</span>
+          <span>10 / UX 리드의 역할</span>
           <div><h2>시니어의 가치는 산출물 수가 아니라<br>판단의 질로 보여줍니다.</h2><p>프로젝트마다 리더가 바꾼 기준과 선택을 네 가지 역할로 명시합니다. 역할명만 쓰지 않고 실제로 무엇을 결정했는지 붙입니다.</p></div>
         </header>
         <div class="formula">
-          <article><span>FRAME</span><h3>문제를 다시 정의</h3><p>요청을 그대로 실행하지 않고 고객·사업·데이터 관점에서 풀어야 할 범위를 재설정합니다.</p></article>
-          <article><span>PRIORITIZE</span><h3>중요한 신호를 선택</h3><p>모든 요구와 데이터를 나열하지 않고 의사결정을 바꾸는 증거에 우선순위를 둡니다.</p></article>
-          <article><span>ALIGN</span><h3>팀의 기준을 통일</h3><p>화면별 역할, 정보 위계, 컴포넌트와 측정 기준을 PO·디자인·개발이 같은 언어로 사용하게 합니다.</p></article>
-          <article><span>VALIDATE</span><h3>학습을 다음 반복으로</h3><p>프로토타입과 내부·사용자 검증 결과를 수정 목록, 이벤트 태깅, 개선 백로그로 연결합니다.</p></article>
+          <article><span>문제 정의</span><h3>문제를 다시 정의</h3><p>요청을 그대로 실행하지 않고 고객·사업·데이터 관점에서 풀어야 할 범위를 재설정합니다.</p></article>
+          <article><span>우선순위</span><h3>중요한 신호를 선택</h3><p>모든 요구와 데이터를 나열하지 않고 의사결정을 바꾸는 증거에 우선순위를 둡니다.</p></article>
+          <article><span>기준 정렬</span><h3>팀의 기준을 통일</h3><p>화면별 역할, 정보 위계, 컴포넌트와 측정 기준을 PO·디자인·개발이 같은 언어로 사용하게 합니다.</p></article>
+          <article><span>검증</span><h3>학습을 다음 반복으로</h3><p>프로토타입과 내부·사용자 검증 결과를 수정 목록, 이벤트 태깅, 개선 백로그로 연결합니다.</p></article>
         </div>
       </div>
     </section>
@@ -163,7 +248,7 @@
     <section class="guide-section" id="copy">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>07 / COPY RULES</span>
+          <span>11 / 문장 규칙</span>
           <div><h2>전문 용어보다 행동을 쓰고,<br>결과보다 근거를 앞세웁니다.</h2><p>읽는 사람이 프로젝트 배경을 모른다고 가정합니다. 화면명과 지표명만으로 설명하지 말고, 고객이 무엇을 하려 했고 어디서 어려웠는지 씁니다.</p></div>
         </header>
         <div class="guide-table-wrap">
@@ -184,7 +269,7 @@
     <section class="guide-section" id="checklist">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>08 / RELEASE CHECKLIST</span>
+          <span>12 / 적용 체크리스트</span>
           <div><h2>다른 하이마트 사례를 만들 때<br>이 항목만 먼저 확인합니다.</h2><p>시각 규칙은 기존 Portfolio Editorial Design Guide를 함께 사용하고, 이 체크리스트는 이야기의 논리와 정보량을 점검합니다.</p></div>
         </header>
         <ul class="guide-checklist">
@@ -211,7 +296,7 @@
     <section class="guide-section">
       <div class="wrap">
         <header class="guide-section-head">
-          <span>REFERENCES</span>
+          <span>참고 원칙</span>
           <div><h2>가이드에 반영한<br>범용 콘텐츠 원칙</h2><p>현재 하이마트 페이지의 자산과 데이터 구조를 기준으로 만들고, 스캔 가능한 글쓰기·중요 정보 우선 배치·점진적 공개·접근 가능한 아코디언 원칙을 보완했습니다.</p></div>
         </header>
         <div class="reference-links">
@@ -226,7 +311,7 @@
   </main>
 
   <footer class="case-footer">
-    <div class="wrap"><p>HIMART CASE STUDY FRAMEWORK · V1.0</p><a href="#top">Back to top ↑</a></div>
+    <div class="wrap"><p>하이마트 UX 사례 디자인·콘텐츠 가이드 · V2.0</p><a href="#top">맨 위로 ↑</a></div>
   </footer>
 </body>
 </html>
