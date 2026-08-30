@@ -29,8 +29,8 @@
     <article><small>FULFILL</small><h4>불안을 일정 확정으로<br>바꾸는 곳</h4><p>설치 일정과 기존 제품 회수 정보를 명확히 안내해 구매 이후 불안을 줄입니다.</p></article>
     <article><small>MY · CARE</small><h4>구매 이후 관계를<br>이어가는 곳</h4><p>케어·수리·이전설치·점검을 상품 이력과 연결해 관리 경험을 이어갑니다.</p></article>`;
 
-  const text=el=>(el?.textContent||'').replace(/\s+/g,' ').trim();
-  const remove=el=>{ if(el?.isConnected)el.remove(); };
+  const normalize=s=>(s||'').replace(/\s+/g,' ').trim();
+  const remove=el=>{if(el?.isConnected)el.remove();};
 
   const forceVisible=el=>{
     if(!el)return;
@@ -43,56 +43,49 @@
     el.style.setProperty('transform','none','important');
   };
 
-  const normalizeHead=(wrap)=>{
-    const head=wrap.querySelector(':scope > .hm-section-head')||wrap.querySelector('.hm-section-head');
-    if(!head)return null;
+  const getParts=()=>{
+    const journey=document.querySelector('#journey');
+    const wrap=journey?.querySelector(':scope > .hm-wrap')||journey?.querySelector('.hm-wrap');
+    const head=wrap?.querySelector(':scope > .hm-section-head')||wrap?.querySelector('.hm-section-head');
+    return {journey,wrap,head};
+  };
 
+  const normalizeHead=head=>{
+    if(!head)return;
     let no=head.querySelector(':scope > .hm-section-no');
-    if(!no){
-      no=document.createElement('span');
-      no.className='hm-section-no';
-    }
-    no.textContent='03';
+    if(!no){no=document.createElement('span');no.className='hm-section-no';}
+    if(no.textContent!=='03')no.textContent='03';
 
     let title=head.querySelector(':scope > .hm-section-title');
-    if(!title){
-      title=document.createElement('h2');
-      title.className='hm-section-title';
-    }
-    title.innerHTML=TITLE_HTML;
+    if(!title){title=document.createElement('h2');title.className='hm-section-title';}
+    if(title.innerHTML!==TITLE_HTML)title.innerHTML=TITLE_HTML;
 
     let desc=head.querySelector(':scope > .hm-section-desc');
-    if(!desc){
-      desc=document.createElement('p');
-      desc.className='hm-section-desc';
-    }
-    desc.textContent=DESC_TEXT;
+    if(!desc){desc=document.createElement('p');desc.className='hm-section-desc';}
+    if(desc.textContent!==DESC_TEXT)desc.textContent=DESC_TEXT;
 
-    head.prepend(no);
-    no.insertAdjacentElement('afterend',title);
-    title.insertAdjacentElement('afterend',desc);
+    if(head.firstElementChild!==no)head.prepend(no);
+    if(no.nextElementSibling!==title)no.insertAdjacentElement('afterend',title);
+    if(title.nextElementSibling!==desc)title.insertAdjacentElement('afterend',desc);
 
     [...head.querySelectorAll(':scope > .hm-section-no')].forEach(el=>{if(el!==no)remove(el);});
     [...head.querySelectorAll(':scope > .hm-section-title')].forEach(el=>{if(el!==title)remove(el);});
     [...head.querySelectorAll(':scope > .hm-section-desc')].forEach(el=>{if(el!==desc)remove(el);});
-
     document.body.classList.add('journey-title-canonical');
-    return head;
   };
 
   const cleanupLegacy=wrap=>{
     [...wrap.querySelectorAll(':scope > .journey-principle-block,:scope > .principle-grid')].forEach(remove);
     [...wrap.querySelectorAll('details.hm-more')].forEach(details=>{
-      const t=text(details);
+      const t=normalize(details.textContent);
       if(t.includes('여정별 역할 정의')||t.includes('ROLE DEFINITION'))remove(details);
     });
     [...wrap.querySelectorAll(':scope > .hm-subsection')].forEach(remove);
-
     const head=wrap.querySelector(':scope > .hm-section-head');
     [...wrap.children].forEach(node=>{
-      if(node===head || node.classList?.contains('journey-flow-block') || node.classList?.contains('journey-role-block'))return;
-      const t=text(node);
-      if(t.includes('그래서 끊어진 여정을') || /FAMILIARITY|NEXT STEP|OMNI|NARROW|CONFIDENCE|DECISION/.test(t))remove(node);
+      if(node===head||node.classList?.contains('journey-flow-block')||node.classList?.contains('journey-role-block'))return;
+      const t=normalize(node.textContent);
+      if(t.includes('그래서 끊어진 여정을')||/FAMILIARITY|NEXT STEP|OMNI|NARROW|CONFIDENCE|DECISION/.test(t))remove(node);
     });
   };
 
@@ -118,47 +111,65 @@
     return section;
   };
 
-  const render=()=>{
-    const journey=document.querySelector('#journey');
-    const wrap=journey?.querySelector(':scope > .hm-wrap')||journey?.querySelector('.hm-wrap');
-    if(!journey||!wrap)return false;
-
-    const head=normalizeHead(wrap);
-    if(!head)return false;
+  const repair=()=>{
+    const {journey,wrap,head}=getParts();
+    if(!journey||!wrap||!head)return false;
+    normalizeHead(head);
     cleanupLegacy(wrap);
 
-    [...wrap.querySelectorAll(':scope > .journey-flow-block')].forEach(remove);
-    [...wrap.querySelectorAll(':scope > .journey-role-block')].forEach(remove);
+    let flow=wrap.querySelector(':scope > .journey-flow-block');
+    if(!flow||flow.querySelectorAll('.flow-node').length!==8){
+      remove(flow);
+      flow=buildFlow();
+      head.insertAdjacentElement('afterend',flow);
+    }else if(head.nextElementSibling!==flow){
+      head.insertAdjacentElement('afterend',flow);
+    }
 
-    const flow=buildFlow();
-    const roles=buildRoles();
-    head.insertAdjacentElement('afterend',flow);
-    flow.insertAdjacentElement('afterend',roles);
+    let roles=wrap.querySelector(':scope > .journey-role-block');
+    if(!roles||roles.querySelectorAll('.journey-role-grid > article').length!==9){
+      remove(roles);
+      roles=buildRoles();
+      flow.insertAdjacentElement('afterend',roles);
+    }else if(flow.nextElementSibling!==roles){
+      flow.insertAdjacentElement('afterend',roles);
+    }
 
+    [...wrap.querySelectorAll(':scope > .journey-flow-block')].forEach(el=>{if(el!==flow)remove(el);});
+    [...wrap.querySelectorAll(':scope > .journey-role-block')].forEach(el=>{if(el!==roles)remove(el);});
     forceVisible(flow);
     forceVisible(roles);
     document.body.classList.add('narrative-journey-ready');
     return true;
   };
 
-  let scheduled=false;
-  const schedule=()=>{
-    if(scheduled)return;
-    scheduled=true;
-    requestAnimationFrame(()=>{
-      scheduled=false;
-      render();
+  const needsRepair=()=>{
+    const {journey,wrap,head}=getParts();
+    if(!journey||!wrap||!head)return true;
+    const no=head.querySelector(':scope > .hm-section-no');
+    const title=head.querySelector(':scope > .hm-section-title');
+    const flow=wrap.querySelector(':scope > .journey-flow-block');
+    const roles=wrap.querySelector(':scope > .journey-role-block');
+    return !no||head.firstElementChild!==no||no.textContent!=='03'||!title||no.nextElementSibling!==title||title.innerHTML!==TITLE_HTML||normalize(journey.textContent).includes('그래서 끊어진 여정을')||!flow||flow.querySelectorAll('.flow-node').length!==8||!roles||roles.querySelectorAll('.journey-role-grid > article').length!==9||wrap.querySelector('.journey-principle-block,.principle-grid');
+  };
+
+  let raf=0;
+  const scheduleRepair=()=>{
+    if(raf)return;
+    raf=requestAnimationFrame(()=>{
+      raf=0;
+      if(needsRepair())repair();
     });
   };
 
   const start=()=>{
-    if(!render()){
+    if(!repair()){
       setTimeout(start,80);
       return;
     }
-    [120,420,900,1600,3000,5200].forEach(ms=>setTimeout(render,ms));
+    [120,420,900,1600,3000,5200].forEach(ms=>setTimeout(()=>{if(needsRepair())repair();},ms));
     if('MutationObserver' in window){
-      const observer=new MutationObserver(schedule);
+      const observer=new MutationObserver(scheduleRepair);
       observer.observe(document.querySelector('#journey')||document.body,{childList:true,subtree:true,characterData:true});
       setTimeout(()=>observer.disconnect(),12000);
     }
