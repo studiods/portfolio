@@ -9,6 +9,26 @@
     <article class="principle-item"><small>05 / CONFIDENCE</small><h4>불확실성을<br>확신으로 바꿉니다.</h4><p>검색과 비교 과정에서 모호한 니즈를 구체적인 상품 후보와 판단 기준으로 바꿉니다.</p></article>
     <article class="principle-item"><small>06 / DECISION</small><h4>결정을 끝낼 수<br>있게 합니다.</h4><p>상세페이지에서 가격·혜택·설치·상담·케어를 함께 판단해 구매 결정을 완료하도록 돕습니다.</p></article>`;
 
+  const flowMarkup=`
+    <div class="journey-flow-row row4">
+      <article class="flow-node"><span class="hm-card-no">01</span><h4>유입</h4><p>광고·검색·CRM의 맥락을 이어받습니다.</p></article>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <article class="flow-node"><span class="hm-card-no">02</span><h4>탐색</h4><p>목적에 맞는 상품 탐색을 시작합니다.</p></article>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <article class="flow-node"><span class="hm-card-no">03</span><h4>후보 압축</h4><p>비교할 후보를 빠르게 줄입니다.</p></article>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <article class="flow-node"><span class="hm-card-no">04</span><h4>비교·판단</h4><p>가격·혜택·설치 조건으로 판단합니다.</p></article>
+    </div>
+    <div class="journey-flow-row row4">
+      <article class="flow-node"><span class="hm-card-no">05</span><h4>장바구니</h4><p>선택 상품과 조건을 다시 확인합니다.</p></article>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <article class="flow-node"><span class="hm-card-no">06</span><h4>결제</h4><p>최종 비용과 혜택을 확정합니다.</p></article>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <article class="flow-node"><span class="hm-card-no">07</span><h4>설치</h4><p>일정·회수·설치를 끊김 없이 잇습니다.</p></article>
+      <div class="flow-arrow" aria-hidden="true"></div>
+      <article class="flow-node"><span class="hm-card-no">08</span><h4>관리</h4><p>A/S·케어·재구매로 관계를 이어갑니다.</p></article>
+    </div>`;
+
   const forceVisible=(el)=>{
     if(!el)return;
     el.classList.remove('hm-reveal','wide-rise-target');
@@ -26,6 +46,18 @@
     const desc=head.querySelector('.hm-section-desc');
     if(title)title.innerHTML='앞선 데이터를 바탕으로,<br>구매 여정의 흐름과 각 화면의 역할을<br>다시 정의했습니다.';
     if(desc)desc.textContent='먼저 고객의 판단 흐름을 만들고, 그 흐름 안에서 각 화면이 맡아야 할 역할과 공통 UX 원칙을 정의했습니다.';
+
+    wrap.querySelectorAll('.hm-section-title,.hm-subtitle,.forced-redesign-title,.journey-block-title,h2,h3').forEach(el=>{
+      if(el===title)return;
+      const text=(el.textContent||'').replace(/\s+/g,' ').trim();
+      if(text.includes('그래서 끊어진 여정을')&&text.includes('다음 행동으로 이어지는 구조')){
+        el.style.setProperty('display','none','important');
+        const parent=el.closest('.hm-section-head,.hm-subhead,.hm-subsection');
+        if(parent&&parent!==head&&!parent.querySelector('.journey-flow-block,.journey-role-block,.journey-principle-block')){
+          parent.style.setProperty('display','none','important');
+        }
+      }
+    });
   };
 
   const mount=()=>{
@@ -49,26 +81,11 @@
       flow.innerHTML=`
         <span class="narrative-subno">03.1 / JOURNEY FLOW</span>
         <h3 class="journey-block-title">화면 순서가 아니라,<br>고객 판단의 흐름으로 다시 연결했습니다.</h3>
-        <p class="journey-block-copy">문제는 유입보다 ‘다음 행동으로 이어지지 않는 것’이었습니다. 그래서 화면 순서가 아닌 고객 판단의 흐름으로 다시 연결했습니다.</p>
-        <div class="journey-stage-flow" aria-label="재설계한 구매 여정">
-          <div class="journey-flow-row row4">
-            <article class="flow-node"><span class="hm-card-no">01</span><h4>유입</h4><p>광고·검색·CRM의 유입 맥락을 이어받습니다.</p></article>
-            <div class="flow-arrow" aria-hidden="true"></div>
-            <article class="flow-node"><span class="hm-card-no">02</span><h4>탐색</h4><p>목적에 맞는 상품·서비스 탐색을 시작합니다.</p></article>
-            <div class="flow-arrow" aria-hidden="true"></div>
-            <article class="flow-node"><span class="hm-card-no">03</span><h4>후보 압축</h4><p>비교할 후보를 빠르게 줄입니다.</p></article>
-            <div class="flow-arrow" aria-hidden="true"></div>
-            <article class="flow-node"><span class="hm-card-no">04</span><h4>비교·판단</h4><p>가격·혜택·설치 조건으로 판단합니다.</p></article>
-          </div>
-          <div class="flow-arrow journey-flow-down" aria-hidden="true"></div>
-          <div class="journey-flow-row row3">
-            <article class="flow-node"><span class="hm-card-no">05</span><h4>구매</h4><p>결정한 상품을 바로 구매합니다.</p></article>
-            <div class="flow-arrow" aria-hidden="true"></div>
-            <article class="flow-node"><span class="hm-card-no">06</span><h4>설치</h4><p>일정·회수·설치를 끊김 없이 잇습니다.</p></article>
-            <div class="flow-arrow" aria-hidden="true"></div>
-            <article class="flow-node"><span class="hm-card-no">07</span><h4>관리</h4><p>A/S·케어·재구매로 관계를 이어갑니다.</p></article>
-          </div>
-        </div>`;
+        <p class="journey-block-copy">문제는 유입보다 다음 행동으로 이어지지 않는 것이었습니다. 그래서 고객 판단 흐름으로 다시 연결했습니다.</p>
+        <div class="journey-stage-flow" aria-label="재설계한 구매 여정">${flowMarkup}</div>`;
+    }else{
+      const stage=flow.querySelector('.journey-stage-flow');
+      if(stage)stage.innerHTML=flowMarkup;
     }
 
     if(!roles){
@@ -127,8 +144,10 @@
     forceVisible(principlesBlock);
     document.body.classList.add('narrative-journey-ready');
 
-    [220,720,1500].forEach(delay=>setTimeout(()=>{
+    [120,420,900,1600].forEach(delay=>setTimeout(()=>{
       applyHeading(wrap);
+      const stage=flow.querySelector('.journey-stage-flow');
+      if(stage&&stage.querySelectorAll('.flow-node').length!==8)stage.innerHTML=flowMarkup;
       forceVisible(flow);
       forceVisible(roles);
       forceVisible(principlesBlock);
