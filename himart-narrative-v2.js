@@ -49,7 +49,23 @@
     if(realityCopy)realityCopy.innerHTML='최초 상기, 멀티 브랜드 비교, 직영 서비스는 강했습니다. 문제는 이 강점이 <strong>실제 경험과 선택, 반복 관계</strong>로 이어지지 않는 데 있었습니다.';
 
     const synthesis=reality.querySelector('.brand-synthesis');
-    if(synthesis)synthesis.classList.add('narrative-blue-synthesis');
+    if(synthesis){
+      synthesis.classList.remove('narrative-blue-synthesis');
+      synthesis.classList.add('narrative-touchpoint-synthesis');
+      synthesis.innerHTML=`
+        <span class="narrative-subno synthesis-subno">01.3 / TRANSITION TOUCHPOINT</span>
+        <h4>결국 문제는 <strong>인지가 아니라 전환 접점</strong>에 있었습니다.</h4>
+        <div class="synthesis-list">
+          <article class="synthesis-card positive">
+            <b>이미 가지고 있던 강점</b>
+            <p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 경쟁사가 쉽게 복제하기 어려운 오프라인 자산이 있었습니다.</p>
+          </article>
+          <article class="synthesis-card negative">
+            <b>온라인에서 끊기던 지점</b>
+            <p>인지 → 실제 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록 편의성과 연결성이 약해졌습니다.</p>
+          </article>
+        </div>`;
+    }
 
     /* 02 / BEHAVIOR */
     const dataHead=main.querySelector('#data .hm-section-head');
