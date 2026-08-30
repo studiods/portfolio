@@ -1,21 +1,95 @@
 (()=>{
   'use strict';
 
+  const pool='가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  const scrambleText=(el,duration=720,customPool=pool)=>{
+    if(!el||el.dataset.scramblePlayed==='1')return;
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+    const parts=[];
+    while(walker.nextNode()){
+      const node=walker.currentNode;
+      const original=node.nodeValue;
+      if(original&&original.trim())parts.push({node,original});
+    }
+    if(!parts.length)return;
+    el.dataset.scramblePlayed='1';
+    const start=performance.now();
+    const tick=(now)=>{
+      const p=Math.min(1,(now-start)/duration);
+      parts.forEach((part,pi)=>{
+        const chars=[...part.original];
+        const reveal=Math.floor(chars.length*p);
+        part.node.nodeValue=chars.map((ch,ci)=>{
+          if(/\s/.test(ch))return ch;
+          if(ci<reveal||p===1)return ch;
+          return customPool[(pi*17+ci*29+Math.floor(now/36))%customPool.length];
+        }).join('');
+      });
+      if(p<1)requestAnimationFrame(tick);
+      else parts.forEach(part=>{part.node.nodeValue=part.original;});
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const animateCount=(el)=>{
+    if(!el||el.dataset.countPlayed==='1')return;
+    const target=parseFloat(el.dataset.count||'0');
+    const decimals=parseInt(el.dataset.decimals||'0',10);
+    const duration=parseInt(el.dataset.duration||'720',10);
+    if(Number.isNaN(target))return;
+    el.dataset.countPlayed='1';
+    const start=performance.now();
+    const tick=(now)=>{
+      const p=Math.min(1,(now-start)/duration);
+      const eased=1-Math.pow(1-p,3);
+      const value=target*eased;
+      el.textContent=value.toFixed(decimals);
+      if(p<1)requestAnimationFrame(tick);
+      else el.textContent=target.toFixed(decimals);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const animateCountersIn=(scope)=>{
+    if(!scope)return;
+    scope.querySelectorAll('[data-count]').forEach(animateCount);
+  };
+
+  const installFocusMotion=(targets)=>{
+    const valid=targets.filter(Boolean);
+    if(!valid.length)return;
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(!entry.isIntersecting||entry.intersectionRatio<0.46)return;
+        const target=entry.target;
+        if(target.dataset.focusPlayed==='1')return;
+        target.dataset.focusPlayed='1';
+        const head=target.querySelector(':scope > .hm-wrap > .hm-section-head')||target.querySelector('.hm-section-head');
+        scrambleText(head?.querySelector('.hm-section-no'),420,'0123456789');
+        scrambleText(head?.querySelector('.hm-section-title'),760);
+        animateCountersIn(target);
+        target.querySelectorAll('.behavior-card').forEach(card=>card.classList.add('is-anim'));
+      });
+    },{threshold:[0.46,0.72]});
+    valid.forEach(target=>obs.observe(target));
+  };
+
   const wait=()=>{
     const main=document.getElementById('live-main');
     const brand=main?.querySelector('#brand');
+    const data=main?.querySelector('#data');
     const problem=brand?.querySelector('.narrative-problem');
     const reality=brand?.querySelector('.narrative-reality');
     const signals=main?.querySelector('#data .narrative-signals');
     const journey=main?.querySelector('#journey');
     const direction=main?.querySelector('#direction');
 
-    if(!main||!brand||!problem||!reality||!signals||!journey||!direction){
+    if(!main||!brand||!data||!problem||!reality||!signals||!journey||!direction){
       setTimeout(wait,60);
       return;
     }
 
-    /* 01 / PROBLEM DEFINITION */
     const brandHead=brand.querySelector(':scope > .hm-wrap > .hm-section-head');
     const brandTitle=brandHead?.querySelector('.hm-section-title');
     const brandDesc=brandHead?.querySelector('.hm-section-desc');
@@ -54,7 +128,7 @@
       synthesis.classList.add('narrative-touchpoint-synthesis');
       synthesis.innerHTML=`
         <span class="narrative-subno synthesis-subno">01.3 / TRANSITION TOUCHPOINT</span>
-        <h4>결국 문제는 <strong>인지가 아니라 전환 접점</strong>에 있었습니다.</h4>
+        <h4>결국 문제는 인지가 아니라 전환 접점에 있었습니다.</h4>
         <div class="synthesis-list">
           <article class="synthesis-card positive">
             <b>이미 가지고 있던 강점</b>
@@ -67,8 +141,7 @@
         </div>`;
     }
 
-    /* 02 / BEHAVIOR */
-    const dataHead=main.querySelector('#data .hm-section-head');
+    const dataHead=data.querySelector('.hm-section-head');
     const dataTitle=dataHead?.querySelector('.hm-section-title');
     const dataDesc=dataHead?.querySelector('.hm-section-desc');
     if(dataTitle)dataTitle.innerHTML='고객의 목소리에서 드러난 문제는<br>실제 이용 패턴에서도 반복됐습니다.';
@@ -77,27 +150,54 @@
     const signalTitle=signals.querySelector('.narrative-title');
     if(signalTitle)signalTitle.innerHTML='고객은 찾아왔지만<br>그 다음으로 연결되지 못했습니다.';
 
-    const firstSignal=signals.querySelector('.signal-item:first-child');
-    if(firstSignal&&!firstSignal.querySelector('.signal-rule')){
-      const rule=document.createElement('div');
-      rule.className='signal-rule';
-      rule.innerHTML='<i style="--w:68%"></i>';
-      firstSignal.appendChild(rule);
-      const bar=rule.querySelector('i');
-      if(bar){
-        bar.style.transform='scaleX(0)';
-        requestAnimationFrame(()=>requestAnimationFrame(()=>bar.style.removeProperty('transform')));
-      }
+    const behaviorGrid=signals.querySelector('.behavior-grid');
+    if(behaviorGrid){
+      behaviorGrid.innerHTML=`
+        <article class="behavior-card">
+          <small>ENTRY</small>
+          <div class="behavior-card-top">
+            <div class="behavior-value"><b data-count="68" data-decimals="0" data-duration="620">0</b><span>%</span></div>
+            <h4>외부 맥락을 가진<br>유입</h4>
+          </div>
+          <p class="behavior-note">광고·CRM·검색 결과를 통해 들어온 비중이 높았습니다. 고객은 이미 맥락을 가진 채 들어왔지만, 그 다음 선택을 빠르게 이어 주는 구조는 충분하지 않았습니다.</p>
+          <div class="behavior-rule"><i style="--w:68%"></i></div>
+        </article>
+        <article class="behavior-card">
+          <small>CAMPAIGN → NEXT</small>
+          <div class="behavior-card-top">
+            <div class="behavior-value"><b data-count="52.2" data-decimals="1" data-duration="620">0.0</b><span>%</span></div>
+            <h4>기획전에서 멈춘<br>다음 행동</h4>
+          </div>
+          <p class="behavior-note">기획전 랜딩 이후 절반 이상이 바로 종료됐고 상품 도달 9.3%, 검색·카테고리 도달 6.6%에 그쳤습니다. 관심은 만들었지만 다음 탐색으로 넘기는 연결이 약했습니다.</p>
+          <div class="behavior-rule"><i style="--w:52.2%"></i></div>
+        </article>
+        <article class="behavior-card">
+          <small>SEARCH INTENT</small>
+          <div class="behavior-card-top">
+            <div class="behavior-value"><b data-count="9.34" data-decimals="2" data-duration="640">0.00</b><span>%</span></div>
+            <h4>검색 의도는 더<br>분명해졌습니다</h4>
+          </div>
+          <p class="behavior-note">검색 비중은 3.26%에서 9.34%로 높아졌습니다. 사용자는 더 명확한 목적을 가지고 들어왔지만, 그 의도를 빠르게 상품 판단과 비교로 연결할 구조는 충분하지 않았습니다.</p>
+          <div class="behavior-rule"><i style="--w:66%"></i></div>
+        </article>
+        <article class="behavior-card">
+          <small>CHECKOUT BIAS</small>
+          <div class="behavior-card-top">
+            <div class="behavior-value"><b data-count="3.1" data-decimals="1" data-duration="620">0.0</b><span>×</span></div>
+            <h4>결제 직행이 장바구니보다<br>더 많았습니다</h4>
+          </div>
+          <p class="behavior-note">장바구니보다 결제 진입이 3.1배 많았고, PDP 이용은 증가했지만 실제 장바구니와 구매 전환은 줄었습니다. 중간 탐색을 줄이고 바로 결정을 돕는 설계가 필요했습니다.</p>
+          <div class="behavior-rule"><i style="--w:78%"></i></div>
+        </article>`;
     }
 
     const bridge=signals.querySelector('.narrative-bridge p');
     if(bridge)bridge.innerHTML='사용자 의견에서는 <strong>“온라인몰이 잘 떠오르지 않는다”</strong>는 이야기가 반복됐고, 실제 이용 데이터에서는 <strong>“들어와도 다음 단계로 이어지지 않는다”</strong>는 행동이 확인됐습니다. 두 결과가 같은 방향을 가리켰기 때문에 목표를 <strong>‘화면을 새로 만든다’가 아니라 ‘고객의 구매 여정 안에 자리를 만든다’</strong>로 다시 정의했습니다.';
 
-    /* 03 / PRINCIPLES */
     const journeyHead=journey.querySelector(':scope > .hm-wrap > .hm-section-head');
     const journeyTitle=journeyHead?.querySelector('.hm-section-title');
     const journeyDesc=journeyHead?.querySelector('.hm-section-desc');
-    if(journeyTitle)journeyTitle.innerHTML='그래서 화면보다 먼저,<br>여정을 설계하는 여섯 가지 원칙을 정했습니다.';
+    if(journeyTitle)journeyTitle.innerHTML='그래서 끊어진 여정을, 어디서 시작해도<br>다음 행동으로 이어지는 구조로<br>다시 설계했습니다.';
     if(journeyDesc)journeyDesc.textContent='모든 화면이 같은 방향으로 움직이도록, 구매 여정 전체의 원칙부터 정했습니다.';
 
     const principles=journey.querySelector('.principle-grid');
@@ -111,7 +211,6 @@
         <article class="principle-item"><small>06 / DECISION</small><h4>결정을 끝낼 수<br>있게 합니다.</h4><p>상세페이지에서 가격·혜택·설치·상담·케어를 함께 판단해 구매 결정을 완료하도록 돕습니다.</p></article>`;
     }
 
-    /* 04 / PROTOTYPE */
     const directionHead=direction.querySelector(':scope > .hm-wrap > .hm-section-head');
     const directionTitle=directionHead?.querySelector('.hm-section-title');
     const directionDesc=directionHead?.querySelector('.hm-section-desc');
@@ -121,7 +220,6 @@
     const standardRule=direction.querySelector('.design-rule article:first-child h4');
     if(standardRule)standardRule.innerHTML='익숙함은 적극적으로<br>가져옵니다.';
 
-    /* Prototype cases stay fully expanded. */
     direction.querySelectorAll('details.hm-more').forEach(details=>{
       if(!details.querySelector('.prototype-case,.production-v18-row,.production-prototype-row,.phone-card,.phone-gallery'))return;
       const body=details.querySelector('.hm-more-body');
@@ -133,6 +231,8 @@
       el.style.removeProperty('display');
       el.classList.add('narrative-prototype-visible');
     });
+
+    installFocusMotion([brand,data,signals,journey,direction]);
 
     document.body.classList.add('narrative-v2-ready');
     window.dispatchEvent(new Event('scroll'));
