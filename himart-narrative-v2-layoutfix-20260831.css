@@ -1,0 +1,57 @@
+/* Final layout adjustments — 2026-08-31 */
+
+/* Only the main chapter numbers 01–04 use 16px. */
+html body.himart-wide-test-page #live-main > section > .hm-wrap > .hm-section-head > .hm-section-no,
+html body.himart-wide-test-page #live-main > section > .hm-section-head > .hm-section-no{
+  font-size:16px!important;
+  line-height:1.2!important;
+  color:var(--hm-blue)!important;
+}
+
+/* Sub-section labels such as 01.1 / 02.1 / 03.1 remain at 12px. */
+html body.himart-wide-test-page :is(
+  .narrative-subno,
+  .hm-subno,
+  .problem-item small,
+  .proof-label,
+  .proof-compare,
+  .signal-item small,
+  .principle-item small,
+  .design-rule small,
+  .behavior-card > small
+){
+  font-size:12px!important;
+  line-height:1.5!important;
+}
+
+/* 02.1 behavior metrics return to a single four-column row on desktop. */
+html body.himart-wide-test-page #data .narrative-signals .behavior-grid,
+html body.himart-wide-test-page #data .narrative-signals .signal-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-auto-flow:row!important;
+  gap:28px!important;
+  width:100%!important;
+}
+
+/* Replace the previous auto-resolved vertical gap with a fixed 40px margin. */
+html body.himart-wide-test-page #data .narrative-signals .behavior-note,
+html body.himart-wide-test-page #data .narrative-signals .signal-item p{
+  margin:40px 0 0!important;
+  padding-top:0!important;
+  max-width:100%!important;
+}
+
+@media(max-width:1180px){
+  html body.himart-wide-test-page #data .narrative-signals .behavior-grid,
+  html body.himart-wide-test-page #data .narrative-signals .signal-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:780px){
+  html body.himart-wide-test-page #data .narrative-signals .behavior-grid,
+  html body.himart-wide-test-page #data .narrative-signals .signal-grid{
+    grid-template-columns:1fr!important;
+  }
+}
