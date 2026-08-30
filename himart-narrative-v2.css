@@ -2,7 +2,11 @@ html body.himart-narrative-test:not(.narrative-v2-ready) #live-main{opacity:0!im
 html body.himart-narrative-test.narrative-v2-ready #live-main{opacity:1!important;visibility:visible!important}
 
 /* ===== TYPOGRAPHY SYSTEM ===== */
-html body.himart-wide-test-page .hm-section-title{
+html body.himart-wide-test-page .hm-section-title,
+html body.himart-wide-test-page #brand .hm-section-title,
+html body.himart-wide-test-page #data .hm-section-title,
+html body.himart-wide-test-page #journey .hm-section-title,
+html body.himart-wide-test-page #direction .hm-section-title{
   font-size:52px!important;
   line-height:1.12!important;
   font-family:var(--hm-ko)!important;
@@ -27,9 +31,9 @@ html body.himart-wide-test-page :is(.hm-source,.narrative-subno,.problem-item sm
 html body.himart-wide-test-page .hm-section-desc{max-width:760px!important;margin-top:24px!important}
 html body.himart-wide-test-page .narrative-copy{max-width:820px!important;margin-top:16px!important}
 
-/* ===== MICRO LABEL COLOR SYSTEM ===== */
+/* ===== MICRO LABEL COLOR SYSTEM / RESTORE BLUE ===== */
 html body.himart-wide-test-page :is(.narrative-subno,.problem-item small,.proof-label,.signal-item small,.principle-item small,.design-rule small,.hm-subno,.hm-card-no){
-  color:var(--hm-green)!important;
+  color:var(--hm-blue)!important;
 }
 
 /* ===== 01.3 / TRANSITION TOUCHPOINT ===== */
@@ -43,7 +47,7 @@ html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis{
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-subno{
   display:block!important;
   margin:0 0 18px!important;
-  color:var(--hm-green)!important;
+  color:var(--hm-blue)!important;
 }
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{
   max-width:980px!important;
@@ -62,22 +66,35 @@ html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-list{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:28px!important;
+  gap:0!important;
   margin-top:58px!important;
 }
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card{
   position:relative!important;
+  isolation:isolate!important;
   min-height:280px!important;
   padding:28px 24px 26px!important;
   border-top:2px solid var(--hm-blue)!important;
   display:flex!important;
   flex-direction:column!important;
   overflow:hidden!important;
-  background:linear-gradient(to bottom,rgba(0,166,237,.16) 0%,rgba(0,166,237,.096) 44%,rgba(0,166,237,.04) 70%,transparent 100%)!important;
+  background:transparent!important;
+}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-20px!important;
+  z-index:-1!important;
+  pointer-events:none!important;
+  background:linear-gradient(to bottom,rgba(0,166,237,.192) 0%,rgba(0,166,237,.115) 44%,rgba(0,166,237,.048) 70%,transparent 100%)!important;
+  filter:blur(20px)!important;
+  transform:scale(1.04)!important;
 }
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative{
   border-top-color:var(--hm-red)!important;
-  background:linear-gradient(to bottom,rgba(250,72,27,.16) 0%,rgba(250,72,27,.096) 44%,rgba(250,72,27,.04) 70%,transparent 100%)!important;
+}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative::before{
+  background:linear-gradient(to bottom,rgba(250,72,27,.192) 0%,rgba(250,72,27,.115) 44%,rgba(250,72,27,.048) 70%,transparent 100%)!important;
 }
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card b{
   display:block!important;
@@ -103,6 +120,10 @@ html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis 
 
 /* ===== 02 / SIGNALS ===== */
 html body.himart-wide-test-page .signal-item:first-child{padding-bottom:3px}
+html body.himart-wide-test-page .signal-item b{
+  font-size:84px!important;
+  line-height:.95!important;
+}
 html body.himart-wide-test-page .signal-item .signal-rule{
   display:block!important;
   height:3px!important;
@@ -114,7 +135,7 @@ html body.himart-wide-test-page .signal-item .signal-rule i{
   display:block!important;
   width:var(--w)!important;
   height:100%!important;
-  background:var(--hm-green)!important;
+  background:var(--hm-blue)!important;
   transform:scaleX(0);
   transform-origin:left;
   transition:transform 1s cubic-bezier(.2,.8,.2,1);
@@ -125,6 +146,12 @@ html body.himart-wide-test-page .hm-reveal.is-in .signal-item .signal-rule i{
 html body.himart-wide-test-page .narrative-bridge p{font-size:28px!important;line-height:1.48!important}
 
 /* ===== 03 / SIX PRINCIPLES ===== */
+html body.himart-wide-test-page #journey .hm-section-title{
+  font-family:var(--hm-ko)!important;
+  font-size:52px!important;
+  line-height:1.12!important;
+  font-weight:400!important;
+}
 html body.himart-wide-test-page .principle-grid{
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
   gap:34px 34px!important;
@@ -142,9 +169,11 @@ html body.himart-wide-test-page #direction .narrative-prototype-visible{
   html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-list{grid-template-columns:1fr!important}
 }
 @media(max-width:780px){
-  html body.himart-wide-test-page .hm-section-title{font-size:44px!important}
+  html body.himart-wide-test-page .hm-section-title,
+  html body.himart-wide-test-page #journey .hm-section-title{font-size:44px!important}
   html body.himart-wide-test-page :is(.narrative-title,.hm-subtitle,.forced-redesign-title){font-size:36px!important}
   html body.himart-wide-test-page .principle-grid{grid-template-columns:1fr!important}
   html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{font-size:36px!important}
   html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card{padding:26px 20px 24px!important}
+  html body.himart-wide-test-page .signal-item b{font-size:68px!important}
 }
