@@ -14,7 +14,7 @@
     style.id='journey-title-hard-guard';
     style.textContent=`
       html body:not(.journey-title-canonical) #journey > .hm-wrap > .hm-section-head .hm-section-title{visibility:hidden!important}
-      html body #journey > .hm-wrap > .hm-section-head .hm-section-no{display:block!important;margin:0 0 24px!important;font-size:16px!important;color:var(--hm-blue)!important}
+      html body #journey > .hm-wrap > .hm-section-head > .hm-section-no{display:block!important;margin:0 0 24px!important;font-size:16px!important;color:var(--hm-blue)!important}
       html body #journey > .hm-wrap > .hm-section-head .hm-section-title::before,
       html body #journey > .hm-wrap > .hm-section-head .hm-section-title::after{content:none!important;display:none!important}
     `;
@@ -51,7 +51,9 @@
       head.prepend(no);
       no.insertAdjacentElement('afterend',title);
 
-      [...head.querySelectorAll(':scope > .hm-section-no')].forEach(el=>{if(el!==no)el.remove();});
+      /* Keep exactly one chapter number in #journey. The source page can inject another
+         .hm-section-no below the description after the V2 scripts have already run. */
+      [...journey.querySelectorAll('.hm-section-no')].forEach(el=>{if(el!==no)el.remove();});
       [...head.querySelectorAll(':scope > .hm-section-title')].forEach(el=>{if(el!==title)el.remove();});
 
       const headingSelector='.hm-section-title,.hm-subtitle,.forced-redesign-title,h1,h2,h3,h4';
@@ -61,7 +63,7 @@
         if(t.includes(OLD_NEEDLE)||t===normalize(title.textContent))el.remove();
       });
 
-      const valid=head.firstElementChild===no && no.nextElementSibling===title && title.innerHTML===CANONICAL_HTML && !normalize(journey.textContent).includes(OLD_NEEDLE);
+      const valid=head.firstElementChild===no && no.nextElementSibling===title && title.innerHTML===CANONICAL_HTML && journey.querySelectorAll('.hm-section-no').length===1 && !normalize(journey.textContent).includes(OLD_NEEDLE);
       document.body?.classList.toggle('journey-title-canonical',valid);
     }finally{
       fixing=false;
