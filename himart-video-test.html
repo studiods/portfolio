@@ -278,8 +278,8 @@ const PATCH_SCRIPT='<script id="himart-video-hero-test-script">'+
 "    if(!stage||!fixed||!brand)return;\n"+
 "    const brandTop=brand.getBoundingClientRect().top;\n"+
 "    const cover=clamp((innerHeight-brandTop)/Math.max(1,innerHeight));\n"+
-"    const fastT=clamp(cover/.28);\n"+
-"    const slowT=clamp((cover-.28)/.72);\n"+
+"    const fastT=clamp(cover/.336);\n"+
+"    const slowT=clamp((cover-.336)/.664);\n"+
 "    const blackout=clamp(.72*fastOut(fastT)+.28*smooth(slowT));\n"+
 "    const frameOpacity=1-blackout;\n"+
 "    fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));\n"+
