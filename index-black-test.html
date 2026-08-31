@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shin Dong Sik — UX Design Lead · Black Test</title>
+<style>html,body{margin:0;background:#000;color:#fff}.boot{min-height:100vh;background:#000}</style>
+</head>
+<body><div class="boot" aria-hidden="true"></div>
+<script>
+fetch('./index.html?v=20260831-black-1',{cache:'no-store'})
+  .then(r=>{if(!r.ok)throw new Error('home load failed');return r.text()})
+  .then(html=>{
+    html=html.replace('<body class="home-test">','<body class="home-test home-black-test">');
+    html=html.replace('<a href="./index.html" aria-current="page">Home</a>','<a href="./index-black-test.html" aria-current="page">Home</a>');
+    html=html.replaceAll('href="./himart.html"','href="https://studiods.github.io/portfolio/himart-narrative-test-v2.html?deploy=4254e58"');
+    html=html.replace('</head>','<link rel="stylesheet" href="./home-black-test.css?v=20260831-1"></head>');
+    document.open();
+    document.write(html);
+    document.close();
+  })
+  .catch(err=>{
+    console.error(err);
+    document.body.innerHTML='<div class="boot" style="display:grid;place-items:center;color:rgba(255,255,255,.5);font:14px Pretendard,sans-serif">페이지를 불러오지 못했습니다.</div>';
+  });
+</script>
+</body>
+</html>
