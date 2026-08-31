@@ -1,0 +1,126 @@
+/* Home black-theme test · 2026-08-31
+   Test-only override for index-black-test.html.
+   Keep the production home layout/interactions intact while translating the
+   warm/light canvas to a true-black portfolio presentation. */
+
+body.home-black-test{
+  --bg:#000!important;
+  --fg:#fff!important;
+  --muted:rgba(255,255,255,.46)!important;
+  --line:rgba(255,255,255,.16)!important;
+  background:#000!important;
+  color:#fff!important;
+}
+
+html,
+body.home-black-test,
+body.home-black-test .shell,
+body.home-black-test .hero-sequence,
+body.home-black-test .hero-sticky,
+body.home-black-test .intro-block,
+body.home-black-test .philosophy-tail-space,
+body.home-black-test .principles-section,
+body.home-black-test .selected-work,
+body.home-black-test .footer,
+body.home-black-test .filip-footer{
+  background:#000!important;
+}
+
+body.home-black-test .top{
+  color:#fff!important;
+}
+
+body.home-black-test .mini-label,
+body.home-black-test .showcase-meta,
+body.home-black-test .footer h3{
+  color:rgba(255,255,255,.46)!important;
+}
+
+body.home-black-test .footer,
+body.home-black-test .footer a,
+body.home-black-test .footer p{
+  color:rgba(255,255,255,.76)!important;
+}
+
+body.home-black-test .showcase-project{
+  border-top-color:rgba(255,255,255,.14)!important;
+}
+body.home-black-test .showcase-project:first-child{
+  border-top-color:transparent!important;
+}
+
+body.home-black-test .placeholder{
+  border-color:rgba(255,255,255,.22)!important;
+  background:#000!important;
+}
+body.home-black-test .placeholder::before,
+body.home-black-test .placeholder::after{
+  background:rgba(255,255,255,.16)!important;
+}
+body.home-black-test .showcase-project:hover .placeholder{
+  background:#080808!important;
+}
+
+body.home-black-test .footer-grid{
+  border-top-color:rgba(255,255,255,.16)!important;
+}
+
+body.home-black-test ::selection{
+  background:#fff!important;
+  color:#000!important;
+}
+
+/*
+  The production motion scripts intentionally paint Hero, Philosophy and Works
+  with 17,17,17 RGB values for the light canvas. Inverting only those text
+  layers preserves every authored alpha/scramble timing while translating the
+  exact same motion to near-white on black. No production JS is duplicated.
+*/
+body.home-black-test .hero-state,
+body.home-black-test .philosophy-statements,
+body.home-black-test .showcase-project h3{
+  filter:invert(1);
+}
+body.home-black-test .hero-state,
+body.home-black-test .showcase-project h3{
+  color:#111!important;
+}
+
+/* Philosophy's JS writes --test-rgb inline; !important custom property keeps
+   its progressive reveal white-based without changing timing. */
+body.home-black-test #philosophy .philosophy-statements .fill-char{
+  --test-rgb:255,255,255!important;
+}
+/* Because Philosophy is already RGB-switched above, do not double-invert it. */
+body.home-black-test #philosophy .philosophy-statements{
+  filter:none!important;
+}
+body.home-black-test #philosophy .philosophy-statements p{
+  color:rgba(255,255,255,.05)!important;
+}
+
+/* Design Principles are natively white-on-dark; only normalize the old #111
+   panel to true black and keep the existing white hierarchy untouched. */
+body.home-black-test .principles-section{
+  color:#fff!important;
+}
+body.home-black-test .principles-intro-ko,
+body.home-black-test .principle-ko{
+  color:#fff!important;
+}
+body.home-black-test .principle-en{
+  color:rgba(255,255,255,.70)!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.home-black-test .hero-state,
+  body.home-black-test .showcase-project h3{
+    filter:invert(1)!important;
+  }
+  body.home-black-test #philosophy .philosophy-statements{
+    filter:none!important;
+  }
+  body.home-black-test #philosophy .philosophy-statements p{
+    color:#fff!important;
+  }
+}
