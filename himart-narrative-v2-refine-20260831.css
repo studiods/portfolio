@@ -1,14 +1,8 @@
 /* Narrative V2 final refinement · 2026-08-31
-   - 03.1 uses the exact circle geometry of the detailed journey diagrams
-   - proof-card copy aligns on the same baseline
-   - neutral white lines are standardized to 10% opacity
+   - proof-card copy alignment
+   - neutral white lines standardized to 10% opacity
+   - journey geometry intentionally delegated to production v12/v13/v14 rules
 */
-
-html body.himart-wide-test-page #journey{
-  --journey-circle:clamp(230px,19.2vw,300px);
-  --journey-arrow:48px;
-  --journey-outline-pad:14px;
-}
 
 /* 01.2 BRAND REALITY: keep every explanation on the same baseline */
 html body.himart-wide-test-page #brand .narrative-reality .proof-grid{
@@ -21,7 +15,7 @@ html body.himart-wide-test-page #brand .narrative-reality .proof-item{
   flex-direction:column!important;
 }
 html body.himart-wide-test-page #brand .narrative-reality .proof-item h4{
-  min-height:52.5px!important;
+  min-height:2.76em!important;
   margin:20px 0 0!important;
   display:block!important;
 }
@@ -31,136 +25,21 @@ html body.himart-wide-test-page #brand .narrative-reality .proof-item p{
   color:rgba(255,255,255,.60)!important;
 }
 
-/* 03.1 and expanded journey diagrams share one identical circle rule */
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-row{
-  position:relative!important;
-  display:grid!important;
-  grid-template-columns:var(--journey-circle) var(--journey-arrow) var(--journey-circle) var(--journey-arrow) var(--journey-circle) var(--journey-arrow) var(--journey-circle)!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  width:100%!important;
-  min-height:calc(var(--journey-circle) + 30px)!important;
-  column-gap:0!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-row + .journey-diagram-row{
-  margin-top:52px!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node{
-  position:relative!important;
-  z-index:2!important;
-  width:var(--journey-circle)!important;
-  min-width:var(--journey-circle)!important;
-  max-width:var(--journey-circle)!important;
-  height:var(--journey-circle)!important;
-  min-height:var(--journey-circle)!important;
-  max-height:var(--journey-circle)!important;
-  aspect-ratio:1 / 1!important;
-  border:1px solid rgba(255,255,255,.20)!important;
-  border-radius:50%!important;
-  background:#050505!important;
-  box-sizing:border-box!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  text-align:center!important;
-  padding:28px 34px!important;
-  overflow:hidden!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node small{
-  display:block!important;
-  margin:0!important;
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-en)!important;
-  font-size:12px!important;
-  font-weight:400!important;
-  line-height:1.5!important;
-  letter-spacing:.02em!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node h5{
-  display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  margin:18px 0 0!important;
-  color:#fff!important;
-  font-family:var(--hm-ko)!important;
-  font-size:20px!important;
-  font-weight:300!important;
-  line-height:1.35!important;
-  letter-spacing:-.04em!important;
-  word-break:keep-all!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node p{
-  display:block!important;
-  margin:18px 0 0!important;
-  max-width:84%!important;
-  color:rgba(255,255,255,.60)!important;
-  font-size:14px!important;
-  line-height:1.58!important;
-  word-break:keep-all!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-arrow{
-  position:relative!important;
-  width:var(--journey-arrow)!important;
-  height:48px!important;
-  font-size:0!important;
-  color:transparent!important;
-}
-html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-arrow::before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:50%!important;
-  width:17px!important;
-  height:17px!important;
-  border-top:1px solid rgba(255,255,255,.36)!important;
-  border-right:1px solid rgba(255,255,255,.36)!important;
-  transform:translate(-62%,-50%) rotate(45deg)!important;
-}
-
-/* Blue/red tablet outlines use the same spacing grammar as production journey diagrams */
-html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram{
-  margin-top:58px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  gap:0!important;
-}
-html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram-group{
-  position:absolute!important;
-  z-index:1!important;
-  top:-10px!important;
-  height:calc(var(--journey-circle) + 20px)!important;
-  border:1px solid var(--hm-blue)!important;
-  border-radius:999px!important;
-  pointer-events:none!important;
-  color:var(--hm-blue)!important;
-}
-html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram-group.first-two{
-  left:calc(0px - var(--journey-outline-pad))!important;
-  width:calc(var(--journey-circle) * 2 + var(--journey-arrow) + var(--journey-outline-pad) * 2)!important;
-}
-html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram-group.middle-two{
-  left:calc(var(--journey-circle) + var(--journey-arrow) - var(--journey-outline-pad))!important;
-  width:calc(var(--journey-circle) * 2 + var(--journey-arrow) + var(--journey-outline-pad) * 2)!important;
-}
-html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram-group-label{
-  position:absolute!important;
-  top:0!important;
-  left:50%!important;
-  transform:translate(-50%,-50%)!important;
-  padding:0 10px!important;
-  background:#050505!important;
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-ko)!important;
-  font-size:10px!important;
-  font-weight:400!important;
-  line-height:1.3!important;
-  white-space:nowrap!important;
-  text-align:center!important;
-}
-
-/* Neutral #fff based dividers = 10%. Exclusions: all circles, blue/red synthesis lines, and 04 prototype/mockup lines. */
-html body.himart-wide-test-page :is(.narrative-block,.problem-item,.proof-item,.signal-item,.behavior-card,.narrative-bridge,.journey-flow-block,.journey-role-block,.journey-deep-block,.journey-role-grid article,details.hm-more){
+/* Neutral #fff based dividers = 10%.
+   Exclusions: circles, blue/red synthesis lines, colored journey tablets, 04 mockup/prototype lines. */
+html body.himart-wide-test-page :is(
+  .narrative-block,
+  .problem-item,
+  .proof-item,
+  .signal-item,
+  .behavior-card,
+  .narrative-bridge,
+  .journey-flow-block,
+  .journey-role-block,
+  .journey-deep-block,
+  .journey-role-grid article,
+  details.hm-more
+){
   border-color:rgba(255,255,255,.10)!important;
 }
 html body.himart-wide-test-page details.hm-more{
@@ -173,15 +52,18 @@ html body.himart-wide-test-page .synthesis-card.positive{
 html body.himart-wide-test-page .synthesis-card.negative{
   border-top-color:var(--hm-red,#FA481B)!important;
 }
-html body.himart-wide-test-page #direction :is(.prototype-case,.production-v18-row,.production-prototype-row,.phone-gallery,.production-device,.prototype-frame,.mockup-frame){
-  border-color:revert-layer!important;
+html body.himart-wide-test-page #journey .flow-node,
+html body.himart-wide-test-page #journey .wide-flow-cluster.v12-journey-tablet{
+  border-color:revert!important;
 }
-
-@media(max-width:1500px){
-  html body.himart-wide-test-page #journey{--journey-circle:clamp(210px,18.5vw,280px);--journey-arrow:40px}
-}
-@media(max-width:1180px){
-  html body.himart-wide-test-page #journey{--journey-circle:clamp(168px,19vw,210px);--journey-arrow:32px}
-  html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node h5{font-size:18px!important}
-  html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node p{font-size:12px!important}
+html body.himart-wide-test-page #direction :is(
+  .prototype-case,
+  .production-v18-row,
+  .production-prototype-row,
+  .phone-gallery,
+  .production-device,
+  .prototype-frame,
+  .mockup-frame
+){
+  border-color:revert!important;
 }
