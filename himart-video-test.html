@@ -44,6 +44,7 @@ html,body{
   background:#000!important;
 }
 body.himart-video-test-page{
+  --hm-brand-alpha:.90;
   width:100%!important;
   max-width:100%!important;
   overflow-x:clip!important;
@@ -212,7 +213,7 @@ body.himart-video-test-page .hm-video-meta b{
   white-space:normal!important;
 }
 
-/* First chapter starts exactly at the bottom of the first viewport and scrolls over the fixed video. */
+/* First chapter starts at the bottom of the viewport and moves over the fixed video. */
 body.himart-video-test-page #brand{
   position:relative!important;
   z-index:10!important;
@@ -221,7 +222,8 @@ body.himart-video-test-page #brand{
   opacity:1!important;
   min-height:100vh!important;
   margin-top:-100vh!important;
-  background:rgba(0,0,0,.10)!important;
+  background:rgba(0,0,0,var(--hm-brand-alpha))!important;
+  will-change:background-color!important;
 }
 body.himart-video-test-page #brand>.hm-wrap,
 body.himart-video-test-page #brand .narrative-block{
@@ -267,30 +269,37 @@ const PATCH_SCRIPT='<script id="himart-video-hero-test-script">'+
 "  const brand=document.getElementById('brand');\n"+
 "  if(fixed&&fixed.parentElement!==document.body){document.body.insertBefore(fixed,document.body.firstChild);}\n"+
 "  const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));\n"+
+"  const smooth=(t)=>t*t*(3-2*t);\n"+
 "  const MAX_SCROLL_OVERLAY=1/3;\n"+
 "  const keepBrandVisible=()=>{if(!brand)return;brand.querySelectorAll('.hm-reveal').forEach(el=>el.classList.add('is-in'));};\n"+
 "  let raf=0;\n"+
 "  const update=()=>{\n"+
 "    raf=0;\n"+
-"    if(!stage||!fixed)return;\n"+
-"    const rect=stage.getBoundingClientRect();\n"+
-"    const travel=Math.max(1,stage.offsetHeight-innerHeight);\n"+
-"    const progress=clamp((-rect.top)/travel);\n"+
-"    const local=clamp((progress-.10)/.90);\n"+
-"    fixed.style.setProperty('--hm-video-blackout',(local*MAX_SCROLL_OVERLAY).toFixed(4));\n"+
-"    fixed.style.setProperty('--hm-frame-opacity',(1-clamp(progress/.32)).toFixed(4));\n"+
+"    if(!stage||!fixed||!brand)return;\n"+
+"    const brandTop=brand.getBoundingClientRect().top;\n"+
+"    const cover=clamp((innerHeight-brandTop)/Math.max(1,innerHeight));\n"+
+"    const videoEase=(1-Math.exp(-4.5*cover))/(1-Math.exp(-4.5));\n"+
+"    const blackout=MAX_SCROLL_OVERLAY*videoEase;\n"+
+"    const contentEase=Math.pow(cover,2.6);\n"+
+"    const brandAlpha=.90-(.80*contentEase);\n"+
+"    const fadeStart=.90;\n"+
+"    const fadeT=clamp((cover-fadeStart)/(1-fadeStart));\n"+
+"    const frameOpacity=1-smooth(fadeT);\n"+
+"    fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));\n"+
+"    fixed.style.setProperty('--hm-frame-opacity',frameOpacity.toFixed(4));\n"+
+"    document.body.style.setProperty('--hm-brand-alpha',brandAlpha.toFixed(4));\n"+
 "    keepBrandVisible();\n"+
 "  };\n"+
 "  const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(update)};\n"+
 "  addEventListener('scroll',requestUpdate,{passive:true});\n"+
 "  addEventListener('resize',requestUpdate,{passive:true});\n"+
-"  if(brand&&'MutationObserver' in window){const mo=new MutationObserver(keepBrandVisible);mo.observe(brand,{childList:true,subtree:true});}\n"+
+"  if(brand&&'MutationObserver' in window){const mo=new MutationObserver(()=>{keepBrandVisible();requestUpdate();});mo.observe(brand,{childList:true,subtree:true});}\n"+
 "  if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}\n"+
 "  keepBrandVisible();\n"+
 "  update();\n"+
 '})();<'+'/script>';
 
-fetch('./himart.html?v=20260901-video-hero-test-4',{cache:'no-store'})
+fetch('./himart.html?v=20260901-video-hero-test-5',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw new Error('himart load failed');return r.text()})
   .then(html=>{
     html=html.replace(/<body class="([^"]*)">/,(_,cls)=>`<body class="${cls} himart-video-test-page">`);
