@@ -5,6 +5,24 @@
    - neutral white lines are standardized to 10% opacity
 */
 
+/* GLOBAL BACKGROUND: use true black across the case while preserving accent lines/graphics. */
+html,
+body.himart-wide-test-page,
+html body.himart-wide-test-page #live-main,
+html body.himart-wide-test-page #live-main > header,
+html body.himart-wide-test-page #live-main > section,
+html body.himart-wide-test-page #live-main > footer,
+html body.himart-wide-test-page :is(#brand,#data,#journey,#direction),
+html body.himart-wide-test-page :is(#brand,#data,#journey,#direction) > .hm-wrap,
+html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-role-block,.journey-more-inner,.v2-production-copy,.flow-area),
+html body.himart-wide-test-page #journey details.hm-more,
+html body.himart-wide-test-page #journey details.hm-more > .hm-more-body{
+  background:#000!important;
+}
+html body.himart-wide-test-page{
+  --hm-bg:#000;
+}
+
 html body.himart-wide-test-page #live-main p,
 html body.himart-wide-test-page #live-main .hm-section-desc,
 html body.himart-wide-test-page #live-main .narrative-copy,
@@ -81,7 +99,7 @@ html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-w
   aspect-ratio:1 / 1!important;
   border:1px solid rgba(255,255,255,.20)!important;
   border-radius:50%!important;
-  background:#050505!important;
+  background:#000!important;
   box-sizing:border-box!important;
   display:flex!important;
   flex-direction:column!important;
@@ -173,7 +191,7 @@ html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram-gr
   left:50%!important;
   transform:translate(-50%,-50%)!important;
   padding:0 10px!important;
-  background:#050505!important;
+  background:#000!important;
   color:var(--hm-blue)!important;
   font-family:var(--hm-ko)!important;
   font-size:10px!important;
@@ -189,6 +207,44 @@ html body.himart-wide-test-page #journey .journey-role-grid{
 }
 html body.himart-wide-test-page #journey .journey-role-grid article p{
   color:rgba(255,255,255,.50)!important;
+}
+
+/* Expanded production 1/2 flow circles: preserve the original h4 titles. */
+html body.himart-wide-test-page #journey details.journey-more .v2-production-copy .flow-node{
+  background:#000!important;
+}
+html body.himart-wide-test-page #journey details.journey-more .v2-production-copy .flow-node h4{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  position:relative!important;
+  width:auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:16px 0 0!important;
+  padding:0!important;
+  overflow:visible!important;
+  clip:auto!important;
+  clip-path:none!important;
+  transform:none!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-family:var(--hm-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  line-height:1.25!important;
+  letter-spacing:-.04em!important;
+  text-align:center!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+}
+html body.himart-wide-test-page #journey details.journey-more .v2-production-copy .flow-node p{
+  margin-top:14px!important;
+  color:rgba(255,255,255,.50)!important;
+}
+html body.himart-wide-test-page #journey details.journey-more .v2-production-copy .flow-label{
+  background:#000!important;
 }
 
 /* Neutral #fff based dividers = 10%. Exclusions: circles, blue/red synthesis lines, and 04 prototype/mockup lines. */
@@ -216,4 +272,5 @@ html body.himart-wide-test-page #direction :is(.prototype-case,.production-v18-r
   html body.himart-wide-test-page #journey{--journey-circle:clamp(168px,19vw,210px);--journey-arrow:32px}
   html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node h5{font-size:18px!important}
   html body.himart-wide-test-page #journey :is(.journey-flow-block,.journey-more-wrap) .journey-diagram-node p{font-size:12px!important}
+  html body.himart-wide-test-page #journey details.journey-more .v2-production-copy .flow-node h4{font-size:22px!important}
 }
