@@ -21,7 +21,7 @@ body.himart-wide-test-page .content-rise.is-content-rise-in{
 }
 
 /* Existing maximum opacity was 11.3%; this is 10% more transparent (10.2%). */
-html body.himart-wide-test-page .synthesis-card::before{
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card::before{
   inset:0!important;
   background:linear-gradient(
     to bottom,
@@ -33,7 +33,7 @@ html body.himart-wide-test-page .synthesis-card::before{
     rgba(0,166,237,0) 100%
   )!important;
 }
-html body.himart-wide-test-page .synthesis-card.negative::before{
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative::before{
   background:linear-gradient(
     to bottom,
     rgba(250,72,27,.102) 0%,
@@ -46,17 +46,17 @@ html body.himart-wide-test-page .synthesis-card.negative::before{
 }
 
 /* Transition-touchpoint typography requested from the supplied reference. */
-html body.himart-wide-test-page .synthesis-card b{
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card b{
   color:var(--hm-blue)!important;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-size:16px!important;
   font-weight:300!important;
   line-height:1.5!important;
 }
-html body.himart-wide-test-page .synthesis-card.negative b{
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card.negative b{
   color:var(--hm-red)!important;
 }
-html body.himart-wide-test-page .synthesis-card p{
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card p{
   margin:auto 0 0!important;
   padding-top:34px!important;
   color:rgba(255,255,255,.50)!important;
@@ -124,7 +124,7 @@ html body.himart-wide-test-page #brand .ring-card.is-fast-chart-active .v15-ring
 }
 
 @media(max-width:780px){
-  html body.himart-wide-test-page .synthesis-card p{
+  html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card p{
     font-size:24px!important;
   }
   html body.himart-wide-test-page.himart-prod-v18 #direction .prototype-case-visual{
