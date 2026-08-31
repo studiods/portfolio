@@ -4,29 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>하이마트 온라인 구매여정 · Narrative Test V2</title>
-<style>html,body{margin:0;background:#050505;color:#fff;font-family:Arial,sans-serif}.boot{min-height:100vh;display:grid;place-items:center;color:rgba(255,255,255,.45);font-size:13px}</style>
+<style>html,body{margin:0;background:#050505;color:#fff}.boot{min-height:100vh}</style>
 </head>
-<body><div class="boot">CASE LOADING…</div>
+<body><div class="boot" aria-hidden="true"></div>
 <script>
-fetch('./himart-narrative-test.html?v=20260831-22',{cache:'no-store'})
+fetch('./himart-narrative-test.html?v=20260831-23',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw new Error('base test load failed');return r.text()})
   .then(html=>{
     const styles=
-      '<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-22">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-journey.css?v=20260831-22">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-layoutfix-20260831.css?v=20260831-22">'+
-      '<style>html body.himart-narrative-test:not(.v2-visibility-guard) #live-main{opacity:1!important;visibility:visible!important} html body:not(.journey-title-canonical) #journey>.hm-wrap>.hm-section-head .hm-section-title{visibility:hidden!important}</style>';
-    const scripts=
-      '<script src="./himart-narrative-v2.js?v=20260831-22"><' + '/script>'+
-      '<script src="./himart-narrative-v2-titlefix.js?v=20260831-22"><' + '/script>'+
-      '<script src="./himart-narrative-v2-journey.js?v=20260831-22"><' + '/script>';
+      '<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-23">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-final.css?v=20260831-23">';
+    const scripts='<script src="./himart-narrative-v2-final.js?v=20260831-23"><'+'/script>';
     html=html.replace('</head>',styles+'</head>');
     html=html.replace('</body>',scripts+'</body>');
     document.open();document.write(html);document.close();
   })
   .catch(err=>{
     console.error(err);
-    document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';
+    document.body.innerHTML='<div class="boot" style="display:grid;place-items:center;color:rgba(255,255,255,.6);font-size:14px">페이지를 불러오지 못했습니다.</div>';
   });
 </script>
 </body>
