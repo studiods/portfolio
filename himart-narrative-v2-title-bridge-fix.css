@@ -1,0 +1,67 @@
+/* Narrative V2 title + bridge fix · 2026-08-31
+   - remove legacy pseudo-title overlay and return chapter titles to normal DOM text
+   - chapter titles use 52px on desktop
+   - highlighted bridge quotes use Pretendard Light / white 100%
+*/
+
+/* The old wide system creates an additional visual title with ::before.
+   V2 uses the real H2 text instead so DevTools, selection, sizing and motion all target one element. */
+html body.himart-wide-test-page #live-main .hm-section-title::before,
+html body.himart-wide-test-page #live-main .hm-section-title::after,
+html body.himart-wide-test-page #journey > .hm-wrap > .hm-section-head .hm-section-title::before,
+html body.himart-wide-test-page #journey > .hm-wrap > .hm-section-head .hm-section-title::after{
+  content:none!important;
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+}
+
+html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  display:block!important;
+  position:static!important;
+  width:auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  clip:auto!important;
+  clip-path:none!important;
+  transform:none!important;
+  visibility:visible!important;
+  opacity:1!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-family:var(--hm-ko)!important;
+  font-size:52px!important;
+  font-weight:100!important;
+  line-height:1.12!important;
+  letter-spacing:-.045em!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+}
+
+/* The bridge itself remains 50% white. Only requested quoted statements are full white. */
+html body.himart-wide-test-page #data .narrative-bridge p{
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-ko)!important;
+  font-weight:100!important;
+}
+html body.himart-wide-test-page #data .narrative-bridge .bridge-quote{
+  color:#fff!important;
+  opacity:1!important;
+  font-family:var(--hm-ko)!important;
+  font-weight:300!important;
+}
+html body.himart-wide-test-page #data .narrative-bridge .bridge-quote.bridge-quote-excluded{
+  color:inherit!important;
+  opacity:1!important;
+  font-weight:inherit!important;
+}
+
+@media(max-width:780px){
+  html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+    font-size:44px!important;
+  }
+}
