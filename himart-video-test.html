@@ -3,112 +3,252 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Himart Video Hero Test</title>
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
-<style>
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Thin.otf') format('opentype');font-weight:100;font-style:normal;font-display:swap}
-@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
-:root{--bg:#000;--fg:#fff;--muted:rgba(255,255,255,.5);--line:rgba(255,255,255,.1);--pad:clamp(24px,3.2vw,52px);--kr:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;--en:'Averta PE',Arial,sans-serif}
-*{box-sizing:border-box}
-html{background:#000;scroll-behavior:smooth}
-body{margin:0;background:#000;color:#fff;font-family:var(--kr);overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-.top{position:fixed;left:0;right:0;top:0;z-index:40;padding:18px var(--pad);pointer-events:none}
-.top-center{display:flex;justify-content:center;gap:clamp(24px,2.8vw,44px);pointer-events:auto}
-.top-center a{font:400 14px/1.1 var(--en);color:rgba(255,255,255,.88)}
-.video-stack{position:relative;background:#000}
-.video-stage{position:relative;height:200vh;width:100%}
-.video-hero{--scroll-blackout:0;position:sticky;top:0;width:100vw;height:100vh;overflow:hidden;background:#000}
-.video-hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block;background:#000}
-.video-overlay-base{position:absolute;inset:0;z-index:2;background:rgba(0,0,0,.60);pointer-events:none}
-.video-overlay-gradient{position:absolute;inset:0;z-index:3;background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 70%,rgba(0,0,0,.48) 84%,#000 100%);pointer-events:none}
-.video-overlay-scroll{position:absolute;inset:0;z-index:4;background:#000;opacity:var(--scroll-blackout);pointer-events:none;will-change:opacity}
-.video-caption{position:absolute;z-index:5;left:var(--pad);bottom:clamp(42px,6vh,80px);font:400 11px/1.2 var(--en);letter-spacing:.02em;color:rgba(255,255,255,.5);text-transform:uppercase;pointer-events:none}
-.video-content{position:relative;z-index:8;width:100vw;margin-top:-100vh;background:#000;padding:clamp(86px,10vh,132px) var(--pad) clamp(100px,12vh,160px);min-height:130vh;border-top:1px solid var(--line)}
-.content-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,2.2fr);column-gap:clamp(36px,4vw,72px);align-items:start}
-.section-no{font:400 13px/1.2 var(--en);color:#00A6ED;padding-top:8px}
-.hero-copy{grid-column:2}
-.hero-copy h1{margin:0;max-width:1240px;font-family:var(--kr);font-weight:100;font-size:clamp(48px,5vw,82px);line-height:1.06;letter-spacing:-.055em;word-break:keep-all}
-.hero-copy p{margin:32px 0 0;max-width:900px;font-size:clamp(17px,1.3vw,21px);line-height:1.62;font-weight:300;color:var(--muted);letter-spacing:-.02em;word-break:keep-all}
-.test-sections{margin-top:clamp(90px,11vh,150px);border-top:1px solid var(--line)}
-.test-row{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,2.2fr);column-gap:clamp(36px,4vw,72px);padding:32px 0 42px;border-bottom:1px solid var(--line)}
-.test-row small{font:400 11px/1.2 var(--en);color:rgba(255,255,255,.4)}
-.test-row h2{margin:0;font-size:clamp(28px,2.8vw,46px);line-height:1.18;font-weight:100;letter-spacing:-.04em}
-.test-row p{margin:20px 0 0;max-width:780px;color:var(--muted);font-size:16px;line-height:1.65;font-weight:300}
-.link-row{margin-top:52px;display:flex;gap:14px;align-items:center}
-.link-row a{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid rgba(255,255,255,.18);font:400 12px/1 var(--en);transition:.2s ease}
-.link-row a:hover{background:#fff;color:#000}
-.video-error{position:absolute;z-index:6;inset:auto var(--pad) clamp(42px,6vh,80px);display:none;color:rgba(255,255,255,.55);font:300 14px/1.5 var(--kr)}
-.video-hero.has-error .video-error{display:block}
-.video-hero.has-error .video-caption{display:none}
-@media(max-width:900px){
- .content-grid,.test-row{grid-template-columns:1fr;row-gap:20px}
- .hero-copy{grid-column:auto}
- .video-content{padding-top:72px}
- .hero-copy h1{font-size:clamp(38px,9vw,62px)}
-}
-@media(prefers-reduced-motion:reduce){.video-overlay-scroll{opacity:.75!important}}
-</style>
+<title>하이마트 온라인 구매여정 · Video Hero Test</title>
+<style>html,body{margin:0;background:#000;color:#fff}.boot{min-height:100vh;background:#000}</style>
 </head>
-<body>
-<nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html">Works</a><a href="./index.html#contact">Contact</a></div></nav>
-<main>
-  <section class="video-stack" id="videoStack">
-    <div class="video-stage" id="videoStage">
-      <div class="video-hero" id="videoHero">
-        <video id="heroVideo" src="./assets/video/himart_01.mp4" autoplay muted loop playsinline preload="auto" aria-label="롯데하이마트 매장에서 고객이 가전제품을 살펴보는 장면"></video>
-        <div class="video-overlay-base" aria-hidden="true"></div>
-        <div class="video-overlay-gradient" aria-hidden="true"></div>
-        <div class="video-overlay-scroll" aria-hidden="true"></div>
-        <div class="video-caption">LOTTE HIMART · PURCHASE JOURNEY</div>
-        <div class="video-error">영상 파일을 불러오지 못했습니다. <code>assets/video/himart_01.mp4</code> 경로를 확인해 주세요.</div>
-      </div>
-    </div>
-
-    <section class="video-content" id="videoContent">
-      <div class="content-grid">
-        <div class="section-no">01</div>
-        <div class="hero-copy">
-          <h1>하이마트 온라인 전체 구매 여정을<br>처음부터 다시 설계했습니다.</h1>
-          <p>화면을 먼저 바꾸기보다 고객이 하이마트를 어떻게 인식하고, 실제로 어디에서 들어와 무엇을 찾고 어디에서 멈추는지부터 확인했습니다. 이 테스트에서는 영상이 고정된 상태에서 하단 콘텐츠가 올라오고, 콘텐츠가 진입할수록 배경 영상이 자연스럽게 블랙으로 전환되는 흐름만 확인합니다.</p>
-        </div>
-      </div>
-
-      <div class="test-sections">
-        <div class="test-row"><small>VIDEO HERO</small><div><h2>고객이 실제 매장에서 제품을 살펴보는 장면을 첫 인상으로 사용합니다.</h2><p>영상 위에는 항상 60% 블랙 오버레이가 유지되고, 화면 하단 30% 영역에는 블랙으로 사라지는 그라데이션이 추가됩니다.</p></div></div>
-        <div class="test-row"><small>SCROLL TRANSITION</small><div><h2>콘텐츠가 올라오는 동안 영상은 배경에 남고 점점 검게 사라집니다.</h2><p>About 페이지와 같은 sticky 구조를 사용해 콘텐츠가 영상 위를 덮으면서 올라옵니다. 스크롤 진행률에 따라 별도 블랙 레이어의 opacity가 증가합니다.</p></div></div>
-      </div>
-
-      <div class="link-row"><a href="./himart.html">HIMART CASE</a><a href="./index.html">HOME</a></div>
-    </section>
-  </section>
-</main>
+<body><div class="boot" aria-hidden="true"></div>
 <script>
 (()=>{
   'use strict';
-  const stage=document.getElementById('videoStage');
-  const hero=document.getElementById('videoHero');
-  const video=document.getElementById('heroVideo');
-  const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));
-  let raf=0;
-  const update=()=>{
-    raf=0;
-    const rect=stage.getBoundingClientRect();
-    const travel=Math.max(1,stage.offsetHeight-innerHeight);
-    const progress=clamp((-rect.top)/travel);
-    const dark=clamp((progress-.18)/.82);
-    hero.style.setProperty('--scroll-blackout',dark.toFixed(4));
-  };
-  const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(update)};
-  addEventListener('scroll',requestUpdate,{passive:true});
-  addEventListener('resize',requestUpdate,{passive:true});
-  video.addEventListener('error',()=>hero.classList.add('has-error'));
-  video.addEventListener('canplay',()=>hero.classList.remove('has-error'));
-  video.play().catch(()=>{});
-  update();
+
+  const HERO_HTML=`<header class="hm-hero hm-video-hero-stage" id="top">
+    <div class="hm-video-sticky" id="hmVideoSticky">
+      <video class="hm-video-media" id="hmHeroVideo" src="./assets/video/himart_01.mp4" autoplay muted loop playsinline preload="auto" aria-label="롯데하이마트 영상"></video>
+      <div class="hm-video-overlay-base" aria-hidden="true"></div>
+      <div class="hm-video-overlay-gradient" aria-hidden="true"></div>
+      <div class="hm-video-overlay-scroll" aria-hidden="true"></div>
+      <div class="hm-video-frame">
+        <div class="hm-video-copy">
+          <div class="hm-kicker">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div>
+          <h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1>
+          <p class="hm-lead">화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p>
+        </div>
+        <div class="hm-meta hm-video-meta">
+          <div><span>ROLE</span><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div>
+          <div><span>FOCUS</span><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div>
+          <div><span>SCOPE</span><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div>
+          <div><span>TEAM</span><b>UX DESIGN · PO · BUSINESS</b></div>
+        </div>
+      </div>
+    </div>
+  </header>`;
+
+  const PATCH_STYLE=`<style id="himart-video-hero-test-style">
+    html,body{background:#000!important}
+    body.himart-video-test-page{background:#000!important}
+    body.himart-video-test-page #live-main{overflow:visible!important;background:#000!important}
+
+    body.himart-video-test-page .hm-video-hero-stage{
+      position:relative!important;
+      width:100%!important;
+      height:200vh!important;
+      min-height:200vh!important;
+      margin:0!important;
+      padding:0!important;
+      background:#000!important;
+      overflow:visible!important;
+    }
+    body.himart-video-test-page .hm-video-sticky{
+      --hm-video-blackout:0;
+      position:sticky!important;
+      top:0!important;
+      width:100vw!important;
+      height:100vh!important;
+      min-height:100vh!important;
+      overflow:hidden!important;
+      background:#000!important;
+    }
+    body.himart-video-test-page .hm-video-media{
+      position:absolute!important;
+      inset:0!important;
+      z-index:1!important;
+      display:block!important;
+      width:100%!important;
+      height:100%!important;
+      object-fit:cover!important;
+      object-position:center center!important;
+      background:#000!important;
+    }
+    body.himart-video-test-page .hm-video-overlay-base{
+      position:absolute!important;
+      inset:0!important;
+      z-index:2!important;
+      background:rgba(0,0,0,.70)!important;
+      pointer-events:none!important;
+    }
+    body.himart-video-test-page .hm-video-overlay-gradient{
+      position:absolute!important;
+      inset:0!important;
+      z-index:3!important;
+      background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 70%,rgba(0,0,0,.38) 82%,rgba(0,0,0,.72) 91%,#000 100%)!important;
+      pointer-events:none!important;
+    }
+    body.himart-video-test-page .hm-video-overlay-scroll{
+      position:absolute!important;
+      inset:0!important;
+      z-index:4!important;
+      background:#000!important;
+      opacity:var(--hm-video-blackout)!important;
+      pointer-events:none!important;
+      will-change:opacity!important;
+    }
+    body.himart-video-test-page .hm-video-frame{
+      position:absolute!important;
+      inset:0 auto 0 50%!important;
+      z-index:5!important;
+      width:min(1440px,100vw)!important;
+      height:100%!important;
+      padding:0 48px!important;
+      transform:translateX(-50%)!important;
+      box-sizing:border-box!important;
+      pointer-events:none!important;
+    }
+    body.himart-video-test-page .hm-video-copy{
+      position:absolute!important;
+      left:48px!important;
+      top:clamp(96px,11vh,128px)!important;
+      width:min(1080px,calc(100% - 96px))!important;
+    }
+    body.himart-video-test-page .hm-video-copy .hm-kicker{
+      margin:0 0 26px!important;
+      color:rgba(255,255,255,.60)!important;
+      font-size:12px!important;
+      line-height:1.2!important;
+      letter-spacing:.02em!important;
+    }
+    body.himart-video-test-page .hm-video-copy .hm-title{
+      margin:0!important;
+      max-width:1080px!important;
+      color:#fff!important;
+      font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+      font-size:clamp(52px,4.55vw,68px)!important;
+      font-weight:100!important;
+      line-height:1.05!important;
+      letter-spacing:-.05em!important;
+      word-break:keep-all!important;
+    }
+    body.himart-video-test-page .hm-video-copy .hm-lead{
+      margin:30px 0 0!important;
+      max-width:960px!important;
+      color:rgba(255,255,255,.58)!important;
+      font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+      font-size:17px!important;
+      font-weight:300!important;
+      line-height:1.58!important;
+      letter-spacing:-.025em!important;
+      word-break:keep-all!important;
+    }
+    body.himart-video-test-page .hm-video-meta{
+      position:absolute!important;
+      left:48px!important;
+      right:48px!important;
+      bottom:44px!important;
+      display:grid!important;
+      grid-template-columns:1.55fr 1.2fr 1.08fr .85fr!important;
+      gap:32px!important;
+      margin:0!important;
+      padding:0!important;
+      border:0!important;
+      align-items:start!important;
+    }
+    body.himart-video-test-page .hm-video-meta>div{
+      display:block!important;
+      min-width:0!important;
+      margin:0!important;
+      padding:0!important;
+      border:0!important;
+    }
+    body.himart-video-test-page .hm-video-meta span{
+      display:block!important;
+      margin:0 0 8px!important;
+      color:rgba(255,255,255,.42)!important;
+      font-family:"Averta PE",Arial,sans-serif!important;
+      font-size:10px!important;
+      font-weight:400!important;
+      line-height:1.15!important;
+      letter-spacing:.05em!important;
+    }
+    body.himart-video-test-page .hm-video-meta b{
+      display:block!important;
+      margin:0!important;
+      color:rgba(255,255,255,.76)!important;
+      font-family:"Averta PE",Arial,sans-serif!important;
+      font-size:11px!important;
+      font-weight:400!important;
+      line-height:1.45!important;
+      letter-spacing:.015em!important;
+      white-space:normal!important;
+    }
+
+    body.himart-video-test-page #brand{
+      position:relative!important;
+      z-index:10!important;
+      margin-top:-100vh!important;
+      background:#000!important;
+    }
+    body.himart-video-test-page #data,
+    body.himart-video-test-page #journey,
+    body.himart-video-test-page #direction{
+      position:relative!important;
+      z-index:10!important;
+      background:#000!important;
+    }
+    body.himart-video-test-page .hm-progress{z-index:50!important}
+    body.himart-video-test-page .top{z-index:60!important}
+
+    @media(max-width:900px){
+      body.himart-video-test-page .hm-video-frame{padding:0 24px!important}
+      body.himart-video-test-page .hm-video-copy{left:24px!important;top:92px!important;width:calc(100% - 48px)!important}
+      body.himart-video-test-page .hm-video-copy .hm-title{font-size:clamp(38px,9vw,58px)!important}
+      body.himart-video-test-page .hm-video-copy .hm-lead{font-size:15px!important;line-height:1.55!important}
+      body.himart-video-test-page .hm-video-meta{left:24px!important;right:24px!important;bottom:28px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px 22px!important}
+      body.himart-video-test-page .hm-video-meta b{font-size:10px!important}
+    }
+    @media(prefers-reduced-motion:reduce){
+      body.himart-video-test-page .hm-video-overlay-scroll{opacity:.82!important}
+    }
+  </style>`;
+
+  const PATCH_SCRIPT='<script id="himart-video-hero-test-script">'+
+  '(()=>{\n'+
+  "  'use strict';\n"+
+  "  document.body.classList.add('himart-video-test-page');\n"+
+  "  const stage=document.querySelector('.hm-video-hero-stage');\n"+
+  "  const sticky=document.getElementById('hmVideoSticky');\n"+
+  "  const video=document.getElementById('hmHeroVideo');\n"+
+  "  const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));\n"+
+  "  let raf=0;\n"+
+  "  const update=()=>{\n"+
+  "    raf=0;\n"+
+  "    if(!stage||!sticky)return;\n"+
+  "    const rect=stage.getBoundingClientRect();\n"+
+  "    const travel=Math.max(1,stage.offsetHeight-innerHeight);\n"+
+  "    const progress=clamp((-rect.top)/travel);\n"+
+  "    const blackout=clamp((progress-.10)/.90);\n"+
+  "    sticky.style.setProperty('--hm-video-blackout',blackout.toFixed(4));\n"+
+  "  };\n"+
+  "  const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(update)};\n"+
+  "  addEventListener('scroll',requestUpdate,{passive:true});\n"+
+  "  addEventListener('resize',requestUpdate,{passive:true});\n"+
+  "  if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}\n"+
+  "  update();\n"+
+  '})();<'+'/script>';
+
+  fetch('./himart.html?v=20260901-video-hero-test-1',{cache:'no-store'})
+    .then(r=>{if(!r.ok)throw new Error('himart load failed');return r.text()})
+    .then(html=>{
+      html=html.replace(/<body class="([^"]*)">/,(_,cls)=>`<body class="${cls} himart-video-test-page">`);
+      html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,HERO_HTML);
+      html=html.replace('</head>',PATCH_STYLE+'</head>');
+      html=html.replace('</body>',PATCH_SCRIPT+'</body>');
+      document.open();
+      document.write(html);
+      document.close();
+    })
+    .catch(err=>{
+      console.error(err);
+      document.body.innerHTML='<div class="boot" style="display:grid;place-items:center;color:rgba(255,255,255,.5);font:14px Pretendard,sans-serif">페이지를 불러오지 못했습니다.</div>';
+    });
 })();
 </script>
 </body>
