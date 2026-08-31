@@ -80,6 +80,50 @@ html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-b
   font-style:normal!important;
 }
 
+/* 03.1 tablet labels: keep existing geometry, only increase the label type from 10px to 12px. */
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label,
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .wide-flow-cluster-label{
+  font-size:12px!important;
+}
+
+/* 03.1 arrows: copy the production arrow grammar used by the current journey analysis.
+   Hide the literal › character and draw one 17px CSS chevron only. */
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .flow-arrow,
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .wide-flow-cluster.v12-journey-tablet .flow-arrow{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 var(--v13-arrow-size,24px)!important;
+  width:var(--v13-arrow-size,24px)!important;
+  min-width:var(--v13-arrow-size,24px)!important;
+  max-width:var(--v13-arrow-size,24px)!important;
+  height:48px!important;
+  font-size:0!important;
+  line-height:0!important;
+  color:transparent!important;
+  background:none!important;
+  overflow:visible!important;
+}
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .flow-arrow::before,
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .wide-flow-cluster.v12-journey-tablet .flow-arrow::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:17px!important;
+  height:17px!important;
+  border:0!important;
+  border-top:1px solid rgba(255,255,255,.56)!important;
+  border-right:1px solid rgba(255,255,255,.56)!important;
+  transform:translate(-62%,-50%) rotate(45deg)!important;
+  box-sizing:border-box!important;
+}
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .flow-arrow::after,
+html body.himart-wide-test-page #live-main #journey .journey-flow-block .wide-flow-cluster.v12-journey-tablet .flow-arrow::after{
+  content:none!important;
+  display:none!important;
+}
+
 @media(max-width:780px){
   html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
     font-size:44px!important;
