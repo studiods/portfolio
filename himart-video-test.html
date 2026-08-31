@@ -47,6 +47,7 @@
       background:#000!important;
     }
     body.himart-video-test-page #live-main{
+      position:relative!important;
       width:100%!important;
       max-width:100%!important;
       overflow-x:hidden!important;
@@ -56,6 +57,7 @@
 
     body.himart-video-test-page .hm-video-hero-stage{
       position:relative!important;
+      z-index:0!important;
       width:100%!important;
       max-width:100%!important;
       height:200vh!important;
@@ -69,6 +71,7 @@
       --hm-video-blackout:0;
       position:sticky!important;
       top:0!important;
+      z-index:1!important;
       width:100%!important;
       max-width:100%!important;
       height:100vh!important;
@@ -200,20 +203,35 @@
       white-space:normal!important;
     }
 
+    /* About page와 같은 방식: 200vh stage 위로 첫 콘텐츠가 100vh만큼 올라옵니다. */
     body.himart-video-test-page #brand{
       position:relative!important;
       z-index:10!important;
+      display:block!important;
+      visibility:visible!important;
+      opacity:1!important;
+      min-height:100vh!important;
       margin-top:-100vh!important;
       background:rgba(0,0,0,.10)!important;
     }
-    body.himart-video-test-page #brand>.hm-wrap{
+    body.himart-video-test-page #brand>.hm-wrap,
+    body.himart-video-test-page #brand .narrative-block{
+      position:relative!important;
+      z-index:11!important;
       background:transparent!important;
     }
+    /* 첫 챕터가 영상 위로 올라오는 동안 reveal 초기값 때문에 사라지지 않게 고정합니다. */
+    body.himart-video-test-page #brand .hm-reveal{
+      visibility:visible!important;
+      opacity:1!important;
+      transform:none!important;
+    }
+
     body.himart-video-test-page #data,
     body.himart-video-test-page #journey,
     body.himart-video-test-page #direction{
       position:relative!important;
-      z-index:10!important;
+      z-index:12!important;
       background:#000!important;
     }
     body.himart-video-test-page .hm-progress{z-index:50!important}
@@ -239,8 +257,10 @@
   "  const stage=document.querySelector('.hm-video-hero-stage');\n"+
   "  const sticky=document.getElementById('hmVideoSticky');\n"+
   "  const video=document.getElementById('hmHeroVideo');\n"+
+  "  const brand=document.getElementById('brand');\n"+
   "  const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));\n"+
   "  const MAX_SCROLL_OVERLAY=1/3;\n"+
+  "  const keepBrandVisible=()=>{if(!brand)return;brand.querySelectorAll('.hm-reveal').forEach(el=>el.classList.add('is-in'));};\n"+
   "  let raf=0;\n"+
   "  const update=()=>{\n"+
   "    raf=0;\n"+
@@ -251,15 +271,18 @@
   "    const local=clamp((progress-.10)/.90);\n"+
   "    const blackout=local*MAX_SCROLL_OVERLAY;\n"+
   "    sticky.style.setProperty('--hm-video-blackout',blackout.toFixed(4));\n"+
+  "    keepBrandVisible();\n"+
   "  };\n"+
   "  const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(update)};\n"+
   "  addEventListener('scroll',requestUpdate,{passive:true});\n"+
   "  addEventListener('resize',requestUpdate,{passive:true});\n"+
+  "  if(brand&&'MutationObserver' in window){const mo=new MutationObserver(keepBrandVisible);mo.observe(brand,{childList:true,subtree:true});}\n"+
   "  if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}\n"+
+  "  keepBrandVisible();\n"+
   "  update();\n"+
   '})();<'+'/script>';
 
-  fetch('./himart.html?v=20260901-video-hero-test-2',{cache:'no-store'})
+  fetch('./himart.html?v=20260901-video-hero-test-3',{cache:'no-store'})
     .then(r=>{if(!r.ok)throw new Error('himart load failed');return r.text()})
     .then(html=>{
       html=html.replace(/<body class="([^"]*)">/,(_,cls)=>`<body class="${cls} himart-video-test-page">`);
