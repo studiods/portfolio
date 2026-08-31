@@ -6,6 +6,32 @@ body.himart-wide-test-page #live-main{
   background:#000!important;
 }
 
+/* The old async composition used readiness gates. Production is now static,
+   so the main content must never depend on a loader class to become visible. */
+html body.himart-wide-test-page #live-main,
+html body.himart-narrative-test #live-main{
+  opacity:1!important;
+  visibility:visible!important;
+}
+
+/* If a motion script is blocked or fails, restore every motion target instead
+   of leaving a blank page. */
+html.hm-motion-fallback body.himart-wide-test-page :is(
+  .hm-reveal,
+  .wide-rise-target,
+  .title-rise-target,
+  .content-rise
+){
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  transition:none!important;
+}
+html.hm-motion-fallback body.himart-wide-test-page .v15-ring-arc{
+  --v15-ring-angle:var(--ring-angle)!important;
+  transition:none!important;
+}
+
 /* Small content units enter independently instead of appearing as one block. */
 body.himart-wide-test-page .content-rise{
   opacity:0;

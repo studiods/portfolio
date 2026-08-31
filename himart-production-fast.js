@@ -1,6 +1,15 @@
 (() => {
   'use strict';
 
+  try {
+  document.body.classList.add(
+    'himart-narrative-ready',
+    'narrative-v2-ready',
+    'narrative-v2-final-ready',
+    'himart-v18-ready'
+  );
+  document.body.classList.remove('himart-narrative-loading', 'himart-v18-loading');
+
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealNow = element => {
     element.classList.add('is-in', 'is-wide-rise-in', 'is-title-rise-in', 'is-content-rise-in');
@@ -85,4 +94,9 @@
     requestAnimationFrame(updateProgress);
   }, { passive:true });
   updateProgress();
+  document.documentElement.classList.add('hm-motion-stable');
+  } catch (error) {
+    document.documentElement.classList.add('hm-motion-fallback');
+    console.error('[Himart] Motion initialization failed; content was restored.', error);
+  }
 })();
