@@ -4,182 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>하이마트 온라인 구매여정</title>
-<link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
-<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="stylesheet" href="./style.css?v=17">
-<link rel="stylesheet" href="./typography.css?v=8">
-<link rel="stylesheet" href="./global-gnb.css?v=e853f2e">
-<link rel="stylesheet" href="./himart-case-v4.css?v=abf3cda">
-<link rel="stylesheet" href="./himart-patch-20260823-2110.css?v=84951c2">
-<link rel="stylesheet" href="./himart-test-20260824.css?v=5142406">
-<link rel="stylesheet" href="./himart-test-refine-v2.css?v=6654c80">
-<link rel="stylesheet" href="./himart-test-fix-20260824.css?v=4e4c6f0">
-<link rel="stylesheet" href="./himart-wide-test.css?v=0260f55">
-<link rel="stylesheet" href="./himart-wide-spacing-300.css?v=fe380cd">
-<link rel="stylesheet" href="./himart-wide-role-v2.css?v=55f6131">
-<link rel="stylesheet" href="./himart-wide-content-v4.css?v=eb5b4b6">
-<link rel="stylesheet" href="./himart-wide-refine-v5.css?v=2e5bf36">
-<link rel="stylesheet" href="./himart-wide-refine-v6.css?v=e6457f7">
-<link rel="stylesheet" href="./himart-wide-system-lock-v1.css?v=00d5f45">
-<link rel="stylesheet" href="./himart-wide-refine-v7.css?v=d343a2a">
-<link rel="stylesheet" href="./himart-wide-refine-v8.css?v=4754d07">
-<link rel="stylesheet" href="./himart-wide-refine-v9.css?v=9ba15fe">
-<link rel="stylesheet" href="./himart-wide-refine-v11.css?v=daf1ed2">
-<link rel="stylesheet" href="./himart-wide-refine-v12.css?v=2886842">
-<link rel="stylesheet" href="./himart-wide-refine-v12-fix.css?v=eb703f0">
-<link rel="stylesheet" href="./himart-wide-refine-v13.css?v=6b962f5">
-<link rel="stylesheet" href="./himart-wide-refine-v14.css?v=a66761a">
-<link rel="stylesheet" href="./himart-wide-refine-v15.css?v=a28fa24">
-<link rel="stylesheet" href="./himart-production-refine-v16.css?v=571c0a5">
-<link rel="stylesheet" href="./himart-mobile-v17.css?v=mobile-title-overflow-v18">
-<link rel="stylesheet" href="./himart-production-mobile-v17.css?v=51767b2">
-<link rel="stylesheet" href="./himart-production-refine-v18.css?v=9a65ff4">
-<style>
-.himart-wide-test-page .wide-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
-.himart-wide-test-page .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.himart-wide-test-page .wide-rise-target{opacity:1!important;transform:none!important;transition:none!important}}
-</style>
+<style>html,body{margin:0;background:#000;color:#fff}.boot{min-height:100vh}</style>
 </head>
-<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading">
-<nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
-<main id="live-main"><div class="hm-wrap" style="padding-top:180px;min-height:100vh"><p style="color:rgba(255,255,255,.55)">CASE LOADING…</p></div></main>
+<body><div class="boot" aria-hidden="true"></div>
 <script>
-(async()=>{
-  'use strict';
-  const main=document.getElementById('live-main');
-  const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-  const textNodesFor=(el)=>{
-    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.nodeValue&&node.nodeValue.trim().length?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
-    const nodes=[];let node;while((node=walker.nextNode()))nodes.push(node);return nodes;
-  };
-
-  const scrambleLargeTitle=(el)=>{
-    if(!el||el.dataset.wideLargeScramblePlayed==='1')return;
-    el.dataset.wideLargeScramblePlayed='1';
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    const parts=textNodesFor(el).map(node=>({node,original:node.nodeValue}));
-    const mutable=(ch)=>/[\p{L}\p{N}]/u.test(ch);
-    const total=parts.reduce((sum,part)=>sum+[...part.original].filter(mutable).length,0);
-    if(!total)return;
-    const started=performance.now();
-    const duration=Math.min(1450,650+total*13);
-    const tick=(now)=>{
-      const p=Math.min(1,(now-started)/duration),resolved=Math.floor(total*Math.pow(p,.72));
-      let cursor=0;
-      parts.forEach((part,pi)=>{part.node.nodeValue=[...part.original].map((ch,ci)=>{if(!mutable(ch))return ch;const idx=cursor++;if(idx<resolved||p>=1)return ch;return pool[(pi*29+ci*17+Math.floor(now/44))%pool.length]}).join('')});
-      if(p<1)requestAnimationFrame(tick);else parts.forEach(part=>part.node.nodeValue=part.original);
-    };
-    requestAnimationFrame(tick);
-  };
-
-  const prepareWideMotion=()=>{
-    main.querySelectorAll('.hm-section-no').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');
-    main.querySelectorAll('.data-card-head .hm-card-no,.data-card-head h3,.hm-subhead .hm-subno,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .hm-card-no,.data-bridge > .data-bridge-title').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');
-    main.querySelectorAll('.flow-label').forEach(el=>el.dataset.flowLabelScramblePlayed='1');
-
-    const riseTargets=[...main.querySelectorAll('.data-card-head h3,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .data-bridge-title')];
-    riseTargets.forEach(el=>el.classList.add('wide-rise-target'));
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches){riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));}
-    else if('IntersectionObserver' in window){
-      const rio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-wide-rise-in');rio.unobserve(entry.target)}}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
-      riseTargets.forEach(el=>rio.observe(el));
-    }else riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));
-
-    const hero=main.querySelector('.hm-title');
-    if(hero){
-      if('IntersectionObserver' in window){
-        const hio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){scrambleLargeTitle(entry.target);hio.disconnect()}}),{threshold:.2});
-        hio.observe(hero);
-      }else scrambleLargeTitle(hero);
-    }
-  };
-
-  try{
-    const html=await fetch('https://api.github.com/repos/studiods/portfolio/git/blobs/6824a76b15854f4608498951bd3f909373cc407b',{cache:'no-store'})
-      .then(r=>{if(!r.ok)throw new Error('source load failed');return r.json()})
-      .then(j=>{const bin=atob(j.content.replace(/\s/g,''));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder('utf-8').decode(bytes)});
-    const doc=new DOMParser().parseFromString(html,'text/html');
-    const sourceMain=doc.querySelector('main');
-    if(!sourceMain)throw new Error('main not found');
-    main.innerHTML=sourceMain.innerHTML;
-    const transform=document.createElement('script');
-    transform.src='./himart-live-transform.js?v=d8f97ef';
-    transform.onload=()=>{
-      const refine=document.createElement('script');
-      refine.src='./himart-wide-content-v4.js?v=c2283bd';
-      refine.onload=()=>{
-        const refineV5=document.createElement('script');
-        refineV5.src='./himart-wide-refine-v5.js?v=134b62b';
-        refineV5.onload=()=>{
-          const refineV6=document.createElement('script');
-          refineV6.src='./himart-wide-refine-v6.js?v=dd39321';
-          refineV6.onload=()=>{
-            const refineV7=document.createElement('script');
-            refineV7.src='./himart-wide-refine-v7.js?v=61d2503';
-            refineV7.onload=()=>{
-              const refineV8=document.createElement('script');
-              refineV8.src='./himart-wide-refine-v8.js?v=75a1915';
-              refineV8.onload=()=>{
-                const refineV9=document.createElement('script');
-                refineV9.src='./himart-wide-refine-v9.js?v=4fc8b91';
-                refineV9.onload=()=>{
-                  const refineV12=document.createElement('script');
-                  refineV12.src='./himart-wide-refine-v12.js?v=d30d68c';
-                  refineV12.onload=()=>{
-                    const refineV13=document.createElement('script');
-                    refineV13.src='./himart-wide-refine-v13.js?v=259bb9c';
-                    refineV13.onload=()=>{
-                      const refineV14=document.createElement('script');
-                      refineV14.src='./himart-wide-refine-v14.js?v=e0a226e';
-                      refineV14.onload=()=>{
-                        const refineV15=document.createElement('script');
-                        refineV15.src='./himart-wide-refine-v15.js?v=d93725e';
-                        refineV15.onload=()=>{
-                          const prodV16=document.createElement('script');
-                          prodV16.src='./himart-production-refine-v16.js?v=e8c6650';
-                          prodV16.onload=()=>{
-                            const prodV18=document.createElement('script');
-                            prodV18.src='./himart-production-refine-v18.js?v=373819e';
-                            prodV18.onload=()=>{
-                              prepareWideMotion();
-                              const boot=document.createElement('script');
-                              boot.src='./himart-live-boot.js?v=9f74114';
-                              document.body.appendChild(boot);
-                            };
-                            document.body.appendChild(prodV18);
-                          };
-                          document.body.appendChild(prodV16);
-                        };
-                        document.body.appendChild(refineV15);
-                      };
-                      document.body.appendChild(refineV14);
-                    };
-                    document.body.appendChild(refineV13);
-                  };
-                  document.body.appendChild(refineV12);
-                };
-                document.body.appendChild(refineV9);
-              };
-              document.body.appendChild(refineV8);
-            };
-            document.body.appendChild(refineV7);
-          };
-          document.body.appendChild(refineV6);
-        };
-        document.body.appendChild(refineV5);
-      };
-      document.body.appendChild(refine);
-    };
-    document.body.appendChild(transform);
-  }catch(err){
-    document.body.classList.remove('himart-v18-loading');
-    document.body.classList.add('himart-v18-ready');
-    main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';
+fetch('./himart-narrative-test.html?v=20260831-35',{cache:'no-store'})
+  .then(r=>{if(!r.ok)throw new Error('base test load failed');return r.text()})
+  .then(html=>{
+    const critical='<style>'+ 
+      'html,body,html body.himart-wide-test-page #live-main,html body.himart-wide-test-page #brand,html body.himart-wide-test-page #data,html body.himart-wide-test-page #journey,html body.himart-wide-test-page #direction{background:#000!important}'+
+      'html body.himart-wide-test-page #brand,html body.himart-wide-test-page #data,html body.himart-wide-test-page #journey,html body.himart-wide-test-page #direction{padding-top:100px!important}'+
+      'html body.himart-wide-test-page #live-main p,html body.himart-wide-test-page #live-main .hm-section-desc,html body.himart-wide-test-page #live-main .narrative-copy,html body.himart-wide-test-page #live-main .hm-subcopy,html body.himart-wide-test-page #live-main .journey-block-copy{color:rgba(255,255,255,.50)!important}'+
+      'html body.himart-wide-test-page #live-main p strong,html body.himart-wide-test-page #live-main p b,html body.himart-wide-test-page #live-main .hm-section-desc strong,html body.himart-wide-test-page #live-main .hm-section-desc b,html body.himart-wide-test-page #live-main .narrative-copy strong,html body.himart-wide-test-page #live-main .narrative-copy b{font-weight:inherit!important;color:inherit!important}'+
+      'html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge,html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p{opacity:1!important}'+
+      'html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p>.bridge-quote:not(.bridge-quote-excluded){color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;font-weight:300!important}'+
+      'html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p>.bridge-quote.bridge-quote-excluded{color:rgba(255,255,255,.50)!important;-webkit-text-fill-color:rgba(255,255,255,.50)!important;opacity:1!important;font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;font-weight:100!important}'+
+      'html body.himart-wide-test-page :is(#brand,#data,#journey,#direction)>.hm-wrap>.hm-section-head .hm-section-no{font-size:16px!important;margin:0 0 16px!important}'+
+      'html body.himart-wide-test-page :is(.narrative-subno,.synthesis-subno,.hm-subno,.hm-card-no){font-size:12px!important}'+
+      'html body.himart-wide-test-page #data .behavior-card{background:transparent!important}'+
+      'html body.himart-wide-test-page .synthesis-card::before{background:linear-gradient(to bottom,rgba(0,166,237,.113) 0%,rgba(0,166,237,.089) 18%,rgba(0,166,237,.065) 40%,rgba(0,166,237,.037) 66%,rgba(0,166,237,.014) 84%,rgba(0,166,237,0) 100%)!important}'+
+      'html body.himart-wide-test-page .synthesis-card.negative::before{background:linear-gradient(to bottom,rgba(250,72,27,.113) 0%,rgba(250,72,27,.089) 18%,rgba(250,72,27,.065) 40%,rgba(250,72,27,.037) 66%,rgba(250,72,27,.014) 84%,rgba(250,72,27,0) 100%)!important}'+
+      '</style>';
+    const styles='<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-35">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-final.css?v=20260831-35">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-flowfix.css?v=20260831-35">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-behavior-proof.css?v=20260831-35">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-refine-20260831.css?v=20260831-35">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-title-bridge-fix.css?v=20260831-35">'+critical;
+    const scripts='<script src="./himart-narrative-v2-final.js?v=20260831-35"><'+'/script>'+ 
+      '<script src="./himart-narrative-v2-flowfix.js?v=20260831-35"><'+'/script>'+ 
+      '<script src="./himart-narrative-v2-refine-20260831.js?v=20260831-35"><'+'/script>'+ 
+      '<script src="./himart-narrative-v2-title-bridge-fix.js?v=20260831-35"><'+'/script>';
+    html=html.replace('</head>',styles+'</head>');
+    html=html.replace('</body>',scripts+'</body>');
+    document.open();document.write(html);document.close();
+  })
+  .catch(err=>{
     console.error(err);
-  }
-})();
+    document.body.innerHTML='<div class="boot" style="display:grid;place-items:center;color:rgba(255,255,255,.5);font-size:14px">페이지를 불러오지 못했습니다.</div>';
+  });
 </script>
 </body>
 </html>
