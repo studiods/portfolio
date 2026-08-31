@@ -42,22 +42,42 @@ html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction)
   word-break:keep-all!important;
 }
 
-/* The bridge itself remains 50% white. Only requested quoted statements are full white. */
-html body.himart-wide-test-page #data .narrative-bridge p{
+/* Bridge base copy stays white 50%, but the element itself must not be opacity-reduced.
+   Otherwise a child can never visually reach 100% white. */
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge,
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p{
+  opacity:1!important;
+}
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p{
   color:rgba(255,255,255,.50)!important;
-  font-family:var(--hm-ko)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.50)!important;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-weight:100!important;
 }
-html body.himart-wide-test-page #data .narrative-bridge .bridge-quote{
+
+/* Requested highlighted phrases. Kept as spans instead of strong/b so global strong-reset rules cannot neutralize them. */
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p > .bridge-quote:not(.bridge-quote-excluded),
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge .bridge-quote-1,
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge .bridge-quote-2,
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge .bridge-quote-4{
+  display:inline!important;
   color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
   opacity:1!important;
-  font-family:var(--hm-ko)!important;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-weight:300!important;
+  font-style:normal!important;
 }
-html body.himart-wide-test-page #data .narrative-bridge .bridge-quote.bridge-quote-excluded{
-  color:inherit!important;
+
+/* '화면을 새로 만든다' intentionally remains body-copy styling. */
+html body.himart-wide-test-page #live-main #data .narrative-signals .narrative-bridge p > .bridge-quote.bridge-quote-excluded{
+  display:inline!important;
+  color:rgba(255,255,255,.50)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.50)!important;
   opacity:1!important;
-  font-weight:inherit!important;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  font-weight:100!important;
+  font-style:normal!important;
 }
 
 @media(max-width:780px){
