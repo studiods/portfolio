@@ -8,13 +8,21 @@
 </head>
 <body><div class="boot" aria-hidden="true"></div>
 <script>
-fetch('./himart-narrative-test.html?v=20260831-23',{cache:'no-store'})
+fetch('./himart-narrative-test.html?v=20260831-24',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw new Error('base test load failed');return r.text()})
   .then(html=>{
-    const styles=
-      '<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-23">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-final.css?v=20260831-23">';
-    const scripts='<script src="./himart-narrative-v2-final.js?v=20260831-23"><'+'/script>';
+    const critical='<style>'+ 
+      'html body.himart-wide-test-page #brand,html body.himart-wide-test-page #data,html body.himart-wide-test-page #journey,html body.himart-wide-test-page #direction{padding-top:100px!important}'+
+      'html body.himart-wide-test-page #live-main p{color:rgba(255,255,255,.60)!important}'+
+      'html body.himart-wide-test-page #brand>.hm-wrap>.hm-section-head>.hm-section-no,html body.himart-wide-test-page #data>.hm-wrap>.hm-section-head>.hm-section-no,html body.himart-wide-test-page #journey>.hm-wrap>.hm-section-head>.hm-section-no,html body.himart-wide-test-page #direction>.hm-wrap>.hm-section-head>.hm-section-no{font-size:16px!important;margin:0 0 16px!important}'+
+      'html body.himart-wide-test-page :is(.narrative-subno,.synthesis-subno,.hm-subno,.hm-card-no){font-size:12px!important}'+
+      'html body.himart-wide-test-page #data .behavior-card{background:transparent!important}'+
+      'html body.himart-wide-test-page .synthesis-card::before{background:linear-gradient(to bottom,rgba(0,166,237,.126) 0%,rgba(0,166,237,.099) 18%,rgba(0,166,237,.072) 40%,rgba(0,166,237,.041) 66%,rgba(0,166,237,.016) 84%,rgba(0,166,237,0) 100%)!important}'+
+      'html body.himart-wide-test-page .synthesis-card.negative::before{background:linear-gradient(to bottom,rgba(250,72,27,.126) 0%,rgba(250,72,27,.099) 18%,rgba(250,72,27,.072) 40%,rgba(250,72,27,.041) 66%,rgba(250,72,27,.016) 84%,rgba(250,72,27,0) 100%)!important}'+
+      '</style>';
+    const styles='<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-24">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-final.css?v=20260831-24">'+critical;
+    const scripts='<script src="./himart-narrative-v2-final.js?v=20260831-24"><'+'/script>';
     html=html.replace('</head>',styles+'</head>');
     html=html.replace('</body>',scripts+'</body>');
     document.open();document.write(html);document.close();
