@@ -4,14 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>하이마트 온라인 구매여정 · Narrative Test V2</title>
-<style>html,body{margin:0;background:#050505;color:#fff}.boot{min-height:100vh}</style>
+<style>html,body{margin:0;background:#000;color:#fff}.boot{min-height:100vh}</style>
 </head>
 <body><div class="boot" aria-hidden="true"></div>
 <script>
-fetch('./himart-narrative-test.html?v=20260831-30',{cache:'no-store'})
+fetch('./himart-narrative-test.html?v=20260831-31',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw new Error('base test load failed');return r.text()})
   .then(html=>{
     const critical='<style>'+ 
+      'html,body,html body.himart-wide-test-page #live-main,html body.himart-wide-test-page #brand,html body.himart-wide-test-page #data,html body.himart-wide-test-page #journey,html body.himart-wide-test-page #direction{background:#000!important}'+
       'html body.himart-wide-test-page #brand,html body.himart-wide-test-page #data,html body.himart-wide-test-page #journey,html body.himart-wide-test-page #direction{padding-top:100px!important}'+
       'html body.himart-wide-test-page #live-main p,html body.himart-wide-test-page #live-main .hm-section-desc,html body.himart-wide-test-page #live-main .narrative-copy,html body.himart-wide-test-page #live-main .hm-subcopy,html body.himart-wide-test-page #live-main .journey-block-copy{color:rgba(255,255,255,.50)!important}'+
       'html body.himart-wide-test-page #live-main p strong,html body.himart-wide-test-page #live-main p b,html body.himart-wide-test-page #live-main .hm-section-desc strong,html body.himart-wide-test-page #live-main .hm-section-desc b,html body.himart-wide-test-page #live-main .narrative-copy strong,html body.himart-wide-test-page #live-main .narrative-copy b{font-weight:inherit!important;color:inherit!important}'+
@@ -21,14 +22,14 @@ fetch('./himart-narrative-test.html?v=20260831-30',{cache:'no-store'})
       'html body.himart-wide-test-page .synthesis-card::before{background:linear-gradient(to bottom,rgba(0,166,237,.113) 0%,rgba(0,166,237,.089) 18%,rgba(0,166,237,.065) 40%,rgba(0,166,237,.037) 66%,rgba(0,166,237,.014) 84%,rgba(0,166,237,0) 100%)!important}'+
       'html body.himart-wide-test-page .synthesis-card.negative::before{background:linear-gradient(to bottom,rgba(250,72,27,.113) 0%,rgba(250,72,27,.089) 18%,rgba(250,72,27,.065) 40%,rgba(250,72,27,.037) 66%,rgba(250,72,27,.014) 84%,rgba(250,72,27,0) 100%)!important}'+
       '</style>';
-    const styles='<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-30">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-final.css?v=20260831-30">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-flowfix.css?v=20260831-30">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-behavior-proof.css?v=20260831-30">'+
-      '<link rel="stylesheet" href="./himart-narrative-v2-refine-20260831.css?v=20260831-30">'+critical;
-    const scripts='<script src="./himart-narrative-v2-final.js?v=20260831-30"><'+'/script>'+ 
-      '<script src="./himart-narrative-v2-flowfix.js?v=20260831-30"><'+'/script>'+ 
-      '<script src="./himart-narrative-v2-refine-20260831.js?v=20260831-30"><'+'/script>';
+    const styles='<link rel="stylesheet" href="./himart-narrative-v2.css?v=20260831-31">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-final.css?v=20260831-31">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-flowfix.css?v=20260831-31">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-behavior-proof.css?v=20260831-31">'+
+      '<link rel="stylesheet" href="./himart-narrative-v2-refine-20260831.css?v=20260831-31">'+critical;
+    const scripts='<script src="./himart-narrative-v2-final.js?v=20260831-31"><'+'/script>'+ 
+      '<script src="./himart-narrative-v2-flowfix.js?v=20260831-31"><'+'/script>'+ 
+      '<script src="./himart-narrative-v2-refine-20260831.js?v=20260831-31"><'+'/script>';
     html=html.replace('</head>',styles+'</head>');
     html=html.replace('</body>',scripts+'</body>');
     document.open();document.write(html);document.close();
