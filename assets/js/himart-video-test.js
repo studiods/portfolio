@@ -12,19 +12,22 @@ const fastOut=t=>1-Math.pow(1-t,3);
 
 function randomReveal(el){
  if(!el)return;
+ const original=el.innerHTML;
  const text=el.textContent;
  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
  let frame=0;
  const total=34;
  const timer=setInterval(()=>{
   const progress=frame/total;
-  el.textContent=[...text].map((c,i)=>{
-   if(c===' ')return ' ';
-   if(i<Math.floor(text.length*progress))return c;
-   return chars[Math.floor(Math.random()*chars.length)];
-  }).join('');
+  let index=0;
+  el.innerHTML=[...text].map(c=>{
+   if(c==='\n'||c===' ')return c;
+   const keep=index<Math.floor(text.length*progress);
+   index++;
+   return keep?c:chars[Math.floor(Math.random()*chars.length)];
+  }).join('').replace(/\n/g,'<br>');
   frame++;
-  if(frame>total){clearInterval(timer);el.textContent=text;}
+  if(frame>total){clearInterval(timer);el.innerHTML=original;}
  },45);
 }
 
