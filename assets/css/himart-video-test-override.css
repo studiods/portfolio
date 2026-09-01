@@ -5,7 +5,7 @@ body.himart-video-test-page .hm-video-meta{
 
 /* Hero first screen black overlay adjustment */
 body.himart-video-test-page .hm-video-overlay-base{
-  background:rgba(0,0,0,.50)!important;
+  background:rgba(0,0,0,.40)!important;
 }
 
 /* Additional top quarter black gradient mask */
@@ -19,9 +19,9 @@ body.himart-video-test-page .hm-video-overlay-base::after{
   height:25vh!important;
   background:linear-gradient(
     to bottom,
-    rgba(0,0,0,.50) 0%,
-    rgba(0,0,0,.35) 40%,
-    rgba(0,0,0,.12) 80%,
+    rgba(0,0,0,.40) 0%,
+    rgba(0,0,0,.28) 40%,
+    rgba(0,0,0,.10) 80%,
     rgba(0,0,0,0) 100%
   )!important;
   pointer-events:none!important;
