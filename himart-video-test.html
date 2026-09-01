@@ -174,7 +174,7 @@ body.himart-video-test-page .hm-video-meta{
   position:absolute!important;
   left:48px!important;
   right:48px!important;
-  bottom:44px!important;
+  bottom:24px!important;
   display:grid!important;
   grid-template-columns:1.55fr 1.2fr 1.08fr .85fr!important;
   gap:32px!important;
@@ -233,8 +233,13 @@ body.himart-video-test-page #brand .narrative-block{
 }
 body.himart-video-test-page #brand .hm-reveal{
   visibility:visible!important;
+  opacity:0!important;
+  transform:translateY(32px)!important;
+  transition:opacity .72s cubic-bezier(.2,.75,.25,1),transform .72s cubic-bezier(.2,.75,.25,1)!important;
+}
+body.himart-video-test-page #brand .hm-reveal.is-in{
   opacity:1!important;
-  transform:none!important;
+  transform:translateY(0)!important;
 }
 body.himart-video-test-page #data,
 body.himart-video-test-page #journey,
@@ -271,7 +276,7 @@ const PATCH_SCRIPT='<script id="himart-video-hero-test-script">'+
 "  const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));\n"+
 "  const smooth=(t)=>t*t*(3-2*t);\n"+
 "  const fastOut=(t)=>1-Math.pow(1-t,3);\n"+
-"  const keepBrandVisible=()=>{if(!brand)return;brand.querySelectorAll('.hm-reveal').forEach(el=>el.classList.add('is-in'));};\n"+
+"  const revealAtMiddle=()=>{if(!brand)return;brand.querySelectorAll('.hm-reveal:not(.is-in)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<=innerHeight*.60&&r.bottom>=innerHeight*.40)el.classList.add('is-in');});};\n"+
 "  let raf=0;\n"+
 "  const update=()=>{\n"+
 "    raf=0;\n"+
@@ -284,14 +289,14 @@ const PATCH_SCRIPT='<script id="himart-video-hero-test-script">'+
 "    const frameOpacity=1-blackout;\n"+
 "    fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));\n"+
 "    fixed.style.setProperty('--hm-frame-opacity',frameOpacity.toFixed(4));\n"+
-"    keepBrandVisible();\n"+
+"    revealAtMiddle();\n"+
 "  };\n"+
 "  const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(update)};\n"+
 "  addEventListener('scroll',requestUpdate,{passive:true});\n"+
 "  addEventListener('resize',requestUpdate,{passive:true});\n"+
-"  if(brand&&'MutationObserver' in window){const mo=new MutationObserver(()=>{keepBrandVisible();requestUpdate();});mo.observe(brand,{childList:true,subtree:true});}\n"+
+"  if(brand&&'MutationObserver' in window){const mo=new MutationObserver(()=>{revealAtMiddle();requestUpdate();});mo.observe(brand,{childList:true,subtree:true});}\n"+
 "  if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}\n"+
-"  keepBrandVisible();\n"+
+"  revealAtMiddle();\n"+
 "  update();\n"+
 '})();<'+'/script>';
 
