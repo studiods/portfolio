@@ -7,3 +7,14 @@ body.himart-video-test-page .hm-video-meta{
 body.himart-video-test-page .hm-video-overlay-base{
   background:rgba(0,0,0,.50)!important;
 }
+
+/* Hero title size and center alignment */
+body.himart-video-test-page .hm-video-copy{
+  top:50%!important;
+  transform:translateY(-50%)!important;
+}
+
+body.himart-video-test-page .hm-title{
+  font-size:120px!important;
+  line-height:1.08!important;
+}
