@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LOTTE HIMART Video Hero Test V2</title>
+<style>
+html,body{margin:0;background:#000;color:#fff;overflow-x:hidden;font-family:Pretendard,Arial,sans-serif}
+.hm-hero{height:100vh;position:relative;overflow:hidden;background:#000}
+.hm-video{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hm-black{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1;pointer-events:none}
+.hm-gradient{position:fixed;inset:0;background:linear-gradient(to bottom,transparent 60%,#000 100%);z-index:2;pointer-events:none}
+.hm-copy{position:absolute;top:80px;left:80px;z-index:3}
+.hm-copy h1{font-size:32px;font-weight:400;line-height:1.3;margin:0 0 32px}
+.hm-copy p{font-size:18px;color:rgba(255,255,255,.7)}
+.hm-meta{position:absolute;bottom:24px;left:72px;right:72px;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2);padding:22px 0;display:grid;grid-template-columns:repeat(4,1fr);z-index:3}
+.hm-content{position:relative;z-index:5;background:rgba(0,0,0,.9);min-height:200vh;padding:120px 80px;opacity:0;transform:translateY(120px);transition:opacity .8s ease,transform .8s ease}
+.hm-content.active{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<section class="hm-hero">
+<video class="hm-video" autoplay muted loop playsinline src="assets/video/himart_01.mp4"></video>
+<div class="hm-black"></div><div class="hm-gradient"></div>
+<div class="hm-copy"><h1>LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</h1><p>하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다.</p></div>
+<div class="hm-meta"><div>ROLE<br><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div><div>FOCUS<br><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div><div>SCOPE<br><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div><div>TEAM<br><b>UX DESIGN · PO · BUSINESS</b></div></div>
+</section>
+<section class="hm-content" id="content">01 구매 여정을 개선하기 전에</section>
+<script>
+const target=document.querySelector('.hm-content');
+const observer=new IntersectionObserver(([e])=>{if(e.isIntersecting)e.target.classList.add('active')},{rootMargin:'-30% 0px -30% 0px',threshold:.3});
+observer.observe(target);
+</script>
+</body>
+</html>
