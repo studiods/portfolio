@@ -1,0 +1,20 @@
+(()=>{'use strict';
+document.body.classList.add('himart-video-test-page');
+const stage=document.querySelector('.hm-video-hero-stage');
+const fixed=document.getElementById('hmVideoFixed');
+const video=document.getElementById('hmHeroVideo');
+const brand=document.getElementById('brand');
+if(fixed&&fixed.parentElement!==document.body)document.body.insertBefore(fixed,document.body.firstChild);
+const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));
+const smooth=t=>t*t*(3-2*t);
+const fastOut=t=>1-Math.pow(1-t,3);
+const revealAtMiddle=()=>{if(!brand)return;brand.querySelectorAll('.hm-reveal:not(.is-in)').forEach(el=>{const r=el.getBoundingClientRect();if(r.top<=innerHeight*.60&&r.bottom>=innerHeight*.40)el.classList.add('is-in');});};
+let raf=0;
+const update=()=>{raf=0;if(!stage||!fixed||!brand)return;const brandTop=brand.getBoundingClientRect().top;const cover=clamp((innerHeight-brandTop)/Math.max(1,innerHeight));const fastT=clamp(cover/.336);const slowT=clamp((cover-.336)/.664);const blackout=clamp(.72*fastOut(fastT)+.28*smooth(slowT));fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));fixed.style.setProperty('--hm-frame-opacity',(1-blackout).toFixed(4));revealAtMiddle();};
+const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(update);};
+addEventListener('scroll',requestUpdate,{passive:true});
+addEventListener('resize',requestUpdate,{passive:true});
+if(brand&&'MutationObserver'in window){new MutationObserver(()=>{revealAtMiddle();requestUpdate();}).observe(brand,{childList:true,subtree:true});}
+if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}
+revealAtMiddle();update();
+})();
