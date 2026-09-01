@@ -5,5 +5,5 @@ body.himart-video-test-page .hm-video-meta{
 
 /* Hero first screen black overlay adjustment */
 body.himart-video-test-page .hm-video-overlay-base{
-  background:rgba(0,0,0,.10)!important;
+  background:rgba(0,0,0,.50)!important;
 }
