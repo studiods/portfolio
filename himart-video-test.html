@@ -14,6 +14,7 @@ const sources={
   page:'./himart.html?v=20260901-video-hero-test-5',
   hero:'./assets/html/himart-video-test-hero.html',
   css:'./assets/css/himart-video-test.css',
+  override:'./assets/css/himart-video-test-override.css',
   js:'./assets/js/himart-video-test.js'
 };
 Promise.all([
@@ -22,7 +23,7 @@ Promise.all([
 ]).then(([html,hero])=>{
   html=html.replace(/<body class="([^"]*)">/,(_,classes)=>'<body class="'+classes+' himart-video-test-page">');
   html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,hero);
-  html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"></head>');
+  html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.override+'"></head>');
   html=html.replace('</body>','<script src="'+sources.js+'"><\/script></body>');
   document.open();document.write(html);document.close();
 }).catch(error=>{
