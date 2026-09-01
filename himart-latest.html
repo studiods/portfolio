@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>하이마트 온라인 구매여정 · Latest Test</title>
+<style>html,body{margin:0;background:#000;color:#fff;overflow-x:clip;max-width:100%}.boot{min-height:100vh;background:#000}</style>
+</head>
+<body>
+<div class="boot" aria-hidden="true"></div>
+<script>
+(()=>{'use strict';
+const sources={
+ page:'./himart.html?v=20260901-latest',
+ hero:'./assets/html/himart-video-test-hero.html',
+ css:'./assets/css/himart-video-test.css',
+ override:'./assets/css/himart-video-test-override.css',
+ js:'./assets/js/himart-video-test.js'
+};
+Promise.all([
+ fetch(sources.page,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('himart load failed'))),
+ fetch(sources.hero,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('hero load failed')))
+]).then(([html,hero])=>{
+ html=html.replace(/<body class="([^"]*)">/,(_,classes)=>'<body class="'+classes+' himart-video-test-page">');
+ html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,hero);
+ html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.override+'"></head>');
+ html=html.replace('</body>','<script src="'+sources.js+'"><\\/script></body>');
+ document.open();document.write(html);document.close();
+}).catch(error=>{console.error(error);document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';});
+})();
+</script>
+</body>
+</html>
