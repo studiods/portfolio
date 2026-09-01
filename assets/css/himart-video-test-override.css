@@ -8,6 +8,12 @@ body.himart-video-test-page .hm-video-overlay-base{
   background:rgba(0,0,0,.50)!important;
 }
 
+/* Scroll driven blackout layer */
+body.himart-video-test-page .hm-video-overlay-scroll{
+  opacity:var(--hm-video-blackout)!important;
+  transition:opacity .05s linear!important;
+}
+
 /* Additional top quarter black gradient mask */
 body.himart-video-test-page .hm-video-overlay-base::after{
   content:""!important;
