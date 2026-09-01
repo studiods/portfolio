@@ -1,0 +1,4 @@
+/* Hero video override patch */
+body.himart-video-test-page .hm-video-meta{
+  padding:24px 0 8px!important;
+}
