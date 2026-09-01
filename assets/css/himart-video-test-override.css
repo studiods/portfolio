@@ -10,16 +10,20 @@ body.himart-video-test-page .hm-video-overlay-base{
 
 /* Additional top quarter black gradient mask */
 body.himart-video-test-page .hm-video-overlay-base::after{
-  content:"";
-  position:absolute;
-  inset:0 0 auto 0;
-  height:25%;
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  height:25vh!important;
   background:linear-gradient(
     to bottom,
     rgba(0,0,0,.50) 0%,
-    rgba(0,0,0,.35) 35%,
-    rgba(0,0,0,.15) 75%,
+    rgba(0,0,0,.35) 40%,
+    rgba(0,0,0,.12) 80%,
     rgba(0,0,0,0) 100%
-  );
-  pointer-events:none;
+  )!important;
+  pointer-events:none!important;
+  z-index:10!important;
 }
