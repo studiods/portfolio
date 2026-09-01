@@ -12,8 +12,10 @@ const fastOut=t=>1-Math.pow(1-t,3);
 
 function randomReveal(el){
  if(!el)return;
- const original=el.innerHTML;
- const text=el.textContent;
+ const html=el.innerHTML;
+ const temp=document.createElement('div');
+ temp.innerHTML=html;
+ const text=temp.textContent;
  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
  let frame=0;
  const total=34;
@@ -21,13 +23,13 @@ function randomReveal(el){
   const progress=frame/total;
   let index=0;
   el.innerHTML=[...text].map(c=>{
-   if(c==='\n'||c===' ')return c;
+   if(c===' '){index++;return ' ';}
    const keep=index<Math.floor(text.length*progress);
    index++;
    return keep?c:chars[Math.floor(Math.random()*chars.length)];
-  }).join('').replace(/\n/g,'<br>');
+  }).join('').replace('전체 구매 여정을','전체 구매 여정을<br>');
   frame++;
-  if(frame>total){clearInterval(timer);el.innerHTML=original;}
+  if(frame>total){clearInterval(timer);el.innerHTML=html;}
  },45);
 }
 
