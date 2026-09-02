@@ -14,8 +14,8 @@ const sources={
  page:'./himart.html?v=20260901-latest',
  hero:'./assets/html/himart-video-test-hero.html',
  css:'./assets/css/himart-video-test.css',
- latest:'./assets/css/himart-latest.css?v=7f9abd3-final',
- js:'./assets/js/himart-latest.js?v=69442e8-final'
+ latest:'./assets/css/himart-latest.css?v=7f9abd3-static',
+ js:'./assets/js/himart-latest.js?v=69442e8-static'
 };
 Promise.all([
  fetch(sources.page,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('himart load failed'))),
@@ -23,6 +23,20 @@ Promise.all([
 ]).then(([html,hero])=>{
  html=html.replace(/<body class="([^"]*)">/,(_,classes)=>'<body class="'+classes+' himart-video-test-page">');
  html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,hero);
+ html=html.replace('화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을<br>확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.','화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을<br>확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.');
+ html=html.replace('style="color:rgba(255,255,255,.70)"','style="color:rgba(255,255,255,.80)"');
+ const roleMap=[
+ ['탐색을 시작시키는 허브','홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.'],
+ ['구매 목적을 구체화하는 화면','선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.'],
+ ['니즈를 상품 후보로 바꾸는 도구','검색은 불확실성을<br>확신으로 바꿔줘야 한다.'],
+ ['후보를 빠르게 압축하는 비교 화면','검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.'],
+ ['구매 확신을 완료하는 곳','상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.'],
+ ['최종 조건을 확인하고 확정하는 화면','장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.'],
+ ['관리 관계가 시작되는 화면','설치 조율에서는 결제 이후의<br>불안을 일정 확정으로 바꿔야 한다.']
+ ];
+ roleMap.forEach(([from,to])=>{html=html.replace('<h4>'+from+'</h4>','<h4>'+to+'</h4>');});
+ html=html.replace('관리 관계가 시작되는 화면</h4><p>설치 일정, 폐가전 회수, 보증, A/S와 케어 상태를 하나의 흐름으로 연결해 구매 이후에도 관리가 이어지도록 합니다.','마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.</h4><p>설치 일정과 사후관리 상태를 한 흐름으로 연결해 구매 이후에도 안심할 수 있도록 합니다.');
+
  html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.latest+'"></head>');
  html=html.replace('</body>','<script src="'+sources.js+'"><'+'/script></body>');
  document.open();document.write(html);document.close();
