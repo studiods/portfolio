@@ -77,15 +77,7 @@ function rewriteHeroLead(){
   lead.innerHTML='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
 }
 
-function applyLatestCopy(){
-  const lead=document.querySelector('.hm-video-copy .hm-lead');if(lead){lead.style.color='rgba(255,255,255,.80)';lead.innerHTML='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';}
-  const t=document.querySelector('#brand .hm-section-title');if(t)t.innerHTML='홈 개편 요청을 받았지만,<br>먼저 고객이 왜 온라인에서<br>하이마트를 선택하지 않는지부터 살펴봤습니다.';
-  const h=[...document.querySelectorAll('#direction h3,#direction h4')].find(x=>x.textContent.includes('각 화면'));
-  if(h)h.textContent='그리고 각 화면은, 다음 행동을 만드는 역할로 다시 정의했습니다.';
-  const roles=['홈은 보여주는 곳이 아닌\\n원하는 곳으로 보내주는 곳이어야 한다.','선택한 카테고리 안에서는\\n고민의 시간을 줄여야 한다.','검색은 불확실성을\\n확신으로 바꿔줘야 한다.','검색 결과는 단순 상품 목록이 아니라\\n비교를 끝내는 화면이어야 한다.','상세페이지는 설명하는 화면이 아니라\\n결정을 끝내는 화면이어야 한다.','장바구니는 결제 직전의\\n마지막 확신을 줘야 한다.','설치 조율에서는 결제 이후의\\n불안을 일정 확정으로 바꿔야 한다.','마이페이지에서는 구매 이후에도\\n관리받고 있다는 느낌을 줘야 한다.','매장과 온라인은 같은 맥락으로\\n상담과 구매를 이어줘야 한다.'];
-  const cards=[...document.querySelectorAll('#direction .role-card,#direction .journey-role-card,#direction article')];roles.forEach((v,i)=>{if(cards[i]&&cards[i].dataset.latestRoleApplied!=='1'){cards[i].dataset.latestRoleApplied='1';const x=cards[i].querySelector('h4,h3');if(x)x.innerHTML=v.replace('\\n','<br>');const p=cards[i].querySelector('p');if(p&&p.dataset.latestRoleShortened!=='1'){p.dataset.latestRoleShortened='1';p.textContent=p.textContent.slice(0,Math.ceil(p.textContent.length*.7));}}});
-}
-function prepareMotion(){
+function applyLatestCopy(){}\nfunction prepareMotion(){
   if(!main)return;
   rewriteHeroLead();
   rewriteFirstTitle();
@@ -125,7 +117,7 @@ let raf=0;
 const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLatestCopy();updateHero();prepareMotion();});};
 addEventListener('scroll',requestUpdate,{passive:true});
 addEventListener('resize',requestUpdate,{passive:true});
-if(main&&'MutationObserver'in window)new MutationObserver(()=>{applyLatestCopy();requestUpdate();}).observe(main,{childList:true,subtree:true});
+if(main&&'MutationObserver'in window)new MutationObserver(requestUpdate).observe(main,{childList:true,subtree:true});
 if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}
 applyLatestCopy();prepareMotion();updateHero();
 })();
