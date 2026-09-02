@@ -107,10 +107,17 @@ const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clear
 addEventListener('load',apply,{once:true});
 })();`;
   doc.body.append(finalPatch);
-  const inertNodes=[...doc.body.childNodes].filter(node=>node!==js&&node!==finalPatch);
+  const originalScripts=[...doc.body.querySelectorAll('script')].filter(node=>node!==js&&node!==finalPatch);
+const inertNodes=[...doc.body.childNodes].filter(node=>!originalScripts.includes(node)&&node!==js&&node!==finalPatch);
 document.head.innerHTML=doc.head.innerHTML;
 document.body.replaceChildren(...inertNodes);
 document.body.classList.add('himart-video-test-page');
+originalScripts.forEach(node=>{
+  const live=document.createElement('script');
+  if(node.src)live.src=node.src;
+  else live.textContent=node.textContent||'';
+  document.body.appendChild(live);
+});
 const liveJs=document.createElement('script');
 liveJs.src=sources.js;
 document.body.appendChild(liveJs);
