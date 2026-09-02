@@ -84,6 +84,8 @@ function applyLatestCopy(){
   if(title&&title.dataset.latestTitleApplied!=='1'){title.dataset.latestTitleApplied='1';title.innerHTML='홈 개편 요청을 받았지만,<br>먼저 고객이 왜 온라인에서<br>하이마트를 선택하지 않는지부터 살펴봤습니다.';}
   const roles=['홈은 보여주는 곳이 아닌|원하는 곳으로 보내주는 곳이어야 한다.','선택한 카테고리 안에서는|고민의 시간을 줄여야 한다.','검색은 불확실성을|확신으로 바꿔줘야 한다.','검색 결과는 단순 상품 목록이 아니라|비교를 끝내는 화면이어야 한다.','상세페이지는 설명하는 화면이 아니라|결정을 끝내는 화면이어야 한다.','장바구니는 결제 직전의|마지막 확신을 줘야 한다.','설치 조율에서는 결제 이후의|불안을 일정 확정으로 바꿔야 한다.','마이페이지에서는 구매 이후에도|관리받고 있다는 느낌을 줘야 한다.','매장과 온라인은 같은 맥락으로|상담과 구매를 이어줘야 한다.'];
   const cards=[...document.querySelectorAll('#direction .role-card,#direction .journey-role-card,#direction article')];
+  const grid=document.querySelector('#direction .role-grid');
+  if(grid&&grid.dataset.latestNineRoles!=='1'){grid.dataset.latestNineRoles='1';['매장과 온라인은 같은 맥락으로|상담과 구매를 이어줘야 한다.','구매 이후의 상태까지|안심하고 확인할 수 있어야 한다.'].forEach((v,i)=>{const card=document.createElement('article');card.className='role-card';card.innerHTML='<span class="hm-role-name">'+(i?'AFTER CARE':'STORE · ONLINE')+'</span><h4>'+v.replace('|','<br>')+'</h4><p>매장 상담과 온라인 구매, 설치 이후 관리까지 하나의 맥락으로 연결해 다음 판단을 돕습니다.</p><strong>맥락 연결 · 상담 · 구매 · 사후관리</strong>';grid.appendChild(card);});}
   cards.slice(0,roles.length).forEach((card,i)=>{if(card.dataset.latestRoleApplied==='1')return;const h=card.querySelector('h4,h3');if(!h)return;card.dataset.latestRoleApplied='1';h.innerHTML=roles[i].replace('|','<br>');const p=card.querySelector('p');if(p)p.textContent=p.textContent.slice(0,Math.ceil(p.textContent.length*.7));});
 }
 function prepareMotion(){
@@ -123,7 +125,7 @@ function updateHero(){
 }
 
 let raf=0;
-const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;updateHero();prepareMotion();});};
+const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLatestCopy();updateHero();prepareMotion();});};
 addEventListener('scroll',requestUpdate,{passive:true});
 addEventListener('resize',requestUpdate,{passive:true});
 if(main&&'MutationObserver'in window)new MutationObserver(requestUpdate).observe(main,{childList:true,subtree:true});
