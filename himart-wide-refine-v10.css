@@ -1,0 +1,80 @@
+/* Wide Himart refinement v10 — 2026-08-26
+   03 JOURNEY ONLY: restore the earlier tablet-wrapped circle treatment.
+   The tablet outline itself carries the signal color, and its label is embedded directly in the top rule. */
+
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-label,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-label{
+  display:none!important;
+}
+
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-row,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-row{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:16px!important;
+  width:100%!important;
+}
+
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node{
+  box-sizing:border-box!important;
+  flex:0 1 clamp(118px,13.2vw,190px)!important;
+  width:clamp(118px,13.2vw,190px)!important;
+  max-width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:1 / 1!important;
+  border:1px solid #fff!important;
+  border-radius:50%!important;
+  padding:28px 22px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  background:#050505!important;
+  box-shadow:none!important;
+}
+
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node .hm-card-no,
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node h4,
+body.himart-wide-test-page #journey .journey-signal-subsection .flow-node p,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node .hm-card-no,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node h4,
+body.himart-wide-test-page #journey .journey-redesign-subsection .flow-node p{
+ text-align:center!important;
+}
+
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet{
+ position:relative!important;
+ display:flex!important;
+ align-items:center!important;
+ flex:0 0 auto!important;
+ max-width:100%!important;
+ padding:30px 24px 22px!important;
+ border:1px solid var(--v10-tablet-color,rgba(255,255,255,.24))!important;
+ border-radius:999px!important;
+ background:transparent!important;
+ box-shadow:none!important;
+ color:var(--v10-tablet-color,rgba(255,255,255,.72))!important;
+}
+
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .wide-flow-cluster-label{
+ position:absolute!important;
+ z-index:2!important;
+ left:30px!important;
+ top:0!important;
+ transform:translateY(-50%)!important;
+ padding:0 10px!important;
+ background:#050505!important;
+ font-size:12px!important;
+}
+
+body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--alert{--v10-tablet-color:var(--hm-red)!important;}
+body.himart-wide-test-page #journey .journey-signal-subsection .v10-journey-tablet.wide-flow-cluster--focus{--v10-tablet-color:var(--hm-blue)!important;}
+body.himart-wide-test-page #journey .journey-redesign-subsection .v10-journey-tablet{--v10-tablet-color:var(--hm-blue)!important;}
+
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-node{flex-basis:168px!important;width:168px!important;}
+body.himart-wide-test-page #journey .wide-flow-cluster.v10-journey-tablet .flow-arrow{flex-basis:22px!important;width:22px!important;}
