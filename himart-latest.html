@@ -14,8 +14,8 @@ const sources={
  page:'./himart.html?v=20260901-latest',
  hero:'./assets/html/himart-video-test-hero.html',
  css:'./assets/css/himart-video-test.css',
- latest:'./assets/css/himart-latest.css?v=7f9abd3',
- js:'./assets/js/himart-latest.js?v=69442e8'
+ latest:'./assets/css/himart-latest.css?v=7f9abd3-final',
+ js:'./assets/js/himart-latest.js?v=69442e8-final'
 };
 Promise.all([
  fetch(sources.page,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('himart load failed'))),
