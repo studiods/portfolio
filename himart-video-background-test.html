@@ -12,11 +12,11 @@
 /* Video hero test layer: the original himart.html content remains unchanged. */
 html,body{width:100%!important;max-width:100%!important;overflow-x:clip!important;background:#000!important}
 body.himart-video-background-test-page #live-main{position:relative!important;width:100%!important;max-width:100%!important;overflow:visible!important;background:#000!important}
-body.himart-video-background-test-page .hm-video-stage{position:absolute;inset:0 0 auto;width:100%;height:200vh;min-height:200vh;z-index:100!important;pointer-events:none}
-body.himart-video-background-test-page .hm-video-fixed{position:fixed;inset:0;width:100%;height:100vh;min-height:100vh;z-index:1!important;overflow:hidden;background:#000;pointer-events:none}
-body.himart-video-background-test-page .hm-video-media{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;background:#000}
-body.himart-video-background-test-page .hm-video-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:2}
-body.himart-video-background-test-page .hm-video-overlay-scroll{position:absolute;inset:0;background:#000;opacity:var(--hm-video-blackout,0);z-index:6;will-change:opacity}
+body.himart-video-background-test-page .hm-video-stage{position:fixed!important;inset:0!important;width:100%!important;height:100vh!important;min-height:100vh!important;z-index:100!important;pointer-events:none!important;visibility:visible!important;opacity:1!important}
+body.himart-video-background-test-page .hm-video-fixed{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;z-index:0!important;overflow:hidden;background:transparent!important;pointer-events:none!important;visibility:visible!important;opacity:1!important}
+body.himart-video-background-test-page .hm-video-media{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;display:block!important;z-index:0!important;object-fit:cover!important;object-position:center center!important;background:transparent!important;visibility:visible!important;opacity:1!important}
+body.himart-video-background-test-page .hm-video-overlay{position:absolute!important;inset:0!important;background:rgba(0,0,0,.5)!important;z-index:1!important;visibility:visible!important;opacity:1!important}
+body.himart-video-background-test-page .hm-video-overlay-scroll{position:absolute!important;inset:0!important;background:#000!important;opacity:var(--hm-video-blackout,0)!important;z-index:2!important;will-change:opacity;visibility:visible!important}
 body.himart-video-background-test-page .hm-hero{position:relative!important;z-index:101!important;height:200vh!important;min-height:200vh!important;margin:0!important;padding:0!important;background:transparent!important;pointer-events:none!important}
 html body.himart-video-background-test-page.himart-wide-test-page.himart-prod-v16 .hm-hero{background:transparent!important}
 body.himart-video-background-test-page .hm-hero>.hm-wrap{position:fixed!important;inset:0!important;width:100%!important;max-width:none!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0 12px 24px!important;z-index:5!important;display:block!important;background:transparent!important;pointer-events:none!important}
@@ -104,7 +104,7 @@ body.himart-video-background-test-page #live-main{opacity:1!important;visibility
   'use strict';
   const fixed=document.getElementById('hmVideoFixed');
   const video=document.getElementById('hmHeroVideo');
-  if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}
+if(video){video.muted=true;video.loop=true;video.playsInline=true;const play=()=>video.play().catch(()=>{});video.addEventListener('loadeddata',play,{once:true});video.addEventListener('canplay',play,{once:true});play();}
   if(!fixed)return;
   const clamp=(value,min=0,max=1)=>Math.max(min,Math.min(max,value));
   let raf=0;
@@ -135,7 +135,7 @@ const prepareWideMotion=()=>{main.querySelectorAll('.hm-section-no').forEach(el=
 const elFromHTML=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
 const wrapMore=(parent,nodes,label,meta='DETAILS')=>{const valid=nodes.filter(Boolean).filter(node=>node.parentElement===parent);if(!valid.length)return null;const details=document.createElement('details');details.className='hm-more';details.innerHTML=`<summary>${label}<span>${meta}</span></summary><div class="hm-more-body"></div>`;const body=details.querySelector('.hm-more-body');parent.insertBefore(details,valid[0]);valid.forEach(node=>body.appendChild(node));details.addEventListener('toggle',()=>{if(details.open){requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')))}});return details};
 const applyNarrativeTest=()=>{
-document.body.classList.add('himart-narrative-test');
+document.body.classList.add('himart-narrative-test-disabled');
 const brand=main.querySelector('#brand');const brandWrap=brand?.querySelector(':scope > .hm-wrap');const brandHead=brandWrap?.querySelector(':scope > .hm-section-head');
 if(brandHead){const title=brandHead.querySelector('.hm-section-title'),desc=brandHead.querySelector('.hm-section-desc');if(title)title.innerHTML='화면을 고치기 전에,<br>왜 고객이 온라인에서 하이마트를 선택하지 않는지부터 정의했습니다.';if(desc)desc.innerHTML='“온라인몰 개편”은 결과의 이름일 뿐 문제의 이름은 아니었습니다. <strong>고객이 하이마트를 어떻게 인식하는지</strong>와 <strong>실제로 어떻게 사용하는지</strong>를 따로 확인한 뒤, 두 결과가 같은 방향을 가리키는 지점만 설계의 근거로 삼았습니다.';
 const problem=elFromHTML(`<div class="narrative-block hm-reveal narrative-problem"><span class="narrative-subno">01.1 / PROBLEM DEFINITION</span><h3 class="narrative-title">“개편해 주세요”라는 요청으로는<br>무엇을 바꿔야 하는지 알 수 없었습니다.</h3><p class="narrative-copy">그래서 먼저 두 가지를 분리해 봤습니다. 하나는 <strong>고객의 머릿속</strong>, 다른 하나는 <strong>고객의 손</strong>입니다. 말과 행동을 각각 끝까지 본 뒤, 겹치는 부분만 남겼습니다.</p><div class="problem-grid"><article class="problem-item"><small>01 / PERCEPTION</small><h4>고객에게 하이마트는<br>어떤 곳일까?</h4><p>가전을 살 때 하이마트를 떠올리는지, 떠올린다면 매장인지 온라인인지, 어떤 기대를 가지고 찾는지부터 확인했습니다.</p></article><article class="problem-item"><small>02 / BEHAVIOR</small><h4>온라인에서는<br>실제로 뭘 하고 있을까?</h4><p>어디에서 들어와 무엇을 보고, 어디서 다음 행동이 끊기는지 2025.01—2026.06 이용 데이터를 따라갔습니다.</p></article><article class="problem-item"><small>03 / OVERLAP</small><h4>말과 행동이<br>겹치는 지점만 남겼습니다.</h4><p>경쟁사 화면을 먼저 보거나 결론을 정해두지 않고, 고객 조사와 행동 데이터가 동시에 지지하는 문제를 우선순위로 삼았습니다.</p></article></div></div>`);brandHead.insertAdjacentElement('afterend',problem);
