@@ -147,5 +147,12 @@ document.querySelectorAll('details.hm-more').forEach(d=>d.open=false)};
 try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');applyNarrativeTest();prepareWideMotion();document.body.classList.remove('himart-narrative-loading');document.body.classList.add('himart-narrative-ready');await loadScript('./himart-live-boot.js?v=9f74114')}catch(err){document.body.classList.remove('himart-v18-loading','himart-narrative-loading');document.body.classList.add('himart-v18-ready','himart-narrative-ready');main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';console.error(err)}})();
 </script>
 <script src="./himart-narrative-v2-production-runtime.js?v=20260901-1"></script>
+<style id="himart-video-background-final-visibility">
+html body.himart-video-background-test-page.himart-narrative-test:not(.narrative-v2-ready) #live-main,
+html body.himart-video-background-test-page.himart-narrative-test:not(.narrative-v2-final-ready) #live-main{
+  opacity:1!important;
+  visibility:visible!important;
+}
+</style>
 </body>
 </html>
