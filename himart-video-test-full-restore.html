@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>하이마트 온라인 구매여정 · Full Video Restore Test</title>
+<link rel="stylesheet" href="./himart-narrative-v2-production.css">
+<link rel="stylesheet" href="./himart-wide-refine-v10.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+(async()=>{
+  const app=document.getElementById('app');
+  const res=await fetch('./himart.html');
+  const html=await res.text();
+  const parser=new DOMParser();
+  const doc=parser.parseFromString(html,'text/html');
+
+  const hero=doc.querySelector('.hm-hero');
+  if(hero){
+    const video=document.createElement('video');
+    video.className='hm-video-media';
+    video.src='./assets/video/himart_01.mp4';
+    video.autoplay=true;
+    video.muted=true;
+    video.loop=true;
+    video.playsInline=true;
+    hero.prepend(video);
+    hero.classList.add('hm-video-hero-stage');
+  }
+
+  app.innerHTML=doc.body.innerHTML;
+})();
+</script>
+<script src="./himart-narrative-v2-production-base.js"></script>
+<script src="./himart-narrative-v2-production-runtime.js"></script>
+<script src="./himart-wide-refine-v10.js"></script>
+<style>
+.hm-video-hero-stage{position:relative;overflow:hidden}
+.hm-video-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hm-video-hero-stage>*:not(.hm-video-media){position:relative;z-index:2}
+</style>
+</body>
+</html>
