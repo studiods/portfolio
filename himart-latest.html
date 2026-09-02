@@ -111,7 +111,11 @@ addEventListener('load',apply,{once:true});
 const inertNodes=[...doc.body.childNodes].filter(node=>!originalScripts.includes(node)&&node!==js&&node!==finalPatch);
 document.head.innerHTML=doc.head.innerHTML;
 document.body.replaceChildren(...inertNodes);
-document.body.classList.add('himart-video-test-page');
+document.body.classList.remove('himart-v18-loading','himart-narrative-loading');
+document.body.classList.add('himart-v18-ready','himart-narrative-ready','himart-video-test-page');
+const visibilityStyle=document.createElement('style');
+visibilityStyle.textContent='body.himart-video-test-page #live-main{opacity:1!important;visibility:visible!important}';
+document.head.appendChild(visibilityStyle);
 originalScripts.forEach(node=>{
   const live=document.createElement('script');
   if(node.src)live.src=node.src;
