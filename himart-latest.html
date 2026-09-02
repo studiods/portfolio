@@ -17,7 +17,7 @@ const sources={
  latest:'./assets/css/himart-latest.css?v=20260902-final-copy',
  js:'./assets/js/himart-latest.js?v=20260902-final-copy'
 };
-const get=url=>fetch(url,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('load failed: '+url)));
+const get=url=>{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);return fetch(url,{cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.text():Promise.reject(new Error('load failed: '+url))).finally(()=>clearTimeout(timeout));};
 Promise.all([get(sources.page),get(sources.hero)]).then(([page,hero])=>{
   const doc=new DOMParser().parseFromString(page,'text/html');
   const heroDoc=new DOMParser().parseFromString(hero,'text/html');
@@ -28,8 +28,6 @@ Promise.all([get(sources.page),get(sources.hero)]).then(([page,hero])=>{
 
   const css=doc.createElement('link');css.rel='stylesheet';css.href=sources.css;doc.head.append(css);
   const latest=doc.createElement('link');latest.rel='stylesheet';latest.href=sources.latest;doc.head.append(latest);
-  const js=doc.createElement('script');js.src=sources.js;doc.body.append(js);
-
   const finalPatch=doc.createElement('script');
   finalPatch.textContent=`(()=>{'use strict';
 const roleData=[
@@ -107,27 +105,49 @@ const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clear
 addEventListener('load',apply,{once:true});
 })();`;
   doc.body.append(finalPatch);
-  const originalScripts=[...doc.body.querySelectorAll('script')].filter(node=>node!==js&&node!==finalPatch);
-const inertNodes=[...doc.body.childNodes].filter(node=>!originalScripts.includes(node)&&node!==js&&node!==finalPatch);
-document.head.innerHTML=doc.head.innerHTML;
-document.body.replaceChildren(...inertNodes);
-document.body.classList.remove('himart-v18-loading','himart-narrative-loading');
-document.body.classList.add('himart-v18-ready','himart-narrative-ready','himart-video-test-page');
-const visibilityStyle=document.createElement('style');
-visibilityStyle.textContent='body.himart-video-test-page #live-main{opacity:1!important;visibility:visible!important}';
-document.head.appendChild(visibilityStyle);
-originalScripts.forEach(node=>{
-  const live=document.createElement('script');
-  if(node.src)live.src=node.src;
-  else live.textContent=node.textContent||'';
-  document.body.appendChild(live);
-});
-const liveJs=document.createElement('script');
-liveJs.src=sources.js;
-document.body.appendChild(liveJs);
-const livePatch=document.createElement('script');
-livePatch.textContent=finalPatch.textContent;
-document.body.appendChild(livePatch);
+  const finalPatchScript=finalPatch;
+  const originalScripts=[...doc.body.querySelectorAll('script')].filter(node=>node!==finalPatchScript);
+  const inertNodes=[...doc.body.childNodes].filter(node=>!originalScripts.includes(node)&&node!==finalPatchScript);
+
+  document.head.innerHTML=doc.head.innerHTML;
+  document.body.replaceChildren(...inertNodes);
+
+  const forceReady=()=>{
+    document.body.classList.remove('himart-v18-loading','himart-narrative-loading');
+    document.body.classList.add('himart-v18-ready','himart-narrative-ready','himart-video-test-page');
+  };
+  forceReady();
+
+  const visibilityStyle=document.createElement('style');
+  visibilityStyle.textContent='body.himart-video-test-page #live-main{opacity:1!important;visibility:visible!important}';
+  document.head.appendChild(visibilityStyle);
+
+  const readyGuard=new MutationObserver(forceReady);
+  readyGuard.observe(document.body,{attributes:true,attributeFilter:['class']});
+
+  originalScripts.forEach(node=>{
+    const live=document.createElement('script');
+    if(node.src)live.src=node.src;
+    else live.textContent=node.textContent||'';
+    document.body.appendChild(live);
+  });
+
+  const runLatest=()=>{
+    if(document.documentElement.dataset.himartLatestStarted==='1')return;
+    document.documentElement.dataset.himartLatestStarted='1';
+    const liveJs=document.createElement('script');
+    liveJs.src=sources.js;
+    const appendPatch=()=>{
+      const livePatch=document.createElement('script');
+      livePatch.textContent=finalPatchScript.textContent;
+      document.body.appendChild(livePatch);
+    };
+    liveJs.onload=appendPatch;
+    liveJs.onerror=appendPatch;
+    document.body.appendChild(liveJs);
+  };
+  runLatest();
+  setTimeout(runLatest,1200);
 }).catch(error=>{console.error(error);document.body.innerHTML='<div style="padding:40px;color:#fff">페이지를 불러오지 못했습니다.</div>';});
 })();
 </script>
