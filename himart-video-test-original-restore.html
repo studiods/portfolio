@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>하이마트 온라인 구매여정 · Video Hero Test</title>
+<style>html,body{margin:0;background:#000;color:#fff}.boot{min-height:100vh;background:#000}</style>
+</head>
+<body><div class="boot" aria-hidden="true"></div>
+<script>
+(()=>{
+'use strict';
+const HERO_HTML=`<header class="hm-hero hm-video-hero-stage" id="top"><div class="hm-video-sticky" id="hmVideoSticky"><video class="hm-video-media" id="hmHeroVideo" src="./assets/video/himart_01.mp4" autoplay muted loop playsinline preload="auto"></video><div class="hm-video-overlay-base"></div><div class="hm-video-overlay-gradient"></div><div class="hm-video-overlay-scroll"></div><div class="hm-video-frame"><div class="hm-video-copy"><div class="hm-kicker">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div><h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1><p class="hm-lead">화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p></div><div class="hm-meta hm-video-meta"><div><span>ROLE</span><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div><div><span>FOCUS</span><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div><div><span>SCOPE</span><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div><div><span>TEAM</span><b>UX DESIGN · PO · BUSINESS</b></div></div></div></div></header>`;
+const style=document.createElement('style');
+style.textContent='.hm-video-hero-stage{height:200vh}.hm-video-sticky{position:sticky;top:0;height:100vh;overflow:hidden}.hm-video-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hm-video-overlay-base,.hm-video-overlay-gradient,.hm-video-overlay-scroll{position:absolute;inset:0}.hm-video-overlay-base{background:rgba(0,0,0,.7)}.hm-video-overlay-scroll{background:#000;opacity:var(--hm-video-blackout,0)}';
+document.body.innerHTML=HERO_HTML;document.head.appendChild(style);
+})();
+</script>
+</body>
+</html>
