@@ -34,26 +34,33 @@ function scramble(el){
   requestAnimationFrame(draw);
 }
 
-const focusObserver=!reduce&&'IntersectionObserver'in window?new IntersectionObserver(entries=>{
+const makeObserver=(callback,options)=>!reduce&&'IntersectionObserver'in window?new IntersectionObserver(callback,options):null;
+const titleObserver=makeObserver(entries=>{
   entries.forEach(entry=>{
     if(!entry.isIntersecting)return;
-    const el=entry.target;
-    if(el.classList.contains('latest-scramble'))scramble(el);
-    else el.classList.add('is-latest-in');
-    focusObserver.unobserve(el);
+    scramble(entry.target);
+    titleObserver.unobserve(entry.target);
   });
-},{threshold:.01,rootMargin:'0px 0px -45% 0px'}):null;
+},{threshold:.2});
+const riseObserver=makeObserver(entries=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting)return;
+    entry.target.classList.add('is-latest-in');
+    riseObserver.unobserve(entry.target);
+  });
+},{threshold:.01,rootMargin:'0px 0px -45% 0px'});
 
 function observe(el,kind){
   if(!el||el.dataset.latestMotionReady==='1')return;
   el.dataset.latestMotionReady='1';
   el.classList.add(kind);
-  if(reduce||!focusObserver){
+  const observer=kind==='latest-scramble'?titleObserver:riseObserver;
+  if(reduce||!observer){
     if(kind==='latest-scramble')scramble(el);
     else el.classList.add('is-latest-in');
     return;
   }
-  focusObserver.observe(el);
+  observer.observe(el);
 }
 
 function rewriteFirstTitle(){
