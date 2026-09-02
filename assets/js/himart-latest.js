@@ -70,8 +70,16 @@ function rewriteFirstTitle(){
   title.innerHTML='홈 개편 요청을 받았지만,<br>먼저 고객이 왜 온라인에서<br>하이마트를 선택하지 않는지부터 살펴봤습니다.';
 }
 
+function rewriteHeroLead(){
+  const lead=document.querySelector('.hm-video-copy .hm-lead');
+  if(!lead||lead.dataset.latestLeadRewritten==='1')return;
+  lead.dataset.latestLeadRewritten='1';
+  lead.innerHTML='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
+}
+
 function prepareMotion(){
   if(!main)return;
+  rewriteHeroLead();
   rewriteFirstTitle();
   // Keep numbering static. Random reveal belongs to the title text beneath it.
   const titles=[
