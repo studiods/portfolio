@@ -107,8 +107,17 @@ const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clear
 addEventListener('load',apply,{once:true});
 })();`;
   doc.body.append(finalPatch);
-  document.open();document.write('<!doctype html>'+doc.documentElement.outerHTML);document.close();
-}).catch(error=>{console.error(error);document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';});
+  const inertNodes=[...doc.body.childNodes].filter(node=>node!==js&&node!==finalPatch);
+document.head.innerHTML=doc.head.innerHTML;
+document.body.replaceChildren(...inertNodes);
+document.body.classList.add('himart-video-test-page');
+const liveJs=document.createElement('script');
+liveJs.src=sources.js;
+document.body.appendChild(liveJs);
+const livePatch=document.createElement('script');
+livePatch.textContent=finalPatch.textContent;
+document.body.appendChild(livePatch);
+}).catch(error=>{console.error(error);document.body.innerHTML='<div style="padding:40px;color:#fff">페이지를 불러오지 못했습니다.</div>';});
 })();
 </script>
 </body>
