@@ -1,0 +1,110 @@
+/* himart-latest: isolated video hero controls */
+body.himart-video-test-page .hm-video-overlay-base{
+  background:rgba(0,0,0,.50)!important;
+}
+body.himart-video-test-page .hm-video-overlay-base::after{
+  content:none!important;
+  display:none!important;
+}
+body.himart-video-test-page .hm-video-overlay-gradient{
+  background:transparent!important;
+}
+body.himart-video-test-page .hm-video-overlay-scroll{
+  display:block!important;
+  visibility:visible!important;
+  inset:0!important;
+  background:#000!important;
+  opacity:var(--hm-video-blackout,0)!important;
+  transition:none!important;
+  will-change:opacity!important;
+}
+
+/* The metadata panel owns its height. No inherited hero spacing is allowed. */
+body.himart-video-test-page .hm-video-meta{
+  position:absolute!important;
+  inset:auto 48px 24px!important;
+  display:grid!important;
+  grid-template-columns:1.55fr 1.2fr 1.08fr .85fr!important;
+  grid-auto-rows:36px!important;
+  align-items:start!important;
+  align-content:start!important;
+  gap:0 32px!important;
+  box-sizing:border-box!important;
+  block-size:86px!important;
+  min-block-size:0!important;
+  max-block-size:none!important;
+  margin:0!important;
+  padding:24px 0!important;
+  border-top:1px solid rgba(255,255,255,.20)!important;
+  border-bottom:1px solid rgba(255,255,255,.20)!important;
+  overflow:visible!important;
+}
+body.himart-video-test-page .hm-video-meta>div{
+  display:block!important;
+  align-self:start!important;
+  block-size:36px!important;
+  min-block-size:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+}
+body.himart-video-test-page .hm-video-meta span{
+  display:block!important;
+  margin:0 0 8px!important;
+  line-height:11px!important;
+}
+body.himart-video-test-page .hm-video-meta b{
+  display:block!important;
+  margin:0!important;
+  line-height:16px!important;
+}
+body.himart-video-test-page .hm-video-meta::before,
+body.himart-video-test-page .hm-video-meta::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* Delayed focus motion for ordinary content and small numbered headings. */
+body.himart-video-test-page .latest-rise{
+  opacity:0!important;
+  transform:translateY(40px)!important;
+  transition:opacity .78s cubic-bezier(.2,.75,.25,1),transform .78s cubic-bezier(.2,.75,.25,1)!important;
+  will-change:opacity,transform!important;
+}
+body.himart-video-test-page .latest-rise.is-latest-in{
+  opacity:1!important;
+  transform:translateY(0)!important;
+}
+body.himart-video-test-page .latest-scramble{
+  opacity:0!important;
+  transform:translateY(40px)!important;
+  transition:opacity .78s cubic-bezier(.2,.75,.25,1),transform .78s cubic-bezier(.2,.75,.25,1)!important;
+}
+body.himart-video-test-page .latest-scramble.is-latest-in{
+  opacity:1!important;
+  transform:translateY(0)!important;
+}
+@media(max-width:900px){
+  body.himart-video-test-page .hm-video-meta{
+    inset:auto 24px 28px!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-auto-rows:auto!important;
+    gap:18px 22px!important;
+    block-size:auto!important;
+    padding:20px 0!important;
+  }
+  body.himart-video-test-page .hm-video-meta>div{block-size:auto!important}
+}
+@media(prefers-reduced-motion:reduce){
+  body.himart-video-test-page .latest-rise,
+  body.himart-video-test-page .latest-scramble{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+}
+
+/* First-screen lead for this latest variant. */
+body.himart-video-test-page .hm-video-copy .hm-lead{
+  color:rgba(255,255,255,.80)!important;
+}
