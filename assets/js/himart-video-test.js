@@ -12,9 +12,14 @@ const revealAtMiddle=()=>{if(!brand)return;brand.querySelectorAll('.hm-reveal:no
 let raf=0;
 const update=()=>{raf=0;if(!stage||!fixed)return;
 const progress=clamp(window.scrollY/Math.max(1,innerHeight));
-// base 50% -> scroll start rapidly approaches 100%, then slows down
-const curve=1-Math.pow(1-progress,5);
-const blackout=0.5+(0.5*curve);
+// The actual composite matte moves from 50% to 100%:
+// 72% of the added darkness arrives in the first 35% of the scroll,
+// then the remaining 28% eases in gradually.
+const early=clamp(progress/.35);
+const late=clamp((progress-.35)/.65);
+const fastOut=t=>1-Math.pow(1-t,3);
+const smooth=t=>t*t*(3-2*t);
+const blackout=clamp(.72*fastOut(early)+.28*smooth(late));
 fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));
 fixed.style.setProperty('--hm-frame-opacity',(1-blackout).toFixed(4));
 revealAtMiddle();};
