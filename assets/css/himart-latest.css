@@ -103,3 +103,8 @@ body.himart-video-test-page .latest-scramble.is-latest-in{
     transition:none!important;
   }
 }
+
+/* First-screen lead for this latest variant. */
+body.himart-video-test-page .hm-video-copy .hm-lead{
+  color:rgba(255,255,255,.70)!important;
+}
