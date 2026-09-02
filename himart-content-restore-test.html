@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Himart Content Restore Test</title>
+<link rel="stylesheet" href="./himart-narrative-v2-production.css?v=restore-test">
+<link rel="stylesheet" href="./himart-wide-refine-v10.css?v=restore-test">
+<link rel="stylesheet" href="./pretendard.css">
+</head>
+<body>
+<main id="restore-app">
+<p style="padding:40px;color:white">CONTENT RESTORE TEST</p>
+</main>
+<script>
+fetch('./himart.html')
+.then(r=>r.text())
+.then(html=>{
+ const parser=new DOMParser();
+ const doc=parser.parseFromString(html,'text/html');
+ const main=doc.querySelector('main');
+ if(main){document.querySelector('#restore-app').replaceWith(main);}
+});
+</script>
+</body>
+</html>
