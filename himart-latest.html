@@ -9,6 +9,16 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260901-1">
 <link rel="stylesheet" href="./assets/css/himart-video-test.css?v=20260902"><link rel="stylesheet" href="./assets/css/himart-latest.css?v=20260902"><style>html body.himart-wide-test-page #live-main{opacity:1!important;visibility:visible!important}</style>
+
+<style id="himart-layout-recovery">
+/* Layout recovery: isolate the fixed hero from legacy width constraints. */
+html,body.himart-page-body,body.himart-page-body #live-main{width:100%!important;max-width:none!important;min-width:0!important;overflow-x:hidden!important;margin:0!important}
+body.himart-page-body .hm-video-hero-stage{width:100vw!important;max-width:none!important;min-width:100vw!important;left:0!important;right:0!important}
+body.himart-page-body .hm-video-fixed{position:fixed!important;inset:0!important;width:100vw!important;max-width:none!important;min-width:100vw!important;height:100vh!important;min-height:100vh!important;margin:0!important;transform:none!important}
+body.himart-page-body .hm-video-media,body.himart-page-body .hm-video-overlay-base,body.himart-page-body .hm-video-overlay-gradient,body.himart-page-body .hm-video-overlay-scroll{width:100%!important;max-width:none!important;inset:0!important}
+body.himart-page-body .hm-video-frame{left:50%!important;width:min(100%,1440px)!important;max-width:1440px!important;box-sizing:border-box!important}
+@media(max-width:1440px){body.himart-page-body .hm-video-frame{width:100%!important}}
+</style>
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
