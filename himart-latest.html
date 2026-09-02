@@ -19,6 +19,23 @@ body.himart-page-body .hm-video-media,body.himart-page-body .hm-video-overlay-ba
 body.himart-page-body .hm-video-frame{left:50%!important;width:min(100%,1440px)!important;max-width:1440px!important;box-sizing:border-box!important}
 @media(max-width:1440px){body.himart-page-body .hm-video-frame{width:100%!important}}
 </style>
+
+<style id="himart-render-fallback">
+/* Render safety: content must remain visible even if scroll enhancement fails. */
+html body.himart-page-body #live-main,
+html body.himart-page-body #live-main .hm-reveal,
+html body.himart-page-body #live-main .latest-rise,
+html body.himart-page-body #live-main .latest-scramble{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+}
+html body.himart-page-body #live-main .hm-reveal,
+html body.himart-page-body #live-main .latest-rise,
+html body.himart-page-body #live-main .latest-scramble{
+  transition:none!important;
+}
+</style>
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
