@@ -131,12 +131,11 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
     const kicker=document.querySelector('.hm-kicker');
     if(kicker)kicker.remove();
     const lead=document.querySelector('.hm-lead');
-    if(lead)lead.innerHTML='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
+    const copy='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
+    if(lead&&lead.innerHTML!==copy)lead.innerHTML=copy;
   };
-  syncHero();
-  const observer=new MutationObserver(syncHero);
-  observer.observe(document.body,{attributes:true,attributeFilter:['class'],childList:true,subtree:true});
-  addEventListener('load',()=>{syncHero();setTimeout(()=>observer.disconnect(),5000)},{once:true});
+  [0,300,1200,2600].forEach(delay=>setTimeout(syncHero,delay));
+  addEventListener('load',syncHero,{once:true});
 })();
 </script>
 </body>
