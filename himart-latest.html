@@ -58,6 +58,7 @@ function apply(){
   const synthesis=Array.from(document.querySelectorAll('.brand-synthesis')).find(el=>el.textContent.includes('이미 가지고 있던 강점'));
   if(synthesis){
     changed=setHTML(synthesis.querySelector('h4'),'하이마트의 강점은 이미 충분했습니다.<br><strong>문제는 그 강점이 온라인 구매로 이어지지 않는 데 있었습니다.</strong>')||changed;
+    const synthesisStrong=synthesis.querySelector('h4 strong');if(synthesisStrong){synthesisStrong.style.setProperty('color','#fff','important');synthesisStrong.style.setProperty('opacity','1','important')}
     const cols=synthesis.querySelectorAll('.synthesis-col,.synthesis-card');
     cols.forEach(col=>{
       const b=col.querySelector('b');
@@ -68,9 +69,12 @@ function apply(){
       const p=cols[0].querySelector('p');if(p){p.style.setProperty('font-size','28px','important');p.style.setProperty('color','rgba(255,255,255,.80)','important');p.style.setProperty('opacity','1','important')}
     }
     if(cols[1]){
-      const p=cols[1].querySelector('p');if(p)p.style.setProperty('color','rgba(255,255,255,.80)','important');
+      const p=cols[1].querySelector('p');if(p){p.style.setProperty('font-size','28px','important');p.style.setProperty('color','#fff','important');p.style.setProperty('opacity','1','important')}
     }
   }
+
+  const prototypeTitle=Array.from(document.querySelectorAll('.hm-section-title,.journey-section-title,h2,h3')).find(el=>el.textContent.includes('프로토타입')&&el.textContent.includes('내부 검증'));
+  if(prototypeTitle)changed=setHTML(prototypeTitle,'앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.')||changed;
 
   const subcopy=Array.from(document.querySelectorAll('.hm-subcopy,.journey-block-copy')).find(el=>el.textContent.includes('홈부터 결제까지')||el.textContent.includes('앞 단계에서 받은 맥락'));
   if(subcopy){
