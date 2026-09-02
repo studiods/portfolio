@@ -6419,7 +6419,7 @@ body.himart-video-test-page #live-main{opacity:1!important;visibility:visible!im
 <main id="live-main">
 <header class="hm-hero hm-video-hero-stage" id="top">
   <div class="hm-video-fixed" id="hmVideoFixed">
-    <video class="hm-video-media" id="hmHeroVideo" data-src="./assets/video/himart_01.mp4" muted loop playsinline preload="none" aria-label="롯데하이마트 영상"></video>
+    <video class="hm-video-media" id="hmHeroVideo" src="./assets/video/himart_01.mp4" autoplay muted loop playsinline preload="metadata" aria-label="롯데하이마트 영상"></video>
     <div class="hm-video-overlay-base" aria-hidden="true"></div>
     <div class="hm-video-overlay-gradient" aria-hidden="true"></div>
     <div class="hm-video-overlay-scroll" aria-hidden="true"></div>
@@ -7287,16 +7287,7 @@ body.himart-video-test-page #live-main{opacity:1!important;visibility:visible!im
 })();
 
 /* Isolated rollback loader: affects only the 03 journey treatment. */
-(() => {
-  'use strict';
-  const css=document.createElement('link');
-  css.rel='stylesheet';
-  css.href='./himart-wide-refine-v10.css?v=9013c72';
-  document.head.appendChild(css);
-  const script=document.createElement('script');
-  script.src='./himart-wide-refine-v10.js?v=8850f1d';
-  document.body.appendChild(script);
-})();
+/* nested wide-refine loader removed: bundled runtime is used */
 
 ;
 /* bundled: himart-wide-refine-v12.js */
@@ -8546,9 +8537,7 @@ if('MutationObserver' in window){
   addEventListener('scroll',()=>requestAnimationFrame(update),{passive:true});
   update();
 
-  const flowScript=document.createElement('script');
-  flowScript.src='./himart-flow-line-sync-v1.js?v=ca60638';
-  document.body.appendChild(flowScript);
+  /* nested flow loader removed */
 })();
 </script>
 <script id="himart-inline-latest-js">
@@ -8762,21 +8751,6 @@ observer.observe(document.documentElement,{childList:true,subtree:true});
 let ticks=0;
 const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clearInterval(timer);observer.disconnect()}},250);
 addEventListener('load',apply,{once:true});
-})();
-</script>
-<script id="himart-deferred-video">
-(()=>{
-  const startVideo=()=>{
-    const video=document.getElementById('hmHeroVideo');
-    if(!video||video.src)return;
-    video.src=video.dataset.src;
-    video.play().catch(()=>{});
-  };
-  if(document.readyState==='complete'){
-    setTimeout(startVideo,0);
-  }else{
-    addEventListener('load',()=>setTimeout(startVideo,0),{once:true});
-  }
 })();
 </script>
 </body>
