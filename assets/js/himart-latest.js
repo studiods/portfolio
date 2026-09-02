@@ -66,7 +66,14 @@ function rewriteFirstTitle(){
 function prepareMotion(){
   if(!main)return;
   rewriteFirstTitle();
-  main.querySelectorAll('.hm-subno,.narrative-subno,.hm-card-no,.data-card-head .hm-card-no').forEach(el=>observe(el,'latest-scramble'));
+  // Keep numbering static. Random reveal belongs to the title text beneath it.
+  const titles=[
+    '.hm-section-title','.narrative-title','.hm-subtitle','.data-card-head h3',
+    '.forced-redesign-title','.data-bridge-title','.principle-item h4',
+    '.design-rule h4','.problem-item h4','.proof-item h4','.signal-item h4',
+    '.direction-card h4','.conclusion-card h5','.voice-group-title'
+  ];
+  main.querySelectorAll(titles.join(',')).forEach(el=>observe(el,'latest-scramble'));
   const content=[
     '.hm-section-desc','.hm-subcopy','.narrative-copy','.hm-source',
     '.problem-item','.proof-item','.signal-item','.principle-item',
