@@ -11,11 +11,11 @@
 <script>
 (()=>{'use strict';
 const sources={
- page:'./himart.html?v=20260902-final-copy',
- hero:'./assets/html/himart-video-test-hero.html?v=20260902-final-copy',
- css:'./assets/css/himart-video-test.css?v=20260902-final-copy',
- latest:'./assets/css/himart-latest.css?v=20260902-final-copy',
- js:'./assets/js/himart-latest.js?v=20260902-final-copy'
+ page:'./himart.html?v=8798394',
+ hero:'./assets/html/himart-video-test-hero.html?v=8798394',
+ css:'./assets/css/himart-video-test.css?v=8798394',
+ latest:'./assets/css/himart-latest.css?v=8798394',
+ js:'./assets/js/himart-latest.js?v=8798394'
 };
 const get=url=>{const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);return fetch(url,{cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.text():Promise.reject(new Error('load failed: '+url))).finally(()=>clearTimeout(timeout));};
 Promise.all([get(sources.page),get(sources.hero)]).then(([page,hero])=>{
