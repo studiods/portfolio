@@ -108,9 +108,12 @@ addEventListener('load',apply,{once:true});
   const finalPatchScript=finalPatch;
   const originalScripts=[...doc.body.querySelectorAll('script')].filter(node=>node!==finalPatchScript);
   const inertNodes=[...doc.body.childNodes].filter(node=>!originalScripts.includes(node)&&node!==finalPatchScript);
+  const bodyAttributes=[...doc.body.attributes].map(attribute=>[attribute.name,attribute.value]);
 
   document.head.innerHTML=doc.head.innerHTML;
   document.body.replaceChildren(...inertNodes);
+  document.body.getAttributeNames().forEach(name=>document.body.removeAttribute(name));
+  bodyAttributes.forEach(([name,value])=>document.body.setAttribute(name,value));
 
   const forceReady=()=>{
     document.body.classList.remove('himart-v18-loading','himart-narrative-loading');
