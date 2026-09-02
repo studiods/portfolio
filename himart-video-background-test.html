@@ -12,12 +12,12 @@
 /* Video hero test layer: the original himart.html content remains unchanged. */
 html,body{width:100%!important;max-width:100%!important;overflow-x:clip!important;background:#000!important}
 body.himart-video-background-test-page #live-main{position:relative!important;width:100%!important;max-width:100%!important;overflow:visible!important;background:#000!important}
-body.himart-video-background-test-page .hm-video-stage{position:absolute;inset:0 0 auto;width:100%;height:200vh;min-height:200vh;z-index:0;pointer-events:none}
+body.himart-video-background-test-page .hm-video-stage{position:absolute;inset:0 0 auto;width:100%;height:200vh;min-height:200vh;z-index:100!important;pointer-events:none}
 body.himart-video-background-test-page .hm-video-fixed{position:fixed;inset:0;width:100%;height:100vh;min-height:100vh;z-index:1;overflow:hidden;background:#000;pointer-events:none}
 body.himart-video-background-test-page .hm-video-media{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;background:#000}
 body.himart-video-background-test-page .hm-video-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:2}
 body.himart-video-background-test-page .hm-video-overlay-scroll{position:absolute;inset:0;background:#000;opacity:var(--hm-video-blackout,0);z-index:6;will-change:opacity}
-body.himart-video-background-test-page .hm-hero{position:relative!important;z-index:5!important;height:200vh!important;min-height:200vh!important;margin:0!important;padding:0!important;background:transparent!important;pointer-events:none!important}
+body.himart-video-background-test-page .hm-hero{position:relative!important;z-index:101!important;height:200vh!important;min-height:200vh!important;margin:0!important;padding:0!important;background:transparent!important;pointer-events:none!important}
 html body.himart-video-background-test-page.himart-wide-test-page.himart-prod-v16 .hm-hero{background:transparent!important}
 body.himart-video-background-test-page .hm-hero>.hm-wrap{position:fixed!important;inset:0!important;width:100%!important;max-width:none!important;height:100vh!important;min-height:100vh!important;margin:0!important;padding:0 12px 24px!important;z-index:5!important;display:block!important;background:transparent!important;pointer-events:none!important}
 body.himart-video-background-test-page .hm-hero>.hm-wrap>div:first-child{position:absolute;top:clamp(92px,11vh,128px);left:12px;right:12px}
@@ -29,8 +29,10 @@ body.himart-video-background-test-page .hm-video-meta{position:relative!importan
 body.himart-video-background-test-page .hm-video-meta>div{min-width:0!important;min-height:0!important;margin:0!important;padding:0 18px 0 0!important;border:0!important}
 body.himart-video-background-test-page .hm-video-meta span{display:block!important;margin:0 0 10px!important;color:rgba(255,255,255,.42)!important;font-size:10px!important}
 body.himart-video-background-test-page .hm-video-meta b{display:block!important;color:rgba(255,255,255,.82)!important;font-size:11px!important;line-height:1.45!important;white-space:normal!important}
-body.himart-video-background-test-page #brand{position:relative!important;z-index:10!important;display:block!important;visibility:visible!important;opacity:1!important;min-height:100vh!important;margin-top:-100vh!important;background:#000!important}
-body.himart-video-background-test-page #data,body.himart-video-background-test-page #journey,body.himart-video-background-test-page #direction{position:relative!important;z-index:10!important;background:#000!important}
+body.himart-video-background-test-page #brand{position:relative!important;z-index:102!important;display:block!important;visibility:visible!important;opacity:1!important;min-height:100vh!important;margin-top:-100vh!important;background:#000!important}
+body.himart-video-background-test-page #data,body.himart-video-background-test-page #journey,body.himart-video-background-test-page #direction{position:relative!important;z-index:102!important;background:#000!important}
+html body.himart-video-background-test-page .top{z-index:110!important}
+html body.himart-video-background-test-page .hm-progress{z-index:111!important}
 body.himart-video-background-test-page #live-main{opacity:1!important;visibility:visible!important}
 @media(max-width:780px){
   body.himart-video-background-test-page .hm-hero>.hm-wrap{padding:0 24px 28px!important}
