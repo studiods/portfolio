@@ -24,7 +24,7 @@ Promise.all([
  html=html.replace(/<body class="([^"]*)">/,(_,classes)=>'<body class="'+classes+' himart-video-test-page">');
  html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,hero);
  html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.override+'"></head>');
- html=html.replace('</body>','<script src="'+sources.js+'"><\\/script></body>');
+ html=html.replace('</body>','<script src="'+sources.js+'"><'+'/script></body>');
  document.open();document.write(html);document.close();
 }).catch(error=>{console.error(error);document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';});
 })();
