@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HIMART Video Simple Test</title>
+<link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260901-1">
+<style>
+.video-hero{
+ position:relative;
+ width:100%;
+ height:100vh;
+ overflow:hidden;
+ background:#000;
+}
+.video-hero video{
+ position:absolute;
+ inset:0;
+ width:100%;
+ height:100%;
+ object-fit:cover;
+}
+.video-overlay{
+ position:relative;
+ z-index:2;
+ height:100%;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:#fff;
+ background:rgba(0,0,0,.35);
+}
+.video-content{
+ max-width:1200px;
+ padding:40px;
+}
+.video-content h1{
+ font-size:clamp(40px,5vw,72px);
+ font-weight:300;
+ line-height:1.2;
+}
+.video-content p{
+ font-size:20px;
+ line-height:1.8;
+ opacity:.8;
+}
+.test-section{
+ min-height:100vh;
+ padding:120px 8%;
+ background:#fff;
+ color:#000;
+}
+</style>
+</head>
+<body>
+<nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./works.html">Works</a></div></nav>
+<main>
+<header class="video-hero">
+<video autoplay muted loop playsinline>
+<source src="./himart-video-test.mp4" type="video/mp4">
+</video>
+<div class="video-overlay">
+<div class="video-content">
+<div>LOTTE HIMART / COMMERCE JOURNEY</div>
+<h1>하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1>
+<p>영상은 배경 레이어로만 동작하고 콘텐츠 흐름에는 영향을 주지 않는 단순 구조 테스트입니다.</p>
+</div>
+</div>
+</header>
+<section class="test-section">
+<h2>01. 브랜드 경험 분석</h2>
+<p>Hero 이후 콘텐츠가 정상적으로 이어지는지 확인하기 위한 테스트 영역입니다.</p>
+</section>
+</main>
+</body>
+</html>
