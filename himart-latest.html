@@ -6413,6 +6413,15 @@ body.himart-video-test-page .hm-video-copy .hm-lead{
 <style id="himart-latest-critical-open">
 body.himart-video-test-page #live-main{opacity:1!important;visibility:visible!important}
 </style>
+<style id="himart-latest-content-fallback">
+body.himart-video-test-page.hm-force-content-visible #live-main .hm-section,
+body.himart-video-test-page.hm-force-content-visible #live-main .hm-reveal,
+body.himart-video-test-page.hm-force-content-visible #live-main .latest-rise,
+body.himart-video-test-page.hm-force-content-visible #live-main .latest-scramble,
+body.himart-video-test-page.hm-force-content-visible #live-main .wide-rise-target{
+  opacity:1!important;visibility:visible!important;transform:none!important;
+}
+</style>
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-ready himart-narrative-ready himart-video-test-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -8752,6 +8761,9 @@ let ticks=0;
 const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clearInterval(timer);observer.disconnect()}},250);
 addEventListener('load',apply,{once:true});
 })();
+</script>
+<script id="himart-content-fallback">
+setTimeout(function(){document.body.classList.add('hm-force-content-visible')},1800);
 </script>
 </body>
 </html>
