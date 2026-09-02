@@ -122,10 +122,10 @@ function updateHero(){
 }
 
 let raf=0;
-const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;updateHero();prepareMotion();});};
+const requestUpdate=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;applyLatestCopy();updateHero();prepareMotion();});};
 addEventListener('scroll',requestUpdate,{passive:true});
 addEventListener('resize',requestUpdate,{passive:true});
-if(main&&'MutationObserver'in window)new MutationObserver(requestUpdate).observe(main,{childList:true,subtree:true});
+if(main&&'MutationObserver'in window)new MutationObserver(()=>{applyLatestCopy();requestUpdate();}).observe(main,{childList:true,subtree:true});
 if(video){video.muted=true;video.loop=true;video.playsInline=true;video.play().catch(()=>{});}
 applyLatestCopy();prepareMotion();updateHero();
 })();
