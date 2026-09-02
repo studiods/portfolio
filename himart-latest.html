@@ -49,6 +49,8 @@ function apply(){
   const lead=document.querySelector('.hm-video-copy .hm-lead,.hm-lead');
   if(lead){
     const value='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
+    lead.dataset.latestLeadRewritten='1';
+    lead.dataset.latestLeadApplied='1';
     changed=setHTML(lead,value)||changed;
     if(lead.style.getPropertyValue('color')!=='rgba(255, 255, 255, 0.8)'||lead.style.getPropertyPriority('color')!=='important'){lead.style.setProperty('color','rgba(255,255,255,.80)','important');changed=true}
   }
@@ -98,10 +100,8 @@ function apply(){
   stableCount=changed?0:stableCount+1;
 }
 apply();
-const observer=new MutationObserver(apply);
-observer.observe(document.documentElement,{childList:true,subtree:true});
 let ticks=0;
-const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clearInterval(timer);observer.disconnect()}},250);
+const timer=setInterval(()=>{apply();ticks++;if(ticks>=16)clearInterval(timer)},250);
 addEventListener('load',apply,{once:true});
 })();`;
   doc.body.append(finalPatch);
