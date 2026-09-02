@@ -165,7 +165,6 @@ let ticks=0;
 const timer=setInterval(()=>{apply();ticks++;if(ticks>=40&&stableCount>=8){clearInterval(timer);observer.disconnect()}},250);
 addEventListener('load',apply,{once:true});
 })();
-})();
 </script>
 </body>
 </html>
