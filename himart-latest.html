@@ -11,35 +11,64 @@
 <script>
 (()=>{'use strict';
 const sources={
- page:'./himart.html?v=20260901-latest',
- hero:'./assets/html/himart-video-test-hero.html',
- css:'./assets/css/himart-video-test.css',
- latest:'./assets/css/himart-latest.css?v=7f9abd3-static',
- js:'./assets/js/himart-latest.js?v=69442e8-static'
+ page:'./himart.html?v=20260902-latest-direct',
+ hero:'./assets/html/himart-video-test-hero.html?v=20260902',
+ css:'./assets/css/himart-video-test.css?v=20260902',
+ latest:'./assets/css/himart-latest.css?v=20260902',
+ js:'./assets/js/himart-latest.js?v=20260902'
 };
-Promise.all([
- fetch(sources.page,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('himart load failed'))),
- fetch(sources.hero,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('hero load failed')))
-]).then(([html,hero])=>{
- html=html.replace(/<body class="([^"]*)">/,(_,classes)=>'<body class="'+classes+' himart-video-test-page">');
- html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,hero);
- html=html.replace('화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을<br>확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.','화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을<br>확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.');
- html=html.replace('style="color:rgba(255,255,255,.70)"','style="color:rgba(255,255,255,.80)"');
- const roleMap=[
- ['탐색을 시작시키는 허브','홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.'],
- ['구매 목적을 구체화하는 화면','선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.'],
- ['니즈를 상품 후보로 바꾸는 도구','검색은 불확실성을<br>확신으로 바꿔줘야 한다.'],
- ['후보를 빠르게 압축하는 비교 화면','검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.'],
- ['구매 확신을 완료하는 곳','상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.'],
- ['최종 조건을 확인하고 확정하는 화면','장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.'],
- ['관리 관계가 시작되는 화면','설치 조율에서는 결제 이후의<br>불안을 일정 확정으로 바꿔야 한다.']
- ];
- roleMap.forEach(([from,to])=>{html=html.replace('<h4>'+from+'</h4>','<h4>'+to+'</h4>');});
- html=html.replace('관리 관계가 시작되는 화면</h4><p>설치 일정, 폐가전 회수, 보증, A/S와 케어 상태를 하나의 흐름으로 연결해 구매 이후에도 관리가 이어지도록 합니다.','마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.</h4><p>설치 일정과 사후관리 상태를 한 흐름으로 연결해 구매 이후에도 안심할 수 있도록 합니다.');
+const get=(url)=>fetch(url,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('load failed: '+url)));
+Promise.all([get(sources.page),get(sources.hero)]).then(([page,hero])=>{
+  const doc=new DOMParser().parseFromString(page,'text/html');
+  const heroDoc=new DOMParser().parseFromString(hero,'text/html');
+  const oldBody=doc.body;
+  oldBody.classList.add('himart-video-test-page');
+  const oldHero=doc.querySelector('header.hm-hero');
+  const newHero=heroDoc.querySelector('header.hm-hero');
+  if(oldHero&&newHero) oldHero.replaceWith(doc.importNode(newHero,true));
 
- html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.latest+'"></head>');
- html=html.replace('</body>','<script src="'+sources.js+'"><'+'/script></body>');
- document.open();document.write(html);document.close();
+  const lead=doc.querySelector('.hm-lead');
+  if(lead){lead.style.color='rgba(255,255,255,.80)';lead.innerHTML='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을<br>확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.'}
+
+  const synthesis=Array.from(doc.querySelectorAll('.synthesis-list')).find(el=>el.textContent.includes('이미 가지고 있던 강점'));
+  if(synthesis){
+    const cols=synthesis.querySelectorAll('.synthesis-col');
+    if(cols[0]){const label=cols[0].querySelector('b');if(label){label.style.fontFamily='Pretendard, sans-serif';label.style.fontSize='16px';label.style.fontWeight='300'}const p=cols[0].querySelector('p');if(p){p.style.fontSize='28px';p.style.opacity='.80';p.innerHTML='멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 복제하기 어려운 오프라인 자산이 있었습니다.'}}
+    if(cols[1]){const label=cols[1].querySelector('b');if(label){label.style.fontFamily='Pretendard, sans-serif';label.style.fontSize='16px';label.style.fontWeight='300'}const p=cols[1].querySelector('p');if(p){p.style.fontSize='16px';p.style.fontWeight='300';p.innerHTML='온라인에서는 인지부터 구매·설치·케어까지 이어지는 연결이 약했습니다.'}}
+    const h=synthesis.querySelector('h4');if(h)h.innerHTML='결국 문제는 <strong>인지가 아니라<br>전환 접점</strong>에 있었습니다.';
+  }
+
+  const subcopy=Array.from(doc.querySelectorAll('.hm-subcopy')).find(el=>el.textContent.includes('홈부터 결제까지'));
+  if(subcopy)subcopy.textContent='홈부터 결제까지 각 단계가 앞선 맥락을 다음 판단으로 넘기도록 역할을 정의했습니다.';
+
+  const roleGrid=doc.querySelector('#direction .role-grid')||doc.querySelector('.role-grid');
+  if(roleGrid){
+    const roles=[
+      ['HOME','홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.','최근 맥락을 기억해 다음 목적지로 연결합니다.'],
+      ['SUBHOME / CATEGORY','선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.','사용 상황과 목적 중심으로 탐색을 안내합니다.'],
+      ['SEARCH','검색은 불확실성을<br>확신으로 바꿔줘야 한다.','가이드와 필터로 요구를 상품 후보로 구체화합니다.'],
+      ['SRP / PLP','검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.','핵심 가격·혜택·스펙을 같은 기준으로 비교합니다.'],
+      ['PDP','상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.','가격·리뷰·설치·상담 정보를 한 흐름으로 판단합니다.'],
+      ['CART / PAY','장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.','총액과 혜택, 배송·설치 조건을 확정합니다.'],
+      ['INSTALL / CARE','설치 조율에서는 결제 이후의<br>불안을 일정 확정으로 바꿔야 한다.','설치 일정과 사후관리 상태를 연결합니다.'],
+      ['MY PAGE','마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.','구매 이후 보증·A/S·케어 상태를 이어갑니다.'],
+      ['STORE · ONLINE','매장과 온라인은 같은 맥락으로<br>상담과 구매를 이어줘야 한다.','매장 상담과 온라인 구매 정보를 한 흐름으로 연결합니다.']
+    ];
+    roleGrid.innerHTML='';
+    roles.forEach(([label,title,body])=>{
+      const card=doc.createElement('article');card.className='role-card';
+      const name=doc.createElement('span');name.className='hm-role-name';name.textContent=label;name.style.fontFamily='Averta, sans-serif';name.style.fontWeight='400';
+      const h=doc.createElement('h4');h.innerHTML=title;
+      const p=doc.createElement('p');p.textContent=body;
+      card.append(name,h,p);roleGrid.append(card);
+    });
+  }
+
+  doc.querySelectorAll('link[rel="stylesheet"]').forEach(link=>{if(link.href.includes('himart-latest.css')||link.href.includes('himart-video-test.css'))link.remove()});
+  const css=doc.createElement('link');css.rel='stylesheet';css.href=sources.css;doc.head.append(css);
+  const latest=doc.createElement('link');latest.rel='stylesheet';latest.href=sources.latest;doc.head.append(latest);
+  const js=doc.createElement('script');js.src=sources.js;doc.body.append(js);
+  document.open();document.write('<!doctype html>'+doc.documentElement.outerHTML);document.close();
 }).catch(error=>{console.error(error);document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';});
 })();
 </script>
