@@ -9,29 +9,32 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260901-1">
 <style>
-/* Clean video test layer. The original himart.html markup remains intact. */
-html,body{background:transparent!important}
-body.himart-background-final-test #live-main,body.himart-background-final-test .hm-hero,body.himart-background-final-test .hm-section,body.himart-background-final-test .hm-footer{background:transparent!important}
-html body.himart-background-final-test.himart-wide-test-page #live-main,html body.himart-background-final-test.himart-wide-test-page #brand,html body.himart-background-final-test.himart-wide-test-page #data,html body.himart-background-final-test.himart-wide-test-page #journey,html body.himart-background-final-test.himart-wide-test-page #direction{background:transparent!important}
-html body.himart-background-final-test.himart-wide-test-page #live-main>header,html body.himart-background-final-test.himart-wide-test-page #live-main>section,html body.himart-background-final-test.himart-wide-test-page #live-main>footer,html body.himart-background-final-test.himart-wide-test-page #live-main>header>.hm-wrap,html body.himart-background-final-test.himart-wide-test-page #live-main>section>.hm-wrap,html body.himart-background-final-test.himart-wide-test-page #live-main>footer>.hm-wrap{background:transparent!important}
-.reset-v2-video,.reset-v2-matte{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
-.reset-v2-video{z-index:0;object-fit:cover;background:#000}
-.reset-v2-matte{z-index:1;background:#000;opacity:.5;will-change:opacity}
-body.himart-background-final-test>nav,body.himart-background-final-test>#live-main{position:relative;z-index:2}
-body.himart-background-final-test #live-main{opacity:1!important;visibility:visible!important}
-body.himart-background-final-test .hm-reveal{opacity:1!important;transform:none!important}
-body.himart-background-final-test .hm-reveal.is-reset-visible{animation:reset-final-rise .85s cubic-bezier(.2,.7,.2,1) both}
-@keyframes reset-final-rise{from{opacity:0;transform:translateY(64px)}to{opacity:1;transform:none}}
-body.himart-background-final-test .hm-lead{opacity:.8!important}
-@media(prefers-reduced-motion:reduce){body.himart-background-final-test .hm-reveal{opacity:1!important;transform:none!important;animation:none!important}.reset-v2-matte{opacity:.5!important}}
+html{background:#000!important}
+body.hm-video-current{--hm-video-matte:.5;background:#000!important}
+.hm-video-current .hm-video-stage{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:#000}
+.hm-video-current .hm-video-stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:1}
+.hm-video-current .hm-video-matte{position:absolute;inset:0;z-index:1;background:#000;opacity:var(--hm-video-matte);will-change:opacity}
+html body.hm-video-current>nav,html body.hm-video-current>#live-main{position:relative!important;z-index:2!important}
+html body.hm-video-current.himart-wide-test-page #live-main,
+html body.hm-video-current.himart-wide-test-page #live-main>header,
+html body.hm-video-current.himart-wide-test-page #live-main>section,
+html body.hm-video-current.himart-wide-test-page #live-main>footer,
+html body.hm-video-current.himart-wide-test-page :is(#brand,#data,#journey,#direction),
+html body.hm-video-current.himart-wide-test-page :is(#brand,#data,#journey,#direction)>.hm-wrap{
+  background:transparent!important
+}
+html body.hm-video-current .hm-kicker{display:none!important}
+html body.hm-video-current .hm-lead{opacity:.8!important}
 </style>
 </head>
-<body class="himart-page-body himart-test-page himart-wide-test-page himart-background-final-test">
-<video class="reset-v2-video" id="reset-v2-video" autoplay muted loop playsinline preload="auto" aria-hidden="true"><source src="./assets/video/himart_01.mp4" type="video/mp4"></video>
-<div class="reset-v2-matte" id="reset-v2-matte" aria-hidden="true"></div>
+<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-video-current">
+<div class="hm-video-stage" aria-hidden="true">
+  <video id="hm-current-video" autoplay muted loop playsinline preload="auto"><source src="./assets/video/himart_01.mp4" type="video/mp4"></video>
+  <div class="hm-video-matte"></div>
+</div>
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
 <main id="live-main">
-<header class="hm-hero" id="top"><div class="hm-wrap"><div><h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1></div><div class="hm-hero-bottom"><p class="hm-lead">하이마트 온라인 전체 개편을 단순한 화면 개선으로 시작하지 않았습니다. 고객이 하이마트를 어떻게 인식하는지, 실제로 어디서 들어와 무엇을 찾고 어디에서 멈추는지부터 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p><div class="hm-meta"><div><span>ROLE</span><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div><div><span>FOCUS</span><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div><div><span>SCOPE</span><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div><div><span>TEAM</span><b>UX DESIGN · PO · BUSINESS</b></div></div></div></div></header>
+<header class="hm-hero" id="top"><div class="hm-wrap"><div><div class="hm-kicker">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div><h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1></div><div class="hm-hero-bottom"><p class="hm-lead">하이마트 온라인 전체 개편을 단순한 화면 개선으로 시작하지 않았습니다. 고객이 하이마트를 어떻게 인식하는지, 실제로 어디서 들어와 무엇을 찾고 어디에서 멈추는지부터 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p><div class="hm-meta"><div><span>ROLE</span><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div><div><span>FOCUS</span><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div><div><span>SCOPE</span><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div><div><span>TEAM</span><b>UX DESIGN · PO · BUSINESS</b></div></div></div></div></header>
 <nav class="hm-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
 
 <section class="hm-section" id="brand" data-chapter="01"><div class="hm-wrap">
@@ -80,29 +83,60 @@ body.himart-background-final-test .hm-lead{opacity:.8!important}
 <footer class="hm-footer" id="contact"><div class="hm-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart-reuse.html">중고 가전의 신뢰 기준 만들기 →</a></div></div></footer>
 </main>
 <script>
+(async()=>{
+'use strict';
+const main=document.getElementById('live-main');
+const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const loadScript=src=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.body.appendChild(s)});
+const textNodesFor=(el)=>{const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.nodeValue&&node.nodeValue.trim().length?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});const nodes=[];let node;while((node=walker.nextNode()))nodes.push(node);return nodes};
+const scrambleLargeTitle=(el)=>{if(!el||el.dataset.wideLargeScramblePlayed==='1')return;el.dataset.wideLargeScramblePlayed='1';if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const parts=textNodesFor(el).map(node=>({node,original:node.nodeValue}));const mutable=(ch)=>/[\p{L}\p{N}]/u.test(ch);const total=parts.reduce((sum,part)=>sum+[...part.original].filter(mutable).length,0);if(!total)return;const started=performance.now();const duration=Math.min(1450,650+total*13);const tick=(now)=>{const p=Math.min(1,(now-started)/duration),resolved=Math.floor(total*Math.pow(p,.72));let cursor=0;parts.forEach((part,pi)=>{part.node.nodeValue=[...part.original].map((ch,ci)=>{if(!mutable(ch))return ch;const idx=cursor++;if(idx<resolved||p>=1)return ch;return pool[(pi*29+ci*17+Math.floor(now/44))%pool.length]}).join('')});if(p<1)requestAnimationFrame(tick);else parts.forEach(part=>part.node.nodeValue=part.original)};requestAnimationFrame(tick)};
+const prepareWideMotion=()=>{main.querySelectorAll('.hm-section-no').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');main.querySelectorAll('.data-card-head .hm-card-no,.data-card-head h3,.hm-subhead .hm-subno,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .hm-card-no,.data-bridge > .data-bridge-title').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');main.querySelectorAll('.flow-label').forEach(el=>el.dataset.flowLabelScramblePlayed='1');const riseTargets=[...main.querySelectorAll('.data-card-head h3,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .data-bridge-title,.narrative-title,.problem-item h4,.proof-item strong,.signal-item b,.principle-item h4,.design-rule h4')];riseTargets.forEach(el=>el.classList.add('wide-rise-target'));if(matchMedia('(prefers-reduced-motion: reduce)').matches){riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'))}else if('IntersectionObserver' in window){const rio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-wide-rise-in');rio.unobserve(entry.target)}}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});riseTargets.forEach(el=>rio.observe(el))}else riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));const hero=main.querySelector('.hm-title');if(hero){if('IntersectionObserver' in window){const hio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){scrambleLargeTitle(entry.target);hio.disconnect()}}),{threshold:.2});hio.observe(hero)}else scrambleLargeTitle(hero)}};
+const elFromHTML=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
+const wrapMore=(parent,nodes,label,meta='DETAILS')=>{const valid=nodes.filter(Boolean).filter(node=>node.parentElement===parent);if(!valid.length)return null;const details=document.createElement('details');details.className='hm-more';details.innerHTML=`<summary>${label}<span>${meta}</span></summary><div class="hm-more-body"></div>`;const body=details.querySelector('.hm-more-body');parent.insertBefore(details,valid[0]);valid.forEach(node=>body.appendChild(node));details.addEventListener('toggle',()=>{if(details.open){requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')))}});return details};
+const applyNarrativeTest=()=>{
+document.body.classList.add('himart-narrative-test');
+const brand=main.querySelector('#brand');const brandWrap=brand?.querySelector(':scope > .hm-wrap');const brandHead=brandWrap?.querySelector(':scope > .hm-section-head');
+if(brandHead){const title=brandHead.querySelector('.hm-section-title'),desc=brandHead.querySelector('.hm-section-desc');if(title)title.innerHTML='화면을 고치기 전에,<br>왜 고객이 온라인에서 하이마트를 선택하지 않는지부터 정의했습니다.';if(desc)desc.innerHTML='“온라인몰 개편”은 결과의 이름일 뿐 문제의 이름은 아니었습니다. <strong>고객이 하이마트를 어떻게 인식하는지</strong>와 <strong>실제로 어떻게 사용하는지</strong>를 따로 확인한 뒤, 두 결과가 같은 방향을 가리키는 지점만 설계의 근거로 삼았습니다.';
+const problem=elFromHTML(`<div class="narrative-block hm-reveal narrative-problem"><span class="narrative-subno">01.1 / PROBLEM DEFINITION</span><h3 class="narrative-title">“개편해 주세요”라는 요청으로는<br>무엇을 바꿔야 하는지 알 수 없었습니다.</h3><p class="narrative-copy">그래서 먼저 두 가지를 분리해 봤습니다. 하나는 <strong>고객의 머릿속</strong>, 다른 하나는 <strong>고객의 손</strong>입니다. 말과 행동을 각각 끝까지 본 뒤, 겹치는 부분만 남겼습니다.</p><div class="problem-grid"><article class="problem-item"><small>01 / PERCEPTION</small><h4>고객에게 하이마트는<br>어떤 곳일까?</h4><p>가전을 살 때 하이마트를 떠올리는지, 떠올린다면 매장인지 온라인인지, 어떤 기대를 가지고 찾는지부터 확인했습니다.</p></article><article class="problem-item"><small>02 / BEHAVIOR</small><h4>온라인에서는<br>실제로 뭘 하고 있을까?</h4><p>어디에서 들어와 무엇을 보고, 어디서 다음 행동이 끊기는지 2025.01—2026.06 이용 데이터를 따라갔습니다.</p></article><article class="problem-item"><small>03 / OVERLAP</small><h4>말과 행동이<br>겹치는 지점만 남겼습니다.</h4><p>경쟁사 화면을 먼저 보거나 결론을 정해두지 않고, 고객 조사와 행동 데이터가 동시에 지지하는 문제를 우선순위로 삼았습니다.</p></article></div></div>`);brandHead.insertAdjacentElement('afterend',problem);
+const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-reality"><span class="narrative-subno">01.2 / BRAND REALITY</span><h3 class="narrative-title">하이마트는 약한 브랜드가 아니었습니다.<br>강한 전문성이 온라인 경험으로 이어지지 않는 것이 문제였습니다.</h3><p class="narrative-copy">2026년 소비자 조사에서는 하이마트가 여전히 <strong>‘가전 살 곳’ 최초 상기 1위</strong>였고, 멀티 브랜드 비교와 직영 서비스 품질도 강점으로 확인됐습니다. 반면 인지와 실제 경험, 구매·예약 편의성, 반복 관계 사이에는 큰 간극이 있었습니다.</p><div class="proof-grid"><article class="proof-item"><span class="proof-label">TOP OF MIND</span><strong>32.6<span>%</span></strong><span class="proof-compare">2위 쿠팡 13.1%</span><h4>‘가전 살 곳’ 최초 상기 1위</h4><p>브랜드 인지 자체가 약한 것이 아니라, 이미 강한 인지를 실제 온라인 경험으로 전환하지 못하는 쪽에 가까웠습니다.</p></article><article class="proof-item"><span class="proof-label">CARE EXPERIENCE GAP</span><strong>54.7<span>%p</span></strong><span class="proof-compare">인지 72.3% → 경험 17.6%</span><h4>알지만 써보지 않은 서비스</h4><p>서비스를 알고 있는 고객이 실제 이용 경험으로 넘어가는 지점에서 큰 병목이 확인됐습니다.</p></article><article class="proof-item"><span class="proof-label">SERVICE CHANNEL PREFERENCE</span><strong>52.9<span>%</span></strong><span class="proof-compare">제조사 52.9% · 하이마트 12.6%</span><h4>품질 신뢰가 최종 선택으로 이어지지 않음</h4><p>하이마트 서비스 품질 평가는 긍정적이지만 실제 선택 단계에서는 제조사 선호가 더 강했습니다.</p></article><article class="proof-item"><span class="proof-label">5Y CUSTOMER PATH</span><strong>76.7<span>%</span></strong><span class="proof-compare">지난 5개년 구매 고객</span><h4>한 번 구매하고 관계가 끝남</h4><p>가전 구매의 저빈도 특성과 구매 후 접점 부족이 겹치며 반복 관계로 이어지는 구조가 약했습니다.</p></article></div><div class="brand-synthesis"><h4>결국 문제는 <strong>인지가 아니라<br>전환 접점</strong>에 있었습니다.</h4><div class="synthesis-list"><div class="synthesis-col"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 경쟁사가 쉽게 복제하기 어려운 오프라인 자산이 있었습니다.</p></div><div class="synthesis-col"><b>온라인에서 끊기던 지점</b><p>인지 → 실제 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록 편의성과 연결성이 약해졌습니다.</p></div></div></div><div class="hm-source">SOURCE · Deloitte Consulting Korea, 평생Care서비스 멤버십 설계 소비자 조사 · 2026.07 / 조사 설계: CRM 770명, 일반 소비자 900명(현재·휴면·잠재 각 300명) + 정성 조사</div></div>`);problem.insertAdjacentElement('afterend',reality);const originals=[...brandWrap.children].filter(node=>node.classList?.contains('hm-subsection')&&!node.classList.contains('narrative-block'));wrapMore(brandWrap,originals,'고객 의견과 기존 정성 분석 더 보기','QUALITATIVE RESEARCH')}
+const data=main.querySelector('#data');const dataWrap=data?.querySelector(':scope > .hm-wrap');const dataHead=dataWrap?.querySelector(':scope > .hm-section-head');if(dataHead){const title=dataHead.querySelector('.hm-section-title'),desc=dataHead.querySelector('.hm-section-desc');if(title)title.innerHTML='정성적으로 보였던 간극은<br>실제 이용 행동에서도 반복됐습니다.';if(desc)desc.innerHTML='고객의 말만으로 문제를 단정하지 않았습니다. 유입, 랜딩, 검색, 상품 상세, 장바구니, 결제까지 실제 행동을 따라가며 <strong>어디에서 다음 행동이 약해지는지</strong>를 확인했습니다.';const signal=elFromHTML(`<div class="narrative-block hm-reveal narrative-signals"><span class="narrative-subno">02.1 / BEHAVIOR SIGNALS</span><h3 class="narrative-title">숫자는 더 단순하게 말했습니다.<br>고객이 들어오는 것보다, 한 걸음 더 가게 만드는 힘이 약했습니다.</h3><div class="signal-grid"><article class="signal-item"><b>68<small>%</small></b><h4>외부 맥락을 가진 유입</h4><p>2026 H1 통합 기준 AD·CPS·CRM 비중. 하나의 ‘홈 시작’을 전제로 설계하기 어려웠습니다.</p><div class="signal-rule"><i style="--w:68%"></i></div></article><article class="signal-item"><b>52.2<small>%</small></b><h4>기획전 시작 후 바로 종료</h4><p>유입은 만들었지만 상품 후보나 다음 탐색으로 넘어가기 전에 흐름이 끝나는 비중이 가장 컸습니다.</p><div class="signal-rule"><i style="--w:52.2%"></i></div></article><article class="signal-item"><b>3.1<small>×</small></b><h4>결제 진입이 장바구니보다 많음</h4><p>2026년 1월 모바일에서 장바구니 24,237건보다 주문결제 진입 75,808건이 3배 이상 많았습니다.</p><div class="signal-rule"><i style="--w:78%"></i></div></article><article class="signal-item"><b>9.34<small>%</small></b><h4>세션 대비 검색 비중</h4><p>2025 H1 3.26%에서 2026 H1 9.34%로 증가. 검색은 보조 기능보다 구매 후보를 만드는 핵심 행동에 가까웠습니다.</p><div class="signal-rule"><i style="--w:62%"></i></div></article></div><div class="narrative-bridge"><p>조사는 “온라인몰이 잘 떠오르지 않는다”고 했고, 데이터는 “들어와도 한 걸음 더 가지 않는다”고 했습니다. 그래서 목표를 <strong>‘화면을 새로 만든다’가 아니라 ‘고객의 구매 여정 안에 자리를 만든다’</strong>로 다시 썼습니다.</p></div><div class="hm-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 / 하이마트 쇼핑몰 이용 현황 Mobile·PC 2026.01—06 / 온라인 백데이터 퍼널·검색</div></div>`);dataHead.insertAdjacentElement('afterend',signal);const dataNodes=[...dataWrap.children].filter(node=>node!==dataHead&&node!==signal&&!node.classList.contains('narrative-block')&&!node.classList.contains('hm-section-head'));wrapMore(dataWrap,dataNodes,'이용 데이터와 경로 분석 자세히 보기','QUANTITATIVE ANALYSIS')}
+const journey=main.querySelector('#journey');const journeyWrap=journey?.querySelector(':scope > .hm-wrap');const journeyHead=journeyWrap?.querySelector(':scope > .hm-section-head');if(journeyHead){const title=journeyHead.querySelector('.hm-section-title'),desc=journeyHead.querySelector('.hm-section-desc');if(title)title.innerHTML='그래서 화면보다 먼저,<br>여정을 설계하는 세 가지 원칙을 정했습니다.';if(desc)desc.innerHTML='자주 방문하지 않는 가전 쇼핑의 특성과 하이마트의 오프라인 자산을 함께 놓고, 이후 모든 화면 설계가 따라야 할 기준을 먼저 만들었습니다.';const principles=elFromHTML(`<div class="principle-grid hm-reveal"><article class="principle-item"><small>01 / FAMILIARITY</small><h4>익숙함이<br>먼저입니다.</h4><p>검색·필터·상품카드·결제처럼 시장 표준이 있는 곳은 새 문법을 만들지 않습니다. 몇 년 만에 다시 온 고객도 바로 쓸 수 있어야 합니다.</p></article><article class="principle-item"><small>02 / NEXT STEP</small><h4>두 번째 걸음을<br>만듭니다.</h4><p>머문 시간보다 다음 화면으로 넘어갔는지를 봅니다. 모든 화면이 다음 판단을 자연스럽게 이어주는 역할을 가져야 합니다.</p></article><article class="principle-item"><small>03 / OMNI</small><h4>매장과 사람을<br>잇습니다.</h4><p>실물을 보고 전문가에게 물어볼 수 있다는 강점을 온라인이 대체하지 않고, 필요할 때 자연스럽게 연결합니다.</p></article></div>`);journeyHead.insertAdjacentElement('afterend',principles);const roleSections=[...journeyWrap.querySelectorAll(':scope > .hm-subsection')];if(roleSections.length)wrapMore(journeyWrap,roleSections,'여정별 역할 정의 자세히 보기','ROLE DEFINITION')}
+const direction=main.querySelector('#direction');const directionWrap=direction?.querySelector(':scope > .hm-wrap');const directionHead=directionWrap?.querySelector(':scope > .hm-section-head');if(directionHead){const desc=directionHead.querySelector('.hm-section-desc');if(desc)desc.innerHTML='정의한 원칙을 실제 화면과 인터랙션으로 빠르게 옮기고 내부 검증을 반복했습니다. <strong>새로움은 탐색·결제의 기본 문법이 아니라 하이마트만의 강점을 보여주는 지점에 사용했습니다.</strong>';const rule=elFromHTML(`<div class="design-rule hm-reveal"><article><small>STANDARD UX</small><h4>익숙함은 만들지 않고<br>빌려옵니다.</h4><p>검색창 위치, 필터 동작, 상품 카드의 정보 순서, 결제 단계처럼 이미 학습된 패턴은 네이버·쿠팡 등 시장 표준을 따릅니다.</p></article><article><small>HIMART DIFFERENCE</small><h4>새로움은 하이마트만<br>할 수 있는 곳에 씁니다.</h4><p>매장 재고·실물 확인, 전문가 상담, 설치 가능일, 폐가전 회수, 보증·A/S·Care처럼 온라인 전용몰이 복제하기 어려운 강점을 판단 순간에 연결합니다.</p></article></div>`);directionHead.insertAdjacentElement('afterend',rule);const caseList=directionWrap.querySelector('.prototype-case-list');if(caseList){const cases=[...caseList.querySelectorAll(':scope > .prototype-case')];if(cases.length>1){const more=wrapMore(caseList,cases.slice(1),'나머지 프로토타입 적용 사례 더 보기',`${cases.length-1} MORE CASES`);if(more)more.style.marginTop='54px'}}else{const gallery=directionWrap.querySelector('.phone-gallery');const rows=gallery?[...gallery.children]:[];if(gallery&&rows.length>1){const more=wrapMore(gallery,rows.slice(1),'나머지 프로토타입 적용 사례 더 보기',`${rows.length-1} MORE CASES`);if(more)more.style.marginTop='54px'}}}
+document.querySelectorAll('details.hm-more').forEach(d=>d.open=false)};
+try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');applyNarrativeTest();prepareWideMotion();document.body.classList.remove('himart-narrative-loading');document.body.classList.add('himart-narrative-ready');await loadScript('./himart-live-boot.js?v=9f74114')}catch(err){document.body.classList.remove('himart-v18-loading','himart-narrative-loading');document.body.classList.add('himart-v18-ready','himart-narrative-ready');main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';console.error(err)}})();
+</script>
+<script src="./himart-narrative-v2-production-runtime.js?v=20260901-1"></script>
+<script>
 (()=>{
-  const video=document.getElementById('reset-v2-video');
-  const matte=document.getElementById('reset-v2-matte');
-  const targets=[...document.querySelectorAll('.hm-reveal')];
-  const scrambleTargets=[...document.querySelectorAll('.hm-title,.hm-section-title,.hm-subtitle,.hm-section-no,.hm-subno')];
-  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const mutable=c=>/[\p{L}\p{N}]/u.test(c);
-  const scramble=el=>{
-    if(reduced||el.dataset.resetV2Scramble)return;
-    el.dataset.resetV2Scramble='1';const original=el.textContent,source=[...original],total=source.filter(mutable).length,start=performance.now(),duration=Math.min(1800,760+total*11);
-    const frame=now=>{const p=Math.min(1,(now-start)/duration),done=Math.floor(total*Math.pow(p,.7));let i=0;el.textContent=source.map(c=>mutable(c)?(i++<done?c:chars[(i*19+Math.floor(now/45))%chars.length]):c).join('');if(p<1)requestAnimationFrame(frame);else el.textContent=original};
-    requestAnimationFrame(frame);
-  };
-  const show=el=>{el.classList.add('is-reset-visible');if(scrambleTargets.includes(el))scramble(el)};
-  video.play().catch(()=>{});video.addEventListener('canplay',()=>video.play().catch(()=>{}),{once:true});
+  'use strict';
+  const video=document.getElementById('hm-current-video');
+  const clamp=value=>Math.max(0,Math.min(1,value));
   let ticking=false;
-  const update=()=>{ticking=false;const p=Math.max(0,Math.min(1,scrollY/Math.max(1,innerHeight)));const fast=1-Math.exp(-7.5*Math.min(1,p/.34));const slow=p<=.34?0:1-Math.exp(-1.45*Math.min(1,(p-.34)/.66));matte.style.opacity=(.92*fast+.08*slow).toFixed(4)};
-  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update,{passive:true});update();
-  if(reduced||!('IntersectionObserver' in window)){targets.forEach(show);scrambleTargets.forEach(show)}else{
-    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){show(e.target);io.unobserve(e.target)}}),{threshold:.14,rootMargin:'0px 0px -8% 0px'});targets.forEach(e=>io.observe(e));
-    const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){show(e.target);so.unobserve(e.target)}}),{threshold:.3,rootMargin:'0px 0px -10% 0px'});scrambleTargets.forEach(e=>so.observe(e));
-  }
+  const syncMatte=()=>{
+    ticking=false;
+    const p=clamp(window.scrollY/Math.max(1,window.innerHeight*1.4));
+    const darkness=p<.3
+      ?.86*(1-Math.pow(1-p/.3,3))
+      :.86+.14*(1-Math.pow(1-(p-.3)/.7,1.5));
+    document.body.style.setProperty('--hm-video-matte',(.5+.49*darkness).toFixed(4));
+  };
+  const requestSync=()=>{if(!ticking){ticking=true;requestAnimationFrame(syncMatte)}};
+  addEventListener('scroll',requestSync,{passive:true});
+  addEventListener('resize',requestSync,{passive:true});
+  syncMatte();
+  video.play().catch(()=>{});
+  video.addEventListener('canplay',()=>video.play().catch(()=>{}),{once:true});
+
+  const syncHero=()=>{
+    const kicker=document.querySelector('.hm-kicker');
+    if(kicker)kicker.remove();
+    const lead=document.querySelector('.hm-lead');
+    if(lead)lead.innerHTML='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
+  };
+  syncHero();
+  const observer=new MutationObserver(syncHero);
+  observer.observe(document.body,{attributes:true,attributeFilter:['class'],childList:true,subtree:true});
+  addEventListener('load',()=>{syncHero();setTimeout(()=>observer.disconnect(),5000)},{once:true});
 })();
 </script>
 </body>
