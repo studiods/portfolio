@@ -14,8 +14,8 @@ const sources={
  page:'./himart.html?v=20260901-latest',
  hero:'./assets/html/himart-video-test-hero.html',
  css:'./assets/css/himart-video-test.css',
- override:'./assets/css/himart-video-test-override.css',
- js:'./assets/js/himart-video-test.js?v=f782104'
+ latest:'./assets/css/himart-latest.css?v=0277f43',
+ js:'./assets/js/himart-latest.js?v=0277f43'
 };
 Promise.all([
  fetch(sources.page,{cache:'no-store'}).then(r=>r.ok?r.text():Promise.reject(new Error('himart load failed'))),
@@ -23,7 +23,7 @@ Promise.all([
 ]).then(([html,hero])=>{
  html=html.replace(/<body class="([^"]*)">/,(_,classes)=>'<body class="'+classes+' himart-video-test-page">');
  html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,hero);
- html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.override+'"></head>');
+ html=html.replace('</head>','<link rel="stylesheet" href="'+sources.css+'"><link rel="stylesheet" href="'+sources.latest+'"></head>');
  html=html.replace('</body>','<script src="'+sources.js+'"><'+'/script></body>');
  document.open();document.write(html);document.close();
 }).catch(error=>{console.error(error);document.body.innerHTML='<div class="boot">페이지를 불러오지 못했습니다.</div>';});
