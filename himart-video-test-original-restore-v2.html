@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>하이마트 온라인 구매여정 · Video Hero Restore V2</title>
+<style>
+html,body{margin:0;background:#000;color:#fff}
+</style>
+</head>
+<body>
+<script>
+(()=>{
+  const HERO=`<header class="hm-video-hero-stage" id="top">
+    <div class="hm-video-sticky">
+      <video class="hm-video-media" src="./assets/video/himart_01.mp4" autoplay muted loop playsinline></video>
+      <div class="hm-video-overlay"></div>
+      <div class="hm-video-copy">
+        <div>LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div>
+        <h1>하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1>
+        <p>화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p>
+      </div>
+    </div>
+  </header>`;
+
+  fetch('./himart.html?v=restore-v2',{cache:'no-store'})
+  .then(r=>r.text())
+  .then(html=>{
+    html=html.replace(/<header class="hm-hero" id="top">[\s\S]*?<\/header>/,HERO);
+    const style=document.createElement('style');
+    style.textContent=`
+    .hm-video-hero-stage{height:200vh;background:#000;position:relative}
+    .hm-video-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+    .hm-video-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .hm-video-overlay{position:absolute;inset:0;background:rgba(0,0,0,.65)}
+    .hm-video-copy{position:absolute;z-index:10;left:48px;top:120px;color:#fff}
+    .hm-video-copy h1{font-size:64px;font-weight:100;line-height:1.05}
+    .hm-video-copy p{font-size:18px;opacity:.7}
+    `;
+    document.head.appendChild(style);
+    document.open();
+    document.write(html);
+    document.close();
+  });
+})();
+</script>
+</body>
+</html>
