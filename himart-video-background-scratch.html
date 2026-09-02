@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIMART · Video Background Test</title>
+<style>
+:root{--blackout:0;--white:#fff;--line:rgba(255,255,255,.24)}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--white);font-family:Arial,"Pretendard",sans-serif}
+body{min-width:320px;overflow-x:hidden}
+.video-layer{position:fixed;inset:0;z-index:0;background:#000;overflow:hidden}
+.video-layer video{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center;background:#000}
+.base-matte,.scroll-matte{position:absolute;inset:0;pointer-events:none}
+.base-matte{z-index:1;background:#000;opacity:.5}
+.scroll-matte{z-index:2;background:#000;opacity:var(--blackout);will-change:opacity}
+.page{position:relative;z-index:3}
+.hero{height:200vh;min-height:1400px;position:relative}
+.hero-content{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:100px 12px 0;pointer-events:none}
+.hero-heading{max-width:1180px}
+.eyebrow{margin:0 0 28px;color:rgba(255,255,255,.68);font-size:13px;letter-spacing:.04em;font-weight:400}
+h1{margin:0;font-size:clamp(38px,5.3vw,88px);line-height:1.04;font-weight:300;letter-spacing:-.055em}
+.bottom-content{padding-bottom:0}
+.lead{max-width:860px;margin:0 0 28px;color:rgba(255,255,255,.8);font-size:clamp(15px,1.25vw,20px);line-height:1.5;font-weight:300}
+.meta{display:grid;grid-template-columns:1.4fr .95fr .95fr .9fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0 20px;gap:20px}
+.meta-item{min-width:0}
+.meta-label{display:block;margin-bottom:16px;color:rgba(255,255,255,.48);font-size:12px;letter-spacing:.08em}
+.meta-value{display:block;color:rgba(255,255,255,.92);font-size:14px;line-height:1.45;font-weight:300}
+.content{min-height:100vh;background:#000;padding:150px 12px 180px;opacity:0;transform:translateY(100px);transition:opacity .8s ease,transform .8s ease}
+.content.is-visible{opacity:1;transform:none}
+.content-inner{max-width:1200px;margin:auto}
+.section-number{color:rgba(255,255,255,.45);font-size:13px;letter-spacing:.08em}
+h2{max-width:900px;margin:28px 0 70px;font-size:clamp(34px,5vw,76px);line-height:1.08;font-weight:300;letter-spacing:-.05em}
+.content-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.card{min-height:270px;background:#000;padding:28px 22px}
+.card small{display:block;color:rgba(255,255,255,.48);font-size:11px;letter-spacing:.08em;margin-bottom:40px}
+.card h3{margin:0 0 18px;font-size:25px;line-height:1.15;font-weight:300;letter-spacing:-.04em}
+.card p{margin:0;color:rgba(255,255,255,.62);font-size:15px;line-height:1.55;font-weight:300}
+@media(max-width:700px){.hero{min-height:1150px}.hero-content{padding:84px 16px 0}.eyebrow{font-size:11px;margin-bottom:22px}h1{font-size:42px}.lead{font-size:15px;margin-bottom:22px}.meta{grid-template-columns:1fr 1fr;gap:18px 14px;padding:18px 0 15px}.meta-label{margin-bottom:9px;font-size:10px}.meta-value{font-size:11px}.content{padding:110px 16px}.content-grid{grid-template-columns:1fr}.card{min-height:auto}}
+@media(prefers-reduced-motion:reduce){.content{transition:none}.scroll-matte{opacity:0!important}}
+</style>
+</head>
+<body>
+<div class="video-layer" aria-hidden="true">
+  <video id="backgroundVideo" src="./assets/video/himart_01.mp4" autoplay muted loop playsinline preload="auto"></video>
+  <div class="base-matte"></div>
+  <div class="scroll-matte"></div>
+</div>
+<main class="page">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-heading">
+        <p class="eyebrow">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</p>
+        <h1>하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1>
+      </div>
+      <div class="bottom-content">
+        <p class="lead">하이마트 온라인 전체 개편을 단순한 화면 개선으로 시작하지 않았습니다. 고객이 하이마트를 어떻게 인식하는지, 실제로 어디서 들어와 무엇을 찾고 어디에서 멈추는지부터 확인한 뒤 전체 구매 여정의 역할을 다시 정의했습니다.</p>
+        <div class="meta">
+          <div class="meta-item"><span class="meta-label">ROLE</span><span class="meta-value">UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</span></div>
+          <div class="meta-item"><span class="meta-label">FOCUS</span><span class="meta-value">COMMERCE JOURNEY · HOME · SEARCH · PDP</span></div>
+          <div class="meta-item"><span class="meta-label">SCOPE</span><span class="meta-value">RESEARCH · STRATEGY · DESIGN DIRECTION</span></div>
+          <div class="meta-item"><span class="meta-label">TEAM</span><span class="meta-value">UX DESIGN · PO · BUSINESS</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content reveal">
+    <div class="content-inner">
+      <span class="section-number">01 / BRAND REALITY</span>
+      <h2>고객의 인식과 실제 이용 행동을 함께 확인했습니다.</h2>
+      <div class="content-grid">
+        <article class="card"><small>01 / PERCEPTION</small><h3>고객에게 하이마트는<br>어떤 곳일까?</h3><p>매장과 온라인을 오가며 고객이 기대하는 가치와 불편을 분리했습니다.</p></article>
+        <article class="card"><small>02 / BEHAVIOR</small><h3>온라인에서는<br>실제로 무엇을 할까?</h3><p>유입부터 검색, 상품 상세, 장바구니까지 실제 행동의 흐름을 따라갔습니다.</p></article>
+        <article class="card"><small>03 / NEXT STEP</small><h3>다음 행동으로<br>이어지게 만들었습니다.</h3><p>모든 화면이 고객의 다음 판단을 자연스럽게 돕도록 여정을 다시 정의했습니다.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="content reveal">
+    <div class="content-inner">
+      <span class="section-number">02 / PURCHASE JOURNEY</span>
+      <h2>화면이 아니라 고객의 구매 여정을 설계했습니다.</h2>
+    </div>
+  </section>
+</main>
+<script>
+(()=>{
+  const video=document.getElementById('backgroundVideo');
+  const matte=document.querySelector('.scroll-matte');
+  const reveals=document.querySelectorAll('.reveal');
+  const clamp=(n,min=0,max=1)=>Math.max(min,Math.min(max,n));
+  const play=()=>video.play().catch(()=>{});
+  video.addEventListener('loadeddata',play,{once:true});
+  video.addEventListener('canplay',play,{once:true});
+  play();
+  let ticking=false;
+  const update=()=>{
+    ticking=false;
+    const p=clamp(window.scrollY/Math.max(1,window.innerHeight));
+    const fast=1-Math.exp(-7.5*clamp(p/.32));
+    const slow=p<=.32?0:1-Math.exp(-1.5*clamp((p-.32)/.68));
+    matte.style.opacity=clamp(.92*fast+.08*slow).toFixed(4);
+    reveals.forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight*.88)el.classList.add('is-visible')});
+  };
+  const request=()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}};
+  addEventListener('scroll',request,{passive:true});
+  addEventListener('resize',request,{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
