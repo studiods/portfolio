@@ -109,7 +109,8 @@ function updateHero(){
   const fast=t=>1-Math.pow(1-t,3);
   const smooth=t=>t*t*(3-2*t);
   const blackout=clamp(.72*fast(early)+.28*smooth(late));
-  fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));\n  const scrollOverlay=fixed.querySelector('.hm-video-overlay-scroll');\n  if(scrollOverlay)scrollOverlay.style.setProperty('opacity',blackout.toFixed(4),'important');
+  fixed.style.setProperty('--hm-video-blackout',blackout.toFixed(4));
+  const scrollOverlay=fixed.querySelector('.hm-video-overlay-scroll');\n  if(scrollOverlay)scrollOverlay.style.setProperty('opacity',blackout.toFixed(4),'important');
   fixed.style.setProperty('--hm-frame-opacity',(1-blackout).toFixed(4));
 }
 
