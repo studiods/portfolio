@@ -52,13 +52,13 @@ function apply(){
   if(lead){
     const value='화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.';
     changed=setHTML(lead,value)||changed;
-    if(lead.style.color!=='rgba(255, 255, 255, 0.8)'){lead.style.setProperty('color','rgba(255,255,255,.80)','important');changed=true}
+    if(lead.style.getPropertyValue('color')!=='rgba(255, 255, 255, 0.8)'||lead.style.getPropertyPriority('color')!=='important'){lead.style.setProperty('color','rgba(255,255,255,.80)','important');changed=true}
   }
 
   const synthesis=Array.from(document.querySelectorAll('.brand-synthesis')).find(el=>el.textContent.includes('이미 가지고 있던 강점'));
   if(synthesis){
     changed=setHTML(synthesis.querySelector('h4'),'하이마트의 강점은 이미 충분했습니다.<br><strong>문제는 그 강점이 온라인 구매로 이어지지 않는 데 있었습니다.</strong>')||changed;
-    const cols=synthesis.querySelectorAll('.synthesis-col');
+    const cols=synthesis.querySelectorAll('.synthesis-col,.synthesis-card');
     cols.forEach(col=>{
       const b=col.querySelector('b');
       if(b){b.style.setProperty('font-family','Pretendard, sans-serif','important');b.style.setProperty('font-size','16px','important');b.style.setProperty('font-weight','300','important')}
@@ -72,22 +72,22 @@ function apply(){
     }
   }
 
-  const subcopy=Array.from(document.querySelectorAll('.hm-subcopy')).find(el=>el.textContent.includes('홈부터 결제까지')||el.textContent.includes('앞 단계에서 받은 맥락'));
+  const subcopy=Array.from(document.querySelectorAll('.hm-subcopy,.journey-block-copy')).find(el=>el.textContent.includes('홈부터 결제까지')||el.textContent.includes('앞 단계에서 받은 맥락'));
   if(subcopy){
     changed=setText(subcopy,'홈부터 결제까지 각 단계가 앞선 맥락을 다음 판단으로 넘기도록 역할을 정의했습니다.')||changed;
-    const head=subcopy.closest('.hm-subhead');
-    if(head)changed=setText(head.querySelector('.hm-subno'),'03.2 / ROLE DEFINITION')||changed;
+    const head=subcopy.closest('.hm-subhead,.journey-role-block');
+    if(head)changed=setText(head.querySelector('.hm-subno,.narrative-subno'),'03.2 / ROLE DEFINITION')||changed;
   }
 
-  const grid=document.querySelector('#journey .role-grid')||document.querySelector('.role-grid');
+  const grid=document.querySelector('#journey .journey-role-grid')||document.querySelector('.journey-role-grid')||document.querySelector('#journey .role-grid')||document.querySelector('.role-grid');
   if(grid){
-    const current=[...grid.querySelectorAll(':scope > .role-card')];
+    const current=[...grid.querySelectorAll(':scope > article')];
     if(current.length!==9||current.some((card,i)=>card.querySelector('h4')?.innerHTML!==roleData[i]?.[1])){
       grid.innerHTML='';
       roleData.forEach(([name,title,body,key])=>{
-        const card=document.createElement('article');card.className='role-card';
-        card.innerHTML='<span class="hm-role-name">'+name+'</span><h4>'+title+'</h4><p>'+body+'</p><strong>'+key+'</strong>';
-        const en=card.querySelector('.hm-role-name');en.style.setProperty('font-family','Averta, sans-serif','important');en.style.setProperty('font-weight','400','important');
+        const card=document.createElement('article');
+        card.innerHTML='<small>'+name+'</small><h4>'+title+'</h4><p>'+body+'</p>';
+        const en=card.querySelector('small');en.style.setProperty('font-family','Averta, sans-serif','important');en.style.setProperty('font-weight','400','important');
         grid.append(card);
       });
       changed=true;
