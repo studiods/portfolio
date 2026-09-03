@@ -228,3 +228,33 @@
 @media(max-width:430px){
   .himart-page-body .hm-keyword-circle{width:calc(50% - 5px)}
 }
+/* Single centered GNB contract for every portfolio page. */
+.top{
+  position:fixed!important;
+  top:0!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  width:max-content!important;
+  height:70px!important;
+  padding:0!important;
+  z-index:50!important;
+  display:block!important;
+  mix-blend-mode:normal!important;
+}
+.top .top-center{
+  height:70px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:40px!important;
+  white-space:nowrap!important;
+}
+.top .top-center a{
+  color:#fff!important;
+  opacity:1!important;
+  text-decoration:none!important;
+}
+@media(max-width:760px){
+  .top,.top .top-center{height:58px!important}
+  .top .top-center{gap:22px!important}
+}
