@@ -44,8 +44,7 @@
     position:absolute;
     inset:0;
     background:#fff;
-    height:33.333%;
-    transform:translateY(0);
+    transform:scaleY(0);
     transform-origin:top center;
     opacity:0;
   }
@@ -66,10 +65,9 @@
     visibility:hidden;
   }
   @keyframes index-scroll-guide-sweep{
-    0%{transform:translateY(0);opacity:0}
-    8%{transform:translateY(0);opacity:1}
-    92%{transform:translateY(200%);opacity:1}
-    100%{transform:translateY(200%);opacity:0}
+    0%{transform:scaleY(0);opacity:0}
+    8%{opacity:1}
+    100%{transform:scaleY(1);opacity:0}
   }
   @media (max-width:850px){
     .index-scroll-guide{right:20px}
