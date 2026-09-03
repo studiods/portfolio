@@ -1,0 +1,91 @@
+/* Production home dark theme.
+   The existing motion scripts paint several animated layers in light-theme
+   RGB values. Those layers are inverted at their section boundary so every
+   authored timing, alpha and scramble state is preserved without duplicating
+   animation logic. */
+
+body.home-dark {
+  --bg: #000;
+  --fg: #fff;
+  --muted: rgba(255, 255, 255, .60);
+  --line: rgba(255, 255, 255, .15);
+  background: #000;
+  color: #fff;
+  color-scheme: dark;
+}
+
+html,
+body.home-dark,
+body.home-dark .shell,
+body.home-dark .hero-sequence,
+body.home-dark .hero-sticky,
+body.home-dark .intro-block,
+body.home-dark .philosophy-tail-space,
+body.home-dark .principles-section,
+body.home-dark .selected-work,
+body.home-dark .footer,
+body.home-dark .filip-footer {
+  background: #000;
+}
+
+body.home-dark .top,
+body.home-dark .principles-section,
+body.home-dark .principles-intro-ko,
+body.home-dark .principle-ko,
+body.home-dark .footer a,
+body.home-dark .footer p {
+  color: #fff;
+}
+
+body.home-dark .mini-label,
+body.home-dark .showcase-meta,
+body.home-dark .footer h3 {
+  color: rgba(255, 255, 255, .60);
+}
+
+body.home-dark .showcase-project,
+body.home-dark .principle-card,
+body.home-dark .footer-grid {
+  border-color: rgba(255, 255, 255, .15);
+}
+
+body.home-dark .showcase-project:first-child {
+  border-top-color: transparent;
+}
+
+body.home-dark .placeholder {
+  border-color: rgba(255, 255, 255, .15);
+  background: #000;
+}
+
+body.home-dark .placeholder::before,
+body.home-dark .placeholder::after {
+  background: rgba(255, 255, 255, .15);
+}
+
+body.home-dark .showcase-project:hover .placeholder {
+  background: #080808;
+}
+
+/* Light-canvas animation layers: black RGB becomes white while alpha and
+   visibility remain exactly as the existing JS renders them. */
+body.home-dark .hero-state,
+body.home-dark .philosophy-statements,
+body.home-dark .showcase-project h3 {
+  filter: invert(1);
+}
+
+body.home-dark .hero-state,
+body.home-dark .showcase-project h3 {
+  color: #111;
+}
+
+/* Principles already use white animation RGB; only their hierarchy changes. */
+body.home-dark .principle-en {
+  color: rgba(255, 255, 255, .60);
+}
+
+body.home-dark ::selection {
+  background: #fff;
+  color: #000;
+}
