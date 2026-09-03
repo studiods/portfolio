@@ -25,8 +25,8 @@
       inset:0;
       z-index:2147483647;
       display:grid;
-      grid-template-columns:repeat(16,1fr);
-      grid-template-rows:repeat(9,1fr);
+      grid-template-columns:repeat(32,1fr);
+      grid-template-rows:repeat(18,1fr);
       background:transparent;
       pointer-events:none;
       overflow:hidden;
@@ -38,7 +38,7 @@
       min-height:0;
       background:#000;
       opacity:1;
-      transition:opacity .24s linear;
+      transition:opacity .2s linear;
       transition-delay:var(--cell-delay,0ms);
     }
     .about-load-cell::after{
@@ -71,7 +71,7 @@
       const cell = document.createElement('span');
       cell.className = 'about-load-cell';
       cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
-      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 850) + 'ms');
+      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 960) + 'ms');
       veil.appendChild(cell);
       cells.push(cell);
     }
@@ -79,7 +79,7 @@
   const reveal = () => {
     veil.classList.remove('is-revealing');
     cells.forEach((cell) => {
-      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 850) + 'ms');
+      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 960) + 'ms');
       cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
     });
     void veil.offsetWidth;
