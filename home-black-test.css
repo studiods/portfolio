@@ -1,0 +1,55 @@
+/* Home black theme override - visual only. Keep animations and interactions unchanged. */
+body.home-black-test{
+  --bg:#000;
+  --fg:#fff;
+  --muted:rgba(255,255,255,.52);
+  --line:rgba(255,255,255,.22);
+  background:#000!important;
+  color:#fff!important;
+}
+body.home-black-test .shell,
+body.home-black-test main{
+  background:#000!important;
+}
+body.home-black-test .top{
+  color:#fff;
+}
+body.home-black-test .mini-label,
+body.home-black-test .showcase-meta,
+body.home-black-test .footer h3,
+body.home-black-test .muted{
+  color:rgba(255,255,255,.48)!important;
+}
+body.home-black-test .hero-side,
+body.home-black-test .hero-bottom,
+body.home-black-test .section-top,
+body.home-black-test .footer-grid,
+body.home-black-test .archive,
+body.home-black-test .archive-row,
+body.home-black-test .case-meta,
+body.home-black-test .case-stats{
+  border-color:rgba(255,255,255,.22)!important;
+}
+body.home-black-test .placeholder{
+  border-color:rgba(255,255,255,.22)!important;
+}
+body.home-black-test .placeholder:before,
+body.home-black-test .placeholder:after{
+  background:rgba(255,255,255,.22)!important;
+}
+body.home-black-test .project:hover .placeholder{
+  background:#111!important;
+}
+body.home-black-test .ai-strip,
+body.home-black-test .timeline-row.ai{
+  background:#0b0b0b!important;
+}
+body.home-black-test .ai-strip .mini-label,
+body.home-black-test .timeline-row.ai .year,
+body.home-black-test .timeline-row.ai .desc{
+  color:rgba(255,255,255,.45)!important;
+}
+body.home-black-test ::selection{
+  background:#fff!important;
+  color:#000!important;
+}
