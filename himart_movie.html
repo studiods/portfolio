@@ -364,6 +364,20 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
   const main = document.getElementById('live-main');
   const fallbackMarkup = main?.innerHTML || '';
   let restoredFallback = false;
+  const runtimeLockStyle = document.createElement('style');
+  runtimeLockStyle.id = 'himart-movie-runtime-lock';
+  runtimeLockStyle.textContent = `
+    html body.himart-movie-page .hm-movie-copy .hm-lead{margin-top:20px!important;color:rgba(255,255,255,.8)!important;opacity:1!important}
+    html body.himart-movie-page .hm-movie-hero .hm-meta>div:last-child{border-bottom:0!important;padding-bottom:0!important}
+    html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card b{font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important;margin:0!important}
+    html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{font:300 24px/1.45 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
+    html body.himart-movie-page #data .behavior-card h4{font-size:28px!important;line-height:1.2!important}
+    html body.himart-movie-page #data .behavior-card p{font-size:16px!important;line-height:1.5!important;margin-top:40px!important}
+    html body.himart-movie-page #journey .journey-role-grid h4{font:100 42px/1.18 Pretendard,var(--hm-ko),sans-serif!important;letter-spacing:-.045em!important}
+    html body.himart-movie-page #journey .journey-role-grid p{font:300 16px/1.55 Pretendard,var(--hm-ko),sans-serif!important;color:rgba(255,255,255,.5)!important}
+    html body.himart-movie-page #journey .journey-role-grid small{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
+  `;
+  document.head.appendChild(runtimeLockStyle);
   const roleCards = [
     ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.', '최근 맥락과 관심을 기억해 원하는 목적지로 바로 이어줍니다.', '맥락 기억 · 목적지 연결 · 개인화 진입'],
     ['SUBHOME / CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.', '상황과 설치 조건을 기준으로 탐색 방향을 빠르게 좁혀줍니다.', '상황 중심 탐색 · 조건 정리'],
@@ -392,20 +406,20 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
       html(transition, transitionHTML);
     }
 
-    const grid = document.querySelector('#journey .hm-subsection .role-grid');
+    const grid = document.querySelector('#journey .hm-subsection .journey-role-grid, #journey .hm-subsection .role-grid');
     const section = grid?.closest('.hm-subsection');
     if (section && grid) {
       text(section.querySelector('.hm-subno'), '03.2 / ROLE DEFINITION');
-      let cards = [...grid.querySelectorAll(':scope > .role-card')];
+      let cards = [...grid.querySelectorAll(':scope > .role-card, :scope > article')];
       while (cards.length < roleCards.length) {
         const clone = cards[cards.length - 1]?.cloneNode(true);
         if (!clone) break;
         grid.appendChild(clone);
-        cards = [...grid.querySelectorAll(':scope > .role-card')];
+        cards = [...grid.querySelectorAll(':scope > .role-card, :scope > article')];
       }
       cards.slice(0, roleCards.length).forEach((card, i) => {
         const [label, title, copy, keywords] = roleCards[i];
-        text(card.querySelector('.hm-role-name'), label);
+        text(card.querySelector('.hm-role-name, small'), label);
         html(card.querySelector('h4'), title);
         text(card.querySelector('p'), copy);
         text(card.querySelector('strong'), keywords);
@@ -436,7 +450,8 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
   updateHeroFade();
   window.addEventListener('scroll', updateHeroFade, { passive:true });
   window.addEventListener('load', schedule, { once:true });
-  setTimeout(() => { apply(); observer.disconnect(); }, 4500);
+  const lateApply = window.setInterval(apply, 600);
+  setTimeout(() => { apply(); observer.disconnect(); clearInterval(lateApply); }, 15000);
 })();
 </script></body>
 </html>
