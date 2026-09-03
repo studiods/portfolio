@@ -367,15 +367,15 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
   const runtimeLockStyle = document.createElement('style');
   runtimeLockStyle.id = 'himart-movie-runtime-lock';
   runtimeLockStyle.textContent = `
-    html body.himart-movie-page .hm-movie-copy .hm-lead{margin-top:20px!important;color:rgba(255,255,255,.8)!important;opacity:1!important}
-    html body.himart-movie-page .hm-movie-hero .hm-meta>div:last-child{border-bottom:0!important;padding-bottom:0!important}
-    html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card b{font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important;margin:0!important}
-    html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{font:300 24px/1.45 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
-    html body.himart-movie-page #data .behavior-card h4{font-size:28px!important;line-height:1.2!important}
-    html body.himart-movie-page #data .behavior-card p{font-size:16px!important;line-height:1.5!important;margin-top:40px!important}
-    html body.himart-movie-page #journey .journey-role-grid h4{font:100 42px/1.18 Pretendard,var(--hm-ko),sans-serif!important;letter-spacing:-.045em!important}
-    html body.himart-movie-page #journey .journey-role-grid p{font:300 16px/1.55 Pretendard,var(--hm-ko),sans-serif!important;color:rgba(255,255,255,.5)!important}
-    html body.himart-movie-page #journey .journey-role-grid small{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
+    html body.himart-movie-page #live-main .hm-movie-copy .hm-lead{margin-top:20px!important;color:rgba(255,255,255,.8)!important;opacity:1!important}
+    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta>div:last-child{border-bottom:0!important;padding-bottom:0!important}
+    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card b{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.3!important;font-weight:300!important;margin:0!important}
+    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:24px!important;line-height:1.45!important;font-weight:300!important;color:#fff!important}
+    html body.himart-movie-page #live-main #data .behavior-card h4{font-size:28px!important;line-height:1.2!important}
+    html body.himart-movie-page #live-main #data .behavior-card p{font-size:16px!important;line-height:1.5!important;margin-top:40px!important}
+    html body.himart-movie-page #live-main #journey .journey-role-grid h4{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:42px!important;line-height:1.18!important;font-weight:100!important;letter-spacing:-.045em!important}
+    html body.himart-movie-page #live-main #journey .journey-role-grid p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.55!important;font-weight:300!important;color:rgba(255,255,255,.5)!important}
+    html body.himart-movie-page #live-main #journey .journey-role-grid small{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
   `;
   document.head.appendChild(runtimeLockStyle);
   const roleCards = [
@@ -453,7 +453,7 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
   window.addEventListener('scroll', updateHeroFade, { passive:true });
   window.addEventListener('load', schedule, { once:true });
   const lateApply = window.setInterval(apply, 600);
-  setTimeout(() => { apply(); observer.disconnect(); clearInterval(lateApply); }, 15000);
+  setTimeout(() => { apply(); observer.disconnect(); clearInterval(lateApply); }, 30000);
 })();
 </script></body>
 </html>
