@@ -23,6 +23,19 @@
 .wide-rise-target{opacity:0;transform:translate3d(0,42px,0);transition:opacity .85s ease,transform .95s cubic-bezier(.22,1,.36,1)}
 .wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
 @media(max-width:700px){.hm-movie-hero .hm-wrap{padding-bottom:28px}.hm-movie-hero .hm-lead{font-size:18px}.hm-movie-hero .hm-meta{font-size:12px}}
+</style><style>
+.hm-movie-hero{position:sticky!important;top:0;z-index:1}
+.hm-movie-hero .hm-wrap{justify-content:flex-start!important;padding-top:0!important;padding-bottom:40px!important}
+.hm-movie-hero .hm-title{margin-top:200px!important}
+.hm-movie-hero .hm-hero-bottom{position:absolute;left:0;right:0;bottom:40px;margin:0!important}
+.hm-movie-overlay{opacity:var(--movie-darkness,.5)!important;transition:opacity .12s linear}
+.hm-movie-hero .hm-lead{color:#fff!important;opacity:.8!important;margin-top:40px!important}
+.hm-movie-hero .hm-meta{border-top:1px solid rgba(255,255,255,.2)!important}
+.hm-movie-hero .hm-meta>div:last-child{border-bottom:1px solid rgba(255,255,255,.2)!important}
+.hm-section{position:relative;z-index:2;background:#050505}
+.hm-section-head,.hm-subsection,.narrative-block,.data-card,.principle-grid,.design-rule{will-change:transform,opacity}
+.about-dummy{display:none}
+@media(max-width:700px){.hm-movie-hero .hm-title{margin-top:140px!important}.hm-movie-hero .hm-hero-bottom{bottom:28px}.hm-movie-hero .hm-lead{margin-top:28px!important}}
 </style></head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -30,8 +43,7 @@
 <header class="hm-hero hm-movie-hero" id="top">
 <video class="hm-movie-video" autoplay muted loop playsinline preload="auto"><source src="./assets/himart_01.mp4" type="video/mp4"></video>
 <div class="hm-movie-overlay" aria-hidden="true"></div>
-<div class="hm-wrap"><div><div class="hm-kicker">LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW</div>
-<h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1></div>
+<div class="hm-wrap"><div><h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1></div>
 <div class="hm-hero-bottom"><p class="hm-lead">화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.</p>
 <div class="hm-meta"><div><span>ROLE</span><b>UX STRATEGY · UX PLANNING · EXPERIENCE DESIGN · UX DIRECTION</b></div><div><span>FOCUS</span><b>COMMERCE JOURNEY · HOME · SEARCH · PDP</b></div><div><span>SCOPE</span><b>RESEARCH · STRATEGY · DESIGN DIRECTION</b></div><div><span>TEAM</span><b>UX DESIGN · PO · BUSINESS</b></div></div></div></div></header>
 <nav class="hm-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
@@ -105,5 +117,66 @@ document.querySelectorAll('details.hm-more').forEach(d=>d.open=false)};
 try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');applyNarrativeTest();prepareWideMotion();document.body.classList.remove('himart-narrative-loading');document.body.classList.add('himart-narrative-ready');await loadScript('./himart-live-boot.js?v=9f74114')}catch(err){document.body.classList.remove('himart-v18-loading','himart-narrative-loading');document.body.classList.add('himart-v18-ready','himart-narrative-ready');main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';console.error(err)}})();
 </script>
 <script src="./himart-narrative-v2-production-runtime.js?v=20260901-1"></script>
-</body>
+<script>
+(function(){
+  const movieHero=document.querySelector('.hm-movie-hero');
+  const overlay=document.querySelector('.hm-movie-overlay');
+  const updateMovieDarkness=()=>{
+    const y=Math.max(0,window.scrollY||0);
+    const eased=1-Math.exp(-y/260);
+    document.documentElement.style.setProperty('--movie-darkness',(0.5+0.45*eased).toFixed(3));
+  };
+  updateMovieDarkness();
+  window.addEventListener('scroll',updateMovieDarkness,{passive:true});
+  const applyRoleDefinitions=()=>{
+    const titles=[
+      '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.',
+      '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.',
+      '검색은 불확실성을<br>확신으로 바꿔줘야 한다.',
+      '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.',
+      '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.',
+      '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.',
+      '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.',
+      '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.',
+      '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.'
+    ];
+    const root=document.querySelector('#journey');
+    if(!root)return false;
+    const nodes=[...root.querySelectorAll('.hm-subsection .hm-subtitle')];
+    if(nodes.length<8)return false;
+    nodes.slice(0,8).forEach((el,i)=>{el.innerHTML=titles[i];el.classList.add('movie-role-title')});
+    if(nodes.length<9){
+      const last=nodes[7].closest('.hm-subsection');
+      if(last){
+        const clone=last.cloneNode(true);
+        const no=clone.querySelector('.hm-subno'); if(no)no.textContent='03.9 / ROLE DEFINITION';
+        const title=clone.querySelector('.hm-subtitle'); if(title)title.innerHTML=titles[8];
+        const copy=clone.querySelector('.hm-subcopy'); if(copy)copy.textContent='구매 이후의 관심과 상태를 기억하고, 다음 방문과 관리 행동으로 자연스럽게 이어줍니다.';
+        last.parentElement.insertBefore(clone,last.nextSibling);
+      }
+    }
+    root.querySelectorAll('.hm-subsection .hm-subtitle').forEach(el=>el.classList.add('movie-role-title'));
+    return true;
+  };
+  const shortenText=()=>{
+    const replacements=[
+      ['하이마트를 떠올리는 방식과 매장·온라인에 기대하는 역할을 확인했습니다.','하이마트를 떠올리는 방식과 온·오프라인 기대를 확인했습니다.'],
+      ['유입부터 다음 행동이 끊기는 지점까지 이용 데이터를 따라갔습니다.','유입부터 행동이 끊기는 지점까지 데이터를 따라갔습니다.'],
+      ['고객 의견과 행동 데이터가 함께 가리킨 문제만 남겼습니다.','고객 의견과 행동이 함께 가리킨 문제만 남겼습니다.']
+    ];
+    document.querySelectorAll('.hm-movie-hero, #brand, #data').forEach(root=>{
+      root.querySelectorAll('*').forEach(el=>{
+        if(el.children.length===0)replacements.forEach(([a,b])=>{if(el.textContent.includes(a))el.textContent=el.textContent.replace(a,b)});
+      });
+    });
+  };
+  let tries=0;
+  const finish=()=>{
+    applyRoleDefinitions(); shortenText();
+    if(++tries<20 && !document.querySelector('.movie-role-title'))setTimeout(finish,300);
+  };
+  window.addEventListener('load',()=>setTimeout(finish,400));
+  setTimeout(finish,900);
+})();
+</script></body>
 </html>
