@@ -8,7 +8,7 @@ body.home-dark {
   --bg: #000;
   --fg: #fff;
   --muted: rgba(255, 255, 255, .60);
-  --line: rgba(255, 255, 255, .15);
+  --line: rgba(255, 255, 255, .18);
   background: #000;
   color: #fff;
   color-scheme: dark;
@@ -43,10 +43,15 @@ body.home-dark .footer h3 {
   color: rgba(255, 255, 255, .60);
 }
 
+body.home-dark .footer a,
+body.home-dark .footer p {
+  color: rgba(255, 255, 255, .84);
+}
+
 body.home-dark .showcase-project,
 body.home-dark .principle-card,
 body.home-dark .footer-grid {
-  border-color: rgba(255, 255, 255, .15);
+  border-color: rgba(255, 255, 255, .18);
 }
 
 body.home-dark .showcase-project:first-child {
@@ -54,13 +59,13 @@ body.home-dark .showcase-project:first-child {
 }
 
 body.home-dark .placeholder {
-  border-color: rgba(255, 255, 255, .15);
+  border-color: rgba(255, 255, 255, .30);
   background: #000;
 }
 
 body.home-dark .placeholder::before,
 body.home-dark .placeholder::after {
-  background: rgba(255, 255, 255, .15);
+  background: rgba(255, 255, 255, .20);
 }
 
 body.home-dark .showcase-project:hover .placeholder {
@@ -82,7 +87,7 @@ body.home-dark .showcase-project h3 {
 
 /* Principles already use white animation RGB; only their hierarchy changes. */
 body.home-dark .principle-en {
-  color: rgba(255, 255, 255, .60);
+  color: rgba(255, 255, 255, .70);
 }
 
 body.home-dark ::selection {
