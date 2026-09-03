@@ -165,22 +165,36 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
     const center=window.innerHeight*.5;
     const viewportBottom=window.innerHeight;
     const handoffGap=30;
+    const handoffDistance=Math.max(180,center*.4);
+    const titleCenter=(record,index,cardTop)=>{
+      if(index===0){
+        const half=record.copy.offsetHeight*.5;
+        return cardTop>center-half ? cardTop+half : center;
+      }
+      return cardTop>center ? center+(cardTop-center)*.9 : center;
+    };
     cardRecords.forEach((record,index)=>{
       const cardTop=record.card.getBoundingClientRect().top;
-      const nextTop=cardRecords[index+1]?.card.getBoundingClientRect().top ?? Infinity;
       let y=center, opacity=0;
-      if(cardTop<viewportBottom && nextTop>center){
-        if(index===0){
-          const half=record.copy.offsetHeight*.5;
-          y=cardTop>center-half ? cardTop+half : center;
-        }else{
-          y=cardTop>center ? center+(cardTop-center)*.9 : center;
-        }
+      if(cardTop<viewportBottom){
+        y=titleCenter(record,index,cardTop);
         opacity=1;
-      } else if(cardTop<viewportBottom && nextTop<=center+handoffGap){
-        const exit=clamp((center+handoffGap-nextTop)/(center*.65),0,1);
-        y=center-exit*center*.9;
-        opacity=1-exit;
+        const next=cardRecords[index+1];
+        if(next){
+          const nextTop=next.card.getBoundingClientRect().top;
+          const nextCenter=titleCenter(next,index+1,nextTop);
+          // Trigger from the actual visible title-to-title distance.
+          // Once the next title reaches center, continue the handoff by
+          // tracking its upward travel so the current title fully exits.
+          const approachingGap=nextTop>center
+            ? center+handoffGap-nextCenter
+            : handoffGap+(center-nextTop);
+          const exit=clamp(approachingGap/handoffDistance,0,1);
+          if(exit>0){
+            y=center-exit*center*.9;
+            opacity=1-exit;
+          }
+        }
       }
       record.copy.style.setProperty('top',y+'px','important');
       record.copy.style.setProperty('opacity',opacity.toFixed(3),'important');
