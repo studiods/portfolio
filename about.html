@@ -66,8 +66,8 @@
   if (!veil || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const glyphs = '#@%*+=-:.01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const cells = [];
-  for (let row = 0; row < 9; row += 1) {
-    for (let col = 0; col < 16; col += 1) {
+  for (let row = 0; row < 18; row += 1) {
+    for (let col = 0; col < 32; col += 1) {
       const cell = document.createElement('span');
       cell.className = 'about-load-cell';
       cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
