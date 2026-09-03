@@ -121,7 +121,7 @@ a{color:inherit;text-decoration:none}
   font-size:clamp(72px,9vw,160px);
   line-height:.8;
   letter-spacing:-.03em;
-  text-align:center;
+  text-align:left;
   pointer-events:none;
 }
 
