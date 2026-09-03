@@ -164,6 +164,7 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
     title.style.setProperty('opacity',(1-.4*p).toFixed(3),'important');
     const center=window.innerHeight*.5;
     const viewportBottom=window.innerHeight;
+    const handoffGap=30;
     cardRecords.forEach((record,index)=>{
       const cardTop=record.card.getBoundingClientRect().top;
       const nextTop=cardRecords[index+1]?.card.getBoundingClientRect().top ?? Infinity;
@@ -176,8 +177,8 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
           y=cardTop>center ? center+(cardTop-center)*.9 : center;
         }
         opacity=1;
-      } else if(cardTop<viewportBottom && nextTop<=center){
-        const exit=clamp((center-nextTop)/(center*.65),0,1);
+      } else if(cardTop<viewportBottom && nextTop<=center+handoffGap){
+        const exit=clamp((center+handoffGap-nextTop)/(center*.65),0,1);
         y=center-exit*center*.9;
         opacity=1-exit;
       }
