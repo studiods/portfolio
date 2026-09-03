@@ -32,7 +32,7 @@
   }
   .index-scroll-guide-line{
     position:relative;
-    width:2px;
+    width:1px;
     height:33.333vh;
     min-height:160px;
     max-height:360px;
@@ -44,7 +44,8 @@
     position:absolute;
     inset:0;
     background:#fff;
-    transform:scaleY(0);
+    height:33.333%;
+    transform:translateY(0);
     transform-origin:top center;
     opacity:0;
   }
@@ -58,12 +59,17 @@
     font-size:12px;
     line-height:1;
     letter-spacing:.04em;
-    color:rgba(255,255,255,1);
+    color:rgba(255,255,255,.4);
+  }
+  .index-scroll-guide.is-user-scrolling{
+    opacity:0;
+    visibility:hidden;
   }
   @keyframes index-scroll-guide-sweep{
-    0%{transform:scaleY(0);opacity:0}
-    8%{opacity:1}
-    100%{transform:scaleY(1);opacity:0}
+    0%{transform:translateY(0);opacity:0}
+    8%{transform:translateY(0);opacity:1}
+    92%{transform:translateY(200%);opacity:1}
+    100%{transform:translateY(200%);opacity:0}
   }
   @media (max-width:850px){
     .index-scroll-guide{right:20px}
@@ -88,6 +94,10 @@
     void guide.offsetWidth;
     guide.classList.add('is-sweeping');
   };
+  const hideForScroll = () => {
+    guide.classList.add('is-user-scrolling');
+    stop();
+  };
   const stop = () => {
     window.clearTimeout(idleTimer);
     window.clearInterval(repeatTimer);
@@ -101,8 +111,11 @@
       repeatTimer = window.setInterval(sweep, 2000);
     }, 3000);
   };
-  ['pointerdown','pointermove','wheel','touchstart','keydown','scroll'].forEach((eventName) => {
+  ['pointerdown','pointermove','wheel','touchstart','keydown'].forEach((eventName) => {
     window.addEventListener(eventName, arm, {passive:true});
+  });
+  ['scroll','wheel','touchstart'].forEach((eventName) => {
+    window.addEventListener(eventName, hideForScroll, {passive:true});
   });
   arm();
 })();
