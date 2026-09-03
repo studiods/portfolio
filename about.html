@@ -18,39 +18,31 @@
     .interview-row:first-child .interview-q{color:rgba(244,242,237,.8)}
     .about-ascii-canvas{position:relative;z-index:1}
     .about-ascii-blackout{z-index:2}
-    /* Randomized black-cell reveal: the ASCII portrait appears through a
-       staggered field of glyphs instead of a uniform fade. */
+    /* Start from pure black, rapidly cycle a randomized glyph field,
+       then reveal the existing ASCII portrait underneath. */
     .about-load-blackout{
       position:fixed;
       inset:0;
       z-index:2147483647;
-      display:grid;
-      grid-template-columns:repeat(32,1fr);
-      grid-template-rows:repeat(18,1fr);
-      background:transparent;
-      pointer-events:none;
-      overflow:hidden;
-    }
-    .about-load-cell{
-      position:relative;
-      display:block;
-      min-width:0;
-      min-height:0;
       background:#000;
       opacity:1;
-      transition:opacity .2s linear;
-      transition-delay:var(--cell-delay,0ms);
+      pointer-events:none;
+      overflow:hidden;
+      transition:opacity .32s cubic-bezier(.22,1,.36,1);
     }
-    .about-load-cell::after{
-      content:attr(data-glyph);
+    .about-load-random{
       position:absolute;
-      inset:50% auto auto 50%;
-      transform:translate(-50%,-50%);
-      color:rgba(255,255,255,.46);
-      font:300 clamp(10px,1.35vw,20px)/1 "Averta PE",Arial,sans-serif;
-      letter-spacing:.06em;
+      inset:7% 5%;
+      display:block;
+      margin:0;
+      color:rgba(255,255,255,.5);
+      font:300 clamp(9px,1.1vw,16px)/1.2 "Averta PE",Arial,sans-serif;
+      letter-spacing:.08em;
+      white-space:pre-wrap;
+      overflow:hidden;
+      user-select:none;
     }
-    .about-load-blackout.is-revealing .about-load-cell{
+    .about-load-blackout.is-revealing{
       opacity:0;
     }
     @media(prefers-reduced-motion:reduce){
@@ -64,26 +56,37 @@
 (() => {
   const veil = document.querySelector('.about-load-blackout');
   if (!veil || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const glyphs = '#@%*+=-:.01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const cells = [];
-  for (let row = 0; row < 18; row += 1) {
-    for (let col = 0; col < 32; col += 1) {
-      const cell = document.createElement('span');
-      cell.className = 'about-load-cell';
-      cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
-      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 960) + 'ms');
-      veil.appendChild(cell);
-      cells.push(cell);
+  const randomLayer = document.createElement('pre');
+  randomLayer.className = 'about-load-random';
+  veil.appendChild(randomLayer);
+  const pool = '#@%*+=-:.01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let cycleTimer = 0;
+  const makeNoise = () => {
+    const cols = Math.max(34, Math.ceil(window.innerWidth / 12));
+    const rows = Math.max(14, Math.ceil(window.innerHeight / 22));
+    const lines = [];
+    for (let row = 0; row < rows; row += 1) {
+      let line = '';
+      for (let col = 0; col < cols; col += 1) {
+        line += pool[Math.floor(Math.random() * pool.length)];
+      }
+      lines.push(line);
     }
-  }
+    randomLayer.textContent = lines.join('\n');
+  };
   const reveal = () => {
+    window.clearInterval(cycleTimer);
     veil.classList.remove('is-revealing');
-    cells.forEach((cell) => {
-      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 960) + 'ms');
-      cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
-    });
-    void veil.offsetWidth;
-    requestAnimationFrame(() => veil.classList.add('is-revealing'));
+    makeNoise();
+    let cycles = 0;
+    cycleTimer = window.setInterval(() => {
+      makeNoise();
+      cycles += 1;
+      if (cycles >= 11) {
+        window.clearInterval(cycleTimer);
+        window.setTimeout(() => veil.classList.add('is-revealing'), 90);
+      }
+    }, 72);
   };
   reveal();
   window.addEventListener('pageshow', (event) => {
