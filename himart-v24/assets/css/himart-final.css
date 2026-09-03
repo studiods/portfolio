@@ -1,0 +1,73 @@
+/*
+ HIMART FINAL CSS v21-3
+
+ Extracted migration target.
+ Layers:
+ 01 reset
+ 02 typography
+ 03 layout
+ 04 section
+ 05 journey
+ 06 direction
+ 07 motion
+ 08 responsive
+
+ Legacy refine / rollback / test overrides are intentionally excluded.
+*/
+
+:root{
+ --hm-bg:#f4f2ed;
+ --hm-fg:#111;
+ --hm-muted:#76736d;
+ --hm-line:#a9a59d;
+ --hm-pad:clamp(18px,2.2vw,34px);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+ margin:0;
+ background:var(--hm-bg);
+ color:var(--hm-fg);
+ font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ font-weight:300;
+}
+
+.hm-section{
+ width:100%;
+ position:relative;
+}
+
+.hm-wrap{
+ width:100%;
+ padding-left:var(--hm-pad);
+ padding-right:var(--hm-pad);
+}
+
+.hm-section-title{
+ font-family:Pretendard,sans-serif;
+ font-weight:100;
+ line-height:.95;
+}
+
+.hm-reveal{
+ opacity:0;
+ transform:translateY(30px);
+ transition:opacity .8s ease,transform .8s ease;
+}
+
+.hm-reveal.is-visible{
+ opacity:1;
+ transform:none;
+}
+
+.journey-flow-block,
+.journey-role-grid,
+.direction-card,
+.role-card{
+ border-top:1px solid rgba(17,17,17,.4);
+}
+
+@media(max-width:850px){
+ .hm-wrap{padding-left:18px;padding-right:18px}
+}
