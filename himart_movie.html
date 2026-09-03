@@ -389,8 +389,8 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
       html(transition, transitionHTML);
     }
 
-    const section = document.querySelector('#journey .hm-subsection');
-    const grid = section?.querySelector('.role-grid');
+    const grid = document.querySelector('#journey .hm-subsection .role-grid');
+    const section = grid?.closest('.hm-subsection');
     if (section && grid) {
       text(section.querySelector('.hm-subno'), '03.2 / ROLE DEFINITION');
       let cards = [...grid.querySelectorAll(':scope > .role-card')];
