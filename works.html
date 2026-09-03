@@ -136,6 +136,13 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
   const cardRecords=[];
   cards.forEach((card,index)=>{
     const media=card.querySelector('.works-card-media');
+    const video=media?.querySelector('.works-card-video');
+    if(video){
+      video.muted=true;
+      video.setAttribute('muted','');
+      const playAttempt=video.play();
+      if(playAttempt&&playAttempt.catch)playAttempt.catch(()=>{});
+    }
     const company=card.querySelector('.works-card-company');
     const heading=card.querySelector('.works-card-title');
     const meta=card.querySelector('.works-card-meta');
@@ -179,6 +186,11 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
     };
     cardRecords.forEach((record,index)=>{
       const cardTop=record.card.getBoundingClientRect().top;
+      const video=record.card.querySelector('.works-card-video');
+      if(video&&video.paused){
+        const playAttempt=video.play();
+        if(playAttempt&&playAttempt.catch)playAttempt.catch(()=>{});
+      }
       let y=center, opacity=0;
       if(cardTop<viewportBottom){
         y=titleCenter(record,index,cardTop);
