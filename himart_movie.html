@@ -361,6 +361,9 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
 </script>
 <script id="himart-movie-request-lock">
 (() => {
+  const main = document.getElementById('live-main');
+  const fallbackMarkup = main?.innerHTML || '';
+  let restoredFallback = false;
   const roleCards = [
     ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.', '최근 맥락과 관심을 기억해 원하는 목적지로 바로 이어줍니다.', '맥락 기억 · 목적지 연결 · 개인화 진입'],
     ['SUBHOME / CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.', '상황과 설치 조건을 기준으로 탐색 방향을 빠르게 좁혀줍니다.', '상황 중심 탐색 · 조건 정리'],
@@ -421,8 +424,14 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
     queued = true;
     requestAnimationFrame(() => { queued = false; apply(); });
   };
-  const observer = new MutationObserver(schedule);
-  observer.observe(document.getElementById('live-main'), { childList:true, subtree:true });
+  const observer = new MutationObserver(() => {
+    if (!restoredFallback && main?.textContent?.includes('페이지를 불러오지 못했습니다.') && fallbackMarkup) {
+      restoredFallback = true;
+      main.innerHTML = fallbackMarkup;
+    }
+    schedule();
+  });
+  observer.observe(main, { childList:true, subtree:true });
   apply();
   updateHeroFade();
   window.addEventListener('scroll', updateHeroFade, { passive:true });
