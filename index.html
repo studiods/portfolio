@@ -16,6 +16,98 @@
   <link rel="stylesheet" href="./home-dark-theme.css?v=1">
 </head>
 <body class="home-test home-dark">
+<style id="index-scroll-guide-styles">
+  /* Idle scroll cue: fixed to the viewport, independent of page sections. */
+  .index-scroll-guide{
+    position:fixed;
+    z-index:2147483000;
+    right:40px;
+    top:50%;
+    transform:translateY(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    pointer-events:none;
+    color:#fff;
+  }
+  .index-scroll-guide-line{
+    position:relative;
+    width:2px;
+    height:33.333vh;
+    min-height:160px;
+    max-height:360px;
+    overflow:hidden;
+    background:rgba(255,255,255,.05);
+  }
+  .index-scroll-guide-line::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:#fff;
+    transform:scaleY(0);
+    transform-origin:top center;
+    opacity:0;
+  }
+  .index-scroll-guide.is-sweeping .index-scroll-guide-line::after{
+    animation:index-scroll-guide-sweep 1s cubic-bezier(.22,.61,.36,1) forwards;
+  }
+  .index-scroll-guide-label{
+    margin-top:12px;
+    font-family:"Averta PE",Arial,sans-serif;
+    font-weight:300;
+    font-size:12px;
+    line-height:1;
+    letter-spacing:.04em;
+    color:rgba(255,255,255,1);
+  }
+  @keyframes index-scroll-guide-sweep{
+    0%{transform:scaleY(0);opacity:0}
+    8%{opacity:1}
+    100%{transform:scaleY(1);opacity:0}
+  }
+  @media (max-width:850px){
+    .index-scroll-guide{right:20px}
+    .index-scroll-guide-line{height:30vh;min-height:120px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .index-scroll-guide{display:none}
+  }
+</style>
+<div class="index-scroll-guide" aria-hidden="true">
+  <div class="index-scroll-guide-line"></div>
+  <div class="index-scroll-guide-label">SCROLL</div>
+</div>
+<script>
+(() => {
+  const guide = document.querySelector('.index-scroll-guide');
+  if (!guide || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let idleTimer = 0;
+  let repeatTimer = 0;
+  const sweep = () => {
+    guide.classList.remove('is-sweeping');
+    void guide.offsetWidth;
+    guide.classList.add('is-sweeping');
+  };
+  const stop = () => {
+    window.clearTimeout(idleTimer);
+    window.clearInterval(repeatTimer);
+    repeatTimer = 0;
+    guide.classList.remove('is-sweeping');
+  };
+  const arm = () => {
+    stop();
+    idleTimer = window.setTimeout(() => {
+      sweep();
+      repeatTimer = window.setInterval(sweep, 2000);
+    }, 3000);
+  };
+  ['pointerdown','pointermove','wheel','touchstart','keydown','scroll'].forEach((eventName) => {
+    window.addEventListener(eventName, arm, {passive:true});
+  });
+  arm();
+})();
+</script>
+
 <nav class="top">
   <div class="top-center">
     <a href="./index.html" aria-current="page">Home</a>
