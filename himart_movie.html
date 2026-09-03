@@ -99,7 +99,22 @@ html body.himart-movie-page #journey .hm-role-name{font-family:'Averta PE',sans-
  html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{bottom:28px!important}
  html body.himart-movie-page .hm-movie-hero .hm-meta{grid-template-columns:1fr 1fr!important;height:auto!important}
 }
-</style><style id="himart-movie-lead-lock">html body.himart-movie-page .hm-movie-copy .hm-lead{opacity:1!important}html body.himart-movie-page .hm-movie-copy .hm-lead>span{display:block!important;color:rgba(255,255,255,.8)!important;opacity:1!important}</style></head>
+</style><style id="himart-movie-lead-lock">html body.himart-movie-page .hm-movie-copy .hm-lead{opacity:1!important}html body.himart-movie-page .hm-movie-copy .hm-lead>span{display:block!important;color:rgba(255,255,255,.8)!important;opacity:1!important}</style>
+<style id="himart-movie-verification-lock">
+html body.himart-movie-page .hm-movie-copy{opacity:var(--movie-copy-opacity,1)!important;transition:opacity .08s linear!important}
+html body.himart-movie-page .hm-movie-copy .hm-lead{margin:40px 0 0!important;color:rgb(255 255 255 / 80%)!important;opacity:1!important;white-space:normal!important}
+html body.himart-movie-page .hm-movie-copy .hm-lead br{display:block!important;content:""!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta{align-items:center!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta>div{justify-content:center!important;align-items:flex-start!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0!important;color:rgba(255,255,255,.8)!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta b{margin-top:2px!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis>h4{font:100 42px/1.18 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card b{margin:0!important;font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card.positive b{color:var(--hm-blue)!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card.negative b{color:var(--hm-red)!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{font:300 24px/1.45 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
+@media(max-width:780px){html body.himart-movie-page .hm-movie-copy .hm-lead{margin-top:28px!important}html body.himart-movie-page .narrative-touchpoint-synthesis>h4{font-size:36px!important}}
+</style></head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-movie-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
 <main id="live-main">
@@ -109,7 +124,7 @@ html body.himart-movie-page #journey .hm-role-name{font-family:'Averta PE',sans-
 <div class="hm-wrap">
   <div class="hm-movie-copy">
     <h1 class="hm-title js-scramble">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h1>
-    <p class="hm-lead"><span>화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤</span><span>전체 구매 여정의 역할을 다시 정의했습니다.</span></p>
+    <p class="hm-lead">화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.</p>
   </div>
   <div class="hm-hero-bottom">
     <div class="hm-meta">
@@ -163,8 +178,7 @@ html body.himart-movie-page #journey .hm-role-name{font-family:'Averta PE',sans-
 <div class="hm-subsection hm-reveal" style="margin-top:142px"><div class="hm-subhead"><span class="hm-subno">03.1 / ROLE DEFINITION</span><div><h3 class="hm-subtitle">그리고 각 화면의 역할을 다시 정의했습니다.</h3><p class="hm-subcopy">홈부터 결제까지 화면을 개별 산출물로 보지 않고, 앞 단계에서 받은 맥락을 다음 판단으로 넘기는 역할로 정의했습니다. 이 정의가 이후 프로토타입의 정보 우선순위와 인터랙션을 결정하는 기준이 됐습니다.</p></div></div><div class="role-grid"><article class="role-card"><span class="hm-role-name">HOME</span><h4>탐색을 시작시키는 허브</h4><p>최근 행동과 유입 맥락을 기억하고 검색·카테고리·혜택·주요 서비스로 빠르게 이동시킵니다. 홈의 역할을 ‘많이 보여주기’보다 ‘다음 목적지 연결’에 둡니다.</p><strong>최근 맥락 기억 · 빠른 목적지 연결 · 개인화 진입</strong></article><article class="role-card"><span class="hm-role-name">SUBHOME / CATEGORY</span><h4>구매 목적을 구체화하는 화면</h4><p>품목 분류만 나열하지 않고 사용 상황·공간·가구 형태·설치 조건처럼 실제 구매 기준을 중심으로 탐색 방향을 잡아줍니다.</p><strong>품목 중심 분류 → 상황·목적 중심 탐색</strong></article><article class="role-card"><span class="hm-role-name">SEARCH</span><h4>니즈를 상품 후보로 바꾸는 도구</h4><p>추천검색, 가이드, 동적 필터와 AI 요약을 통해 모호한 요구를 실제 상품 후보로 구체화하고 고관여 가전의 학습 비용을 낮춥니다.</p><strong>추천검색 · 동적 필터 · AI 요약 · 탐색 가이드</strong></article><article class="role-card"><span class="hm-role-name">SRP / PLP</span><h4>후보를 빠르게 압축하는 비교 화면</h4><p>대표 가격·혜택·리뷰·설치 조건과 핵심 스펙을 같은 기준으로 비교하고 검색에서 사용한 필터와 맥락을 목록까지 유지합니다.</p><strong>지속 필터 · 핵심 비교 기준 · 가격/혜택 명확화</strong></article><article class="role-card"><span class="hm-role-name">PDP</span><h4>구매 확신을 완료하는 곳</h4><p>가격과 혜택, 리뷰, 설치 조건, 매장 실물 확인, 전문 상담과 케어 정보를 하나의 판단 흐름으로 연결합니다.</p><strong>가격 · 설치 · 매장 · 상담 · 케어를 한 번에 판단</strong></article><article class="role-card"><span class="hm-role-name">CART / PAY</span><h4>최종 조건을 확인하고 확정하는 화면</h4><p>총 결제금액, 적용 혜택, 배송·설치 조건을 명확히 고정해서 보여주고 구매에 필요한 입력만 남깁니다.</p><strong>총액 고정 · 혜택 확인 · 설치 조건 확정 · 입력 최소화</strong></article><article class="role-card"><span class="hm-role-name">INSTALL / CARE</span><h4>관리 관계가 시작되는 화면</h4><p>설치 일정, 폐가전 회수, 보증, A/S와 케어 상태를 하나의 흐름으로 연결해 구매 이후에도 관리가 이어지도록 합니다.</p><strong>설치 상태 · 회수 · 보증 · A/S · 평생Care 연결</strong></article></div></div>
 </div></section>
 
-<section class="hm-section" id="direction" data-chapter="04"><div class="hm-wrap"><div class="hm-section-head hm-reveal"><div><span class="hm-section-no">04</span><h2 class="hm-section-title js-scramble">UX 전략을 바탕으로 빠르게 프로토타입을 만들고,
-내부 검증을 반복하고 있습니다.</h2></div><p class="hm-section-desc">정의한 역할을 실제 화면과 인터랙션으로 빠르게 옮기고, 내부 리뷰와 검증을 통해 정보 위계와 연결 방식을 반복해서 조정하고 있습니다. 현재는 서비스 오픈 전 단계이므로 세부 설계 화면은 제한적으로만 공개합니다.</p></div><div class="prototype-intro hm-reveal"><h3>전략 문서에서 끝내지 않고,<br>실제로 검증 가능한 화면으로 전환했습니다.</h3><p>홈·서브홈·검색·SRP/PLP·PDP·장바구니·결제·설치/케어까지 핵심 흐름을 프로토타입으로 연결하고 있습니다. 공개 가능한 범위에서는 구조와 진행 범위를 보여주되, 오픈 전 세부 UI는 블러 처리했습니다.</p></div><div class="phone-gallery hm-reveal"><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div></div></section>
+<section class="hm-section" id="direction" data-chapter="04"><div class="hm-wrap"><div class="hm-section-head hm-reveal"><div><span class="hm-section-no">04</span><h2 class="hm-section-title js-scramble">앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.</h2></div><p class="hm-section-desc">정의한 역할을 실제 화면과 인터랙션으로 빠르게 옮기고, 내부 리뷰와 검증을 통해 정보 위계와 연결 방식을 반복해서 조정하고 있습니다. 현재는 서비스 오픈 전 단계이므로 세부 설계 화면은 제한적으로만 공개합니다.</p></div><div class="prototype-intro hm-reveal"><h3>전략 문서에서 끝내지 않고,<br>실제로 검증 가능한 화면으로 전환했습니다.</h3><p>홈·서브홈·검색·SRP/PLP·PDP·장바구니·결제·설치/케어까지 핵심 흐름을 프로토타입으로 연결하고 있습니다. 공개 가능한 범위에서는 구조와 진행 범위를 보여주되, 오픈 전 세부 UI는 블러 처리했습니다.</p></div><div class="phone-gallery hm-reveal"><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div></div></section>
 
 <footer class="hm-footer" id="contact"><div class="hm-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart-reuse.html">중고 가전의 신뢰 기준 만들기 →</a></div></div></footer>
 </main>
@@ -343,6 +357,77 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
   observer.observe(document.body,{childList:true,subtree:true});
   run();
   setTimeout(()=>{run();if(observer)observer.disconnect()},10000);
+})();
+</script>
+<script id="himart-movie-request-lock">
+(() => {
+  const roleCards = [
+    ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.', '최근 맥락과 관심을 기억해 원하는 목적지로 바로 이어줍니다.', '맥락 기억 · 목적지 연결 · 개인화 진입'],
+    ['SUBHOME / CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.', '상황과 설치 조건을 기준으로 탐색 방향을 빠르게 좁혀줍니다.', '상황 중심 탐색 · 조건 정리'],
+    ['SEARCH', '검색은 불확실성을<br>확신으로 바꿔줘야 한다.', '모호한 요구를 추천검색과 필터로 실제 후보까지 구체화합니다.', '추천검색 · 동적 필터 · 탐색 가이드'],
+    ['SRP / PLP', '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.', '가격·혜택·설치 조건과 핵심 스펙을 같은 기준으로 비교하게 합니다.', '지속 필터 · 핵심 비교 · 조건 명확화'],
+    ['PDP', '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.', '가격·설치·매장·상담·케어를 한 흐름 안에서 판단하게 합니다.', '가격 · 설치 · 매장 · 상담 · 케어'],
+    ['CART / PAY', '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.', '총액과 혜택, 배송·설치 조건을 고정해 마지막 불확실성을 줄입니다.', '총액 고정 · 혜택 확인 · 조건 확정'],
+    ['INSTALL / CARE', '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.', '설치 일정과 회수·보증 정보를 주문 맥락 안에서 분명하게 보여줍니다.', '일정 확정 · 회수 · 보증 · A/S'],
+    ['MYPAGE', '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.', '주문 상태와 보증·A/S·케어 정보를 한곳에서 이어서 관리합니다.', '주문 상태 · 보증 · 케어 관리'],
+    ['POST-PURCHASE', '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.', '관심과 관리 이력을 다음 방문과 재구매로 자연스럽게 연결합니다.', '관심 기억 · 관리 연결 · 재방문']
+  ];
+
+  const html = (el, value) => { if (el && el.innerHTML !== value) el.innerHTML = value; };
+  const text = (el, value) => { if (el && el.textContent !== value) el.textContent = value; };
+  const apply = () => {
+    const lead = document.querySelector('.hm-movie-copy .hm-lead');
+    html(lead, '화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.');
+
+    const directionTitle = document.querySelector('#direction .hm-section-title');
+    html(directionTitle, '앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.');
+
+    const transition = document.querySelector('#brand .narrative-touchpoint-synthesis, #brand .brand-synthesis');
+    if (transition) {
+      transition.className = 'brand-synthesis narrative-touchpoint-synthesis';
+      const transitionHTML = '<span class="narrative-subno synthesis-subno">01.3 / TRANSITION TOUCHPOINT</span><h4>결국 문제는 인지가 아니라<br>구매 전환 과정에 있었습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 오프라인 자산이 있었습니다.</p></article><article class="synthesis-card negative"><b>온라인에서 끊기던 지점</b><p>인지 → 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록<br>편의성과 연결성이 약해졌습니다.</p></article></div>';
+      html(transition, transitionHTML);
+    }
+
+    const section = document.querySelector('#journey .hm-subsection');
+    const grid = section?.querySelector('.role-grid');
+    if (section && grid) {
+      text(section.querySelector('.hm-subno'), '03.2 / ROLE DEFINITION');
+      let cards = [...grid.querySelectorAll(':scope > .role-card')];
+      while (cards.length < roleCards.length) {
+        const clone = cards[cards.length - 1]?.cloneNode(true);
+        if (!clone) break;
+        grid.appendChild(clone);
+        cards = [...grid.querySelectorAll(':scope > .role-card')];
+      }
+      cards.slice(0, roleCards.length).forEach((card, i) => {
+        const [label, title, copy, keywords] = roleCards[i];
+        text(card.querySelector('.hm-role-name'), label);
+        html(card.querySelector('h4'), title);
+        text(card.querySelector('p'), copy);
+        text(card.querySelector('strong'), keywords);
+      });
+    }
+  };
+
+  const updateHeroFade = () => {
+    const progress = Math.min(1, Math.max(0, window.scrollY || 0) / 420);
+    document.documentElement.style.setProperty('--movie-copy-opacity', String((1 - progress * .88).toFixed(3)));
+  };
+
+  let queued = false;
+  const schedule = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; apply(); });
+  };
+  const observer = new MutationObserver(schedule);
+  observer.observe(document.getElementById('live-main'), { childList:true, subtree:true });
+  apply();
+  updateHeroFade();
+  window.addEventListener('scroll', updateHeroFade, { passive:true });
+  window.addEventListener('load', schedule, { once:true });
+  setTimeout(() => { apply(); observer.disconnect(); }, 4500);
 })();
 </script></body>
 </html>
