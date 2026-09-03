@@ -57,6 +57,10 @@ body.works-page-body>.works-title-layer{position:fixed!important;display:block!i
 body.works-page-body .works-grid{display:block!important;position:relative!important;z-index:2!important;margin:0!important;padding:0!important}
 body.works-page-body .works-card{position:relative!important;display:block!important;width:100%!important;min-height:100vh!important;margin:0!important;padding:0!important;overflow:visible!important;background:#050505!important}
 body.works-page-body .works-card-media{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;aspect-ratio:16/9!important;border:1px solid rgba(255,255,255,.28)!important;background:#050505!important;background-image:none!important;overflow:hidden!important;z-index:0!important}
+body.works-page-body .works-card-video{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:0!important;display:block!important}
+body.works-page-body .works-card-matte{position:absolute!important;inset:0!important;background:#000!important;opacity:.6!important;z-index:2!important;pointer-events:none!important}
+body.works-page-body .works-card-media.has-video::before,
+body.works-page-body .works-card-media.has-video::after{display:none!important}
 body.works-page-body .works-card-stage{position:sticky!important;top:0!important;width:100%!important;height:100vh!important;display:flex!important;align-items:center!important;z-index:5!important;pointer-events:none!important}
 body.works-page-body .works-card-copy{position:relative!important;top:auto!important;left:auto!important;width:min(70%,860px)!important;height:auto!important;margin:0 40px!important;padding:0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;transform:none!important;z-index:6!important;pointer-events:none!important;text-shadow:0 2px 24px rgba(0,0,0,.65);will-change:opacity}
 body.works-page-body .works-card-title{order:1!important;margin:0!important;color:#fff!important;font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;font-size:52px!important;font-weight:100!important;line-height:1.12!important;letter-spacing:-.055em!important;word-break:keep-all!important}
@@ -104,8 +108,8 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
   </nav>
 
   <section class="works-grid" aria-label="주요 프로젝트">
-    <a id="works-project-1" class="works-card" href="./himart.html" data-date="202407" data-recent-rank="1" data-company="LOTTE HIMART" data-company-rank="1"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko">하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다.</h2><p class="works-card-meta">LOTTE HIMART · COMMERCE JOURNEY</p></a>
-    <a id="works-project-2" class="works-card" href="./himart-reuse.html" data-date="202407" data-recent-rank="2" data-company="LOTTE HIMART" data-company-rank="2"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko">중고 가전의 신뢰 기준 만들기</h2><p class="works-card-meta">LOTTE HIMART · REUSE</p></a>
+    <a id="works-project-1" class="works-card" href="./himart.html" data-date="202407" data-recent-rank="1" data-company="LOTTE HIMART" data-company-rank="1"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media has-video"><video class="works-card-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="./assets/himart_01.mp4" type="video/mp4"></video><div class="works-card-matte" aria-hidden="true"></div></div><h2 class="works-card-title ko">하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다.</h2><p class="works-card-meta">LOTTE HIMART · COMMERCE JOURNEY</p></a>
+    <a id="works-project-2" class="works-card" href="./himart-reuse.html" data-date="202407" data-recent-rank="2" data-company="LOTTE HIMART" data-company-rank="2"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media has-video"><video class="works-card-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="./assets/reuse_01.mp4" type="video/mp4"></video><div class="works-card-matte" aria-hidden="true"></div></div><h2 class="works-card-title ko">중고 가전의 신뢰 기준 만들기</h2><p class="works-card-meta">LOTTE HIMART · REUSE</p></a>
     <a id="works-project-3" class="works-card" href="./himart-ways.html" data-date="202407" data-recent-rank="3" data-company="LOTTE HIMART" data-company-rank="3"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko">일이 남는 협업 방식 만들기</h2><p class="works-card-meta">LOTTE HIMART · WAYS OF WORKING</p></a>
     <a id="works-project-4" class="works-card" href="./himart-team.html" data-date="202407" data-recent-rank="4" data-company="LOTTE HIMART" data-company-rank="4"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko">새 팀의 공통 언어 만들기</h2><p class="works-card-meta">LOTTE HIMART · TEAM WORKSHOP</p></a>
     <a id="works-project-5" class="works-card" href="./himart-automation.html" data-date="202407" data-recent-rank="5" data-company="LOTTE HIMART" data-company-rank="5"><p class="works-card-company">LOTTE HIMART <span>2024.07—NOW</span></p><div class="works-card-media"></div><h2 class="works-card-title ko">반복 디자인 업무 자동화하기</h2><p class="works-card-meta">LOTTE HIMART · AI AUTOMATION</p></a>
@@ -156,12 +160,12 @@ body.works-page-body .works-card-title{font-family:'Pretendard Variable',Pretend
     const range=Math.max(1,Math.min(460,hero.offsetHeight*.52));
     const p=reduced?(window.scrollY>32?1:0):clamp(window.scrollY/range,0,1);
     const sizeStart=clamp(window.innerWidth*.09,72,160);
-    const size=sizeStart-(sizeStart-24)*p;
+    const size=sizeStart-(sizeStart-32)*p;
     title.style.top=(50-40*p)+'vh';
     title.style.left=(window.innerWidth<=780?36:40)+'px';
     title.style.setProperty('font-size',size+'px','important');
     title.style.setProperty('transform','translateY('+((-50+50*p).toFixed(2))+'%)','important');
-    title.style.setProperty('opacity',(1-.4*p).toFixed(3),'important');
+    title.style.setProperty('opacity','1','important');
     const center=window.innerHeight*.5;
     const viewportBottom=window.innerHeight;
     const handoffGap=30;
