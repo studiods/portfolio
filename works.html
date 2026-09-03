@@ -119,6 +119,9 @@ body.works-page-body{margin:0;background:#050505;color:#fff;overflow-x:hidden}
     cards.forEach((card,index)=>{
       const copy=card.querySelector('.works-card-copy');
       if(!copy)return;
+      const centeredTop=Math.max(12,(window.innerHeight-copy.offsetHeight)/2);
+      copy.style.setProperty('top',centeredTop+'px','important');
+      copy.style.setProperty('transform','none','important');
       const next=cards[index+1];
       if(!next){copy.style.opacity='1';return;}
       const nextTop=next.getBoundingClientRect().top;
