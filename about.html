@@ -18,21 +18,40 @@
     .interview-row:first-child .interview-q{color:rgba(244,242,237,.8)}
     .about-ascii-canvas{position:relative;z-index:1}
     .about-ascii-blackout{z-index:2}
-    /* Start the About page from pure black, then reveal the existing 30% veil. */
+    /* Randomized black-cell reveal: the ASCII portrait appears through a
+       staggered field of glyphs instead of a uniform fade. */
     .about-load-blackout{
       position:fixed;
       inset:0;
       z-index:2147483647;
+      display:grid;
+      grid-template-columns:repeat(16,1fr);
+      grid-template-rows:repeat(9,1fr);
+      background:transparent;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .about-load-cell{
+      position:relative;
+      display:block;
+      min-width:0;
+      min-height:0;
       background:#000;
       opacity:1;
-      pointer-events:none;
+      transition:opacity .24s linear;
+      transition-delay:var(--cell-delay,0ms);
     }
-    .about-load-blackout.is-revealing{
-      animation:about-load-brighten 1.2s cubic-bezier(.2,.9,.2,1) forwards;
+    .about-load-cell::after{
+      content:attr(data-glyph);
+      position:absolute;
+      inset:50% auto auto 50%;
+      transform:translate(-50%,-50%);
+      color:rgba(255,255,255,.46);
+      font:300 clamp(10px,1.35vw,20px)/1 "Averta PE",Arial,sans-serif;
+      letter-spacing:.06em;
     }
-    @keyframes about-load-brighten{
-      0%,45%{opacity:1}
-      100%{opacity:0}
+    .about-load-blackout.is-revealing .about-load-cell{
+      opacity:0;
     }
     @media(prefers-reduced-motion:reduce){
       .about-load-blackout{display:none}
@@ -44,9 +63,25 @@
 <script>
 (() => {
   const veil = document.querySelector('.about-load-blackout');
-  if (!veil) return;
+  if (!veil || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const glyphs = '#@%*+=-:.01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const cells = [];
+  for (let row = 0; row < 9; row += 1) {
+    for (let col = 0; col < 16; col += 1) {
+      const cell = document.createElement('span');
+      cell.className = 'about-load-cell';
+      cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 850) + 'ms');
+      veil.appendChild(cell);
+      cells.push(cell);
+    }
+  }
   const reveal = () => {
     veil.classList.remove('is-revealing');
+    cells.forEach((cell) => {
+      cell.style.setProperty('--cell-delay', Math.floor(Math.random() * 850) + 'ms');
+      cell.dataset.glyph = glyphs[Math.floor(Math.random() * glyphs.length)];
+    });
     void veil.offsetWidth;
     requestAnimationFrame(() => veil.classList.add('is-revealing'));
   };
