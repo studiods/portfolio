@@ -48,12 +48,14 @@ body.works-page-body{margin:0;background:#050505;color:#fff;overflow-x:hidden}
 /* Hold each full-screen project briefly at its top edge before the next wheel
    gesture releases it. Native scroll snapping keeps the handoff crisp rather
    than applying a continuous smooth-scroll interpolation. */
-html{scroll-snap-type:y mandatory!important;scroll-behavior:auto!important}
-body.works-page-body{scroll-snap-type:y mandatory!important;scroll-behavior:auto!important}
+/* Reduced snap intensity: cards still catch at their top edge, but the
+   viewport can release with a lighter gesture instead of hard-locking. */
+html{scroll-snap-type:y proximity!important;scroll-behavior:auto!important}
+body.works-page-body{scroll-snap-type:y proximity!important;scroll-behavior:auto!important}
 body.works-page-body .works-hero,
 body.works-page-body .works-card{
   scroll-snap-align:start!important;
-  scroll-snap-stop:always!important;
+  scroll-snap-stop:normal!important;
 }
 
 /* Final fullscreen interaction contract (kept last to beat legacy case-page rules). */
