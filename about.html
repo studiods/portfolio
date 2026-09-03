@@ -18,9 +18,44 @@
     .interview-row:first-child .interview-q{color:rgba(244,242,237,.8)}
     .about-ascii-canvas{position:relative;z-index:1}
     .about-ascii-blackout{z-index:2}
+    /* Start the About page from pure black, then reveal the existing 30% veil. */
+    .about-load-blackout{
+      position:fixed;
+      inset:0;
+      z-index:2147483647;
+      background:#000;
+      opacity:1;
+      pointer-events:none;
+    }
+    .about-load-blackout.is-revealing{
+      animation:about-load-brighten .48s cubic-bezier(.2,.9,.2,1) forwards;
+    }
+    @keyframes about-load-brighten{
+      0%,45%{opacity:1}
+      100%{opacity:0}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .about-load-blackout{display:none}
+    }
   </style>
 </head>
 <body>
+<div class="about-load-blackout" aria-hidden="true"></div>
+<script>
+(() => {
+  const veil = document.querySelector('.about-load-blackout');
+  if (!veil) return;
+  const reveal = () => {
+    veil.classList.remove('is-revealing');
+    void veil.offsetWidth;
+    requestAnimationFrame(() => veil.classList.add('is-revealing'));
+  };
+  reveal();
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) reveal();
+  });
+})();
+</script>
 <nav class="top">
   <div class="top-center">
     <a href="./index.html">Home</a>
