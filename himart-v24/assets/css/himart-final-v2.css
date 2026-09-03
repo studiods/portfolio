@@ -1,0 +1,64 @@
+/*
+ HIMART FINAL CSS v2
+
+ v21-4 extraction layer
+ - hero
+ - data
+ - journey
+ - direction
+ - motion placeholders
+ - responsive foundation
+
+ This file is prepared as the migration target before final production swap.
+*/
+
+:root{
+ --hm-bg:#000;
+ --hm-fg:#fff;
+ --hm-line:rgba(255,255,255,.2);
+ --hm-muted:rgba(255,255,255,.6);
+}
+
+.himart-final{
+ background:var(--hm-bg);
+ color:var(--hm-fg);
+}
+
+.hm-section{
+ width:100%;
+ position:relative;
+}
+
+.hm-wrap{
+ width:min(1400px,calc(100% - 80px));
+ margin:0 auto;
+}
+
+.hm-section-title{
+ font-family:Pretendard,sans-serif;
+ font-weight:100;
+}
+
+.hm-reveal{
+ opacity:0;
+ transform:translateY(40px);
+}
+
+.hm-reveal.is-visible{
+ opacity:1;
+ transform:none;
+ transition:opacity .8s ease,transform .8s ease;
+}
+
+.journey-flow-block,
+.journey-role-grid,
+.direction-card,
+.role-card{
+ border-top:1px solid var(--hm-line);
+}
+
+@media(max-width:850px){
+ .hm-wrap{
+  width:calc(100% - 40px);
+ }
+}
