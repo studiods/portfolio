@@ -18,50 +18,9 @@
     .interview-row:first-child .interview-q{color:rgba(244,242,237,.8)}
     .about-ascii-canvas{position:relative;z-index:1}
     .about-ascii-blackout{z-index:2}
-    /* Initial reveal: pure black settles to the existing ASCII veil. */
-    .about-load-blackout{
-      position:fixed;
-      inset:0;
-      z-index:2147483647;
-      background:#000;
-      opacity:1;
-      pointer-events:none;
-      overflow:hidden;
-      transition:opacity 1.5s cubic-bezier(.22,1,.36,1);
-      will-change:opacity;
-    }
-    .about-load-blackout.is-revealing{
-      opacity:.05;
-    }
-    @media(prefers-reduced-motion:reduce){
-      .about-load-blackout{opacity:.05;transition:none}
-    }
   </style>
 </head>
 <body>
-<div class="about-load-blackout" aria-hidden="true"></div>
-<script>
-(() => {
-  const veil = document.querySelector('.about-load-blackout');
-  if (!veil) return;
-  // Let the existing ASCII canvas begin rendering underneath immediately,
-  // then ease the pure-black layer down to the current 5% veil over 1.5s.
-  const reveal = () => {
-    veil.classList.remove('is-revealing');
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      veil.classList.add('is-revealing');
-    }));
-  };
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    veil.classList.add('is-revealing');
-    return;
-  }
-  reveal();
-  window.addEventListener('pageshow', event => {
-    if (event.persisted) reveal();
-  });
-})();
-</script>
 <nav class="top">
   <div class="top-center">
     <a href="./index.html">Home</a>
