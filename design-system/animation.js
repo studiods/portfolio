@@ -3,7 +3,7 @@
 (() => {
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const revealTargets = document.querySelectorAll('[data-hm-reveal]');
-  const counterTargets = document.querySelectorAll('[data-hm-counter]');
+  const counterTargets = document.querySelectorAll('[data-hm-counter], [data-count]');
   const hero = document.querySelector('[data-hm-hero]');
   const video = document.querySelector('[data-hm-video]');
 
@@ -24,10 +24,10 @@
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
-        const end = Number(el.dataset.hmCounter);
+        const end = Number(el.dataset.hmCounter ?? el.dataset.count);
         if (!Number.isFinite(end)) return;
-        const decimals = Number(el.dataset.hmDecimals || 0);
-        const duration = Number(el.dataset.hmDuration || 1200);
+        const decimals = Number(el.dataset.hmDecimals ?? el.dataset.decimals ?? 0);
+        const duration = Number(el.dataset.hmDuration ?? 1200);
         const start = performance.now();
         const tick = now => {
           const p = Math.min(1, (now - start) / duration);
@@ -42,7 +42,7 @@
     counterTargets.forEach(el => counterObserver.observe(el));
   } else {
     revealTargets.forEach(el => el.classList.add('is-visible'));
-    counterTargets.forEach(el => { el.textContent = Number(el.dataset.hmCounter).toFixed(Number(el.dataset.hmDecimals || 0)); });
+    counterTargets.forEach(el => { el.textContent = Number(el.dataset.hmCounter ?? el.dataset.count).toFixed(Number(el.dataset.hmDecimals ?? el.dataset.decimals ?? 0)); });
   }
 
   if (hero && !reduce) {
