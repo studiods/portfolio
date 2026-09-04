@@ -206,4 +206,4 @@
 - `content-runtime.js`는 기존 콘텐츠 치환·구조 보정만 담당하며 `IntersectionObserver`, `requestAnimationFrame`, 카운터/스크롤 애니메이션을 포함하지 않는다.
 - `animation.js`는 reveal, counter, hero scroll, video viewport 재생만 담당한다. 기존 `data-count`도 호환한다.
 - 운영 기준 파일 `himart.html` 및 기존 production CSS/runtime은 변경하지 않았다.
-- 테스트 페이지의 인라인 legacy compatibility script에서는 난수·rise·scroll·rAF 애니메이션을 제거했다. 남은 MutationObserver/지연 실행은 콘텐츠 보정 잠금용이며, 다음 단계에서 정적 HTML로 승격해 제거한다. 새 애니메이션 로직은 이 인라인 블록에 추가하지 않는다.
+- 테스트 페이지의 인라인 스크립트를 모두 제거하고 `test-content-loader.js`와 `test-content-final.js`로 외부화했다. 콘텐츠 로더/보정 레이어에는 애니메이션 코드를 두지 않으며, 애니메이션은 `animation.js`가 독점한다. 다음 단계는 이 외부 콘텐츠 보정 로직을 정적 HTML로 승격해 제거하는 것이다.
