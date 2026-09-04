@@ -70,7 +70,7 @@ function data(main){
   if(b)b.innerHTML='사용자 의견에서는 <strong>“온라인몰이 잘 떠오르지 않는다”</strong>는 이야기가 반복됐고, 실제 이용 데이터에서는 <strong>“들어와도 다음 단계로 이어지지 않는다”</strong>는 행동이 확인됐습니다. 두 결과가 같은 방향을 가리켜 목표를 <strong>‘화면을 새로 만든다’가 아니라 ‘고객의 구매 여정 안에 자리를 만든다’</strong>로 다시 정의했습니다.';
 }
 
-const fn=(n,t,p)=>`<article class="flow-node"><span class="hm-card-no">${n}</span><h4>${t}</h4><p>${p}</p></article>`;
+const fn=(n,t,p)=>`<article class="flow-node hm-ds-card hm-ds-flow-node"><span class="hm-card-no">${n}</span><h4>${t}</h4><p>${p}</p></article>`;
 const ar=()=>'<div class="flow-arrow">›</div>';
 const roles=[
   ['HOME','원하는 곳으로<br>보내주는 허브','최근 관심 상품·혜택·서비스를 기억하고 원하는 목적지로 바로 이어줍니다.'],
