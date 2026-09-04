@@ -1,0 +1,21 @@
+/* HIMART Design System v1.0 — typography foundation */
+@font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+.hm-ds-en{font-family:var(--hm-font-en);font-weight:300}
+.hm-ds-ko{font-family:var(--hm-font-ko);font-weight:300}
+.hm-ds-hero{font:300 var(--hm-type-hero)/1.04 var(--hm-font-ko);letter-spacing:-.045em}
+.hm-ds-section{font:300 var(--hm-type-section)/1.18 var(--hm-font-ko);letter-spacing:-.045em}
+.hm-ds-subsection{font:300 var(--hm-type-subsection)/1.25 var(--hm-font-ko);letter-spacing:-.04em}
+.hm-ds-group{font:300 var(--hm-type-group)/1.35 var(--hm-font-ko);letter-spacing:-.035em}
+.hm-ds-body{font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);letter-spacing:-.02em}
+.hm-ds-note{font:400 var(--hm-type-note)/1.4 var(--hm-font-en);letter-spacing:.04em}
+@media (max-width:780px){
+  .hm-ds-hero{font-size:clamp(30px,8.6vw,35px)}
+  .hm-ds-section{font-size:clamp(29px,8vw,33px)}
+  .hm-ds-subsection{font-size:clamp(23px,6.5vw,26px)}
+  .hm-ds-group{font-size:clamp(20px,5.6vw,22px)}
+  .hm-ds-body{font-size:clamp(14px,3.9vw,16px)}
+  .hm-ds-note{font-size:clamp(12px,3.35vw,14px)}
+}
