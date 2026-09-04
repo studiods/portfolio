@@ -181,3 +181,20 @@
 6. runtime을 animation-only 구조로 축소
 7. 기존 화면과 pixel/section 비교
 8. 승인 후 원본 적용 여부 결정
+
+## 10. Separated File Map
+
+정적 스타일은 `design-system/index.css`를 진입점으로 관리한다.
+
+- `tokens.css`: 색상·타입·간격·레이아웃 변수
+- `typography.css`: 폰트 로드와 타입 클래스
+- `spacing.css`: 컨테이너·간격·라인
+- `layout.css`: 페이지 공통 레이아웃
+- `components/hero.css`: 영상 Hero와 메타
+- `components/section.css`: 장·서브섹션 헤더
+- `components/cards.css`: 통계·시그널·역할 카드
+- `components/narrative.css`: 합성 블록·여정·프로토타입
+- `motion.css`: 정적 transition과 reduced-motion
+- `animation.js`: reveal·counter·scroll·video만 담당하며 콘텐츠와 CSS를 교체하지 않음
+
+운영 페이지 연결 전, 각 컴포넌트를 기존 DOM에 매핑하고 시각 비교를 진행한다.
