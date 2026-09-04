@@ -190,8 +190,8 @@ const main=document.getElementById('live-main');
 const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const loadScript=src=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.body.appendChild(s)});
 const textNodesFor=(el)=>{const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.nodeValue&&node.nodeValue.trim().length?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});const nodes=[];let node;while((node=walker.nextNode()))nodes.push(node);return nodes};
-const scrambleLargeTitle=(el)=>{if(!el||el.dataset.wideLargeScramblePlayed==='1')return;el.dataset.wideLargeScramblePlayed='1';if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const parts=textNodesFor(el).map(node=>({node,original:node.nodeValue}));const mutable=(ch)=>/[\p{L}\p{N}]/u.test(ch);const total=parts.reduce((sum,part)=>sum+[...part.original].filter(mutable).length,0);if(!total)return;const started=performance.now();const duration=Math.min(1450,650+total*13);const tick=(now)=>{const p=Math.min(1,(now-started)/duration),resolved=Math.floor(total*Math.pow(p,.72));let cursor=0;parts.forEach((part,pi)=>{part.node.nodeValue=[...part.original].map((ch,ci)=>{if(!mutable(ch))return ch;const idx=cursor++;if(idx<resolved||p>=1)return ch;return pool[(pi*29+ci*17+Math.floor(now/44))%pool.length]}).join('')});if(p<1)requestAnimationFrame(tick);else parts.forEach(part=>part.node.nodeValue=part.original)};requestAnimationFrame(tick)};
-const prepareWideMotion=()=>{main.querySelectorAll('.hm-section-no').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');main.querySelectorAll('.data-card-head .hm-card-no,.data-card-head h3,.hm-subhead .hm-subno,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .hm-card-no,.data-bridge > .data-bridge-title').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');main.querySelectorAll('.flow-label').forEach(el=>el.dataset.flowLabelScramblePlayed='1');const riseTargets=[...main.querySelectorAll('.data-card-head h3,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .data-bridge-title,.narrative-title,.problem-item h4,.proof-item strong,.signal-item b,.principle-item h4,.design-rule h4')];riseTargets.forEach(el=>el.classList.add('wide-rise-target'));if(matchMedia('(prefers-reduced-motion: reduce)').matches){riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'))}else if('IntersectionObserver' in window){const rio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-wide-rise-in');rio.unobserve(entry.target)}}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});riseTargets.forEach(el=>rio.observe(el))}else riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));const hero=main.querySelector('.hm-title');if(hero){if('IntersectionObserver' in window){const hio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){scrambleLargeTitle(entry.target);hio.disconnect()}}),{threshold:.2});hio.observe(hero)}else scrambleLargeTitle(hero)}};
+const scrambleLargeTitle=()=>{};
+const prepareWideMotion=()=>{};
 const elFromHTML=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
 const wrapMore=(parent,nodes,label,meta='DETAILS')=>{const valid=nodes.filter(Boolean).filter(node=>node.parentElement===parent);if(!valid.length)return null;const details=document.createElement('details');details.className='hm-more';details.innerHTML=`<summary>${label}<span>${meta}</span></summary><div class="hm-more-body"></div>`;const body=details.querySelector('.hm-more-body');parent.insertBefore(details,valid[0]);valid.forEach(node=>body.appendChild(node));details.addEventListener('toggle',()=>{if(details.open){requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')))}});return details};
 const applyNarrativeTest=()=>{
@@ -208,68 +208,7 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
 </script>
 <script src="./design-system/content-runtime.js?v=20260904-1"></script>
 <script src="./design-system/animation.js?v=20260904-1"></script>
-<script>
-(function(){
-  const movieHero=document.querySelector('.hm-movie-hero');
-  const overlay=document.querySelector('.hm-movie-overlay');
-  const updateMovieDarkness=()=>{
-    const y=Math.max(0,window.scrollY||0);
-    const eased=1-Math.exp(-y/260);
-    document.documentElement.style.setProperty('--movie-darkness',(0.5+0.45*eased).toFixed(3));
-  };
-  updateMovieDarkness();
-  window.addEventListener('scroll',updateMovieDarkness,{passive:true});
-  const applyRoleDefinitions=()=>{
-    const titles=[
-      '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.',
-      '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.',
-      '검색은 불확실성을<br>확신으로 바꿔줘야 한다.',
-      '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.',
-      '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.',
-      '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.',
-      '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.',
-      '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.',
-      '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.'
-    ];
-    const root=document.querySelector('#journey');
-    if(!root)return false;
-    const nodes=[...root.querySelectorAll('.hm-subsection .hm-subtitle')];
-    if(nodes.length<8)return false;
-    nodes.slice(0,8).forEach((el,i)=>{el.innerHTML=titles[i];el.classList.add('movie-role-title')});
-    if(nodes.length<9){
-      const last=nodes[7].closest('.hm-subsection');
-      if(last){
-        const clone=last.cloneNode(true);
-        const no=clone.querySelector('.hm-subno'); if(no)no.textContent='03.9 / ROLE DEFINITION';
-        const title=clone.querySelector('.hm-subtitle'); if(title)title.innerHTML=titles[8];
-        const copy=clone.querySelector('.hm-subcopy'); if(copy)copy.textContent='구매 이후의 관심과 상태를 기억하고, 다음 방문과 관리 행동으로 자연스럽게 이어줍니다.';
-        last.parentElement.insertBefore(clone,last.nextSibling);
-      }
-    }
-    root.querySelectorAll('.hm-subsection .hm-subtitle').forEach(el=>el.classList.add('movie-role-title'));
-    return true;
-  };
-  const shortenText=()=>{
-    const replacements=[
-      ['하이마트를 떠올리는 방식과 매장·온라인에 기대하는 역할을 확인했습니다.','하이마트를 떠올리는 방식과 온·오프라인 기대를 확인했습니다.'],
-      ['유입부터 다음 행동이 끊기는 지점까지 이용 데이터를 따라갔습니다.','유입부터 행동이 끊기는 지점까지 데이터를 따라갔습니다.'],
-      ['고객 의견과 행동 데이터가 함께 가리킨 문제만 남겼습니다.','고객 의견과 행동이 함께 가리킨 문제만 남겼습니다.']
-    ];
-    document.querySelectorAll('.hm-movie-hero, #brand, #data').forEach(root=>{
-      root.querySelectorAll('*').forEach(el=>{
-        if(el.children.length===0)replacements.forEach(([a,b])=>{if(el.textContent.includes(a))el.textContent=el.textContent.replace(a,b)});
-      });
-    });
-  };
-  let tries=0;
-  const finish=()=>{
-    applyRoleDefinitions(); shortenText();
-    if(++tries<20 && !document.querySelector('.movie-role-title'))setTimeout(finish,300);
-  };
-  window.addEventListener('load',()=>setTimeout(finish,400));
-  setTimeout(finish,900);
-})();
-</script><script id="himart-movie-content-final">
+<script></script><script id="himart-movie-content-final">
 (function(){
   const roleTitles=[
     '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.',
@@ -460,17 +399,10 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
     }
   };
 
-  const updateHeroFade = () => {
-    const progress = Math.min(1, Math.max(0, window.scrollY || 0) / 420);
-    document.documentElement.style.setProperty('--movie-copy-opacity', String((1 - progress * .88).toFixed(3)));
-  };
+  const updateHeroFade = () => {};
 
   let queued = false;
-  const schedule = () => {
-    if (queued) return;
-    queued = true;
-    requestAnimationFrame(() => { queued = false; apply(); });
-  };
+  const schedule = () => apply();
   const observer = new MutationObserver(() => {
     if (!restoredFallback && main?.textContent?.includes('페이지를 불러오지 못했습니다.') && fallbackMarkup) {
       restoredFallback = true;
@@ -481,7 +413,6 @@ try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');ap
   observer.observe(main, { childList:true, subtree:true });
   apply();
   updateHeroFade();
-  window.addEventListener('scroll', updateHeroFade, { passive:true });
   window.addEventListener('load', schedule, { once:true });
   const lateApply = window.setInterval(apply, 600);
   setTimeout(() => { apply(); observer.disconnect(); clearInterval(lateApply); }, 30000);
