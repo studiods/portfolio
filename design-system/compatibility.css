@@ -1,0 +1,16 @@
+@import url("./tokens.css");
+@import url("./typography.css");
+/* Bridge layer: maps the current Himart DOM to the new static tokens.
+   Remove selectors gradually as the HTML is migrated to hm-ds-* classes. */
+.himart-movie-page,.himart-movie-page #live-main{background:var(--hm-bg-page);color:var(--hm-text-primary)}
+.himart-movie-page .hm-title,.himart-movie-page .hm-section-title,.himart-movie-page .hm-subtitle,.himart-movie-page .journey-block-title{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:-.045em}
+.himart-movie-page .hm-section-desc,.himart-movie-page .hm-subcopy,.himart-movie-page .narrative-copy,.himart-movie-page .problem-item p,.himart-movie-page .proof-item p,.himart-movie-page .signal-item p,.himart-movie-page .role-card p{font-family:var(--hm-font-ko);font-weight:300;color:var(--hm-text-body)}
+.himart-movie-page .hm-section-no,.himart-movie-page .hm-subno,.himart-movie-page .hm-role-name{font-family:var(--hm-font-en);color:var(--hm-blue)}
+.himart-movie-page .hm-meta{border-color:var(--hm-line-default)}
+.himart-movie-page .hm-meta span{color:var(--hm-text-secondary)}
+.himart-movie-page .hm-meta b{color:var(--hm-text-primary)}
+.himart-movie-page .hm-section,.himart-movie-page .hm-section>.hm-wrap{background:var(--hm-bg-section)}
+.himart-movie-page .role-card,.himart-movie-page .proof-item,.himart-movie-page .signal-item,.himart-movie-page .problem-item{border-top-color:var(--hm-line-strong)}
+@media(max-width:780px){
+  .himart-movie-page .hm-section-desc,.himart-movie-page .hm-subcopy,.himart-movie-page .role-card p{font-size:clamp(14px,3.9vw,16px)}
+}
