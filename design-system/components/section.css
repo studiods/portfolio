@@ -1,0 +1,12 @@
+@import url("../tokens.css");
+@import url("../typography.css");
+.hm-ds-section{position:relative;background:var(--hm-bg-section)}
+.hm-ds-section__inner{padding-block:var(--hm-space-section)}
+.hm-ds-section__head{display:grid;grid-template-columns:180px 1fr;gap:40px;border-top:1px solid var(--hm-line-faint);padding-top:20px}
+.hm-ds-section__number,.hm-ds-subnumber{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:.04em}
+.hm-ds-section__title{margin:0}
+.hm-ds-section__description{margin:20px 0 0;max-width:900px;color:var(--hm-text-body)}
+.hm-ds-subsection{margin-top:var(--hm-space-subsection)}
+.hm-ds-subsection__title{margin:0}
+.hm-ds-subsection__description{margin:20px 0 0;color:var(--hm-text-body)}
+@media(max-width:780px){.hm-ds-section__inner{padding-block:clamp(80px,20vw,120px)}.hm-ds-section__head{display:block}.hm-ds-section__title{margin-top:16px}.hm-ds-section__description{margin-top:16px}}
