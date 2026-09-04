@@ -3,48 +3,448 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>신뢰를 설계하다 — 하이마트 인증 중고</title>
+<title>HIMART REUSE — 신뢰를 설계하다</title>
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260901-1">
 <style>
-:root{--ink:#050505;--line:rgba(255,255,255,.2);--muted:rgba(255,255,255,.6);--blue:#00a9e8;--cyan:#00c7d9;--green:#00e0b0;--yellow:#f5e900;--red:#ff4b20}
-*{box-sizing:border-box}html{background:var(--ink);scroll-behavior:smooth}body{margin:0;background:var(--ink);color:#fff;font-family:Pretendard,'Averta PE',Arial,sans-serif;overflow-x:hidden}
-.reuse-current .top{position:fixed!important;z-index:50!important;inset:0 0 auto!important;display:flex!important;justify-content:center!important;align-items:flex-start!important;padding:18px 34px!important;width:100%!important;height:auto!important;transform:none!important;color:#fff!important;pointer-events:none!important}.reuse-current .top>*{pointer-events:auto!important}
-.reuse-current .top-center{display:flex!important;gap:26px!important;align-items:flex-start!important;justify-content:center!important;white-space:nowrap}.reuse-current .top a{color:#fff!important;text-decoration:none;font:400 12px/1.25 'Averta PE',Arial,sans-serif}
-.reuse-wrap{width:min(calc(100% - 80px),1360px);margin:0 auto}.reuse-hero{position:sticky;top:0;z-index:1;height:100vh;min-height:700px;isolation:isolate;overflow:hidden;background:#000}.reuse-hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}.reuse-hero-shade{position:absolute;inset:0;background:#000;opacity:var(--reuse-darkness,.48);z-index:-2;transition:opacity .08s linear}.reuse-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 45%,rgba(0,0,0,.28));z-index:-1;pointer-events:none}.reuse-hero-inner{height:100%;position:relative}.reuse-hero-copy{position:absolute;top:20vh;left:0;max-width:1120px;opacity:var(--reuse-copy,1);transition:opacity .12s linear}.reuse-hero-title{margin:0;color:#fff;font:100 72px/1.06 Pretendard,sans-serif;letter-spacing:-.055em}.reuse-hero-lead{margin:20px 0 0;max-width:760px;color:rgba(255,255,255,.8);font:300 clamp(16px,1.45vw,20px)/1.55 Pretendard,sans-serif;letter-spacing:-.025em}.reuse-hero-meta{position:absolute;left:0;right:0;bottom:40px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);min-height:74px}.reuse-hero-meta article{padding:0 18px;display:flex;flex-direction:column;justify-content:center;gap:7px}.reuse-hero-meta article:first-child{padding-left:0}.reuse-hero-meta article+article{border-left:1px solid rgba(255,255,255,.08)}.reuse-hero-meta span{color:rgba(255,255,255,.56);font:400 12px/1 'Averta PE',Arial,sans-serif;letter-spacing:.05em}.reuse-hero-meta b{color:#fff;font:300 12px/1.3 'Averta PE',Pretendard,sans-serif}
-.reuse-progress{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:24;display:flex;flex-direction:column;gap:14px}.reuse-progress a{color:rgba(255,255,255,.35);font:400 11px/1 'Averta PE',Arial,sans-serif;text-decoration:none}.reuse-progress a.is-active,.reuse-progress a:hover{color:var(--blue)}
-.reuse-section{position:relative;background:var(--ink);padding:150px 0 190px;z-index:2}.reuse-section.alt{background:#080808}.reuse-section-head{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(300px,.72fr);gap:70px;padding-bottom:92px;border-bottom:1px solid var(--line)}.reuse-section-no,.reuse-subno,.reuse-eyebrow{color:var(--blue);font:400 13px/1.2 'Averta PE',Arial,sans-serif;letter-spacing:.08em}.reuse-section-title{margin:28px 0 0;max-width:820px;color:#fff;font:100 52px/1.12 Pretendard,sans-serif;letter-spacing:-.055em}.reuse-section-desc{margin:52px 0 0;color:var(--muted);font:300 16px/1.7 Pretendard,sans-serif;letter-spacing:-.02em}.reuse-sub{padding-top:100px}.reuse-subhead{display:grid;grid-template-columns:220px minmax(0,1fr);gap:46px}.reuse-subtitle{margin:0;color:#fff;font:100 42px/1.18 Pretendard,sans-serif;letter-spacing:-.05em}.reuse-subcopy{max-width:720px;margin:24px 0 0;color:var(--muted);font:300 16px/1.7 Pretendard,sans-serif;letter-spacing:-.02em}
-.reuse-card-grid,.reuse-proof-grid,.reuse-barriers,.reuse-ai{display:grid;gap:14px;margin-top:62px}.reuse-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.reuse-card{min-height:210px;padding:28px;border:0;border-top:1px solid rgba(255,255,255,.2);background:transparent}.reuse-card strong{display:block;margin-top:32px;color:#fff;font:100 28px/1.2 Pretendard,sans-serif;letter-spacing:-.04em}.reuse-card p,.reuse-proof p,.reuse-barriers p,.reuse-ai p{margin:20px 0 0;color:var(--muted);font:300 14px/1.6 Pretendard,sans-serif}.reuse-card.red,.reuse-card.blue{border-top-color:rgba(255,255,255,.2)}
-.reuse-flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:44px;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:rgba(255,255,255,.72);font:300 14px/1.2 'Averta PE',Pretendard,sans-serif}.reuse-flow i{color:var(--blue);font-style:normal}
-.reuse-proof-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.reuse-proof{aspect-ratio:16/9;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;border:0;border-top:1px solid rgba(255,255,255,.2);background:transparent}.reuse-proof:nth-child(n){border-top-color:rgba(255,255,255,.2)}.reuse-proof b{margin-top:auto;color:#fff;font:100 28px/1.2 Pretendard,sans-serif}
-.reuse-graph{margin-top:62px;padding:28px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.reuse-graph-title{margin:0;color:rgba(255,255,255,.55);font:400 12px/1 'Averta PE',Arial,sans-serif;letter-spacing:.06em}.reuse-bars{display:flex;gap:3px;height:56px;margin-top:28px;align-items:stretch}.reuse-bars span{display:flex;align-items:flex-end;padding:0 14px 10px;color:#fff;font:300 14px/1.1 Pretendard,sans-serif;min-width:110px}.reuse-bars .b1{flex:4;background:#1479c9}.reuse-bars .b2{flex:3;background:#08a9df}.reuse-bars .b3{flex:2;background:#00c7d9}.reuse-bars .b4{flex:1.4;background:#00d9b0}.reuse-bars .b5{flex:1;background:#f5e900;color:#111}.reuse-graph-caption{margin:16px 0 0;color:rgba(255,255,255,.38);font:300 11px/1.4 Pretendard,sans-serif}
-.reuse-linechart{position:relative;height:220px;margin-top:22px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 54px,rgba(255,255,255,.12) 55px,transparent 56px)}.reuse-linechart svg{width:100%;height:100%;overflow:visible}.reuse-linechart text{fill:rgba(255,255,255,.45);font:11px Pretendard}.reuse-linechart .sessions{stroke:var(--blue)}.reuse-linechart .cvr{stroke:var(--green)}.reuse-linechart .guide{stroke:var(--yellow);stroke-width:2}
-.reuse-media-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:62px}.reuse-media{position:relative;min-height:70vh;aspect-ratio:16/9;border:1px solid rgba(255,255,255,.25);background:#080808;overflow:hidden}.reuse-media:before,.reuse-media:after{content:"";position:absolute;left:0;top:50%;width:100%;height:1px;background:rgba(255,255,255,.28);transform:rotate(26deg)}.reuse-media:after{transform:rotate(-26deg)}.reuse-media figcaption{position:absolute;left:20px;right:20px;bottom:18px;display:flex;justify-content:space-between;color:#fff;font:300 13px/1.3 Pretendard,sans-serif}.reuse-media figcaption span{color:var(--blue);font:400 11px/1 'Averta PE',Arial,sans-serif;letter-spacing:.08em}
-.reuse-studio,.reuse-story,.reuse-mobile{display:grid;gap:70px;margin-top:64px;padding-top:36px;border-top:1px solid var(--line)}.reuse-studio{grid-template-columns:.8fr 1.2fr}.reuse-story{grid-template-columns:1.1fr .9fr}.reuse-mobile{grid-template-columns:.9fr 1.1fr}.reuse-studio h4,.reuse-story h4,.reuse-mobile h4{margin:0;color:#fff;font:100 42px/1.18 Pretendard,sans-serif}.reuse-studio p,.reuse-story p,.reuse-mobile p{margin:24px 0 0;color:var(--muted);font:300 16px/1.7 Pretendard,sans-serif}.reuse-checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.reuse-check{padding:22px;border:0;border-top:1px solid rgba(255,255,255,.2)}.reuse-check span{color:var(--blue);font:400 11px/1 'Averta PE',Arial,sans-serif}.reuse-check b{display:block;margin-top:24px;color:#fff;font:300 18px/1.3 Pretendard,sans-serif}.reuse-check p{margin:10px 0 0;font-size:13px}.reuse-story-copy,.reuse-story-quote{padding:34px;border-top:1px solid var(--line)}.reuse-story-quote{display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,#122d3b,#080808)}.reuse-story-quote blockquote{margin:22px 0 0;color:#fff;font:100 28px/1.35 Pretendard,sans-serif;letter-spacing:-.04em}.reuse-story-quote small{margin-top:24px;color:rgba(255,255,255,.45);font:300 12px/1.4 Pretendard,sans-serif}.reuse-barriers{grid-template-columns:repeat(4,minmax(0,1fr))}.reuse-barriers article,.reuse-ai article{padding:22px;border:0;border-top:1px solid rgba(255,255,255,.2)}.reuse-barriers b{color:#fff;font:300 18px/1.3 Pretendard,sans-serif}.reuse-ai{grid-template-columns:repeat(4,minmax(0,1fr))}.reuse-ai article{border-top:1px solid var(--red);border-right:0;border-bottom:0;border-left:0}.reuse-ai span{color:var(--red);font:400 11px/1 'Averta PE',Arial,sans-serif}.reuse-ai h4{margin:34px 0 0;color:#fff;font:300 20px/1.3 Pretendard,sans-serif}
-.reuse-device-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.reuse-device{position:relative;aspect-ratio:9/16;border:1px solid rgba(255,255,255,.2);background:#0a0a0a}.reuse-device:before,.reuse-device:after{content:"";position:absolute;left:0;top:50%;width:100%;height:1px;background:rgba(255,255,255,.25);transform:rotate(72deg)}.reuse-device:after{transform:rotate(-72deg)}.reuse-device span{position:absolute;left:10px;bottom:10px;color:#fff;font:300 11px/1 'Averta PE',Arial,sans-serif}
-.reuse-journey-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;gap:14px;margin-top:62px}.reuse-flow-node{padding:24px 0;border-top:1px solid rgba(255,255,255,.2)}.reuse-flow-node span{color:var(--blue);font:400 11px/1 'Averta PE',Arial,sans-serif}.reuse-flow-node b{display:block;margin-top:28px;color:#fff;font:100 28px/1.2 Pretendard,sans-serif}.reuse-flow-node p{margin:14px 0 0;color:var(--muted);font:300 16px/1.5 Pretendard,sans-serif}.reuse-flow-arrow{align-self:center;color:var(--blue);font:300 28px/1 'Averta PE',Arial,sans-serif}.reuse-final{padding-top:120px;margin-top:120px;border-top:1px solid var(--line)}.reuse-final h3{margin:24px 0 0;color:#fff;font:100 clamp(40px,5vw,72px)/1.08 Pretendard,sans-serif;letter-spacing:-.055em}.reuse-final p{max-width:720px;margin:28px 0 0;color:var(--muted);font:300 17px/1.7 Pretendard,sans-serif}.reuse-footer{padding:60px 0 80px;border-top:1px solid var(--line);color:rgba(255,255,255,.42);font:300 12px/1.5 'Averta PE',Pretendard,sans-serif}.reuse-reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}.reuse-reveal.is-visible{opacity:1;transform:none}
-@media(max-width:800px){.reuse-wrap{width:calc(100% - 36px)}.reuse-current .top-center{gap:20px!important}.reuse-current .top{padding:14px 18px!important}.reuse-current .top a{font-size:11px}.reuse-progress{right:12px;gap:10px}.reuse-hero{min-height:640px}.reuse-hero-copy{top:20vh}.reuse-hero-title{font-size:52px}.reuse-hero-lead{font-size:15px}.reuse-hero-meta{bottom:24px;grid-template-columns:1fr 1fr}.reuse-hero-meta article{min-height:56px;padding:12px 10px}.reuse-section{padding:100px 0 120px}.reuse-section-head,.reuse-subhead,.reuse-studio,.reuse-story,.reuse-mobile{grid-template-columns:1fr;gap:32px}.reuse-section-desc{margin-top:0}.reuse-card-grid,.reuse-proof-grid,.reuse-ai,.reuse-barriers{grid-template-columns:1fr 1fr}.reuse-journey-flow{grid-template-columns:1fr;gap:0}.reuse-flow-arrow{display:none}.reuse-media-grid{grid-template-columns:1fr}.reuse-checklist{grid-template-columns:1fr}.reuse-bars span{min-width:0;padding:0 6px 8px;font-size:11px}.reuse-final{margin-top:80px;padding-top:80px}}
-.reuse-research-data{margin-top:62px;padding-top:28px;border-top:1px solid rgba(255,255,255,.2)}.reuse-research-data h4{margin:0;color:rgba(255,255,255,.55);font:400 12px/1 'Averta PE',Arial,sans-serif;letter-spacing:.06em}.reuse-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:26px;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}.reuse-stat{padding:20px 18px 22px 0}.reuse-stat+.reuse-stat{border-left:1px solid rgba(255,255,255,.2);padding-left:18px}.reuse-stat strong{display:block;color:#fff;font:100 84px/.9 Pretendard,sans-serif;letter-spacing:-.06em}.reuse-stat strong small{font-size:28px}.reuse-stat b{display:block;margin-top:16px;color:#fff;font:300 16px/1.3 Pretendard,sans-serif}.reuse-stat p{margin:10px 0 0;color:rgba(255,255,255,.5);font:300 13px/1.5 Pretendard,sans-serif}.reuse-chart{margin-top:62px;padding:24px 0 18px;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}.reuse-chart-title{margin:0;color:rgba(255,255,255,.55);font:400 12px/1 'Averta PE',Arial,sans-serif;letter-spacing:.06em}.reuse-hbars{display:grid;gap:14px;margin-top:28px}.reuse-hbar{display:grid;grid-template-columns:190px 1fr 62px;align-items:center;gap:16px}.reuse-hbar label{color:rgba(255,255,255,.7);font:300 14px/1.2 Pretendard,sans-serif}.reuse-hbar-track{height:8px;background:rgba(255,255,255,.1);position:relative}.reuse-hbar-track i{display:block;height:100%;background:var(--blue);width:var(--w)}.reuse-hbar:nth-child(2) i{background:var(--cyan)}.reuse-hbar:nth-child(3) i{background:var(--green)}.reuse-hbar:nth-child(4) i{background:var(--yellow)}.reuse-hbar:nth-child(5) i{background:var(--red)}.reuse-hbar strong{color:#fff;font:300 16px/1 'Averta PE',Arial,sans-serif}.reuse-chart-source{margin:16px 0 0;color:rgba(255,255,255,.38);font:300 11px/1.4 Pretendard,sans-serif}.reuse-flow-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:62px;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}.reuse-flow-card{position:relative;padding:22px 18px 24px 0}.reuse-flow-card+.reuse-flow-card{border-left:1px solid rgba(255,255,255,.2);padding-left:18px}.reuse-flow-card:after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--blue);font:300 22px/1 'Averta PE',Arial,sans-serif}.reuse-flow-card:last-child:after{display:none}.reuse-flow-card span{color:var(--blue);font:400 11px/1 'Averta PE',Arial,sans-serif}.reuse-flow-card b{display:block;margin-top:28px;color:#fff;font:100 28px/1.2 Pretendard,sans-serif}.reuse-flow-card p{margin:12px 0 0;color:rgba(255,255,255,.5);font:300 14px/1.5 Pretendard,sans-serif}@media(max-width:800px){.reuse-stat-grid{grid-template-columns:1fr 1fr}.reuse-stat strong{font-size:58px}.reuse-hbar{grid-template-columns:120px 1fr 48px}.reuse-flow-grid{grid-template-columns:1fr 1fr}.reuse-flow-card:nth-child(3){border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.2)}.reuse-flow-card:nth-child(4){border-top:1px solid rgba(255,255,255,.2)}}.reuse-line-graph{margin-top:42px;padding:24px 0 18px;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}.reuse-line-graph svg{display:block;width:100%;height:auto;overflow:visible}.reuse-line-graph .grid{stroke:rgba(255,255,255,.12);stroke-width:1}.reuse-line-graph .line{fill:none;stroke:var(--blue);stroke-width:2}.reuse-line-graph .dot{fill:var(--yellow)}.reuse-line-graph text{fill:rgba(255,255,255,.55);font:300 12px Pretendard,sans-serif}.reuse-line-graph .value{fill:#fff;font:300 14px 'Averta PE',Arial,sans-serif}.reuse-line-graph figcaption{margin-top:14px;color:rgba(255,255,255,.38);font:300 11px/1.4 Pretendard,sans-serif}/* Himart component alignment */.reuse-section-head{display:block;grid-template-columns:none;gap:0;margin-bottom:104px;padding-bottom:0;border-bottom:0}.reuse-section-no{display:block;margin-bottom:22px;font-family:'Averta PE',Arial,sans-serif;font-weight:300;font-size:24px;color:rgba(255,255,255,.38);letter-spacing:.03em}.reuse-section-desc{margin:32px 0 0;max-width:780px;color:rgba(255,255,255,.70);font:300 17px/1.52 Pretendard,sans-serif}.reuse-subhead{display:block;padding-left:0;margin-bottom:56px}.reuse-subno{display:block;font-size:12px;color:rgba(255,255,255,.42);padding:0;margin:0 0 18px}.reuse-subtitle{margin:0;max-width:980px;font:100 42px/1.18 Pretendard,sans-serif;letter-spacing:-.045em}.reuse-subcopy{margin:20px 0 0;max-width:820px;color:rgba(255,255,255,.70);font:300 17px/1.52 Pretendard,sans-serif}.reuse-stat-grid{border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}.reuse-stat strong{font-family:var(--hm-ko,Pretendard),sans-serif}.reuse-hbar-track i{background:#00a6ed!important}.reuse-hbar:nth-child(2) i{background:#00a6ed!important}.reuse-hbar:nth-child(3) i{background:#00bda5!important}.reuse-hbar:nth-child(4) i{background:#00bda5!important}.reuse-hbar:nth-child(5) i{background:#00a6ed!important}.reuse-line-graph .line{stroke:#00a6ed}.reuse-line-graph .dot{fill:#00bda5}.reuse-flow-card:after{color:#00a6ed}.reuse-flow-card b,.reuse-card strong,.reuse-proof b,.reuse-flow-node b{font-family:var(--hm-ko,Pretendard),sans-serif}.reuse-mockup{margin-top:0}.reuse-mockup .phone-frame{border-color:rgba(255,255,255,.72)}.reuse-mockup .phone-meta{padding-top:14px}.reuse-mockup .phone-meta span{color:#00a6ed;font:400 11px/1 'Averta PE',Arial,sans-serif}.reuse-mockup .phone-meta b{display:block;margin-top:10px;color:#fff;font:300 16px/1.2 Pretendard,sans-serif}.reuse-mockup .phone-meta p{margin:8px 0 0;color:rgba(255,255,255,.55);font:300 13px/1.4 Pretendard,sans-serif}.reuse-current .top{left:0!important;right:0!important;inset-inline:0!important;display:flex!important;justify-content:center!important}.reuse-current .top-center{margin:0 auto!important;position:relative!important;left:auto!important;right:auto!important}</style>
-</head>
-<body class="himart-page-body reuse-current">
-<nav class="top" aria-label="주요 메뉴"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
-<main>
-<header class="reuse-hero" id="top"><video class="reuse-hero-video" autoplay muted loop playsinline preload="auto" aria-label="인증 중고 상품화 현장 영상"><source src="./assets/reuse_01.mp4" type="video/mp4"></video><div class="reuse-hero-shade" aria-hidden="true"></div><div class="reuse-wrap reuse-hero-inner"><div class="reuse-hero-copy"><h1 class="reuse-hero-title">중고 거래의 불안을<br>신뢰의 경험으로 바꾸었습니다.</h1><p class="reuse-hero-lead">인증 중고 서비스 UX를 요청받았지만, 먼저 사람들이 무엇을 걱정하고 언제 안심하는지부터 확인했습니다.</p></div><div class="reuse-hero-meta"><article><span>ROLE</span><b>UX STRATEGY · EXPERIENCE DESIGN · UX DIRECTION</b></article><article><span>FOCUS</span><b>TRUST · REUSE COMMERCE</b></article><article><span>SCOPE</span><b>RESEARCH · CONTENT · UX/UI</b></article><article><span>OUTPUT</span><b>GUIDE · PDP · AI · MOBILE</b></article></div></div></header>
-<nav class="reuse-progress" aria-label="케이스 챕터"><a href="#research">01</a><a href="#insight">02</a><a href="#research-data">02A</a><a href="#content">03</a><a href="#pdp">04</a><a href="#scale">05</a></nav>
+.hm-movie-hero{position:relative;min-height:100vh;overflow:hidden;background:#000;color:#fff}
+.hm-movie-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hm-movie-overlay{position:absolute;inset:0;background:#000;opacity:.5;z-index:1;pointer-events:none}
+.hm-movie-hero .hm-wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:120px;padding-bottom:40px}
+.hm-movie-hero .hm-hero-bottom{margin-top:clamp(48px,8vh,110px)}
+.hm-movie-hero .hm-lead{opacity:.8}
+.hm-movie-hero .hm-meta{border-top:1px solid rgba(255,255,255,.7);padding-top:18px}
+.hm-movie-hero .hm-meta>div:last-child{border-bottom:1px solid rgba(255,255,255,.7);padding-bottom:18px}
+.hm-section,.hm-footer{position:relative}
+.hm-reveal{opacity:0;transform:translate3d(0,42px,0);transition:opacity .8s ease,transform .9s cubic-bezier(.22,1,.36,1)}
+.hm-reveal.is-visible{opacity:1;transform:none}
+.wide-rise-target{opacity:0;transform:translate3d(0,42px,0);transition:opacity .85s ease,transform .95s cubic-bezier(.22,1,.36,1)}
+.wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
+@media(max-width:700px){.hm-movie-hero .hm-wrap{padding-bottom:28px}.hm-movie-hero .hm-lead{font-size:18px}.hm-movie-hero .hm-meta{font-size:12px}}
+</style><style>
+.hm-movie-hero{position:sticky!important;top:0;z-index:1}
+.hm-movie-hero .hm-wrap{justify-content:flex-start!important;padding-top:0!important;padding-bottom:40px!important}
+.hm-movie-hero .hm-title{margin-top:200px!important}
+.hm-movie-hero .hm-hero-bottom{position:absolute;left:0;right:0;bottom:40px;margin:0!important}
+.hm-movie-overlay{opacity:var(--movie-darkness,.5)!important;transition:opacity .12s linear}
+.hm-movie-hero .hm-lead{color:#fff!important;opacity:.8!important;margin-top:40px!important}
+.hm-movie-hero .hm-meta{border-top:1px solid rgba(255,255,255,.2)!important}
+.hm-movie-hero .hm-meta>div:last-child{border-bottom:1px solid rgba(255,255,255,.2)!important}
+.hm-section{position:relative;z-index:2;background:#050505}
+.hm-section-head,.hm-subsection,.narrative-block,.data-card,.principle-grid,.design-rule{will-change:transform,opacity}
+.about-dummy{display:none}
+@media(max-width:700px){.hm-movie-hero .hm-title{margin-top:140px!important}.hm-movie-hero .hm-hero-bottom{bottom:28px}.hm-movie-hero .hm-lead{margin-top:28px!important}}
+</style><style id="himart-movie-final-overrides">
+html body.himart-movie-page .top,
+html body.himart-movie-page .top a{color:#fff!important;mix-blend-mode:normal!important;opacity:1!important}
+html body.himart-movie-page .hm-movie-hero{height:100vh!important;min-height:100vh!important;padding:0!important;position:sticky!important;top:0!important;z-index:1!important}
+html body.himart-movie-page .hm-movie-hero>.hm-wrap{position:relative!important;width:min(calc(100% - 80px),1360px)!important;height:100%!important;min-height:100%!important;margin:0 auto!important;padding:0 0 40px!important;display:block!important}
+html body.himart-movie-page .hm-movie-hero .hm-title{position:absolute!important;top:200px!important;left:0!important;margin:0!important;max-width:1280px!important;font-size:clamp(58px,5.7vw,82px)!important;line-height:1.04!important}
+html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{position:absolute!important;left:0!important;right:0!important;bottom:40px!important;margin:0!important;padding:0!important}
+html body.himart-movie-page .hm-movie-hero .hm-lead{display:block!important;max-width:1000px!important;margin:0 0 40px!important;padding:0!important;color:#fff!important;opacity:.8!important;font-size:18px!important;line-height:1.5!important;white-space:pre-line!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta{margin:0!important;min-height:74px!important;border-top:1px solid rgba(255,255,255,.2)!important;border-bottom:1px solid rgba(255,255,255,.2)!important;align-items:center!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta>div{min-height:74px!important;height:74px!important;padding:0 18px 0 0!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta>div+div{padding-left:18px!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0 0 8px!important;color:rgba(255,255,255,.8)!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta b{color:#fff!important}
+html body.himart-movie-page #brand{position:relative!important;z-index:2!important;background:#050505!important}
+html body.himart-movie-page .movie-role-title,
+html body.himart-movie-page .role-card h4{font-family:'Averta PE',var(--hm-en),sans-serif!important;font-weight:400!important}
+html body.himart-movie-page .brand-synthesis .synthesis-col b{font-size:16px!important;font-family:Pretendard,var(--hm-ko),sans-serif!important;font-weight:300!important}
+html body.himart-movie-page .brand-synthesis .synthesis-col:first-child b{color:var(--hm-blue)!important}
+html body.himart-movie-page .brand-synthesis .synthesis-col:nth-child(2) b{color:var(--hm-red)!important}
+html body.himart-movie-page .brand-synthesis .synthesis-col p{font-size:24px!important;line-height:1.45!important;color:#fff!important;font-weight:300!important}
+html body.himart-movie-page .signal-item h4{font-size:28px!important;line-height:1.2!important}
+html body.himart-movie-page .signal-item p{margin-top:40px!important}
+@media(max-width:780px){
+ html body.himart-movie-page .hm-movie-hero>.hm-wrap{width:calc(100% - 36px)!important;padding-bottom:28px!important}
+ html body.himart-movie-page .hm-movie-hero .hm-title{top:140px!important;font-size:clamp(38px,10vw,58px)!important}
+ html body.himart-movie-page .hm-movie-hero .hm-lead{margin-bottom:28px!important;font-size:16px!important}
+ html body.himart-movie-page .hm-movie-hero .hm-meta{grid-template-columns:1fr 1fr!important}
+}
+</style><style id="himart-movie-final-v2">
+html body.himart-movie-page .top,
+html body.himart-movie-page .top a{color:#fff!important;opacity:1!important;mix-blend-mode:normal!important}
+html body.himart-movie-page .hm-movie-hero{height:100vh!important;min-height:100vh!important;padding:0!important;position:sticky!important;top:0!important;z-index:1!important}
+html body.himart-movie-page .hm-movie-hero>.hm-wrap{position:relative!important;width:min(calc(100% - 80px),1360px)!important;height:100%!important;min-height:100%!important;margin:0 auto!important;padding:0!important;display:block!important}
+html body.himart-movie-page .hm-movie-copy{position:absolute!important;top:200px!important;left:0!important;right:0!important}
+html body.himart-movie-page .hm-movie-copy .hm-title{position:static!important;margin:0!important;max-width:1280px!important;font-size:clamp(58px,5.7vw,82px)!important;line-height:1.04!important}
+html body.himart-movie-page .hm-movie-copy .hm-lead{display:block!important;position:static!important;max-width:1000px!important;margin:40px 0 0!important;padding:0!important;color:#fff!important;opacity:.8!important;font-size:18px!important;line-height:1.5!important;white-space:pre-line!important}
+html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{position:absolute!important;left:0!important;right:0!important;bottom:40px!important;margin:0!important;padding:0!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta{display:grid!important;grid-template-columns:1.4fr .95fr .95fr .9fr!important;margin:0!important;min-height:74px!important;height:74px!important;border-top:1px solid rgba(255,255,255,.2)!important;border-bottom:1px solid rgba(255,255,255,.2)!important;align-items:stretch!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta>div{min-height:74px!important;height:74px!important;padding:0 18px 0 0!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta>div+div{padding-left:18px!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0 0 8px!important;color:rgba(255,255,255,.8)!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta b{color:#fff!important}
+html body.himart-movie-page #brand{position:relative!important;z-index:2!important;background:#050505!important}
+html body.himart-movie-page #brand .problem-item p,
+html body.himart-movie-page #data .signal-item p{font-size:16px!important;line-height:1.5!important}
+html body.himart-movie-page #brand .proof-item h4{font-size:26px!important;line-height:1.25!important}
+html body.himart-movie-page #brand .proof-item p{font-size:16px!important;line-height:1.5!important}
+html body.himart-movie-page #brand .brand-synthesis .synthesis-col b{font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important}
+html body.himart-movie-page #brand .brand-synthesis .synthesis-col:first-child b{color:var(--hm-blue)!important}
+html body.himart-movie-page #brand .brand-synthesis .synthesis-col:nth-child(2) b{color:var(--hm-red)!important}
+html body.himart-movie-page #brand .brand-synthesis .synthesis-col p{font-size:24px!important;line-height:1.45!important;color:#fff!important}
+html body.himart-movie-page #data .signal-item h4{font-size:28px!important;line-height:1.2!important}
+html body.himart-movie-page #data .signal-item p{margin-top:40px!important}
+html body.himart-movie-page #journey .role-card h4,
+html body.himart-movie-page #journey .hm-role-name{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
+@media(max-width:780px){
+ html body.himart-movie-page .hm-movie-hero>.hm-wrap{width:calc(100% - 36px)!important}
+ html body.himart-movie-page .hm-movie-copy{top:140px!important}
+ html body.himart-movie-page .hm-movie-copy .hm-title{font-size:clamp(38px,10vw,58px)!important}
+ html body.himart-movie-page .hm-movie-copy .hm-lead{font-size:16px!important;margin-top:28px!important}
+ html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{bottom:28px!important}
+ html body.himart-movie-page .hm-movie-hero .hm-meta{grid-template-columns:1fr 1fr!important;height:auto!important}
+}
+</style><style id="himart-movie-lead-lock">html body.himart-movie-page .hm-movie-copy .hm-lead{opacity:1!important}html body.himart-movie-page .hm-movie-copy .hm-lead>span{display:block!important;color:rgba(255,255,255,.8)!important;opacity:1!important}</style>
+<style id="himart-movie-verification-lock">
+html body.himart-movie-page .hm-movie-copy{opacity:var(--movie-copy-opacity,1)!important;transition:opacity .08s linear!important}
+html body.himart-movie-page .hm-movie-copy .hm-lead{margin:40px 0 0!important;color:rgb(255 255 255 / 80%)!important;opacity:1!important;white-space:normal!important}
+html body.himart-movie-page .hm-movie-copy .hm-lead br{display:block!important;content:""!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta{align-items:center!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta>div{justify-content:center!important;align-items:flex-start!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0!important;color:rgba(255,255,255,.8)!important}
+html body.himart-movie-page .hm-movie-hero .hm-meta b{margin-top:2px!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis>h4{font:100 42px/1.18 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card b{margin:0!important;font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card.positive b{color:var(--hm-blue)!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card.negative b{color:var(--hm-red)!important}
+html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{font:300 24px/1.45 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
+@media(max-width:780px){html body.himart-movie-page .hm-movie-copy .hm-lead{margin-top:28px!important}html body.himart-movie-page .narrative-touchpoint-synthesis>h4{font-size:36px!important}}
+</style></head>
+<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-movie-page">
+<nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
+<main id="live-main">
+<header class="hm-hero hm-movie-hero" id="top">
+<video class="hm-movie-video" autoplay muted loop playsinline preload="auto"><source src="./assets/reuse_01.mp4" type="video/mp4"></video>
+<div class="hm-movie-overlay" aria-hidden="true"></div>
+<div class="hm-wrap">
+  <div class="hm-movie-copy">
+    <h1 class="hm-title js-scramble">중고 거래의 불안을<br>신뢰의 경험으로 바꾸었습니다.</h1>
+    <p class="hm-lead">중고 거래의 기본은 신뢰였습니다.<br>그 신뢰를 지키기 위해 고객의 불안부터 확인했습니다.</p>
+  </div>
+  <div class="hm-hero-bottom">
+    <div class="hm-meta">
+      <div><span>ROLE</span><b>UX STRATEGY · EXPERIENCE DESIGN · UX DIRECTION</b></div>
+      <div><span>FOCUS</span><b>TRUST EXPERIENCE · REUSE · PDP</b></div>
+      <div><span>SCOPE</span><b>RESEARCH · CONTENT · UX/UI</b></div>
+      <div><span>TEAM</span><b>UX DESIGN · CONTENT · OPERATIONS</b></div>
+    </div>
+  </div>
+</div>
+</header>
+<nav class="hm-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
 
-<section class="reuse-section" id="research" data-chapter="01"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">01 / START WITH PEOPLE</span><h2 class="reuse-section-title js-scramble">화면보다 먼저,<br>중고 거래를 이해했습니다.</h2></div><p class="reuse-section-desc">요청은 인증 중고 신규 서비스 UX 설계였습니다. 바로 화면을 만들지 않고, 사람들이 무엇을 불안해하고 어떤 조건에서 안심하는지부터 확인했습니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">01.1 / PAIN POINTS</span><div><h3 class="reuse-subtitle js-scramble">중고 구매를 멈추게 하는<br>세 가지 불안</h3><p class="reuse-subcopy">실제 상태, 사용 이력, 거래 이후 책임이 보이지 않을수록 구매는 멈췄습니다. 문제는 가격이 아니라 확인할 수 없는 상태였습니다.</p></div></div><div class="reuse-card-grid"><article class="reuse-card red"><span class="reuse-eyebrow">ANXIETY 01</span><strong>상태가 실제와<br>다르면?</strong><p>사진과 설명만으로 하자와 사용감을 추측해야 했습니다.</p></article><article class="reuse-card"><span class="reuse-eyebrow">ANXIETY 02</span><strong>얼마나 쓰였고<br>누가 관리했나?</strong><p>사용 이력과 검수 주체가 구매 전에 보이지 않았습니다.</p></article><article class="reuse-card blue"><span class="reuse-eyebrow">ANXIETY 03</span><strong>문제가 생기면<br>누가 책임지나?</strong><p>배송·설치·A/S 이후의 책임이 불명확했습니다.</p></article></div></div></div></section>
-
-<section class="reuse-section alt" id="research-data" data-chapter="02"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">02 / RESEARCH DATA</span><h2 class="reuse-section-title js-scramble">중고 거래의 매력은 가격에서 시작되지만,<br>구매를 결정하는 순간 신뢰가 필요했습니다.</h2></div><p class="reuse-section-desc">중고 탐색 동기는 저렴한 가격 56.7%, 높은 가성비 79.1%에 집중됐습니다. 하지만 경험자의 51.2%는 구매 시 불안을 느꼈고, 불만족 이유는 품질·상태 불확실성 41.0%, 상대방 신뢰 부족 20.9%로 이어졌습니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">02.1 / DECISION GAP</span><div><h3 class="reuse-subtitle js-scramble">가격이 관심을 만들고,<br>불안이 구매를 멈췄습니다.</h3><p class="reuse-subcopy">고객은 싸기 때문에 탐색하지만, 상태와 책임을 확인하지 못하면 마지막에 멈춥니다. 이 간극을 줄이는 것이 인증 중고 서비스의 첫 번째 역할이었습니다.</p></div></div><div class="reuse-stat-grid"><article class="reuse-stat"><strong>79.1<small>%</small></strong><b>중고 탐색 동기 · 가성비</b><p>신제품 대비 효율적인 선택</p></article><article class="reuse-stat"><strong>56.7<small>%</small></strong><b>중고 탐색 동기 · 저렴한 가격</b><p>가격 매력으로 시작되는 탐색</p></article><article class="reuse-stat"><strong>51.2<small>%</small></strong><b>구매 시 불안 경험</b><p>결정 단계에서 커지는 심리적 저항</p></article><article class="reuse-stat"><strong>41.0<small>%</small></strong><b>불만족 이유 · 상태 불확실성</b><p>품질과 기능을 믿기 어려운 상태</p></article></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">02.2 / CONCERN INDEX</span><div><h3 class="reuse-subtitle js-scramble">고객이 실제로 걱정한 내용을<br>비율로 다시 확인했습니다.</h3><p class="reuse-subcopy">외관·기능 상태, 사기, 위조품, 위생, 구매 후 책임까지. 숫자가 높은 걱정부터 상세페이지와 콘텐츠의 우선순위로 옮겼습니다.</p></div></div><div class="reuse-chart"><h4 class="reuse-chart-title">USED PURCHASE CONCERNS / 실제 응답 비율</h4><div class="reuse-hbars"><div class="reuse-hbar"><label>외관·기능 상태</label><div class="reuse-hbar-track"><i style="--w:50.8%"></i></div><strong>50.8%</strong></div><div class="reuse-hbar"><label>금전적 사기 위험</label><div class="reuse-hbar-track"><i style="--w:44.6%"></i></div><strong>44.6%</strong></div><div class="reuse-hbar"><label>위조품 유통</label><div class="reuse-hbar-track"><i style="--w:37.7%"></i></div><strong>37.7%</strong></div><div class="reuse-hbar"><label>오염·위생 문제</label><div class="reuse-hbar-track"><i style="--w:34.6%"></i></div><strong>34.6%</strong></div><div class="reuse-hbar"><label>고장 후 A/S·반품</label><div class="reuse-hbar-track"><i style="--w:31.1%"></i></div><strong>31.1%</strong></div></div><p class="reuse-chart-source">SOURCE · 하이마트 리유즈 중고 거래 인식 리서치 요약 · 복수응답 기준</p><figure class="reuse-line-graph" aria-label="중고 구매 우려 항목 비율 꺾은선 그래프"><svg viewBox="0 0 900 280" role="img" aria-labelledby="concern-line-title"><title id="concern-line-title">중고 구매 우려 항목별 응답 비율</title><line class="grid" x1="70" y1="36" x2="860" y2="36"/><line class="grid" x1="70" y1="106" x2="860" y2="106"/><line class="grid" x1="70" y1="176" x2="860" y2="176"/><line class="grid" x1="70" y1="246" x2="860" y2="246"/><text x="16" y="40">60%</text><text x="16" y="110">40%</text><text x="16" y="180">20%</text><text x="30" y="250">0%</text><polyline class="line" points="110,68 290,90 470,114 650,125 830,137"/><circle class="dot" cx="110" cy="68" r="4"/><circle class="dot" cx="290" cy="90" r="4"/><circle class="dot" cx="470" cy="114" r="4"/><circle class="dot" cx="650" cy="125" r="4"/><circle class="dot" cx="830" cy="137" r="4"/><text class="value" x="92" y="54">50.8%</text><text class="value" x="272" y="76">44.6%</text><text class="value" x="452" y="100">37.7%</text><text class="value" x="632" y="111">34.6%</text><text class="value" x="812" y="123">31.1%</text><text x="78" y="270">외관·기능</text><text x="254" y="270">사기 위험</text><text x="434" y="270">위조품</text><text x="616" y="270">위생</text><text x="788" y="270">A/S·반품</text></svg><figcaption>SOURCE · 하이마트 리유즈 중고 거래 인식 리서치 요약 · 복수응답 기준</figcaption></figure></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">02.3 / TRUST SHIFT</span><div><h3 class="reuse-subtitle js-scramble">개인 간 거래의 불안은,<br>하이마트가 책임지는 구조로 전환했습니다.</h3><p class="reuse-subcopy">직거래 대면 불안 74.0%, 판매자의 개인정보 유출 부담 61.3%를 확인했습니다. 에스크로·익명성·전문 배송·설치·폐가전 수거·2년 무상 A/S를 신뢰 앵커로 설계했습니다.</p></div></div><div class="reuse-flow-grid"><article class="reuse-flow-card"><span>01 / C2C</span><b>직거래 불안<br>74.0%</b><p>대면 만남과 신상 노출에 대한 걱정</p></article><article class="reuse-flow-card"><span>02 / SELLER</span><b>개인정보 부담<br>61.3%</b><p>판매자도 거래 과정의 노출을 우려</p></article><article class="reuse-flow-card"><span>03 / HIMART</span><b>전문 검수·배송</b><p>공인 주체가 확인하고 책임지는 구조</p></article><article class="reuse-flow-card"><span>04 / CARE</span><b>2년 무상 A/S</b><p>구매 이후까지 이어지는 안전망</p></article></div></div></div></section><section class="reuse-section alt" id="insight" data-chapter="02"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">02 / TRUST INSIGHT</span><h2 class="reuse-section-title js-scramble">중고 거래의 핵심은<br>가격이 아니라 신뢰였습니다.</h2></div><p class="reuse-section-desc">신뢰는 말로 설명하는 것이 아니라 확인 가능한 경험으로 만들어야 했습니다. 하이마트가 인증하고 관리한다는 사실을 제품을 만나는 모든 순간에 보이게 했습니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">02.1 / TRUST CONDITIONS</span><div><h3 class="reuse-subtitle js-scramble">믿을 수 있는 주체,<br>확인 가능한 정보, 구매 이후의 책임</h3><p class="reuse-subcopy">개인 간 거래의 불확실성을 하이마트의 인증·검수·보증으로 바꾸고, 고객이 스스로 판단할 수 있는 정보 구조를 만들었습니다.</p></div></div><div class="reuse-proof-grid"><article class="reuse-proof"><span class="reuse-eyebrow">01 / CERTIFIED</span><b>하이마트 인증</b><p>누가 확인했는지 먼저 보입니다.</p></article><article class="reuse-proof"><span class="reuse-eyebrow">02 / REAL VIEW</span><b>실제 상품 사진</b><p>상태와 하자를 같은 기준으로 봅니다.</p></article><article class="reuse-proof"><span class="reuse-eyebrow">03 / PROCESS</span><b>검수·상품화</b><p>보이지 않던 과정을 콘텐츠로 증명합니다.</p></article><article class="reuse-proof"><span class="reuse-eyebrow">04 / CARE</span><b>2년 무상 보증</b><p>구매 후 책임까지 안심합니다.</p></article></div><div class="reuse-flow"><span>인증</span><i>→</i><span>검수</span><i>→</i><span>상품화</span><i>→</i><span>실제 정보</span><i>→</i><strong>신뢰의 선택</strong></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">02.2 / EXPERIENCE SHIFT</span><div><h3 class="reuse-subtitle js-scramble">신뢰는 화면 하나가 아니라<br>연결된 경험의 결과였습니다.</h3><p class="reuse-subcopy">현장에서 만드는 정보와 온라인에서 읽는 정보가 같은 기준을 가져야 했습니다. 그래서 UX와 콘텐츠, 운영 환경을 하나의 시스템으로 설계했습니다.</p></div></div><div class="reuse-media-grid"><figure class="reuse-media"><figcaption><span>RESEARCH</span>고객의 걱정 수집</figcaption></figure><figure class="reuse-media"><figcaption><span>PROOF</span>검수·상품화의 증거</figcaption></figure></div></div></div></section>
-
-<section class="reuse-section alt" id="journey-flow" data-chapter="03"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">03</span><h2 class="reuse-section-title js-scramble">신뢰가 이어지는 순서로,<br>중고 구매 여정을 다시 정의했습니다.</h2></div><p class="reuse-section-desc">고객이 불안을 느끼는 순간마다 확인할 수 있는 근거를 배치했습니다. 인증에서 보증까지의 흐름을 하나의 여정으로 연결하고, 각 화면의 역할을 분명히 했습니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">03.1 / JOURNEY FLOW</span><div><h3 class="reuse-subtitle js-scramble">고객의 질문이 생기는 순서대로,<br>신뢰의 근거를 연결했습니다.</h3><p class="reuse-subcopy">실제 상태를 보고, 누가 관리했는지 확인하고, 구매 후 책임까지 이해한 뒤 선택하도록 설계했습니다.</p></div></div><div class="reuse-journey-flow"><div class="reuse-flow-node"><span>01 / DISCOVER</span><b>중고 제품을 발견</b><p>상태 등급·가격·카테고리</p></div><div class="reuse-flow-arrow">→</div><div class="reuse-flow-node"><span>02 / VERIFY</span><b>실제 상태를 확인</b><p>실물 사진·하자 Detail</p></div><div class="reuse-flow-arrow">→</div><div class="reuse-flow-node"><span>03 / PROOF</span><b>검수 과정을 이해</b><p>인증·상품화·이력</p></div><div class="reuse-flow-arrow">→</div><div class="reuse-flow-node"><span>04 / CARE</span><b>구매 후를 안심</b><p>배송·설치·2년 보증</p></div></div></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">03.2 / PROTOTYPE LOOP</span><div><h3 class="reuse-subtitle js-scramble">정의한 UX 전략을 빠르게 프로토타입으로 만들고,<br>내부 검증을 반복했습니다.</h3><p class="reuse-subcopy">리스트·상세·검수·보증 모듈을 실제 화면 크기로 구성해 구매 질문이 끊기는 지점을 확인했습니다.</p></div></div><div class="reuse-media-grid"><figure class="reuse-media"><figcaption><span>PROTOTYPE 01</span>상품 리스트와 상태 정보</figcaption></figure><figure class="reuse-media"><figcaption><span>PROTOTYPE 02</span>상세페이지의 신뢰 모듈</figcaption></figure><figure class="reuse-media"><figcaption><span>PROTOTYPE 03</span>검수·보증 확인 흐름</figcaption></figure></div></div></div></section><section class="reuse-section" id="content" data-chapter="03"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">03 / CONTENT SYSTEM</span><h2 class="reuse-section-title js-scramble">콘텐츠를 만들기 전에,<br>콘텐츠가 만들어지는 환경을 설계했습니다.</h2></div><p class="reuse-section-desc">촬영 공간과 장비, 작업 순서, 가이드와 검수 기준을 직접 리드했습니다. 사진 한 장의 품질이 곧 고객이 느끼는 신뢰의 품질이기 때문입니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">03.1 / STUDIO GUIDE</span><div><h3 class="reuse-subtitle js-scramble">조도·조명·구도까지,<br>상품화의 첫 화면을 맞췄습니다.</h3><p class="reuse-subcopy">제품 위치와 카메라 높이, 조명 방향, 필수 컷과 하자 Detail, 보정 원칙을 가이드로 만들고 직접 촬영·편집했습니다.</p></div></div><div class="reuse-studio"><div><h4>현장의 기준이<br>온라인의 신뢰가 되도록.</h4><p>촬영자마다 다른 감각에 의존하지 않도록 조도·조명·거리·구도·파일명·업로드 전 QA까지 한 흐름으로 정리했습니다.</p></div><div class="reuse-checklist"><article class="reuse-check"><span>LIGHT</span><b>조도·조명 방향</b><p>재질과 흠집을 왜곡하지 않는 빛</p></article><article class="reuse-check"><span>FRAME</span><b>카메라 높이·구도</b><p>제품 비율을 그대로 전달하는 프레임</p></article><article class="reuse-check"><span>SHOT LIST</span><b>필수 컷·하자 Detail</b><p>앞·뒤·좌·우와 궁금한 영역 고정</p></article><article class="reuse-check"><span>QA</span><b>보정·업로드 검수</b><p>실제보다 좋아 보이는 편집 제한</p></article></div></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">03.2 / AI CONTENT</span><div><h3 class="reuse-subtitle js-scramble">촬영이 어려운 공정은,<br>사실을 근거로 다시 보여줬습니다.</h3><p class="reuse-subcopy">현장 사진·시연 영상·작업 기록을 근거로 콘티를 만들고 AI 이미지와 동영상으로 이해를 돕는 콘텐츠를 제작했습니다. 생성 후에는 실제 과정과의 일치 여부를 다시 검수했습니다.</p></div></div><div class="reuse-ai"><article><span>01 / SOURCE</span><h4>실제 자료 수집</h4><p>현장 사진·영상·작업 기록</p></article><article><span>02 / STORYBOARD</span><h4>정보의 순서 설계</h4><p>고객이 먼저 알아야 할 장면</p></article><article><span>03 / GENERATE</span><h4>AI 이미지·영상 제작</h4><p>촬영이 어려운 공정을 보완</p></article><article><span>04 / QA</span><h4>사실성 검수</h4><p>실제와 어긋나는 장면 제거</p></article></div></div></div></section>
-
-<section class="reuse-section alt" id="pdp" data-chapter="04"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">04 / PDP EXPERIENCE</span><h2 class="reuse-section-title js-scramble">구매를 망설이는 순간마다,<br>다음 판단을 도왔습니다.</h2></div><p class="reuse-section-desc">고객의 질문 순서에 맞춰 상품화 과정·인증·실제 사진·보증을 배치했습니다. 이탈이 시작되는 위치에 신뢰의 근거를 놓았습니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">04.1 / OWNER STORY</span><div><h3 class="reuse-subtitle js-scramble">상품의 상태뿐 아니라,<br>상품의 시간을 전달했습니다.</h3><p class="reuse-subcopy">이전 소유자가 제품에 대한 코멘트와 홍보 메시지를 남기면 포인트를 지급하고, 구매자는 그 이야기를 읽은 뒤 선택하도록 제안했습니다. 당근에서 느끼는 사람 사이의 온기를 브랜드 경험 안으로 확장한 아이디어입니다.</p></div></div><div class="reuse-story"><div class="reuse-story-copy"><span class="reuse-eyebrow">PDP MODULE / PREVIOUS OWNER</span><h4>제품의 이력까지 알고,<br>더 안심하고 선택합니다.</h4><p>누가 얼마나 사용했고 왜 보내는지, 다음 사용자에게 무엇을 추천하는지. 짧은 메시지가 낯선 중고품을 이어지는 생활의 이야기로 바꿉니다.</p></div><div class="reuse-story-quote"><span class="reuse-eyebrow">OWNER NOTE</span><blockquote>“우리 가족의 빨래를 맡아주던 제품입니다. 다음 집에서도 오래 쓰이길 바랍니다.”</blockquote><small>이전 소유자 코멘트 · 참여 포인트 지급</small></div></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">04.2 / PURCHASE BARRIERS</span><div><h3 class="reuse-subtitle js-scramble">의심이 생기는 위치에,<br>하이마트가 확인한 근거를 놓았습니다.</h3><p class="reuse-subcopy">상태를 볼 때는 등급과 실제 사진을, 결제 전에는 배송·설치와 2년 무상 보증을 확인하도록 했습니다.</p></div></div><div class="reuse-barriers"><article><b>상태가 정말<br>설명과 같은가?</b><p>상태등급·실물 사진·하자 Detail</p></article><article><b>누가 검수하고<br>상품화했는가?</b><p>검수·세척·촬영 과정과 인증</p></article><article><b>배송·설치 뒤<br>문제가 생기면?</b><p>설치 조건·책임 범위·A/S</p></article><article><b>구매 후에도<br>보호받는가?</b><p>2년 무상 보증과 케어</p></article></div></div></div></section>
-
-<section class="reuse-section" id="scale" data-chapter="05"><div class="reuse-wrap"><div class="reuse-section-head reuse-reveal"><div><span class="reuse-section-no">05 / SCALE THE STANDARD</span><h2 class="reuse-section-title js-scramble">대형가전에서 중고 모바일까지,<br>같은 신뢰의 기준을 확장합니다.</h2></div><p class="reuse-section-desc">세탁기·냉장고·건조기·의류관리기·세탁/건조기에서 시작해 중고 모바일까지 넓히고 있습니다. 카테고리가 달라도 촬영과 상품화 품질이 같도록 현장 가이드를 직접 만들어 배포했습니다.</p></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">05.1 / MOBILE EXPANSION</span><div><h3 class="reuse-subtitle js-scramble">매장에서 찍는 순간부터,<br>온라인에 보이는 순간까지 일관되게.</h3><p class="reuse-subcopy">지점별 촬영 환경 편차를 줄이기 위해 조명·구도·필수 컷·상태 정보·상품화 순서를 직접 가이드로 만들었습니다.</p></div></div><div class="reuse-mobile"><div><h4>같은 기준이<br>다른 카테고리로.</h4><p>대형가전에서 시작한 신뢰 설계를 모바일의 작은 흠집, 기능 점검, 구성품 확인까지 확장했습니다.</p></div><div class="reuse-device-grid"><figure class="reuse-device"><span>HOME</span></figure><figure class="reuse-device"><span>LIST</span></figure><figure class="reuse-device"><span>PDP</span></figure><figure class="reuse-device"><span>CHECK</span></figure></div></div></div><div class="reuse-sub reuse-reveal"><div class="reuse-subhead"><span class="reuse-subno">05.2 / PROTOTYPE MOCKUP</span><div><h3 class="reuse-subtitle js-scramble">신뢰를 확인하는 화면을 빠르게 만들고,<br>반복해서 검증했습니다.</h3><p class="reuse-subcopy">리스트·상세·검수·보증 화면을 하나의 흐름으로 연결해 고객의 질문이 끊기지 않는지 확인했습니다.</p></div></div><div class="phone-gallery reuse-mockup"><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>01</span><b>HOME</b><p>신뢰 기준을 먼저 안내</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>02</span><b>LIST</b><p>인증·상태·가격 비교</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>03</span><b>PDP</b><p>실물·이력·검수 확인</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>04</span><b>CHECK</b><p>배송·설치·보증 선택</p></div></article></div></div></div></section>
-</main><footer class="reuse-footer"><div class="reuse-wrap">LOTTE HIMART · REUSE COMMERCE · TRUST BY DESIGN</div></footer>
+<section class="hm-section" id="brand" data-chapter="01"><div class="hm-wrap"><div class="hm-section-head hm-reveal"><div><span class="hm-section-no">01</span><h2 class="hm-section-title js-scramble">화면보다 먼저,<br>중고 거래를 이해했습니다.</h2></div><p class="hm-section-desc">요청은 인증 중고 신규 서비스 UX 설계였습니다. 바로 화면을 만들지 않고, 사람들이 무엇을 불안해하고 어떤 조건에서 안심하는지부터 확인했습니다.</p></div><div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.1 / PAIN POINTS</span><div><h3 class="hm-subtitle">중고 구매를 멈추게 하는<br>세 가지 불안</h3><p class="hm-subcopy">제품의 상태, 사용 이력, 거래 이후 책임이 보이지 않을수록 구매는 멈췄습니다. 문제는 가격이 아니라 확인할 수 없는 상태였습니다.</p></div></div><div class="keyword-grid"><div class="keyword-group"><h3>고객이 걱정한 것</h3><div class="keyword-cloud"><span class="keyword-pill major"><b>상태가 실제와 다르면?</b><em>외관·기능 상태 50.8%</em></span><span class="keyword-pill major"><b>돈을 보내도 안전할까?</b><em>금전적 사기 44.6%</em></span><span class="keyword-pill major"><b>문제가 생기면?</b><em>A/S·반품 불가 31.1%</em></span><span class="keyword-pill"><b>위조품이면?</b><em>위조품 유통 37.7%</em></span><span class="keyword-pill"><b>깨끗하게 관리됐을까?</b><em>오염·위생 34.6%</em></span></div></div><div class="keyword-group negative"><h3>직거래에서 커진 불안</h3><div class="keyword-cloud"><span class="keyword-pill major"><b>대면 거래가 불안함</b><em>응답자 74.0%</em></span><span class="keyword-pill major"><b>개인정보가 노출될까?</b><em>판매자 부담 61.3%</em></span><span class="keyword-pill"><b>누가 책임지는가</b><em>품질 불확실성 41.0%</em></span></div></div></div></div><div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.2 / TRUST SIGNALS</span><div><h3 class="hm-subtitle">고객이 안심하는 조건을<br>신뢰의 기준으로 바꿨습니다.</h3><p class="hm-subcopy">공인된 검수, 투명한 사용 이력, 표준화된 보증과 책임. 개인 간 거래에서 보이지 않던 근거를 하이마트가 직접 확인하고 전달하는 구조로 전환했습니다.</p></div></div><div class="voice-stack"><article class="voice-group"><h4 class="voice-group-title">불안을 만드는 지점은<br><strong>확인할 수 없는 정보</strong>에 모였습니다.</h4><div class="ring-row"><div class="ring-card" style="--pct:50.8"><div class="inner"><h4>외관·기능<br>상태</h4><p>실제 상태를<br>판단하기 어려움</p></div><span class="pct">50.8%</span></div><div class="ring-card" style="--pct:44.6"><div class="inner"><h4>금전적<br>사기 위험</h4><p>거래 상대방을<br>믿기 어려움</p></div><span class="pct">44.6%</span></div><div class="ring-card" style="--pct:41"><div class="inner"><h4>품질·상태<br>불확실성</h4><p>고장과 결함을<br>예측하기 어려움</p></div><span class="pct">41.0%</span></div></div></article><article class="voice-group negative"><h4 class="voice-group-title">신뢰는 말이 아니라<br><strong>확인 가능한 경험</strong>으로 만들어야 했습니다.</h4><div class="ring-row"><div class="ring-card" style="--pct:74"><div class="inner"><h4>전문 검수와<br>인증</h4><p>공인 주체가<br>상태를 확인</p></div><span class="pct">74.0%</span></div><div class="ring-card" style="--pct:61.3"><div class="inner"><h4>개인정보<br>보호</h4><p>익명·안전 결제로<br>거래 부담 완화</p></div><span class="pct">61.3%</span></div><div class="ring-card" style="--pct:2"><div class="inner"><h4>2년 무상<br>A/S</h4><p>구매 이후까지<br>책임을 연결</p></div><span class="pct">2년</span></div></div></article></div></div><div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.3 / SUMMARY</span><div><h3 class="hm-subtitle">중고 거래의 본질적 결핍은<br>가격이 아니라 신뢰였습니다.</h3><p class="hm-subcopy">가격과 가성비는 탐색을 시작하게 만들었지만, 신뢰할 근거가 없으면 구매로 이어지지 않았습니다.</p></div></div><h4 class="sentiment-title">탐색 동기와 구매 불안</h4><div class="sentiment-graph"><div class="sentiment-block"><div class="sentiment-number">79.1%</div><div class="sentiment-keywords"><b>탐색 동기</b><br>신제품 대비 높은 가성비</div></div><div class="sentiment-block negative"><div class="sentiment-number">51.2%</div><div class="sentiment-keywords"><b>구매 단계</b><br>중고 거래 경험자의 불안</div></div></div></div></div></section>
+<section class="hm-section" id="data" data-chapter="02"><div class="hm-wrap"><div class="hm-section-head hm-reveal"><div><span class="hm-section-no">02</span><h2 class="hm-section-title js-scramble">고객의 불안은 막연하지 않았습니다.<br>실제 응답과 행동으로 확인했습니다.</h2></div><p class="hm-section-desc">중고를 찾는 이유와 구매를 멈추는 이유를 분리해 확인했습니다. 가격·가성비는 탐색을 만들었고, 상태·안전·사후 책임에 대한 불안은 마지막 결정을 막았습니다.</p></div><div class="data-list"><article class="data-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.1 / MOTIVE ≠ CONFIDENCE</span><div><h3>가격은 관심을 만들었지만,<br>신뢰가 구매 확신을 만들었습니다.</h3><p class="desc">중고 탐색 동기는 높은 가성비 79.1%, 저렴한 가격 56.7%였습니다. 하지만 구매 시 불안을 느낀 경험자는 51.2%였습니다.</p></div></div><div class="data-viz number-pair"><div class="number-panel"><strong>79.1%</strong><h4>탐색 동기 · 높은 가성비</h4><p>신제품보다 효율적인 선택이라는 기대가 탐색을 시작하게 했습니다.</p></div><div class="number-panel"><strong>51.2%</strong><h4>구매 시 불안 경험</h4><p>상태와 책임을 확인하지 못하면 가격 매력은 구매 직전에 약해졌습니다.</p></div></div><div class="hm-source">SOURCE · 하이마트 리유즈 중고 거래 인식 리서치 요약</div></article><article class="data-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.2 / CONCERN INDEX</span><div><h3>고객이 걱정한 내용을<br>비율로 다시 확인했습니다.</h3><p class="desc">외관·기능 상태 50.8%, 금전적 사기 44.6%, 위조품 37.7%, 위생 34.6%, 고장 후 A/S·반품 31.1%. 숫자가 높은 걱정부터 정보와 콘텐츠의 우선순위로 옮겼습니다.</p></div></div><div class="data-viz landing-stack"><div class="landing-chart"><h4>중고 구매 시 우려 항목 · 복수응답</h4><div class="stackbar"><i style="width:50.8%;--c:var(--hm-blue)"></i><i style="width:44.6%;--c:var(--hm-newblue)"></i><i style="width:37.7%;--c:var(--hm-green)"></i><i style="width:34.6%;--c:var(--hm-newblue)"></i><i style="width:31.1%;--c:var(--hm-blue)"></i></div><div class="stacklabels"><div><b>50.8%</b>외관·기능</div><div><b>44.6%</b>사기 위험</div><div><b>37.7%</b>위조품</div><div><b>34.6%</b>위생</div><div><b>31.1%</b>A/S·반품</div></div></div></div><div class="hm-source">SOURCE · 하이마트 리유즈 중고 거래 인식 리서치 요약 · 복수응답 기준</div></article><article class="data-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.3 / TRUST SHIFT</span><div><h3>개인 간 거래의 불안을<br>책임지는 구조로 전환했습니다.</h3><p class="desc">직거래 대면 불안 74.0%, 판매자의 개인정보 유출 부담 61.3%를 확인했습니다. 익명성·안전결제·전문 배송·설치·폐가전 수거·2년 무상 A/S를 신뢰 앵커로 설계했습니다.</p></div></div><div class="data-viz chart-wrap"><svg class="chart-svg traffic-v5-live" viewBox="0 0 1160 390" role="img" aria-label="직거래 불안과 신뢰 솔루션"><text class="axis" x="12" y="35">CONCERN</text><text class="axis" x="12" y="60">80%</text><text class="axis" x="12" y="136">0</text><line class="grid" x1="90" y1="55" x2="1110" y2="55"/><line class="grid" x1="90" y1="95" x2="1110" y2="95"/><line class="grid" x1="90" y1="135" x2="1110" y2="135"/><line class="bar" x1="180" y1="65" x2="180" y2="135"/><line class="bar" x1="390" y1="82" x2="390" y2="135"/><line class="bar" x1="600" y1="99" x2="600" y2="135"/><line class="bar" x1="810" y1="106" x2="810" y2="135"/><line class="bar" x1="1020" y1="108" x2="1020" y2="135"/><text class="axis" x="12" y="170">TRUST ANCHOR</text><text class="axis" x="12" y="193">80%</text><text class="axis" x="12" y="266">0</text><line class="grid" x1="90" y1="185" x2="1110" y2="185"/><line class="grid" x1="90" y1="225" x2="1110" y2="225"/><line class="grid" x1="90" y1="265" x2="1110" y2="265"/><polyline class="line-newblue" points="180,65 390,82 600,99 810,106 1020,108"/><circle class="point-yellow" cx="180" cy="65" r="5"/><circle class="point-yellow" cx="390" cy="82" r="5"/><circle class="point-yellow" cx="600" cy="99" r="5"/><circle class="point-yellow" cx="810" cy="106" r="5"/><circle class="point-yellow" cx="1020" cy="108" r="5"/><polyline class="line-green" points="180,205 390,202 600,200 810,194 1020,188"/><text class="axis" x="165" y="388">대면 불안</text><text class="axis" x="365" y="388">개인정보</text><text class="axis" x="570" y="388">검수</text><text class="axis" x="785" y="388">배송·설치</text><text class="axis" x="1005" y="388">A/S</text></svg><div class="chart-legend"><span><i style="--c:var(--hm-blue)"></i>고객 불안 비율</span><span><i style="--c:var(--hm-green)"></i>신뢰 앵커 배치</span></div></div><div class="hm-source">SOURCE · 하이마트 리유즈 중고 거래 인식 리서치 요약 · 실제 응답 비율</div></article></div></div></section>
+<section class="hm-section" id="journey" data-chapter="03"><div class="hm-wrap"><div class="hm-section-head hm-reveal"><div><span class="hm-section-no">03</span><h2 class="hm-section-title js-scramble">신뢰가 이어지는 순서로,<br>중고 구매 여정을 다시 정의했습니다.</h2></div><p class="hm-section-desc">고객이 불안을 느끼는 순간마다 확인할 수 있는 근거를 배치했습니다. 인증에서 보증까지의 흐름을 하나의 여정으로 연결하고 각 화면의 역할을 분명히 했습니다.</p></div><div class="flow-area hm-reveal" style="margin-top:0"><div class="flow-groups"><div class="flow-group blue" data-line-target="3"><div class="flow-label">고객의 질문을 잃지 않고 탐색에서 확인으로 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">01 / DISCOVER</span><h4>중고 제품 발견</h4><p>가격·카테고리·인증 뱃지로 탐색의 이유를 만듭니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">02 / VERIFY</span><h4>상태를 확인</h4><p>실물 사진·하자 Detail·상태 등급으로 궁금증을 줄입니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">03 / HISTORY</span><h4>사용 이력 확인</h4><p>이전 소유자 코멘트와 검수 기록으로 제품의 시간을 보여줍니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">04 / PROOF</span><h4>검수 근거 확인</h4><p>엔지니어 검품 성적서와 상품화 과정을 공개합니다.</p></article></div></div><div class="flow-group blue" data-line-target="2"><div class="flow-label">구매 확신을 만들고 배송·설치·보증까지 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">05 / SELECT</span><h4>신뢰의 선택</h4><p>가격과 상태, 보증을 함께 비교해 결정 부담을 줄입니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">06 / CHECKOUT</span><h4>안전 결제</h4><p>에스크로와 익명성, 총액과 환불 조건을 명확히 보여줍니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">07 / DELIVERY</span><h4>전문 배송·설치</h4><p>설치 기사 직배송과 폐가전 무상 수거를 연결합니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">08 / CARE</span><h4>2년 무상 A/S</h4><p>구매 이후에도 하이마트가 책임지는 관계를 이어갑니다.</p></article></div></div></div></div><div class="hm-subsection hm-reveal" style="margin-top:142px"><div class="hm-subhead"><span class="hm-subno">03.1 / TRUST SYSTEM</span><div><h3 class="hm-subtitle">신뢰를 만드는 실행 방법을<br>하나의 시스템으로 묶었습니다.</h3><p class="hm-subcopy">촬영 환경, 검수 기준, 이전 소유자 스토리, AI 콘텐츠와 PDP 모듈을 따로 만들지 않고 하나의 신뢰 경험으로 연결했습니다.</p></div></div><div class="role-grid"><article class="role-card"><span class="hm-role-name">CERTIFIED</span><h4>누가 확인했는지 보이는 화면</h4><p>하이마트 인증과 엔지니어 검품 성적서를 제품 발견 순간부터 보여줍니다.</p><strong>인증 뱃지 · 검품 리포트 · 상태 등급</strong></article><article class="role-card"><span class="hm-role-name">CONTENT</span><h4>확인 가능한 상품 정보</h4><p>무왜곡 사진, 하자 Detail, 세척·살균 영상으로 상태를 추측하지 않게 합니다.</p><strong>실물 사진 · 상품화 과정 · AI 보완 콘텐츠</strong></article><article class="role-card"><span class="hm-role-name">OWNER STORY</span><h4>제품의 시간을 전달하는 기능</h4><p>이전 소유자의 사용 기간과 관리 팁을 코멘트로 남기고 참여 포인트를 제공합니다.</p><strong>사용 이력 · 코멘트 · L.POINT 보상</strong></article><article class="role-card"><span class="hm-role-name">CARE</span><h4>구매 이후에도 이어지는 책임</h4><p>전문 배송·설치, 폐가전 수거, 2년 무상 A/S를 결제와 동시에 확정합니다.</p><strong>안전 결제 · 설치 · 회수 · 2년 보증</strong></article></div></div></div></section>
+<section class="hm-section" id="direction" data-chapter="04"><div class="hm-wrap"><div class="hm-section-head hm-reveal"><div><span class="hm-section-no">04</span><h2 class="hm-section-title js-scramble">앞서 정의한 신뢰 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복했습니다.</h2></div><p class="hm-section-desc">리스트·상세·검수·보증 모듈을 실제 화면 크기로 구성해 구매 질문이 끊기는 지점을 확인했습니다. 전략 문서에서 끝내지 않고 검증 가능한 화면으로 전환했습니다.</p></div><div class="prototype-intro hm-reveal"><h3>신뢰를 확인하는 흐름을<br>실제 화면으로 전환했습니다.</h3><p>홈·리스트·PDP·검수·결제·배송·보증까지 핵심 흐름을 프로토타입으로 연결하고, 내부 리뷰를 통해 정보 위계와 연결 방식을 반복해서 조정했습니다.</p></div><div class="phone-gallery hm-reveal"><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>01</span><b>HOME</b><p>신뢰 기준을 먼저 안내</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>02</span><b>LIST</b><p>인증·상태·가격 비교</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>03</span><b>PDP</b><p>실물·이력·검수 확인</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>04</span><b>CHECK</b><p>배송·설치·보증 선택</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>05</span><b>OWNER STORY</b><p>이전 소유자 코멘트</p></div></article><article class="phone-card"><div class="phone-frame"></div><div class="phone-meta"><span>06</span><b>CARE</b><p>2년 무상 A/S 안내</p></div></article></div></div></section>
+<footer class="hm-footer" id="contact"><div class="hm-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart.html">온라인 구매여정 다시 보기 →</a></div></div></footer>
+</main>
 <script>
-(function(){const body=document.body,progress=[...document.querySelectorAll('.reuse-progress a')],chapters=[...document.querySelectorAll('[data-chapter]')];function update(){const y=Math.max(0,window.scrollY);body.style.setProperty('--reuse-darkness',Math.min(.93,.48+.43*(1-Math.exp(-y/210))).toFixed(3));body.style.setProperty('--reuse-copy',Math.max(.08,1-y/520).toFixed(3));}window.addEventListener('scroll',update,{passive:true});update();const reveal=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');if(e.target.matches('.reuse-section-title,.reuse-subtitle'))scramble(e.target)}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.reuse-reveal,.reuse-section-title,.reuse-subtitle').forEach(el=>reveal.observe(el));function scramble(el){if(el.dataset.scrambled)return;el.dataset.scrambled='1';const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';const nodes=[];const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);while(walker.nextNode())nodes.push(walker.currentNode);const originals=nodes.map(n=>n.nodeValue);let frame=0;const total=18;const timer=setInterval(()=>{nodes.forEach((n,i)=>{const src=originals[i];n.nodeValue=src.split('').map((c,j)=>c===' '||c==='\\n'?c:(j<Math.floor(src.length*(frame/total))?c:chars[Math.floor(Math.random()*chars.length)])).join('')});if(++frame>total){clearInterval(timer);nodes.forEach((n,i)=>n.nodeValue=originals[i])}},45)}const active=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;progress.forEach(a=>a.classList.toggle('is-active',a.getAttribute('href')==='#'+id));}}),{threshold:.22});chapters.forEach(s=>active.observe(s));const v=document.querySelector('.reuse-hero-video');if(v)v.play().catch(()=>{});})();
+(async()=>{
+'use strict';
+const main=document.getElementById('live-main');
+const pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const loadScript=src=>new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=reject;document.body.appendChild(s)});
+const textNodesFor=(el)=>{const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{acceptNode(node){return node.nodeValue&&node.nodeValue.trim().length?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});const nodes=[];let node;while((node=walker.nextNode()))nodes.push(node);return nodes};
+const scrambleLargeTitle=(el)=>{if(!el||el.dataset.wideLargeScramblePlayed==='1')return;el.dataset.wideLargeScramblePlayed='1';if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const parts=textNodesFor(el).map(node=>({node,original:node.nodeValue}));const mutable=(ch)=>/[\p{L}\p{N}]/u.test(ch);const total=parts.reduce((sum,part)=>sum+[...part.original].filter(mutable).length,0);if(!total)return;const started=performance.now();const duration=Math.min(1450,650+total*13);const tick=(now)=>{const p=Math.min(1,(now-started)/duration),resolved=Math.floor(total*Math.pow(p,.72));let cursor=0;parts.forEach((part,pi)=>{part.node.nodeValue=[...part.original].map((ch,ci)=>{if(!mutable(ch))return ch;const idx=cursor++;if(idx<resolved||p>=1)return ch;return pool[(pi*29+ci*17+Math.floor(now/44))%pool.length]}).join('')});if(p<1)requestAnimationFrame(tick);else parts.forEach(part=>part.node.nodeValue=part.original)};requestAnimationFrame(tick)};
+const prepareWideMotion=()=>{main.querySelectorAll('.hm-section-no').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');main.querySelectorAll('.data-card-head .hm-card-no,.data-card-head h3,.hm-subhead .hm-subno,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .hm-card-no,.data-bridge > .data-bridge-title').forEach(el=>el.dataset.numberedGroupScramblePlayed='1');main.querySelectorAll('.flow-label').forEach(el=>el.dataset.flowLabelScramblePlayed='1');const riseTargets=[...main.querySelectorAll('.data-card-head h3,.hm-subhead .hm-subtitle,.hm-subhead .forced-redesign-title,.data-bridge > .data-bridge-title,.narrative-title,.problem-item h4,.proof-item strong,.signal-item b,.principle-item h4,.design-rule h4')];riseTargets.forEach(el=>el.classList.add('wide-rise-target'));if(matchMedia('(prefers-reduced-motion: reduce)').matches){riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'))}else if('IntersectionObserver' in window){const rio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-wide-rise-in');rio.unobserve(entry.target)}}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});riseTargets.forEach(el=>rio.observe(el))}else riseTargets.forEach(el=>el.classList.add('is-wide-rise-in'));const hero=main.querySelector('.hm-title');if(hero){if('IntersectionObserver' in window){const hio=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){scrambleLargeTitle(entry.target);hio.disconnect()}}),{threshold:.2});hio.observe(hero)}else scrambleLargeTitle(hero)}};
+const elFromHTML=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
+const wrapMore=(parent,nodes,label,meta='DETAILS')=>{const valid=nodes.filter(Boolean).filter(node=>node.parentElement===parent);if(!valid.length)return null;const details=document.createElement('details');details.className='hm-more';details.innerHTML=`<summary>${label}<span>${meta}</span></summary><div class="hm-more-body"></div>`;const body=details.querySelector('.hm-more-body');parent.insertBefore(details,valid[0]);valid.forEach(node=>body.appendChild(node));details.addEventListener('toggle',()=>{if(details.open){requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')))}});return details};
+const applyNarrativeTest=()=>{
+document.body.classList.add('himart-narrative-test');
+const brand=main.querySelector('#brand');const brandWrap=brand?.querySelector(':scope > .hm-wrap');const brandHead=brandWrap?.querySelector(':scope > .hm-section-head');
+if(brandHead){const title=brandHead.querySelector('.hm-section-title'),desc=brandHead.querySelector('.hm-section-desc');if(title)title.innerHTML='화면을 고치기 전에,<br>왜 고객이 온라인에서 하이마트를 선택하지 않는지부터 정의했습니다.';if(desc)desc.innerHTML='“온라인몰 개편”은 결과의 이름일 뿐 문제의 이름은 아니었습니다. <strong>고객이 하이마트를 어떻게 인식하는지</strong>와 <strong>실제로 어떻게 사용하는지</strong>를 따로 확인한 뒤, 두 결과가 같은 방향을 가리키는 지점만 설계의 근거로 삼았습니다.';
+const problem=elFromHTML(`<div class="narrative-block hm-reveal narrative-problem"><span class="narrative-subno">01.1 / PROBLEM DEFINITION</span><h3 class="narrative-title">“개편해 주세요”라는 요청으로는<br>무엇을 바꿔야 하는지 알 수 없었습니다.</h3><p class="narrative-copy">그래서 먼저 두 가지를 분리해 봤습니다. 하나는 <strong>고객의 머릿속</strong>, 다른 하나는 <strong>고객의 손</strong>입니다. 말과 행동을 각각 끝까지 본 뒤, 겹치는 부분만 남겼습니다.</p><div class="problem-grid"><article class="problem-item"><small>01 / PERCEPTION</small><h4>고객에게 하이마트는<br>어떤 곳일까?</h4><p>가전을 살 때 하이마트를 떠올리는지, 떠올린다면 매장인지 온라인인지, 어떤 기대를 가지고 찾는지부터 확인했습니다.</p></article><article class="problem-item"><small>02 / BEHAVIOR</small><h4>온라인에서는<br>실제로 뭘 하고 있을까?</h4><p>어디에서 들어와 무엇을 보고, 어디서 다음 행동이 끊기는지 2025.01—2026.06 이용 데이터를 따라갔습니다.</p></article><article class="problem-item"><small>03 / OVERLAP</small><h4>말과 행동이<br>겹치는 지점만 남겼습니다.</h4><p>경쟁사 화면을 먼저 보거나 결론을 정해두지 않고, 고객 조사와 행동 데이터가 동시에 지지하는 문제를 우선순위로 삼았습니다.</p></article></div></div>`);brandHead.insertAdjacentElement('afterend',problem);
+const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-reality"><span class="narrative-subno">01.2 / BRAND REALITY</span><h3 class="narrative-title">하이마트는 약한 브랜드가 아니었습니다.<br>강한 전문성이 온라인 경험으로 이어지지 않는 것이 문제였습니다.</h3><p class="narrative-copy">2026년 소비자 조사에서는 하이마트가 여전히 <strong>‘가전 살 곳’ 최초 상기 1위</strong>였고, 멀티 브랜드 비교와 직영 서비스 품질도 강점으로 확인됐습니다. 반면 인지와 실제 경험, 구매·예약 편의성, 반복 관계 사이에는 큰 간극이 있었습니다.</p><div class="proof-grid"><article class="proof-item"><span class="proof-label">TOP OF MIND</span><strong>32.6<span>%</span></strong><span class="proof-compare">2위 쿠팡 13.1%</span><h4>‘가전 살 곳’ 최초 상기 1위</h4><p>브랜드 인지 자체가 약한 것이 아니라, 이미 강한 인지를 실제 온라인 경험으로 전환하지 못하는 쪽에 가까웠습니다.</p></article><article class="proof-item"><span class="proof-label">CARE EXPERIENCE GAP</span><strong>54.7<span>%p</span></strong><span class="proof-compare">인지 72.3% → 경험 17.6%</span><h4>알지만 써보지 않은 서비스</h4><p>서비스를 알고 있는 고객이 실제 이용 경험으로 넘어가는 지점에서 큰 병목이 확인됐습니다.</p></article><article class="proof-item"><span class="proof-label">SERVICE CHANNEL PREFERENCE</span><strong>52.9<span>%</span></strong><span class="proof-compare">제조사 52.9% · 하이마트 12.6%</span><h4>품질 신뢰가 최종 선택으로 이어지지 않음</h4><p>하이마트 서비스 품질 평가는 긍정적이지만 실제 선택 단계에서는 제조사 선호가 더 강했습니다.</p></article><article class="proof-item"><span class="proof-label">5Y CUSTOMER PATH</span><strong>76.7<span>%</span></strong><span class="proof-compare">지난 5개년 구매 고객</span><h4>한 번 구매하고 관계가 끝남</h4><p>가전 구매의 저빈도 특성과 구매 후 접점 부족이 겹치며 반복 관계로 이어지는 구조가 약했습니다.</p></article></div><div class="brand-synthesis"><h4>결국 문제는 인지가 아니라<br>구매 전환 과정에 있었습니다.</h4><div class="synthesis-list"><div class="synthesis-col"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 경쟁사가 쉽게 복제하기 어려운 오프라인 자산이 있었습니다.</p></div><div class="synthesis-col"><b>온라인에서 끊기던 지점</b><p>인지 → 실제 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록 편의성과 연결성이 약해졌습니다.</p></div></div></div><div class="hm-source">SOURCE · Deloitte Consulting Korea, 평생Care서비스 멤버십 설계 소비자 조사 · 2026.07 / 조사 설계: CRM 770명, 일반 소비자 900명(현재·휴면·잠재 각 300명) + 정성 조사</div></div>`);problem.insertAdjacentElement('afterend',reality);const originals=[...brandWrap.children].filter(node=>node.classList?.contains('hm-subsection')&&!node.classList.contains('narrative-block'));wrapMore(brandWrap,originals,'고객 의견과 기존 정성 분석 더 보기','QUALITATIVE RESEARCH')}
+const data=main.querySelector('#data');const dataWrap=data?.querySelector(':scope > .hm-wrap');const dataHead=dataWrap?.querySelector(':scope > .hm-section-head');if(dataHead){const title=dataHead.querySelector('.hm-section-title'),desc=dataHead.querySelector('.hm-section-desc');if(title)title.innerHTML='정성적으로 보였던 간극은<br>실제 이용 행동에서도 반복됐습니다.';if(desc)desc.innerHTML='고객의 말만으로 문제를 단정하지 않았습니다. 유입, 랜딩, 검색, 상품 상세, 장바구니, 결제까지 실제 행동을 따라가며 <strong>어디에서 다음 행동이 약해지는지</strong>를 확인했습니다.';const signal=elFromHTML(`<div class="narrative-block hm-reveal narrative-signals"><span class="narrative-subno">02.1 / BEHAVIOR SIGNALS</span><h3 class="narrative-title">숫자는 더 단순하게 말했습니다.<br>고객이 들어오는 것보다, 한 걸음 더 가게 만드는 힘이 약했습니다.</h3><div class="signal-grid"><article class="signal-item"><b>68<small>%</small></b><h4>외부 맥락을 가진 유입</h4><p>2026 H1 통합 기준 AD·CPS·CRM 비중. 하나의 ‘홈 시작’을 전제로 설계하기 어려웠습니다.</p><div class="signal-rule"><i style="--w:68%"></i></div></article><article class="signal-item"><b>52.2<small>%</small></b><h4>기획전 시작 후 바로 종료</h4><p>유입은 만들었지만 상품 후보나 다음 탐색으로 넘어가기 전에 흐름이 끝나는 비중이 가장 컸습니다.</p><div class="signal-rule"><i style="--w:52.2%"></i></div></article><article class="signal-item"><b>3.1<small>×</small></b><h4>결제 진입이 장바구니보다 많음</h4><p>2026년 1월 모바일에서 장바구니 24,237건보다 주문결제 진입 75,808건이 3배 이상 많았습니다.</p><div class="signal-rule"><i style="--w:78%"></i></div></article><article class="signal-item"><b>9.34<small>%</small></b><h4>세션 대비 검색 비중</h4><p>2025 H1 3.26%에서 2026 H1 9.34%로 증가. 검색은 보조 기능보다 구매 후보를 만드는 핵심 행동에 가까웠습니다.</p><div class="signal-rule"><i style="--w:62%"></i></div></article></div><div class="narrative-bridge"><p>조사는 “온라인몰이 잘 떠오르지 않는다”고 했고, 데이터는 “들어와도 한 걸음 더 가지 않는다”고 했습니다. 그래서 목표를 <strong>‘화면을 새로 만든다’가 아니라 ‘고객의 구매 여정 안에 자리를 만든다’</strong>로 다시 썼습니다.</p></div><div class="hm-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 / 하이마트 쇼핑몰 이용 현황 Mobile·PC 2026.01—06 / 온라인 백데이터 퍼널·검색</div></div>`);dataHead.insertAdjacentElement('afterend',signal);const dataNodes=[...dataWrap.children].filter(node=>node!==dataHead&&node!==signal&&!node.classList.contains('narrative-block')&&!node.classList.contains('hm-section-head'));wrapMore(dataWrap,dataNodes,'이용 데이터와 경로 분석 자세히 보기','QUANTITATIVE ANALYSIS')}
+const journey=main.querySelector('#journey');const journeyWrap=journey?.querySelector(':scope > .hm-wrap');const journeyHead=journeyWrap?.querySelector(':scope > .hm-section-head');if(journeyHead){const title=journeyHead.querySelector('.hm-section-title'),desc=journeyHead.querySelector('.hm-section-desc');if(title)title.innerHTML='그래서 화면보다 먼저,<br>여정을 설계하는 세 가지 원칙을 정했습니다.';if(desc)desc.innerHTML='자주 방문하지 않는 가전 쇼핑의 특성과 하이마트의 오프라인 자산을 함께 놓고, 이후 모든 화면 설계가 따라야 할 기준을 먼저 만들었습니다.';const principles=elFromHTML(`<div class="principle-grid hm-reveal"><article class="principle-item"><small>01 / FAMILIARITY</small><h4>익숙함이<br>먼저입니다.</h4><p>검색·필터·상품카드·결제처럼 시장 표준이 있는 곳은 새 문법을 만들지 않습니다. 몇 년 만에 다시 온 고객도 바로 쓸 수 있어야 합니다.</p></article><article class="principle-item"><small>02 / NEXT STEP</small><h4>두 번째 걸음을<br>만듭니다.</h4><p>머문 시간보다 다음 화면으로 넘어갔는지를 봅니다. 모든 화면이 다음 판단을 자연스럽게 이어주는 역할을 가져야 합니다.</p></article><article class="principle-item"><small>03 / OMNI</small><h4>매장과 사람을<br>잇습니다.</h4><p>실물을 보고 전문가에게 물어볼 수 있다는 강점을 온라인이 대체하지 않고, 필요할 때 자연스럽게 연결합니다.</p></article></div>`);journeyHead.insertAdjacentElement('afterend',principles);const roleSections=[...journeyWrap.querySelectorAll(':scope > .hm-subsection')];if(roleSections.length)wrapMore(journeyWrap,roleSections,'여정별 역할 정의 자세히 보기','ROLE DEFINITION')}
+const direction=main.querySelector('#direction');const directionWrap=direction?.querySelector(':scope > .hm-wrap');const directionHead=directionWrap?.querySelector(':scope > .hm-section-head');if(directionHead){const desc=directionHead.querySelector('.hm-section-desc');if(desc)desc.innerHTML='정의한 원칙을 실제 화면과 인터랙션으로 빠르게 옮기고 내부 검증을 반복했습니다. <strong>새로움은 탐색·결제의 기본 문법이 아니라 하이마트만의 강점을 보여주는 지점에 사용했습니다.</strong>';const rule=elFromHTML(`<div class="design-rule hm-reveal"><article><small>STANDARD UX</small><h4>익숙함은 만들지 않고<br>빌려옵니다.</h4><p>검색창 위치, 필터 동작, 상품 카드의 정보 순서, 결제 단계처럼 이미 학습된 패턴은 네이버·쿠팡 등 시장 표준을 따릅니다.</p></article><article><small>HIMART DIFFERENCE</small><h4>새로움은 하이마트만<br>할 수 있는 곳에 씁니다.</h4><p>매장 재고·실물 확인, 전문가 상담, 설치 가능일, 폐가전 회수, 보증·A/S·Care처럼 온라인 전용몰이 복제하기 어려운 강점을 판단 순간에 연결합니다.</p></article></div>`);directionHead.insertAdjacentElement('afterend',rule);const caseList=directionWrap.querySelector('.prototype-case-list');if(caseList){const cases=[...caseList.querySelectorAll(':scope > .prototype-case')];if(cases.length>1){const more=wrapMore(caseList,cases.slice(1),'나머지 프로토타입 적용 사례 더 보기',`${cases.length-1} MORE CASES`);if(more)more.style.marginTop='54px'}}else{const gallery=directionWrap.querySelector('.phone-gallery');const rows=gallery?[...gallery.children]:[];if(gallery&&rows.length>1){const more=wrapMore(gallery,rows.slice(1),'나머지 프로토타입 적용 사례 더 보기',`${rows.length-1} MORE CASES`);if(more)more.style.marginTop='54px'}}}
+document.querySelectorAll('details.hm-more').forEach(d=>d.open=false)};
+try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');applyNarrativeTest();prepareWideMotion();document.body.classList.remove('himart-narrative-loading');document.body.classList.add('himart-narrative-ready');await loadScript('./himart-live-boot.js?v=9f74114')}catch(err){document.body.classList.remove('himart-v18-loading','himart-narrative-loading');document.body.classList.add('himart-v18-ready','himart-narrative-ready');main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';console.error(err)}})();
 </script>
-</body></html>
+<script src="./himart-narrative-v2-production-runtime.js?v=20260901-1"></script>
+<script>
+(function(){
+  const movieHero=document.querySelector('.hm-movie-hero');
+  const overlay=document.querySelector('.hm-movie-overlay');
+  const updateMovieDarkness=()=>{
+    const y=Math.max(0,window.scrollY||0);
+    const eased=1-Math.exp(-y/260);
+    document.documentElement.style.setProperty('--movie-darkness',(0.5+0.45*eased).toFixed(3));
+  };
+  updateMovieDarkness();
+  window.addEventListener('scroll',updateMovieDarkness,{passive:true});
+  const applyRoleDefinitions=()=>{
+    const titles=[
+      '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.',
+      '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.',
+      '검색은 불확실성을<br>확신으로 바꿔줘야 한다.',
+      '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.',
+      '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.',
+      '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.',
+      '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.',
+      '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.',
+      '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.'
+    ];
+    const root=document.querySelector('#journey');
+    if(!root)return false;
+    const nodes=[...root.querySelectorAll('.hm-subsection .hm-subtitle')];
+    if(nodes.length<8)return false;
+    nodes.slice(0,8).forEach((el,i)=>{el.innerHTML=titles[i];el.classList.add('movie-role-title')});
+    if(nodes.length<9){
+      const last=nodes[7].closest('.hm-subsection');
+      if(last){
+        const clone=last.cloneNode(true);
+        const no=clone.querySelector('.hm-subno'); if(no)no.textContent='03.9 / ROLE DEFINITION';
+        const title=clone.querySelector('.hm-subtitle'); if(title)title.innerHTML=titles[8];
+        const copy=clone.querySelector('.hm-subcopy'); if(copy)copy.textContent='구매 이후의 관심과 상태를 기억하고, 다음 방문과 관리 행동으로 자연스럽게 이어줍니다.';
+        last.parentElement.insertBefore(clone,last.nextSibling);
+      }
+    }
+    root.querySelectorAll('.hm-subsection .hm-subtitle').forEach(el=>el.classList.add('movie-role-title'));
+    return true;
+  };
+  const shortenText=()=>{
+    const replacements=[
+      ['하이마트를 떠올리는 방식과 매장·온라인에 기대하는 역할을 확인했습니다.','하이마트를 떠올리는 방식과 온·오프라인 기대를 확인했습니다.'],
+      ['유입부터 다음 행동이 끊기는 지점까지 이용 데이터를 따라갔습니다.','유입부터 행동이 끊기는 지점까지 데이터를 따라갔습니다.'],
+      ['고객 의견과 행동 데이터가 함께 가리킨 문제만 남겼습니다.','고객 의견과 행동이 함께 가리킨 문제만 남겼습니다.']
+    ];
+    document.querySelectorAll('.hm-movie-hero, #brand, #data').forEach(root=>{
+      root.querySelectorAll('*').forEach(el=>{
+        if(el.children.length===0)replacements.forEach(([a,b])=>{if(el.textContent.includes(a))el.textContent=el.textContent.replace(a,b)});
+      });
+    });
+  };
+  let tries=0;
+  const finish=()=>{
+    applyRoleDefinitions(); shortenText();
+    if(++tries<20 && !document.querySelector('.movie-role-title'))setTimeout(finish,300);
+  };
+  window.addEventListener('load',()=>setTimeout(finish,400));
+  setTimeout(finish,900);
+})();
+</script><script id="himart-movie-content-final">
+(function(){
+  const roleTitles=[
+    '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.',
+    '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.',
+    '검색은 불확실성을<br>확신으로 바꿔줘야 한다.',
+    '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.',
+    '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.',
+    '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.',
+    '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.',
+    '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.',
+    '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.'
+  ];
+  const shorten=()=>{
+    document.querySelectorAll('#brand .problem-item p').forEach((el,i)=>{
+      const a=['하이마트를 떠올리는 방식과 매장·온라인에 기대하는 역할을 확인했습니다.','유입부터 다음 행동이 끊기는 지점까지 이용 데이터를 따라갔습니다.','고객 의견과 행동 데이터가 함께 가리킨 문제만 남겼습니다.'][i];
+      if(a)el.textContent=['하이마트를 떠올리는 방식과 온·오프라인 기대를 확인했습니다.','유입부터 행동이 끊기는 지점까지 데이터를 따라갔습니다.','고객 의견과 행동이 함께 가리킨 문제만 남겼습니다.'][i];
+    });
+    const signalCopy=['AD·CPS·CRM 유입이 68%. 하나의 홈 시작만으로 설계하기 어려웠습니다.','유입은 만들었지만 다음 탐색으로 넘어가기 전에 흐름이 끊겼습니다.','장바구니보다 결제 진입이 3배 이상 많아 행동 기준을 다시 봐야 했습니다.','검색 비중이 커지며 구매 후보를 만드는 핵심 행동이 되었습니다.'];
+    document.querySelectorAll('#data .signal-item p').forEach((el,i)=>{if(signalCopy[i])el.textContent=signalCopy[i]});
+    const proofTitles=['가전 살 곳’ 하면 최초로<br>떠오르는 곳 1위','알지만 써보지 않은<br>서비스','품질 신뢰가 최종 선택으로<br>이어지지 않음','한 번 구매하고<br>관계가 끝남'];
+    document.querySelectorAll('#brand .proof-item h4').forEach((el,i)=>{if(proofTitles[i])el.innerHTML=proofTitles[i]});
+    const proofCopy=['브랜드 인지는 강했지만, 온라인 경험으로 이어지는 연결은 약했습니다.','서비스를 아는 고객이 실제 이용으로 넘어가는 과정에서 큰 병목이 있었습니다.','품질 평가는 긍정적이지만 최종 선택에서는 제조사 선호가 더 강했습니다.','구매 후 접점이 부족해 한 번의 구매가 지속 관계로 이어지지 않았습니다.'];
+    document.querySelectorAll('#brand .proof-item p').forEach((el,i)=>{if(proofCopy[i])el.textContent=proofCopy[i]});
+  };
+  const roles=()=>{
+    const cards=[...document.querySelectorAll('#journey .role-grid .role-card')];
+    if(cards.length<8)return false;
+    cards.slice(0,8).forEach((card,i)=>{const h=card.querySelector('h4');if(h)h.innerHTML=roleTitles[i]});
+    if(cards.length<9){
+      const clone=cards[7].cloneNode(true);
+      const label=clone.querySelector('.hm-role-name');if(label)label.textContent='POST-PURCHASE';
+      const h=clone.querySelector('h4');if(h)h.innerHTML=roleTitles[8];
+      const p=clone.querySelector('p');if(p)p.textContent='구매 이후의 관심과 상태를 기억하고 다음 관리 행동으로 이어줍니다.';
+      const strong=clone.querySelector('strong');if(strong)strong.textContent='관심 기억 · 관리 연결 · 재방문';
+      cards[7].parentElement.appendChild(clone);
+    }
+    document.querySelectorAll('#journey .role-card .hm-role-name').forEach(el=>{el.style.fontFamily="'Averta PE',sans-serif";el.style.fontWeight='400'});
+    return true;
+  };
+  const run=()=>{shorten();roles();};
+  window.addEventListener('load',()=>{run();setTimeout(run,700);setTimeout(run,1600);});
+  setTimeout(run,1200);
+})();
+</script><script id="himart-movie-final-v2-script">
+(function(){
+  const roleTitles=[
+    '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.',
+    '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.',
+    '검색은 불확실성을<br>확신으로 바꿔줘야 한다.',
+    '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.',
+    '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.',
+    '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.',
+    '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.',
+    '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.',
+    '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.'
+  ];
+  const setContent=()=>{
+    const root=document.querySelector('#journey');
+    const cards=root?[...root.querySelectorAll('.role-grid .role-card')]:[];
+    if(cards.length<8)return false;
+    cards.slice(0,8).forEach((card,i)=>{const h=card.querySelector('h4');if(h)h.innerHTML=roleTitles[i]});
+    if(cards.length<9){
+      const clone=cards[7].cloneNode(true);
+      clone.querySelector('.hm-role-name')?.replaceChildren(document.createTextNode('POST-PURCHASE'));
+      const h=clone.querySelector('h4');if(h)h.innerHTML=roleTitles[8];
+      const p=clone.querySelector('p');if(p)p.textContent='구매 이후의 관심과 상태를 기억하고 다음 관리 행동으로 이어줍니다.';
+      const strong=clone.querySelector('strong');if(strong)strong.textContent='관심 기억 · 관리 연결 · 재방문';
+      cards[7].parentElement.appendChild(clone);
+    }
+    return true;
+  };
+  const shorten=()=>{
+    const problem=['하이마트를 떠올리는 방식과 온·오프라인 기대를 확인했습니다.','유입부터 행동이 끊기는 지점까지 데이터를 따라갔습니다.','고객 의견과 행동이 함께 가리킨 문제만 남겼습니다.'];
+    document.querySelectorAll('#brand .problem-item p').forEach((el,i)=>{if(problem[i])el.textContent=problem[i]});
+    const signal=['AD·CPS·CRM 유입이 68%. 하나의 홈만으로 설계하기 어려웠습니다.','유입은 만들었지만 다음 탐색으로 넘어가기 전에 흐름이 끊겼습니다.','장바구니보다 결제 진입이 3배 이상 많아 행동 기준을 다시 봐야 했습니다.','검색 비중이 커지며 구매 후보를 만드는 핵심 행동이 되었습니다.'];
+    document.querySelectorAll('#data .signal-item p').forEach((el,i)=>{if(signal[i])el.textContent=signal[i]});
+    const proof=['브랜드 인지는 강했지만 온라인 경험으로 이어지는 연결은 약했습니다.','서비스를 아는 고객이 실제 이용으로 넘어가는 과정에서 병목이 있었습니다.','품질 평가는 긍정적이지만 최종 선택에서는 제조사 선호가 더 강했습니다.','구매 후 접점이 부족해 지속 관계로 이어지지 않았습니다.'];
+    document.querySelectorAll('#brand .proof-item p').forEach((el,i)=>{if(proof[i])el.textContent=proof[i]});
+  };
+  let observer;
+  const run=()=>{
+    shorten();
+    const done=setContent();
+    if(done&&observer){observer.disconnect();observer=null}
+  };
+  observer=new MutationObserver(run);
+  observer.observe(document.body,{childList:true,subtree:true});
+  run();
+  setTimeout(()=>{run();if(observer)observer.disconnect()},10000);
+})();
+</script>
+<script id="himart-movie-request-lock">
+(() => {
+  const main = document.getElementById('live-main');
+  const fallbackMarkup = main?.innerHTML || '';
+  let restoredFallback = false;
+  const runtimeLockStyle = document.createElement('style');
+  runtimeLockStyle.id = 'himart-movie-runtime-lock';
+  runtimeLockStyle.textContent = `
+    html body.himart-movie-page #live-main .hm-movie-copy{top:20vh!important}
+    html body.himart-movie-page #live-main .hm-movie-copy .hm-lead{margin-top:20px!important;color:rgba(255,255,255,.6)!important;opacity:1!important}
+    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta{padding-top:0!important;box-sizing:border-box!important;align-items:center!important}
+    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta>div:last-child{border-bottom:0!important;padding-bottom:0!important}
+    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card b{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.3!important;font-weight:300!important;margin:0!important}
+    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:24px!important;line-height:1.45!important;font-weight:300!important;color:#fff!important}
+    html body.himart-movie-page #live-main #data .behavior-card h4{font-size:28px!important;line-height:1.2!important}
+    html body.himart-movie-page #live-main #data .signal-item h4{font-size:28px!important;line-height:1.2!important;min-height:2.4em!important}
+    html body.himart-movie-page #live-main #data .behavior-card p{font-size:16px!important;line-height:1.5!important;margin-top:40px!important}
+    html body.himart-movie-page #live-main #journey .journey-role-grid h4,
+    html body.himart-movie-page #live-main #journey .role-grid h4{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:28px!important;line-height:1.25!important;font-weight:100!important;letter-spacing:-.045em!important}
+    html body.himart-movie-page #live-main #journey .journey-role-grid p,
+    html body.himart-movie-page #live-main #journey .role-grid p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.55!important;font-weight:300!important;color:rgba(255,255,255,.5)!important}
+    html body.himart-movie-page #live-main #journey .journey-role-grid small,
+    html body.himart-movie-page #live-main #journey .role-grid .hm-role-name{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
+    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta span{color:rgba(255,255,255,.5)!important}
+    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card.positive p{font-size:28px!important;color:var(--hm-blue)!important}
+    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card.negative p{font-size:28px!important;color:var(--hm-red)!important}
+    html body.himart-movie-page #live-main #direction .design-rule article p{font-size:16px!important;line-height:1.5!important}
+  `;
+  document.head.appendChild(runtimeLockStyle);
+  const roleCards = [
+    ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.', '최근 맥락과 관심을 기억해 원하는 목적지로 바로 이어줍니다.', '맥락 기억 · 목적지 연결 · 개인화 진입'],
+    ['SUBHOME / CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.', '상황과 설치 조건을 기준으로 탐색 방향을 빠르게 좁혀줍니다.', '상황 중심 탐색 · 조건 정리'],
+    ['SEARCH', '검색은 불확실성을<br>확신으로 바꿔줘야 한다.', '모호한 요구를 추천검색과 필터로 실제 후보까지 구체화합니다.', '추천검색 · 동적 필터 · 탐색 가이드'],
+    ['SRP / PLP', '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다.', '가격·혜택·설치 조건과 핵심 스펙을 같은 기준으로 비교하게 합니다.', '지속 필터 · 핵심 비교 · 조건 명확화'],
+    ['PDP', '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다.', '가격·설치·매장·상담·케어를 한 흐름 안에서 판단하게 합니다.', '가격 · 설치 · 매장 · 상담 · 케어'],
+    ['CART / PAY', '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다.', '총액과 혜택, 배송·설치 조건을 고정해 마지막 불확실성을 줄입니다.', '총액 고정 · 혜택 확인 · 조건 확정'],
+    ['INSTALL / CARE', '배송/설치에서는 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다.', '설치 일정과 회수·보증 정보를 주문 맥락 안에서 분명하게 보여줍니다.', '일정 확정 · 회수 · 보증 · A/S'],
+    ['MYPAGE', '마이페이지에서는 구매 이후에도<br>관리받고 있다는 느낌을 줘야 한다.', '주문 상태와 보증·A/S·케어 정보를 한곳에서 이어서 관리합니다.', '주문 상태 · 보증 · 케어 관리'],
+    ['POST-PURCHASE', '구매 이후의 경험은 다시 찾게 되는<br>관계로 이어져야 한다.', '관심과 관리 이력을 다음 방문과 재구매로 자연스럽게 연결합니다.', '관심 기억 · 관리 연결 · 재방문']
+  ];
+
+  const html = (el, value) => { if (el && el.innerHTML !== value) el.innerHTML = value; };
+  const text = (el, value) => { if (el && el.textContent !== value) el.textContent = value; };
+  const apply = () => {
+    /* Runtime CSS is injected asynchronously; keep this lock last in the cascade. */
+    document.head.appendChild(runtimeLockStyle);
+    const lead = document.querySelector('.hm-movie-copy .hm-lead');
+    html(lead, '화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.');
+
+    const directionTitle = document.querySelector('#direction .hm-section-title');
+    html(directionTitle, '앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.');
+
+    const behaviorTitles = [
+      '외부 맥락을<br>가진 유입',
+      '기획전 시작 후<br>바로 종료',
+      '결제 진입이<br>장바구니보다 많음',
+      '세션 대비<br>검색 비중'
+    ];
+    document.querySelectorAll('#data .signal-item h4, #data .behavior-card h4').forEach((el, i) => {
+      if (behaviorTitles[i]) html(el, behaviorTitles[i]);
+    });
+    const journeyCopy = document.querySelector('#journey .journey-role-block .hm-subcopy, #journey .hm-subsection .hm-subcopy');
+    text(journeyCopy, '홈부터 결제까지 화면을 개별 산출물이 아닌, 앞 단계 맥락을 다음 판단으로 넘기는 역할로 정의했습니다. 이 기준이 프로토타입의 정보 우선순위와 인터랙션을 결정했습니다.');
+    const designRuleCopy = [
+      '검색·필터·상품카드·결제처럼 학습된 패턴은 네이버·쿠팡 등 시장 표준을 따릅니다.',
+      '매장 재고·실물 확인, 전문가 상담, 설치일, 회수·보증·A/S·Care를 판단 순간에 연결합니다.'
+    ];
+    document.querySelectorAll('#direction .design-rule article p').forEach((el, i) => {
+      if (designRuleCopy[i]) text(el, designRuleCopy[i]);
+    });
+
+    const transition = document.querySelector('#brand .narrative-touchpoint-synthesis, #brand .brand-synthesis');
+    if (transition) {
+      transition.className = 'brand-synthesis narrative-touchpoint-synthesis';
+      const transitionHTML = '<span class="narrative-subno synthesis-subno">01.3 / TRANSITION TOUCHPOINT</span><h4>결국 문제는 인지가 아니라<br>구매 전환 과정에 있었습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 오프라인 자산이 있었습니다.</p></article><article class="synthesis-card negative"><b>온라인에서 끊기던 지점</b><p>인지 → 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록<br>편의성과 연결성이 약해졌습니다.</p></article></div>';
+      html(transition, transitionHTML);
+    }
+
+    const grid = document.querySelector('#journey .journey-role-grid, #journey .role-grid');
+    const section = grid?.closest('.journey-role-block, .hm-subsection');
+    if (section && grid) {
+      text(section.querySelector('.hm-subno'), '03.2 / ROLE DEFINITION');
+      let cards = [...grid.querySelectorAll(':scope > .role-card, :scope > article')];
+      while (cards.length < roleCards.length) {
+        const clone = cards[cards.length - 1]?.cloneNode(true);
+        if (!clone) break;
+        grid.appendChild(clone);
+        cards = [...grid.querySelectorAll(':scope > .role-card, :scope > article')];
+      }
+      cards.slice(0, roleCards.length).forEach((card, i) => {
+        const [label, title, copy, keywords] = roleCards[i];
+        text(card.querySelector('.hm-role-name, small'), label);
+        html(card.querySelector('h4'), title);
+        text(card.querySelector('p'), copy);
+        text(card.querySelector('strong'), keywords);
+      });
+    }
+  };
+
+  const updateHeroFade = () => {
+    const progress = Math.min(1, Math.max(0, window.scrollY || 0) / 420);
+    document.documentElement.style.setProperty('--movie-copy-opacity', String((1 - progress * .88).toFixed(3)));
+  };
+
+  let queued = false;
+  const schedule = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; apply(); });
+  };
+  const observer = new MutationObserver(() => {
+    if (!restoredFallback && main?.textContent?.includes('페이지를 불러오지 못했습니다.') && fallbackMarkup) {
+      restoredFallback = true;
+      main.innerHTML = fallbackMarkup;
+    }
+    schedule();
+  });
+  observer.observe(main, { childList:true, subtree:true });
+  apply();
+  updateHeroFade();
+  window.addEventListener('scroll', updateHeroFade, { passive:true });
+  window.addEventListener('load', schedule, { once:true });
+  const lateApply = window.setInterval(apply, 600);
+  setTimeout(() => { apply(); observer.disconnect(); clearInterval(lateApply); }, 30000);
+})();
+</script></body>
+</html>
