@@ -1,8 +1,9 @@
 /* HIMART Design System v1.0 — typography foundation */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
 .hm-ds-en{font-family:var(--hm-font-en);font-weight:300}
 .hm-ds-ko{font-family:var(--hm-font-ko);font-weight:300}
 .hm-ds-hero{font:300 var(--hm-type-hero)/1.04 var(--hm-font-ko);letter-spacing:-.045em}
