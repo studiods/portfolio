@@ -18,8 +18,7 @@
     .interview-row:first-child .interview-q{color:rgba(244,242,237,.8)}
     .about-ascii-canvas{position:relative;z-index:1}
     .about-ascii-blackout{z-index:2}
-    /* Start from pure black, rapidly cycle a randomized glyph field,
-       then reveal the existing ASCII portrait underneath. */
+    /* Initial reveal: pure black settles to the existing ASCII veil. */
     .about-load-blackout{
       position:fixed;
       inset:0;
@@ -28,25 +27,14 @@
       opacity:1;
       pointer-events:none;
       overflow:hidden;
-      transition:opacity .32s cubic-bezier(.22,1,.36,1);
-    }
-    .about-load-random{
-      position:absolute;
-      inset:7% 5%;
-      display:block;
-      margin:0;
-      color:rgba(255,255,255,.5);
-      font:300 clamp(9px,1.1vw,16px)/1.2 "Averta PE",Arial,sans-serif;
-      letter-spacing:.08em;
-      white-space:pre-wrap;
-      overflow:hidden;
-      user-select:none;
+      transition:opacity 1.5s cubic-bezier(.22,1,.36,1);
+      will-change:opacity;
     }
     .about-load-blackout.is-revealing{
-      opacity:0;
+      opacity:.05;
     }
     @media(prefers-reduced-motion:reduce){
-      .about-load-blackout{display:none}
+      .about-load-blackout{opacity:.05;transition:none}
     }
   </style>
 </head>
@@ -55,41 +43,21 @@
 <script>
 (() => {
   const veil = document.querySelector('.about-load-blackout');
-  if (!veil || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const randomLayer = document.createElement('pre');
-  randomLayer.className = 'about-load-random';
-  veil.appendChild(randomLayer);
-  const pool = '#@%*+=-:.01ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  let cycleTimer = 0;
-  const makeNoise = () => {
-    const cols = Math.max(34, Math.ceil(window.innerWidth / 12));
-    const rows = Math.max(14, Math.ceil(window.innerHeight / 22));
-    const lines = [];
-    for (let row = 0; row < rows; row += 1) {
-      let line = '';
-      for (let col = 0; col < cols; col += 1) {
-        line += pool[Math.floor(Math.random() * pool.length)];
-      }
-      lines.push(line);
-    }
-    randomLayer.textContent = lines.join('\n');
-  };
+  if (!veil) return;
+  // Let the existing ASCII canvas begin rendering underneath immediately,
+  // then ease the pure-black layer down to the current 5% veil over 1.5s.
   const reveal = () => {
-    window.clearInterval(cycleTimer);
     veil.classList.remove('is-revealing');
-    makeNoise();
-    let cycles = 0;
-    cycleTimer = window.setInterval(() => {
-      makeNoise();
-      cycles += 1;
-      if (cycles >= 11) {
-        window.clearInterval(cycleTimer);
-        window.setTimeout(() => veil.classList.add('is-revealing'), 90);
-      }
-    }, 72);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      veil.classList.add('is-revealing');
+    }));
   };
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    veil.classList.add('is-revealing');
+    return;
+  }
   reveal();
-  window.addEventListener('pageshow', (event) => {
+  window.addEventListener('pageshow', event => {
     if (event.persisted) reveal();
   });
 })();
