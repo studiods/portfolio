@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 330">
+  <style>
+    text{font-family:Arial,sans-serif;fill:rgba(255,255,255,.46);font-size:12px}
+    .grid{stroke:rgba(255,255,255,.12);stroke-width:1}
+    .concern{fill:none;stroke:#00A6ED;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+    .dot{fill:#F3EB01}
+    .value{fill:#fff;font-size:14px}
+    .label{fill:rgba(255,255,255,.56);font-size:12px}
+  </style>
+  <text x="0" y="22">USED PURCHASE CONCERNS</text>
+  <text x="0" y="58">60%</text><text x="0" y="125">40%</text><text x="0" y="192">20%</text><text x="0" y="258">0%</text>
+  <line class="grid" x1="90" y1="50" x2="1070" y2="50"/><line class="grid" x1="90" y1="117" x2="1070" y2="117"/><line class="grid" x1="90" y1="183" x2="1070" y2="183"/><line class="grid" x1="90" y1="250" x2="1070" y2="250"/>
+  <polyline class="concern" points="145,81 370,101 595,113 820,134 1045,146"/>
+  <circle class="dot" cx="145" cy="81" r="4"/><circle class="dot" cx="370" cy="101" r="4"/><circle class="dot" cx="595" cy="113" r="4"/><circle class="dot" cx="820" cy="134" r="4"/><circle class="dot" cx="1045" cy="146" r="4"/>
+  <text class="value" x="130" y="68">50.8%</text><text class="value" x="355" y="88">44.6%</text><text class="value" x="580" y="100">37.7%</text><text class="value" x="805" y="121">34.6%</text><text class="value" x="1030" y="133">31.1%</text>
+  <text class="label" x="113" y="300">외관·기능</text><text class="label" x="347" y="300">사기 위험</text><text class="label" x="572" y="300">위조품</text><text class="label" x="799" y="300">위생</text><text class="label" x="1006" y="300">A/S·반품</text>
+</svg>
