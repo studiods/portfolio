@@ -1,73 +1,183 @@
-# HIMART DESIGN SYSTEM REBUILD PLAN v1.0 — 실행 기준
+# HIMART Design System v1.0 — Observed Baseline
 
-## 기준과 불변 조건
+기준 화면: `himart-system-test.html`  
+기준 조합: `himart.html` + `himart-narrative-v2-production.css` + `himart-narrative-v2-production-runtime.js`  
+작성 원칙: 현재 화면을 먼저 보존하고, 통합은 관측값 검증 후 진행한다. 원본 `himart.html`에는 적용하지 않는다.
 
-- 원본 기준 파일: `himart.html`
-- 원본 파일은 이 리팩토링에서 수정하지 않음
-- 검증용 페이지: `himart-system-test.html`
-- 신규 스타일시트: `himart-design-system.css`
-- 기존 자산: `assets/himart_01.mp4`, Averta PE, Pretendard
+## 1. Source of Truth
 
-## 실제 소스 분석
+현재 화면은 정적 HTML만으로 완성되지 않는다.
 
-| 항목 | 확인값 |
+1. HTML: 초기 구조와 레거시 텍스트
+2. CSS: 여러 시기의 스타일이 하나의 번들로 결합됨
+3. Runtime JS: 제목·본문·역할 카드 교체, observer, counter, reveal, scroll fade 실행
+4. Assets: 로컬 Averta OTF, Pretendard CDN, Himart 영상·SVG
+
+따라서 정적 HTML과 실행 후 DOM을 구분해 관리한다. 새 구조에서는 콘텐츠는 HTML, 스타일은 CSS, 동작은 JS가 소유한다.
+
+## 2. Current Complexity Baseline
+
+| 항목 | 관측값 |
+|---|---:|
+| CSS 규칙 | 약 1,921 |
+| CSS `!important` | 약 3,802 |
+| CSS 미디어쿼리 | 67 |
+| CSS 색상 표현 | 113종 |
+| HTML inline style | 43 |
+| HTML style block | 6 |
+| Runtime 함수 | 약 29 |
+| Observer | 7 |
+| Timer | 8 |
+| innerHTML 교체 | 28 |
+
+현재 CSS는 `style.css`, `typography.css`, `global-gnb.css`, `himart-case-v4.css`, 날짜별 patch, wide/final/verification 규칙이 결합된 historical bundle이다. 통합 전 원본별 역할 분리가 필요하다.
+
+## 3. Observed Typography Tokens
+
+### Font
+
+- English: `Averta PE`
+- Korean: `Pretendard`
+- Averta local faces: Thin 300 / Regular 400 / Bold 700
+- Pretendard: CDN import
+- 100/200/500/600은 실제 face가 아니라 합성 굵기 가능성이 있으므로 정리 대상
+
+### Desktop
+
+| Token | Observed value | 사용 |
+|---|---:|---|
+| `type.hero` | 82px | Hero title |
+| `type.section` | 42px | 장 제목 |
+| `type.subsection` | 28px | 데이터·여정 제목 |
+| `type.group` | 22px | 카드 그룹 제목 |
+| `type.body` | 16px | 본문 |
+| `type.note` | 12px | 출처·메타 |
+
+### Mobile
+
+- Display: `clamp(30px, 8.6vw, 35px)`
+- Section: `clamp(29px, 8vw, 33px)`
+- Subsection: `clamp(23px, 6.5vw, 26px)`
+- Group: `clamp(20px, 5.6vw, 22px)`
+- Body: `clamp(14px, 3.9vw, 16px)`
+- Small: `clamp(12px, 3.35vw, 14px)`
+
+## 4. Observed Color Tokens
+
+### Background
+
+- `bg.page`: #000
+- `bg.section`: #050505
+- Legacy light background: #f4f2ed (최신 검은 화면 기준에서는 사용 금지 후보)
+
+### Accent
+
+- `accent.blue`: #00A6ED
+- `accent.blue-new`: #00B8DE
+- `accent.green`: #00EDBD
+- `accent.yellow`: #F3EB01
+- `accent.red`: #FA481B
+
+### Text and line opacity
+
+- Primary: #fff / 1.0
+- Emphasis: rgba(255,255,255,.80)
+- Secondary: rgba(255,255,255,.60)
+- Body: rgba(255,255,255,.50)
+- Tertiary: rgba(255,255,255,.38)
+- Line strong: rgba(255,255,255,.40)
+- Line default: rgba(255,255,255,.24)
+- Line weak: rgba(255,255,255,.14)
+- Line faint: rgba(255,255,255,.10)
+
+기존의 100/80/60/40/20/10 체계는 문서상 표현으로만 사용하고, 실제 화면 보존 단계에서는 .80/.60/.50/.38/.40/.24/.14/.10을 유지한다.
+
+## 5. Observed Layout and Spacing
+
+### Layout
+
+- Hero canvas: `calc(100% - 80px)`, 최대 약 1360~1440px
+- Editorial content: 약 1100~1280px
+- Mobile horizontal inset: 약 18px
+- Metadata bar height: 약 74px
+
+### Spacing
+
+| 역할 | Observed values |
 |---|---|
-| HTML 인라인 style | 46개 |
-| HTML style 블록 | 8개 |
-| HTML script 블록 | 6개 |
-| 외부 CSS | `himart-narrative-v2-production.css` 약 320KB |
-| 외부 runtime | `himart-narrative-v2-production-runtime.js` 약 26KB |
-| 반복 컴포넌트 | hm-section, hm-subsection, hm-meta, data-card, proof-item, role-card, phone-card, flow-node |
-| 충돌 원인 | final-overrides, verification-lock, hero-center 계열 선언이 동일 속성을 반복 선언 |
+| Micro | 14 / 18 / 20px |
+| Component | 24 / 26 / 28 / 34 / 40px |
+| Subsection | 50 / 74 / 100px |
+| Section / Hero | 142 / 200px |
 
-## 페이지 구조
+4px spacing scale는 최종 통합 후보이지 현재 화면의 원본 규칙이 아니다. 먼저 위 관측값으로 시각적 동등성을 검증한다.
 
-```
-PAGE
-├─ Hero / hm-movie-hero
-├─ Brand Problem / #brand
-├─ Data Insight / #data
-├─ UX Strategy / #journey
-├─ Journey / flow-area, flow-node
-├─ Prototype / #direction, media blocks
-└─ Footer / hm-footer
-```
+## 6. Component Inventory
 
-## Token v1
+기존 계획에 다음 모듈을 추가한다.
 
-Typography: Display 128, Heading XL 72, Heading L 48, Heading M 32, Body Large 20, Body 16, Caption 12. English는 Averta PE, Korean은 Pretendard.
+- Hero Movie + Overlay + Copy + Meta
+- Section Header
+- Problem Definition Card
+- Keyword Matrix
+- Positive/Negative Keyword Split
+- Brand Reality Stat Card
+- Transition Touchpoint Synthesis
+- Behavior Signal Card
+- Chart / Data Visualization
+- Journey Flow Node + Connector
+- Role Definition Card
+- Prototype Gallery
+- Device Mockup
+- Source Note
+- Expandable Research Row
+- Progress Navigator
+- Footer Metadata
 
-Color: bg-primary #050505, bg-secondary #000, text opacity 100/80/60/40, Himart Blue #00A6ED, Himart Red #FA481B.
+## 7. Motion Inventory
 
-Spacing: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128px. Container max 1360px, desktop padding 40px. Line 0.5px/1px, opacity 10/20/40%.
+### CSS / visual
 
-## Component API
+- Hero video autoplay
+- Hero sticky and scroll fade
+- Reveal / rise
+- Hover transition
+- Ring and chart drawing
+- Sequential opacity changes
 
-Hero(Video + Overlay + Copy + Meta), Section Header(Number + Title + Description), Narrative Block, Data Card, Role Card, Media Block.
+### Runtime
 
-## Motion
+- Random glyph scramble
+- Content replacement
+- Counter
+- IntersectionObserver reveal
+- MutationObserver re-application
+- Scroll progress
+- Fallback restoration
+- Delayed retry timers
 
-Fade, Rise(Y 40px/900ms), Stagger(100ms), Counter(1200ms), Scroll Transform(hero opacity/overlay).
+통합 순서는 콘텐츠 교체 제거 → observer 통합 → animation-only JS 분리 → CSS transition 정리이다. 현재 단계에서 runtime lock을 단순 삭제하면 화면이 깨질 수 있으므로, 기능별 검증 후 제거한다.
 
-## 검증 기준
+## 8. Migration Rules
 
-- 작업 전후 원본 `himart.html` blob SHA 비교
-- 테스트 페이지에서 인라인 style 및 legacy override 제거
-- 토큰 기반 반응형(900px/600px)
-- 신규 CSS는 원본 production CSS보다 현저히 작게 유지
+1. `himart.html`은 원본 기준으로 보존한다.
+2. `himart-system-test.html`에서만 새 시스템을 검증한다.
+3. 정적 콘텐츠와 런타임 교체 콘텐츠를 먼저 하나로 확정한다.
+4. 관측 토큰과 통합 토큰을 별도 표기로 유지한다.
+5. `!important`를 새로 추가하지 않는다.
+6. 기존 `!important`는 selector 충돌 원인을 제거한 뒤 단계적으로 삭제한다.
+7. CSS bundle을 foundation / components / page / motion으로 분리한다.
+8. 폰트는 로컬 Averta와 Pretendard 로드 성공 여부를 별도로 검증한다.
+9. 데스크톱·모바일 최종 적용값을 각각 검증한다.
+10. 시각 비교 전에는 `himart.html`에 직접 반영하지 않는다.
 
+## 9. Next Implementation Order
 
-## 최신 라이브 기준 보정 (2026-09-04)
-
-초기 분석에서 `himart.html`의 정적 DOM만 복제하면 과거 내러티브가 노출되는 문제가 확인되었습니다. 최신 화면은 다음 런타임 조합으로 생성됩니다.
-
-- 기준 콘텐츠 Blob: `6824a76b15854f4608498951bd3f909373cc407b`
-- 기준 변환: `himart-live-transform.js`
-- 후속 refine: `himart-wide-content-v4.js`, `himart-wide-refine-v5/v6/v7/v8/v9/v12/v13/v14/v15.js`, `himart-production-refine-v16/v18.js`
-- 최신 제목·섹션·카드·여정 모듈은 위 런타임에서 삽입 또는 교체됨
-
-따라서 `himart-system-test.html`은 최신 런타임 기준 페이지를 먼저 고정한 뒤, 시각 회귀 검증을 거쳐 컴포넌트별로 신규 토큰 CSS에 단계적으로 이관합니다.
-
-### 폰트 로딩 원인
-
-기존 테스트는 Averta만 신규 CSS에 선언하고 Pretendard를 `local()`에만 의존해 환경에 따라 대체 글꼴이 사용될 수 있었습니다. 최신 기준 페이지는 저장소의 `typography.css`를 통해 Averta PE Thin/Regular/Bold를 직접 로드하며, 본문은 Pretendard 시스템 폴백을 사용합니다. 테스트 기준은 이 실제 경로를 유지합니다.
+1. 최종 실행 DOM에서 desktop/mobile computed value 추출
+2. 레거시 CSS와 최신 규칙 분리
+3. 콘텐츠를 HTML로 이동할 목록 확정
+4. foundation token 파일 적용
+5. component CSS 적용
+6. runtime을 animation-only 구조로 축소
+7. 기존 화면과 pixel/section 비교
+8. 승인 후 원본 적용 여부 결정
