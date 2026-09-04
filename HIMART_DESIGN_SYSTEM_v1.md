@@ -215,3 +215,12 @@
 - Pretendard는 `design-system/typography.css`의 jsDelivr import에 의존한다. 외부 네트워크가 차단되면 동일하게 fallback으로 내려간다.
 - Averta를 실제 적용하려면 해당 폰트 파일을 저장소에 추가하거나, 사용 권한이 있는 호스팅 URL을 제공해야 한다. 라이선스 확인 없이 임의의 폰트를 포함하지 않는다.
 - 현재 단계에서는 폰트 파일을 새로 만들지 않고, 누락 사실과 적용 경로를 문서화했다.
+
+
+## 컴포넌트 매핑 진행 (2026-09-04)
+
+- Prototype intro: `hm-ds-prototype-grid hm-ds-narrative`
+- Phone gallery: `hm-ds-media-grid`
+- Phone cards: `hm-ds-media-card`
+- 동적 Journey flow node: `hm-ds-flow-node`
+- 기존 전용 레이아웃의 시각 규칙은 건드리지 않고 의미 클래스만 추가했다.
