@@ -1,7 +1,11 @@
 /* HIMART Design System — animation layer
    Content and layout are intentionally not mutated here. */
 (() => {
-  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  let initialized = false;
+  const init = () => {
+    if (initialized) return;
+    initialized = true;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const revealTargets = document.querySelectorAll('[data-hm-reveal]');
   const counterTargets = document.querySelectorAll('[data-hm-counter], [data-count]');
   const hero = document.querySelector('[data-hm-hero]');
@@ -63,4 +67,18 @@
     }, { threshold: 0.1 });
     videoObserver.observe(video);
   }
+
+  const boot = () => {
+    const hasTargets = document.querySelector('[data-hm-reveal], [data-hm-counter], [data-count], [data-hm-hero], [data-hm-video]');
+    if (hasTargets) { init(); return true; }
+    return false;
+  };
+  if (!boot() && 'MutationObserver' in window) {
+    const observer = new MutationObserver(() => {
+      if (boot()) observer.disconnect();
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(() => observer.disconnect(), 20000);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
 })();
