@@ -1,0 +1,36 @@
+/* HIMART Design System v1.0 — foundation tokens */
+:root{
+  --hm-bg-page:#000;
+  --hm-bg-section:#050505;
+  --hm-text-primary:#fff;
+  --hm-text-emphasis:rgba(255,255,255,.8);
+  --hm-text-secondary:rgba(255,255,255,.6);
+  --hm-text-body:rgba(255,255,255,.5);
+  --hm-text-tertiary:rgba(255,255,255,.38);
+  --hm-line-strong:rgba(255,255,255,.4);
+  --hm-line-default:rgba(255,255,255,.24);
+  --hm-line-weak:rgba(255,255,255,.14);
+  --hm-line-faint:rgba(255,255,255,.1);
+  --hm-blue:#00A6ED;
+  --hm-blue-new:#00B8DE;
+  --hm-green:#00EDBD;
+  --hm-yellow:#F3EB01;
+  --hm-red:#FA481B;
+  --hm-font-en:"Averta PE",Arial,sans-serif;
+  --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+  --hm-type-hero:82px;
+  --hm-type-section:42px;
+  --hm-type-subsection:28px;
+  --hm-type-group:22px;
+  --hm-type-body:16px;
+  --hm-type-note:12px;
+  --hm-space-micro:20px;
+  --hm-space-component:40px;
+  --hm-space-subsection:74px;
+  --hm-space-section:142px;
+  --hm-space-hero:200px;
+  --hm-meta-height:74px;
+  --hm-mobile-inset:18px;
+  --hm-container-editorial:1100px;
+  --hm-container-wide:1360px;
+}
