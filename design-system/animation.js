@@ -69,7 +69,7 @@
   }
 
   const boot = () => {
-    const hasTargets = document.querySelector('[data-hm-reveal], [data-hm-counter], [data-count], [data-hm-hero], [data-hm-video]');
+    const hasTargets = document.querySelector('[data-hm-reveal], [data-hm-counter], [data-count]');
     if (hasTargets) { init(); return true; }
     return false;
   };
