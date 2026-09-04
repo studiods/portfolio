@@ -47,3 +47,9 @@
 - 중복 선택자 상위: `.hm-title` 6회, `.hm-section-title` 5회, `.role-grid` 4회, `.direction-card` 4회
 
 이 수치는 현재 화면이 깨지는 원인을 단순한 모바일 규칙 하나가 아니라, 동일 컴포넌트에 누적된 우선순위 잠금으로 봐야 한다는 근거다. 따라서 다음 정리에서는 선택자 삭제보다 먼저 컴포넌트별 최종 규칙을 지정하고, 그 규칙으로 대체한 뒤 legacy 블록을 제거한다.
+
+## 현재 적용 단계
+
+- `design-system/components/chapter.css`를 챕터 타이틀의 단일 정적 규칙으로 등록했다.
+- `himart-system-test.html`에서는 이 파일을 기존 inline/legacy 스타일 뒤에 마지막으로 로드해 PC 2열, 모바일 1열 및 타이틀 clamp를 소유하도록 했다.
+- 운영 `himart.html`은 변경하지 않았다. 다음 검증 지점은 실제 PC·모바일 브라우저에서 computed style과 줄바꿈을 대조하는 것이다.
