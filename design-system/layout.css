@@ -1,0 +1,9 @@
+@import url("./tokens.css");
+@import url("./spacing.css");
+html,body{margin:0;background:var(--hm-bg-page);color:var(--hm-text-primary)}
+.hm-ds-page{font-family:var(--hm-font-ko);font-weight:300}
+.hm-ds-wrap{width:min(calc(100% - (var(--hm-inset-desktop) * 2)),var(--hm-content-wide));margin-inline:auto}
+.hm-ds-editorial{width:min(100%,var(--hm-content-editorial));margin-inline:auto}
+.hm-ds-top{position:fixed;inset:0 0 auto;z-index:10;height:40px;display:flex;justify-content:center;align-items:center;font:400 12px/1 var(--hm-font-en)}
+.hm-ds-progress{position:fixed;right:24px;top:50%;z-index:10;display:grid;gap:8px;font:400 10px/1 var(--hm-font-en);color:var(--hm-text-tertiary)}
+@media(max-width:780px){.hm-ds-wrap{width:calc(100% - (var(--hm-inset-mobile) * 2))}.hm-ds-progress{right:12px}}
