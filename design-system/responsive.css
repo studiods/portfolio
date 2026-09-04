@@ -18,8 +18,8 @@
   .journey-block-title{
     width:auto !important;
     max-width:none !important;
-    font-size:clamp(34px,9.5vw,52px) !important;
-    line-height:1.14 !important;
+    font-size:clamp(30px,7.2vw,42px) !important;
+    line-height:1.2 !important;
     letter-spacing:-.035em !important;
     word-break:keep-all !important;
     overflow-wrap:normal !important;
@@ -58,4 +58,12 @@
 
   .hm-ds-hero__copy{max-width:100% !important}
   .hm-ds-hero__title{font-size:clamp(34px,9.5vw,52px) !important}
+}
+
+@media (max-width:700px){
+  /* Body section titles are intentionally one step below the hero title. */
+  .hm-section-title,
+  .hm-ds-section__title{font-size:clamp(30px,7.2vw,42px) !important;line-height:1.2 !important}
+  .hm-movie-hero .hm-title,
+  .hm-ds-hero__title{font-size:clamp(34px,9.5vw,52px) !important;line-height:1.12 !important}
 }
