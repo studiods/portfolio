@@ -1,0 +1,30 @@
+/* HIMART Design System v1.0 — spacing and layout foundation */
+:root{
+  --hm-inset-desktop:40px;
+  --hm-inset-mobile:18px;
+  --hm-content-editorial:1100px;
+  --hm-content-wide:1360px;
+  --hm-space-14:14px;
+  --hm-space-18:18px;
+  --hm-space-20:20px;
+  --hm-space-24:24px;
+  --hm-space-26:26px;
+  --hm-space-28:28px;
+  --hm-space-34:34px;
+  --hm-space-40:40px;
+  --hm-space-50:50px;
+  --hm-space-74:74px;
+  --hm-space-100:100px;
+  --hm-space-142:142px;
+  --hm-space-200:200px;
+}
+.hm-ds-container{width:min(calc(100% - (var(--hm-inset-desktop) * 2)),var(--hm-content-wide));margin-inline:auto}
+.hm-ds-editorial{width:min(100%,var(--hm-content-editorial));margin-inline:auto}
+.hm-ds-section-gap{margin-top:var(--hm-space-142)}
+.hm-ds-subsection-gap{margin-top:var(--hm-space-74)}
+.hm-ds-rule{border-top:1px solid var(--hm-line-faint)}
+@media (max-width:780px){
+  .hm-ds-container{width:calc(100% - (var(--hm-inset-mobile) * 2))}
+  .hm-ds-section-gap{margin-top:clamp(80px,20vw,120px)}
+  .hm-ds-subsection-gap{margin-top:clamp(48px,12vw,74px)}
+}
