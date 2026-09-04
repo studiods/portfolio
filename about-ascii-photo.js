@@ -16,8 +16,8 @@
   const PACKED = Math.ceil(COLS * ROWS / 2);
   const SOURCE_RATIO = COLS / ROWS;
   const PALETTE = ' .,:;-=+*#%@';
-  const SCENE_MS = 1500;
-  const HOLD_MS = 960;
+  const SCENE_MS = 3000;
+  const HOLD_MS = 2460;
   const MORPH_MS = 540;
   const GLITCH_MS = 48;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
