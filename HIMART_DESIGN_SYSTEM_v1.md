@@ -207,3 +207,11 @@
 - `animation.js`는 reveal, counter, hero scroll, video viewport 재생만 담당한다. 기존 `data-count`도 호환한다.
 - 운영 기준 파일 `himart.html` 및 기존 production CSS/runtime은 변경하지 않았다.
 - 테스트 페이지의 인라인 스크립트를 모두 제거하고 `test-content-loader.js`와 `test-content-final.js`로 외부화했다. 콘텐츠 로더/보정 레이어에는 애니메이션 코드를 두지 않으며, 애니메이션은 `animation.js`가 독점한다. 다음 단계는 이 외부 콘텐츠 보정 로직을 정적 HTML로 승격해 제거하는 것이다.
+
+
+## 폰트 로딩 감사 (2026-09-04)
+
+- 저장소에서 `fonts/Averta-PE-Thin.otf`, `Averta-PE-Regular.otf`, `Averta-PE-Bold.otf` 파일이 확인되지 않았다. 따라서 현재 Averta 선언은 404 후 시스템 fallback으로 내려간다.
+- Pretendard는 `design-system/typography.css`의 jsDelivr import에 의존한다. 외부 네트워크가 차단되면 동일하게 fallback으로 내려간다.
+- Averta를 실제 적용하려면 해당 폰트 파일을 저장소에 추가하거나, 사용 권한이 있는 호스팅 URL을 제공해야 한다. 라이선스 확인 없이 임의의 폰트를 포함하지 않는다.
+- 현재 단계에서는 폰트 파일을 새로 만들지 않고, 누락 사실과 적용 경로를 문서화했다.
