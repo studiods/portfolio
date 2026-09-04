@@ -193,7 +193,7 @@ const textNodesFor=(el)=>{const walker=document.createTreeWalker(el,NodeFilter.S
 const scrambleLargeTitle=()=>{};
 const prepareWideMotion=()=>{};
 const elFromHTML=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
-const wrapMore=(parent,nodes,label,meta='DETAILS')=>{const valid=nodes.filter(Boolean).filter(node=>node.parentElement===parent);if(!valid.length)return null;const details=document.createElement('details');details.className='hm-more';details.innerHTML=`<summary>${label}<span>${meta}</span></summary><div class="hm-more-body"></div>`;const body=details.querySelector('.hm-more-body');parent.insertBefore(details,valid[0]);valid.forEach(node=>body.appendChild(node));details.addEventListener('toggle',()=>{if(details.open){requestAnimationFrame(()=>window.dispatchEvent(new Event('scroll')))}});return details};
+const wrapMore=(parent,nodes,label,meta='DETAILS')=>{const valid=nodes.filter(Boolean).filter(node=>node.parentElement===parent);if(!valid.length)return null;const details=document.createElement('details');details.className='hm-more';details.innerHTML=`<summary>${label}<span>${meta}</span></summary><div class="hm-more-body"></div>`;const body=details.querySelector('.hm-more-body');parent.insertBefore(details,valid[0]);valid.forEach(node=>body.appendChild(node));details.addEventListener('toggle',()=>{});return details};
 const applyNarrativeTest=()=>{
 document.body.classList.add('himart-narrative-test');
 const brand=main.querySelector('#brand');const brandWrap=brand?.querySelector(':scope > .hm-wrap');const brandHead=brandWrap?.querySelector(':scope > .hm-section-head');
