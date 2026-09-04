@@ -1,0 +1,15 @@
+/* HIMART Design System v1.0 — motion foundation */
+:root{
+  --hm-motion-fade:opacity .8s ease;
+  --hm-motion-rise:opacity .8s ease,transform .9s cubic-bezier(.22,1,.36,1);
+  --hm-motion-stagger:100ms;
+  --hm-motion-counter:1200ms;
+  --hm-motion-scroll:opacity .12s linear,transform .12s linear;
+}
+.hm-ds-reveal{opacity:0;transform:translate3d(0,40px,0);transition:var(--hm-motion-rise)}
+.hm-ds-reveal.is-visible{opacity:1;transform:none}
+.hm-ds-stagger>*{transition-delay:calc(var(--hm-index,0) * var(--hm-motion-stagger))}
+@media (prefers-reduced-motion:reduce){
+  .hm-ds-reveal{opacity:1;transform:none;transition:none}
+  .hm-ds-stagger>*{transition-delay:0ms}
+}
