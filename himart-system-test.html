@@ -206,7 +206,8 @@ const direction=main.querySelector('#direction');const directionWrap=direction?.
 document.querySelectorAll('details.hm-more').forEach(d=>d.open=false)};
 try{await loadScript('./himart-narrative-v2-production-base.js?v=20260901-1');applyNarrativeTest();prepareWideMotion();document.body.classList.remove('himart-narrative-loading');document.body.classList.add('himart-narrative-ready');await loadScript('./himart-live-boot.js?v=9f74114')}catch(err){document.body.classList.remove('himart-v18-loading','himart-narrative-loading');document.body.classList.add('himart-v18-ready','himart-narrative-ready');main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">페이지를 불러오지 못했습니다.</h1><p style="color:rgba(255,255,255,.6)">잠시 후 다시 시도해 주세요.</p></div>';console.error(err)}})();
 </script>
-<script src="./himart-narrative-v2-production-runtime.js?v=20260901-1"></script>
+<script src="./design-system/content-runtime.js?v=20260904-1"></script>
+<script src="./design-system/animation.js?v=20260904-1"></script>
 <script>
 (function(){
   const movieHero=document.querySelector('.hm-movie-hero');
