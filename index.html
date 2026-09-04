@@ -103,7 +103,7 @@
     void guide.offsetWidth;
     guide.classList.add('is-sweeping');
     // The highlight reaches the bottom after 1s; reveal SCROLL then hold it
-    // for 1.5s before fading it out, independent of pseudo-element events.
+    // for 1s before fading it out, independent of pseudo-element events.
     labelShowTimer = window.setTimeout(() => {
       label.classList.add('is-label-visible');
       labelHideTimer = window.setTimeout(() => label.classList.remove('is-label-visible'), 1000);
