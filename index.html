@@ -94,20 +94,21 @@
   if (!guide || !line || !label || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   let idleTimer = 0;
   let repeatTimer = 0;
-  let labelTimer = 0;
+  let labelShowTimer = 0;
+  let labelHideTimer = 0;
   const sweep = () => {
-    label.classList.remove('is-label-visible');
-    window.clearTimeout(labelTimer);
+    window.clearTimeout(labelShowTimer);
+    window.clearTimeout(labelHideTimer);
     guide.classList.remove('is-sweeping');
     void guide.offsetWidth;
     guide.classList.add('is-sweeping');
+    // The highlight reaches the bottom after 1s; reveal SCROLL then hold it
+    // for 1.5s before fading it out, independent of pseudo-element events.
+    labelShowTimer = window.setTimeout(() => {
+      label.classList.add('is-label-visible');
+      labelHideTimer = window.setTimeout(() => label.classList.remove('is-label-visible'), 1500);
+    }, 1000);
   };
-  line.addEventListener('animationend', event => {
-    if (event.animationName !== 'index-scroll-guide-sweep') return;
-    label.classList.add('is-label-visible');
-    window.clearTimeout(labelTimer);
-    labelTimer = window.setTimeout(() => label.classList.remove('is-label-visible'), 1500);
-  });
   const hideForScroll = () => {
     guide.classList.add('is-user-scrolling');
     stop();
@@ -115,7 +116,8 @@
   const stop = () => {
     window.clearTimeout(idleTimer);
     window.clearInterval(repeatTimer);
-    window.clearTimeout(labelTimer);
+    window.clearTimeout(labelShowTimer);
+    window.clearTimeout(labelHideTimer);
     repeatTimer = 0;
     guide.classList.remove('is-sweeping');
     label.classList.remove('is-label-visible');
