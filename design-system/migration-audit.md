@@ -125,3 +125,11 @@
 - 모바일용 `≤780px` 규칙은 Chapter title을 `clamp(30px, 6.8vw, 38px)`로 제한하고 1열 헤더로 전환한다. 다만 현재 브라우저 세션에서 실제 모바일 뷰포트 렌더링을 직접 캡처할 수 없어, 모바일은 소스·반응형 규칙 기준으로만 확인했다.
 - 운영 `himart.html` blob SHA는 `2e911968b521662e3a4493891b570cceaca8715a`로 유지됐다. 테스트 결과와 모바일 직접 시각 확인이 모두 충족되기 전까지 운영 파일에는 적용하지 않는다.
 - 현재 판단: **운영 적용 보류**. 테스트 페이지를 기준본으로 유지하고, 실제 모바일 디바이스/에뮬레이터에서 Chapter title 위계와 hero 하단 잘림을 한 번 더 확인한 뒤 운영 반영 여부를 결정한다.
+
+
+## 캐시·운영 보호 재확인
+
+- 테스트 페이지 blob SHA: `c594a1f07afd97e1658479463bf9baf2fee3a8b2`
+- 애니메이션 모듈 blob SHA: `206ef03eb7c5c4f26d565a866616bbeea39ec11a7` (동적 reveal 등록 포함)
+- 테스트 HTML에는 기존 `himart-movie-lead-lock` 및 `himart-movie-request-lock` 잔여 스크립트가 없다.
+- 운영 `himart.html` blob SHA: `2e911968b521662e3a4493891b570cceaca8715a` (변경 없음)
