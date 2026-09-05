@@ -67,3 +67,13 @@
 - 페이지 코드 오류/경고: 애플리케이션 오류 없음(브라우저 확장 메타데이터 오류 1건은 외부 확장).
 - 모바일: ≤780px에서 1열 스택 및 Chapter 30–38px clamp 규칙을 소스에서 확인. 실제 모바일 viewport 캡처는 별도 디바이스 확인 필요.
 - 운영 `himart.html`: 변경하지 않음. 현재 적용 판단은 **보류**이며, 모바일 직접 시각 확인 후 승인한다.
+
+
+## 난수 애니메이션 회귀 확인 (2026-09-06)
+
+- 히어로 타이틀: 새 페이지 진입 후 data-hm-scramble-runs=1, 재생 중 data-hm-scramble-active=true 확인
+- 챕터 타이틀: 01 → 02 → 03 → 04 순서로 스크롤하며 각 요소에 data-hm-scramble-runs가 기록되는지 확인
+- 종료 상태: active 속성 제거 및 원문 텍스트 복원 확인
+- 중복 실행 방지: animation.js에서 난수 observer를 제거하고 scramble-final.js만 실행 주체로 유지
+- 정적 구문: 두 모듈 node --check 통과
+- 운영 보호: himart.html SHA 2e911968b521662e3a4493891b570cceaca8715a 유지
