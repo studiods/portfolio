@@ -34,7 +34,8 @@
   --hm-title-description-max:40ch;
   --hm-hero-description-width:32ch;
   --hm-subtitle-to-content:80px;
-  --hm-section-head-to-subsection:100px;
+  --hm-title-to-subsection-gap:160px;
+  --hm-section-head-to-subsection:160px;
   --hm-section-head-after:100px;
   --hm-meta-height:74px;
   --hm-mobile-inset:18px;
