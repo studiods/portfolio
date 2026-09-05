@@ -5,7 +5,7 @@
 - 기준 운영 페이지: `himart.html`
 - 검증 페이지: `himart-system-test.html`
 - 운영 페이지는 최종 승인 전 변경하지 않는다.
-- 폰트 에셋은 별도 업로드 전까지 토큰 경로만 유지한다.
+- 폰트 에셋은 `fonts/`의 Averta PE 3종과 Pretendard Variable을 로컬 로드한다.
 - 애니메이션은 정적 CSS와 분리해 `animation.js`에서만 관리한다.
 
 ## 로딩 순서
@@ -44,3 +44,8 @@
 - 반응형 타이포그래피는 Hero/Chapter 소유 파일에서 수정한다.
 - 애니메이션 수정은 `animation.js`에서만 한다.
 - 모든 변경은 테스트 페이지에서 먼저 검증하고 운영 페이지에는 전파하지 않는다.
+
+
+## Font assets
+
+`typography.css`가 `fonts/Averta-PE-*.otf`와 `fonts/PretendardVariable.woff2`를 로컬 `@font-face`로 연결한다. CDN 폰트 의존성은 사용하지 않는다.
