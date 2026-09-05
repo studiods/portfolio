@@ -267,3 +267,21 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-he
   font-size:inherit!important;
   line-height:inherit!important;
 }
+
+
+/* Canonical full-viewport 16:9 hero media. */
+body.himart-page-body .hm-movie-hero{
+  aspect-ratio:16/9;
+  width:100%;
+  height:100svh;
+  min-height:100svh!important;
+}
+body.himart-page-body .hm-movie-hero .hm-movie-video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+body.himart-page-body .hm-meta > div + div{
+  border-left:0!important;
+  padding-left:18px;
+}
