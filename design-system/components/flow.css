@@ -1,0 +1,70 @@
+@import url("../tokens.css");
+@import url("../typography.css");
+
+/* HIMART Design System — Flow / Journey component */
+.hm-ds-flow{
+  margin-top:var(--hm-space-component);
+}
+.hm-ds-flow__head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,.72fr);
+  gap:40px;
+}
+.hm-ds-flow__groups{
+  display:grid;
+  gap:48px;
+  margin-top:40px;
+}
+.hm-ds-flow__group{
+  min-width:0;
+}
+.hm-ds-flow__label{
+  margin-bottom:16px;
+  color:var(--hm-text-secondary);
+  font:400 12px/1.35 var(--hm-font-ko);
+}
+.hm-ds-flow__row{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  align-items:stretch;
+}
+.hm-ds-flow__node{
+  min-width:0;
+  border-top:1px solid var(--hm-line-strong);
+  padding-top:16px;
+}
+.hm-ds-flow__node h4{
+  margin:16px 0 0;
+  color:var(--hm-text-primary);
+}
+.hm-ds-flow__node p{
+  margin:16px 0 0;
+  color:var(--hm-text-body);
+  font:300 14px/1.5 var(--hm-font-ko);
+}
+.hm-ds-flow__arrow{
+  display:none;
+}
+.hm-ds-flow__conclusion{
+  margin-top:32px;
+  color:var(--hm-text-body);
+}
+@media(max-width:780px){
+  .hm-ds-flow__head{grid-template-columns:1fr;gap:20px}
+  .hm-ds-flow__groups{gap:40px;margin-top:28px}
+  .hm-ds-flow__row{grid-template-columns:1fr;gap:24px}
+}
+
+/* Transitional DOM mapping for current flow markup. */
+.hm-ds-journey.flow-area{margin-top:var(--hm-space-component)}
+.hm-ds-journey .flow-groups{display:grid;gap:48px}
+.hm-ds-journey .flow-label{margin-bottom:16px;color:var(--hm-text-secondary);font:400 12px/1.35 var(--hm-font-ko)}
+.hm-ds-journey .flow-row.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.hm-ds-journey .flow-node{min-width:0;border-top:1px solid var(--hm-line-strong);padding-top:16px}
+.hm-ds-journey .flow-node h4{margin:16px 0 0;color:var(--hm-text-primary)}
+.hm-ds-journey .flow-node p{margin:16px 0 0;color:var(--hm-text-body);font:300 14px/1.5 var(--hm-font-ko)}
+.hm-ds-journey .flow-arrow{display:none}
+@media(max-width:780px){
+  .hm-ds-journey .flow-row.row4{grid-template-columns:1fr;gap:24px}
+}
