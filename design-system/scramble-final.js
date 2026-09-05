@@ -108,18 +108,6 @@
     });
   };
 
-  const normaliseSubtitles = () => {
-    document.querySelectorAll('#live-main .hm-section').forEach(section => {
-      let order = 0;
-      section.querySelectorAll('.hm-subhead .hm-subtitle').forEach(title => {
-        if (!title.dataset.hmRoman) {
-          order += 1;
-          title.dataset.hmRoman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][order - 1] || String(order);
-        }
-      });
-    });
-  };
-
   const enforceDescriptionLimit = () => {
     document.querySelectorAll(descriptionSelector).forEach(element => {
       if (element.dataset.hmDescriptionLimited === 'true') return;
@@ -143,7 +131,6 @@
   };
 
   const initialise = () => {
-    normaliseSubtitles();
     enforceDescriptionLimit();
     launchHero();
     scanTitles();
