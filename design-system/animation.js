@@ -69,7 +69,7 @@
   }
 
   const boot = () => {
-    const hasTargets = document.querySelector('[data-hm-reveal], [data-hm-counter], [data-count]');
+    const hasTargets = document.querySelector('[data-hm-reveal], .hm-reveal, .wide-rise-target, [data-hm-counter], [data-count]');
     if (hasTargets) { init(); return true; }
     return false;
   };
