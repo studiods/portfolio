@@ -10,3 +10,14 @@
 .hm-ds-subsection__title{margin:0}
 .hm-ds-subsection__description{margin:20px 0 0;color:var(--hm-text-body)}
 @media(max-width:780px){.hm-ds-section__inner{padding-block:clamp(80px,20vw,120px)}.hm-ds-section__head{display:block}.hm-ds-section__title{margin-top:16px}.hm-ds-section__description{margin-top:16px}}
+
+/* Transitional subsection mapping. */
+.himart-movie-page .hm-subsection{margin-top:var(--hm-space-subsection)}
+.himart-movie-page .hm-subhead{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;align-items:start}
+.himart-movie-page .hm-subno{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:.04em}
+.himart-movie-page .hm-subtitle{margin:0;color:var(--hm-text-primary)}
+.himart-movie-page .hm-subcopy{margin:20px 0 0;color:var(--hm-text-body)}
+@media(max-width:780px){
+  .himart-movie-page .hm-subhead{grid-template-columns:1fr;gap:16px}
+  .himart-movie-page .hm-subtitle{margin:0}
+}
