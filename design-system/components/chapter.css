@@ -1,11 +1,11 @@
 /* HIMART Design System — Chapter component
    Canonical title rules replace legacy title locks in the test page. */
-html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
   display:grid !important;
   grid-template-columns:minmax(0,1fr) minmax(260px,.72fr) !important;
   align-items:start !important;
 }
-html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
   display:block !important;
   position:static !important;
   width:auto !important;
@@ -24,17 +24,17 @@ html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction)
   writing-mode:horizontal-tb !important;
 }
 @media (max-width:1024px){
-  html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
+  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
     grid-template-columns:minmax(0,1fr) !important;
     gap:20px !important;
   }
-  html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
     font-size:clamp(30px,7.2vw,42px) !important;
     line-height:1.2 !important;
   }
 }
 @media (max-width:700px){
-  html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
     font-size:clamp(28px,7vw,36px) !important;
   }
 }
