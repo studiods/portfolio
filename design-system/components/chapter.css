@@ -57,6 +57,31 @@ html body.reuse-current.himart-wide-test-page #live-main :is(
   color:var(--hm-blue) !important;
 }
 
+/* Canonical Himart page rules — shared by future case-study pages. */
+:root{
+  --hm-subsection-gap:100px;
+  --hm-title-description-max:40ch;
+  --hm-inner-number-max:12px;
+}
+body.himart-page-body .hm-subsection{margin-top:var(--hm-subsection-gap)!important}
+body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc){
+  max-width:var(--hm-title-description-max)!important;
+}
+.hm-no-vertical-lines,
+.hm-no-vertical-lines > *{
+  border-left:0!important;
+  border-right:0!important;
+}
+.hm-roman-no{
+  display:block!important;
+  margin:0 0 22px!important;
+  color:#fff!important;
+  font-family:var(--hm-ko,Pretendard),sans-serif!important;
+  font-size:26px!important;
+  font-weight:100!important;
+  line-height:1!important;
+}
+
 /* Shared description hierarchy: white text at 60% opacity. */
 html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
   .hm-lead,
