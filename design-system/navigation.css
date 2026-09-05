@@ -1,7 +1,4 @@
-/*
-  Portfolio global navigation — canonical source based on index.html.
-  Every portfolio page loads this after its page-specific styles.
-*/
+/* Portfolio global navigation — canonical source based on index.html. */
 html body .top{
   position:fixed!important;
   z-index:50!important;
@@ -20,14 +17,6 @@ html body .top{
 }
 html body .top>*{pointer-events:auto!important}
 html body .top .top-center{
-  /*
-    Do not assign a grid column globally.
-    index.html still receives position:absolute + left:50% + translateX(-50%)
-    from type-overrides.css. Grid-placement on that absolutely-positioned child
-    changes its positioning reference and shifts the Home GNB horizontally.
-    Works is the only legacy page that needs explicit grid placement, handled
-    by the works-page-body rule below.
-  */
   display:flex!important;
   align-items:flex-start!important;
   justify-content:center!important;
@@ -61,84 +50,19 @@ html body .top a::after{
 html body .top a:hover::after,
 html body .top a[aria-current="page"]::after{right:0!important}
 
+/* Works has no legacy absolute centering after its DS rebuild; use grid column 2 explicitly. */
 html body.works-page-body>.top{
   z-index:2147483646!important;
-  height:auto!important;
-  padding:18px var(--pad,34px)!important;
 }
 html body.works-page-body>.top .top-center{
-  /* Works has a stronger inline absolute-position rule. Reset it here and
-     place the menu explicitly in the middle grid track only on Works. */
   position:static!important;
   grid-column:2!important;
   justify-self:center!important;
-  gap:26px!important;
   transform:none!important;
 }
+
 @media(max-width:850px){
   html body .top{padding:17px 18px!important}
   html body .top .top-center{gap:22px!important}
   html body .top a{font-size:11px!important}
-}
-
-/* Works project switcher: anchored to the live, shrinking WORKS title. */
-.works-title-menu-toggle{
-  position:fixed;
-  z-index:2147483647;
-  width:18px;
-  height:18px;
-  margin:0;
-  padding:0;
-  border:0;
-  background:transparent;
-  color:#fff;
-  cursor:pointer;
-}
-.works-title-menu-toggle::before{
-  content:"";
-  position:absolute;
-  top:4px;
-  left:4px;
-  width:7px;
-  height:7px;
-  border-right:1px solid currentColor;
-  border-bottom:1px solid currentColor;
-  transform:rotate(45deg);
-  transition:transform .18s ease;
-}
-.works-title-menu-toggle[aria-expanded="true"]::before{transform:translateY(3px) rotate(225deg)}
-.works-project-menu{
-  position:fixed;
-  z-index:2147483647;
-  width:min(360px,calc(100vw - 80px));
-  max-height:min(60vh,520px);
-  overflow:auto;
-  margin:0;
-  padding:10px 0;
-  border-top:1px solid rgba(255,255,255,.28);
-  border-bottom:1px solid rgba(255,255,255,.28);
-  background:rgba(0,0,0,.94);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  opacity:0;
-  visibility:hidden;
-  transform:translateY(-4px);
-  transition:opacity .16s ease,transform .16s ease,visibility .16s;
-}
-.works-project-menu.is-open{opacity:1;visibility:visible;transform:none}
-.works-project-menu a{
-  display:block;
-  padding:9px 0;
-  color:rgba(255,255,255,.62);
-  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-size:13px;
-  font-weight:300;
-  line-height:1.45;
-  letter-spacing:-.02em;
-  text-decoration:none;
-}
-.works-project-menu a:hover,.works-project-menu a:focus-visible{color:#fff}
-@media(max-width:780px){
-  .works-project-menu{width:calc(100vw - 72px)}
-  .works-project-menu a{font-size:12px}
 }
