@@ -110,7 +110,6 @@ html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-desc{
   width:100% !important;
   max-width:100% !important;
-  margin-top:20px !important;
   color:var(--hm-text-emphasis) !important;
   letter-spacing:0 !important;
 }
@@ -176,7 +175,6 @@ html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .
 }
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head > p{
   order:2 !important;
-  margin-top:20px !important;
   color:var(--hm-text-emphasis) !important;
 }
 @media(max-width:780px){
