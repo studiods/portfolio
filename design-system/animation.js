@@ -64,55 +64,11 @@
       document.querySelectorAll(revealSelector).forEach(registerReveal);
       document.querySelectorAll('[data-hm-counter], [data-count]').forEach(registerCounter);
     };
-    const scrambleTargets = new WeakSet();
-    const scramble = el => {
-      if (scrambleTargets.has(el)) return;
-      const size = parseFloat(getComputedStyle(el).fontSize) || 0;
-      const isHeroTitle = el.matches('.hm-movie-copy .hm-title');
-      const isChapterTitle = el.matches('.hm-section-title');
-      const isLargeNumber = el.matches('[data-hm-scramble], [data-hm-counter], .hm-number, .signal-item h4, .behavior-card h4');
-      if (!isHeroTitle && !isChapterTitle && !isLargeNumber) return;
-      const revealHost = el.closest('.hm-reveal, [data-hm-reveal], .wide-rise-target');
-      if (!isHeroTitle && !el.classList.contains('is-visible') && !revealHost?.classList.contains('is-visible')) return;
-      scrambleTargets.add(el);
-      const nodes = [];
-      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      const originals = nodes.map(n => n.nodeValue);
-      const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let frame = 0;
-      const total = Math.max(8, Math.round(520 / 16));
-      const tick = () => {
-        nodes.forEach((node, i) => {
-          const original = originals[i];
-          node.nodeValue = [...original].map((ch, j) => {
-            if (/\\s/.test(ch) || ch === '·') return ch;
-            return j / Math.max(1, original.length) < frame / total ? ch : glyphs[Math.floor(Math.random() * glyphs.length)];
-          }).join('');
-        });
-        if (frame++ < total) requestAnimationFrame(tick);
-        else nodes.forEach((n, i) => { n.nodeValue = originals[i]; });
-      };
-      requestAnimationFrame(tick);
-    };
-    const scanScramble = () => {
-      document.querySelectorAll('.hm-movie-copy .hm-title, .hm-section-title, [data-hm-scramble], [data-hm-counter], .hm-number, .signal-item h4, .behavior-card h4').forEach(scramble);
-    };
-    window.__hmScrambleScan = scanScramble;
     scan();
-    scanScramble();
-    window.addEventListener('load', () => { scan(); scanScramble(); setTimeout(scanScramble, 600); setTimeout(scanScramble, 1600); }, { once: true });
-    let scrambleQueued = false;
-    window.addEventListener('scroll', () => {
-      if (scrambleQueued) return;
-      scrambleQueued = true;
-      requestAnimationFrame(() => { scrambleQueued = false; scanScramble(); });
-    }, { passive: true });
-    if ('MutationObserver' in window) {
-      const mo = new MutationObserver(() => { scan(); scanScramble(); });
-      mo.observe(document.documentElement, { childList: true, subtree: true });
-      setTimeout(() => mo.disconnect(), 30000);
-    }
+    // Scramble animation is owned by design-system/scramble-final.js.
+    // Keeping it out of this layer prevents duplicate observers and text races.
+    window.__hmAnimationScan = scan;
+    window.addEventListener('load', () => { scan(); setTimeout(scan, 600); }, { once: true });
 
     const hero = document.querySelector('[data-hm-hero]');
     if (hero && !reduce) {
