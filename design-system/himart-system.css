@@ -14,7 +14,8 @@
   --hm-inner-number-max:12px;
   --hm-description-color:rgb(255 255 255 / 60%);
   --hm-description-max-chars:40ch;
-  --hm-hero-description-width:22ch;
+  --hm-hero-description-width:32ch;
+  --hm-subtitle-to-content:80px;
   --hm-hero-ratio:16 / 9;
 }
 
@@ -97,13 +98,11 @@ html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,
 
 /* Subsection labels are inline Roman numerals, never blue labels above the title. */
 html body.himart-page-body #live-main .hm-subhead .hm-subno{
-  display:none!important;
-}
-html body.himart-page-body #live-main .hm-subhead .hm-subtitle[data-hm-roman]::before{
-  content:attr(data-hm-roman) ". ";
-  color:inherit!important;
-  font:inherit!important;
-  letter-spacing:inherit!important;
+  display:block!important;
+  margin:0 0 18px!important;
+  color:var(--hm-blue)!important;
+  font-size:var(--hm-inner-number-max)!important;
+  line-height:1.2!important;
 }
 html body.himart-page-body #live-main :is(.hm-card-no,.data-card-head .hm-card-no,.hm-subno){
   font-size:var(--hm-inner-number-max)!important;
@@ -169,9 +168,9 @@ html body.himart-page-body .hm-gnb a[aria-current="page"]::after{
 /* All title-description pairs use a consistent 20px relationship. */
 html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead{
   max-width:var(--hm-hero-description-width)!important;
-  min-height:3em!important;
+  min-height:0!important;
   margin-top:var(--hm-title-description-gap)!important;
-  white-space:pre-line!important;
+  white-space:normal!important;
   text-wrap:balance!important;
 }
 html body.himart-page-body #live-main .hm-subtitle + .hm-subcopy,
@@ -189,4 +188,34 @@ html body.himart-page-body #live-main .hm-ds-section__head{
 /* Action labels follow default letter spacing across all page button patterns. */
 html body.himart-page-body :is(button,[role="button"],input[type="button"],input[type="submit"],.hm-button,.button,.btn,.hm-more > summary,.hm-more summary,.data-detail-trigger,.data-open-button,.open-data-button){
   letter-spacing:normal!important;
+}
+
+/* Intermediate labels sit above their title; the title always starts at the shared left edge. */
+html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head){
+  display:block!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+}
+html body.himart-page-body #live-main .data-card-head > :is(.hm-card-no,.hm-roman-no){
+  display:block!important;
+  width:auto!important;
+  margin:0 0 18px!important;
+}
+html body.himart-page-body #live-main .data-card-head > div,
+html body.himart-page-body #live-main .hm-subhead > div{
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* One relationship owns each vertical rhythm: no section-edge or final-card margin can duplicate it. */
+html body.himart-page-body #live-main > .hm-section + .hm-section{
+  margin-top:0!important;
+}
+html body.himart-page-body #live-main > .hm-section > .hm-wrap > :last-child,
+html body.himart-page-body #live-main .data-list > .data-card:last-child{
+  margin-bottom:0!important;
+}
+html body.himart-page-body #live-main .hm-subhead + .reuse-proof-stack{
+  margin-top:var(--hm-subtitle-to-content)!important;
 }
