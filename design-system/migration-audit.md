@@ -92,3 +92,10 @@
 - 정적 QA 체크리스트: `design-system/qa-matrix.md`
 - PC computed 확인: chapter header가 시스템 grid 규칙으로 연결됨
 - 현재 남은 확인 게이트: 모바일 브라우저 computed style 및 전체 시각 비교
+
+
+## 런타임 정리 결과
+
+- `test-content-final.js`의 중복 텍스트 보정 IIFE 2개를 제거하고 단일 reconciliation 레이어로 통합했다.
+- 레이아웃 보정은 CSS 소유권으로 유지하고, 애니메이션은 `animation.js`에 남겼다.
+- 다음 검증 게이트는 일반 모션과 reduced-motion에서 동일 콘텐츠가 중복 생성되지 않는지 확인하는 것이다.
