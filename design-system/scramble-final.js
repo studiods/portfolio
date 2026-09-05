@@ -6,6 +6,14 @@
   let heroStarted = false;
 
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const waitUntilVisible = () => {
+    if (document.visibilityState === 'visible') return Promise.resolve();
+    return new Promise(resolve => {
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') resolve();
+      }, { once: true });
+    });
+  };
   const textNodes = element => {
     const nodes = [];
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
@@ -32,7 +40,7 @@
     element.setAttribute('data-hm-scramble-kind', kind);
     element.setAttribute('data-hm-scramble-runs', String(Number(element.getAttribute('data-hm-scramble-runs') || 0) + 1));
 
-    const totalSteps = 18;
+    const totalSteps = 26;
     let step = 0;
     const render = () => {
       nodes.forEach((node, nodeIndex) => {
@@ -57,7 +65,7 @@
         return;
       }
       render();
-    }, 84);
+    }, 90);
     return true;
   };
 
@@ -85,13 +93,19 @@
   };
 
   const startHeroAfterContent = async () => {
+    await waitUntilVisible();
     const fontsReady = document.fonts?.ready;
     if (fontsReady) await fontsReady.catch(() => {});
     await wait(1600);
     const hero = document.querySelector('.hm-movie-copy .hm-title');
     if (!hero) return false;
-    scramble(hero, 'hero');
-    return true;
+    return scramble(hero, 'hero');
+  };
+
+  const launchHero = () => {
+    if (heroStarted) return;
+    heroStarted = true;
+    startHeroAfterContent();
   };
 
   const waitForContentReady = () => {
@@ -99,18 +113,12 @@
       const ready = document.body?.classList.contains('himart-narrative-ready');
       if (!ready || document.readyState !== 'complete') return;
       clearInterval(timer);
-      if (!heroStarted) {
-        heroStarted = true;
-        startHeroAfterContent();
-      }
+      launchHero();
       scanChapters();
     }, 100);
     setTimeout(() => {
       clearInterval(timer);
-      if (!heroStarted) {
-        heroStarted = true;
-        startHeroAfterContent();
-      }
+      launchHero();
     }, 12000);
   };
 
