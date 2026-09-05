@@ -39,7 +39,6 @@ html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .
   letter-spacing:normal !important;
 }
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-desc{
-  margin-top:20px !important;
   letter-spacing:normal !important;
 }
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
