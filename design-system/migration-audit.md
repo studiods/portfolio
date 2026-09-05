@@ -107,3 +107,7 @@
 - `test-content-final.js`는 단일 콘텐츠 reconciliation 레이어로 유지하고 동적 style 삽입을 제거했다.
 - 소스 기준 애니메이션 회귀 항목(reveal/counter/hero/video/reduced-motion)을 점검했다.
 - GitHub Pages CDN 반영 시점 차이로 브라우저에서 이전 캐시가 보일 수 있어, 최종 배포 후 동일 항목을 재확인한다.
+
+
+- 애니메이션 레이어가 `.hm-reveal`·`.wide-rise-target` 클래스 기반 콘텐츠도 초기화 대상으로 포함하도록 보완했다.
+- 콘텐츠가 런타임에 삽입되는 경우에도 해당 클래스가 boot 조건으로 인식되도록 수정했다.
