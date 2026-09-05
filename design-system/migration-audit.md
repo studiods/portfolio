@@ -53,3 +53,12 @@
 - `design-system/components/chapter.css`를 챕터 타이틀의 단일 정적 규칙으로 등록했다.
 - `himart-system-test.html`에서는 이 파일을 기존 inline/legacy 스타일 뒤에 마지막으로 로드해 PC 2열, 모바일 1열 및 타이틀 clamp를 소유하도록 했다.
 - 운영 `himart.html`은 변경하지 않았다. 다음 검증 지점은 실제 PC·모바일 브라우저에서 computed style과 줄바꿈을 대조하는 것이다.
+
+## 소유권 정리
+
+- `components/hero.css`: Hero 타이포그래피와 메타 레이아웃
+- `components/chapter.css`: 본문 Chapter 타이틀의 크기·줄바꿈·PC/모바일 구조
+- `responsive.css`: 타이포그래피를 재정의하지 않고 breakpoint 레이아웃만 담당
+- `animation.js`: reveal·counter·hero scroll·video viewport만 담당
+
+따라서 이후 반응형 조정은 컴포넌트 소유권을 먼저 확인한 뒤 해당 파일 하나에서만 수정한다.
