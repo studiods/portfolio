@@ -32,6 +32,8 @@
   --hm-rule-to-section-number:32px;
   --hm-title-description-gap:20px;
   --hm-title-description-max:40ch;
+  --hm-hero-description-width:32ch;
+  --hm-subtitle-to-content:80px;
   --hm-section-head-to-subsection:100px;
   --hm-section-head-after:100px;
   --hm-meta-height:74px;
