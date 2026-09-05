@@ -1,19 +1,10 @@
-/* HIMART Design System — post-content scramble animation */
+/* HIMART Design System — immediate post-content scramble animation */
 (() => {
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const chapterSelector = '#brand .hm-section-title, #data .hm-section-title, #journey .hm-section-title, #direction .hm-section-title';
   const stateByElement = new WeakMap();
   let heroStarted = false;
 
-  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-  const waitUntilVisible = () => {
-    if (document.visibilityState === 'visible') return Promise.resolve();
-    return new Promise(resolve => {
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') resolve();
-      }, { once: true });
-    });
-  };
   const textNodes = element => {
     const nodes = [];
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
@@ -27,6 +18,7 @@
     if (!element || !document.contains(element)) return false;
     const nodes = textNodes(element);
     if (!nodes.length) return false;
+
     const original = nodes.map(node => node.nodeValue || '');
     const signature = original.join('\u0001');
     const state = stateByElement.get(element) || { running: false, completed: false, signature: '' };
@@ -92,34 +84,30 @@
     });
   };
 
-  const startHeroAfterContent = async () => {
-    await waitUntilVisible();
-    const fontsReady = document.fonts?.ready;
-    if (fontsReady) await fontsReady.catch(() => {});
-    await wait(1600);
+  const launchHero = () => {
+    if (heroStarted) return true;
     const hero = document.querySelector('.hm-movie-copy .hm-title');
     if (!hero) return false;
-    return scramble(hero, 'hero');
-  };
-
-  const launchHero = () => {
-    if (heroStarted) return;
     heroStarted = true;
-    startHeroAfterContent();
+    requestAnimationFrame(() => {
+      if (!scramble(hero, 'hero')) heroStarted = false;
+    });
+    return true;
   };
 
   const waitForContentReady = () => {
-    const timer = setInterval(() => {
-      const ready = document.body?.classList.contains('himart-narrative-ready');
-      if (!ready || document.readyState !== 'complete') return;
-      clearInterval(timer);
-      launchHero();
+    const checkReady = () => {
+      if (!document.body?.classList.contains('himart-narrative-ready')) return false;
+      const launched = launchHero();
       scanChapters();
-    }, 100);
-    setTimeout(() => {
-      clearInterval(timer);
-      launchHero();
-    }, 12000);
+      return launched;
+    };
+    if (checkReady()) return;
+    const timer = setInterval(() => {
+      if (checkReady()) clearInterval(timer);
+    }, 16);
+    setTimeout(() => clearInterval(timer), 12000);
+    document.addEventListener('himart:narrative-ready', checkReady, { once: true });
   };
 
   let scrollQueued = false;
@@ -138,7 +126,5 @@
     waitForContentReady();
   }
 
-  window.addEventListener('load', () => {
-    setTimeout(scanChapters, 300);
-  }, { once: true });
+  window.addEventListener('load', () => setTimeout(scanChapters, 0), { once: true });
 })();
