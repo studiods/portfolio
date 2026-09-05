@@ -59,6 +59,7 @@
 - `components/hero.css`: Hero 타이포그래피와 메타 레이아웃
 - `components/chapter.css`: 본문 Chapter 타이틀의 크기·줄바꿈·PC/모바일 구조
 - `components/media.css`: Prototype/Media grid·card·frame·caption
+- `components/flow.css`: Journey flow의 그룹·노드·라벨·반응형 구조
 - `responsive.css`: 타이포그래피를 재정의하지 않고 breakpoint 레이아웃만 담당
 - `animation.js`: reveal·counter·hero scroll·video viewport만 담당
 
