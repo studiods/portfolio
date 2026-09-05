@@ -38,3 +38,10 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
     font-size:clamp(28px,7vw,36px) !important;
   }
 }
+
+@media (max-width:780px){
+  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+    font-size:clamp(30px,6.8vw,38px) !important;
+    line-height:1.18 !important;
+  }
+}
