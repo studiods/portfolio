@@ -72,7 +72,8 @@
       const isChapterTitle = el.matches('.hm-section-title');
       const isLargeNumber = el.matches('[data-hm-scramble], [data-hm-counter], .hm-number, .signal-item h4, .behavior-card h4');
       if (!isHeroTitle && !isChapterTitle && !isLargeNumber) return;
-      if (!isHeroTitle && !el.classList.contains('is-visible')) return;
+      const revealHost = el.closest('.hm-reveal, [data-hm-reveal], .wide-rise-target');
+      if (!isHeroTitle && !el.classList.contains('is-visible') && !revealHost?.classList.contains('is-visible')) return;
       scrambleTargets.add(el);
       const nodes = [];
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -100,6 +101,7 @@
         if ((parseFloat(getComputedStyle(el).fontSize) || 0) >= 50) scramble(el);
       });
     };
+    window.__hmScrambleScan = scanScramble;
     scan();
     scanScramble();
     if ('MutationObserver' in window) {
