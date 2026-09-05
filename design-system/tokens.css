@@ -1,7 +1,7 @@
 /* HIMART Design System v1.0 — foundation tokens */
 :root{
   --hm-bg-page:#000;
-  --hm-bg-section:#050505;
+  --hm-bg-section:#000;
   --hm-text-primary:#fff;
   --hm-text-emphasis:rgba(255,255,255,.8);
   --hm-text-secondary:rgba(255,255,255,.6);
@@ -29,6 +29,8 @@
   --hm-space-subsection:74px;
   --hm-space-section:142px;
   --hm-space-hero:200px;
+  --hm-rule-to-section-number:32px;
+  --hm-section-head-after:0px;
   --hm-meta-height:74px;
   --hm-mobile-inset:18px;
   --hm-container-editorial:1100px;
