@@ -63,7 +63,7 @@ html body.reuse-current.himart-wide-test-page #live-main :is(
   --hm-title-description-max:40ch;
   --hm-inner-number-max:12px;
 }
-body.himart-page-body .hm-subsection{margin-top:var(--hm-subsection-gap)!important}
+body.himart-page-body .hm-subsection + .hm-subsection{margin-top:var(--hm-subsection-gap)!important}
 body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc){
   max-width:var(--hm-title-description-max)!important;
 }
@@ -77,9 +77,32 @@ body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head 
   margin:0 0 22px!important;
   color:#fff!important;
   font-family:var(--hm-ko,Pretendard),sans-serif!important;
-  font-size:26px!important;
+  font-size:12px!important;
   font-weight:100!important;
   line-height:1!important;
+}
+
+
+
+/* Canonical hero composition: opt in with .hm-hero--system. */
+.hm-hero--system{
+  aspect-ratio:16/9;
+  min-height:0!important;
+  position:relative;
+  overflow:hidden;
+}
+.hm-hero--system > .hm-wrap{
+  height:100%;
+  min-height:0!important;
+  position:relative;
+}
+.hm-hero--system .hm-movie-copy{
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+  margin:0;
+  transform:translateY(-50%);
 }
 
 /* Shared description hierarchy: white text at 60% opacity. */
