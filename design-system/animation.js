@@ -6,7 +6,7 @@
     if (initialized) return;
     initialized = true;
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const revealTargets = document.querySelectorAll('[data-hm-reveal]');
+  const revealTargets = document.querySelectorAll('[data-hm-reveal], .hm-reveal, .wide-rise-target');
   const counterTargets = document.querySelectorAll('[data-hm-counter], [data-count]');
   const hero = document.querySelector('[data-hm-hero]');
   const video = document.querySelector('[data-hm-video]');
