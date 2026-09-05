@@ -90,4 +90,5 @@
 - `fonts/PretendardVariable.woff2` 확인
 - `typography.css`는 CDN 대신 로컬 폰트 파일을 우선 로드
 - 정적 QA 체크리스트: `design-system/qa-matrix.md`
-- 현재 남은 확인 게이트: PC·모바일 브라우저 computed style 및 시각 비교
+- PC computed 확인: chapter header가 시스템 grid 규칙으로 연결됨
+- 현재 남은 확인 게이트: 모바일 브라우저 computed style 및 전체 시각 비교
