@@ -96,10 +96,7 @@
       requestAnimationFrame(tick);
     };
     const scanScramble = () => {
-      document.querySelectorAll('.js-scramble, .hm-section-title, .hm-section-no').forEach(scramble);
-      document.querySelectorAll('*').forEach(el => {
-        if ((parseFloat(getComputedStyle(el).fontSize) || 0) >= 50) scramble(el);
-      });
+      document.querySelectorAll('.hm-movie-copy .hm-title, .hm-section-title, [data-hm-scramble], [data-hm-counter], .hm-number, .signal-item h4, .behavior-card h4').forEach(scramble);
     };
     window.__hmScrambleScan = scanScramble;
     scan();
