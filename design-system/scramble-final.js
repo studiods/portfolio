@@ -87,7 +87,7 @@
   const startHeroAfterContent = async () => {
     const fontsReady = document.fonts?.ready;
     if (fontsReady) await fontsReady.catch(() => {});
-    await wait(720);
+    await wait(1600);
     const hero = document.querySelector('.hm-movie-copy .hm-title');
     if (!hero) return false;
     scramble(hero, 'hero');
@@ -97,7 +97,7 @@
   const waitForContentReady = () => {
     const timer = setInterval(() => {
       const ready = document.body?.classList.contains('himart-narrative-ready');
-      if (!ready && document.readyState !== 'complete') return;
+      if (!ready || document.readyState !== 'complete') return;
       clearInterval(timer);
       if (!heroStarted) {
         heroStarted = true;
