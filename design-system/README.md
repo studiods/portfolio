@@ -49,3 +49,11 @@
 ## Font assets
 
 `typography.css`가 `fonts/Averta-PE-*.otf`와 `fonts/PretendardVariable.woff2`를 로컬 `@font-face`로 연결한다. CDN 폰트 의존성은 사용하지 않는다.
+
+
+## Runtime consolidation
+
+- `test-content-final.js`는 단일 reconciliation pass만 수행한다.
+- 콘텐츠 텍스트·역할 카드 보정은 한 레이어에서 처리하고, 레이아웃은 CSS, reveal·counter·hero/video 모션은 `animation.js`가 담당한다.
+- 중복 observer와 동일 콘텐츠 재주입 루프를 새로 추가하지 않는다.
+- 회귀 기준은 `design-system/qa-matrix.md`를 따른다.
