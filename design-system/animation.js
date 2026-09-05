@@ -101,6 +101,13 @@
     window.__hmScrambleScan = scanScramble;
     scan();
     scanScramble();
+    window.addEventListener('load', () => { scan(); scanScramble(); setTimeout(scanScramble, 600); setTimeout(scanScramble, 1600); }, { once: true });
+    let scrambleQueued = false;
+    window.addEventListener('scroll', () => {
+      if (scrambleQueued) return;
+      scrambleQueued = true;
+      requestAnimationFrame(() => { scrambleQueued = false; scanScramble(); });
+    }, { passive: true });
     if ('MutationObserver' in window) {
       const mo = new MutationObserver(() => { scan(); scanScramble(); });
       mo.observe(document.documentElement, { childList: true, subtree: true });
