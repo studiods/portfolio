@@ -68,3 +68,17 @@
 - `components/cards.css`: Data/Narrative/Role 카드의 공통 border·padding·text foundation을 transitional mapping으로 등록
 
 상세 컴포넌트 계약과 변경 규칙은 `design-system/README.md`에 고정했다.
+
+
+## Legacy 정리 매트릭스
+
+| Legacy 영역 | 현재 중복 신호 | 대체 소유자 | 제거 조건 |
+|---|---|---|---|
+| Chapter title lock | `.hm-section-title` 반복 선언·고특이도 `!important` | `components/chapter.css` | PC/모바일 computed 값 대조 완료 |
+| Section header grid | `.hm-section-head`의 폭·grid 반복 | `components/chapter.css` + `section.css` | 줄바꿈·간격 대조 완료 |
+| Data/Role cards | `.data-card`, `.role-card`, `.signal-item` 개별 선언 | `components/cards.css` | 카드 높이·라인·본문 명도 대조 완료 |
+| Prototype media | `.phone-gallery`, `.phone-card` 개별 선언 | `components/media.css` | 이미지/영상 asset 연결 후 대조 |
+| Journey flow | `.flow-row`, `.flow-node` 반복 선언 | `components/flow.css` | 단계 순서·모바일 스택 대조 |
+| Runtime locks | 콘텐츠 재주입·observer·style lock | `content-runtime.js` + `animation.js` | 콘텐츠/모션 독립 실행 확인 |
+
+삭제는 위 조건 충족 후 legacy 파일의 블록 단위가 아니라 selector 단위로 진행한다.
