@@ -1,4 +1,4 @@
-/* WORKS page controller — title state, project switcher, media and chapter progress. */
+/* WORKS page controller — title state, project switcher, media and sticky project handoff. */
 (() => {
   'use strict';
 
@@ -12,6 +12,7 @@
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const copies = cards.map(card => card.querySelector('.works-card-copy'));
 
   /* Keep authored video behavior without page-local CSS/JS overrides. */
   cards.forEach(card => {
@@ -23,7 +24,7 @@
     if (attempt && attempt.catch) attempt.catch(() => {});
   });
 
-  /* Entry scramble remains a one-second A-Z / 0-9 reveal, now owned by the DS. */
+  /* Entry scramble remains a one-second A-Z / 0-9 reveal, owned by the DS. */
   const runEntryScramble = () => {
     if (reduced || title.dataset.scrambleReady === '1') return;
     title.dataset.scrambleReady = '1';
@@ -67,8 +68,9 @@
 
   cards.forEach(card => {
     const heading = card.querySelector('.works-card-title');
+    const destination = card.querySelector('.works-card-title-link, .works-card-media-link');
     const item = document.createElement('a');
-    item.href = card.getAttribute('href') || '#';
+    item.href = destination?.getAttribute('href') || '#';
     item.textContent = heading ? heading.textContent.trim() : card.textContent.trim();
     menu.appendChild(item);
   });
@@ -126,6 +128,51 @@
     progressLinks.forEach((link, index) => link.classList.toggle('is-active', index === bestIndex));
   };
 
+  /*
+    Desktop project-copy handoff:
+    - the title text itself settles 400px below compact WORKS;
+    - the 1px rule + 32px gap are accounted for when positioning the sticky group;
+    - as the next title approaches, the current title exits upward and loses opacity quickly.
+  */
+  const updateProjectCopies = compact => {
+    const isDesktop = window.innerWidth > 780;
+    if (!isDesktop || !compact) {
+      copies.forEach(copy => {
+        if (!copy) return;
+        copy.style.setProperty('--works-copy-opacity', '1');
+        copy.style.setProperty('--works-copy-shift', '0px');
+      });
+      return;
+    }
+
+    const workRect = title.getBoundingClientRect();
+    const ruleAndGap = 33;
+    const titleGap = 400;
+    const targetTitleTop = workRect.bottom + titleGap;
+    const stickyGroupTop = targetTitleTop - ruleAndGap;
+    body.style.setProperty('--works-project-sticky-top', `${Math.round(stickyGroupTop)}px`);
+
+    const handoffDistance = clamp(window.innerHeight * .17, 140, 220);
+    copies.forEach((copy, index) => {
+      if (!copy) return;
+      const nextCard = cards[index + 1];
+      if (!nextCard) {
+        copy.style.setProperty('--works-copy-opacity', '1');
+        copy.style.setProperty('--works-copy-shift', '0px');
+        return;
+      }
+
+      const nextTitleTop = nextCard.getBoundingClientRect().top + ruleAndGap;
+      const fadeStart = targetTitleTop + handoffDistance;
+      const t = clamp((fadeStart - nextTitleTop) / handoffDistance, 0, 1);
+      const opacity = Math.pow(1 - t, 3);
+      const shift = -96 * t;
+
+      copy.style.setProperty('--works-copy-opacity', opacity.toFixed(3));
+      copy.style.setProperty('--works-copy-shift', `${shift.toFixed(1)}px`);
+    });
+  };
+
   const updateTitle = () => {
     const range = Math.max(1, Math.min(520, hero.offsetHeight * .55));
     const p = reduced ? (window.scrollY > 32 ? 1 : 0) : clamp(window.scrollY / range, 0, 1);
@@ -145,6 +192,7 @@
     body.classList.toggle('works-title-compact', compact);
     if (!compact) closeMenu();
     placeSwitcher();
+    updateProjectCopies(compact);
     updateProgress();
   };
 
