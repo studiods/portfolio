@@ -6,6 +6,7 @@
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="./style.css?v=17"><link rel="stylesheet" href="./typography.css?v=8"><link rel="stylesheet" href="./global-gnb.css?v=1">
 <link rel="stylesheet" href="./himart-case-v4.css?v=920a015"><link rel="stylesheet" href="./himart-patch-20260823-2110.css?v=7ce7fee"><link rel="stylesheet" href="./himart-secondary-case-v1.css?v=9706082">
+  <link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
 </head>
 <body class="himart-page-body secondary-case team-page">
 <nav class="top"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -39,4 +40,5 @@
 <footer class="hm-footer"><div class="hm-wrap"><a href="./himart-ways.html">← 일하는 방식 개선</a><div><span>NEXT HIMART CASE</span><a href="./himart-automation.html">AI 활용 디자인 자동화 →</a></div></div></footer>
 </main>
 <script>(()=>{'use strict';const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,pool='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';document.querySelectorAll('.js-scramble').forEach(el=>{const original=el.textContent;if(reduced)return;let played=false;const play=()=>{if(played)return;played=true;const chars=[...original],start=performance.now(),duration=Math.min(1500,560+chars.length*12);const tick=now=>{const p=Math.min(1,(now-start)/duration),resolved=Math.floor(chars.length*Math.pow(p,.72));el.textContent=chars.map((ch,i)=>ch===' '||ch==='\n'||ch==='\t'?ch:i<resolved?ch:pool[(i*17+Math.floor(now/46))%pool.length]).join('');p<1?requestAnimationFrame(tick):el.textContent=original};requestAnimationFrame(tick)};const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){play();io.disconnect()}}),{threshold:.3});io.observe(el)});const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');rio.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -8% 0px'});document.querySelectorAll('.hm-reveal').forEach(n=>rio.observe(n));})();</script>
+<script src="./design-system/navigation.js?v=20260908-1"></script>
 </body></html>
