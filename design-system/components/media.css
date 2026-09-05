@@ -1,0 +1,57 @@
+@import url("../tokens.css");
+@import url("../typography.css");
+
+/* HIMART Design System — Media component */
+.hm-ds-media-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:32px 24px;
+}
+.hm-ds-media-card{
+  min-width:0;
+  border-top:1px solid var(--hm-line-strong);
+  padding-top:16px;
+}
+.hm-ds-media-card__frame{
+  position:relative;
+  aspect-ratio:9/16;
+  overflow:hidden;
+  background:var(--hm-bg-card);
+  border:1px solid var(--hm-line-default);
+}
+.hm-ds-media-card__frame img,
+.hm-ds-media-card__frame video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hm-ds-media-card__caption{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:12px;
+  margin-top:16px;
+}
+.hm-ds-media-card__index{
+  color:var(--hm-blue);
+  font:400 12px/1.2 var(--hm-font-en);
+}
+.hm-ds-media-card__title{
+  margin:0;
+  color:var(--hm-text-primary);
+  font:400 12px/1.3 var(--hm-font-en);
+}
+.hm-ds-media-card__description{
+  grid-column:2;
+  margin:6px 0 0;
+  color:var(--hm-text-body);
+  font:300 14px/1.45 var(--hm-font-ko);
+}
+@media(max-width:1024px){
+  .hm-ds-media-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:700px){
+  .hm-ds-media-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}
+  .hm-ds-media-card__caption{gap:8px}
+  .hm-ds-media-card__description{font-size:13px}
+}
