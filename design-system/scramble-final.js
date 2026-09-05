@@ -3,7 +3,28 @@
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const chapterSelector = '#brand .hm-section-title, #data .hm-section-title, #journey .hm-section-title, #direction .hm-section-title';
   const stateByElement = new WeakMap();
+  const activeAnimations = new Set();
   let heroStarted = false;
+
+  const finishScramble = element => {
+    const state = stateByElement.get(element);
+    if (!state) return;
+    if (state.timer) {
+      clearInterval(state.timer);
+      state.timer = null;
+    }
+    const nodes = textNodes(element);
+    if (Array.isArray(state.original) && nodes.length === state.original.length) {
+      nodes.forEach((node, index) => {
+        node.nodeValue = state.original[index];
+      });
+    }
+    state.running = false;
+    state.completed = true;
+    stateByElement.set(element, state);
+    activeAnimations.delete(element);
+    element.removeAttribute('data-hm-scramble-active');
+  };
 
   const textNodes = element => {
     const nodes = [];
@@ -39,7 +60,9 @@
     state.completed = true;
     state.signature = signature;
     state.original = original.slice();
+    state.timer = null;
     stateByElement.set(element, state);
+    activeAnimations.add(element);
     element.setAttribute('data-hm-scramble-active', 'true');
     element.setAttribute('data-hm-scramble-kind', kind);
     element.setAttribute('data-hm-scramble-runs', String(Number(element.getAttribute('data-hm-scramble-runs') || 0) + 1));
@@ -57,19 +80,28 @@
       });
     };
 
-    render();
-    const timer = setInterval(() => {
-      step += 1;
-      if (step >= totalSteps) {
-        clearInterval(timer);
-        nodes.forEach((node, index) => { node.nodeValue = original[index]; });
-        state.running = false;
-        stateByElement.set(element, state);
-        element.removeAttribute('data-hm-scramble-active');
-        return;
-      }
+    try {
       render();
+    } catch (error) {
+      finishScramble(element);
+      return false;
+    }
+
+    const timer = setInterval(() => {
+      try {
+        step += 1;
+        if (step >= totalSteps) {
+          finishScramble(element);
+          return;
+        }
+        render();
+      } catch (error) {
+        // Any interrupted render must end on the original source text.
+        finishScramble(element);
+      }
     }, 30);
+    state.timer = timer;
+    stateByElement.set(element, state);
     return true;
   };
 
@@ -123,6 +155,13 @@
     setTimeout(() => clearInterval(timer), 12000);
     document.addEventListener('himart:narrative-ready', checkReady, { once: true });
   };
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) activeAnimations.forEach(finishScramble);
+  });
+  window.addEventListener('pagehide', () => {
+    activeAnimations.forEach(finishScramble);
+  });
 
   let scrollQueued = false;
   window.addEventListener('scroll', () => {
