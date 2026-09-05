@@ -130,6 +130,6 @@
 ## 캐시·운영 보호 재확인
 
 - 테스트 페이지 blob SHA: `c594a1f07afd97e1658479463bf9baf2fee3a8b2`
-- 애니메이션 모듈 blob SHA: `206ef03eb7c5c4f26d565a866616bbeea39ec11a7` (동적 reveal 등록 포함)
+- 애니메이션 모듈 blob SHA: `206ef03eb7c5fd747f338cb7974042c129b84696` (동적 reveal 등록 포함)
 - 테스트 HTML에는 기존 `himart-movie-lead-lock` 및 `himart-movie-request-lock` 잔여 스크립트가 없다.
 - 운영 `himart.html` blob SHA: `2e911968b521662e3a4493891b570cceaca8715a` (변경 없음)
