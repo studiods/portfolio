@@ -235,3 +235,8 @@
 - 반응형 파일은 레이아웃만 담당하며 타이포그래피를 재정의하지 않는다.
 - 각 legacy selector는 computed style 대조가 끝난 뒤 selector 단위로 제거한다.
 - production `himart.html`은 승인 전까지 변경하지 않는다.
+
+
+## 2026-09-05 폰트 연결
+
+Averta PE 3종과 Pretendard Variable을 로컬 assets에 연결했다. 테스트 페이지의 디자인 시스템 typography가 더 이상 CDN Pretendard에 의존하지 않는다.
