@@ -26,11 +26,14 @@
   --hm-type-note:12px;
   --hm-space-micro:20px;
   --hm-space-component:40px;
-  --hm-space-subsection:74px;
+  --hm-space-subsection:100px;
   --hm-space-section:142px;
   --hm-space-hero:200px;
   --hm-rule-to-section-number:32px;
-  --hm-section-head-after:0px;
+  --hm-title-description-gap:0px;
+  --hm-title-description-max:40ch;
+  --hm-section-head-to-subsection:100px;
+  --hm-section-head-after:100px;
   --hm-meta-height:74px;
   --hm-mobile-inset:18px;
   --hm-container-editorial:1100px;
