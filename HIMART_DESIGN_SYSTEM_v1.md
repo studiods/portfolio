@@ -224,3 +224,14 @@
 - Phone cards: `hm-ds-media-card`
 - 동적 Journey flow node: `hm-ds-flow-node`
 - 기존 전용 레이아웃의 시각 규칙은 건드리지 않고 의미 클래스만 추가했다.
+
+
+## 컴포넌트 소유권 및 legacy 정리 (2026-09-05)
+
+- Chapter 타이틀: `components/chapter.css`
+- Media grid/card/frame/caption: `components/media.css`
+- Journey Flow group/node/label: `components/flow.css`
+- Data/Narrative/Role/Problem/Proof/Signal 카드 foundation: `components/cards.css`
+- 반응형 파일은 레이아웃만 담당하며 타이포그래피를 재정의하지 않는다.
+- 각 legacy selector는 computed style 대조가 끝난 뒤 selector 단위로 제거한다.
+- production `himart.html`은 승인 전까지 변경하지 않는다.
