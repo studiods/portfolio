@@ -63,3 +63,5 @@
 - `animation.js`: reveal·counter·hero scroll·video viewport만 담당
 
 따라서 이후 반응형 조정은 컴포넌트 소유권을 먼저 확인한 뒤 해당 파일 하나에서만 수정한다.
+
+- `components/cards.css`: Data/Narrative/Role 카드의 공통 border·padding·text foundation을 transitional mapping으로 등록
