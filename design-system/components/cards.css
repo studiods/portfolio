@@ -12,3 +12,33 @@
 .hm-ds-role__body{margin:28px 0 0;color:var(--hm-text-body)}
 .hm-ds-role__keyword{display:block;margin-top:20px;color:var(--hm-blue);font:300 14px/1.4 var(--hm-font-ko)}
 @media(max-width:780px){.hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{grid-template-columns:1fr;gap:40px}.hm-ds-role-grid{gap:40px}.hm-ds-card__body,.hm-ds-role__body{margin-top:20px}}
+
+/* Transitional DOM mapping: Data/Narrative cards adopt one foundation. */
+.himart-movie-page .data-card,
+.himart-movie-page .role-card,
+.himart-movie-page .problem-item,
+.himart-movie-page .proof-item,
+.himart-movie-page .signal-item{
+  border-top:1px solid var(--hm-line-strong);
+  padding-top:20px;
+}
+.himart-movie-page .data-card h3,
+.himart-movie-page .role-card h4,
+.himart-movie-page .problem-item h4,
+.himart-movie-page .proof-item h4,
+.himart-movie-page .signal-item h4{
+  margin-top:20px;
+  color:var(--hm-text-primary);
+}
+.himart-movie-page .data-card .desc,
+.himart-movie-page .role-card p,
+.himart-movie-page .problem-item p,
+.himart-movie-page .proof-item p,
+.himart-movie-page .signal-item p{
+  color:var(--hm-text-body);
+}
+.himart-movie-page .data-card .hm-source{
+  margin-top:20px;
+  color:var(--hm-text-tertiary);
+  font:300 12px/1.4 var(--hm-font-ko);
+}
