@@ -247,3 +247,23 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhe
     .data-card-head h3
   ){font-size:36px !important;line-height:1.2 !important;}
 }
+
+
+/* Final specificity lock: Roman index and small title share one baseline. */
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-head{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:0!important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-head > div{
+  display:inline!important;
+  width:auto!important;
+  max-width:none!important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-head .hm-roman-no{
+  display:inline-block!important;
+  width:auto!important;
+  margin:0 18px 0 0!important;
+  font-size:inherit!important;
+  line-height:inherit!important;
+}
