@@ -68,7 +68,8 @@
     const scramble = el => {
       if (scrambleTargets.has(el)) return;
       const size = parseFloat(getComputedStyle(el).fontSize) || 0;
-      if (!el.matches('.hm-section-title, .hm-section-no') && size < 50) return;
+      if (el.matches('.hm-section-title, .hm-section-no') && !el.classList.contains('is-visible')) return;
+      if (size < 50) return;
       scrambleTargets.add(el);
       const nodes = [];
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -99,7 +100,7 @@
     scan();
     scanScramble();
     if ('MutationObserver' in window) {
-      const mo = new MutationObserver(scan);
+      const mo = new MutationObserver(() => { scan(); scanScramble(); });
       mo.observe(document.documentElement, { childList: true, subtree: true });
       setTimeout(() => mo.disconnect(), 30000);
     }
