@@ -57,3 +57,36 @@ html body.himart-movie-page #live-main .hm-progress{
   html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){padding-top:200px !important}
   html body.himart-movie-page #live-main .hm-movie-hero .hm-meta b{word-spacing:.08em !important}
 }
+
+html body.himart-movie-page #live-main .hm-hero-nav{
+  position:absolute !important;
+  left:-40px !important;
+  right:-40px !important;
+  bottom:40px !important;
+  display:flex !important;
+  justify-content:space-between !important;
+  align-items:center !important;
+  pointer-events:none !important;
+  z-index:3 !important;
+}
+html body.himart-movie-page #live-main .hm-hero-nav a{
+  pointer-events:auto !important;
+  display:grid !important;
+  place-items:center !important;
+  width:40px !important;
+  height:40px !important;
+  color:#fff !important;
+  border:1px solid rgb(255 255 255 / 20%) !important;
+  border-radius:50% !important;
+  font:300 24px/1 'Averta PE',sans-serif !important;
+  text-decoration:none !important;
+  transition:background .24s ease,border-color .24s ease !important;
+}
+html body.himart-movie-page #live-main .hm-hero-nav a:hover{
+  background:rgb(255 255 255 / 12%) !important;
+  border-color:rgb(255 255 255 / 60%) !important;
+}
+@media (max-width:780px){
+  html body.himart-movie-page #live-main .hm-hero-nav{left:-18px !important;right:-18px !important;bottom:28px !important}
+  html body.himart-movie-page #live-main .hm-hero-nav a{width:32px !important;height:32px !important;font-size:20px !important}
+}
