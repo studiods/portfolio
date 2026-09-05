@@ -62,6 +62,7 @@ html body.reuse-current.himart-wide-test-page #live-main :is(
   --hm-subsection-gap:100px;
   --hm-title-description-max:40ch;
   --hm-inner-number-max:12px;
+  --hm-title-to-subsection-gap:100px;
 }
 body.himart-page-body .hm-subsection + .hm-subsection{margin-top:var(--hm-subsection-gap)!important}
 body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc){
@@ -87,7 +88,9 @@ body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head 
 /* Canonical hero composition: opt in with .hm-hero--system. */
 .hm-hero--system{
   aspect-ratio:16/9;
-  min-height:0!important;
+  width:100%;
+  height:100svh;
+  min-height:100svh!important;
   position:relative;
   overflow:hidden;
 }
@@ -104,6 +107,71 @@ body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head 
   margin:0;
   transform:translateY(-50%);
 }
+
+/* Canonical canvas, table, and title rhythm. */
+body.himart-page-body,
+body.himart-page-body #live-main,
+body.himart-page-body #live-main > .hm-section,
+body.himart-page-body #live-main > section.hm-section,
+body.himart-page-body .hm-card,
+body.himart-page-body .data-card,
+body.himart-page-body .hm-subsection,
+body.himart-page-body .hm-section-head{
+  background-color:#000!important;
+}
+body.himart-page-body .hm-section-head{
+  margin-bottom:var(--hm-title-to-subsection-gap)!important;
+}
+body.himart-page-body :is(table,.hm-table) :is(th,td){
+  border-left:0!important;
+  border-right:0!important;
+}
+body.himart-page-body :is(.hm-no-vertical-lines,.hm-no-vertical-lines > *){
+  border-left:0!important;
+  border-right:0!important;
+}
+body.himart-page-body :is(.data-card-head,.ways-list article){
+  --hm-inner-number-size:var(--hm-inner-number-max);
+}
+body.himart-page-body :is(.data-card-head,.ways-list article) .hm-roman-no{
+  display:inline-block!important;
+  width:auto!important;
+  margin:0 18px 0 0!important;
+  font-size:inherit!important;
+  line-height:inherit!important;
+  vertical-align:baseline!important;
+}
+body.himart-page-body .data-card-head,
+body.himart-page-body .ways-list article{
+  display:flex!important;
+  align-items:baseline!important;
+  gap:0!important;
+}
+body.himart-page-body .data-card-head > div,
+body.himart-page-body .ways-list article > h4{
+  display:inline!important;
+  width:auto!important;
+}
+body.himart-page-body .hm-meta{
+  display:flex!important;
+  align-items:stretch;
+  container-type:inline-size;
+}
+body.himart-page-body .hm-meta > div{
+  flex:1 1 auto!important;
+  min-width:0;
+}
+body.himart-page-body .hm-meta b{
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+@container (max-width:900px){
+  body.himart-page-body .hm-meta b{letter-spacing:-.025em!important;}
+}
+@container (max-width:620px){
+  body.himart-page-body .hm-meta b{font-size:11px!important;letter-spacing:-.045em!important;}
+}
+
 
 /* Shared description hierarchy: white text at 60% opacity. */
 html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
