@@ -133,3 +133,14 @@
 - 애니메이션 모듈 blob SHA: `206ef03eb7c5fd747f338cb7974042c129b84696` (동적 reveal 등록 포함)
 - 테스트 HTML에는 기존 `himart-movie-lead-lock` 및 `himart-movie-request-lock` 잔여 스크립트가 없다.
 - 운영 `himart.html` blob SHA: `2e911968b521662e3a4493891b570cceaca8715a` (변경 없음)
+
+
+## 난수 애니메이션 전체 코드 리뷰 및 회귀 검증 (2026-09-06)
+
+- 원인: animation.js와 별도 난수 모듈이 동시에 타이틀 텍스트를 감시해 DOM 교체 시점에 observer가 끊기거나 실행 상태가 서로 덮어쓰일 수 있었다.
+- 조치: 난수 애니메이션 소유권을 design-system/scramble-final.js 단일 모듈로 고정하고, animation.js에서는 관련 observer·WeakSet·스크롤 스캔을 제거했다.
+- 실행 기준: 히어로 타이틀은 콘텐츠가 주입되는 즉시/재시도 구간에서 1회 실행하고, 01~04 챕터 타이틀은 실제 viewport 진입 전환을 직접 계산해 실행한다. 콘텐츠가 같은 요소에서 바뀌어도 텍스트 signature를 비교해 다시 실행한다.
+- 검증 마커: 실행 중 data-hm-scramble-active="true", 누적 횟수 data-hm-scramble-runs를 기록하고 종료 후 원문을 복원한다.
+- 브라우저 검증: 새 캐시 URL himart-system-test.html?cache=full-review-20260906-5에서 히어로 실행 횟수 1회, 실행 중 active=true, 종료 후 원문 복원 확인. 01~04를 순차 스크롤해 각 타이틀의 실행 횟수 1회 이상 확인.
+- 정적 검증: 배포된 animation.js, scramble-final.js 모두 node --check 통과. 애플리케이션 콘솔 오류 없음(브라우저 확장 메타데이터 오류는 페이지 코드와 무관).
+- 운영 himart.html은 SHA 2e911968b521662e3a4493891b570cceaca8715a로 유지되며 변경하지 않았다.
