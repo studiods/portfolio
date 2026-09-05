@@ -28,10 +28,10 @@ html body.himart-movie-page #live-main .hm-movie-hero .hm-meta b{
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){
   padding-top:200px !important;
   margin-top:0 !important;
-  background:#050505 !important;
+  background:#000000 !important;
 }
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
-  padding-top:0 !important;
+  padding-top:var(--hm-rule-to-section-number) !important;
 }
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-no{
   font-family:'Averta PE',var(--hm-en),sans-serif !important;
@@ -185,4 +185,27 @@ html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .
     white-space:normal !important;
     transform:none !important;
   }
+}
+
+
+/* Global black-canvas lock: no charcoal section or card surfaces. */
+html body.himart-page-body :is(
+  #live-main,
+  #live-main > section,
+  #live-main > footer,
+  .hm-section,
+  .hm-ds-section,
+  .hm-section-head,
+  .hm-subsection,
+  .hm-card,
+  .data-card,
+  .flow-node,
+  .role-card,
+  .sentiment-block,
+  .conclusion-card,
+  .prototype-case-visual,
+  .behavior-card,
+  .direction-card
+){
+  background-color:#000000!important;
 }
