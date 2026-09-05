@@ -18,7 +18,7 @@
 | Section header | 다수의 grid/width override | 1열·2열 토큰 레이아웃 | 컴포넌트 CSS로 통합 |
 | Card | section별 개별 카드 규칙 | 공통 card foundation | 시각 차이 확인 후 공통화 |
 | Hero | movie/production lock 혼재 | hero component | 운영 페이지와 분리 검증 |
-| Font | 존재하지 않는 Averta local URL | font token | 에셋 업로드 후 경로 확정 |
+| Font | legacy 규칙과 신규 local font 혼재 | `typography.css`의 local font token | 브라우저 computed font 확인 후 legacy fallback 정리 |
 
 ## 제거 후보
 
@@ -89,3 +89,5 @@
 - `fonts/Averta-PE-Thin.otf`, `Averta-PE-Regular.otf`, `Averta-PE-Bold.otf` 확인
 - `fonts/PretendardVariable.woff2` 확인
 - `typography.css`는 CDN 대신 로컬 폰트 파일을 우선 로드
+- 정적 QA 체크리스트: `design-system/qa-matrix.md`
+- 현재 남은 확인 게이트: PC·모바일 브라우저 computed style 및 시각 비교
