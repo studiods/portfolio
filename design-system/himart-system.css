@@ -1,0 +1,118 @@
+/*
+  HIMART Shared System — the sole final-authority layer.
+  All Himart case-study pages load this file last.
+*/
+:root{
+  --hm-bg-page:#000000;
+  --hm-bg-section:#000000;
+  --hm-title-description-gap:0px;
+  --hm-section-head-to-subsection:100px;
+  --hm-subsection-gap:100px;
+  --hm-rule-to-section-number:32px;
+  --hm-inner-number-max:12px;
+  --hm-description-color:rgb(255 255 255 / 60%);
+  --hm-description-max-chars:40ch;
+  --hm-hero-ratio:16 / 9;
+}
+
+html body.himart-page-body,
+html body.himart-page-body #live-main,
+html body.himart-page-body #live-main > section,
+html body.himart-page-body #live-main > footer,
+html body.himart-page-body .hm-section,
+html body.himart-page-body .hm-ds-section,
+html body.himart-page-body .hm-footer{
+  background-color:var(--hm-bg-page)!important;
+}
+
+/* A 16:9 source always covers the viewport; the copy itself is vertically centred. */
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero){
+  position:relative!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  aspect-ratio:var(--hm-hero-ratio)!important;
+  overflow:hidden!important;
+  background-color:var(--hm-bg-page)!important;
+}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) :is(.hm-movie-video,.ways-hero__image){
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-movie-copy{
+  position:absolute!important;
+  top:50%!important;
+  left:0!important;
+  right:0!important;
+  transform:translateY(-50%)!important;
+  margin:0!important;
+}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-lead{
+  max-width:var(--hm-description-max-chars)!important;
+  color:var(--hm-description-color)!important;
+}
+
+/* Section heading is a single vertical flow: no inherited grid/flex gap can create empty space. */
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head{
+  display:block!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  margin:0 0 var(--hm-section-head-to-subsection)!important;
+  padding-top:var(--hm-rule-to-section-number)!important;
+  background:transparent!important;
+}
+html body.himart-page-body #live-main .hm-section-head > div{
+  margin:0!important;
+  padding:0!important;
+}
+html body.himart-page-body #live-main .hm-section-head .hm-section-no{
+  display:block!important;
+  margin:0 0 16px!important;
+  padding:0!important;
+}
+html body.himart-page-body #live-main .hm-section-head .hm-section-title{
+  margin:0!important;
+  padding:0!important;
+}
+html body.himart-page-body #live-main .hm-section-head .hm-section-desc{
+  display:block!important;
+  max-width:var(--hm-description-max-chars)!important;
+  margin:var(--hm-title-description-gap) 0 0!important;
+  padding:0!important;
+  color:var(--hm-description-color)!important;
+}
+html body.himart-page-body #live-main .hm-subsection + .hm-subsection{
+  margin-top:var(--hm-subsection-gap)!important;
+}
+
+/* Descriptions use one shared contrast and a 40-character line measure. */
+html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc){
+  max-width:var(--hm-description-max-chars)!important;
+  color:var(--hm-description-color)!important;
+}
+
+/* Subsection labels are inline Roman numerals, never blue labels above the title. */
+html body.himart-page-body #live-main .hm-subhead .hm-subno{
+  display:none!important;
+}
+html body.himart-page-body #live-main .hm-subhead .hm-subtitle[data-hm-roman]::before{
+  content:attr(data-hm-roman) ". ";
+  color:inherit!important;
+  font:inherit!important;
+  letter-spacing:inherit!important;
+}
+html body.himart-page-body #live-main :is(.hm-card-no,.data-card-head .hm-card-no,.hm-subno){
+  font-size:var(--hm-inner-number-max)!important;
+}
+
+/* Tables and boxed information never use vertical dividers. */
+html body.himart-page-body #live-main :is(table,thead,tbody,tfoot,tr,th,td),
+html body.himart-page-body #live-main :is(.hm-card,.data-card,.role-card,.flow-node,.ways-list > article,.ways-grid > article,.ways-flow > article){
+  border-left:0!important;
+  border-right:0!important;
+}
+html body.himart-page-body #live-main :is(table,th,td){
+  border-inline-start:0!important;
+  border-inline-end:0!important;
+}
