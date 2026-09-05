@@ -20,6 +20,8 @@ html body .top{
 }
 html body .top>*{pointer-events:auto!important}
 html body .top .top-center{
+  grid-column:2!important;
+  justify-self:center!important;
   display:flex!important;
   align-items:flex-start!important;
   justify-content:center!important;
@@ -60,6 +62,8 @@ html body.works-page-body>.top{
 }
 html body.works-page-body>.top .top-center{
   position:static!important;
+  grid-column:2!important;
+  justify-self:center!important;
   gap:26px!important;
   transform:none!important;
 }
