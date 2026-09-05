@@ -104,8 +104,10 @@
       if (!visible) {
         state.inView = false;
         state.played = false;
-      } else if (!state.inView) {
+      } else if (!state.inView || state.signature !== (chapter.textContent || '')) {
         state.inView = true;
+        state.signature = chapter.textContent || '';
+        state.played = false;
         stateByElement.set(chapter, state);
         run(chapter, 'chapter');
       }
@@ -133,9 +135,7 @@
     scan();
     [80, 300, 800, 1500, 3000].forEach(delay => setTimeout(scan, delay));
     const retry = setInterval(() => {
-      if (scan()) {
-        retry.dataset = undefined;
-      }
+      scan();
     }, 500);
     setTimeout(() => clearInterval(retry), 12000);
   };
