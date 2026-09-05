@@ -57,3 +57,11 @@
 - 콘텐츠 텍스트·역할 카드 보정은 한 레이어에서 처리하고, 레이아웃은 CSS, reveal·counter·hero/video 모션은 `animation.js`가 담당한다.
 - 중복 observer와 동일 콘텐츠 재주입 루프를 새로 추가하지 않는다.
 - 회귀 기준은 `design-system/qa-matrix.md`를 따른다.
+
+
+## Final readiness gate
+
+1. Legacy selector remnants are removed only after the matching component passes PC/mobile comparison.
+2. The test page is validated with a fresh cache version after each runtime or CSS change.
+3. Typography fine tuning is performed after local font loading and line wrapping are stable.
+4. Production `himart.html` remains untouched until explicit approval after visual comparison.
