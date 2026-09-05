@@ -135,9 +135,17 @@
     const hero = document.querySelector('.hm-movie-copy .hm-title');
     if (!hero) return false;
     heroStarted = true;
-    requestAnimationFrame(() => {
-      if (!scramble(hero, 'hero')) heroStarted = false;
-    });
+    if ('IntersectionObserver' in window) {
+      const hio = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          scramble(hero, 'hero');
+          hio.disconnect();
+        }
+      }), {threshold:.25});
+      hio.observe(hero);
+    } else {
+      requestAnimationFrame(() => scramble(hero, 'hero'));
+    }
     return true;
   };
 
