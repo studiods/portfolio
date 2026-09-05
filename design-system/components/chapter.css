@@ -285,3 +285,10 @@ body.himart-page-body .hm-meta > div + div{
   border-left:0!important;
   padding-left:18px;
 }
+
+
+/* Final section-head rhythm: remove trailing void and restore 32px rule gap. */
+html body.himart-page-body #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
+  margin-bottom:var(--hm-section-head-after)!important;
+  padding-top:var(--hm-rule-to-section-number)!important;
+}
