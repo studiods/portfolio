@@ -1,24 +1,31 @@
-/* HIMART Design System — final scramble layer
-   Loaded after content reconciliation so text replacement cannot cancel the effect. */
+/* HIMART Design System — deterministic scramble animation */
 (() => {
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const done = new WeakSet();
-  const textNodes = el => {
-    const out = [];
+  const states = new WeakMap();
+  let observer = null;
+  let targets = [];
+
+  const collectText = el => {
+    const nodes = [];
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    while (walker.nextNode()) out.push(walker.currentNode);
-    return out;
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    return nodes;
   };
-  const run = el => {
-    if (!el || done.has(el)) return;
-    done.add(el);
-    const nodes = textNodes(el);
-    const originals = nodes.map(n => n.nodeValue);
+
+  const play = (el, force = false) => {
+    if (!el) return;
+    const state = states.get(el) || { running:false, played:false };
+    if (state.running || (!force && state.played)) return;
+    state.running = true;
+    state.played = true;
+    states.set(el, state);
+    const nodes = collectText(el);
+    const originals = nodes.map(n => n.nodeValue || '');
     const total = 32;
     let frame = 0;
     const tick = () => {
       nodes.forEach((node, index) => {
-        const original = originals[index] || '';
+        const original = originals[index];
         node.nodeValue = [...original].map((ch, i) => {
           if (/\s/.test(ch) || ch === '·') return ch;
           const threshold = (i / Math.max(1, original.length)) * total;
@@ -27,34 +34,40 @@
       });
       frame += 1;
       if (frame <= total) requestAnimationFrame(tick);
-      else nodes.forEach((n, i) => { n.nodeValue = originals[i]; });
+      else {
+        nodes.forEach((node, index) => { node.nodeValue = originals[index]; });
+        state.running = false;
+      }
     };
     requestAnimationFrame(tick);
   };
+
   const setup = () => {
     const hero = document.querySelector('.hm-movie-copy .hm-title');
-    if (hero) run(hero);
     const chapters = [...document.querySelectorAll('#brand .hm-section-title, #data .hm-section-title, #journey .hm-section-title, #direction .hm-section-title')];
-    if (!chapters.length) return false;
+    const next = [hero, ...chapters].filter(Boolean);
+    if (!next.length) return false;
+    targets = next;
+    if (hero) play(hero, true);
+    if (observer) observer.disconnect();
     if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (entry.isIntersecting) { run(entry.target); io.unobserve(entry.target); }
-      }), { threshold: .25, rootMargin: '0px 0px -10% 0px' });
-      chapters.forEach(el => io.observe(el));
-    } else chapters.forEach(run);
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const state = states.get(entry.target) || { running:false, played:false };
+          if (entry.isIntersecting && !state.played) play(entry.target);
+          if (!entry.isIntersecting) { state.played = false; states.set(entry.target, state); }
+        });
+      }, { threshold:.18, rootMargin:'0px 0px -10% 0px' });
+      chapters.forEach(el => observer.observe(el));
+    } else chapters.forEach(el => play(el, true));
     return true;
   };
-  const boot = () => {
-    if (setup()) {
-      clearInterval(retry);
-      setTimeout(() => {
-        const hero = document.querySelector('.hm-movie-copy .hm-title');
-        if (hero && !done.has(hero)) run(hero);
-      }, 1200);
-    }
-  };
-  const retry = setInterval(boot, 250);
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
-  else boot();
-  setTimeout(() => clearInterval(retry), 12000);
+
+  let attempts = 0;
+  const retry = setInterval(() => {
+    if (setup() || ++attempts > 48) clearInterval(retry);
+  }, 250);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup, { once:true });
+  else setup();
+  window.addEventListener('load', () => { setup(); setTimeout(setup, 700); }, { once:true });
 })();
