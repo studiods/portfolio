@@ -45,3 +45,67 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
     line-height:1.18 !important;
   }
 }
+
+/* Final shared canvas + intermediate-title lock (design-system token: 42px). */
+html body:is(.himart-wide-test-page,.himart-movie-page){
+  background:#000 !important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main,
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main > .hm-section,
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main > section.hm-section,
+html body:is(.himart-wide-test-page,.himart-movie-page) #brand,
+html body:is(.himart-wide-test-page,.himart-movie-page) #data,
+html body:is(.himart-wide-test-page,.himart-movie-page) #journey,
+html body:is(.himart-wide-test-page,.himart-movie-page) #direction{
+  background:#000 !important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhead,.data-card-head){
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhead > div,.data-card-head > div){
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
+  .hm-subhead .hm-subtitle,
+  .hm-subhead .forced-redesign-title,
+  .narrative-title,
+  .journey-block-title,
+  .data-bridge-title,
+  .data-card-head h3
+){
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  box-sizing:border-box !important;
+  font-size:42px !important;
+  line-height:1.18 !important;
+  letter-spacing:0 !important;
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+  white-space:normal !important;
+  writing-mode:horizontal-tb !important;
+}
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhead .hm-subcopy,.hm-subhead .hm-subtitle + p){
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  margin-top:20px !important;
+  letter-spacing:0 !important;
+}
+@media (max-width:780px){
+  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
+    .hm-subhead .hm-subtitle,
+    .hm-subhead .forced-redesign-title,
+    .narrative-title,
+    .journey-block-title,
+    .data-bridge-title,
+    .data-card-head h3
+  ){font-size:36px !important;line-height:1.2 !important;}
+}
