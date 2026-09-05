@@ -1,0 +1,59 @@
+/* HIMART Design System — final typography and hero tuning
+   All spacing values follow the 8px scale. Test page only. */
+html body.himart-movie-page #live-main .hm-movie-copy{
+  top:50% !important;
+  transform:translateY(-50%) !important;
+}
+html body.himart-movie-page #live-main .hm-movie-copy .hm-title{
+  margin:0 !important;
+}
+html body.himart-movie-page #live-main .hm-movie-copy .hm-lead{
+  margin-top:24px !important;
+}
+html body.himart-movie-page #live-main .hm-movie-hero .hm-hero-bottom{
+  bottom:40px !important;
+}
+html body.himart-movie-page #live-main .hm-movie-hero .hm-meta{
+  gap:0 !important;
+  letter-spacing:normal !important;
+}
+html body.himart-movie-page #live-main .hm-movie-hero .hm-meta span,
+html body.himart-movie-page #live-main .hm-movie-hero .hm-meta b{
+  letter-spacing:normal !important;
+  word-spacing:.16em !important;
+}
+html body.himart-movie-page #live-main .hm-movie-hero .hm-meta b{
+  line-height:1.5 !important;
+}
+html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){
+  padding-top:200px !important;
+  margin-top:0 !important;
+  background:#050505 !important;
+}
+html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
+  padding-top:0 !important;
+}
+html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-no{
+  font-family:'Averta PE',var(--hm-en),sans-serif !important;
+  font-weight:300 !important;
+  letter-spacing:normal !important;
+}
+html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-desc{
+  margin-top:20px !important;
+  letter-spacing:normal !important;
+}
+html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  letter-spacing:normal !important;
+}
+html body.himart-movie-page #live-main .hm-section:first-of-type{
+  border-top:0 !important;
+}
+html body.himart-movie-page #live-main .hm-progress{
+  z-index:4 !important;
+}
+@media (max-width:780px){
+  html body.himart-movie-page #live-main .hm-movie-copy{top:50% !important}
+  html body.himart-movie-page #live-main .hm-movie-copy .hm-lead{margin-top:16px !important}
+  html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){padding-top:200px !important}
+  html body.himart-movie-page #live-main .hm-movie-hero .hm-meta b{word-spacing:.08em !important}
+}
