@@ -20,8 +20,14 @@ html body .top{
 }
 html body .top>*{pointer-events:auto!important}
 html body .top .top-center{
-  grid-column:2!important;
-  justify-self:center!important;
+  /*
+    Do not assign a grid column globally.
+    index.html still receives position:absolute + left:50% + translateX(-50%)
+    from type-overrides.css. Grid-placement on that absolutely-positioned child
+    changes its positioning reference and shifts the Home GNB horizontally.
+    Works is the only legacy page that needs explicit grid placement, handled
+    by the works-page-body rule below.
+  */
   display:flex!important;
   align-items:flex-start!important;
   justify-content:center!important;
@@ -61,6 +67,8 @@ html body.works-page-body>.top{
   padding:18px var(--pad,34px)!important;
 }
 html body.works-page-body>.top .top-center{
+  /* Works has a stronger inline absolute-position rule. Reset it here and
+     place the menu explicitly in the middle grid track only on Works. */
   position:static!important;
   grid-column:2!important;
   justify-self:center!important;
