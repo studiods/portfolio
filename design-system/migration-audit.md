@@ -82,3 +82,10 @@
 | Runtime locks | 콘텐츠 재주입·observer·style lock | `content-runtime.js` + `animation.js` | 콘텐츠/모션 독립 실행 확인 |
 
 삭제는 위 조건 충족 후 legacy 파일의 블록 단위가 아니라 selector 단위로 진행한다.
+
+
+## 폰트 자산 연결 상태
+
+- `fonts/Averta-PE-Thin.otf`, `Averta-PE-Regular.otf`, `Averta-PE-Bold.otf` 확인
+- `fonts/PretendardVariable.woff2` 확인
+- `typography.css`는 CDN 대신 로컬 폰트 파일을 우선 로드
