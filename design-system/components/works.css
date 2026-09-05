@@ -10,6 +10,7 @@ body.works-page-body{
   scroll-snap-type:y proximity;
   scroll-behavior:auto;
 }
+body.works-page-body *{box-sizing:border-box}
 
 body.works-page-body .works-page{
   min-height:100vh;
@@ -233,7 +234,7 @@ body.works-page-body .works-project-menu a{
   height:28px;
   margin:0;
   padding:0;
-  border-bottom:1px solid rgba(255,255,255,.16);
+  border:0;
   color:var(--hm-text-secondary);
   font-family:var(--hm-font-ko);
   font-size:16px;
@@ -243,7 +244,7 @@ body.works-page-body .works-project-menu a{
   text-decoration:none;
   white-space:nowrap;
 }
-body.works-page-body .works-project-menu a:first-child{border-top:1px solid rgba(255,255,255,.16)}
+body.works-page-body .works-project-menu a+a{border-top:1px solid rgba(255,255,255,.16)}
 body.works-page-body .works-project-menu a:hover,
 body.works-page-body .works-project-menu a:focus-visible{color:var(--hm-text-primary)}
 
