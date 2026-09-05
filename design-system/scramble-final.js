@@ -19,14 +19,26 @@
     const nodes = textNodes(element);
     if (!nodes.length) return false;
 
-    const original = nodes.map(node => node.nodeValue || '');
+    const state = stateByElement.get(element) || {
+      running: false,
+      completed: false,
+      signature: '',
+      original: null,
+      visible: false
+    };
+    // Keep the resolved source text independent from the currently rendered glyphs.
+    // If an element leaves the viewport during the animation, its temporary random
+    // characters must never become the next animation's source text.
+    const original = Array.isArray(state.original) && state.original.length === nodes.length
+      ? state.original.slice()
+      : nodes.map(node => node.nodeValue || '');
     const signature = original.join('\u0001');
-    const state = stateByElement.get(element) || { running: false, completed: false, signature: '' };
     if (state.running || (!replay && state.completed && state.signature === signature)) return false;
 
     state.running = true;
     state.completed = true;
     state.signature = signature;
+    state.original = original.slice();
     stateByElement.set(element, state);
     element.setAttribute('data-hm-scramble-active', 'true');
     element.setAttribute('data-hm-scramble-kind', kind);
@@ -72,6 +84,8 @@
       const visible = isInView(title);
       if (!visible) {
         state.visible = false;
+        // Allow a fresh replay on re-entry, but retain state.original so a
+        // partially rendered scramble can never be used as source text.
         state.completed = false;
         stateByElement.set(title, state);
         return;
