@@ -46,6 +46,17 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
   }
 }
 
+/* Reuse chapter labels override the legacy wide-page label hide. */
+html body.reuse-current.himart-wide-test-page #live-main :is(
+  .hm-subhead > .hm-subno,
+  .data-card-head > .hm-card-no
+){
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  color:var(--hm-blue) !important;
+}
+
 /* Shared description hierarchy: white text at 60% opacity. */
 html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
   .hm-lead,
