@@ -1,161 +1,136 @@
-/* HIMART Design System — deterministic, DOM-safe scramble animation */
+/* HIMART Design System — post-content scramble animation */
 (() => {
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const chapterSelector = '#brand .hm-section-title, #data .hm-section-title, #journey .hm-section-title, #direction .hm-section-title';
   const stateByElement = new WeakMap();
-  const debug = window.__hmScrambleDebug || {
-    heroRuns: 0,
-    chapterRuns: 0,
-    totalRuns: 0,
-    lastRun: null
-  };
-  window.__hmScrambleDebug = debug;
+  let heroStarted = false;
 
-  const getTargets = () => ({
-    hero: document.querySelector('.hm-movie-copy .hm-title'),
-    chapters: [...document.querySelectorAll(
-      '#brand .hm-section-title, #data .hm-section-title, #journey .hm-section-title, #direction .hm-section-title'
-    )]
-  });
-
-  const getTextNodes = el => {
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const textNodes = element => {
     const nodes = [];
-    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    while (walker.nextNode()) nodes.push(walker.currentNode);
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      if ((walker.currentNode.nodeValue || '').trim()) nodes.push(walker.currentNode);
+    }
     return nodes;
   };
 
-  const hasText = el => getTextNodes(el).some(node => (node.nodeValue || '').trim().length > 0);
+  const scramble = (element, kind, replay = false) => {
+    if (!element || !document.contains(element)) return false;
+    const nodes = textNodes(element);
+    if (!nodes.length) return false;
+    const original = nodes.map(node => node.nodeValue || '');
+    const signature = original.join('\u0001');
+    const state = stateByElement.get(element) || { running: false, completed: false, signature: '' };
+    if (state.running || (!replay && state.completed && state.signature === signature)) return false;
 
-  const run = (el, kind) => {
-    if (!el || !document.contains(el) || !hasText(el)) return false;
-    const currentText = el.textContent || '';
-    const state = stateByElement.get(el) || {
-      running: false,
-      played: false,
-      signature: currentText,
-      inView: false,
-      runs: 0
-    };
-    if (state.signature !== currentText && !state.running) {
-      state.signature = currentText;
-      state.played = false;
-    }
-    if (state.running || state.played) {
-      stateByElement.set(el, state);
-      return false;
-    }
-
-    const nodes = getTextNodes(el);
-    const originals = nodes.map(node => node.nodeValue || '');
     state.running = true;
-    state.played = true;
-    state.runs += 1;
-    stateByElement.set(el, state);
-    el.classList.add('is-scrambling');
-    el.setAttribute('data-hm-scramble-active', 'true');
-    el.setAttribute('data-hm-scramble-runs', String(state.runs));
-    debug.totalRuns += 1;
-    if (kind === 'hero') debug.heroRuns += 1;
-    else debug.chapterRuns += 1;
-    debug.lastRun = { kind, text: currentText.slice(0, 80), at: Date.now() };
+    state.completed = true;
+    state.signature = signature;
+    stateByElement.set(element, state);
+    element.setAttribute('data-hm-scramble-active', 'true');
+    element.setAttribute('data-hm-scramble-kind', kind);
+    element.setAttribute('data-hm-scramble-runs', String(Number(element.getAttribute('data-hm-scramble-runs') || 0) + 1));
 
-    const totalFrames = 42;
-    let frame = 0;
-    const tick = () => {
+    const totalSteps = 18;
+    let step = 0;
+    const render = () => {
       nodes.forEach((node, nodeIndex) => {
-        const original = originals[nodeIndex];
-        const chars = [...original];
-        node.nodeValue = chars.map((char, index) => {
+        const source = [...original[nodeIndex]];
+        node.nodeValue = source.map((char, charIndex) => {
           if (/\s/.test(char) || char === '·') return char;
-          const threshold = (index / Math.max(1, chars.length)) * totalFrames;
-          return frame >= threshold
-            ? char
-            : glyphs[Math.floor(Math.random() * glyphs.length)];
+          const resolveAt = Math.floor((charIndex / Math.max(1, source.length)) * totalSteps);
+          return step >= resolveAt ? char : glyphs[Math.floor(Math.random() * glyphs.length)];
         }).join('');
       });
-      if (frame < totalFrames) {
-        frame += 1;
-        requestAnimationFrame(tick);
-      } else {
-        nodes.forEach((node, nodeIndex) => { node.nodeValue = originals[nodeIndex]; });
-        state.running = false;
-        el.classList.remove('is-scrambling');
-        el.removeAttribute('data-hm-scramble-active');
-        stateByElement.set(el, state);
-      }
     };
-    requestAnimationFrame(tick);
+
+    render();
+    const timer = setInterval(() => {
+      step += 1;
+      if (step >= totalSteps) {
+        clearInterval(timer);
+        nodes.forEach((node, index) => { node.nodeValue = original[index]; });
+        state.running = false;
+        stateByElement.set(element, state);
+        element.removeAttribute('data-hm-scramble-active');
+        return;
+      }
+      render();
+    }, 84);
     return true;
   };
 
-  const inViewport = el => {
-    const rect = el.getBoundingClientRect();
+  const isInView = element => {
+    const rect = element.getBoundingClientRect();
     return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.08;
   };
 
-  const scan = () => {
-    const { hero, chapters } = getTargets();
-    if (hero) run(hero, 'hero');
-    chapters.forEach(chapter => {
-      const state = stateByElement.get(chapter) || {
-        running: false, played: false, signature: chapter.textContent || '', inView: false, runs: 0
-      };
-      const visible = inViewport(chapter);
+  const scanChapters = () => {
+    document.querySelectorAll(chapterSelector).forEach(title => {
+      const state = stateByElement.get(title) || { running: false, completed: false, signature: '', visible: false };
+      const visible = isInView(title);
       if (!visible) {
-        state.inView = false;
-        state.played = false;
-      } else if (!state.inView || state.signature !== (chapter.textContent || '')) {
-        state.inView = true;
-        state.signature = chapter.textContent || '';
-        state.played = false;
-        stateByElement.set(chapter, state);
-        run(chapter, 'chapter');
+        state.visible = false;
+        state.completed = false;
+        stateByElement.set(title, state);
+        return;
       }
-      stateByElement.set(chapter, state);
+      if (!state.visible) {
+        state.visible = true;
+        stateByElement.set(title, state);
+        scramble(title, 'chapter');
+      }
     });
-    return Boolean(hero || chapters.length);
   };
 
-  let queued = false;
-  const scheduleScan = () => {
-    if (queued) return;
-    queued = true;
+  const startHeroAfterContent = async () => {
+    const fontsReady = document.fonts?.ready;
+    if (fontsReady) await fontsReady.catch(() => {});
+    await wait(720);
+    const hero = document.querySelector('.hm-movie-copy .hm-title');
+    if (!hero) return false;
+    scramble(hero, 'hero');
+    return true;
+  };
+
+  const waitForContentReady = () => {
+    const timer = setInterval(() => {
+      const ready = document.body?.classList.contains('himart-narrative-ready');
+      if (!ready && document.readyState !== 'complete') return;
+      clearInterval(timer);
+      if (!heroStarted) {
+        heroStarted = true;
+        startHeroAfterContent();
+      }
+      scanChapters();
+    }, 100);
+    setTimeout(() => {
+      clearInterval(timer);
+      if (!heroStarted) {
+        heroStarted = true;
+        startHeroAfterContent();
+      }
+    }, 12000);
+  };
+
+  let scrollQueued = false;
+  window.addEventListener('scroll', () => {
+    if (scrollQueued) return;
+    scrollQueued = true;
     requestAnimationFrame(() => {
-      queued = false;
-      scan();
+      scrollQueued = false;
+      scanChapters();
     });
-  };
-
-  window.__hmScrambleScan = scan;
-  window.__hmScramblePlay = run;
-  window.addEventListener('scroll', scheduleScan, { passive: true });
-  window.addEventListener('resize', scheduleScan, { passive: true });
-
-  const boot = () => {
-    scan();
-    [80, 300, 800, 1500, 3000].forEach(delay => setTimeout(scan, delay));
-    const retry = setInterval(() => {
-      scan();
-    }, 500);
-    setTimeout(() => clearInterval(retry), 12000);
-  };
+  }, { passive: true });
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
+    document.addEventListener('DOMContentLoaded', waitForContentReady, { once: true });
   } else {
-    boot();
+    waitForContentReady();
   }
-  window.addEventListener('load', () => {
-    scan();
-    setTimeout(scan, 500);
-  }, { once: true });
 
-  if ('MutationObserver' in window) {
-    const observer = new MutationObserver(scheduleScan);
-    const observe = () => {
-      if (document.body) observer.observe(document.body, { childList: true, subtree: true });
-    };
-    if (document.body) observe();
-    else document.addEventListener('DOMContentLoaded', observe, { once: true });
-  }
+  window.addEventListener('load', () => {
+    setTimeout(scanChapters, 300);
+  }, { once: true });
 })();
