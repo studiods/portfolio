@@ -57,3 +57,13 @@
 
 
 - 테스트 페이지 중복 inline lock 중 `himart-movie-lead-lock`을 제거했다. Hero·Chapter의 핵심 lock은 시각 기준 확인 전까지 유지한다.
+
+
+## 최종 확인 기록 (2026-09-05)
+
+- 새 캐시 로드 확인: `index.css?v=20260906-1`, `animation.js?v=20260906-3`, `test-content-final.js?v=20260905-2`.
+- PC 1363×936: 로컬 폰트 로드 완료, Hero 82px, Chapter 52px, Chapter 헤더 2열.
+- 스크롤 회귀: reveal 대상 24개 중 현재 viewport 진입 대상이 `is-visible`로 전환됨.
+- 페이지 코드 오류/경고: 애플리케이션 오류 없음(브라우저 확장 메타데이터 오류 1건은 외부 확장).
+- 모바일: ≤780px에서 1열 스택 및 Chapter 30–38px clamp 규칙을 소스에서 확인. 실제 모바일 viewport 캡처는 별도 디바이스 확인 필요.
+- 운영 `himart.html`: 변경하지 않음. 현재 적용 판단은 **보류**이며, 모바일 직접 시각 확인 후 승인한다.
