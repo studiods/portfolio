@@ -8,7 +8,7 @@
   --hm-bg-page:#000000;
   --hm-bg-section:#000000;
   --hm-title-description-gap:20px;
-  --hm-section-head-to-subsection:100px;
+  --hm-section-head-to-subsection:160px;
   --hm-subsection-gap:100px;
   --hm-rule-to-section-number:32px;
   --hm-inner-number-max:12px;
@@ -16,6 +16,7 @@
   --hm-description-max-chars:40ch;
   --hm-hero-description-width:32ch;
   --hm-subtitle-to-content:80px;
+  --hm-title-to-subsection-gap:160px;
   --hm-hero-ratio:16 / 9;
 }
 
@@ -218,4 +219,14 @@ html body.himart-page-body #live-main .data-list > .data-card:last-child{
 }
 html body.himart-page-body #live-main .hm-subhead + .reuse-proof-stack{
   margin-top:var(--hm-subtitle-to-content)!important;
+}
+
+/* One canonical 160px gap from a major section title to its first subsection.
+   The former 120px margin + 40px padding are intentionally collapsed into this one rule. */
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head{
+  margin-bottom:0!important;
+}
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
+  margin-top:var(--hm-title-to-subsection-gap)!important;
+  padding-top:0!important;
 }
