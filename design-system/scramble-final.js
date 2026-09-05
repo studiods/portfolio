@@ -1,30 +1,12 @@
-/* HIMART Design System — immediate post-content scramble animation */
+/* HIMART Design System — fail-safe title scramble and content constraints. */
 (() => {
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const chapterSelector = '#brand .hm-section-title, #data .hm-section-title, #journey .hm-section-title, #direction .hm-section-title';
+  const titleSelector = '#live-main .hm-section-head .hm-section-title.js-scramble, #live-main .hm-section-head .hm-section-title';
+  const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title.js-scramble, :is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title';
+  const descriptionSelector = '#live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc)';
   const stateByElement = new WeakMap();
   const activeAnimations = new Set();
   let heroStarted = false;
-
-  const finishScramble = element => {
-    const state = stateByElement.get(element);
-    if (!state) return;
-    if (state.timer) {
-      clearInterval(state.timer);
-      state.timer = null;
-    }
-    const nodes = textNodes(element);
-    if (Array.isArray(state.original) && nodes.length === state.original.length) {
-      nodes.forEach((node, index) => {
-        node.nodeValue = state.original[index];
-      });
-    }
-    state.running = false;
-    state.completed = true;
-    stateByElement.set(element, state);
-    activeAnimations.delete(element);
-    element.removeAttribute('data-hm-scramble-active');
-  };
 
   const textNodes = element => {
     const nodes = [];
@@ -35,37 +17,49 @@
     return nodes;
   };
 
+  const finishScramble = element => {
+    const state = stateByElement.get(element);
+    if (!state) return;
+    if (state.timer) clearInterval(state.timer);
+    const nodes = textNodes(element);
+    if (nodes.length === state.original.length) {
+      nodes.forEach((node, index) => { node.nodeValue = state.original[index]; });
+    } else if (state.originalHTML != null) {
+      /* A DOM replacement during motion must still finish on the authored text. */
+      element.innerHTML = state.originalHTML;
+    }
+    state.timer = null;
+    state.running = false;
+    state.completed = true;
+    stateByElement.set(element, state);
+    activeAnimations.delete(element);
+    element.removeAttribute('data-hm-scramble-active');
+  };
+
   const scramble = (element, kind, replay = false) => {
     if (!element || !document.contains(element)) return false;
     const nodes = textNodes(element);
     if (!nodes.length) return false;
-
-    const state = stateByElement.get(element) || {
-      running: false,
-      completed: false,
-      signature: '',
-      original: null,
-      visible: false
-    };
-    // Keep the resolved source text independent from the currently rendered glyphs.
-    // If an element leaves the viewport during the animation, its temporary random
-    // characters must never become the next animation's source text.
-    const original = Array.isArray(state.original) && state.original.length === nodes.length
-      ? state.original.slice()
+    const previous = stateByElement.get(element);
+    const original = previous?.original?.length === nodes.length
+      ? previous.original.slice()
       : nodes.map(node => node.nodeValue || '');
     const signature = original.join('\u0001');
-    if (state.running || (!replay && state.completed && state.signature === signature)) return false;
+    if (previous?.running || (!replay && previous?.completed && previous.signature === signature)) return false;
 
-    state.running = true;
-    state.completed = true;
-    state.signature = signature;
-    state.original = original.slice();
-    state.timer = null;
+    const state = {
+      running: true,
+      completed: false,
+      visible: true,
+      signature,
+      original,
+      originalHTML: previous?.originalHTML ?? element.innerHTML,
+      timer: null
+    };
     stateByElement.set(element, state);
     activeAnimations.add(element);
     element.setAttribute('data-hm-scramble-active', 'true');
     element.setAttribute('data-hm-scramble-kind', kind);
-    element.setAttribute('data-hm-scramble-runs', String(Number(element.getAttribute('data-hm-scramble-runs') || 0) + 1));
 
     const totalSteps = 26;
     let step = 0;
@@ -74,55 +68,39 @@
         const source = [...original[nodeIndex]];
         node.nodeValue = source.map((char, charIndex) => {
           if (/\s/.test(char) || char === '·') return char;
-          const resolveAt = Math.floor((charIndex / Math.max(1, source.length)) * totalSteps);
-          return step >= resolveAt ? char : glyphs[Math.floor(Math.random() * glyphs.length)];
+          return step >= Math.floor((charIndex / Math.max(1, source.length)) * totalSteps)
+            ? char
+            : glyphs[Math.floor(Math.random() * glyphs.length)];
         }).join('');
       });
     };
 
-    try {
-      render();
-    } catch (error) {
-      finishScramble(element);
-      return false;
-    }
-
-    const timer = setInterval(() => {
+    try { render(); } catch { finishScramble(element); return false; }
+    state.timer = setInterval(() => {
       try {
         step += 1;
-        if (step >= totalSteps) {
-          finishScramble(element);
-          return;
-        }
-        render();
-      } catch (error) {
-        // Any interrupted render must end on the original source text.
-        finishScramble(element);
-      }
+        if (step >= totalSteps) finishScramble(element);
+        else render();
+      } catch { finishScramble(element); }
     }, 30);
-    state.timer = timer;
-    stateByElement.set(element, state);
     return true;
   };
 
   const isInView = element => {
     const rect = element.getBoundingClientRect();
-    return rect.top < window.innerHeight * 0.82 && rect.bottom > window.innerHeight * 0.08;
+    return rect.top < innerHeight * .82 && rect.bottom > innerHeight * .08;
   };
 
-  const scanChapters = () => {
-    document.querySelectorAll(chapterSelector).forEach(title => {
-      const state = stateByElement.get(title) || { running: false, completed: false, signature: '', visible: false };
+  const scanTitles = () => {
+    document.querySelectorAll(titleSelector).forEach(title => {
+      const state = stateByElement.get(title) || { visible: false, completed: false };
       const visible = isInView(title);
       if (!visible) {
+        if (state.running) finishScramble(title);
         state.visible = false;
-        // Allow a fresh replay on re-entry, but retain state.original so a
-        // partially rendered scramble can never be used as source text.
         state.completed = false;
         stateByElement.set(title, state);
-        return;
-      }
-      if (!state.visible) {
+      } else if (!state.visible) {
         state.visible = true;
         stateByElement.set(title, state);
         scramble(title, 'chapter');
@@ -130,62 +108,71 @@
     });
   };
 
+  const normaliseSubtitles = () => {
+    document.querySelectorAll('#live-main .hm-section').forEach(section => {
+      let order = 0;
+      section.querySelectorAll('.hm-subhead .hm-subtitle').forEach(title => {
+        if (!title.dataset.hmRoman) {
+          order += 1;
+          title.dataset.hmRoman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'][order - 1] || String(order);
+        }
+      });
+    });
+  };
+
+  const enforceDescriptionLimit = () => {
+    document.querySelectorAll(descriptionSelector).forEach(element => {
+      if (element.dataset.hmDescriptionLimited === 'true') return;
+      const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
+      if ([...text].length > 40) element.textContent = [...text].slice(0, 39).join('') + '…';
+      element.dataset.hmDescriptionLimited = 'true';
+    });
+  };
+
   const launchHero = () => {
-    if (heroStarted) return true;
-    const hero = document.querySelector('.hm-movie-copy .hm-title');
-    if (!hero) return false;
+    if (heroStarted) return;
+    const hero = document.querySelector(heroSelector);
+    if (!hero) return;
     heroStarted = true;
     if ('IntersectionObserver' in window) {
-      const hio = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          scramble(hero, 'hero');
-          hio.disconnect();
-        }
-      }), {threshold:.25});
-      hio.observe(hero);
-    } else {
-      requestAnimationFrame(() => scramble(hero, 'hero'));
-    }
-    return true;
+      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { scramble(hero, 'hero'); observer.disconnect(); }
+      }), { threshold: .25 });
+      observer.observe(hero);
+    } else requestAnimationFrame(() => scramble(hero, 'hero'));
+  };
+
+  const initialise = () => {
+    normaliseSubtitles();
+    enforceDescriptionLimit();
+    launchHero();
+    scanTitles();
   };
 
   const waitForContentReady = () => {
-    const checkReady = () => {
-      if (!document.body?.classList.contains('himart-narrative-ready')) return false;
-      const launched = launchHero();
-      scanChapters();
-      return launched;
-    };
-    if (checkReady()) return;
+    if (document.body?.classList.contains('himart-narrative-ready')) return initialise();
     const timer = setInterval(() => {
-      if (checkReady()) clearInterval(timer);
+      if (document.body?.classList.contains('himart-narrative-ready')) {
+        clearInterval(timer);
+        initialise();
+      }
     }, 16);
-    setTimeout(() => clearInterval(timer), 12000);
-    document.addEventListener('himart:narrative-ready', checkReady, { once: true });
+    setTimeout(() => { clearInterval(timer); initialise(); }, 12000);
+    document.addEventListener('himart:narrative-ready', initialise, { once: true });
   };
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) activeAnimations.forEach(finishScramble);
   });
-  window.addEventListener('pagehide', () => {
-    activeAnimations.forEach(finishScramble);
-  });
-
-  let scrollQueued = false;
-  window.addEventListener('scroll', () => {
-    if (scrollQueued) return;
-    scrollQueued = true;
-    requestAnimationFrame(() => {
-      scrollQueued = false;
-      scanChapters();
-    });
+  addEventListener('pagehide', () => activeAnimations.forEach(finishScramble));
+  let queued = false;
+  addEventListener('scroll', () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; scanTitles(); });
   }, { passive: true });
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', waitForContentReady, { once: true });
-  } else {
-    waitForContentReady();
-  }
-
-  window.addEventListener('load', () => setTimeout(scanChapters, 0), { once: true });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', waitForContentReady, { once: true });
+  else waitForContentReady();
+  addEventListener('load', () => setTimeout(initialise, 0), { once: true });
 })();
