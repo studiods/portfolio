@@ -46,6 +46,17 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
   }
 }
 
+/* Shared description hierarchy: white text at 60% opacity. */
+html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
+  .hm-lead,
+  .hm-section-desc,
+  .hm-subcopy,
+  .data-card-head .desc
+){
+  color:#fff !important;
+  opacity:.6 !important;
+}
+
 /* Final shared canvas + intermediate-title lock (design-system token: 42px). */
 html body:is(.himart-wide-test-page,.himart-movie-page){
   background:#000 !important;
