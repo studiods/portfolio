@@ -4,30 +4,7 @@
   const main = document.getElementById('live-main');
   const fallbackMarkup = main?.innerHTML || '';
   let restoredFallback = false;
-  const runtimeLockStyle = document.createElement('style');
-  runtimeLockStyle.id = 'himart-movie-runtime-lock';
-  runtimeLockStyle.textContent = `
-    html body.himart-movie-page #live-main .hm-movie-copy{top:20vh!important}
-    html body.himart-movie-page #live-main .hm-movie-copy .hm-lead{margin-top:20px!important;color:rgba(255,255,255,.6)!important;opacity:1!important}
-    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta{padding-top:0!important;box-sizing:border-box!important;align-items:center!important}
-    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta>div:last-child{border-bottom:0!important;padding-bottom:0!important}
-    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card b{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.3!important;font-weight:300!important;margin:0!important}
-    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:24px!important;line-height:1.45!important;font-weight:300!important;color:#fff!important}
-    html body.himart-movie-page #live-main #data .behavior-card h4{font-size:28px!important;line-height:1.2!important}
-    html body.himart-movie-page #live-main #data .signal-item h4{font-size:28px!important;line-height:1.2!important;min-height:2.4em!important}
-    html body.himart-movie-page #live-main #data .behavior-card p{font-size:16px!important;line-height:1.5!important;margin-top:40px!important}
-    html body.himart-movie-page #live-main #journey .journey-role-grid h4,
-    html body.himart-movie-page #live-main #journey .role-grid h4{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:28px!important;line-height:1.25!important;font-weight:100!important;letter-spacing:-.045em!important}
-    html body.himart-movie-page #live-main #journey .journey-role-grid p,
-    html body.himart-movie-page #live-main #journey .role-grid p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.55!important;font-weight:300!important;color:rgba(255,255,255,.5)!important}
-    html body.himart-movie-page #live-main #journey .journey-role-grid small,
-    html body.himart-movie-page #live-main #journey .role-grid .hm-role-name{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
-    html body.himart-movie-page #live-main .hm-movie-hero .hm-meta span{color:rgba(255,255,255,.5)!important}
-    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card.positive p{font-size:28px!important;color:var(--hm-blue)!important}
-    html body.himart-movie-page #live-main .narrative-touchpoint-synthesis .synthesis-card.negative p{font-size:28px!important;color:var(--hm-red)!important}
-    html body.himart-movie-page #live-main #direction .design-rule article p{font-size:16px!important;line-height:1.5!important}
-  `;
-  document.head.appendChild(runtimeLockStyle);
+  
   const roleCards = [
     ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다.', '최근 맥락과 관심을 기억해 원하는 목적지로 바로 이어줍니다.', '맥락 기억 · 목적지 연결 · 개인화 진입'],
     ['SUBHOME / CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다.', '상황과 설치 조건을 기준으로 탐색 방향을 빠르게 좁혀줍니다.', '상황 중심 탐색 · 조건 정리'],
@@ -44,7 +21,6 @@
   const text = (el, value) => { if (el && el.textContent !== value) el.textContent = value; };
   const apply = () => {
     /* Runtime CSS is injected asynchronously; keep this lock last in the cascade. */
-    document.head.appendChild(runtimeLockStyle);
     const lead = document.querySelector('.hm-movie-copy .hm-lead');
     html(lead, '화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.');
 
