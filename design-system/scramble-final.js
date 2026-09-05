@@ -48,7 +48,7 @@
     const next = [hero, ...chapters].filter(Boolean);
     if (!next.length) return false;
     targets = next;
-    if (hero) play(hero, true);
+    if (hero) play(hero);
     if (observer) observer.disconnect();
     if ('IntersectionObserver' in window) {
       observer = new IntersectionObserver(entries => {
