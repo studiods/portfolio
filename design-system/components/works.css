@@ -1,6 +1,8 @@
-/* WORKS page component — all page styling lives in the design system. */
+/* WORKS page component — page styling is owned by the design system. */
 
 body.works-page-body{
+  --works-project-title-gap:400px;
+  --works-project-rule-width:calc(100vw / 12);
   margin:0;
   overflow-x:hidden;
   overflow-y:auto;
@@ -17,13 +19,12 @@ body.works-page-body .works-page{
   background:var(--hm-bg-page);
 }
 
-/* Entry title: large = Averta Thin asset, compact = closest available Light fallback (Regular asset). */
+/* Entry title: large = Averta Thin asset, compact = Light semantic fallback. */
 body.works-page-body .works-hero{
   position:relative;
   height:100vh;
   min-height:680px;
   scroll-snap-align:start;
-  scroll-snap-stop:always;
 }
 body.works-page-body .works-page-title{
   position:fixed;
@@ -59,7 +60,7 @@ body.works-page-body .works-page-title .entry-scramble-char{
   letter-spacing:inherit;
 }
 
-/* Project chapters */
+/* Project stream: exact 1/3 copy + 2/3 media. Media rows touch with zero vertical gap. */
 body.works-page-body .works-grid{
   display:block;
   margin:0;
@@ -70,24 +71,51 @@ body.works-page-body .works-card{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,2fr);
   width:100%;
-  min-height:100vh;
+  min-height:0;
   margin:0;
   padding:0;
   color:var(--hm-text-primary);
-  text-decoration:none;
   background:var(--hm-bg-page);
   scroll-snap-align:start;
-  scroll-snap-stop:always;
 }
+
+/*
+  Sticky project copy contract:
+  - the project title text settles 400px below the compact WORKS title;
+  - the line above the title is exactly 1/4 of the 1/3 copy column = 1/12 viewport;
+  - the rule is white 30% and the rule-to-title gap is 32px;
+  - JS only supplies handoff opacity/vertical shift as the next project approaches.
+*/
 body.works-page-body .works-card-copy{
+  position:sticky;
+  z-index:4;
+  top:var(--works-project-sticky-top,432px);
   grid-column:1;
-  align-self:center;
+  align-self:start;
   min-width:0;
   padding:0 var(--hm-space-40) 0 var(--hm-inset-desktop);
+  opacity:var(--works-copy-opacity,1);
+  transform:translateY(var(--works-copy-shift,0px));
+  will-change:opacity,transform;
+}
+body.works-page-body .works-card-copy::before{
+  content:"";
+  display:block;
+  width:var(--works-project-rule-width);
+  height:1px;
+  margin:0 0 32px;
+  background:rgba(255,255,255,.30);
+}
+body.works-page-body .works-card-title-link{
+  display:block;
+  width:fit-content;
+  max-width:100%;
+  color:var(--hm-text-primary);
+  text-decoration:none;
 }
 body.works-page-body .works-card-title{
   margin:0;
-  color:var(--hm-text-primary);
+  color:inherit;
   font-family:var(--hm-font-ko);
   font-size:52px;
   font-weight:100;
@@ -108,10 +136,23 @@ body.works-page-body .works-card-company{
   letter-spacing:.04em;
   text-transform:uppercase;
 }
+
+/* Only the media itself is clickable; the project row is not a link. */
+body.works-page-body .works-card-media-link{
+  position:relative;
+  z-index:2;
+  grid-column:2;
+  align-self:start;
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  color:inherit;
+  text-decoration:none;
+}
 body.works-page-body .works-card-media{
   position:relative;
-  grid-column:2;
-  align-self:center;
   width:100%;
   aspect-ratio:16/9;
   overflow:hidden;
@@ -144,6 +185,21 @@ body.works-page-body .works-card-image{
   width:100%;
   height:100%;
   object-fit:cover;
+}
+
+/* Media overlay: black 50%, darkening to 70% on direct media hover. */
+body.works-page-body .works-card-media-link.has-visual::after{
+  content:"";
+  position:absolute;
+  z-index:3;
+  inset:0;
+  background:rgba(0,0,0,.50);
+  pointer-events:none;
+  transition:background .2s ease;
+}
+body.works-page-body .works-card-media-link.has-visual:hover::after,
+body.works-page-body .works-card-media-link.has-visual:focus-visible::after{
+  background:rgba(0,0,0,.70);
 }
 
 /* Right-side chapter progress */
@@ -234,7 +290,6 @@ body.works-page-body .works-project-menu a{
   height:28px;
   margin:0;
   padding:0;
-  border:0;
   color:var(--hm-text-secondary);
   font-family:var(--hm-font-ko);
   font-size:16px;
@@ -244,7 +299,9 @@ body.works-page-body .works-project-menu a{
   text-decoration:none;
   white-space:nowrap;
 }
-body.works-page-body .works-project-menu a+a{border-top:1px solid rgba(255,255,255,.16)}
+body.works-page-body .works-project-menu a+a{
+  border-top:1px solid rgba(255,255,255,.16);
+}
 body.works-page-body .works-project-menu a:hover,
 body.works-page-body .works-project-menu a:focus-visible{color:var(--hm-text-primary)}
 
@@ -275,21 +332,28 @@ body.works-page-body .works-footer a{
 }
 
 @media(max-width:780px){
-  body.works-page-body{scroll-snap-type:none}
+  body.works-page-body{
+    --works-project-rule-width:25%;
+    scroll-snap-type:none;
+  }
   body.works-page-body .works-hero{min-height:580px}
   body.works-page-body .works-page-title{left:var(--hm-inset-mobile)}
   body.works-page-body .works-card{
     grid-template-columns:1fr;
     min-height:auto;
-    padding:120px 0 80px;
+    padding:120px 0 0;
     scroll-snap-align:none;
   }
   body.works-page-body .works-card-copy{
+    position:relative;
+    top:auto;
     grid-column:1;
     padding:0 var(--hm-inset-mobile) var(--hm-space-40);
+    opacity:1!important;
+    transform:none!important;
   }
   body.works-page-body .works-card-title{font-size:clamp(34px,9vw,52px)}
-  body.works-page-body .works-card-media{
+  body.works-page-body .works-card-media-link{
     grid-column:1;
     width:100%;
   }
@@ -303,5 +367,6 @@ body.works-page-body .works-footer a{
 
 @media(prefers-reduced-motion:reduce){
   body.works-page-body .works-title-menu-toggle,
-  body.works-page-body .works-project-menu{transition:none}
+  body.works-page-body .works-project-menu,
+  body.works-page-body .works-card-media-link.has-visual::after{transition:none}
 }
