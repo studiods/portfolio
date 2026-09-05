@@ -55,3 +55,10 @@
   .hm-ds-media-card__caption{gap:8px}
   .hm-ds-media-card__description{font-size:13px}
 }
+
+/* Transitional DOM mapping: keeps current media markup reusable during migration. */
+.hm-ds-media-card > .phone-frame{position:relative;aspect-ratio:9/16;overflow:hidden;background:var(--hm-bg-card);border:1px solid var(--hm-line-default)}
+.hm-ds-media-card > .phone-meta{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;margin-top:16px}
+.hm-ds-media-card > .phone-meta > span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en)}
+.hm-ds-media-card > .phone-meta > b{color:var(--hm-text-primary);font:400 12px/1.3 var(--hm-font-en)}
+.hm-ds-media-card > .phone-meta > p{grid-column:2;margin:0;color:var(--hm-text-body);font:300 14px/1.45 var(--hm-font-ko)}
