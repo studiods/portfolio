@@ -57,7 +57,7 @@
         return;
       }
       render();
-    }, 60);
+    }, 30);
     return true;
   };
 
