@@ -1,4 +1,4 @@
-/* HIMART Design System v1.4 — foundation tokens
+/* HIMART Design System v1.5 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
@@ -12,6 +12,7 @@
   --hm-line-default:rgba(255,255,255,.24);
   --hm-line-weak:rgba(255,255,255,.14);
   --hm-line-faint:rgba(255,255,255,.1);
+  --hm-blue-deep:#0572CB;
   --hm-blue:#00A6ED;
   --hm-blue-new:#00B8DE;
   --hm-green:#00EDBD;
