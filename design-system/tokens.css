@@ -1,4 +1,4 @@
-/* HIMART Design System v1.2 — foundation tokens
+/* HIMART Design System v1.3 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
@@ -30,17 +30,16 @@
   --hm-type-body:16px;
   --hm-type-note:12px;
 
-  /* Exactly 10% tighter than the former authored typography values.
-     -0.045 → -0.0495 / -0.040 → -0.044 / -0.035 → -0.0385 /
-     -0.020 → -0.022 / +0.040 → +0.036. Numeric display is exempt. */
-  --hm-track-base:-.01em;
-  --hm-track-hero:-.0495em;
-  --hm-track-section:-.0495em;
-  --hm-track-subsection:-.044em;
-  --hm-track-group:-.0385em;
-  --hm-track-body:-.022em;
-  --hm-track-note:.036em;
-  --hm-track-nav:-.01em;
+  /* Sitewide tracking v1.3: another 10% tighter than v1.2.
+     Numeric display components remain exempt and keep --hm-track-data-number unchanged. */
+  --hm-track-base:-.011em;
+  --hm-track-hero:-.05445em;
+  --hm-track-section:-.05445em;
+  --hm-track-subsection:-.0484em;
+  --hm-track-group:-.04235em;
+  --hm-track-body:-.0242em;
+  --hm-track-note:.0324em;
+  --hm-track-nav:-.011em;
   --hm-track-data-number:-.055em;
 
   /* Canonical vertical rhythm from himart.html */
