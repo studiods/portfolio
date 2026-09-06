@@ -31,16 +31,17 @@
 | Narrative | `components/narrative.css` | Synthesis, Journey narrative, Prototype intro |
 | Media | `components/media.css` | Prototype media grid/card/frame/caption |
 | Flow | `components/flow.css` | Journey flow group/node/label/responsive 구조 |
-| Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 7/20·13/20 프로젝트 레이아웃, 미디어 오버레이, centered title handoff, 프로젝트 메뉴 |
+| Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
 | Motion | `animation.js` | Himart reveal, counter, hero scroll, video viewport |
 
 ## WORKS component contract
 
-- PC 프로젝트 구조는 화면 폭을 `7/20 copy : 13/20 media`로 고정한다.
-- 좌측 copy 영역 내부는 `2/10 blank : 8/10 title content`로 나눈다. 즉 viewport 기준 좌측 `7vw`는 여백, 다음 `28vw`만 실제 타이틀/메타 영역으로 사용한다.
+- PC 프로젝트 구조는 화면 폭을 `8/20 copy : 12/20 media`로 고정한다.
+- 좌측 copy 영역의 시작 inset은 기존 공통 desktop inset인 `40px`을 사용한다.
+- 좌측 copy 영역과 우측 media 사이에는 좌측 전체 영역의 `2/10`인 `8vw`를 비워 둔다. 따라서 실제 title/meta content 폭은 `40vw - 8vw - 40px`이다.
 - 우측 media는 `16:9`, 프로젝트 간 vertical gap은 `0`이다.
-- 각 프로젝트 copy 상단 rule은 7/20 title column의 1/4인 `8.75vw`이며 `rgba(255,255,255,.30)`을 사용한다.
+- 각 프로젝트 copy 상단 rule은 8/20 title column의 1/4인 `10vw`이며 `rgba(255,255,255,.30)`을 사용한다.
 - rule과 프로젝트 title 사이 간격은 `44px`이다.
 - 프로젝트 전체 row는 링크가 아니다. 실제 이동 링크는 `works-card-title-link`와 `works-card-media-link` 두 영역만 가진다.
 - 실제 영상/이미지 위에는 black `40%` overlay를 두고 direct hover/focus 시 black `20%`로 밝아진다.
@@ -48,8 +49,9 @@
 - project copy는 해당 media의 top과 같은 line에서 동일한 scroll 속도로 올라오며, copy의 중심이 viewport center에 도달하면 그 위치에서 정지한다.
 - 우측 media는 copy가 정지한 이후에도 계속 원래 scroll 속도로 위로 이동한다.
 - 다음 project copy 역시 별도 easing 없이 자신의 media와 top line을 맞춰 그대로 올라온다.
-- outgoing handoff 구간은 기존 `75vh → 50vh`에서 `100vh → 50vh`로 확장해 scroll-height 노출 구간을 정확히 2배로 늘린다.
-- outgoing copy는 최대 `192px` 위로 이동하며, opacity는 squared progress를 smoothstep에 통과시켜 초반에는 더 오래 보이고 center에 가까워질수록 자연스럽게 사라진다.
+- outgoing handoff 구간은 `100vh → 50vh`를 유지한다.
+- outgoing copy는 최대 `120px` 위로 이동한다.
+- opacity는 handoff 초반 약 `28%` 구간에서 `100% → 50%`로 비교적 빠르게 낮아지고, 나머지 약 `72%` 구간에서 `50% → 0%`로 더 천천히 사라진다.
 - 마지막 project와 footer 사이에는 `400px`의 black spacing을 유지한다.
 - WORKS 프로젝트 메뉴는 compact 상태에서만 노출되며, 화살표는 WORKS 우측 `24px`, 메뉴는 WORKS 하단 `24px`에 배치한다.
 - compact WORKS 화살표는 white `60%`다.
