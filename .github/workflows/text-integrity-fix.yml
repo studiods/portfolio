@@ -1,0 +1,163 @@
+name: Himart text integrity fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/text-integrity-fix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply shared wrapping and no-truncation contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          def replace_once(path, old, new):
+            p=Path(path); t=p.read_text()
+            if old not in t:
+              raise SystemExit(f'MISSING PATTERN in {path}: {old[:90]}')
+            p.write_text(t.replace(old,new,1))
+
+          # 1) Foundation token: mobile Hero description gets enough width for a natural two-line wrap,
+          # while still staying clearly narrower than its containing canvas.
+          replace_once(
+            'design-system/tokens.css',
+            '  --hm-hero-description-width:32ch;\n',
+            '  --hm-hero-description-width:32ch;\n  --hm-hero-description-width-mobile:38ch;\n'
+          )
+          p=Path('design-system/tokens.css'); t=p.read_text().replace('HIMART Design System v1.7','HIMART Design System v1.8',1); p.write_text(t)
+
+          # 2) Hero component owns natural copy wrapping. No fixed line count, clipping or ellipsis.
+          p=Path('design-system/components/hero.css'); t=p.read_text()
+          old='''html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{\n  display:block!important;\n  max-width:var(--hm-hero-description-width)!important;\n  min-height:0!important;\n  margin:var(--hm-title-description-gap) 0 0!important;\n  padding:0!important;\n  color:var(--hm-text-secondary)!important;\n  font-family:var(--hm-font-ko)!important;\n  font-size:var(--hm-type-body)!important;\n  font-weight:300!important;\n  line-height:1.58!important;\n  letter-spacing:var(--hm-track-body)!important;\n  white-space:normal!important;\n  text-wrap:balance!important;\n  word-break:keep-all!important;\n}\n'''
+          new='''html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{\n  display:block!important;\n  width:fit-content!important;\n  max-width:var(--hm-hero-description-width)!important;\n  min-height:0!important;\n  height:auto!important;\n  max-height:none!important;\n  margin:var(--hm-title-description-gap) 0 0!important;\n  padding:0!important;\n  overflow:visible!important;\n  text-overflow:clip!important;\n  color:var(--hm-text-secondary)!important;\n  font-family:var(--hm-font-ko)!important;\n  font-size:var(--hm-type-body)!important;\n  font-weight:300!important;\n  line-height:1.58!important;\n  letter-spacing:var(--hm-track-body)!important;\n  white-space:normal!important;\n  text-wrap:pretty!important;\n  word-break:keep-all!important;\n  overflow-wrap:normal!important;\n  -webkit-line-clamp:unset!important;\n  line-clamp:none!important;\n  -webkit-box-orient:initial!important;\n}\n'''
+          if old not in t: raise SystemExit('Hero description block not found')
+          t=t.replace(old,new,1)
+          t=t.replace('    max-width:30ch!important;\n    margin-top:16px!important;', '    max-width:min(var(--hm-hero-description-width-mobile),88%)!important;\n    margin-top:16px!important;',1)
+          p.write_text(t)
+
+          # 3) Mobile authority must not narrow Hero copy back to 30ch.
+          p=Path('design-system/mobile-system.css'); t=p.read_text()
+          if '    max-width:30ch!important;' not in t: raise SystemExit('mobile-system hero width not found')
+          t=t.replace('    max-width:30ch!important;', '    width:fit-content!important;\n    max-width:min(var(--hm-hero-description-width-mobile),88%)!important;\n    height:auto!important;\n    max-height:none!important;\n    overflow:visible!important;\n    text-overflow:clip!important;\n    white-space:normal!important;\n    text-wrap:pretty!important;\n    word-break:keep-all!important;\n    -webkit-line-clamp:unset!important;\n    line-clamp:none!important;',1)
+          t=t.replace('HIMART Mobile System v1.0','HIMART Mobile System v1.2',1)
+          p.write_text(t)
+
+          # 4) Shared final authority: every prose role shows its full authored text.
+          p=Path('design-system/himart-system.css'); t=p.read_text()
+          t=t.replace('HIMART Shared System v1.8','HIMART Shared System v1.9',1)
+          t=t.replace('  max-width:var(--hm-hero-description-width)!important;\n  min-height:0!important;\n  margin-top:var(--hm-title-description-gap)!important;\n  white-space:normal!important;\n  text-wrap:balance!important;',
+                      '  width:fit-content!important;\n  max-width:var(--hm-hero-description-width)!important;\n  min-height:0!important;\n  height:auto!important;\n  max-height:none!important;\n  margin-top:var(--hm-title-description-gap)!important;\n  overflow:visible!important;\n  text-overflow:clip!important;\n  white-space:normal!important;\n  text-wrap:pretty!important;\n  word-break:keep-all!important;\n  -webkit-line-clamp:unset!important;\n  line-clamp:none!important;',1)
+          marker='''html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.hm-source,.phone-meta span,.phone-meta b){'''
+          contract='''\n/* Text integrity contract: authored prose is never shortened, clamped or ellipsized. */\nhtml body.himart-page-body #live-main :is(\n  .hm-lead,.hm-ds-hero__description,.hm-section-desc,.hm-ds-section__description,.hm-subcopy,.hm-ds-subsection__description,\n  .data-card-head .desc,.hm-ds-card__body,.hm-ds-role__body,.narrative-copy,.journey-block-copy,.behavior-note,\n  .stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p,.role-card p,.hm-ds-flow__node p,\n  .flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.prototype-case-copy p,.sentiment-conclusion p,\n  .sentiment-keywords,.hm-ds-numbered-list>article>p,.phone-meta p\n){\n  min-height:0!important;\n  height:auto!important;\n  max-height:none!important;\n  overflow:visible!important;\n  text-overflow:clip!important;\n  white-space:normal!important;\n  text-wrap:pretty!important;\n  word-break:keep-all!important;\n  overflow-wrap:break-word!important;\n  -webkit-line-clamp:unset!important;\n  line-clamp:none!important;\n  -webkit-box-orient:initial!important;\n}\n\n'''
+          if marker not in t: raise SystemExit('himart-system insertion marker missing')
+          t=t.replace(marker,contract+marker,1)
+          p.write_text(t)
+
+          # 5) Remove the JS that was physically replacing >40-character descriptions with an ellipsis.
+          p=Path('design-system/scramble-final.js'); t=p.read_text()
+          t=t.replace('/* HIMART Design System — fail-safe title scramble and content constraints. */','/* HIMART Design System — fail-safe title scramble. Authored copy is never mutated or shortened. */',1)
+          t=t.replace("  const descriptionSelector = '#live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc)';\n",'',1)
+          limit=re.compile(r"\n  const enforceDescriptionLimit = \(\) => \{.*?\n  \};\n",re.S)
+          t,n=limit.subn('\n',t,count=1)
+          if n != 1: raise SystemExit('description limiter function not found')
+          t=t.replace('    enforceDescriptionLimit();\n','',1)
+          p.write_text(t)
+
+          # 6) Legacy/test floating title also may never use line-clamp.
+          p=Path('himart-wide-floating-header-v1.css'); t=p.read_text()
+          old='''  display:-webkit-box;\n  -webkit-line-clamp:2;\n  -webkit-box-orient:vertical;\n  overflow:hidden;'''
+          new='''  display:block;\n  height:auto;\n  max-height:none;\n  overflow:visible;\n  text-overflow:clip;\n  white-space:normal;\n  text-wrap:pretty;\n  -webkit-line-clamp:unset;\n  line-clamp:none;'''
+          if old not in t: raise SystemExit('legacy clamp block not found')
+          p.write_text(t.replace(old,new,1))
+
+          # 7) Cache tree. Shared pages all receive the same system/runtime versions.
+          p=Path('design-system/index.css'); t=p.read_text()
+          t=t.replace('HIMART Design System v1.9','HIMART Design System v2.0',1)
+          t=re.sub(r'\.\/tokens\.css\?v=[^"]+', './tokens.css?v=20260907-4', t, count=1)
+          t=re.sub(r'\.\/components\/hero\.css\?v=[^"]+', './components/hero.css?v=20260907-2', t, count=1)
+          t=re.sub(r'\.\/mobile-system\.css\?v=[^"]+', './mobile-system.css?v=20260907-2', t, count=1)
+          p.write_text(t)
+
+          p=Path('design-system/himart-system.css'); t=p.read_text()
+          t=re.sub(r'@import url\("\.\/index\.css\?v=[^"]+"\);','@import url("./index.css?v=20260907-5");',t,count=1)
+          p.write_text(t)
+
+          for p in Path('.').glob('*.html'):
+            t=p.read_text(errors='ignore')
+            changed=False
+            nt=re.sub(r'design-system/himart-system\.css\?v=[^"\']+', 'design-system/himart-system.css?v=20260907-8', t)
+            if nt!=t: t=nt; changed=True
+            nt=re.sub(r'design-system/scramble-final\.js\?v=[^"\']+', 'design-system/scramble-final.js?v=20260907-1', t)
+            if nt!=t: t=nt; changed=True
+            if changed: p.write_text(t)
+
+          # 8) Document the contract.
+          p=Path('design-system/README.md'); t=p.read_text()
+          if '## Text integrity / wrapping contract' not in t:
+            block='''\n## Text integrity / wrapping contract\n\n- Hero description은 고정 2줄/3줄 clamp를 사용하지 않는다. `word-break:keep-all` + `text-wrap:pretty`로 문맥에 가까운 자연 줄바꿈을 사용한다.\n- Mobile Hero description은 `--hm-hero-description-width-mobile`을 사용하고 화면 내부 container의 최대 88%까지만 사용해 좌우 여백을 남긴다.\n- Hero/section/subsection/card/flow 등 모든 prose는 authored text 전체를 표시한다. `text-overflow:ellipsis`, 숫자형 `line-clamp`, JS substring/slice 기반 말줄임을 금지한다.\n- `scramble-final.js`는 타이틀 scramble만 담당하며 본문 텍스트를 변경하거나 자르지 않는다.\n- media/chart/frame의 `overflow:hidden`과 navigation label의 `white-space:nowrap`은 시각 구조용이며 prose truncation으로 사용하지 않는다.\n- 신규 case에서 텍스트 길이를 맞추기 위해 DOM text를 자르지 않고, design-system width/wrap token과 authored copy를 조정한다.\n\n'''
+            t=t.replace('## Numbered editorial list contract',block+'## Numbered editorial list contract',1)
+          p.write_text(t)
+
+          p=Path('design-system/qa-matrix.md'); t=p.read_text()
+          if '## Text integrity 회귀 확인 (2026-09-07)' not in t:
+            t += '''\n\n## Text integrity 회귀 확인 (2026-09-07)\n\n- 모든 HTML/CSS/JS를 정적 스캔해 `text-overflow:ellipsis`가 없어야 한다.\n- 숫자형 `line-clamp`가 없어야 하며 `unset/none`은 truncation 방지용으로만 허용한다.\n- `scramble-final.js`에 description 길이 제한 또는 `slice(...)+…` 로직이 없어야 한다.\n- Hero description은 desktop width token과 mobile width token을 사용하며 mobile은 container의 88%를 넘지 않는다.\n- Hero와 모든 prose role은 `height:auto`, `max-height:none`, `overflow:visible`, `white-space:normal` 계약을 갖는다.\n- 실제 media/chart의 clipping용 `overflow:hidden`은 허용하며 prose selector에는 사용하지 않는다.\n- GitHub Pages build/deploy 성공을 확인한다.\n'''
+          p.write_text(t)
+          PY
+
+      - name: Verify every portfolio HTML CSS JS file
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          exts={'.html','.css','.js'}
+          files=[p for p in Path('.').rglob('*') if p.is_file() and p.suffix.lower() in exts and '.git' not in p.parts]
+          failures=[]
+          numeric_clamp=re.compile(r'(?:-webkit-)?line-clamp\s*:\s*\d+',re.I)
+          ellipsis_css=re.compile(r'text-overflow\s*:\s*ellipsis',re.I)
+          js_ellipsis=re.compile(r'(?:textContent|innerText|innerHTML)[^\n;]{0,180}(?:slice|substring|substr)[^\n;]{0,180}(?:…|\.\.\.)|(?:slice|substring|substr)[^\n;]{0,180}(?:…|\.\.\.)[^\n;]{0,180}(?:textContent|innerText|innerHTML)',re.I)
+          for p in files:
+            text=p.read_text(errors='ignore')
+            for label,rx in [('ellipsis CSS',ellipsis_css),('numeric line clamp',numeric_clamp),('JS copy truncation',js_ellipsis)]:
+              if rx.search(text): failures.append(f'{label}: {p}')
+
+          required={
+            'hero mobile width token':'--hm-hero-description-width-mobile:38ch' in Path('design-system/tokens.css').read_text(),
+            'hero pretty wrap':'text-wrap:pretty!important' in Path('design-system/components/hero.css').read_text(),
+            'hero non-full mobile width':'max-width:min(var(--hm-hero-description-width-mobile),88%)!important' in Path('design-system/components/hero.css').read_text(),
+            'system text integrity contract':'Text integrity contract' in Path('design-system/himart-system.css').read_text(),
+            'description limiter removed':'enforceDescriptionLimit' not in Path('design-system/scramble-final.js').read_text(),
+            'description mutation removed':"+ '…'" not in Path('design-system/scramble-final.js').read_text(),
+            'legacy numeric clamp removed':'-webkit-line-clamp:2' not in Path('himart-wide-floating-header-v1.css').read_text(),
+          }
+          print(f'AUDITED_FILES={len(files)}')
+          for name,ok in required.items(): print(('PASS' if ok else 'FAIL')+' - '+name)
+          failures += [name for name,ok in required.items() if not ok]
+          if failures:
+            print('FAILURES:')
+            print('\n'.join(failures))
+            sys.exit(1)
+          print('PASS - no text-overflow ellipsis / numeric line-clamp / JS copy truncation in repository')
+          PY
+          node --check design-system/scramble-final.js
+
+      - name: Remove temporary audit workflows and commit
+        run: |
+          rm -f .github/workflows/text-integrity-audit.yml .github/workflows/text-integrity-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Define natural text wrapping and prevent truncation"
+          git push
