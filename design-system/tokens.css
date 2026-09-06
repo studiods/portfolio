@@ -1,4 +1,4 @@
-/* HIMART Design System v1.5 — foundation tokens
+/* HIMART Design System v1.6 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
@@ -23,13 +23,26 @@
   --hm-font-en-extralight:"Averta PE ExtraLight","Averta PE",Arial,sans-serif;
   --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
 
-  /* Hero / major / middle / small / body / note */
+  /* Desktop type hierarchy: hero / major / middle / small / body / note */
   --hm-type-hero:82px;
   --hm-type-section:52px;
   --hm-type-subsection:42px;
   --hm-type-group:28px;
   --hm-type-body:16px;
   --hm-type-note:12px;
+
+  /* Canonical mobile hierarchy. Keep every lower title smaller than the hero. */
+  --hm-type-hero-mobile:clamp(36px,9.5vw,46px);
+  --hm-type-section-mobile:clamp(30px,7.6vw,36px);
+  --hm-type-subsection-mobile:clamp(26px,6.4vw,31px);
+  --hm-type-group-mobile:clamp(20px,5.2vw,24px);
+  --hm-type-body-mobile:15px;
+  --hm-type-note-mobile:11px;
+
+  /* Mobile circular journey geometry. */
+  --hm-mobile-circle-size:clamp(136px,42vw,164px);
+  --hm-mobile-tablet-width:min(100%,320px);
+  --hm-mobile-tablet-radius:999px;
 
   /* Sitewide tracking v1.3: another 10% tighter than v1.2.
      Numeric display components remain exempt and keep --hm-track-data-number unchanged. */
