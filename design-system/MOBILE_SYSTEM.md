@@ -1,4 +1,4 @@
-# HIMART Mobile Design System v1.0
+# HIMART Mobile Design System v1.1
 
 적용 기준: `himart.html`, `himart-reuse.html`, `himart-ways.html`의 모바일(`max-width: 780px`). PC 규칙은 변경하지 않습니다.
 
@@ -30,18 +30,19 @@ Journey에서 원형 노드와 이를 감싸는 tablet/capsule 구조는 모바�
 
 - 전체 흐름은 세로 방향으로 전환
 - 원형 node는 `1:1`, `border-radius: 50%` 유지
-- 원형 크기: `--hm-mobile-circle-size: clamp(136px, 42vw, 164px)`
+- 원형 크기: `--hm-mobile-circle-size: clamp(168px, 50vw, 200px)`
 - tablet/capsule: `--hm-mobile-tablet-width: min(100%, 320px)`
 - tablet radius: `999px`로 감싸는 구조 유지
 - 내부 arrow는 90도 회전해 세로 흐름으로 연결
-- 원형 내부 텍스트는 container query unit(`cqi`)을 사용해 원형 크기에 맞춰 비례 축소
+- 원형 내부 제목·본문·label은 container query unit(`cqi`)을 사용해 원형 크기에 맞춰 비례 축소
+- 원형 자체 padding은 viewport 기반 `clamp()`로 제한해 작은 화면에서도 텍스트 공간을 확보
 - font family / weight / tracking은 기존 디자인 시스템 token을 유지
 
 ## Ownership
 
 - Foundation token: `tokens.css`
 - Canonical mobile rules: `mobile-system.css`
-- Legacy production specificity bridge: `mobile-locks.css`
+- Final specificity / legacy bridge: `mobile-locks.css`
 - Entry point: `index.css`
 
 페이지별 임시 `<style>`이나 모바일 override를 추가하지 않습니다. 모바일 규칙 수정은 위 공통 파일에서만 진행합니다.
