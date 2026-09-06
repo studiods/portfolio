@@ -1,4 +1,4 @@
-/* WORKS page controller — title state, project switcher, media and centered project handoff. */
+/* WORKS page controller — title state, project switcher, focused media playback and centered project handoff. */
 (() => {
   'use strict';
 
@@ -18,182 +18,164 @@
     return t * t * (3 - 2 * t);
   };
   const copies = cards.map(card => card.querySelector('.works-card-copy'));
+  const mediaVideos = cards
+    .map(card => ({card, video:card.querySelector('.works-card-video')}))
+    .filter(item => item.video);
 
-  /* Keep authored video behavior and seamless reusable sequences inside the Works design-system runtime. */
-  cards.forEach(card => {
-    const video = card.querySelector('.works-card-video');
-    if (!video) return;
+  /*
+    WORKS media runtime:
+    - videos do not autoplay on page load;
+    - only the video whose media center is close to viewport center plays;
+    - leaving the focus band pauses at the current frame, reverse scroll resumes from that frame;
+    - nearby media may upgrade preload from metadata to auto, but offscreen media is never force-played;
+    - sequential clips use one video element. During source replacement the video fades to black,
+      avoiding the previous second decoder / hidden buffer while keeping the transition intentional.
+  */
+  const focusState = new WeakMap();
+
+  const waitForFrame = video => new Promise(resolve => {
+    let settled = false;
+    const done = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    if ('requestVideoFrameCallback' in video) {
+      video.requestVideoFrameCallback(done);
+      window.setTimeout(done, 260);
+    } else {
+      video.addEventListener('playing', () => requestAnimationFrame(done), {once:true});
+      window.setTimeout(done, 260);
+    }
+  });
+
+  const revealCurrentSequenceFrame = async state => {
+    if (!state.focused || state.switching !== true) return;
+    const attempt = state.video.play?.();
+    if (attempt && attempt.catch) await attempt.catch(() => {});
+    if (!state.focused) return;
+    await waitForFrame(state.video);
+    if (!state.focused) return;
+    state.video.classList.remove('is-sequence-switching');
+    state.switching = false;
+  };
+
+  const switchSequence = state => {
+    if (!state.sequence.length || state.switching) return;
+    state.switching = true;
+    state.video.classList.add('is-sequence-switching');
+    state.index = (state.index + 1) % state.sequence.length;
+    state.video.pause();
+    state.video.src = state.sequence[state.index];
+    state.video.preload = state.focused ? 'auto' : 'metadata';
+    state.video.load();
+
+    const onReady = () => {
+      state.video.removeEventListener('loadeddata', onReady);
+      state.video.removeEventListener('canplay', onReady);
+      if (state.focused) revealCurrentSequenceFrame(state);
+      else state.switching = false;
+    };
+
+    if (state.video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) onReady();
+    else {
+      state.video.addEventListener('loadeddata', onReady, {once:true});
+      state.video.addEventListener('canplay', onReady, {once:true});
+    }
+  };
+
+  mediaVideos.forEach(({video}) => {
+    video.removeAttribute('autoplay');
+    video.autoplay = false;
+    video.pause();
     video.muted = true;
     video.setAttribute('muted', '');
+    video.playsInline = true;
+    video.preload = 'metadata';
 
     const sequence = (video.dataset.worksVideoSequence || '')
       .split('|')
       .map(src => src.trim())
       .filter(Boolean);
 
+    const state = {
+      video,
+      sequence,
+      index:0,
+      focused:false,
+      switching:false
+    };
+    focusState.set(video, state);
+
     if (sequence.length > 1) {
       video.loop = false;
       video.removeAttribute('loop');
-      video.preload = 'auto';
-      video.classList.add('works-sequence-buffer', 'is-sequence-active');
-
-      const standby = video.cloneNode(false);
-      standby.removeAttribute('data-works-video-sequence');
-      standby.removeAttribute('autoplay');
-      standby.removeAttribute('loop');
-      standby.classList.remove('is-sequence-active');
-      standby.classList.add('works-sequence-buffer');
-      standby.preload = 'auto';
-      standby.muted = true;
-      standby.setAttribute('muted', '');
-      standby.playsInline = true;
-      video.insertAdjacentElement('afterend', standby);
-
-      let active = video;
-      let buffer = standby;
-      let index = 0;
-      let switching = false;
-      let frameCallbackId = null;
-      let fallbackTimer = 0;
-      let primeToken = 0;
-
-      const setSource = (target, src) => {
-        target.pause?.();
-        target.src = src;
-        target.preload = 'auto';
-        target.load();
-      };
-
-      const whenDecoded = (target) => new Promise(resolve => {
-        let resolved = false;
-        const done = () => {
-          if (resolved) return;
-          resolved = true;
-          target.removeEventListener('loadeddata', done);
-          target.removeEventListener('canplay', done);
-          resolve();
-        };
-        if (target.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-          done();
-          return;
-        }
-        target.addEventListener('loadeddata', done, { once:true });
-        target.addEventListener('canplay', done, { once:true });
-      });
-
-      const whenFramePresented = (target) => new Promise(resolve => {
-        let settled = false;
-        const done = () => {
-          if (settled) return;
-          settled = true;
-          resolve();
-        };
-        if ('requestVideoFrameCallback' in target) {
-          target.requestVideoFrameCallback(done);
-          setTimeout(done, 240);
-        } else {
-          target.addEventListener('playing', () => requestAnimationFrame(done), { once:true });
-          setTimeout(done, 240);
-        }
-      });
-
-      const primeBuffer = async () => {
-        const token = ++primeToken;
-        const nextSrc = sequence[(index + 1) % sequence.length];
-        setSource(buffer, nextSrc);
-        await whenDecoded(buffer);
-        if (token !== primeToken) return;
-        try { buffer.currentTime = 0; } catch (_) {}
-        const attempt = buffer.play?.();
-        if (attempt && attempt.catch) await attempt.catch(() => {});
-        await whenFramePresented(buffer);
-        if (token !== primeToken) return;
-        buffer.pause?.();
-        try { buffer.currentTime = 0; } catch (_) {}
-      };
-
-      const clearWatch = () => {
-        if (frameCallbackId !== null && 'cancelVideoFrameCallback' in active) {
-          active.cancelVideoFrameCallback(frameCallbackId);
-          frameCallbackId = null;
-        }
-        if (fallbackTimer) {
-          clearTimeout(fallbackTimer);
-          fallbackTimer = 0;
-        }
-      };
-
-      const watchActive = () => {
-        clearWatch();
-        if (switching || active.paused || active.ended) return;
-
-        if ('requestVideoFrameCallback' in active) {
-          const onFrame = () => {
-            if (switching || active.paused) return;
-            const remaining = Number.isFinite(active.duration) ? active.duration - active.currentTime : Infinity;
-            if (remaining <= 0.12) {
-              switchToBuffered();
-              return;
-            }
-            frameCallbackId = active.requestVideoFrameCallback(onFrame);
-          };
-          frameCallbackId = active.requestVideoFrameCallback(onFrame);
-        } else {
-          const poll = () => {
-            if (switching || active.paused) return;
-            const remaining = Number.isFinite(active.duration) ? active.duration - active.currentTime : Infinity;
-            if (remaining <= 0.12) switchToBuffered();
-            else fallbackTimer = window.setTimeout(poll, 50);
-          };
-          fallbackTimer = window.setTimeout(poll, 50);
-        }
-      };
-
-      const completeSwap = () => {
-        const previous = active;
-        active = buffer;
-        buffer = previous;
-        index = (index + 1) % sequence.length;
-
-        window.setTimeout(() => {
-          buffer.pause?.();
-          buffer.classList.remove('is-sequence-active');
-          switching = false;
-          primeBuffer();
-          watchActive();
-        }, 140);
-      };
-
-      const switchToBuffered = async () => {
-        if (switching) return;
-        switching = true;
-        clearWatch();
-
-        await whenDecoded(buffer);
-        try { buffer.currentTime = 0; } catch (_) {}
-        const attempt = buffer.play?.();
-        if (attempt && attempt.catch) await attempt.catch(() => {});
-        await whenFramePresented(buffer);
-
-        buffer.classList.add('is-sequence-active');
-        active.classList.remove('is-sequence-active');
-        completeSwap();
-      };
-
-      active.addEventListener('ended', switchToBuffered);
-      standby.addEventListener('ended', switchToBuffered);
-      active.addEventListener('playing', watchActive);
-      standby.addEventListener('playing', watchActive);
-
-      primeBuffer();
-      const attempt = active.play();
-      if (attempt && attempt.catch) attempt.catch(() => {});
-      watchActive();
-    } else {
-      const attempt = video.play();
-      if (attempt && attempt.catch) attempt.catch(() => {});
+      video.addEventListener('ended', () => switchSequence(state));
     }
   });
+
+  /* Warm only media near the viewport. This avoids eager auto-preload for every project video. */
+  if ('IntersectionObserver' in window && mediaVideos.length) {
+    const warmObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const video = entry.target;
+        if (video.preload !== 'auto') video.preload = 'auto';
+      });
+    }, {rootMargin:'75% 0px 75% 0px', threshold:0.01});
+    mediaVideos.forEach(({video}) => warmObserver.observe(video));
+  }
+
+  const updateFocusedMedia = () => {
+    if (!mediaVideos.length) return;
+    if (reduced) {
+      mediaVideos.forEach(({video}) => {
+        const state = focusState.get(video);
+        if (state) state.focused = false;
+        video.pause();
+      });
+      return;
+    }
+
+    const viewportCenter = window.innerHeight * .5;
+    const focusTolerance = clamp(window.innerHeight * .065, 48, 72);
+    let focusedVideo = null;
+    let focusedDistance = Infinity;
+
+    mediaVideos.forEach(({video}) => {
+      const media = video.closest('.works-card-media') || video;
+      const rect = media.getBoundingClientRect();
+      const center = rect.top + rect.height * .5;
+      const distance = Math.abs(center - viewportCenter);
+      const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (visible && distance <= focusTolerance && distance < focusedDistance) {
+        focusedVideo = video;
+        focusedDistance = distance;
+      }
+    });
+
+    mediaVideos.forEach(({video}) => {
+      const state = focusState.get(video);
+      if (!state) return;
+      const shouldFocus = video === focusedVideo;
+
+      if (state.focused === shouldFocus) return;
+      state.focused = shouldFocus;
+
+      if (!shouldFocus) {
+        video.pause();
+        return;
+      }
+
+      video.preload = 'auto';
+      if (state.switching) {
+        revealCurrentSequenceFrame(state);
+        return;
+      }
+      const attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(() => {});
+    });
+  };
 
   /* Entry scramble remains a one-second A-Z / 0-9 reveal, owned by the DS. */
   const runEntryScramble = () => {
@@ -436,6 +418,7 @@
     placeSwitcher();
     updateProjectCopies();
     updateProgress();
+    updateFocusedMedia();
   };
 
   let raf = 0;
@@ -449,6 +432,10 @@
 
   window.addEventListener('scroll', requestUpdate, {passive:true});
   window.addEventListener('resize', requestUpdate);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) mediaVideos.forEach(({video}) => video.pause());
+    else requestUpdate();
+  });
   runEntryScramble();
   updateTitle();
 })();
