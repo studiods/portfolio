@@ -1,4 +1,4 @@
-@import url("../tokens.css");
+@import url("../tokens.css?v=20260907-3");
 @import url("../typography.css");
 
 /*
@@ -160,28 +160,47 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
     width:calc(100% - 36px)!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
-    font-size:clamp(38px,10vw,58px)!important;
+    font-size:var(--hm-type-hero-mobile)!important;
+    line-height:1.08!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
-    margin-top:var(--hm-title-description-gap)!important;
-    font-size:16px!important;
+    max-width:30ch!important;
+    margin-top:16px!important;
+    font-size:var(--hm-type-body-mobile)!important;
+    line-height:1.5!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__bottom{
     bottom:28px!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta{
-    grid-template-columns:1fr 1fr!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-auto-rows:auto!important;
+    align-items:stretch!important;
     height:auto!important;
     min-height:0!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{
     height:auto!important;
-    min-height:64px!important;
-    padding:12px 12px 12px 0!important;
+    min-height:88px!important;
+    justify-content:flex-start!important;
+    align-items:flex-start!important;
+    padding:14px 12px 14px 0!important;
+    border:0!important;
   }
-  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{padding-left:0!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px!important;padding-right:0!important}
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)!important}
-  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{font-size:11px!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
+    margin-bottom:8px!important;
+    font-size:var(--hm-type-note-mobile)!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
+    font-size:var(--hm-type-note-mobile)!important;
+    line-height:1.45!important;
+    word-break:normal!important;
+    overflow-wrap:break-word!important;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
