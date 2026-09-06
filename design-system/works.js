@@ -19,7 +19,7 @@
   };
   const copies = cards.map(card => card.querySelector('.works-card-copy'));
 
-  /* Keep authored video behavior and reusable sequences inside the Works design-system runtime. */
+  /* Keep authored video behavior and seamless reusable sequences inside the Works design-system runtime. */
   cards.forEach(card => {
     const video = card.querySelector('.works-card-video');
     if (!video) return;
@@ -34,20 +34,165 @@
     if (sequence.length > 1) {
       video.loop = false;
       video.removeAttribute('loop');
-      let index = 0;
-      const source = video.querySelector('source');
-      video.addEventListener('ended', () => {
-        index = (index + 1) % sequence.length;
-        if (source) source.src = sequence[index];
-        else video.src = sequence[index];
-        video.load();
-        const nextAttempt = video.play();
-        if (nextAttempt && nextAttempt.catch) nextAttempt.catch(() => {});
-      });
-    }
+      video.preload = 'auto';
+      video.classList.add('works-sequence-buffer', 'is-sequence-active');
 
-    const attempt = video.play();
-    if (attempt && attempt.catch) attempt.catch(() => {});
+      const standby = video.cloneNode(false);
+      standby.removeAttribute('data-works-video-sequence');
+      standby.removeAttribute('autoplay');
+      standby.removeAttribute('loop');
+      standby.classList.remove('is-sequence-active');
+      standby.classList.add('works-sequence-buffer');
+      standby.preload = 'auto';
+      standby.muted = true;
+      standby.setAttribute('muted', '');
+      standby.playsInline = true;
+      video.insertAdjacentElement('afterend', standby);
+
+      let active = video;
+      let buffer = standby;
+      let index = 0;
+      let switching = false;
+      let frameCallbackId = null;
+      let fallbackTimer = 0;
+      let primeToken = 0;
+
+      const setSource = (target, src) => {
+        target.pause?.();
+        target.src = src;
+        target.preload = 'auto';
+        target.load();
+      };
+
+      const whenDecoded = (target) => new Promise(resolve => {
+        let resolved = false;
+        const done = () => {
+          if (resolved) return;
+          resolved = true;
+          target.removeEventListener('loadeddata', done);
+          target.removeEventListener('canplay', done);
+          resolve();
+        };
+        if (target.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+          done();
+          return;
+        }
+        target.addEventListener('loadeddata', done, { once:true });
+        target.addEventListener('canplay', done, { once:true });
+      });
+
+      const whenFramePresented = (target) => new Promise(resolve => {
+        let settled = false;
+        const done = () => {
+          if (settled) return;
+          settled = true;
+          resolve();
+        };
+        if ('requestVideoFrameCallback' in target) {
+          target.requestVideoFrameCallback(done);
+          setTimeout(done, 240);
+        } else {
+          target.addEventListener('playing', () => requestAnimationFrame(done), { once:true });
+          setTimeout(done, 240);
+        }
+      });
+
+      const primeBuffer = async () => {
+        const token = ++primeToken;
+        const nextSrc = sequence[(index + 1) % sequence.length];
+        setSource(buffer, nextSrc);
+        await whenDecoded(buffer);
+        if (token !== primeToken) return;
+        try { buffer.currentTime = 0; } catch (_) {}
+        const attempt = buffer.play?.();
+        if (attempt && attempt.catch) await attempt.catch(() => {});
+        await whenFramePresented(buffer);
+        if (token !== primeToken) return;
+        buffer.pause?.();
+        try { buffer.currentTime = 0; } catch (_) {}
+      };
+
+      const clearWatch = () => {
+        if (frameCallbackId !== null && 'cancelVideoFrameCallback' in active) {
+          active.cancelVideoFrameCallback(frameCallbackId);
+          frameCallbackId = null;
+        }
+        if (fallbackTimer) {
+          clearTimeout(fallbackTimer);
+          fallbackTimer = 0;
+        }
+      };
+
+      const watchActive = () => {
+        clearWatch();
+        if (switching || active.paused || active.ended) return;
+
+        if ('requestVideoFrameCallback' in active) {
+          const onFrame = () => {
+            if (switching || active.paused) return;
+            const remaining = Number.isFinite(active.duration) ? active.duration - active.currentTime : Infinity;
+            if (remaining <= 0.12) {
+              switchToBuffered();
+              return;
+            }
+            frameCallbackId = active.requestVideoFrameCallback(onFrame);
+          };
+          frameCallbackId = active.requestVideoFrameCallback(onFrame);
+        } else {
+          const poll = () => {
+            if (switching || active.paused) return;
+            const remaining = Number.isFinite(active.duration) ? active.duration - active.currentTime : Infinity;
+            if (remaining <= 0.12) switchToBuffered();
+            else fallbackTimer = window.setTimeout(poll, 50);
+          };
+          fallbackTimer = window.setTimeout(poll, 50);
+        }
+      };
+
+      const completeSwap = () => {
+        const previous = active;
+        active = buffer;
+        buffer = previous;
+        index = (index + 1) % sequence.length;
+
+        window.setTimeout(() => {
+          buffer.pause?.();
+          buffer.classList.remove('is-sequence-active');
+          switching = false;
+          primeBuffer();
+          watchActive();
+        }, 140);
+      };
+
+      const switchToBuffered = async () => {
+        if (switching) return;
+        switching = true;
+        clearWatch();
+
+        await whenDecoded(buffer);
+        try { buffer.currentTime = 0; } catch (_) {}
+        const attempt = buffer.play?.();
+        if (attempt && attempt.catch) await attempt.catch(() => {});
+        await whenFramePresented(buffer);
+
+        buffer.classList.add('is-sequence-active');
+        active.classList.remove('is-sequence-active');
+        completeSwap();
+      };
+
+      active.addEventListener('ended', switchToBuffered);
+      standby.addEventListener('ended', switchToBuffered);
+      active.addEventListener('playing', watchActive);
+      standby.addEventListener('playing', watchActive);
+
+      primeBuffer();
+      const attempt = active.play();
+      if (attempt && attempt.catch) attempt.catch(() => {});
+      watchActive();
+    } else {
+      const attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(() => {});
+    }
   });
 
   /* Entry scramble remains a one-second A-Z / 0-9 reveal, owned by the DS. */
