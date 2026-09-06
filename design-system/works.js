@@ -151,10 +151,10 @@
   /*
     Desktop project-copy handoff:
     - each copy rises at the exact same scroll rate as its media, with both top edges aligned;
-    - once the copy reaches viewport center it stops, while the media keeps scrolling;
-    - the outgoing handoff spans 100vh -> 50vh;
-    - opacity drops to about 50% relatively quickly in the first 28% of the handoff, then fades more slowly through the remaining distance;
-    - the outgoing copy travels up to 120px before replacement completes.
+    - once the copy reaches viewport center it stays completely fixed: position 0 shift / opacity 1;
+    - no outgoing animation runs while the next title is still far below;
+    - handoff starts only when the incoming title comes within a small visual gap of the centered title;
+    - from that proximity point to center, the outgoing title uses the existing 120px upward motion and two-stage fade.
   */
   const updateProjectCopies = () => {
     const isDesktop = window.innerWidth > 780;
@@ -172,8 +172,8 @@
 
     const viewportHeight = window.innerHeight;
     const center = viewportHeight * .5;
-    const handoffStart = viewportHeight;
     const gridBottom = grid.getBoundingClientRect().bottom;
+    const handoffGap = clamp(viewportHeight * .08, 72, 120);
 
     const outgoingOpacity = progress => {
       const p = clamp(progress, 0, 1);
@@ -195,25 +195,36 @@
       const copyHeight = copy.offsetHeight;
       const naturalCenter = cardRect.top + copyHeight * .5;
 
-      /* Natural scroll until centered; no separate incoming easing/fade. */
+      /* Natural scroll until centered; after that the copy is fully locked until proximity handoff. */
       const y = Math.max(center, naturalCenter);
       let opacity = 1;
       let shift = 0;
 
       const nextCopy = copies[index + 1];
       const nextCard = cards[index + 1];
-      const nextAnchor = nextCard && nextCopy
-        ? nextCard.getBoundingClientRect().top + nextCopy.offsetHeight * .5
-        : gridBottom;
 
-      if (nextAnchor < handoffStart) {
-        const progress = clamp(
-          (handoffStart - nextAnchor) / Math.max(1, handoffStart - center),
-          0,
-          1
-        );
+      if (nextCard && nextCopy) {
+        const nextHeight = nextCopy.offsetHeight;
+        const nextRect = nextCard.getBoundingClientRect();
+        const nextAnchor = nextRect.top + nextHeight * .5;
+        const outgoingBottom = center + copyHeight * .5;
+        const handoffStart = outgoingBottom + handoffGap + nextHeight * .5;
+
+        if (nextAnchor < handoffStart) {
+          const progress = clamp(
+            (handoffStart - nextAnchor) / Math.max(1, handoffStart - center),
+            0,
+            1
+          );
+          const motion = smoothstep(progress);
+          opacity = outgoingOpacity(progress);
+          shift = -120 * motion;
+        }
+      } else if (gridBottom < center) {
+        /* Final-project escape only: avoid leaving the last fixed title over the footer. */
+        const progress = clamp((center - gridBottom) / Math.max(1, center), 0, 1);
         const motion = smoothstep(progress);
-        opacity = outgoingOpacity(progress);
+        opacity = 1 - motion;
         shift = -120 * motion;
       }
 
