@@ -1,5 +1,5 @@
 /* HIMART Design System — animation layer
-   Dynamic content-safe reveal, counter, hero fade and video visibility. */
+   Dynamic content-safe reveal, counter, hero fade and video visibility/sequence. */
 (() => {
   let started = false;
   const revealSelector = '[data-hm-reveal], .hm-reveal, .wide-rise-target';
@@ -10,6 +10,7 @@
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const reveals = new WeakSet();
     const counters = new WeakSet();
+    const videoSequences = new WeakSet();
 
     const registerReveal = (el) => {
       if (reveals.has(el)) return;
@@ -60,9 +61,34 @@
       } else run();
     };
 
+    const registerVideoSequence = (video) => {
+      if (videoSequences.has(video)) return;
+      const sequence = (video.dataset.hmVideoSequence || '')
+        .split('|')
+        .map(src => src.trim())
+        .filter(Boolean);
+      if (sequence.length < 2) return;
+
+      videoSequences.add(video);
+      video.loop = false;
+      video.removeAttribute('loop');
+      let index = 0;
+      const source = video.querySelector('source');
+
+      video.addEventListener('ended', () => {
+        index = (index + 1) % sequence.length;
+        if (source) source.src = sequence[index];
+        else video.src = sequence[index];
+        video.load();
+        const attempt = video.play?.();
+        if (attempt && attempt.catch) attempt.catch(() => {});
+      });
+    };
+
     const scan = () => {
       document.querySelectorAll(revealSelector).forEach(registerReveal);
       document.querySelectorAll('[data-hm-counter], [data-count]').forEach(registerCounter);
+      document.querySelectorAll('[data-hm-video]').forEach(registerVideoSequence);
     };
     scan();
     // Scramble animation is owned by design-system/scramble-final.js.
@@ -83,12 +109,12 @@
       window.addEventListener('scroll', updateHero, { passive: true });
     }
 
-    const video = document.querySelector('[data-hm-video]');
-    if (video && 'IntersectionObserver' in window) {
+    const videos = [...document.querySelectorAll('[data-hm-video]')];
+    if (videos.length && 'IntersectionObserver' in window) {
       const videoObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => entry.isIntersecting ? video.play?.().catch(() => {}) : video.pause?.());
+        entries.forEach(entry => entry.isIntersecting ? entry.target.play?.().catch(() => {}) : entry.target.pause?.());
       }, { threshold: 0.1 });
-      videoObserver.observe(video);
+      videos.forEach(video => videoObserver.observe(video));
     }
   };
 
