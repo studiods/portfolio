@@ -47,11 +47,11 @@
 - 실제 영상/이미지 위에는 black `40%` overlay를 두고 direct hover/focus 시 black `20%`로 밝아진다.
 - PC에서 project copy는 별도의 incoming animation/fade를 사용하지 않는다.
 - project copy는 해당 media의 top과 같은 line에서 동일한 scroll 속도로 올라오며, copy의 중심이 viewport center에 도달하면 그 위치에서 정지한다.
-- 우측 media는 copy가 정지한 이후에도 계속 원래 scroll 속도로 위로 이동한다.
-- 다음 project copy 역시 별도 easing 없이 자신의 media와 top line을 맞춰 그대로 올라온다.
-- outgoing handoff 구간은 `100vh → 50vh`를 유지한다.
-- outgoing copy는 최대 `120px` 위로 이동한다.
+- 가운데에 정착한 project copy는 다음 타이틀이 충분히 가까워지기 전까지 scroll 여부와 관계없이 `opacity 1 / shift 0`을 유지한다.
+- 다음 project copy는 자신의 media와 top line을 맞춰 그대로 올라오며, 현재 copy 하단과 다음 copy 상단 사이 gap이 약 `8vh`(`72–120px` clamp) 이내로 가까워지는 시점부터 handoff가 시작된다.
+- handoff가 시작된 뒤에만 기존 copy가 최대 `120px` 위로 이동한다.
 - opacity는 handoff 초반 약 `28%` 구간에서 `100% → 50%`로 비교적 빠르게 낮아지고, 나머지 약 `72%` 구간에서 `50% → 0%`로 더 천천히 사라진다.
+- 마지막 project는 다음 타이틀이 없으므로 project grid가 viewport center 위로 빠져나갈 때만 footer overlap 방지를 위한 종료 fade를 적용한다.
 - 마지막 project와 footer 사이에는 `400px`의 black spacing을 유지한다.
 - WORKS 프로젝트 메뉴는 compact 상태에서만 노출되며, 화살표는 WORKS 우측 `24px`, 메뉴는 WORKS 하단 `24px`에 배치한다.
 - compact WORKS 화살표는 white `60%`다.
