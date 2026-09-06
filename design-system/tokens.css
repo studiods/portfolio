@@ -1,4 +1,5 @@
-/* HIMART Design System v1.0 — foundation tokens */
+/* HIMART Design System v1.1 — foundation tokens
+   Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
   --hm-bg-section:#000;
@@ -16,19 +17,38 @@
   --hm-green:#00EDBD;
   --hm-yellow:#F3EB01;
   --hm-red:#FA481B;
+
   --hm-font-en:"Averta PE",Arial,sans-serif;
   --hm-font-en-extralight:"Averta PE ExtraLight","Averta PE",Arial,sans-serif;
   --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+
+  /* Type hierarchy — Hero / major / middle / small / body / note. */
   --hm-type-hero:82px;
-  --hm-type-section:42px;
-  --hm-type-subsection:28px;
-  --hm-type-group:22px;
+  --hm-type-section:52px;
+  --hm-type-subsection:42px;
+  --hm-type-group:28px;
   --hm-type-body:16px;
   --hm-type-note:12px;
+
+  /* Tracking v1.1: 10% tighter than the former authored values.
+     Numeric display components keep their existing numeric tracking. */
+  --hm-track-base:-.01em;
+  --hm-track-hero:-.0495em;
+  --hm-track-section:-.0495em;
+  --hm-track-subsection:-.0495em;
+  --hm-track-group:-.033em;
+  --hm-track-body:-.022em;
+  --hm-track-note:.036em;
+  --hm-track-nav:-.01em;
+  --hm-track-data-number:-.055em;
+
+  /* Canonical vertical rhythm from himart.html. */
   --hm-space-micro:20px;
   --hm-space-component:40px;
+  --hm-space-subtitle-content:80px;
   --hm-space-subsection:100px;
-  --hm-space-section:142px;
+  --hm-space-title-subsection:160px;
+  --hm-space-section:200px;
   --hm-space-hero:200px;
   --hm-rule-to-section-number:32px;
   --hm-title-description-gap:20px;
@@ -37,7 +57,7 @@
   --hm-subtitle-to-content:80px;
   --hm-title-to-subsection-gap:160px;
   --hm-section-head-to-subsection:160px;
-  --hm-section-head-after:100px;
+  --hm-subsection-gap:100px;
   --hm-meta-height:74px;
   --hm-mobile-inset:18px;
   --hm-container-editorial:1100px;
