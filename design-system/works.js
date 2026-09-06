@@ -19,12 +19,33 @@
   };
   const copies = cards.map(card => card.querySelector('.works-card-copy'));
 
-  /* Keep authored video behavior without page-local CSS/JS overrides. */
+  /* Keep authored video behavior and reusable sequences inside the Works design-system runtime. */
   cards.forEach(card => {
     const video = card.querySelector('.works-card-video');
     if (!video) return;
     video.muted = true;
     video.setAttribute('muted', '');
+
+    const sequence = (video.dataset.worksVideoSequence || '')
+      .split('|')
+      .map(src => src.trim())
+      .filter(Boolean);
+
+    if (sequence.length > 1) {
+      video.loop = false;
+      video.removeAttribute('loop');
+      let index = 0;
+      const source = video.querySelector('source');
+      video.addEventListener('ended', () => {
+        index = (index + 1) % sequence.length;
+        if (source) source.src = sequence[index];
+        else video.src = sequence[index];
+        video.load();
+        const nextAttempt = video.play();
+        if (nextAttempt && nextAttempt.catch) nextAttempt.catch(() => {});
+      });
+    }
+
     const attempt = video.play();
     if (attempt && attempt.catch) attempt.catch(() => {});
   });
