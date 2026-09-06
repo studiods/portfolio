@@ -31,9 +31,9 @@
 | Narrative | `components/narrative.css` | Synthesis, Journey narrative, Prototype intro |
 | Media | `components/media.css` | Prototype media grid/card/frame/caption |
 | Flow | `components/flow.css` | Journey flow group/node/label/responsive 구조 |
-| Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, centered title handoff, 프로젝트 메뉴 |
+| Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, focused video playback, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
-| Motion | `animation.js` | Himart reveal, counter, hero scroll variable, video viewport/sequence |
+| Motion | `animation.js` | Himart reveal, counter, hero scroll variable, viewport video control, single-video sequence |
 
 ## HIMART Hero component contract
 
@@ -44,6 +44,8 @@
 - `animation.js`는 `--hm-hero-overlay-opacity`와 `--hm-hero-copy-opacity`만 계산한다. 실제 black overlay와 copy opacity 표현은 `components/hero.css`가 소유한다.
 - scroll 시작 시 overlay는 기본 black 50%에서 점차 진해지고 Hero copy는 함께 낮아지며, 다음 section은 물리적으로 아래에서 올라온다.
 - 신규 Himart case에서 동일한 동작이 필요하면 page-local sticky/fade 코드를 추가하지 말고 `hm-ds-hero hm-ds-hero--scroll-cover`, `hm-ds-hero__bottom`, `hm-ds-hero__meta`를 조합한다.
+- 두 개 이상의 Hero clip은 hidden `<video>`를 추가하는 double-buffer를 사용하지 않는다. 하나의 `<video>`에서 clip 종료 시 black transition → source 교체 → 첫 프레임 준비 후 노출 순서로 처리한다.
+- sequence video의 기본 preload는 `metadata`이며 실제 viewport에 보일 때만 `auto`로 올리고 재생한다.
 
 ## Numbered editorial list contract
 
@@ -64,6 +66,10 @@
 - rule과 프로젝트 title 사이 간격은 `44px`이다.
 - 프로젝트 전체 row는 링크가 아니다. 실제 이동 링크는 `works-card-title-link`와 `works-card-media-link` 두 영역만 가진다.
 - 실제 영상/이미지 위에는 black `40%` overlay를 두고 direct hover/focus 시 black `20%`로 밝아진다.
+- WORKS video는 페이지 진입 시 autoplay하지 않는다. media 중심이 viewport 중심에서 약 `6.5vh`, 최소 `48px`~최대 `72px` 이내로 들어온 단 하나의 video만 재생한다.
+- 포커스 구간을 벗어나 위로 올라가거나 아래로 내려가면 즉시 `pause()`하고 현재 프레임/재생 위치를 유지한다. 역스크롤로 같은 media가 다시 중앙 포커스에 들어오면 해당 위치에서 재생을 재개한다.
+- WORKS video는 기본 `preload="metadata"`를 사용한다. viewport 근처 약 `75%` root margin 안으로 접근한 video만 `preload="auto"`로 승격해 초기 재생 지연과 불필요한 전체 다운로드를 함께 줄인다.
+- Ways처럼 두 clip을 순차 재생하는 WORKS media도 double-buffer를 금지한다. 하나의 video element에서 source를 교체하며 교체 중에는 `is-sequence-switching`으로 짧은 black transition을 노출한다.
 - PC에서 project copy는 별도의 incoming animation/fade를 사용하지 않는다.
 - project copy는 해당 media의 top과 같은 line에서 동일한 scroll 속도로 올라오며, copy의 중심이 viewport center에 도달하면 그 위치에서 정지한다.
 - 가운데에 정착한 project copy는 다음 타이틀이 충분히 가까워지기 전까지 scroll 여부와 관계없이 `opacity 1 / shift 0`을 유지한다.
@@ -101,8 +107,9 @@
 
 - `test-content-final.js`는 단일 reconciliation pass만 수행한다.
 - 콘텐츠 텍스트·역할 카드 보정은 한 레이어에서 처리하고, 레이아웃은 CSS, reveal·counter·hero/video 모션은 `animation.js`가 담당한다.
-- Works는 page-local JS를 두지 않고 `design-system/works.js` 한 곳에서 title/menu/centered handoff 상태를 관리한다.
+- Works는 page-local JS를 두지 않고 `design-system/works.js` 한 곳에서 title/menu/centered handoff/media focus 상태를 관리한다.
 - 중복 observer와 동일 콘텐츠 재주입 루프를 새로 추가하지 않는다.
+- 동일한 clip transition을 위해 두 개의 `<video>` decoder를 동시에 유지하지 않는다. 검은 전환을 허용하고 single-video source swap을 우선한다.
 - 회귀 기준은 `design-system/qa-matrix.md`를 따른다.
 
 ## Final readiness gate
