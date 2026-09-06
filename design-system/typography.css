@@ -3,6 +3,8 @@
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+/* The repository currently has Thin / Regular / Bold only. Keep ExtraLight as a semantic alias to the thinnest local Averta asset so the component contract stays centralized; swap this source only when a native ExtraLight asset is added. */
+@font-face{font-family:"Averta PE ExtraLight";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:200;font-style:normal;font-display:swap}
 
 .hm-ds-en{font-family:var(--hm-font-en);font-weight:300}
 .hm-ds-ko{font-family:var(--hm-font-ko);font-weight:300}
