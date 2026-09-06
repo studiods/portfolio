@@ -1,5 +1,6 @@
-/* HIMART Mobile System v1.0 — legacy specificity bridge.
-   Mobile only. These selectors prevent old Himart production rules from escaping the shared hierarchy. */
+/* HIMART Mobile System v1.1 — final specificity bridge.
+   Mobile only. It keeps the shared hierarchy authoritative against legacy production rules
+   and finalizes the circular journey geometry for current and future DS markup. */
 @media(max-width:780px){
   /* Himart qualitative synthesis */
   html body.himart-page-body.himart-commerce-page #live-main #brand .narrative-touchpoint-synthesis>h4{
@@ -17,7 +18,7 @@
     letter-spacing:var(--hm-track-group)!important;
   }
 
-  /* Old data card locks used 28px even on mobile; force them back to the mobile group token. */
+  /* Old data-card locks used desktop-sized titles on mobile. */
   html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #data :is(.behavior-card h4,.signal-item h4){
     min-height:0!important;
     font-family:var(--hm-font-ko)!important;
@@ -53,28 +54,62 @@
     line-height:1.58!important;
   }
 
-  /* Keep the current Himart journey vertical and circular even against the legacy wide bundle. */
-  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row{
+  /* ---------- Canonical journey stack ---------- */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .journey-signal-subsection .flow-row,
+    .journey-redesign-subsection .flow-row,
+    .hm-ds-journey-stack
+  ){
     display:flex!important;
     flex-direction:column!important;
     align-items:center!important;
+    justify-content:flex-start!important;
     flex-wrap:nowrap!important;
     gap:16px!important;
+    width:100%!important;
   }
-  html body.himart-page-body.himart-commerce-page #live-main #journey .wide-flow-cluster.v12-journey-tablet{
+
+  /* The enclosing tablet remains a rounded capsule while its contents become vertical. */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .wide-flow-cluster.v12-journey-tablet,
+    .hm-ds-journey-tablet
+  ){
+    position:relative!important;
+    display:flex!important;
     width:var(--hm-mobile-tablet-width)!important;
     max-width:320px!important;
+    flex:0 0 auto!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin:8px auto!important;
     padding:32px 18px 24px!important;
     border-radius:var(--hm-mobile-tablet-radius)!important;
+    background:#000!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
   }
-  html body.himart-page-body.himart-commerce-page #live-main #journey .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-inner{
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-inner,
+    .hm-ds-journey-tablet__inner
+  ){
     display:flex!important;
     flex-direction:column!important;
     align-items:center!important;
+    justify-content:center!important;
     flex-wrap:nowrap!important;
     gap:14px!important;
+    width:100%!important;
   }
-  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
+
+  /* A circle stays geometrically circular at every supported mobile width. */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .journey-signal-subsection .flow-node,
+    .journey-redesign-subsection .flow-node,
+    .wide-flow-cluster.v12-journey-tablet .flow-node,
+    .hm-ds-journey-circle
+  ){
+    position:relative!important;
+    display:flex!important;
     flex:0 0 var(--hm-mobile-circle-size)!important;
     width:var(--hm-mobile-circle-size)!important;
     min-width:var(--hm-mobile-circle-size)!important;
@@ -82,22 +117,97 @@
     height:var(--hm-mobile-circle-size)!important;
     min-height:var(--hm-mobile-circle-size)!important;
     aspect-ratio:1/1!important;
-    padding:13cqi!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:clamp(18px,5vw,24px)!important;
     border-radius:50%!important;
-    container-type:inline-size!important;
-    box-sizing:border-box!important;
-  }
-  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node h4{
-    font-size:clamp(14px,12.5cqi,var(--hm-type-group-mobile))!important;
-    line-height:1.22!important;
-  }
-  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node p{
-    margin-top:6cqi!important;
-    font-size:clamp(10px,7.5cqi,var(--hm-type-body-mobile))!important;
-    line-height:1.42!important;
     text-align:center!important;
+    box-sizing:border-box!important;
+    container-type:inline-size!important;
   }
-  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow{
+
+  /* Text inside circles scales from the circle container, but keeps DS font family/weight/tracking. */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .journey-signal-subsection .flow-node .hm-card-no,
+    .journey-redesign-subsection .flow-node .hm-card-no,
+    .hm-ds-journey-circle .hm-card-no
+  ){
+    display:block!important;
+    margin:0 0 clamp(8px,5cqi,12px)!important;
+    font-family:var(--hm-font-en)!important;
+    font-size:clamp(9px,5.5cqi,11px)!important;
+    font-weight:400!important;
+    line-height:1.15!important;
+    letter-spacing:var(--hm-track-note)!important;
+  }
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .journey-signal-subsection .flow-node h4,
+    .journey-redesign-subsection .flow-node h4,
+    .hm-ds-journey-circle h4
+  ){
+    margin:0!important;
+    font-family:var(--hm-font-ko)!important;
+    font-size:clamp(14px,10cqi,20px)!important;
+    font-weight:100!important;
+    line-height:1.22!important;
+    letter-spacing:var(--hm-track-group)!important;
+    text-align:center!important;
+    word-break:keep-all!important;
+  }
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .journey-signal-subsection .flow-node p,
+    .journey-redesign-subsection .flow-node p,
+    .hm-ds-journey-circle p
+  ){
+    max-width:100%!important;
+    margin:clamp(8px,5cqi,12px) 0 0!important;
+    font-family:var(--hm-font-ko)!important;
+    font-size:clamp(10px,6.2cqi,13px)!important;
+    font-weight:300!important;
+    line-height:1.42!important;
+    letter-spacing:var(--hm-track-body)!important;
+    text-align:center!important;
+    word-break:keep-all!important;
+  }
+
+  /* Horizontal arrow becomes vertical only in the mobile stack. */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .flow-arrow,
+    .wide-flow-cluster.v12-journey-tablet .flow-arrow,
+    .hm-ds-journey-arrow
+  ){
+    display:flex!important;
+    flex:0 0 24px!important;
+    width:24px!important;
+    height:24px!important;
+    align-items:center!important;
+    justify-content:center!important;
     transform:rotate(90deg)!important;
+    transform-origin:center!important;
+  }
+
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(
+    .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label,
+    .hm-ds-journey-tablet__label
+  ){
+    position:absolute!important;
+    top:0!important;
+    left:50%!important;
+    right:auto!important;
+    width:max-content!important;
+    max-width:78%!important;
+    height:auto!important;
+    min-height:0!important;
+    padding:0 10px!important;
+    transform:translate(-50%,-50%)!important;
+    background:#000!important;
+    font-family:var(--hm-font-ko)!important;
+    font-size:var(--hm-type-note-mobile)!important;
+    font-weight:300!important;
+    line-height:1.4!important;
+    letter-spacing:var(--hm-track-body)!important;
+    text-align:center!important;
+    white-space:normal!important;
   }
 }
