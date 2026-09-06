@@ -56,15 +56,19 @@
   .hm-ds-flow__row{grid-template-columns:1fr;gap:24px}
 }
 
-/* Transitional DOM mapping for current flow markup. */
-.hm-ds-journey.flow-area{margin-top:var(--hm-space-component)}
-.hm-ds-journey .flow-groups{display:grid;gap:48px}
-.hm-ds-journey .flow-label{margin-bottom:16px;color:var(--hm-text-secondary);font:400 12px/1.35 var(--hm-font-ko)}
-.hm-ds-journey .flow-row.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
-.hm-ds-journey .flow-node{min-width:0;border-top:1px solid var(--hm-line-strong);padding-top:16px}
+/* Transitional DOM mapping for current flow markup.
+   flow-area is explicitly block-level so it never inherits the older
+   four-column .hm-ds-journey narrative layout. */
+.hm-ds-journey.flow-area{display:block;width:100%;margin-top:var(--hm-space-component)}
+.hm-ds-journey .flow-groups{display:grid;gap:48px;width:100%}
+.hm-ds-journey .flow-group{min-width:0}
+.hm-ds-journey .flow-label{position:static;margin:0 0 16px;color:var(--hm-text-secondary);font:400 12px/1.35 var(--hm-font-ko);letter-spacing:var(--hm-track-note)}
+.hm-ds-journey .flow-row.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;align-items:stretch}
+.hm-ds-journey .flow-node{width:auto;height:auto;min-width:0;border:0;border-top:1px solid var(--hm-line-strong);padding:16px 0 0;background:transparent}
 .hm-ds-journey .flow-node h4{margin:16px 0 0;color:var(--hm-text-primary)}
 .hm-ds-journey .flow-node p{margin:16px 0 0;color:var(--hm-text-body);font:300 14px/1.5 var(--hm-font-ko)}
 .hm-ds-journey .flow-arrow{display:none}
 @media(max-width:780px){
+  .hm-ds-journey .flow-groups{gap:40px}
   .hm-ds-journey .flow-row.row4{grid-template-columns:1fr;gap:24px}
 }
