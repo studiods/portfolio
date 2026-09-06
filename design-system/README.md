@@ -65,9 +65,10 @@
 - 각 프로젝트 copy 상단 rule은 8/20 title column의 1/4인 `10vw`이며 `rgba(255,255,255,.30)`을 사용한다.
 - rule과 프로젝트 title 사이 간격은 `44px`이다.
 - 프로젝트 전체 row는 링크가 아니다. 실제 이동 링크는 `works-card-title-link`와 `works-card-media-link` 두 영역만 가진다.
-- 실제 영상/이미지 위에는 black `40%` overlay를 두고 direct hover/focus 시 black `20%`로 밝아진다.
-- WORKS video는 페이지 진입 시 autoplay하지 않는다. media 중심이 viewport 중심에서 약 `6.5vh`, 최소 `48px`~최대 `72px` 이내로 들어온 단 하나의 video만 재생한다.
-- 포커스 구간을 벗어나 위로 올라가거나 아래로 내려가면 즉시 `pause()`하고 현재 프레임/재생 위치를 유지한다. 역스크롤로 같은 media가 다시 중앙 포커스에 들어오면 해당 위치에서 재생을 재개한다.
+- 실제 영상/이미지 위에는 기본 black `40%` overlay를 둔다. direct hover/focus 또는 현재 video playback focus 상태(`is-video-focused`)에서는 black overlay를 `0%`로 제거한다.
+- WORKS video는 페이지 진입 시 autoplay하지 않는다. media 중심이 viewport 세로 `35%–65%` 구간, 즉 화면 중앙 기준 `±15vh` 안에 들어오면 재생 후보가 된다.
+- focus band 안에 video가 둘 이상 걸릴 가능성이 있으면 viewport center에 가장 가까운 단 하나의 video만 재생해 decoder 부하를 제한한다.
+- media 중심이 `35%–65%` 구간을 벗어나는 순간 즉시 `pause()`하고 현재 프레임/재생 위치를 유지한다. 역스크롤로 같은 media가 다시 focus band에 들어오면 해당 위치에서 재생을 재개한다.
 - WORKS video는 기본 `preload="metadata"`를 사용한다. viewport 근처 약 `75%` root margin 안으로 접근한 video만 `preload="auto"`로 승격해 초기 재생 지연과 불필요한 전체 다운로드를 함께 줄인다.
 - Ways처럼 두 clip을 순차 재생하는 WORKS media도 double-buffer를 금지한다. 하나의 video element에서 source를 교체하며 교체 중에는 `is-sequence-switching`으로 짧은 black transition을 노출한다.
 - PC에서 project copy는 별도의 incoming animation/fade를 사용하지 않는다.
