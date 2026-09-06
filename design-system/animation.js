@@ -2,7 +2,7 @@
    Dynamic content-safe reveal, counter, hero fade, chart drawing and efficient video visibility/sequence. */
 (() => {
   let started = false;
-  const revealSelector = '[data-hm-reveal], .hm-reveal, .wide-rise-target';
+  const revealSelector = '[data-hm-reveal], .hm-reveal, .hm-ds-reveal, .wide-rise-target';
 
   const init = () => {
     if (started) return;
