@@ -1,0 +1,62 @@
+/* Shared representative/concept visual component for portfolio case pages. */
+.hm-representative-visual{
+  margin:0;
+  padding:0 0 120px;
+  background:#000;
+  color:#fff;
+}
+.hm-representative-visual .hm-wrap{
+  width:min(calc(100% - 80px),1360px);
+  margin:0 auto;
+}
+.hm-representative-visual figure,
+.case-generated-visual,
+.about-generated-visual{
+  margin:0;
+}
+.hm-representative-visual img,
+.case-generated-visual img,
+.about-generated-visual img,
+.project-visual .portfolio-project-image{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  object-fit:cover;
+}
+.hm-representative-visual figcaption,
+.case-generated-visual figcaption,
+.about-generated-visual figcaption{
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  gap:24px;
+  align-items:start;
+  margin-top:16px;
+  color:rgba(255,255,255,.55);
+  font-size:12px;
+  font-weight:400;
+  line-height:1.5;
+}
+.hm-representative-visual figcaption span,
+.case-generated-visual figcaption span,
+.about-generated-visual figcaption span{
+  color:rgba(255,255,255,.78);
+  font-family:"Averta PE",Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.hm-representative-visual figcaption p,
+.case-generated-visual figcaption p,
+.about-generated-visual figcaption p{margin:0;max-width:56ch}
+.case-generated-visual{margin:0 0 120px}
+.about-generated-visual{margin-top:48px}
+.project-visual .portfolio-project-image{height:100%;min-height:100%;}
+@media(max-width:780px){
+  .hm-representative-visual{padding-bottom:80px}
+  .hm-representative-visual .hm-wrap{width:calc(100% - 36px)}
+  .hm-representative-visual figcaption,
+  .case-generated-visual figcaption,
+  .about-generated-visual figcaption{grid-template-columns:1fr;gap:8px}
+  .case-generated-visual{margin-bottom:80px}
+}
