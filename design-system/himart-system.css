@@ -1,7 +1,7 @@
-@import url("./index.css?v=20260906-6");
+@import url("./index.css?v=20260906-7");
 
 /*
-  HIMART Shared System v1.1 — sole final-authority layer.
+  HIMART Shared System v1.2 — sole final-authority layer.
   Typography, tracking and spacing mirror the current himart.html production hierarchy.
 */
 :root{
@@ -128,6 +128,7 @@ html body.himart-page-body #live-main :is(.hm-number,[data-hm-number],.behavior-
   font-variant-numeric:tabular-nums!important;
 }
 html body.himart-page-body #live-main :is(.behavior-value,.number-panel strong,.stepup-stat-number){letter-spacing:var(--hm-track-data-number)!important}
+html body.himart-page-body #live-main [data-hm-number="normal"]{letter-spacing:normal!important}
 
 /* Section rhythm */
 html body.himart-page-body #live-main > .hm-section{
