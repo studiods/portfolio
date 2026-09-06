@@ -31,15 +31,16 @@
 | Narrative | `components/narrative.css` | Synthesis, Journey narrative, Prototype intro |
 | Media | `components/media.css` | Prototype media grid/card/frame/caption |
 | Flow | `components/flow.css` | Journey flow group/node/label/responsive 구조 |
-| Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 1/3·2/3 프로젝트 레이아웃, 미디어 오버레이, centered title handoff, 프로젝트 메뉴 |
+| Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 7/20·13/20 프로젝트 레이아웃, 미디어 오버레이, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
 | Motion | `animation.js` | Himart reveal, counter, hero scroll, video viewport |
 
 ## WORKS component contract
 
-- PC 프로젝트 구조는 화면 폭을 `1/3 copy : 2/3 media`로 고정한다.
+- PC 프로젝트 구조는 화면 폭을 `7/20 copy : 13/20 media`로 고정한다.
+- 좌측 copy 영역 내부는 `2/10 blank : 8/10 title content`로 나눈다. 즉 viewport 기준 좌측 `7vw`는 여백, 다음 `28vw`만 실제 타이틀/메타 영역으로 사용한다.
 - 우측 media는 `16:9`, 프로젝트 간 vertical gap은 `0`이다.
-- 각 프로젝트 copy 상단 rule은 화면 전체 폭의 `1/12`이며 `rgba(255,255,255,.30)`을 사용한다.
+- 각 프로젝트 copy 상단 rule은 7/20 title column의 1/4인 `8.75vw`이며 `rgba(255,255,255,.30)`을 사용한다.
 - rule과 프로젝트 title 사이 간격은 `44px`이다.
 - 프로젝트 전체 row는 링크가 아니다. 실제 이동 링크는 `works-card-title-link`와 `works-card-media-link` 두 영역만 가진다.
 - 실제 영상/이미지 위에는 black `40%` overlay를 두고 direct hover/focus 시 black `20%`로 밝아진다.
@@ -47,11 +48,13 @@
 - project copy는 해당 media의 top과 같은 line에서 동일한 scroll 속도로 올라오며, copy의 중심이 viewport center에 도달하면 그 위치에서 정지한다.
 - 우측 media는 copy가 정지한 이후에도 계속 원래 scroll 속도로 위로 이동한다.
 - 다음 project copy 역시 별도 easing 없이 자신의 media와 top line을 맞춰 그대로 올라온다.
-- 다음 project copy의 center가 `75vh`를 지나면 기존 copy가 자연스럽게 opacity를 낮추면서 최대 `96px` 위로 이동하고, 다음 copy가 center에 도달할 때 교체가 완료된다.
-- outgoing fade는 `smoothstep` 한 단계만 사용하며 이전의 별도 incoming easing/arrival fade 코드는 사용하지 않는다.
+- outgoing handoff 구간은 기존 `75vh → 50vh`에서 `100vh → 50vh`로 확장해 scroll-height 노출 구간을 정확히 2배로 늘린다.
+- outgoing copy는 최대 `192px` 위로 이동하며, opacity는 squared progress를 smoothstep에 통과시켜 초반에는 더 오래 보이고 center에 가까워질수록 자연스럽게 사라진다.
 - 마지막 project와 footer 사이에는 `400px`의 black spacing을 유지한다.
 - WORKS 프로젝트 메뉴는 compact 상태에서만 노출되며, 화살표는 WORKS 우측 `24px`, 메뉴는 WORKS 하단 `24px`에 배치한다.
 - compact WORKS 화살표는 white `60%`다.
+- 화살표의 실제 아이콘 크기는 유지하되 클릭 hit area는 `18px → 24px`로 약 30% 확대한다.
+- compact 상태의 좌측 상단 WORKS 텍스트는 직접 선택 가능하며 선택 시 페이지 맨 위로 이동한다. 키보드 Enter/Space도 동일하게 동작한다.
 - 메뉴 폭은 PC `400px`, 각 항목은 `14px / 40px height`이고 항목 사이에만 white `16%` rule을 둔다.
 - 메뉴 기본 텍스트는 white `60%`, 이미 방문한 항목은 그보다 30% 어두운 white `42%`를 사용한다.
 - 확대 WORKS는 Averta Thin, compact WORKS는 `Averta PE ExtraLight` semantic을 사용한다. 현재 저장소에는 native ExtraLight 파일이 없어 `typography.css`에서 가장 얇은 로컬 Thin 에셋을 ExtraLight semantic alias로 연결한다.
