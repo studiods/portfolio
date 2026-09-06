@@ -187,26 +187,31 @@
     }
 
     const videos = [...document.querySelectorAll('[data-hm-video]')];
+    const setVideoVisible = (video, isVisible) => {
+      const controller = video.__hmSequenceController;
+      if (controller) controller.setVisible(isVisible);
+      else isVisible ? video.play?.().catch(() => {}) : video.pause?.();
+    };
+
     if (videos.length && 'IntersectionObserver' in window) {
       const videoObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          const controller = entry.target.__hmSequenceController;
-          if (controller) controller.setVisible(entry.isIntersecting);
-          else entry.isIntersecting ? entry.target.play?.().catch(() => {}) : entry.target.pause?.();
-        });
+        entries.forEach(entry => setVideoVisible(entry.target, entry.isIntersecting));
       }, { threshold: 0.1 });
       videos.forEach(video => videoObserver.observe(video));
     } else {
-      videos.forEach(video => {
-        const controller = video.__hmSequenceController;
-        if (controller) controller.setVisible(true);
-        else video.play?.().catch(() => {});
-      });
+      videos.forEach(video => setVideoVisible(video, true));
     }
 
     document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) return;
-      videos.forEach(video => video.pause?.());
+      if (document.hidden) {
+        videos.forEach(video => video.pause?.());
+        return;
+      }
+      videos.forEach(video => {
+        const rect = video.getBoundingClientRect();
+        const visibleNow = rect.bottom > 0 && rect.top < window.innerHeight;
+        setVideoVisible(video, visibleNow);
+      });
     });
   };
 
