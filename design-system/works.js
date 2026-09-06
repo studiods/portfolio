@@ -74,7 +74,6 @@
       state.video.removeEventListener('loadeddata', onReady);
       state.video.removeEventListener('canplay', onReady);
       if (state.focused) revealCurrentSequenceFrame(state);
-      else state.switching = false;
     };
 
     if (state.video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) onReady();
