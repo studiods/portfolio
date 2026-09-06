@@ -1,4 +1,4 @@
-/* Portfolio Tracking System v1.1
+/* Portfolio Tracking System v1.2
    Shared by legacy portfolio pages and HIMART design-system pages.
    Text is another 10% tighter than the current site treatment.
    Numeric display components are intentionally not re-tracked here. */
@@ -52,7 +52,7 @@ html body .career-company{letter-spacing:-.033em!important}
 html body.works-page-body .works-page-title{letter-spacing:-.0385em!important}
 html body.works-page-body.works-title-compact .works-page-title{letter-spacing:-.022em!important}
 html body.works-page-body .works-card-title{letter-spacing:-.0605em!important}
-html body.works-page-body :is(.works-card-company,.works-progress a){letter-spacing:.036em!important}
+html body.works-page-body .works-card-company{letter-spacing:.036em!important}
 html body.works-page-body .works-project-menu a{letter-spacing:-.022em!important}
 html body.works-page-body :is(.works-footer h3,.works-footer p,.works-footer a){letter-spacing:-.011em!important}
 
@@ -70,8 +70,10 @@ html body.reuse-current .reuse-roman{letter-spacing:-.044em!important}
 html body .top a{letter-spacing:var(--hm-track-nav,-.011em)!important}
 
 /* ---------- NUMERIC EXEMPTIONS ----------
-   Do not apply the tighter text tracking to dedicated number components.
-   Their existing component rules remain authoritative. */
+   Dedicated numeric displays keep the tracking they had before this change. */
+html body.works-page-body .works-progress a{letter-spacing:.04em!important}
+html body.works-page-body .works-card-company>span{letter-spacing:.04em!important}
+html body :is(.career-period,.timeline-row .year){letter-spacing:normal!important}
 html body :is(
   [data-hm-number],
   .hm-ds-number,
