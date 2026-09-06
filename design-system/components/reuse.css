@@ -1,0 +1,97 @@
+/* HIMART REUSE — page-specific composition only.
+   Typography hierarchy, global tracking and vertical rhythm are owned by himart-system.css.
+   This layer keeps only Reuse-specific grids, colors and data presentation. */
+
+html body.reuse-current .reuse-blue-subno{color:var(--hm-blue)!important}
+html body.reuse-current .reuse-white-phrase{color:#fff!important}
+
+/* Research proof groups */
+html body.reuse-current .reuse-proof-stack{
+  display:flex;
+  flex-direction:column;
+  gap:var(--hm-subsection-gap);
+  width:100%;
+}
+html body.reuse-current .reuse-proof-group .voice-group-title{
+  display:block;
+  margin:0!important;
+  color:#fff!important;
+}
+html body.reuse-current .reuse-proof-group .voice-group-title strong{
+  color:var(--hm-red)!important;
+  font-weight:300!important;
+  letter-spacing:normal!important;
+}
+html body.reuse-current .reuse-proof-positive .voice-group-title strong{color:var(--hm-blue)!important}
+html body.reuse-current .reuse-roman{
+  display:inline!important;
+  width:auto!important;
+  margin:0!important;
+  padding:0!important;
+  vertical-align:baseline!important;
+  color:#fff!important;
+}
+html body.reuse-current .reuse-proof-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:var(--hm-space-28)!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content)!important;
+}
+html body.reuse-current .reuse-proof-grid .proof-item{
+  display:flex!important;
+  flex-direction:column!important;
+  min-width:0!important;
+  min-height:360px!important;
+  padding:var(--hm-space-24) 0 0!important;
+  border-top:1px solid rgba(250,72,27,.55)!important;
+  background:transparent!important;
+}
+html body.reuse-current .reuse-proof-positive .reuse-proof-grid .proof-item{border-top-color:rgba(0,166,237,.45)!important}
+html body.reuse-current .reuse-proof-grid .proof-item .proof-label,
+html body.reuse-current .reuse-proof-grid .proof-item>strong{color:var(--hm-red)!important}
+html body.reuse-current .reuse-proof-positive .reuse-proof-grid .proof-item .proof-label,
+html body.reuse-current .reuse-proof-positive .reuse-proof-grid .proof-item>strong{color:var(--hm-blue)!important}
+html body.reuse-current .reuse-proof-grid .proof-item>strong{
+  display:block!important;
+  margin:var(--hm-space-20) 0 0!important;
+  font:300 84px/.98 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html body.reuse-current .reuse-proof-grid .proof-item>strong span{font-size:.38em!important;line-height:1!important}
+html body.reuse-current .reuse-proof-grid .proof-item .proof-compare{display:block;margin-top:var(--hm-space-14)!important}
+html body.reuse-current .reuse-proof-grid .proof-item h4{margin:var(--hm-space-20) 0 0!important;min-height:0!important}
+html body.reuse-current .reuse-proof-grid .proof-item p{margin:var(--hm-space-40) 0 0!important;padding:0!important;min-height:0!important}
+
+/* Summary / data visuals */
+html body.reuse-current .sentiment-title{margin:0!important}
+html body.reuse-current .sentiment-graph{margin-top:var(--hm-space-40)!important}
+html body.reuse-current .sentiment-number{font-variant-numeric:tabular-nums!important}
+html body.reuse-current .reuse-concern-chart{
+  display:block!important;
+  width:100%!important;
+  overflow:visible!important;
+}
+html body.reuse-current .reuse-concern-chart::before{display:none!important;content:none!important}
+html body.reuse-current .reuse-concern-chart img{display:block!important;width:100%!important;height:auto!important}
+html body.reuse-current .reuse-concern-chart .chart-legend{display:flex!important;margin-top:var(--hm-space-20)!important}
+
+/* Reuse-specific content grouping. Layout spacing comes from shared tokens. */
+html body.reuse-current .prototype-intro{margin:0!important}
+html body.reuse-current .prototype-intro h3,
+html body.reuse-current .prototype-intro p,
+html body.reuse-current .sentiment-conclusion h4,
+html body.reuse-current .sentiment-conclusion p{margin-left:0!important;margin-right:0!important}
+html body.reuse-current .phone-gallery{width:100%!important}
+html body.reuse-current .sentiment-conclusion{margin-bottom:0!important}
+
+@media(max-width:980px){
+  html body.reuse-current .reuse-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:780px){
+  html body.reuse-current .reuse-proof-stack{gap:var(--hm-space-80)}
+  html body.reuse-current .reuse-proof-grid{grid-template-columns:1fr!important;margin-top:56px!important}
+  html body.reuse-current .reuse-proof-grid .proof-item{min-height:0!important}
+  html body.reuse-current .reuse-proof-grid .proof-item>strong{font-size:68px!important}
+}
