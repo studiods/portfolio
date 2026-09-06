@@ -1,5 +1,5 @@
 /* HIMART Design System — animation layer
-   Dynamic content-safe reveal, counter, hero fade and seamless video visibility/sequence. */
+   Dynamic content-safe reveal, counter, hero fade and efficient video visibility/sequence. */
 (() => {
   let started = false;
   const revealSelector = '[data-hm-reveal], .hm-reveal, .wide-rise-target';
@@ -61,13 +61,28 @@
       } else run();
     };
 
+    const waitForFrame = video => new Promise(resolve => {
+      let settled = false;
+      const done = () => {
+        if (settled) return;
+        settled = true;
+        resolve();
+      };
+      if ('requestVideoFrameCallback' in video) {
+        video.requestVideoFrameCallback(done);
+        window.setTimeout(done, 260);
+      } else {
+        video.addEventListener('playing', () => requestAnimationFrame(done), {once:true});
+        window.setTimeout(done, 260);
+      }
+    });
+
     /*
-      Seamless sequence strategy:
-      - never replace the src on the video currently visible;
-      - keep a second hidden video preloaded with the next clip;
-      - start that hidden buffer before the current clip ends;
-      - reveal it only after the browser has composited its first decoded frame;
-      - the previous last frame remains visible underneath until the swap is safe.
+      Efficient sequence strategy:
+      - one video element only; no hidden clone or second decoder;
+      - when a clip ends, fade the single element to black, replace src, then reveal after
+        the next clip has produced its first frame;
+      - visibility control pauses the same element offscreen and resumes it in place.
     */
     const registerVideoSequence = (video) => {
       if (videoSequences.has(video)) return;
@@ -80,182 +95,71 @@
       videoSequences.add(video);
       video.loop = false;
       video.removeAttribute('loop');
-      video.preload = 'auto';
+      video.removeAttribute('autoplay');
+      video.autoplay = false;
+      video.pause();
+      video.preload = 'metadata';
       video.muted = true;
       video.setAttribute('muted', '');
-      video.classList.add('hm-sequence-buffer', 'is-sequence-active');
+      video.playsInline = true;
 
-      const standby = video.cloneNode(false);
-      standby.removeAttribute('data-hm-video');
-      standby.removeAttribute('data-hm-video-sequence');
-      standby.removeAttribute('autoplay');
-      standby.removeAttribute('loop');
-      standby.classList.remove('is-sequence-active');
-      standby.classList.add('hm-sequence-buffer');
-      standby.preload = 'auto';
-      standby.muted = true;
-      standby.setAttribute('muted', '');
-      standby.playsInline = true;
-      video.insertAdjacentElement('afterend', standby);
-
-      let active = video;
-      let buffer = standby;
       let index = 0;
       let switching = false;
-      let visible = true;
-      let frameCallbackId = null;
-      let fallbackTimer = 0;
-      let primeToken = 0;
+      let visible = false;
 
-      const setSource = (target, src) => {
-        target.pause?.();
-        target.src = src;
-        target.preload = 'auto';
-        target.load();
-      };
-
-      const whenDecoded = (target) => new Promise(resolve => {
-        let resolved = false;
-        const done = () => {
-          if (resolved) return;
-          resolved = true;
-          target.removeEventListener('loadeddata', done);
-          target.removeEventListener('canplay', done);
-          resolve();
-        };
-        if (target.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-          done();
-          return;
-        }
-        target.addEventListener('loadeddata', done, { once:true });
-        target.addEventListener('canplay', done, { once:true });
-      });
-
-      const whenFramePresented = (target) => new Promise(resolve => {
-        let settled = false;
-        const done = () => {
-          if (settled) return;
-          settled = true;
-          resolve();
-        };
-        if ('requestVideoFrameCallback' in target) {
-          target.requestVideoFrameCallback(done);
-          setTimeout(done, 240);
-        } else {
-          target.addEventListener('playing', () => requestAnimationFrame(done), { once:true });
-          setTimeout(done, 240);
-        }
-      });
-
-      const primeBuffer = async () => {
-        const token = ++primeToken;
-        const nextSrc = sequence[(index + 1) % sequence.length];
-        setSource(buffer, nextSrc);
-        await whenDecoded(buffer);
-        if (token !== primeToken) return;
-        try { buffer.currentTime = 0; } catch (_) {}
-        const attempt = buffer.play?.();
+      const revealCurrent = async () => {
+        if (!visible || !switching) return;
+        video.preload = 'auto';
+        const attempt = video.play?.();
         if (attempt && attempt.catch) await attempt.catch(() => {});
-        await whenFramePresented(buffer);
-        if (token !== primeToken) return;
-        buffer.pause?.();
-        try { buffer.currentTime = 0; } catch (_) {}
+        if (!visible) return;
+        await waitForFrame(video);
+        if (!visible) return;
+        video.classList.remove('is-sequence-switching');
+        switching = false;
       };
 
-      const clearWatch = () => {
-        if (frameCallbackId !== null && 'cancelVideoFrameCallback' in active) {
-          active.cancelVideoFrameCallback(frameCallbackId);
-          frameCallbackId = null;
-        }
-        if (fallbackTimer) {
-          clearTimeout(fallbackTimer);
-          fallbackTimer = 0;
-        }
-      };
-
-      const completeSwap = () => {
-        const previous = active;
-        active = buffer;
-        buffer = previous;
-        index = (index + 1) % sequence.length;
-
-        window.setTimeout(() => {
-          buffer.pause?.();
-          buffer.classList.remove('is-sequence-active');
-          switching = false;
-          primeBuffer();
-          if (visible) watchActive();
-        }, 140);
-      };
-
-      const switchToBuffered = async () => {
+      const switchToNext = () => {
         if (switching) return;
         switching = true;
-        clearWatch();
+        video.classList.add('is-sequence-switching');
+        index = (index + 1) % sequence.length;
+        video.pause();
+        video.src = sequence[index];
+        video.preload = visible ? 'auto' : 'metadata';
+        video.load();
 
-        await whenDecoded(buffer);
-        try { buffer.currentTime = 0; } catch (_) {}
-        const attempt = buffer.play?.();
-        if (attempt && attempt.catch) await attempt.catch(() => {});
-        await whenFramePresented(buffer);
+        const onReady = () => {
+          video.removeEventListener('loadeddata', onReady);
+          video.removeEventListener('canplay', onReady);
+          if (visible) revealCurrent();
+        };
 
-        /* Swap only after the next frame has reached the compositor. */
-        buffer.classList.add('is-sequence-active');
-        active.classList.remove('is-sequence-active');
-        completeSwap();
-      };
-
-      const watchActive = () => {
-        clearWatch();
-        if (!visible || switching || active.paused || active.ended) return;
-
-        if ('requestVideoFrameCallback' in active) {
-          const onFrame = () => {
-            if (!visible || switching || active.paused) return;
-            const remaining = Number.isFinite(active.duration) ? active.duration - active.currentTime : Infinity;
-            if (remaining <= 0.12) {
-              switchToBuffered();
-              return;
-            }
-            frameCallbackId = active.requestVideoFrameCallback(onFrame);
-          };
-          frameCallbackId = active.requestVideoFrameCallback(onFrame);
-        } else {
-          const poll = () => {
-            if (!visible || switching || active.paused) return;
-            const remaining = Number.isFinite(active.duration) ? active.duration - active.currentTime : Infinity;
-            if (remaining <= 0.12) switchToBuffered();
-            else fallbackTimer = window.setTimeout(poll, 50);
-          };
-          fallbackTimer = window.setTimeout(poll, 50);
+        if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) onReady();
+        else {
+          video.addEventListener('loadeddata', onReady, {once:true});
+          video.addEventListener('canplay', onReady, {once:true});
         }
       };
 
-      active.addEventListener('ended', switchToBuffered);
-      standby.addEventListener('ended', switchToBuffered);
-      active.addEventListener('playing', watchActive);
-      standby.addEventListener('playing', watchActive);
+      video.addEventListener('ended', switchToNext);
 
-      const controller = {
+      video.__hmSequenceController = {
         setVisible(isVisible) {
           visible = isVisible;
           if (!visible) {
-            clearWatch();
-            active.pause?.();
-            buffer.pause?.();
+            video.pause();
             return;
           }
-          const attempt = active.play?.();
+          video.preload = 'auto';
+          if (switching) {
+            revealCurrent();
+            return;
+          }
+          const attempt = video.play?.();
           if (attempt && attempt.catch) attempt.catch(() => {});
-          watchActive();
         }
       };
-      video.__hmSequenceController = controller;
-
-      primeBuffer();
-      const firstAttempt = active.play?.();
-      if (firstAttempt && firstAttempt.catch) firstAttempt.catch(() => {});
-      watchActive();
     };
 
     const scan = () => {
@@ -292,7 +196,18 @@
         });
       }, { threshold: 0.1 });
       videos.forEach(video => videoObserver.observe(video));
+    } else {
+      videos.forEach(video => {
+        const controller = video.__hmSequenceController;
+        if (controller) controller.setVisible(true);
+        else video.play?.().catch(() => {});
+      });
     }
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) return;
+      videos.forEach(video => video.pause?.());
+    });
   };
 
   const boot = () => {
