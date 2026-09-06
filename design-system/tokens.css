@@ -1,4 +1,4 @@
-/* HIMART Design System v1.6 — foundation tokens
+/* HIMART Design System v1.7 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
@@ -31,11 +31,12 @@
   --hm-type-body:16px;
   --hm-type-note:12px;
 
-  /* Canonical mobile hierarchy. Keep every lower title smaller than the hero. */
-  --hm-type-hero-mobile:clamp(36px,9.5vw,46px);
-  --hm-type-section-mobile:clamp(30px,7.6vw,36px);
-  --hm-type-subsection-mobile:clamp(26px,6.4vw,31px);
-  --hm-type-group-mobile:clamp(20px,5.2vw,24px);
+  /* Canonical mobile hierarchy.
+     Hero must remain visually dominant; every lower title is strictly smaller. */
+  --hm-type-hero-mobile:clamp(36px,9.2vw,44px);
+  --hm-type-section-mobile:clamp(28px,7.4vw,34px);
+  --hm-type-subsection-mobile:clamp(24px,6.2vw,29px);
+  --hm-type-group-mobile:clamp(19px,5vw,23px);
   --hm-type-body-mobile:15px;
   --hm-type-note-mobile:11px;
 
