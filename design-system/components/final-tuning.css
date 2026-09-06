@@ -4,7 +4,6 @@
   Page canvas, typography, tracking and vertical rhythm are owned by himart-system.css.
 */
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){
-  padding-top:200px!important;
   margin-top:0!important;
   background:#000!important;
 }
@@ -40,7 +39,3 @@ html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction) > .
 }
 html body.himart-movie-page #live-main .hm-section:first-of-type{border-top:0!important}
 html body.himart-movie-page #live-main .hm-progress{z-index:4!important}
-
-@media(max-width:780px){
-  html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){padding-top:200px!important}
-}
