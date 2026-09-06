@@ -1,3 +1,5 @@
+@import url("./tracking.css?v=20260906-1");
+
 /* Portfolio global navigation — canonical source based on index.html. */
 html body .top{
   position:fixed!important;
@@ -32,7 +34,7 @@ html body .top a{
   font-size:12px!important;
   font-weight:400!important;
   line-height:1.25!important;
-  letter-spacing:var(--hm-track-nav,-.01em)!important;
+  letter-spacing:var(--hm-track-nav,-.011em)!important;
   text-decoration:none!important;
   text-transform:none!important;
   opacity:1!important;
