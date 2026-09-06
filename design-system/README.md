@@ -44,12 +44,13 @@
 - 프로젝트 전체 row는 링크가 아니다. 실제 이동 링크는 `works-card-title-link`와 `works-card-media-link` 두 영역만 가진다.
 - 실제 영상/이미지 위에는 black `40%` overlay를 두고 direct hover/focus 시 black `20%`로 밝아진다.
 - WORKS가 compact 상태가 되면 현재 project copy는 viewport 상하 기준 중앙에 고정된다.
-- 다음 project copy는 아래에서 자연스럽게 올라와 중앙에 ease-out으로 붙고, 기존 copy는 최대 `96px` 위로 이동하며 opacity가 감소한다.
-- title handoff opacity 곡선은 기존 cubic falloff(`3`)보다 50% 완만한 `1.5` exponent를 사용한다.
+- 다음 project copy는 아래에서 자연스럽게 올라와 중앙에 ease-out으로 붙는다.
+- 기존 project copy는 다음 project anchor가 viewport 하단에서 `75vh`까지 올라오는 동안 opacity가 천천히 `1 → .78`로 낮아진다.
+- 다음 project anchor가 화면 높이의 `3/4(75vh)` 지점을 넘어 위로 올라오면 기존 copy가 급격하게 fade-out되며 최대 `96px` 위로 이동한다.
 - 마지막 project와 footer 사이에는 `400px`의 black spacing을 유지한다.
 - WORKS 프로젝트 메뉴는 compact 상태에서만 노출되며, 화살표는 WORKS 우측 `24px`, 메뉴는 WORKS 하단 `24px`에 배치한다.
 - compact WORKS 화살표는 white `60%`다.
-- 메뉴 폭은 PC `500px`, 각 항목은 `12px / 28px height`이고 항목 사이에만 white `16%` rule을 둔다.
+- 메뉴 폭은 PC `400px`, 각 항목은 `14px / 40px height`이고 항목 사이에만 white `16%` rule을 둔다.
 - 확대 WORKS는 Averta Thin, compact WORKS는 `Averta PE ExtraLight` semantic을 사용한다. 현재 저장소에는 native ExtraLight 파일이 없어 `typography.css`에서 가장 얇은 로컬 Thin 에셋을 ExtraLight semantic alias로 연결한다.
 
 ## Transitional mapping 원칙
