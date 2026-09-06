@@ -1,5 +1,5 @@
 /* HIMART Design System — animation layer
-   Dynamic content-safe reveal, counter, hero fade and efficient video visibility/sequence. */
+   Dynamic content-safe reveal, counter, hero fade, chart drawing and efficient video visibility/sequence. */
 (() => {
   let started = false;
   const revealSelector = '[data-hm-reveal], .hm-reveal, .wide-rise-target';
@@ -10,6 +10,7 @@
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const reveals = new WeakSet();
     const counters = new WeakSet();
+    const charts = new WeakSet();
     const videoSequences = new WeakSet();
 
     const registerReveal = (el) => {
@@ -59,6 +60,98 @@
         }, { threshold: 0.5 });
         io.observe(el);
       } else run();
+    };
+
+    /*
+      Canonical Himart traffic chart source.
+      Geometry and series coordinates are copied from the approved production graph.
+      Text font/color are intentionally owned by components/data-viz.css so no new typography
+      rule is introduced inside the SVG.
+    */
+    const trafficSvgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 330" class="chart-svg traffic-v5-live" role="img" aria-label="2026년 1월부터 6월까지 세션, 구매건수, 구매전환율"><text x="0" y="22">SESSIONS</text><text x="0" y="58">6M</text><text x="0" y="158">3M</text><text x="0" y="258">0</text><line class="grid" x1="90" y1="50" x2="1070" y2="50"/><line class="grid" x1="90" y1="150" x2="1070" y2="150"/><line class="grid" x1="90" y1="250" x2="1070" y2="250"/><text class="right-blue" x="1088" y="64">42K</text><text class="right-blue" x="1088" y="158">39K</text><text class="right-blue" x="1088" y="252">36K</text><text class="right-green" x="1088" y="88">1.2%</text><text class="right-green" x="1088" y="180">0.9%</text><text class="right-green" x="1088" y="272">0.6%</text><line class="session" x1="145" y1="95" x2="145" y2="250"/><line class="session" x1="325" y1="132" x2="325" y2="250"/><line class="session" x1="505" y1="102" x2="505" y2="250"/><line class="session" x1="685" y1="61" x2="685" y2="250"/><line class="session" x1="865" y1="64" x2="865" y2="250"/><line class="session" x1="1045" y1="97" x2="1045" y2="250"/><polyline class="purchase" points="145,78 325,182 505,184 685,183 865,132 1045,117"/><circle class="p-dot" cx="145" cy="78" r="3"/><circle class="p-dot" cx="325" cy="182" r="3"/><circle class="p-dot" cx="505" cy="184" r="3"/><circle class="p-dot" cx="685" cy="183" r="3"/><circle class="p-dot" cx="865" cy="132" r="3"/><circle class="p-dot" cx="1045" cy="117" r="3"/><polyline class="cvr" points="145,170 325,85 505,185 685,240 865,226 1045,174"/><circle class="c-dot" cx="145" cy="170" r="2.5"/><circle class="c-dot" cx="325" cy="85" r="2.5"/><circle class="c-dot" cx="505" cy="185" r="2.5"/><circle class="c-dot" cx="685" cy="240" r="2.5"/><circle class="c-dot" cx="865" cy="226" r="2.5"/><circle class="c-dot" cx="1045" cy="174" r="2.5"/><text x="133" y="300">1월</text><text x="313" y="300">2월</text><text x="493" y="300">3월</text><text x="673" y="300">4월</text><text x="853" y="300">5월</text><text x="1033" y="300">6월</text></svg>`;
+
+    const ensureTrafficSvg = host => {
+      if (!host?.matches('[data-hm-traffic-chart]')) return host?.querySelector?.('.traffic-v5-live') || null;
+      let svg = host.querySelector('.traffic-v5-live');
+      if (svg) return svg;
+      const holder = document.createElement('div');
+      holder.innerHTML = trafficSvgMarkup;
+      svg = holder.firstElementChild;
+      const legend = host.querySelector('.hm-ds-traffic__legend,.wide-traffic-legend');
+      host.insertBefore(svg, legend || host.firstChild);
+      return svg;
+    };
+
+    const prepareTraffic = svg => {
+      if (!svg || svg.dataset.hmChartPrepared === '1') return;
+      svg.dataset.hmChartPrepared = '1';
+      [...svg.querySelectorAll('.session')].forEach((shape, index) => {
+        const length = Math.max(1, shape.getTotalLength());
+        shape.style.strokeDasharray = String(length);
+        shape.style.strokeDashoffset = String(length);
+        shape.style.transition = `stroke-dashoffset 460ms cubic-bezier(.2,.8,.2,1) ${index * 70}ms`;
+      });
+      const purchase = svg.querySelector('.purchase');
+      if (purchase) {
+        const length = Math.max(1, purchase.getTotalLength());
+        purchase.style.strokeDasharray = String(length);
+        purchase.style.strokeDashoffset = String(length);
+        purchase.style.transition = 'stroke-dashoffset 820ms cubic-bezier(.2,.8,.2,1) 620ms';
+      }
+      [...svg.querySelectorAll('.p-dot')].forEach((dot, index) => {
+        dot.style.opacity = '0';
+        dot.style.transition = `opacity 180ms ease ${1320 + index * 45}ms`;
+      });
+      const cvr = svg.querySelector('.cvr');
+      if (cvr) {
+        const length = Math.max(1, cvr.getTotalLength());
+        cvr.style.strokeDasharray = String(length);
+        cvr.style.strokeDashoffset = String(length);
+        cvr.style.transition = 'stroke-dashoffset 820ms cubic-bezier(.2,.8,.2,1) 1500ms';
+      }
+      [...svg.querySelectorAll('.c-dot')].forEach((dot, index) => {
+        dot.style.opacity = '0';
+        dot.style.transition = `opacity 180ms ease ${2200 + index * 45}ms`;
+      });
+    };
+
+    const activateTraffic = svg => {
+      if (!svg) return;
+      [...svg.querySelectorAll('.session')].forEach(shape => { shape.style.strokeDashoffset = '0'; });
+      const purchase = svg.querySelector('.purchase');
+      if (purchase) purchase.style.strokeDashoffset = '0';
+      [...svg.querySelectorAll('.p-dot')].forEach(dot => { dot.style.opacity = '1'; });
+      const cvr = svg.querySelector('.cvr');
+      if (cvr) cvr.style.strokeDashoffset = '0';
+      [...svg.querySelectorAll('.c-dot')].forEach(dot => { dot.style.opacity = '1'; });
+    };
+
+    const activateChart = el => {
+      if (!el || el.classList.contains('is-hm-chart-active')) return;
+      el.classList.add('is-hm-chart-active');
+      activateTraffic(ensureTrafficSvg(el));
+    };
+
+    const chartObserver = !reduce && 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            activateChart(entry.target);
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' })
+      : null;
+
+    const registerChart = el => {
+      if (charts.has(el)) return;
+      charts.add(el);
+      const svg = ensureTrafficSvg(el);
+      prepareTraffic(svg);
+      if (reduce || !chartObserver) {
+        activateChart(el);
+        return;
+      }
+      chartObserver.observe(el);
     };
 
     const waitForFrame = video => new Promise(resolve => {
@@ -165,6 +258,7 @@
     const scan = () => {
       document.querySelectorAll(revealSelector).forEach(registerReveal);
       document.querySelectorAll('[data-hm-counter], [data-count]').forEach(registerCounter);
+      document.querySelectorAll('[data-hm-chart]').forEach(registerChart);
       document.querySelectorAll('[data-hm-video]').forEach(registerVideoSequence);
     };
     scan();
@@ -216,7 +310,7 @@
   };
 
   const boot = () => {
-    if (document.querySelector(revealSelector + ', [data-hm-counter], [data-count], [data-hm-hero], [data-hm-video]')) {
+    if (document.querySelector(revealSelector + ', [data-hm-counter], [data-count], [data-hm-chart], [data-hm-hero], [data-hm-video]')) {
       init();
       return true;
     }
