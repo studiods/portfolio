@@ -1,0 +1,95 @@
+/* Portfolio Tracking System v1.0
+   Shared by legacy portfolio pages and HIMART design-system pages.
+   Text is another 10% tighter than the current site treatment.
+   Numeric display components are intentionally not re-tracked here. */
+
+html body{
+  letter-spacing:var(--hm-track-base,-.011em);
+}
+
+/* ---------- SHARED DESIGN-SYSTEM ROLES ---------- */
+html body.himart-page-body #live-main :is(.hm-title,.hm-ds-hero__title){
+  letter-spacing:var(--hm-track-hero,-.05445em)!important;
+}
+html body.himart-page-body #live-main :is(.hm-section-title,.hm-ds-section__title){
+  letter-spacing:var(--hm-track-section,-.05445em)!important;
+}
+html body.himart-page-body #live-main :is(.hm-subtitle,.hm-ds-subsection__title,.narrative-title,.data-card-head h3){
+  letter-spacing:var(--hm-track-subsection,-.0484em)!important;
+}
+html body.himart-page-body #live-main :is(.hm-group-title,.problem-item h4,.proof-item h4,.signal-item h4,.behavior-card h4,.role-card h4,.flow-node h4,.direction-card h4,.stepup-card h4,.stepup-question-grid h4,.stepup-experience-grid h4,.stepup-process h4){
+  letter-spacing:var(--hm-track-group,-.04235em)!important;
+}
+html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.behavior-note,.stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p){
+  letter-spacing:var(--hm-track-body,-.0242em)!important;
+}
+html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-eyebrow){
+  letter-spacing:var(--hm-track-note,.0324em)!important;
+}
+
+/* ---------- HOME / LEGACY PORTFOLIO ---------- */
+html body :is(.hero-line,.hero-quote,.subtractive-title,.intro-copy,.ai-big,.showcase-project h3,.project-title,.foot-name,.case-title,.case-copy h2,.about-hero h1){
+  letter-spacing:-.011em!important;
+}
+html body .philosophy-statements{letter-spacing:-.022em!important}
+html body .definition-copy{letter-spacing:-.0275em!important}
+html body .definition-source{letter-spacing:-.011em!important}
+html body :is(.principles-intro-ko,.principle-ko){letter-spacing:-.033em!important}
+html body :is(.mini-label,.hero-bottom,.project-meta,.footer h3,.case-kicker,.case-section .label,.phil strong){
+  letter-spacing:-.011em!important;
+}
+
+/* ---------- ABOUT ---------- */
+html body .about-ascii-title{letter-spacing:-.033em!important}
+html body :is(.about-hero-title,.about-statement){letter-spacing:-.0605em!important}
+html body .about-lead{letter-spacing:-.0275em!important}
+html body :is(.principle-title,.interview-q){letter-spacing:-.0385em!important}
+html body :is(.principle-copy,.interview-a){letter-spacing:-.022em!important}
+html body .about-statement-en{letter-spacing:.018em!important}
+html body .career-company{letter-spacing:-.033em!important}
+
+/* ---------- WORKS ---------- */
+html body.works-page-body .works-page-title{letter-spacing:-.0385em!important}
+html body.works-page-body.works-title-compact .works-page-title{letter-spacing:-.022em!important}
+html body.works-page-body .works-card-title{letter-spacing:-.0605em!important}
+html body.works-page-body :is(.works-card-company,.works-progress a){letter-spacing:.036em!important}
+html body.works-page-body .works-project-menu a{letter-spacing:-.022em!important}
+html body.works-page-body :is(.works-footer h3,.works-footer p,.works-footer a){letter-spacing:-.011em!important}
+
+/* ---------- REUSE / CASE-SPECIFIC TEXT ---------- */
+html body.reuse-current .reuse-proof-group .voice-group-title{letter-spacing:-.0495em!important}
+html body.reuse-current .reuse-roman{letter-spacing:-.044em!important}
+
+/* ---------- GLOBAL NAVIGATION ---------- */
+html body .top a{letter-spacing:var(--hm-track-nav,-.011em)!important}
+
+/* ---------- NUMERIC EXEMPTIONS ----------
+   Do not apply the tighter text tracking to dedicated number components.
+   Their existing component rules remain authoritative. */
+html body :is(
+  [data-hm-number],
+  .hm-ds-number,
+  .behavior-value,
+  .sentiment-number,
+  .pct,
+  .stepup-stat-number,
+  .number-panel strong,
+  .pie-center strong,
+  .hm-data-total strong,
+  .hm-start-month strong,
+  .hm-search-bar b,
+  .hm-series-row b,
+  .hm-series-row em,
+  .hm-service-click strong,
+  .phone-metric b,
+  .stepup-hero-phone>strong,
+  .ui-main-number,
+  .ui-stats-row b,
+  .case-stats strong
+){
+  font-variant-numeric:tabular-nums;
+}
+
+@media(max-width:850px){
+  html body .definition-copy{letter-spacing:-.033em!important}
+}
