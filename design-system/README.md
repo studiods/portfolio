@@ -37,6 +37,10 @@
 
 ## HIMART Hero component contract
 
+- Himart/ReUse movie Hero의 canonical DOM은 `hm-ds-hero hm-ds-hero--scroll-cover` → `hm-ds-hero__inner` → `hm-ds-hero__copy` + `hm-ds-hero__bottom` → `hm-ds-hero__meta` 순서로 통일한다.
+- `components/hero.css`가 Hero의 position/height/copy center/bottom rail/meta typography를 단독 소유하며, `final-tuning.css`나 case page에서 Hero selector를 다시 정의하지 않는다.
+- Legacy `himart-narrative-v2-production.css`의 `.himart-wide-test-page`/`.hm-hero-bottom` 규칙은 이전 호환성용이며 canonical `hm-ds-*` Hero selector가 항상 우선한다.
+- Himart와 ReUse는 동일한 `himart-system.css` cache version을 사용해 서로 다른 cached import tree가 적용되지 않게 한다.
 - `hm-ds-hero__bottom`은 approved `himart.html`의 Hero 하단 위치를 기준으로 desktop `40px`, mobile `28px` bottom inset을 사용한다.
 - Hero meta는 `hm-ds-hero__meta`가 단일 소유한다. 4열 비율은 `1.4fr / .95fr / .95fr / .9fr`, 기본 높이는 `74px`이다.
 - Meta typography와 자간/행간은 `components/hero.css`의 공통 규칙만 사용하며 case page에서 별도 override하지 않는다.
