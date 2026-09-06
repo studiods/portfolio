@@ -139,9 +139,9 @@ body.works-page-body .works-card-company{
 }
 
 @media(min-width:781px){
-  body.works-page-body.works-title-compact .works-card-copy{
+  body.works-page-body .works-card-copy{
     position:fixed;
-    top:var(--works-copy-top,50vh);
+    top:var(--works-copy-top,110vh);
     left:0;
     width:33.333333vw;
     transform:translateY(-50%) translateY(var(--works-copy-shift,0px));
