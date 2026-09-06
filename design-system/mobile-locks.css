@@ -1,0 +1,103 @@
+/* HIMART Mobile System v1.0 — legacy specificity bridge.
+   Mobile only. These selectors prevent old Himart production rules from escaping the shared hierarchy. */
+@media(max-width:780px){
+  /* Himart qualitative synthesis */
+  html body.himart-page-body.himart-commerce-page #live-main #brand .narrative-touchpoint-synthesis>h4{
+    font-family:var(--hm-font-ko)!important;
+    font-size:var(--hm-type-subsection-mobile)!important;
+    font-weight:100!important;
+    line-height:1.2!important;
+    letter-spacing:var(--hm-track-subsection)!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #brand .narrative-touchpoint-synthesis .synthesis-card p{
+    font-family:var(--hm-font-ko)!important;
+    font-size:var(--hm-type-group-mobile)!important;
+    font-weight:100!important;
+    line-height:1.35!important;
+    letter-spacing:var(--hm-track-group)!important;
+  }
+
+  /* Old data card locks used 28px even on mobile; force them back to the mobile group token. */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #data :is(.behavior-card h4,.signal-item h4){
+    min-height:0!important;
+    font-family:var(--hm-font-ko)!important;
+    font-size:var(--hm-type-group-mobile)!important;
+    font-weight:100!important;
+    line-height:1.3!important;
+    letter-spacing:var(--hm-track-group)!important;
+  }
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #data :is(.behavior-card p,.signal-item p){
+    margin-top:24px!important;
+    font-size:var(--hm-type-body-mobile)!important;
+    line-height:1.58!important;
+  }
+
+  /* Role definition must match the same mobile hierarchy. */
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(.journey-role-grid h4,.role-grid h4){
+    font-family:var(--hm-font-ko)!important;
+    font-size:var(--hm-type-group-mobile)!important;
+    font-weight:100!important;
+    line-height:1.3!important;
+    letter-spacing:var(--hm-track-group)!important;
+  }
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #journey :is(.journey-role-grid p,.role-grid p){
+    font-family:var(--hm-font-ko)!important;
+    font-size:var(--hm-type-body-mobile)!important;
+    font-weight:300!important;
+    line-height:1.58!important;
+    letter-spacing:var(--hm-track-body)!important;
+  }
+
+  html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main #direction .design-rule article p{
+    font-size:var(--hm-type-body-mobile)!important;
+    line-height:1.58!important;
+  }
+
+  /* Keep the current Himart journey vertical and circular even against the legacy wide bundle. */
+  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    flex-wrap:nowrap!important;
+    gap:16px!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #journey .wide-flow-cluster.v12-journey-tablet{
+    width:var(--hm-mobile-tablet-width)!important;
+    max-width:320px!important;
+    padding:32px 18px 24px!important;
+    border-radius:var(--hm-mobile-tablet-radius)!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #journey .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-inner{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    flex-wrap:nowrap!important;
+    gap:14px!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
+    flex:0 0 var(--hm-mobile-circle-size)!important;
+    width:var(--hm-mobile-circle-size)!important;
+    min-width:var(--hm-mobile-circle-size)!important;
+    max-width:var(--hm-mobile-circle-size)!important;
+    height:var(--hm-mobile-circle-size)!important;
+    min-height:var(--hm-mobile-circle-size)!important;
+    aspect-ratio:1/1!important;
+    padding:13cqi!important;
+    border-radius:50%!important;
+    container-type:inline-size!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node h4{
+    font-size:clamp(14px,12.5cqi,var(--hm-type-group-mobile))!important;
+    line-height:1.22!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node p{
+    margin-top:6cqi!important;
+    font-size:clamp(10px,7.5cqi,var(--hm-type-body-mobile))!important;
+    line-height:1.42!important;
+    text-align:center!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow{
+    transform:rotate(90deg)!important;
+  }
+}
