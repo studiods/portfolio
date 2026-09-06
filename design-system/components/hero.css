@@ -4,8 +4,6 @@
 .hm-ds-hero{position:relative;min-height:100vh;overflow:hidden;background:var(--hm-bg-page);color:var(--hm-text-primary)}
 .hm-ds-hero__video,.hm-ds-hero__overlay{position:absolute;inset:0;width:100%;height:100%}
 .hm-ds-hero__video{object-fit:cover;z-index:0}
-.hm-ds-hero__video.hm-sequence-buffer{opacity:0;transition:opacity .12s linear;will-change:opacity}
-.hm-ds-hero__video.hm-sequence-buffer.is-sequence-active{opacity:1}
 .hm-ds-hero__overlay{background:#000;opacity:var(--hm-hero-overlay-opacity,.5);z-index:1;pointer-events:none;transition:opacity .12s linear}
 .hm-ds-hero__inner{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:40px}
 .hm-ds-hero__copy{margin-bottom:40px;opacity:var(--hm-hero-copy-opacity,1);transition:opacity .08s linear}
@@ -60,6 +58,5 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
 }
 
 @media(prefers-reduced-motion:reduce){
-  .hm-ds-hero__video.hm-sequence-buffer{transition:none}
   .hm-ds-hero__overlay,.hm-ds-hero__copy{transition:none}
 }
