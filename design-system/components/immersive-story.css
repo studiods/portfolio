@@ -1,0 +1,268 @@
+@import url("../tokens.css");
+@import url("../typography.css");
+@import url("../spacing.css");
+
+/* HIMART Design System — Immersive Story component
+   Purpose: alternate dense evidence with cinematic, low-copy visual beats.
+   It introduces no new type scale or palette; all typography, spacing and colors inherit existing tokens. */
+.hm-ds-impact{
+  position:relative;
+  z-index:2;
+  display:flex;
+  min-height:72svh;
+  align-items:center;
+  background:var(--hm-bg-page);
+}
+.hm-ds-impact__inner,
+.hm-ds-immersive-stage__inner{
+  width:min(calc(100% - (var(--hm-inset-desktop) * 2)),var(--hm-container-wide));
+  margin-inline:auto;
+}
+.hm-ds-impact__eyebrow,
+.hm-ds-immersive-stage__eyebrow,
+.hm-ds-visual-card__label{
+  color:var(--hm-blue);
+  font:400 var(--hm-type-note)/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+.hm-ds-impact__title{
+  max-width:1180px;
+  margin:var(--hm-space-20) 0 0;
+  color:var(--hm-text-primary);
+  font:100 var(--hm-type-hero)/1.04 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-hero);
+  word-break:keep-all;
+  text-wrap:balance;
+}
+.hm-ds-impact__title strong{color:var(--hm-blue);font-weight:100}
+.hm-ds-impact__copy{
+  max-width:40ch;
+  margin:var(--hm-space-32) 0 0;
+  color:var(--hm-text-secondary);
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+  text-wrap:pretty;
+}
+.hm-ds-impact-metrics{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--hm-space-40);
+  margin-top:var(--hm-space-80);
+  border-top:1px solid var(--hm-line-default);
+}
+.hm-ds-impact-metric{
+  min-width:0;
+  padding:var(--hm-space-32) 0 0;
+}
+.hm-ds-impact-metric__value{
+  display:block;
+  color:var(--hm-text-primary);
+  font:300 var(--hm-type-hero)/.95 var(--hm-font-en);
+  letter-spacing:var(--hm-track-data-number);
+}
+.hm-ds-impact-metric__label{
+  display:block;
+  margin-top:var(--hm-space-20);
+  color:var(--hm-text-secondary);
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+}
+
+/* Sticky full-bleed beat. The wrapper creates dwell time; the visual itself stays fixed for one viewport. */
+.hm-ds-immersive-sequence{
+  position:relative;
+  z-index:2;
+  min-height:150svh;
+  background:var(--hm-bg-page);
+}
+.hm-ds-immersive-stage{
+  position:sticky;
+  top:0;
+  display:flex;
+  width:100%;
+  height:100svh;
+  min-height:100svh;
+  align-items:flex-end;
+  overflow:hidden;
+  background:#050505;
+}
+.hm-ds-immersive-stage__media,
+.hm-ds-immersive-stage__overlay{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.hm-ds-immersive-stage__media{object-fit:cover;transform:scale(1.001)}
+.hm-ds-immersive-stage__overlay{
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.28) 52%,rgba(0,0,0,.78) 100%);
+}
+.hm-ds-immersive-stage__inner{
+  position:relative;
+  z-index:2;
+  padding-bottom:var(--hm-space-100);
+}
+.hm-ds-immersive-stage__title{
+  max-width:1080px;
+  margin:var(--hm-space-20) 0 0;
+  color:var(--hm-text-primary);
+  font:100 var(--hm-type-section)/1.12 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-section);
+  word-break:keep-all;
+  text-wrap:balance;
+}
+.hm-ds-immersive-stage__copy{
+  max-width:40ch;
+  margin:var(--hm-space-20) 0 0;
+  color:var(--hm-text-secondary);
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+  text-wrap:pretty;
+}
+.hm-ds-immersive-stage__keywords{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--hm-space-14);
+  margin-top:var(--hm-space-40);
+}
+.hm-ds-immersive-stage__keywords span{
+  padding:10px 14px;
+  border:1px solid var(--hm-line-default);
+  color:var(--hm-text-primary);
+  font:400 var(--hm-type-note)/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+
+/* Visual wall: intentionally asymmetric to break the report rhythm. */
+.hm-ds-visual-wall{
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:var(--hm-space-24);
+  width:100%;
+}
+.hm-ds-visual-card{
+  position:relative;
+  grid-column:span 6;
+  min-width:0;
+  min-height:420px;
+  overflow:hidden;
+  background:#050505;
+}
+.hm-ds-visual-card--4{grid-column:span 4}
+.hm-ds-visual-card--5{grid-column:span 5}
+.hm-ds-visual-card--7{grid-column:span 7}
+.hm-ds-visual-card--8{grid-column:span 8}
+.hm-ds-visual-card--wide{grid-column:1/-1;min-height:620px}
+.hm-ds-visual-card__media,
+.hm-ds-visual-card__placeholder,
+.hm-ds-visual-card__shade{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.hm-ds-visual-card__media{object-fit:cover;transition:transform .8s cubic-bezier(.22,1,.36,1)}
+.hm-ds-visual-card:hover .hm-ds-visual-card__media{transform:scale(1.025)}
+.hm-ds-visual-card__placeholder{
+  display:flex;
+  align-items:flex-end;
+  padding:var(--hm-space-32);
+  background:
+    radial-gradient(circle at 78% 24%,rgba(0,166,237,.22),transparent 36%),
+    linear-gradient(135deg,#090909 0%,#050505 54%,#0a1720 100%);
+}
+.hm-ds-visual-card__placeholder strong{
+  max-width:90%;
+  color:rgba(255,255,255,.16);
+  font:100 var(--hm-type-section)/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-section);
+}
+.hm-ds-visual-card__shade{
+  background:linear-gradient(180deg,rgba(0,0,0,.02) 20%,rgba(0,0,0,.78) 100%);
+  pointer-events:none;
+}
+.hm-ds-visual-card__caption{
+  position:absolute;
+  z-index:2;
+  right:var(--hm-space-32);
+  bottom:var(--hm-space-32);
+  left:var(--hm-space-32);
+}
+.hm-ds-visual-card__caption h4{
+  max-width:30ch;
+  margin:var(--hm-space-14) 0 0;
+  color:var(--hm-text-primary);
+  font:100 var(--hm-type-group)/1.3 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+.hm-ds-visual-card__caption p{
+  max-width:34ch;
+  margin:var(--hm-space-14) 0 0;
+  color:var(--hm-text-secondary);
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+.hm-ds-visual-card__status{
+  display:inline-block;
+  margin-left:10px;
+  color:var(--hm-text-tertiary);
+  font:400 var(--hm-type-note)/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+
+/* Closing statement reuses the hero scale but keeps the page black and quiet. */
+.hm-ds-closing{
+  display:flex;
+  min-height:82svh;
+  align-items:center;
+  background:var(--hm-bg-page);
+}
+.hm-ds-closing__inner{
+  width:min(calc(100% - (var(--hm-inset-desktop) * 2)),var(--hm-container-wide));
+  margin-inline:auto;
+}
+.hm-ds-closing__title{
+  max-width:1180px;
+  margin:0;
+  color:var(--hm-text-primary);
+  font:100 var(--hm-type-hero)/1.04 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-hero);
+  word-break:keep-all;
+  text-wrap:balance;
+}
+.hm-ds-closing__title strong{color:var(--hm-blue);font-weight:100}
+.hm-ds-closing__copy{
+  max-width:40ch;
+  margin:var(--hm-space-32) 0 0;
+  color:var(--hm-text-secondary);
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+}
+
+@media(max-width:780px){
+  .hm-ds-impact{min-height:auto;padding:var(--hm-space-120) 0}
+  .hm-ds-impact__inner,.hm-ds-immersive-stage__inner,.hm-ds-closing__inner{width:calc(100% - (var(--hm-inset-mobile) * 2))}
+  .hm-ds-impact__title,.hm-ds-closing__title{font-size:var(--hm-type-hero-mobile);line-height:1.08}
+  .hm-ds-impact-metrics{grid-template-columns:1fr;gap:var(--hm-space-24);margin-top:56px}
+  .hm-ds-impact-metric__value{font-size:var(--hm-type-hero-mobile)}
+  .hm-ds-immersive-sequence{min-height:130svh}
+  .hm-ds-immersive-stage__inner{padding-bottom:var(--hm-space-80)}
+  .hm-ds-immersive-stage__title{font-size:var(--hm-type-section-mobile);line-height:1.16}
+  .hm-ds-visual-wall{grid-template-columns:1fr;gap:var(--hm-space-18)}
+  .hm-ds-visual-card,.hm-ds-visual-card--4,.hm-ds-visual-card--5,.hm-ds-visual-card--7,.hm-ds-visual-card--8,.hm-ds-visual-card--wide{grid-column:1;min-height:420px}
+  .hm-ds-visual-card--wide{min-height:520px}
+  .hm-ds-visual-card__caption{right:var(--hm-space-24);bottom:var(--hm-space-24);left:var(--hm-space-24)}
+  .hm-ds-visual-card__placeholder{padding:var(--hm-space-24)}
+  .hm-ds-visual-card__placeholder strong{font-size:var(--hm-type-section-mobile)}
+  .hm-ds-closing{min-height:72svh}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .hm-ds-visual-card__media{transition:none}
+  .hm-ds-visual-card:hover .hm-ds-visual-card__media{transform:none}
+}
