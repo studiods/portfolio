@@ -25,15 +25,34 @@
 
 | 컴포넌트 | 파일 | 책임 |
 |---|---|---|
-| Hero | `components/hero.css` | 영상, 오버레이, Hero 타이포그래피, 메타 |
+| Hero | `components/hero.css` | 영상, 오버레이, Hero 타이포그래피, 하단 메타, scroll-cover 구조 |
 | Chapter | `components/chapter.css` | 본문 챕터 제목의 PC/모바일 크기·줄바꿈·헤더 구조 |
-| Card | `components/cards.css` | Data/Narrative/Role 카드 foundation |
+| Card | `components/cards.css` | Data/Narrative/Role 카드 foundation, numbered editorial list |
 | Narrative | `components/narrative.css` | Synthesis, Journey narrative, Prototype intro |
 | Media | `components/media.css` | Prototype media grid/card/frame/caption |
 | Flow | `components/flow.css` | Journey flow group/node/label/responsive 구조 |
 | Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
-| Motion | `animation.js` | Himart reveal, counter, hero scroll, video viewport |
+| Motion | `animation.js` | Himart reveal, counter, hero scroll variable, video viewport/sequence |
+
+## HIMART Hero component contract
+
+- `hm-ds-hero__bottom`은 approved `himart.html`의 Hero 하단 위치를 기준으로 desktop `40px`, mobile `28px` bottom inset을 사용한다.
+- Hero meta는 `hm-ds-hero__meta`가 단일 소유한다. 4열 비율은 `1.4fr / .95fr / .95fr / .9fr`, 기본 높이는 `74px`이다.
+- Meta typography와 자간/행간은 `components/hero.css`의 공통 규칙만 사용하며 case page에서 별도 override하지 않는다.
+- `hm-ds-hero--scroll-cover`를 가진 Hero는 viewport에 sticky로 고정되고 뒤따르는 `.hm-section`이 더 높은 z-index로 아래에서 올라와 Hero를 덮는다.
+- `animation.js`는 `--hm-hero-overlay-opacity`와 `--hm-hero-copy-opacity`만 계산한다. 실제 black overlay와 copy opacity 표현은 `components/hero.css`가 소유한다.
+- scroll 시작 시 overlay는 기본 black 50%에서 점차 진해지고 Hero copy는 함께 낮아지며, 다음 section은 물리적으로 아래에서 올라온다.
+- 신규 Himart case에서 동일한 동작이 필요하면 page-local sticky/fade 코드를 추가하지 말고 `hm-ds-hero hm-ds-hero--scroll-cover`, `hm-ds-hero__bottom`, `hm-ds-hero__meta`를 조합한다.
+
+## Numbered editorial list contract
+
+- `hm-ds-numbered-list`는 로마 숫자 + 본문 타이틀 + 설명 구조의 공통 컴포넌트다.
+- 로마 숫자와 타이틀은 같은 첫 행에 배치하고 동일한 `30px / 1.22` 크기·행간을 사용한다.
+- 설명은 타이틀의 오른쪽이 아니라 항상 타이틀 바로 아래에 배치한다.
+- title → description 간격은 공통 token `--hm-title-description-gap`(`20px`)을 사용한다.
+- 설명 최대 폭은 `--hm-title-description-max`(`40ch`)를 따르며 기본 contrast는 secondary text를 사용한다.
+- mobile에서는 번호/타이틀 크기를 `26px`로 낮추고 구조는 동일하게 유지한다.
 
 ## WORKS component contract
 
