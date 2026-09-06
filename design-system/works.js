@@ -135,17 +135,18 @@
 
   /*
     Desktop project-copy handoff:
-    - the current copy stays fixed at the viewport vertical center;
-    - as the next project enters the lower viewport, the current copy dims gradually;
-    - once the next project anchor crosses the 3/4 viewport-height line, the current copy fades rapidly and moves upward;
-    - the next copy rises naturally from below and eases into the same centered position.
+    - there is no separate incoming animation or arrival fade;
+    - each copy rises at the exact same scroll rate as its media, with both top edges aligned;
+    - once the copy reaches viewport center it stops, while the media keeps scrolling;
+    - when the next copy reaches the lower 3/4 line, the outgoing copy begins a smooth fade/upward handoff;
+    - the outgoing copy reaches zero only as the incoming copy reaches center.
   */
-  const updateProjectCopies = compact => {
+  const updateProjectCopies = () => {
     const isDesktop = window.innerWidth > 780;
-    if (!isDesktop || !compact) {
+    if (!isDesktop) {
       copies.forEach(copy => {
         if (!copy) return;
-        copy.style.setProperty('--works-copy-top', '50vh');
+        copy.style.removeProperty('--works-copy-top');
         copy.style.setProperty('--works-copy-opacity', '1');
         copy.style.setProperty('--works-copy-shift', '0px');
         copy.style.removeProperty('--works-copy-z');
@@ -156,80 +157,47 @@
 
     const viewportHeight = window.innerHeight;
     const center = viewportHeight * .5;
-    const handoffDistance = clamp(viewportHeight * .17, 140, 220);
+    const handoffStart = viewportHeight * .75;
     const gridBottom = grid.getBoundingClientRect().bottom;
-    const gradualFadeStart = viewportHeight;
-    const rapidFadeStart = viewportHeight * .75;
-    const rapidFadeEnd = center + clamp(viewportHeight * .055, 48, 72);
-
-    const easedIncomingOffset = rawDistance => {
-      if (rawDistance <= 0) return 0;
-      if (rawDistance >= handoffDistance) return rawDistance;
-      const u = rawDistance / handoffDistance;
-      /* Hermite curve: zero arrival velocity at center, unit velocity at the outer edge. */
-      return handoffDistance * (-u * u * u + 2 * u * u);
-    };
-
-    const outgoingFade = nextAnchor => {
-      if (nextAnchor >= gradualFadeStart) return {opacity:1, shift:0};
-
-      if (nextAnchor > rapidFadeStart) {
-        const gradual = clamp(
-          (gradualFadeStart - nextAnchor) / (gradualFadeStart - rapidFadeStart),
-          0,
-          1
-        );
-        return {
-          opacity:1 - .22 * smoothstep(gradual),
-          shift:0
-        };
-      }
-
-      const rapid = clamp(
-        (rapidFadeStart - nextAnchor) / Math.max(1, rapidFadeStart - rapidFadeEnd),
-        0,
-        1
-      );
-      const easedRapid = smoothstep(rapid);
-      return {
-        opacity:.78 * (1 - easedRapid),
-        shift:-96 * easedRapid
-      };
-    };
 
     copies.forEach((copy, index) => {
       if (!copy) return;
-      const rect = cards[index].getBoundingClientRect();
-      const cardCenter = rect.top + rect.height * .5;
-      const distanceBelowCenter = cardCenter - center;
 
-      let y = center;
+      const cardRect = cards[index].getBoundingClientRect();
+      const copyHeight = copy.offsetHeight;
+      const naturalCenter = cardRect.top + copyHeight * .5;
+
+      /* Natural scroll until centered; no easing, no arrival opacity animation. */
+      const y = Math.max(center, naturalCenter);
       let opacity = 1;
       let shift = 0;
 
-      if (distanceBelowCenter > 0) {
-        y = center + easedIncomingOffset(distanceBelowCenter);
-        const arrival = clamp((center + handoffDistance - cardCenter) / handoffDistance, 0, 1);
-        opacity = smoothstep(arrival);
-      }
-
+      const nextCopy = copies[index + 1];
       const nextCard = cards[index + 1];
-      const nextAnchor = nextCard
-        ? (() => {
-            const nextRect = nextCard.getBoundingClientRect();
-            return nextRect.top + nextRect.height * .5;
-          })()
+      const nextAnchor = nextCard && nextCopy
+        ? nextCard.getBoundingClientRect().top + nextCopy.offsetHeight * .5
         : gridBottom;
 
-      const outgoing = outgoingFade(nextAnchor);
-      opacity *= outgoing.opacity;
-      shift = outgoing.shift;
+      if (nextAnchor < handoffStart) {
+        const progress = clamp(
+          (handoffStart - nextAnchor) / Math.max(1, handoffStart - center),
+          0,
+          1
+        );
+        const eased = smoothstep(progress);
+        opacity = 1 - eased;
+        shift = -96 * eased;
+      }
 
       copy.style.setProperty('--works-copy-top', `${y.toFixed(1)}px`);
       copy.style.setProperty('--works-copy-opacity', opacity.toFixed(3));
       copy.style.setProperty('--works-copy-shift', `${shift.toFixed(1)}px`);
       copy.style.setProperty('--works-copy-z', String(1000 + index));
-      copy.style.pointerEvents = opacity > .18 ? 'auto' : 'none';
+
+      const copyTop = y - copyHeight * .5 + shift;
+      const copyBottom = copyTop + copyHeight;
+      const isVisible = copyBottom > 0 && copyTop < viewportHeight;
+      copy.style.pointerEvents = isVisible && opacity > .18 ? 'auto' : 'none';
     });
   };
 
@@ -252,7 +220,7 @@
     body.classList.toggle('works-title-compact', compact);
     if (!compact) closeMenu();
     placeSwitcher();
-    updateProjectCopies(compact);
+    updateProjectCopies();
     updateProgress();
   };
 
