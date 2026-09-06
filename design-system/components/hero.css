@@ -131,7 +131,7 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
   color:var(--hm-text-secondary)!important;
   opacity:1!important;
   font:400 12px/1 var(--hm-font-en)!important;
-  letter-spacing:normal!important;
+  letter-spacing:var(--hm-track-note)!important;
   word-spacing:normal!important;
 }
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
@@ -139,7 +139,7 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
   margin:0!important;
   color:var(--hm-text-primary)!important;
   font:400 12px/1.35 var(--hm-font-en)!important;
-  letter-spacing:normal!important;
+  letter-spacing:var(--hm-track-note)!important;
   word-spacing:normal!important;
   white-space:normal!important;
   transform:none!important;
