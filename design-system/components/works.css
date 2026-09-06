@@ -83,10 +83,11 @@ body.works-page-body .works-card{
 
 /*
   Project copy contract:
-  - desktop compact state centers the current copy vertically in the viewport;
+  - while entering, copy top stays aligned with the corresponding media top;
+  - once its center reaches the viewport center, the copy stops there while media keeps scrolling;
   - the line above the title is exactly 1/4 of the 1/3 copy column = 1/12 viewport;
   - the rule is white 30% and the rule-to-title gap is 44px;
-  - works.js owns only scroll-driven incoming/exit position and opacity.
+  - works.js owns only scroll-linked positioning and outgoing handoff opacity.
 */
 body.works-page-body .works-card-copy{
   position:relative;
@@ -309,6 +310,9 @@ body.works-page-body .works-project-menu a{
   letter-spacing:-.02em;
   text-decoration:none;
   white-space:nowrap;
+}
+body.works-page-body .works-project-menu a:visited{
+  color:rgba(255,255,255,.42);
 }
 body.works-page-body .works-project-menu a+a{
   border-top:1px solid rgba(255,255,255,.16);
