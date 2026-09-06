@@ -1,25 +1,32 @@
-/* HIMART Design System v1.1 — typography foundation */
+/* HIMART Design System v1.2 — canonical typography foundation */
 @font-face{font-family:"Pretendard";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE ExtraLight";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:200;font-style:normal;font-display:swap}
 
+/* Base tracking is 10% tighter than the previous authored values. */
+html body.himart-page-body{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:var(--hm-track-base)}
 .hm-ds-en{font-family:var(--hm-font-en);font-weight:300;letter-spacing:var(--hm-track-base)}
 .hm-ds-ko{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:var(--hm-track-base)}
-.hm-ds-hero{font:100 var(--hm-type-hero)/1.04 var(--hm-font-ko);letter-spacing:var(--hm-track-hero)}
-.hm-ds-section{font:100 var(--hm-type-section)/1.12 var(--hm-font-ko);letter-spacing:var(--hm-track-section)}
-.hm-ds-subsection{font:100 var(--hm-type-subsection)/1.18 var(--hm-font-ko);letter-spacing:var(--hm-track-subsection)}
-.hm-ds-group{font:100 var(--hm-type-group)/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-group)}
-.hm-ds-body{font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);letter-spacing:var(--hm-track-body)}
-.hm-ds-note{font:400 var(--hm-type-note)/1.4 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
-.hm-ds-number,[data-hm-number]{font-family:var(--hm-font-en);font-variant-numeric:tabular-nums}
 
-@media (max-width:780px){
-  .hm-ds-hero{font-size:clamp(38px,10vw,58px)}
-  .hm-ds-section{font-size:clamp(34px,9vw,42px)}
-  .hm-ds-subsection{font-size:clamp(28px,7.5vw,32px)}
+/* .hm-ds-section is a layout component, so typography is bound to actual title roles. */
+.hm-ds-hero__title,.hm-title{font:100 var(--hm-type-hero)/1.04 var(--hm-font-ko);letter-spacing:var(--hm-track-hero)}
+.hm-section-title,.hm-ds-section__title{font:100 var(--hm-type-section)/1.12 var(--hm-font-ko);letter-spacing:var(--hm-track-section)}
+.hm-subtitle,.hm-ds-subsection__title{font:100 var(--hm-type-subsection)/1.18 var(--hm-font-ko);letter-spacing:var(--hm-track-subsection)}
+.hm-ds-group{font:100 var(--hm-type-group)/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-group)}
+.hm-ds-body,.hm-section-desc,.hm-subcopy{font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);letter-spacing:var(--hm-track-body)}
+.hm-ds-note{font:400 var(--hm-type-note)/1.4 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+
+/* Numeric glyph blocks are exempt from the new text tracking rule. */
+.hm-ds-number,[data-hm-number]{font-family:var(--hm-font-en);font-variant-numeric:tabular-nums;letter-spacing:var(--hm-track-data-number)!important}
+.hm-ds-number--normal,[data-hm-number="normal"]{letter-spacing:normal!important}
+
+@media(max-width:780px){
+  .hm-ds-hero__title,.hm-title{font-size:clamp(38px,10vw,58px)}
+  .hm-section-title,.hm-ds-section__title{font-size:clamp(34px,9vw,42px)}
+  .hm-subtitle,.hm-ds-subsection__title{font-size:clamp(28px,7.5vw,32px)}
   .hm-ds-group{font-size:clamp(22px,6vw,24px)}
-  .hm-ds-body{font-size:clamp(14px,3.9vw,16px)}
+  .hm-ds-body,.hm-section-desc,.hm-subcopy{font-size:clamp(14px,3.9vw,16px)}
   .hm-ds-note{font-size:clamp(11px,3vw,12px)}
 }
