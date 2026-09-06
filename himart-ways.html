@@ -5,62 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>휘발되는 소통을 줄이고, 일이 남는 방식을 만들었습니다. — Shin Dong Sik</title>
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260906-3">
-<style>
-/* HIMART WAYS — page composition using the shared Himart system. */
-html body.ways-page{background:#000!important;color:#fff!important}
-.ways-hero{position:relative;aspect-ratio:16/9;height:100svh;min-height:100svh;overflow:hidden;background:#000;color:#fff}
-.ways-hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
-.ways-hero .hm-wrap{position:relative;z-index:2;height:100%;min-height:0;display:block;padding-bottom:0}
-.ways-hero .hm-movie-copy{position:absolute;top:50%;left:0;right:0;max-width:1080px;margin:0;transform:translateY(-50%)}
-.ways-hero .hm-kicker{margin-bottom:24px;color:rgba(255,255,255,.72)}
-.ways-hero .hm-title{font-size:clamp(58px,5.7vw,82px);line-height:1.04}
-.ways-hero .hm-lead{max-width:860px;margin:32px 0 0;color:rgba(255,255,255,.6);font-size:18px;line-height:1.55}
-.ways-page .hm-section{background:#000!important;position:relative}
-.ways-page .hm-section-head{margin-bottom:100px}
-.ways-page .hm-section-desc,.ways-page .hm-subcopy,.ways-page .data-card-head .desc{color:rgba(255,255,255,.6)!important}
-.ways-page .hm-subno,.ways-page .hm-card-no{display:block!important;color:var(--hm-blue)!important}
-.ways-page .ways-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:0;row-gap:1px}
-.ways-page .ways-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:0;row-gap:1px;background:#000;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);border-left:0;border-right:0}
-.ways-page .ways-list article{min-height:236px;padding:28px;background:#000}
-.ways-page .ways-pair{padding-top:28px;border-top:1px solid rgba(255,255,255,.25)}
-.ways-page .ways-pair+.ways-pair{margin-top:48px}
-.ways-page .ways-pair h4{margin:0;font:100 28px/1.3 Pretendard,sans-serif;letter-spacing:-.04em}
-.ways-page .ways-pair p{margin:20px 0 0;color:rgba(255,255,255,.6);font-size:16px;line-height:1.55}
-.ways-page .ways-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.ways-page .ways-flow article{min-height:220px;padding:24px;border-top:1px solid rgba(255,255,255,.32);background:#000}
-.ways-page .ways-flow span{display:block;color:var(--hm-blue);font:300 11px/1.2 'Averta PE',sans-serif;letter-spacing:.05em}
-.ways-page .ways-flow h4{margin:26px 0 0;font:100 26px/1.25 Pretendard,sans-serif;letter-spacing:-.04em}
-.ways-page .ways-flow p{margin:20px 0 0;color:rgba(255,255,255,.6);font-size:14px;line-height:1.55}
-.ways-page .ways-conclusion{margin-top:112px;padding-top:32px;border-top:1px solid rgba(255,255,255,.25)}
-.ways-page .ways-conclusion h3{margin:0;font:100 42px/1.18 Pretendard,sans-serif;letter-spacing:-.045em}
-.ways-page .ways-conclusion p{max-width:760px;margin:24px 0 0;color:rgba(255,255,255,.6);font-size:17px;line-height:1.55}
-@media(max-width:780px){
-  .ways-hero{aspect-ratio:auto;height:100svh;min-height:100svh}
-  .ways-hero .hm-wrap{width:calc(100% - 36px);height:100svh;padding-bottom:28px}
-  .ways-hero .hm-movie-copy{top:50%;margin:0}
-  .ways-hero .hm-title{font-size:clamp(42px,10vw,58px)}
-  .ways-hero .hm-lead{margin-top:24px;font-size:16px}
-  .ways-page .ways-grid,.ways-page .ways-list,.ways-page .ways-flow{grid-template-columns:1fr}
-  .ways-page .ways-list article{min-height:0}
-  .ways-page .ways-flow article{min-height:0}
-  .ways-page .ways-conclusion{margin-top:78px}
-  .ways-page .ways-conclusion h3{font-size:36px}
-}
-</style>
-<link rel="stylesheet" href="./design-system/himart-system.css?v=20260907-6">
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260907-7">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
 </head>
 <body class="himart-page-body himart-movie-page himart-narrative-ready ways-page">
 <main id="live-main">
-<header class="hm-hero hm-hero--system ways-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
-  <video class="ways-hero__video hm-ds-hero__video" data-hm-video data-hm-video-sequence="./assets/ways_01.mp4|./assets/ways_02.mp4" muted playsinline preload="metadata" aria-hidden="true">
+<header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
+  <video class="hm-movie-video hm-ds-hero__video" data-hm-video data-hm-video-sequence="./assets/ways_01.mp4|./assets/ways_02.mp4" muted playsinline preload="metadata" aria-hidden="true">
     <source src="./assets/ways_01.mp4" type="video/mp4">
   </video>
-  <div class="hm-ds-hero__overlay" aria-hidden="true"></div>
-  <div class="hm-wrap hm-ds-hero__inner">
+  <div class="hm-movie-overlay hm-ds-hero__overlay" aria-hidden="true"></div>
+  <div class="hm-wrap hm-ds-wrap hm-ds-hero__inner">
     <div class="hm-movie-copy hm-ds-hero__copy">
-      <h1 class="hm-title js-scramble hm-ds-hero__title">휘발되는 소통을 줄이고,<br>일이 남는 방식을 만들었습니다.</h1>
+      <h1 class="hm-title hm-ds-hero__title js-scramble">휘발되는 소통을 줄이고,<br>일이 남는 방식을 만들었습니다.</h1>
       <p class="hm-lead hm-ds-hero__description">협업의 맥락과 결정이 남는 구조를 설계했습니다.</p>
     </div>
     <div class="hm-hero-bottom hm-ds-hero__bottom">
@@ -73,31 +34,43 @@ html body.ways-page{background:#000!important;color:#fff!important}
     </div>
   </div>
 </header>
-<nav class="hm-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
+<nav class="hm-progress hm-ds-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
 
-<section class="hm-section" id="brand" data-chapter="01"><div class="hm-wrap">
-  <div class="hm-section-head hm-reveal"><div><span class="hm-section-no">01</span><h2 class="hm-section-title js-scramble">문제는 도구보다,<br>결정이 어디에 남는지 알기 어렵다는 점이었습니다.</h2><p class="hm-section-desc">요청·변경·책임이 흩어지는 협업을 다시 정의했습니다.</p></div></div>
-  <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.1 / FRICTION</span><div><h3 class="hm-subtitle">반복해서 시간을 빼앗는 지점을<br>협업의 마찰로 나눠봤습니다.</h3><p class="hm-subcopy">정보와 판단이 흩어져 논쟁이 반복됐습니다.</p></div></div>
-    <div class="ways-grid hm-no-vertical-lines">
-      <article class="data-card"><div class="data-card-head"><span class="hm-roman-no">I.</span><div><h3>일을 느리게 만드는 구조</h3></div></div><p class="desc">요청·버전·일정·책임·피드백이 여러 곳에 흩어졌습니다.</p></article>
-      <article class="data-card"><div class="data-card-head"><span class="hm-roman-no">II.</span><div><h3>남겨야 했던 것</h3></div></div><p class="desc">문제·요구조건·근거·결정·Owner·일정·학습을 남겼습니다.</p></article>
+<section class="hm-section hm-ds-section" id="brand" data-chapter="01"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">문제는 도구보다,<br>결정이 어디에 남는지 알기 어렵다는 점이었습니다.</h2><p class="hm-section-desc hm-ds-section__description">요청·변경·책임이 흩어지는 협업을 다시 정의했습니다.</p></div></div>
+
+  <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.1 / FRICTION</span><div><h3 class="hm-subtitle hm-ds-subsection__title">반복해서 시간을 빼앗는 지점을<br>협업의 마찰로 나눠봤습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">정보와 판단이 흩어져 논쟁이 반복됐습니다.</p></div></div>
+    <div class="hm-ds-stat-grid hm-ds-subtitle-to-content">
+      <article class="hm-ds-card"><span class="hm-ds-card__label">I. / STRUCTURE</span><h4 class="hm-group-title hm-ds-card__title">일을 느리게 만드는 구조</h4><p class="hm-subcopy hm-ds-card__body">요청·버전·일정·책임·피드백이 여러 곳에 흩어졌습니다.</p></article>
+      <article class="hm-ds-card"><span class="hm-ds-card__label">II. / RECORD</span><h4 class="hm-group-title hm-ds-card__title">남겨야 했던 것</h4><p class="hm-subcopy hm-ds-card__body">문제·요구조건·근거·결정·Owner·일정·학습을 남겼습니다.</p></article>
     </div>
   </div>
-  <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.2 / AS-IS</span><div><h3 class="hm-subtitle">화면을 만드는 순서보다,<br>의사결정이 고정되는 순서를 먼저 봤습니다.</h3></div></div>
-    <div class="ways-flow">
-      <article><span>01 / REQUEST</span><h4>여러 채널로 요청</h4><p>요청과 수정사항이 여러 문서로 나뉘었습니다.</p></article>
-      <article><span>02 / FIX</span><h4>화면이 먼저 고정</h4><p>버튼·플로우·URL이 문제보다 먼저 고정됐습니다.</p></article>
-      <article><span>03 / DESIGN</span><h4>UX가 후반에 참여</h4><p>UX가 구조보다 화면 완성에 머물 수 있었습니다.</p></article>
-      <article><span>04 / REVIEW</span><h4>결정이 흩어짐</h4><p>변경 이유와 최종 판단을 재사용하기 어려웠습니다.</p></article>
+
+  <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.2 / AS-IS</span><div><h3 class="hm-subtitle hm-ds-subsection__title">화면을 만드는 순서보다,<br>의사결정이 고정되는 순서를 먼저 봤습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">기존 협업은 네 단계로 흘렀지만 판단 근거가 다음 단계에 충분히 남지 않았습니다.</p></div></div>
+    <div class="hm-ds-data-viz hm-ds-segmented-chart hm-ds-subtitle-to-content">
+      <div class="wide-segmented-bar hm-ds-segmented-bar hm-ds-segmented--equal-4" data-hm-chart aria-label="기존 협업의 네 단계">
+        <div class="wide-segment hm-ds-segment"><span>REQUEST <small>01</small></span></div>
+        <div class="wide-segment hm-ds-segment"><span>FIX <small>02</small></span></div>
+        <div class="wide-segment hm-ds-segment"><span>DESIGN <small>03</small></span></div>
+        <div class="wide-segment hm-ds-segment"><span>REVIEW <small>04</small></span></div>
+      </div>
     </div>
-    <div class="ways-conclusion"><h3>결론</h3><p>문제·역할·결정이 하나의 흐름에 남아야 했습니다.</p></div>
+    <div class="hm-ds-flow hm-ds-subsection-gap">
+      <div class="hm-ds-flow__row">
+        <article class="hm-ds-flow__node"><span class="hm-card-no">01 / REQUEST</span><h4>여러 채널로 요청</h4><p>요청과 수정사항이 여러 문서로 나뉘었습니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">02 / FIX</span><h4>화면이 먼저 고정</h4><p>버튼·플로우·URL이 문제보다 먼저 고정됐습니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">03 / DESIGN</span><h4>UX가 후반에 참여</h4><p>UX가 구조보다 화면 완성에 머물 수 있었습니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">04 / REVIEW</span><h4>결정이 흩어짐</h4><p>변경 이유와 최종 판단을 재사용하기 어려웠습니다.</p></article>
+      </div>
+    </div>
+    <div class="hm-ds-subsection-gap"><h3 class="hm-subtitle hm-ds-subsection__title">결론</h3><p class="hm-subcopy hm-ds-subsection__description">문제·역할·결정이 하나의 흐름에 남아야 했습니다.</p></div>
   </div>
 </div></section>
 
-<section class="hm-section" id="data" data-chapter="02"><div class="hm-wrap">
-  <div class="hm-section-head hm-reveal"><div><span class="hm-section-no">02</span><h2 class="hm-section-title js-scramble">문제·역할·결정을 분리하고,<br>다시 연결하는 기준을 만들었습니다.</h2><p class="hm-section-desc">PO·UX·개발·사업의 판단 기준을 다시 연결했습니다.</p></div></div>
-  <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">02.1 / PRINCIPLES</span><div><h3 class="hm-subtitle">협업의 기준도 화면 설계처럼<br>단순한 질문으로 정리했습니다.</h3></div></div>
-    <div class="ways-list hm-ds-numbered-list hm-no-vertical-lines">
+<section class="hm-section hm-ds-section" id="data" data-chapter="02"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">문제·역할·결정을 분리하고,<br>다시 연결하는 기준을 만들었습니다.</h2><p class="hm-section-desc hm-ds-section__description">PO·UX·개발·사업의 판단 기준을 다시 연결했습니다.</p></div></div>
+  <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">02.1 / PRINCIPLES</span><div><h3 class="hm-subtitle hm-ds-subsection__title">협업의 기준도 화면 설계처럼<br>단순한 질문으로 정리했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">여섯 가지 원칙을 모든 리뷰의 공통 기준으로 사용했습니다.</p></div></div>
+    <div class="hm-ds-numbered-list hm-ds-subtitle-to-content">
       <article><span class="hm-roman-no">III.</span><h4>화면보다 문제를 먼저 봅니다.</h4><p>필요한 이유와 해결할 문제를 먼저 합의합니다.</p></article>
       <article><span class="hm-roman-no">IV.</span><h4>역할의 경계를 분명히 합니다.</h4><p>문제·UX·기술·실행 책임을 구분합니다.</p></article>
       <article><span class="hm-roman-no">V.</span><h4>말보다 동작으로 확인합니다.</h4><p>복잡한 흐름은 프로토타입으로 검토합니다.</p></article>
@@ -108,10 +81,20 @@ html body.ways-page{background:#000!important;color:#fff!important}
   </div>
 </div></section>
 
-<section class="hm-section" id="journey" data-chapter="03"><div class="hm-wrap">
-  <div class="hm-section-head hm-reveal"><div><span class="hm-section-no">03</span><h2 class="hm-section-title js-scramble">결국 협업 흐름을,<br>문제에서 학습까지 이어지게 설계했습니다.</h2><p class="hm-section-desc">도구보다 맥락이 이어지는 흐름을 설계했습니다.</p></div></div>
-  <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1 / TO-BE FLOW</span><div><h3 class="hm-subtitle">요청이 들어온 순간부터<br>판단이 남는 일곱 단계를 정의했습니다.</h3></div></div>
-    <div class="ways-list hm-ds-numbered-list">
+<section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">결국 협업 흐름을,<br>문제에서 학습까지 이어지게 설계했습니다.</h2><p class="hm-section-desc hm-ds-section__description">도구보다 맥락이 이어지는 흐름을 설계했습니다.</p></div></div>
+
+  <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1 / TO-BE FLOW</span><div><h3 class="hm-subtitle hm-ds-subsection__title">요청이 들어온 순간부터<br>판단이 남는 일곱 단계를 정의했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">아래 막대는 성과 비율이 아니라 일곱 단계의 진행 순서를 보여줍니다.</p></div></div>
+    <div class="hm-ds-data-viz hm-ds-home-bars hm-ds-subtitle-to-content" data-hm-chart aria-label="협업 프로세스 일곱 단계 진행 구조">
+      <div class="hm-ds-home-bar hm-ds-home-bar--blue hm-ds-progress-bar--1"><span class="hm-ds-home-bar__label">문제 정의</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">01 / 07</b></div>
+      <div class="hm-ds-home-bar hm-ds-home-bar--blue-new hm-ds-progress-bar--2"><span class="hm-ds-home-bar__label">요구조건</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">02 / 07</b></div>
+      <div class="hm-ds-home-bar hm-ds-home-bar--green hm-ds-progress-bar--3"><span class="hm-ds-home-bar__label">대안 설계</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">03 / 07</b></div>
+      <div class="hm-ds-home-bar hm-ds-home-bar--yellow hm-ds-progress-bar--4"><span class="hm-ds-home-bar__label">동작 검증</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">04 / 07</b></div>
+      <div class="hm-ds-home-bar hm-ds-home-bar--blue hm-ds-progress-bar--5"><span class="hm-ds-home-bar__label">근거와 결정</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">05 / 07</b></div>
+      <div class="hm-ds-home-bar hm-ds-home-bar--blue-new hm-ds-progress-bar--6"><span class="hm-ds-home-bar__label">일정·담당</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">06 / 07</b></div>
+      <div class="hm-ds-home-bar hm-ds-home-bar--green hm-ds-progress-bar--7"><span class="hm-ds-home-bar__label">학습 축적</span><div class="hm-ds-home-bar__track"><i class="hm-ds-home-bar__fill"></i></div><b class="hm-ds-home-bar__value">07 / 07</b></div>
+    </div>
+    <div class="hm-ds-numbered-list hm-ds-subsection-gap">
       <article><span class="hm-roman-no">IX.</span><h4>문제 정의</h4><p>사용자와 사업의 문제를 먼저 맞춥니다.</p></article>
       <article><span class="hm-roman-no">X.</span><h4>요구조건</h4><p>정책·목표·조건과 제약을 문서화합니다.</p></article>
       <article><span class="hm-roman-no">XI.</span><h4>대안 설계</h4><p>UX가 흐름과 화면 대안을 구체화합니다.</p></article>
@@ -121,8 +104,9 @@ html body.ways-page{background:#000!important;color:#fff!important}
       <article><span class="hm-roman-no">XV.</span><h4>학습 축적</h4><p>예외와 판단 기준을 다음 과제에 남깁니다.</p></article>
     </div>
   </div>
-  <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.2 / ROLE</span><div><h3 class="hm-subtitle">누가 화면을 그리느냐보다,<br>어떤 판단을 책임지는지 다시 나눴습니다.</h3></div></div>
-    <div class="ways-list hm-ds-numbered-list">
+
+  <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.2 / ROLE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">누가 화면을 그리느냐보다,<br>어떤 판단을 책임지는지 다시 나눴습니다.</h3></div></div>
+    <div class="hm-ds-numbered-list hm-ds-subtitle-to-content">
       <article><span class="hm-roman-no">XVI.</span><h4>문제·정책·요구조건</h4><p>사업 목표와 정책, 해결할 문제를 정의합니다.<br><br>PROBLEM · REQUIREMENT</p></article>
       <article><span class="hm-roman-no">XVII.</span><h4>사용자 흐름·화면 대안</h4><p>문제에 맞는 구조와 인터랙션을 검증합니다.<br><br>FLOW · INTERACTION · PROTOTYPE</p></article>
       <article><span class="hm-roman-no">XVIII.</span><h4>기술 제약·구현 가능성</h4><p>설계 단계에서 기술 조건과 예외를 검토합니다.<br><br>FEASIBILITY · EXCEPTION</p></article>
@@ -131,22 +115,28 @@ html body.ways-page{background:#000!important;color:#fff!important}
   </div>
 </div></section>
 
-<section class="hm-section" id="direction" data-chapter="04"><div class="hm-wrap">
-  <div class="hm-section-head hm-reveal"><div><span class="hm-section-no">04</span><h2 class="hm-section-title js-scramble">그리고 바뀐 방식을,<br>실제 프로젝트 문서와 리뷰에 적용했습니다.</h2><p class="hm-section-desc">실제 문서와 리뷰에 새로운 협업 방식을 적용했습니다.</p></div></div>
-  <div class="ways-flow hm-no-vertical-lines hm-reveal">
-    <article><span>01 / BEFORE</span><h4>기존 PPT·Storyboard 요청 구조</h4><p>공개 가능한 자료를 배치합니다.</p></article>
-    <article><span>02 / AFTER</span><h4>문제·요구조건 중심 요청 구조</h4><p>개선 문서를 배치합니다.</p></article>
-    <article><span>03 / FIGMA</span><h4>UX 설계·리뷰 기록</h4><p>Figma 화면을 배치합니다.</p></article>
-    <article><span>04 / PLANNER</span><h4>일정·Owner·상태 관리</h4><p>Planner 화면을 배치합니다.</p></article>
-    <article><span>05 / PROTOTYPE</span><h4>동작 가능한 리뷰 목업</h4><p>AI·Figma 프로토타입을 배치합니다.</p></article>
-    <article><span>06 / DECISION</span><h4>피드백보다 결정이 남는 기록</h4><p>리뷰 로그를 배치합니다.</p></article>
+<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">그리고 바뀐 방식을,<br>실제 프로젝트 문서와 리뷰에 적용했습니다.</h2><p class="hm-section-desc hm-ds-section__description">실제 문서와 리뷰에 새로운 협업 방식을 적용했습니다.</p></div></div>
+  <div class="hm-ds-flow hm-ds-title-to-subsection hm-reveal">
+    <div class="hm-ds-flow__groups">
+      <div class="hm-ds-flow__row hm-ds-flow__row--3">
+        <article class="hm-ds-flow__node"><span class="hm-card-no">01 / BEFORE</span><h4>기존 PPT·Storyboard 요청 구조</h4><p>공개 가능한 자료를 배치합니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">02 / AFTER</span><h4>문제·요구조건 중심 요청 구조</h4><p>개선 문서를 배치합니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">03 / FIGMA</span><h4>UX 설계·리뷰 기록</h4><p>Figma 화면을 배치합니다.</p></article>
+      </div>
+      <div class="hm-ds-flow__row hm-ds-flow__row--3">
+        <article class="hm-ds-flow__node"><span class="hm-card-no">04 / PLANNER</span><h4>일정·Owner·상태 관리</h4><p>Planner 화면을 배치합니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">05 / PROTOTYPE</span><h4>동작 가능한 리뷰 목업</h4><p>AI·Figma 프로토타입을 배치합니다.</p></article>
+        <article class="hm-ds-flow__node"><span class="hm-card-no">06 / DECISION</span><h4>피드백보다 결정이 남는 기록</h4><p>리뷰 로그를 배치합니다.</p></article>
+      </div>
+    </div>
   </div>
-  <div class="ways-conclusion hm-reveal"><h3>결론</h3><p>문제와 결정이 사라지지 않는 경험을 설계했습니다.</p></div>
+  <div class="hm-ds-subsection-gap hm-reveal"><h3 class="hm-subtitle hm-ds-subsection__title">결론</h3><p class="hm-subcopy hm-ds-subsection__description">문제와 결정이 사라지지 않는 경험을 설계했습니다.</p></div>
 </div></section>
 </main>
-<footer class="hm-footer" id="contact"><div class="hm-wrap"><a href="./himart-reuse.html">← 중고 가전의 신뢰 기준</a><div><span>NEXT HIMART CASE</span><a href="./himart-team.html">새 팀의 공통 언어 만들기 →</a></div></div></footer>
+<footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./himart-reuse.html">← 중고 가전의 신뢰 기준</a><div><span>NEXT HIMART CASE</span><a href="./himart-team.html">새 팀의 공통 언어 만들기 →</a></div></div></footer>
 <script src="./himart-live-boot.js?v=20260906-1"></script>
-<script src="./design-system/animation.js?v=20260906-13"></script>
+<script src="./design-system/animation.js?v=20260906-14"></script>
 <script src="./design-system/scramble-final.js?v=20260906-11"></script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
 </body>
