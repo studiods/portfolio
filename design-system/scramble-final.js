@@ -1,9 +1,8 @@
-/* HIMART Design System — fail-safe title scramble and content constraints. */
+/* HIMART Design System — fail-safe title scramble. Authored copy is never mutated or shortened. */
 (() => {
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const titleSelector = '#live-main .hm-section-head .hm-section-title.js-scramble, #live-main .hm-section-head .hm-section-title';
   const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title.js-scramble, :is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title';
-  const descriptionSelector = '#live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc)';
   const stateByElement = new WeakMap();
   const activeAnimations = new Set();
   let heroStarted = false;
@@ -108,14 +107,6 @@
     });
   };
 
-  const enforceDescriptionLimit = () => {
-    document.querySelectorAll(descriptionSelector).forEach(element => {
-      if (element.dataset.hmDescriptionLimited === 'true') return;
-      const text = (element.textContent || '').replace(/\s+/g, ' ').trim();
-      if ([...text].length > 40) element.textContent = [...text].slice(0, 39).join('') + '…';
-      element.dataset.hmDescriptionLimited = 'true';
-    });
-  };
 
   const launchHero = () => {
     if (heroStarted) return;
@@ -131,7 +122,6 @@
   };
 
   const initialise = () => {
-    enforceDescriptionLimit();
     launchHero();
     scanTitles();
   };

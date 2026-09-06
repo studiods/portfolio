@@ -1,4 +1,4 @@
-/* HIMART Design System v1.7 — foundation tokens
+/* HIMART Design System v1.8 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
@@ -80,6 +80,7 @@
   --hm-title-description-gap:20px;
   --hm-title-description-max:40ch;
   --hm-hero-description-width:32ch;
+  --hm-hero-description-width-mobile:38ch;
   --hm-subtitle-to-content:80px;
   --hm-title-to-subsection-gap:160px;
   --hm-section-head-to-subsection:160px;

@@ -1,7 +1,7 @@
-@import url("./index.css?v=20260907-4");
+@import url("./index.css?v=20260907-5");
 
 /*
-  HIMART Shared System v1.8 — sole final-authority layer.
+  HIMART Shared System v1.9 — sole final-authority layer.
   Typography, tracking and spacing mirror the current himart.html production hierarchy.
 */
 :root{
@@ -64,11 +64,19 @@ html body.himart-page-body #live-main .stepup-en{
   font-weight:300!important;
 }
 html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead{
+  width:fit-content!important;
   max-width:var(--hm-hero-description-width)!important;
   min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
   margin-top:var(--hm-title-description-gap)!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
   white-space:normal!important;
-  text-wrap:balance!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+  -webkit-line-clamp:unset!important;
+  line-clamp:none!important;
 }
 
 /* Canonical type hierarchy: 82 / 52 / 42 / 28 / 16 / 12 */
@@ -112,6 +120,29 @@ html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
+
+/* Text integrity contract: authored prose is never shortened, clamped or ellipsized. */
+html body.himart-page-body #live-main :is(
+  .hm-lead,.hm-ds-hero__description,.hm-section-desc,.hm-ds-section__description,.hm-subcopy,.hm-ds-subsection__description,
+  .data-card-head .desc,.hm-ds-card__body,.hm-ds-role__body,.narrative-copy,.journey-block-copy,.behavior-note,
+  .stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p,.role-card p,.hm-ds-flow__node p,
+  .flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.prototype-case-copy p,.sentiment-conclusion p,
+  .sentiment-keywords,.hm-ds-numbered-list>article>p,.phone-meta p
+){
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  white-space:normal!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+  overflow-wrap:break-word!important;
+  -webkit-line-clamp:unset!important;
+  line-clamp:none!important;
+  -webkit-box-orient:initial!important;
+}
+
 html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.hm-source,.phone-meta span,.phone-meta b){
   font-family:var(--hm-font-en)!important;
   font-size:var(--hm-type-note)!important;

@@ -71,10 +71,15 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
 }
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
   display:block!important;
+  width:fit-content!important;
   max-width:var(--hm-hero-description-width)!important;
   min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
   margin:var(--hm-title-description-gap) 0 0!important;
   padding:0!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
   color:var(--hm-text-secondary)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:var(--hm-type-body)!important;
@@ -82,8 +87,12 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
   line-height:1.58!important;
   letter-spacing:var(--hm-track-body)!important;
   white-space:normal!important;
-  text-wrap:balance!important;
+  text-wrap:pretty!important;
   word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  -webkit-line-clamp:unset!important;
+  line-clamp:none!important;
+  -webkit-box-orient:initial!important;
 }
 
 /* Approved himart.html bottom rail: desktop 40px / mobile 28px. */
@@ -164,7 +173,7 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
     line-height:1.08!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
-    max-width:30ch!important;
+    max-width:min(var(--hm-hero-description-width-mobile),88%)!important;
     margin-top:16px!important;
     font-size:var(--hm-type-body-mobile)!important;
     line-height:1.5!important;

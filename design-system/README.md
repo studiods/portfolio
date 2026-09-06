@@ -52,6 +52,16 @@
 - 두 개 이상의 Hero clip은 hidden `<video>`를 추가하는 double-buffer를 사용하지 않는다. 하나의 `<video>`에서 clip 종료 시 black transition → source 교체 → 첫 프레임 준비 후 노출 순서로 처리한다.
 - sequence video의 기본 preload는 `metadata`이며 실제 viewport에 보일 때만 `auto`로 올리고 재생한다.
 
+
+## Text integrity / wrapping contract
+
+- Hero description은 고정 2줄/3줄 clamp를 사용하지 않는다. `word-break:keep-all` + `text-wrap:pretty`로 문맥에 가까운 자연 줄바꿈을 사용한다.
+- Mobile Hero description은 `--hm-hero-description-width-mobile`을 사용하고 화면 내부 container의 최대 88%까지만 사용해 좌우 여백을 남긴다.
+- Hero/section/subsection/card/flow 등 모든 prose는 authored text 전체를 표시한다. `text-overflow:ellipsis`, 숫자형 `line-clamp`, JS substring/slice 기반 말줄임을 금지한다.
+- `scramble-final.js`는 타이틀 scramble만 담당하며 본문 텍스트를 변경하거나 자르지 않는다.
+- media/chart/frame의 `overflow:hidden`과 navigation label의 `white-space:nowrap`은 시각 구조용이며 prose truncation으로 사용하지 않는다.
+- 신규 case에서 텍스트 길이를 맞추기 위해 DOM text를 자르지 않고, design-system width/wrap token과 authored copy를 조정한다.
+
 ## Numbered editorial list contract
 
 - `hm-ds-numbered-list`는 로마 숫자 + 본문 타이틀 + 설명 구조의 공통 컴포넌트다.

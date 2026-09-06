@@ -97,10 +97,15 @@ body.himart-wide-sticky-test-page .hm-floating-chapter-title{
   font-weight:300!important;
   line-height:1.22!important;
   letter-spacing:-.035em!important;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
+  display:block;
+  height:auto;
+  max-height:none;
+  overflow:visible;
+  text-overflow:clip;
+  white-space:normal;
+  text-wrap:pretty;
+  -webkit-line-clamp:unset;
+  line-clamp:none;
 }
 
 /* Keep the original major title fully visible in document flow. */

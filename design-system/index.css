@@ -1,11 +1,11 @@
-/* HIMART Design System v1.9 — static style entrypoint
+/* HIMART Design System v2.0 — static style entrypoint
    Animation remains separate: load design-system/animation.js explicitly. */
-@import url("./tokens.css?v=20260907-3");
+@import url("./tokens.css?v=20260907-4");
 @import url("./typography.css?v=20260906-5");
 @import url("./spacing.css?v=20260906-3");
 @import url("./layout.css");
 @import url("./motion.css?v=20260906-2");
-@import url("./components/hero.css?v=20260907-1");
+@import url("./components/hero.css?v=20260907-2");
 @import url("./components/section.css?v=20260906-3");
 @import url("./components/cards.css?v=20260906-2");
 @import url("./components/data-viz.css?v=20260906-1");
@@ -19,5 +19,5 @@
 @import url("./responsive.css");
 @import url("./components/final-tuning.css?v=20260907-2");
 @import url("./tracking.css?v=20260906-2");
-@import url("./mobile-system.css?v=20260907-1");
+@import url("./mobile-system.css?v=20260907-2");
 @import url("./mobile-locks.css?v=20260907-2");

@@ -92,3 +92,14 @@
 - Traffic SVG는 `viewBox=0 0 1160 330`, 기존 session/purchase/CVR 좌표를 유지하고 SVG 내부 새 font-family를 만들지 않는다.
 - 모바일 780px 이하에서 numbered list·split ratio·ring row·flow가 단일 열로 내려가며 가로 overflow가 없어야 한다.
 - GitHub Pages build 성공과 정적 구조 PASS를 확인한 뒤 브라우저 픽셀 검증을 별도 기록한다.
+
+
+## Text integrity 회귀 확인 (2026-09-07)
+
+- 모든 HTML/CSS/JS를 정적 스캔해 `text-overflow:ellipsis`가 없어야 한다.
+- 숫자형 `line-clamp`가 없어야 하며 `unset/none`은 truncation 방지용으로만 허용한다.
+- `scramble-final.js`에 description 길이 제한 또는 `slice(...)+…` 로직이 없어야 한다.
+- Hero description은 desktop width token과 mobile width token을 사용하며 mobile은 container의 88%를 넘지 않는다.
+- Hero와 모든 prose role은 `height:auto`, `max-height:none`, `overflow:visible`, `white-space:normal` 계약을 갖는다.
+- 실제 media/chart의 clipping용 `overflow:hidden`은 허용하며 prose selector에는 사용하지 않는다.
+- GitHub Pages build/deploy 성공을 확인한다.

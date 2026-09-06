@@ -1,5 +1,5 @@
 /*
-  HIMART Mobile System v1.0
+  HIMART Mobile System v1.2
   Canonical mobile authority for the current Himart / Reuse / Ways case studies.
   Desktop is intentionally untouched: every rule is isolated below 780px.
 
@@ -131,7 +131,17 @@
 
   /* Hero description and metadata use the same hierarchy on all three pages. */
   html body.himart-page-body:is(.himart-commerce-page,.reuse-current,.ways-page) #live-main > .hm-ds-hero .hm-ds-hero__description{
-    max-width:30ch!important;
+    width:fit-content!important;
+    max-width:min(var(--hm-hero-description-width-mobile),88%)!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    white-space:normal!important;
+    text-wrap:pretty!important;
+    word-break:keep-all!important;
+    -webkit-line-clamp:unset!important;
+    line-clamp:none!important;
     margin-top:16px!important;
     font-size:var(--hm-type-body-mobile)!important;
     line-height:1.5!important;
