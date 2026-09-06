@@ -10,10 +10,8 @@
 /* HIMART WAYS — page composition using the shared Himart system. */
 html body.ways-page{background:#000!important;color:#fff!important}
 .ways-hero{position:relative;aspect-ratio:16/9;height:100svh;min-height:100svh;overflow:hidden;background:#000;color:#fff}
-.ways-hero__image,.ways-hero__shade{position:absolute;inset:0;pointer-events:none}
-.ways-hero__image{background:url('./assets/image/himart-ways.jpg') center/cover no-repeat;filter:grayscale(100%)}
-.ways-hero__shade{background:linear-gradient(180deg,rgba(0,0,0,.26) 0%,rgba(0,0,0,.62) 54%,#000 100%)}
-.ways-hero .hm-wrap{position:relative;z-index:1;height:100%;min-height:0;display:block;padding-bottom:0}
+.ways-hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.ways-hero .hm-wrap{position:relative;z-index:2;height:100%;min-height:0;display:block;padding-bottom:0}
 .ways-hero .hm-movie-copy{position:absolute;top:50%;left:0;right:0;max-width:1080px;margin:0;transform:translateY(-50%)}
 .ways-hero .hm-kicker{margin-bottom:24px;color:rgba(255,255,255,.72)}
 .ways-hero .hm-title{font-size:clamp(58px,5.7vw,82px);line-height:1.04}
@@ -65,14 +63,17 @@ html body.ways-page{background:#000!important;color:#fff!important}
 </head>
 <body class="himart-page-body himart-movie-page himart-narrative-ready ways-page">
 <main id="live-main">
-<header class="hm-hero hm-hero--system ways-hero" id="top">
-  <div class="ways-hero__image" aria-hidden="true"></div><div class="ways-hero__shade" aria-hidden="true"></div>
-  <div class="hm-wrap">
-    <div class="hm-movie-copy">
-      <h1 class="hm-title js-scramble">휘발되는 소통을 줄이고,<br>일이 남는 방식을 만들었습니다.</h1>
-      <p class="hm-lead">협업의 맥락과 결정이 남는 구조를 설계했습니다.</p>
+<header class="hm-hero hm-hero--system ways-hero hm-ds-hero" id="top" data-hm-hero data-hm-fade-distance="420">
+  <video class="ways-hero__video hm-ds-hero__video" data-hm-video data-hm-video-sequence="./assets/ways_01.mp4|./assets/ways_02.mp4" autoplay muted playsinline preload="auto" aria-hidden="true">
+    <source src="./assets/ways_01.mp4" type="video/mp4">
+  </video>
+  <div class="hm-ds-hero__overlay" aria-hidden="true"></div>
+  <div class="hm-wrap hm-ds-hero__inner">
+    <div class="hm-movie-copy hm-ds-hero__copy">
+      <h1 class="hm-title js-scramble hm-ds-hero__title">휘발되는 소통을 줄이고,<br>일이 남는 방식을 만들었습니다.</h1>
+      <p class="hm-lead hm-ds-hero__description">협업의 맥락과 결정이 남는 구조를 설계했습니다.</p>
     </div>
-    <div class="hm-meta">
+    <div class="hm-meta hm-ds-hero__meta">
       <div><span>ROLE</span><b>UX DESIGN LEAD · PROCESS DESIGN · UX DIRECTION</b></div>
       <div><span>FOCUS</span><b>COLLABORATION · OWNERSHIP · DECISION</b></div>
       <div><span>SCOPE</span><b>PO · UX · BUSINESS · DEV</b></div>
@@ -153,7 +154,7 @@ html body.ways-page{background:#000!important;color:#fff!important}
 </main>
 <footer class="hm-footer" id="contact"><div class="hm-wrap"><a href="./himart-reuse.html">← 중고 가전의 신뢰 기준</a><div><span>NEXT HIMART CASE</span><a href="./himart-team.html">새 팀의 공통 언어 만들기 →</a></div></div></footer>
 <script src="./himart-live-boot.js?v=20260906-1"></script>
-<script src="./design-system/animation.js?v=20260906-9"></script>
+<script src="./design-system/animation.js?v=20260906-10"></script>
 <script src="./design-system/scramble-final.js?v=20260906-11"></script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
 </body>
