@@ -40,7 +40,7 @@
   --hm-type-note-mobile:11px;
 
   /* Mobile circular journey geometry. */
-  --hm-mobile-circle-size:clamp(136px,42vw,164px);
+  --hm-mobile-circle-size:clamp(168px,50vw,200px);
   --hm-mobile-tablet-width:min(100%,320px);
   --hm-mobile-tablet-radius:999px;
 
