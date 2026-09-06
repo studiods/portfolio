@@ -152,9 +152,9 @@
     Desktop project-copy handoff:
     - each copy rises at the exact same scroll rate as its media, with both top edges aligned;
     - once the copy reaches viewport center it stops, while the media keeps scrolling;
-    - the outgoing handoff now spans 100vh -> 50vh instead of 75vh -> 50vh, exactly doubling its scroll-height exposure;
-    - opacity stays visible longer with a squared progress before smoothstep;
-    - the outgoing copy can travel up to 192px, twice the previous 96px distance, before replacement completes.
+    - the outgoing handoff spans 100vh -> 50vh;
+    - opacity drops to about 50% relatively quickly in the first 28% of the handoff, then fades more slowly through the remaining distance;
+    - the outgoing copy travels up to 120px before replacement completes.
   */
   const updateProjectCopies = () => {
     const isDesktop = window.innerWidth > 780;
@@ -174,6 +174,19 @@
     const center = viewportHeight * .5;
     const handoffStart = viewportHeight;
     const gridBottom = grid.getBoundingClientRect().bottom;
+
+    const outgoingOpacity = progress => {
+      const p = clamp(progress, 0, 1);
+      const earlyEnd = .28;
+
+      if (p <= earlyEnd) {
+        const early = smoothstep(p / earlyEnd);
+        return 1 - .5 * early;
+      }
+
+      const tail = smoothstep((p - earlyEnd) / (1 - earlyEnd));
+      return .5 * (1 - tail);
+    };
 
     copies.forEach((copy, index) => {
       if (!copy) return;
@@ -200,9 +213,8 @@
           1
         );
         const motion = smoothstep(progress);
-        const fade = smoothstep(progress * progress);
-        opacity = 1 - fade;
-        shift = -192 * motion;
+        opacity = outgoingOpacity(progress);
+        shift = -120 * motion;
       }
 
       copy.style.setProperty('--works-copy-top', `${y.toFixed(1)}px`);
