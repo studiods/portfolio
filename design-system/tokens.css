@@ -1,4 +1,4 @@
-/* HIMART Design System v1.3 — foundation tokens
+/* HIMART Design System v1.4 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment. */
 :root{
   --hm-bg-page:#000;
@@ -50,6 +50,17 @@
   --hm-space-title-subsection:160px;
   --hm-space-section:200px;
   --hm-space-hero:200px;
+
+  /* Section boundary contract.
+     Every major section starts 200px below its boundary, ends with 100px,
+     and the final major section restores a full 200px bottom breathing room. */
+  --hm-section-padding-top:200px;
+  --hm-section-padding-bottom:100px;
+  --hm-section-padding-bottom-last:200px;
+  --hm-section-padding-top-mobile:120px;
+  --hm-section-padding-bottom-mobile:80px;
+  --hm-section-padding-bottom-last-mobile:120px;
+
   --hm-rule-to-section-number:32px;
   --hm-title-description-gap:20px;
   --hm-title-description-max:40ch;
