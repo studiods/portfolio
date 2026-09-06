@@ -5,116 +5,14 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>하이마트 온라인 구매여정 — Movie Test</title>
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260906-3">
-<style>
-.hm-movie-hero{position:relative;min-height:100vh;overflow:hidden;background:#000;color:#fff}
-.hm-movie-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-.hm-movie-overlay{position:absolute;inset:0;background:#000;opacity:.5;z-index:1;pointer-events:none}
-.hm-movie-hero .hm-wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:120px;padding-bottom:40px}
-.hm-movie-hero .hm-hero-bottom{margin-top:clamp(48px,8vh,110px)}
-.hm-movie-hero .hm-lead{opacity:.8}
-.hm-movie-hero .hm-meta{border-top:1px solid rgba(255,255,255,.7);padding-top:18px}
-.hm-movie-hero .hm-meta>div:last-child{border-bottom:1px solid rgba(255,255,255,.7);padding-bottom:18px}
-.hm-section,.hm-footer{position:relative}
-.hm-reveal{opacity:0;transform:translate3d(0,42px,0);transition:opacity .8s ease,transform .9s cubic-bezier(.22,1,.36,1)}
-.hm-reveal.is-visible{opacity:1;transform:none}
-.wide-rise-target{opacity:0;transform:translate3d(0,42px,0);transition:opacity .85s ease,transform .95s cubic-bezier(.22,1,.36,1)}
-.wide-rise-target.is-wide-rise-in{opacity:1;transform:none}
-@media(max-width:700px){.hm-movie-hero .hm-wrap{padding-bottom:28px}.hm-movie-hero .hm-lead{font-size:18px}.hm-movie-hero .hm-meta{font-size:12px}}
-</style><style>
-.hm-movie-hero{position:sticky!important;top:0;z-index:1}
-.hm-movie-hero .hm-wrap{justify-content:flex-start!important;padding-top:0!important;padding-bottom:40px!important}
-.hm-movie-hero .hm-title{margin-top:200px!important}
-.hm-movie-hero .hm-hero-bottom{position:absolute;left:0;right:0;bottom:40px;margin:0!important}
-.hm-movie-overlay{opacity:var(--movie-darkness,.5)!important;transition:opacity .12s linear}
-.hm-movie-hero .hm-lead{color:#fff!important;opacity:.8!important;margin-top:40px!important}
-.hm-movie-hero .hm-meta{border-top:1px solid rgba(255,255,255,.2)!important}
-.hm-movie-hero .hm-meta>div:last-child{border-bottom:1px solid rgba(255,255,255,.2)!important}
-.hm-section{position:relative;z-index:2;background:#000000}
-.hm-section-head,.hm-subsection,.narrative-block,.data-card,.principle-grid,.design-rule{will-change:transform,opacity}
-.about-dummy{display:none}
-@media(max-width:700px){.hm-movie-hero .hm-title{margin-top:140px!important}.hm-movie-hero .hm-hero-bottom{bottom:28px}.hm-movie-hero .hm-lead{margin-top:28px!important}}
-</style><style id="himart-movie-final-overrides">
-html body.himart-movie-page .top,
-html body.himart-movie-page .top a{color:#fff!important;mix-blend-mode:normal!important;opacity:1!important}
-html body.himart-movie-page .hm-movie-hero{height:100vh!important;min-height:100vh!important;padding:0!important;position:sticky!important;top:0!important;z-index:1!important}
-html body.himart-movie-page .hm-movie-hero>.hm-wrap{position:relative!important;width:min(calc(100% - 80px),1360px)!important;height:100%!important;min-height:100%!important;margin:0 auto!important;padding:0 0 40px!important;display:block!important}
-html body.himart-movie-page .hm-movie-hero .hm-title{position:absolute!important;top:200px!important;left:0!important;margin:0!important;max-width:1280px!important;font-size:clamp(58px,5.7vw,82px)!important;line-height:1.04!important}
-html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{position:absolute!important;left:0!important;right:0!important;bottom:40px!important;margin:0!important;padding:0!important}
-html body.himart-movie-page .hm-movie-hero .hm-lead{display:block!important;max-width:1000px!important;margin:0 0 40px!important;padding:0!important;color:#fff!important;opacity:.8!important;font-size:18px!important;line-height:1.5!important;white-space:pre-line!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta{margin:0!important;min-height:74px!important;border-top:1px solid rgba(255,255,255,.2)!important;border-bottom:1px solid rgba(255,255,255,.2)!important;align-items:center!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta>div{min-height:74px!important;height:74px!important;padding:0 18px 0 0!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta>div+div{padding-left:18px!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0 0 8px!important;color:rgba(255,255,255,.8)!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta b{color:#fff!important}
-html body.himart-movie-page #brand{position:relative!important;z-index:2!important;background:#000000!important}
-html body.himart-movie-page .movie-role-title,
-html body.himart-movie-page .role-card h4{font-family:'Averta PE',var(--hm-en),sans-serif!important;font-weight:400!important}
-html body.himart-movie-page .brand-synthesis .synthesis-col b{font-size:16px!important;font-family:Pretendard,var(--hm-ko),sans-serif!important;font-weight:300!important}
-html body.himart-movie-page .brand-synthesis .synthesis-col:first-child b{color:var(--hm-blue)!important}
-html body.himart-movie-page .brand-synthesis .synthesis-col:nth-child(2) b{color:var(--hm-red)!important}
-html body.himart-movie-page .brand-synthesis .synthesis-col p{font-size:24px!important;line-height:1.45!important;color:#fff!important;font-weight:300!important}
-html body.himart-movie-page .signal-item h4{font-size:28px!important;line-height:1.2!important}
-html body.himart-movie-page .signal-item p{margin-top:40px!important}
-@media(max-width:780px){
- html body.himart-movie-page .hm-movie-hero>.hm-wrap{width:calc(100% - 36px)!important;padding-bottom:28px!important}
- html body.himart-movie-page .hm-movie-hero .hm-title{top:140px!important;font-size:clamp(38px,10vw,58px)!important}
- html body.himart-movie-page .hm-movie-hero .hm-lead{margin-bottom:28px!important;font-size:16px!important}
- html body.himart-movie-page .hm-movie-hero .hm-meta{grid-template-columns:1fr 1fr!important}
-}
-</style><style id="himart-movie-final-v2">
-html body.himart-movie-page .top,
-html body.himart-movie-page .top a{color:#fff!important;opacity:1!important;mix-blend-mode:normal!important}
-html body.himart-movie-page .hm-movie-hero{height:100vh!important;min-height:100vh!important;padding:0!important;position:sticky!important;top:0!important;z-index:1!important}
-html body.himart-movie-page .hm-movie-hero>.hm-wrap{position:relative!important;width:min(calc(100% - 80px),1360px)!important;height:100%!important;min-height:100%!important;margin:0 auto!important;padding:0!important;display:block!important}
-html body.himart-movie-page .hm-movie-copy{position:absolute!important;top:200px!important;left:0!important;right:0!important}
-html body.himart-movie-page .hm-movie-copy .hm-title{position:static!important;margin:0!important;max-width:1280px!important;font-size:clamp(58px,5.7vw,82px)!important;line-height:1.04!important}
-html body.himart-movie-page .hm-movie-copy .hm-lead{display:block!important;position:static!important;max-width:1000px!important;margin:40px 0 0!important;padding:0!important;color:#fff!important;opacity:.8!important;font-size:18px!important;line-height:1.5!important;white-space:pre-line!important}
-html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{position:absolute!important;left:0!important;right:0!important;bottom:40px!important;margin:0!important;padding:0!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta{display:grid!important;grid-template-columns:1.4fr .95fr .95fr .9fr!important;margin:0!important;min-height:74px!important;height:74px!important;border-top:1px solid rgba(255,255,255,.2)!important;border-bottom:1px solid rgba(255,255,255,.2)!important;align-items:stretch!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta>div{min-height:74px!important;height:74px!important;padding:0 18px 0 0!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta>div+div{padding-left:18px!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0 0 8px!important;color:rgba(255,255,255,.8)!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta b{color:#fff!important}
-html body.himart-movie-page #brand{position:relative!important;z-index:2!important;background:#000000!important}
-html body.himart-movie-page #brand .problem-item p,
-html body.himart-movie-page #data .signal-item p{font-size:16px!important;line-height:1.5!important}
-html body.himart-movie-page #brand .proof-item h4{font-size:26px!important;line-height:1.25!important}
-html body.himart-movie-page #brand .proof-item p{font-size:16px!important;line-height:1.5!important}
-html body.himart-movie-page #brand .brand-synthesis .synthesis-col b{font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important}
-html body.himart-movie-page #brand .brand-synthesis .synthesis-col:first-child b{color:var(--hm-blue)!important}
-html body.himart-movie-page #brand .brand-synthesis .synthesis-col:nth-child(2) b{color:var(--hm-red)!important}
-html body.himart-movie-page #brand .brand-synthesis .synthesis-col p{font-size:24px!important;line-height:1.45!important;color:#fff!important}
-html body.himart-movie-page #data .signal-item h4{font-size:28px!important;line-height:1.2!important}
-html body.himart-movie-page #data .signal-item p{margin-top:40px!important}
-html body.himart-movie-page #journey .role-card h4,
-html body.himart-movie-page #journey .hm-role-name{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
-@media(max-width:780px){
- html body.himart-movie-page .hm-movie-hero>.hm-wrap{width:calc(100% - 36px)!important}
- html body.himart-movie-page .hm-movie-copy{top:140px!important}
- html body.himart-movie-page .hm-movie-copy .hm-title{font-size:clamp(38px,10vw,58px)!important}
- html body.himart-movie-page .hm-movie-copy .hm-lead{font-size:16px!important;margin-top:28px!important}
- html body.himart-movie-page .hm-movie-hero .hm-hero-bottom{bottom:28px!important}
- html body.himart-movie-page .hm-movie-hero .hm-meta{grid-template-columns:1fr 1fr!important;height:auto!important}
-}
-</style><style id="himart-movie-verification-lock">
-html body.himart-movie-page .hm-movie-copy{opacity:var(--movie-copy-opacity,1)!important;transition:opacity .08s linear!important}
-html body.himart-movie-page .hm-movie-copy .hm-lead{margin:40px 0 0!important;color:rgb(255 255 255 / 80%)!important;opacity:1!important;white-space:normal!important}
-html body.himart-movie-page .hm-movie-copy .hm-lead br{display:block!important;content:""!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta{align-items:center!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta>div{justify-content:center!important;align-items:flex-start!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta span{margin:0!important;color:rgba(255,255,255,.8)!important}
-html body.himart-movie-page .hm-movie-hero .hm-meta b{margin-top:2px!important}
-html body.himart-movie-page .narrative-touchpoint-synthesis>h4{font:100 42px/1.18 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
-html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card b{margin:0!important;font:300 16px/1.3 Pretendard,var(--hm-ko),sans-serif!important}
-html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card.positive b{color:var(--hm-blue)!important}
-html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card.negative b{color:var(--hm-red)!important}
-html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{font:300 24px/1.45 Pretendard,var(--hm-ko),sans-serif!important;color:#fff!important}
-@media(max-width:780px){html body.himart-movie-page .hm-movie-copy .hm-lead{margin-top:28px!important}html body.himart-movie-page .narrative-touchpoint-synthesis>h4{font-size:36px!important}}
-</style><link rel="stylesheet" href="./design-system/himart-system.css?v=20260907-4">
-  <link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
+<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./design-system/components/himart-commerce.css?v=20260906-1">
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260906-9">
+<link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
 </head>
-<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-movie-page">
+<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-movie-page himart-commerce-page">
 <main id="live-main">
 <header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
 <video class="hm-movie-video hm-ds-hero__video" data-hm-video autoplay muted loop playsinline preload="auto"><source src="./assets/himart_01.mp4" type="video/mp4"></video>
@@ -137,7 +35,7 @@ html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{fo
 </header>
 <nav class="hm-progress hm-ds-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
 
-<section class="hm-section hm-ds-section" id="brand" data-chapter="01"><div class="hm-wrap">
+<section class="hm-section hm-ds-section" id="brand" data-chapter="01"><div class="hm-wrap hm-ds-wrap">
 <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">홈 개편 요청을 받았지만,
 먼저 하이마트가 어떤 브랜드로
 인식되고 있는지부터 확인했습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">AI로 고객의 목소리를 모아 기대와 불편을 분리했습니다.</p></div>
@@ -151,7 +49,7 @@ html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{fo
 <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.4 / UX POINTS</span><div><h3 class="hm-subtitle hm-ds-subsection__title">우리는 어떤 포인트를 개선된 UX에<br>반드시 반영해야 하는가?</h3><p class="hm-subcopy hm-ds-subsection__description">고객의 기대와 불편을 이후 설계의 원칙으로 정리했습니다.</p></div></div><div class="direction-list"><article class="direction-card"><span class="hm-card-no">01 / EXPERTISE</span><h4>전문성을 24시간 디지털 경험으로</h4><p>매장에서만 느낄 수 있었던 전문 상담과 방문 컨설팅의 신뢰를 온라인에서도 이어가야 했습니다. 상품 선택 과정에서 사용자가 궁금한 조건을 먼저 설명하고, AI Agent와 데이터 기반 가이드가 필요할 때 바로 개입하는 구조로 확장합니다.</p></article><article class="direction-card"><span class="hm-card-no">02 / CARE</span><h4>구매를 케어의 시작으로</h4><p>설치와 A/S에 대한 신뢰가 구매 직전의 안심 요소로만 끝나지 않도록, 설치 일정·보증·A/S·관리·중고판매까지 하나의 관계로 연결합니다. 구매 이후의 상태를 투명하게 보여주는 것이 다시 구매할 이유가 되도록 설계합니다.</p></article><article class="direction-card"><span class="hm-card-no">03 / OMNI</span><h4>온라인과 매장을 하나의 맥락으로</h4><p>스마트픽, 단골매장, 전시상품, 매장 혜택과 전문 상담이 온라인 여정에서 별도 서비스처럼 분리되지 않게 합니다. 온라인에서 만든 관심과 비교 맥락이 매장에서도 이어지고, 매장 경험이 다시 온라인 구매로 돌아올 수 있어야 합니다.</p></article><article class="direction-card"><span class="hm-card-no">04 / BASICS + α</span><h4>검색·탐색의 기본기를 먼저</h4><p>고관여 가전은 가격·스펙·설치·배송·브랜드 조건을 함께 비교해야 하므로 탐색 비용이 큽니다. 속도, 추천검색, 동적 필터, 핵심 정보 위계와 AI 요약을 통해 후보를 빠르게 줄이고 다음 행동으로 넘어가게 합니다.</p></article><article class="direction-card"><span class="hm-card-no">05 / TRANSPARENCY</span><h4>약속과 상태를 눈에 보이게</h4><p>주문·결제·배송·설치·케어 상태를 사용자가 다시 문의하지 않아도 이해할 수 있게 보여줍니다. 총액과 혜택, 설치 가능일, 진행 상태가 바뀌는 순간을 명확히 알리고 개인별 관리 정보를 선제적으로 제공합니다.</p></article></div></div>
 </div></section>
 
-<section class="hm-section hm-ds-section" id="data" data-chapter="02"><div class="hm-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">그리고 실제로 고객들이 서비스를 어떻게
+<section class="hm-section hm-ds-section" id="data" data-chapter="02"><div class="hm-wrap hm-ds-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">그리고 실제로 고객들이 서비스를 어떻게
 이용하고 있는지도 살펴봤습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">실제 이용 데이터로 유입과 이탈 지점을 확인했습니다.</p></div><div class="data-list">
 <article class="data-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.1 / ENTRY CHANNEL</span><div><h3>홈보다 먼저, 이미 외부에서 만들어진 맥락을 가지고 들어왔습니다.</h3><p class="desc">AD·CPS·CRM 유입이 68%.<br>하나의 ‘홈 시작’만으로 설계하기 어려웠습니다.</p></div></div><div class="data-viz pie-layout"><div class="pie"><div class="pie-center">52%<small>AD</small></div></div><div class="legend"><div class="legend-row"><i style="--c:var(--hm-blue)"></i><span>AD · 프로모션/광고</span><b>52%</b></div><div class="legend-row"><i style="--c:var(--hm-newblue)"></i><span>Direct · 직접방문/재방문</span><b>31%</b></div><div class="legend-row"><i style="--c:var(--hm-green)"></i><span>CPS · 가격비교/제휴</span><b>10%</b></div><div class="legend-row"><i style="--c:var(--hm-yellow)"></i><span>CRM · 앱푸시/문자/메일</span><b>6%</b></div><div class="legend-row"><i style="--c:rgba(255,255,255,.25)"></i><span>기타</span><b>1%</b></div></div></div><div class="hm-source hm-ds-source-note">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 · 2026 H1 유입 채널 구조</div></article>
 
@@ -169,28 +67,24 @@ html body.himart-movie-page .narrative-touchpoint-synthesis .synthesis-card p{fo
 <div class="flow-area hm-ds-journey hm-reveal"><div class="flow-head"><h3>데이터를 하나의 여정으로 놓고 보니,<br>끊기는 위치가 더 명확해졌습니다.</h3><p>고객은 홈에서 순서대로 이동하지 않았습니다. 외부에서 이벤트·상품으로 바로 들어오기도 하고, 검색과 비교를 반복한 뒤 PDP에 도달했습니다. 이 실제 흐름을 기준으로 ‘어디에서 다음 행동이 약해지는가’를 다시 표시했습니다.</p></div><div class="flow-groups"><div class="flow-group" data-line-target="3"><div class="flow-label">외부 랜딩 이후 다음 탐색이 끊김 · 기획전 바로 종료 52.2%</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">01 / ENTRY</span><h4>외부 유입</h4><p>AD · CRM · CPS · Direct를 통해 각기 다른 맥락으로 진입</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">02 / LANDING</span><h4>홈·서브홈<br>이벤트·PDP</h4><p>출발점이 하나가 아니며 랜딩에 따라 다음 행동의 맥락도 달라짐</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">03 / EXPLORE</span><h4>검색·카테고리</h4><p>검색과 카테고리를 반복하며 구매 후보를 만들기 시작</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">04 / COMPARE</span><h4>SRP·PLP</h4><p>가격·혜택·설치 조건이 분산돼 후보 압축에 시간이 걸림</p></article></div></div><div class="flow-group" data-line-target="2"><div class="flow-label">PDP 관심은 유지됐지만 장바구니·구매 행동은 약화</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">05 / DECIDE</span><h4>PDP</h4><p>상품 관심은 유지되지만 구매 확신을 만들 정보가 여러 영역에 분산됨</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">06 / CONVERT</span><h4>장바구니·결제</h4><p>혜택과 설치 조건을 다시 확인하는 과정에서 구매 행동이 약해짐</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">07 / INSTALL</span><h4>배송·설치</h4><p>결제 이후 배송 일정과 설치 가능 조건을 다시 확인하면서 구매 맥락이 끊어짐</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">08 / RELATION</span><h4>보증·A/S·케어</h4><p>구매 이후 보증과 A/S, 케어 정보가 앞선 구매 맥락과 분리되어 관리됨</p></article></div></div></div><p class="flow-conclusion">결국 문제는 특정 한 화면이 아니라, <strong>유입 맥락 → 탐색 → 비교 → 구매 확신 → 설치·케어</strong>가 다음 단계로 자연스럽게 이어지지 않는 데 있었습니다.</p></div>
 </div></section>
 
-<section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">그래서 끊어진 여정을, 어디서 시작해도 다음 행동으로
+<section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap hm-ds-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">그래서 끊어진 여정을, 어디서 시작해도 다음 행동으로
 이어지는 구조로 다시 설계했습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">화면별 과제를 하나의 구매 흐름으로 다시 연결했습니다.</p></div>
 
-<div class="flow-area hm-ds-journey hm-reveal" style="margin-top:0"><div class="flow-groups"><div class="flow-group blue" data-line-target="3"><div class="flow-label">유입 맥락을 잃지 않고 탐색으로 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">01 / ENTRY</span><h4>외부·직접 유입</h4><p>어디서 시작하더라도 사용자가 가지고 온 관심과 혜택 맥락을 유지</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">02 / CONTEXT</span><h4>맥락을 이어주는 랜딩</h4><p>최근 관심·혜택·다음 목적지를 바로 보여줘 다시 탐색할 이유를 만듦</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">03 / EXPLORE</span><h4>빠른 탐색 시작</h4><p>검색·목적형 카테고리로 사용자의 니즈를 빠르게 구체화</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">04 / NARROW</span><h4>후보 압축·비교</h4><p>지속 필터와 핵심 비교 기준을 유지해 후보를 빠르게 줄임</p></article></div></div><div class="flow-group blue" data-line-target="2"><div class="flow-label">비교 기준을 유지해 구매 확신과 설치·케어까지 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">05 / CONFIDENCE</span><h4>구매 확신 형성</h4><p>가격·혜택·설치·매장·케어를 한 번에 판단해 결정 부담을 줄임</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">06 / CONFIRM</span><h4>조건이 명확한 주문</h4><p>총액·혜택·배송·설치 조건을 고정해서 보여주고 필수 입력만 남김</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">07 / INSTALL</span><h4>설치·회수 확정</h4><p>설치 일정과 조건, 폐가전 회수를 주문 맥락 안에서 이어 확인</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">08 / CARE</span><h4>보증·A/S·케어</h4><p>구매 이후 진행 상태와 보증·A/S·케어 정보를 하나의 관계로 연결</p></article></div></div></div></div>
+<div class="flow-area hm-ds-journey hm-reveal"><div class="flow-groups"><div class="flow-group blue" data-line-target="3"><div class="flow-label">유입 맥락을 잃지 않고 탐색으로 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">01 / ENTRY</span><h4>외부·직접 유입</h4><p>어디서 시작하더라도 사용자가 가지고 온 관심과 혜택 맥락을 유지</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">02 / CONTEXT</span><h4>맥락을 이어주는 랜딩</h4><p>최근 관심·혜택·다음 목적지를 바로 보여줘 다시 탐색할 이유를 만듦</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">03 / EXPLORE</span><h4>빠른 탐색 시작</h4><p>검색·목적형 카테고리로 사용자의 니즈를 빠르게 구체화</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">04 / NARROW</span><h4>후보 압축·비교</h4><p>지속 필터와 핵심 비교 기준을 유지해 후보를 빠르게 줄임</p></article></div></div><div class="flow-group blue" data-line-target="2"><div class="flow-label">비교 기준을 유지해 구매 확신과 설치·케어까지 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">05 / CONFIDENCE</span><h4>구매 확신 형성</h4><p>가격·혜택·설치·매장·케어를 한 번에 판단해 결정 부담을 줄임</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">06 / CONFIRM</span><h4>조건이 명확한 주문</h4><p>총액·혜택·배송·설치 조건을 고정해서 보여주고 필수 입력만 남김</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">07 / INSTALL</span><h4>설치·회수 확정</h4><p>설치 일정과 조건, 폐가전 회수를 주문 맥락 안에서 이어 확인</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">08 / CARE</span><h4>보증·A/S·케어</h4><p>구매 이후 진행 상태와 보증·A/S·케어 정보를 하나의 관계로 연결</p></article></div></div></div></div>
 
-<div class="hm-subsection hm-ds-subsection hm-reveal" style="margin-top:142px"><div class="hm-subhead"><span class="hm-subno">03.1 / ROLE DEFINITION</span><div><h3 class="hm-subtitle hm-ds-subsection__title">그리고 각 화면의 역할을 다시 정의했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">각 화면을 다음 판단으로 이어주는 역할로 정의했습니다.</p></div></div><div class="role-grid hm-ds-role-grid"><article class="role-card hm-ds-card"><span class="hm-role-name">HOME</span><h4>탐색을 시작시키는 허브</h4><p>최근 행동과 유입 맥락을 기억하고 검색·카테고리·혜택·주요 서비스로 빠르게 이동시킵니다. 홈의 역할을 ‘많이 보여주기’보다 ‘다음 목적지 연결’에 둡니다.</p><strong>최근 맥락 기억 · 빠른 목적지 연결 · 개인화 진입</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">SUBHOME / CATEGORY</span><h4>구매 목적을 구체화하는 화면</h4><p>품목 분류만 나열하지 않고 사용 상황·공간·가구 형태·설치 조건처럼 실제 구매 기준을 중심으로 탐색 방향을 잡아줍니다.</p><strong>품목 중심 분류 → 상황·목적 중심 탐색</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">SEARCH</span><h4>니즈를 상품 후보로 바꾸는 도구</h4><p>추천검색, 가이드, 동적 필터와 AI 요약을 통해 모호한 요구를 실제 상품 후보로 구체화하고 고관여 가전의 학습 비용을 낮춥니다.</p><strong>추천검색 · 동적 필터 · AI 요약 · 탐색 가이드</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">SRP / PLP</span><h4>후보를 빠르게 압축하는 비교 화면</h4><p>대표 가격·혜택·리뷰·설치 조건과 핵심 스펙을 같은 기준으로 비교하고 검색에서 사용한 필터와 맥락을 목록까지 유지합니다.</p><strong>지속 필터 · 핵심 비교 기준 · 가격/혜택 명확화</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">PDP</span><h4>구매 확신을 완료하는 곳</h4><p>가격과 혜택, 리뷰, 설치 조건, 매장 실물 확인, 전문 상담과 케어 정보를 하나의 판단 흐름으로 연결합니다.</p><strong>가격 · 설치 · 매장 · 상담 · 케어를 한 번에 판단</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">CART / PAY</span><h4>최종 조건을 확인하고 확정하는 화면</h4><p>총 결제금액, 적용 혜택, 배송·설치 조건을 명확히 고정해서 보여주고 구매에 필요한 입력만 남깁니다.</p><strong>총액 고정 · 혜택 확인 · 설치 조건 확정 · 입력 최소화</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">INSTALL / CARE</span><h4>관리 관계가 시작되는 화면</h4><p>설치 일정, 폐가전 회수, 보증, A/S와 케어 상태를 하나의 흐름으로 연결해 구매 이후에도 관리가 이어지도록 합니다.</p><strong>설치 상태 · 회수 · 보증 · A/S · 평생Care 연결</strong></article></div></div>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1 / ROLE DEFINITION</span><div><h3 class="hm-subtitle hm-ds-subsection__title">그리고 각 화면의 역할을 다시 정의했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">각 화면을 다음 판단으로 이어주는 역할로 정의했습니다.</p></div></div><div class="role-grid hm-ds-role-grid"><article class="role-card hm-ds-card"><span class="hm-role-name">HOME</span><h4>탐색을 시작시키는 허브</h4><p>최근 행동과 유입 맥락을 기억하고 검색·카테고리·혜택·주요 서비스로 빠르게 이동시킵니다. 홈의 역할을 ‘많이 보여주기’보다 ‘다음 목적지 연결’에 둡니다.</p><strong>최근 맥락 기억 · 빠른 목적지 연결 · 개인화 진입</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">SUBHOME / CATEGORY</span><h4>구매 목적을 구체화하는 화면</h4><p>품목 분류만 나열하지 않고 사용 상황·공간·가구 형태·설치 조건처럼 실제 구매 기준을 중심으로 탐색 방향을 잡아줍니다.</p><strong>품목 중심 분류 → 상황·목적 중심 탐색</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">SEARCH</span><h4>니즈를 상품 후보로 바꾸는 도구</h4><p>추천검색, 가이드, 동적 필터와 AI 요약을 통해 모호한 요구를 실제 상품 후보로 구체화하고 고관여 가전의 학습 비용을 낮춥니다.</p><strong>추천검색 · 동적 필터 · AI 요약 · 탐색 가이드</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">SRP / PLP</span><h4>후보를 빠르게 압축하는 비교 화면</h4><p>대표 가격·혜택·리뷰·설치 조건과 핵심 스펙을 같은 기준으로 비교하고 검색에서 사용한 필터와 맥락을 목록까지 유지합니다.</p><strong>지속 필터 · 핵심 비교 기준 · 가격/혜택 명확화</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">PDP</span><h4>구매 확신을 완료하는 곳</h4><p>가격과 혜택, 리뷰, 설치 조건, 매장 실물 확인, 전문 상담과 케어 정보를 하나의 판단 흐름으로 연결합니다.</p><strong>가격 · 설치 · 매장 · 상담 · 케어를 한 번에 판단</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">CART / PAY</span><h4>최종 조건을 확인하고 확정하는 화면</h4><p>총 결제금액, 적용 혜택, 배송·설치 조건을 명확히 고정해서 보여주고 구매에 필요한 입력만 남깁니다.</p><strong>총액 고정 · 혜택 확인 · 설치 조건 확정 · 입력 최소화</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">INSTALL / CARE</span><h4>관리 관계가 시작되는 화면</h4><p>설치 일정, 폐가전 회수, 보증, A/S와 케어 상태를 하나의 흐름으로 연결해 구매 이후에도 관리가 이어지도록 합니다.</p><strong>설치 상태 · 회수 · 보증 · A/S · 평생Care 연결</strong></article></div></div>
 </div></section>
 
-<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">정의한 전략을 실제 화면과 인터랙션으로 검증하고 있습니다.</p></div><div class="prototype-intro hm-ds-prototype-grid hm-ds-narrative hm-reveal"><h3>전략 문서에서 끝내지 않고,<br>실제로 검증 가능한 화면으로 전환했습니다.</h3><p>핵심 구매 흐름을 프로토타입으로 연결하고 있습니다. 공개 가능한 범위에서는 구조와 진행 범위를 보여주되, 오픈 전 세부 UI는 블러 처리했습니다.</p></div><div class="phone-gallery hm-ds-media-grid hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div></div></section>
+<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">정의한 전략을 실제 화면과 인터랙션으로 검증하고 있습니다.</p></div><div class="prototype-intro hm-ds-prototype-grid hm-ds-narrative hm-reveal"><h3>전략 문서에서 끝내지 않고,<br>실제로 검증 가능한 화면으로 전환했습니다.</h3><p>핵심 구매 흐름을 프로토타입으로 연결하고 있습니다. 공개 가능한 범위에서는 구조와 진행 범위를 보여주되, 오픈 전 세부 UI는 블러 처리했습니다.</p></div><div class="phone-gallery hm-ds-media-grid hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span>12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div></div></section>
 
 <footer class="hm-footer" id="contact"><div class="hm-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart-reuse.html">중고 가전의 신뢰 기준 만들기 →</a></div></div></footer>
 </main>
 
 <script src="./design-system/content-runtime.js?v=20260904-2"></script>
 <script src="./design-system/animation.js?v=20260906-9"></script>
-
 <script src="./design-system/test-content-loader.js?v=20260904-2"></script>
 <script src="./design-system/test-content-final.js?v=20260905-2"></script>
 <script src="./design-system/scramble-final.js?v=20260906-11"></script>
-<script>
-(function(){document.querySelectorAll('body.himart-movie-page #live-main,body.himart-movie-page #live-main > section,body.himart-movie-page .hm-section,body.himart-movie-page .hm-footer').forEach(function(el){el.style.setProperty('background-color','#000000','important');});})();
-</script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
 </body>
 </html>
