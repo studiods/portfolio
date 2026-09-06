@@ -1,0 +1,30 @@
+/* HIMART Commerce case — page-specific visualization compatibility layer.
+   Common hero, typography, spacing, motion, navigation and canvas rules are owned by the shared design system.
+   The legacy production bundle is kept behind this component only to preserve the approved Himart-specific
+   keyword/ring/data-chart/landing visualization while those selectors are migrated incrementally. */
+@import url("../../himart-narrative-v2-production.css?v=20260906-3");
+
+/* Himart-only narrative synthesis treatment moved out of himart.html. */
+html body.himart-commerce-page .narrative-touchpoint-synthesis>h4{
+  font:100 42px/1.18 var(--hm-font-ko)!important;
+  color:#fff!important;
+}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card b{
+  margin:0!important;
+  font:300 16px/1.3 var(--hm-font-ko)!important;
+}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.positive b{color:var(--hm-blue)!important}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.negative b{color:var(--hm-red)!important}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p{
+  font:300 24px/1.45 var(--hm-font-ko)!important;
+  color:#fff!important;
+}
+
+/* The values below are data, not layout overrides. The HTML continues to provide --pct / --c / width / height values. */
+html body.himart-commerce-page :is(.keyword-grid,.voice-stack,.ring-row,.sentiment-graph,.pie-layout,.chart-wrap,.hbars,.landing-stack,.search-slope,.pdp-columns){
+  min-width:0;
+}
+
+@media(max-width:780px){
+  html body.himart-commerce-page .narrative-touchpoint-synthesis>h4{font-size:36px!important}
+}
