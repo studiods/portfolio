@@ -1,11 +1,11 @@
 /* WORKS page component — page styling is owned by the design system. */
 
 body.works-page-body{
-  --works-title-column:35vw;
-  --works-media-column:65vw;
-  --works-title-gutter:7vw;
-  --works-title-content-width:28vw;
-  --works-project-rule-width:8.75vw;
+  --works-title-column:40vw;
+  --works-media-column:60vw;
+  --works-title-media-gap:8vw;
+  --works-title-content-width:calc(var(--works-title-column) - var(--works-title-media-gap) - var(--hm-inset-desktop));
+  --works-project-rule-width:10vw;
   --works-project-rule-gap:44px;
   --works-footer-gap:400px;
   margin:0;
@@ -68,7 +68,7 @@ body.works-page-body .works-page-title .entry-scramble-char{
   letter-spacing:inherit;
 }
 
-/* Project stream: exact 7/20 copy + 13/20 media. Media rows touch with zero vertical gap. */
+/* Project stream: exact 8/20 copy + 12/20 media. Media rows touch with zero vertical gap. */
 body.works-page-body .works-grid{
   display:block;
   margin:0;
@@ -77,7 +77,7 @@ body.works-page-body .works-grid{
 body.works-page-body .works-card{
   position:relative;
   display:grid;
-  grid-template-columns:minmax(0,7fr) minmax(0,13fr);
+  grid-template-columns:minmax(0,8fr) minmax(0,12fr);
   width:100%;
   min-height:0;
   margin:0;
@@ -89,11 +89,12 @@ body.works-page-body .works-card{
 
 /*
   Project copy contract:
-  - the left area is 7/20 of the viewport and media is 13/20;
-  - within the left area, 2/10 is intentionally empty and copy uses only the remaining 8/10;
+  - the left area is 8/20 of the viewport and media is 12/20;
+  - the left inset returns to the global desktop inset;
+  - the gap between copy content and media is 2/10 of the full left area = 8vw;
   - while entering, copy top stays aligned with the corresponding media top;
   - once its center reaches the viewport center, the copy stops there while media keeps scrolling;
-  - the rule above the title is 1/4 of the 7/20 title column, white 30%;
+  - the rule above the title is 1/4 of the 8/20 title column, white 30%;
   - the rule-to-title gap is 44px;
   - works.js owns only scroll-linked positioning and outgoing handoff opacity.
 */
@@ -104,7 +105,7 @@ body.works-page-body .works-card-copy{
   align-self:center;
   min-width:0;
   width:var(--works-title-column);
-  padding:0 0 0 var(--works-title-gutter);
+  padding:0 var(--works-title-media-gap) 0 var(--hm-inset-desktop);
   opacity:var(--works-copy-opacity,1);
   will-change:top,opacity,transform;
 }
