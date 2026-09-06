@@ -135,10 +135,10 @@
 
   /*
     Desktop project-copy handoff:
-    - the current copy is fixed to the viewport vertical center;
-    - the next copy rises from below and eases into that same center position;
-    - the outgoing copy still moves upward by up to 96px;
-    - fade exponent changed from 3 to 1.5, making the opacity falloff about 50% less abrupt.
+    - the current copy stays fixed at the viewport vertical center;
+    - as the next project enters the lower viewport, the current copy dims gradually;
+    - once the next project anchor crosses the 3/4 viewport-height line, the current copy fades rapidly and moves upward;
+    - the next copy rises naturally from below and eases into the same centered position.
   */
   const updateProjectCopies = compact => {
     const isDesktop = window.innerWidth > 780;
@@ -154,9 +154,13 @@
       return;
     }
 
-    const center = window.innerHeight * .5;
-    const handoffDistance = clamp(window.innerHeight * .17, 140, 220);
+    const viewportHeight = window.innerHeight;
+    const center = viewportHeight * .5;
+    const handoffDistance = clamp(viewportHeight * .17, 140, 220);
     const gridBottom = grid.getBoundingClientRect().bottom;
+    const gradualFadeStart = viewportHeight;
+    const rapidFadeStart = viewportHeight * .75;
+    const rapidFadeEnd = center + clamp(viewportHeight * .055, 48, 72);
 
     const easedIncomingOffset = rawDistance => {
       if (rawDistance <= 0) return 0;
@@ -164,6 +168,33 @@
       const u = rawDistance / handoffDistance;
       /* Hermite curve: zero arrival velocity at center, unit velocity at the outer edge. */
       return handoffDistance * (-u * u * u + 2 * u * u);
+    };
+
+    const outgoingFade = nextAnchor => {
+      if (nextAnchor >= gradualFadeStart) return {opacity:1, shift:0};
+
+      if (nextAnchor > rapidFadeStart) {
+        const gradual = clamp(
+          (gradualFadeStart - nextAnchor) / (gradualFadeStart - rapidFadeStart),
+          0,
+          1
+        );
+        return {
+          opacity:1 - .22 * smoothstep(gradual),
+          shift:0
+        };
+      }
+
+      const rapid = clamp(
+        (rapidFadeStart - nextAnchor) / Math.max(1, rapidFadeStart - rapidFadeEnd),
+        0,
+        1
+      );
+      const easedRapid = smoothstep(rapid);
+      return {
+        opacity:.78 * (1 - easedRapid),
+        shift:-96 * easedRapid
+      };
     };
 
     copies.forEach((copy, index) => {
@@ -190,11 +221,9 @@
           })()
         : gridBottom;
 
-      const exit = clamp((center + handoffDistance - nextAnchor) / handoffDistance, 0, 1);
-      if (exit > 0) {
-        opacity *= Math.pow(1 - exit, 1.5);
-        shift = -96 * exit;
-      }
+      const outgoing = outgoingFade(nextAnchor);
+      opacity *= outgoing.opacity;
+      shift = outgoing.shift;
 
       copy.style.setProperty('--works-copy-top', `${y.toFixed(1)}px`);
       copy.style.setProperty('--works-copy-opacity', opacity.toFixed(3));
