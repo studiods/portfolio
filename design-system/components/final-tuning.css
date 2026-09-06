@@ -1,7 +1,7 @@
 /*
   HIMART final tuning — section-only compatibility.
-  Hero layout, copy, overlay and metadata are intentionally NOT defined here.
-  They are owned exclusively by components/hero.css.
+  Hero layout, copy, overlay and metadata are owned exclusively by components/hero.css.
+  Page canvas, typography, tracking and vertical rhythm are owned by himart-system.css.
 */
 html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){
   padding-top:200px!important;
@@ -44,23 +44,3 @@ html body.himart-movie-page #live-main .hm-progress{z-index:4!important}
 @media(max-width:780px){
   html body.himart-movie-page #live-main :is(#brand,#data,#journey,#direction){padding-top:200px!important}
 }
-
-/* Global black-canvas lock: no charcoal section or card surfaces. */
-html body.himart-page-body :is(
-  #live-main,
-  #live-main > section,
-  #live-main > footer,
-  .hm-section,
-  .hm-ds-section,
-  .hm-section-head,
-  .hm-subsection,
-  .hm-card,
-  .data-card,
-  .flow-node,
-  .role-card,
-  .sentiment-block,
-  .conclusion-card,
-  .prototype-case-visual,
-  .behavior-card,
-  .direction-card
-){background-color:#000!important}
