@@ -9,10 +9,12 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260906-7">
-<link rel="stylesheet" href="./design-system/components/nbt-stepup.css?v=20260906-4">
-<link rel="stylesheet" href="./design-system/navigation.css?v=20260906-2">
+<link rel="stylesheet" href="./design-system/tokens.css?v=20260906-4">
+<link rel="stylesheet" href="./design-system/typography.css?v=20260906-5">
+<link rel="stylesheet" href="./design-system/components/nbt-stepup.css?v=20260906-5">
+<link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
 </head>
-<body class="himart-page-body himart-movie-page hm-ds-page nbt-stepup-page himart-narrative-ready">
+<body class="himart-page-body himart-movie-page nbt-stepup-page himart-narrative-ready">
 
 <nav class="hm-gnb top" aria-label="Global navigation">
   <div class="top-center">
@@ -24,85 +26,81 @@
 </nav>
 
 <main id="live-main">
-  <header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
+  <header class="hm-hero hm-movie-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
     <div class="stepup-hero-media" aria-hidden="true">
       <div class="stepup-hero-glow"></div>
       <div class="stepup-hero-phones">
-        <div class="stepup-hero-phone phone-today">
+        <div class="stepup-hero-phone">
           <span class="phone-label">오늘</span>
           <small>cashslide stepup</small>
-          <strong>6,954</strong>
+          <strong data-hm-number>6,954</strong>
           <em>걸음 수</em>
-          <div class="phone-mini-row"><b>5.23 km</b><b>4h 25m</b><b>452 kcal</b></div>
+          <div class="phone-mini-row"><b data-hm-number>5.23 km</b><b data-hm-number>4h 25m</b><b data-hm-number>452 kcal</b></div>
           <div class="phone-reward">목표를 달성하면<br><b>+ CASH</b></div>
         </div>
-        <div class="stepup-hero-phone phone-stats">
+        <div class="stepup-hero-phone">
           <span class="phone-label">통계</span>
           <div class="phone-tabs"><b>오늘</b><span>주간</span><span>월간</span></div>
           <div class="phone-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="phone-metric"><b>13,954</b><span>걸음 수</span></div>
-          <div class="phone-metric"><b>3.24km</b><span>거리</span></div>
+          <div class="phone-metric"><b data-hm-number>13,954</b><span>걸음 수</span></div>
+          <div class="phone-metric"><b data-hm-number>3.24 km</b><span>거리</span></div>
         </div>
         <div class="stepup-hero-phone phone-mate">
           <span class="phone-label">산책 메이트</span>
           <div class="mate-character">MATE</div>
-          <strong>7,000</strong>
+          <strong data-hm-number>7,000</strong>
           <em>목표 걸음 수</em>
           <div class="mate-button">오늘도 같이 걷기</div>
         </div>
       </div>
     </div>
-    <div class="hm-movie-overlay hm-ds-hero__overlay" aria-hidden="true"></div>
+    <div class="hm-movie-overlay" aria-hidden="true"></div>
 
-    <div class="hm-wrap hm-ds-wrap hm-ds-hero__inner">
-      <div class="hm-movie-copy hm-ds-hero__copy">
-        <h1 class="hm-title hm-ds-hero__title stepup-en js-scramble">Designing a habit,<br><span class="light">not a pedometer.</span></h1>
-        <p class="hm-lead hm-ds-hero__description">만보기보다, 계속 걷게 만드는 경험을 설계했습니다.</p>
+    <div class="hm-wrap hm-ds-hero__inner">
+      <div class="hm-movie-copy">
+        <h1 class="hm-title stepup-en js-scramble">Designing a habit,<br><span class="light">not a pedometer.</span></h1>
+        <p class="hm-lead">만보기보다, 계속 걷게 만드는 경험을 설계했습니다.</p>
       </div>
-      <div class="hm-hero-bottom hm-ds-hero__bottom">
-        <div class="hm-meta hm-ds-hero__meta">
+      <div class="hm-hero-bottom">
+        <div class="hm-meta">
           <div><span>ROLE</span><b>UX / PRODUCT DESIGN</b></div>
           <div><span>FOCUS</span><b>HABIT FORMATION · RETENTION</b></div>
           <div><span>SCOPE</span><b>UX STRATEGY · PLANNING · GUI · RESEARCH</b></div>
-          <div><span>PERIOD</span><b>2017—2020</b></div>
+          <div><span>PERIOD</span><b><span data-hm-number="normal">2017—2020</span></b></div>
         </div>
       </div>
     </div>
   </header>
 
-  <nav class="hm-progress hm-ds-progress" aria-label="Case study chapters">
-    <a href="#reframe">01</a>
-    <a href="#strategy">02</a>
-    <a href="#habit">03</a>
-    <a href="#iteration">04</a>
-    <a href="#outcome">05</a>
+  <nav class="hm-progress" aria-label="Case study chapters">
+    <a href="#reframe">01</a><a href="#strategy">02</a><a href="#habit">03</a><a href="#iteration">04</a><a href="#outcome">05</a>
   </nav>
 
-  <section class="hm-section hm-ds-section" id="reframe" data-chapter="01">
-    <div class="hm-wrap hm-ds-wrap">
-      <div class="hm-section-head hm-ds-section__head hm-reveal" data-hm-reveal>
+  <section class="hm-section" id="reframe" data-chapter="01">
+    <div class="hm-wrap">
+      <div class="hm-section-head hm-reveal" data-hm-reveal>
         <div>
-          <span class="hm-section-no hm-ds-section__number">01 / REFRAME</span>
-          <h2 class="hm-section-title hm-ds-section__title js-scramble">처음에는,<br>만보계를 만드는 프로젝트였습니다.</h2>
+          <span class="hm-section-no">01 / REFRAME</span>
+          <h2 class="hm-section-title js-scramble">처음에는,<br>만보계를 만드는 프로젝트였습니다.</h2>
         </div>
-        <p class="hm-section-desc hm-ds-section__description">걷는 만큼 캐시를 주는 만보기에서 시작했습니다.</p>
+        <p class="hm-section-desc">캐시슬라이드의 리워드 경험과 만보기 기능을 결합해, 걷는 행동 자체에 혜택을 주는 서비스에서 시작했습니다.</p>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
           <span class="hm-subno">01.1 / BUSINESS CONTEXT</span>
-          <div><h3 class="hm-subtitle">이미 큰 리워드 서비스였던 캐시슬라이드에,<br>새로운 일상 접점이 필요했습니다.</h3></div>
+          <div><h3 class="hm-subtitle">이미 큰 서비스였던 캐시슬라이드에,<br>새로운 일상 접점이 필요했습니다.</h3></div>
         </div>
         <div class="stepup-question-grid">
           <article>
-            <span>MARKET CONTEXT</span>
-            <h4>리워드 경험을 일상 행동으로 확장</h4>
-            <p>2018년 당시 캐시슬라이드는 가입자 2,000만 명에 근접한 성숙 서비스였습니다. NBT는 광고를 보는 순간뿐 아니라 사용자가 매일 반복하는 행동으로 혜택 경험을 넓히고 있었습니다.</p>
+            <span class="stepup-label"><span data-hm-number="normal">2018</span> MARKET CONTEXT</span>
+            <h4>가입자 <span data-hm-number="normal">2,000</span>만 명에 근접한 캐시슬라이드</h4>
+            <p>당시 캐시슬라이드는 성숙기에 접어든 대표 리워드 서비스였습니다. NBT는 광고 확인을 넘어 사용자의 일상 행동 자체로 혜택 경험을 확장하는 후속 서비스를 전개하고 있었습니다.</p>
           </article>
           <article class="shift">
-            <span>STEPUP</span>
-            <h4>걷기라는 가장 반복적인 행동을 선택</h4>
-            <p>Stepup은 걷는 행동과 캐시 적립을 연결했습니다. 하지만 단순 측정과 보상만으로는 오래 사용할 이유를 만들기 어렵다고 판단했습니다.</p>
+            <span class="stepup-label">NBT MISSION</span>
+            <h4>‘일상의 낙’을 반복 행동으로 확장</h4>
+            <p>NBT는 스텝업을 사람들이 매일 반복하는 활동에 혜택을 더하는 확장 서비스로 소개했습니다. 단순히 걸음을 세는 것보다 매일 다시 사용할 이유를 만드는 것이 더 중요한 과제가 됐습니다.</p>
           </article>
         </div>
       </div>
@@ -114,56 +112,61 @@
         </div>
         <div class="stepup-question-grid">
           <article>
-            <span>START</span>
+            <span class="stepup-label">START</span>
             <h4>얼마나 걸었는가?</h4>
-            <p>걸음 수·거리·칼로리·시간을 측정하고 결과를 확인하는 전형적인 만보기의 질문이었습니다.</p>
+            <p>걸음 수·거리·칼로리·시간을 보여주고 걷는 만큼 캐시를 제공하는 전형적인 만보기형 리워드 경험에서 출발했습니다.</p>
           </article>
           <article class="shift">
-            <span>REFRAME</span>
+            <span class="stepup-label">SHIFT</span>
             <h4>어떻게 하면 내일도 걷게 만들 수 있을까?</h4>
-            <p>목표, 즉각적인 보상, 캐릭터와의 상호작용을 연결해 사용자가 다시 돌아오는 이유를 제품의 중심으로 옮겼습니다.</p>
+            <p>측정 자체보다 목표, 보상, 메이트와의 상호작용을 통해 사용자가 다시 돌아오고 걷는 행동을 반복하게 만드는 구조로 제품의 중심을 옮겼습니다.</p>
           </article>
         </div>
+      </div>
+
+      <div class="stepup-final-statement hm-reveal" data-hm-reveal>
+        <span>PRODUCT REFRAME</span>
+        <p>측정하는 서비스에서,<br><strong>다시 돌아오게 만드는 서비스로.</strong></p>
       </div>
     </div>
   </section>
 
-  <section class="hm-section hm-ds-section" id="strategy" data-chapter="02">
-    <div class="hm-wrap hm-ds-wrap">
-      <div class="hm-section-head hm-ds-section__head hm-reveal" data-hm-reveal>
+  <section class="hm-section" id="strategy" data-chapter="02">
+    <div class="hm-wrap">
+      <div class="hm-section-head hm-reveal" data-hm-reveal>
         <div>
-          <span class="hm-section-no hm-ds-section__number">02 / EXPERIENCE STRATEGY</span>
-          <h2 class="hm-section-title hm-ds-section__title js-scramble">걷기를 기록하는 기능을,<br>매일 반복되는 리워드 경험으로 바꿨습니다.</h2>
+          <span class="hm-section-no">02 / EXPERIENCE STRATEGY</span>
+          <h2 class="hm-section-title js-scramble">걷기를 기록하는 기능을,<br>매일 반복되는 리워드 경험으로 바꿨습니다.</h2>
         </div>
-        <p class="hm-section-desc hm-ds-section__description">행동과 보상의 거리를 짧게 만들었습니다.</p>
+        <p class="hm-section-desc">공개 당시 서비스 구조를 기준으로 보면 스텝업은 걸음 측정, 목표, 캐시, 메이트, 재방문을 하나의 반복 경험으로 연결했습니다.</p>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
-          <span class="hm-subno">02.1 / REWARD MECHANICS</span>
-          <div><h3 class="hm-subtitle">보상은 작더라도 즉시 느끼고,<br>목표는 분명하게 보이도록 설계했습니다.</h3></div>
+          <span class="hm-subno">02.1 / REWARD MECHANISM</span>
+          <div><h3 class="hm-subtitle">행동과 보상 사이의 거리를,<br>최대한 짧게 만들었습니다.</h3></div>
         </div>
-        <div class="narrative-signals stepup-content">
+        <div class="narrative-signals">
           <div class="behavior-grid">
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>50</b><span>보</span></div>
-              <h4>걸을 때마다<br>1캐시를 즉시 적립</h4>
-              <p class="behavior-note">2018년 공개 정책 기준. 작은 행동과 보상을 가깝게 연결했습니다.</p>
+              <div class="behavior-value"><b>50</b><span>보</span></div>
+              <h4>걷는 즉시 적립되는 짧은 피드백</h4>
+              <p class="behavior-note"><span data-hm-number="normal">2018</span>년 공개 정책 기준, <span data-hm-number="normal">50</span>보마다 <span data-hm-number="normal">1</span>캐시를 지급해 행동과 보상이 멀어지지 않게 했습니다.</p>
             </article>
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>1,000</b><span>C</span></div>
-              <h4>목표 달성 시<br>추가 보상</h4>
-              <p class="behavior-note">직접 설정한 목표 걸음 수를 달성하면 최대 1,000캐시를 추가로 받을 수 있었습니다.</p>
+              <div class="behavior-value"><b>1,000</b><span>C</span></div>
+              <h4>개인 목표 달성에 추가 보상</h4>
+              <p class="behavior-note">사용자가 목표 걸음 수를 설정하고 달성하면 최대 <span data-hm-number="normal">1,000</span>캐시를 추가로 받을 수 있었습니다.</p>
             </article>
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>6,000</b><span>C</span></div>
-              <h4>1만 보/일 기준<br>월 적립 가치</h4>
-              <p class="behavior-note">공개 당시 정책 기준으로 매일 1만 보를 걸으면 한 달 약 6,000캐시로 환산됐습니다.</p>
+              <div class="behavior-value"><b>6,000</b><span>C</span></div>
+              <h4>한 달의 걷기를 이해 가능한 가치로</h4>
+              <p class="behavior-note">매일 <span data-hm-number="normal">1</span>만 보를 걸을 경우 한 달 약 <span data-hm-number="normal">6,000</span>캐시라는 구체적인 누적 가치를 제시했습니다.</p>
             </article>
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>60+</b><span>곳</span></div>
-              <h4>초기 모바일 쿠폰<br>제휴처</h4>
-              <p class="behavior-note">카페·영화관 등의 모바일 상품권과 연결해 적립의 실질적인 사용 가치를 만들었습니다.</p>
+              <div class="behavior-value"><b>60</b><span>+</span></div>
+              <h4>쌓인 캐시를 실제 혜택으로 연결</h4>
+              <p class="behavior-note">초기 공개 기준 카페·영화관 등 <span data-hm-number="normal">60</span>여 제휴처 모바일 상품권과 현금 전환으로 보상의 실질성을 높였습니다.</p>
             </article>
           </div>
         </div>
@@ -171,138 +174,176 @@
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
-          <span class="hm-subno">02.2 / PRODUCT EXPERIENCE</span>
-          <div><h3 class="hm-subtitle">걸음 수는 결과이고,<br>설계해야 했던 것은 다음 행동이었습니다.</h3></div>
+          <span class="hm-subno">02.2 / EXPERIENCE</span>
+          <div><h3 class="hm-subtitle">숫자만 보여주는 대신,<br>걷는 이유를 여러 층으로 만들었습니다.</h3></div>
         </div>
         <div class="stepup-experience-grid">
-          <article><span>TODAY</span><h4>현재 상태를 빠르게 확인</h4><p>오늘의 걸음, 거리, 시간과 적립 상태를 한 화면에서 확인하게 했습니다.</p></article>
-          <article><span>STATISTICS</span><h4>변화를 보며 성취를 인지</h4><p>오늘·주간·월간 기록을 통해 걷기의 누적과 자신의 변화를 확인하게 했습니다.</p></article>
-          <article><span>MATE</span><h4>캐릭터를 행동 파트너로</h4><p>산책 메이트가 응원하고 추가 적립을 제공하도록 해 기능과 정서적 접점을 연결했습니다.</p></article>
-          <article><span>MISSION</span><h4>한 번의 보상을 다음 목표로</h4><p>출석·미션·목표 달성 피드백으로 오늘의 행동이 다음 방문으로 이어지게 했습니다.</p></article>
+          <article>
+            <span class="stepup-label">WALK / CHECK</span>
+            <h4>오늘의 상태는 가장 단순하게</h4>
+            <p>오늘 걸음 수와 거리·시간·칼로리, 적립 상태를 한 화면에서 빠르게 확인하도록 기본 Utility 경험은 최대한 명확하게 유지했습니다.</p>
+          </article>
+          <article>
+            <span class="stepup-label">MATE / INTERACT</span>
+            <h4>캐릭터를 걷기 경험의 메이트로</h4>
+            <p>캐릭터를 장식 요소로 두지 않고 응원과 추가 적립을 제공하는 산책 메이트로 사용해 정서적 동기와 기능적 보상을 연결했습니다.</p>
+          </article>
+          <article>
+            <span class="stepup-label">MISSION</span>
+            <h4>한 번의 보상 다음에 새로운 목표를</h4>
+            <p>출석, 목표 달성, 미션 등 서로 다른 보상 접점을 배치해 한 번의 적립으로 행동이 끝나지 않고 다음 행동으로 이어지게 했습니다.</p>
+          </article>
+          <article>
+            <span class="stepup-label">RETURN</span>
+            <h4>오늘의 기록이 내일의 방문으로</h4>
+            <p>오늘의 성취와 누적 기록을 확인하고 다시 목표를 세우는 구조를 통해 만보기 사용을 일회성 확인이 아닌 일상의 반복 경험으로 전환했습니다.</p>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="hm-section hm-ds-section" id="habit" data-chapter="03">
-    <div class="hm-wrap hm-ds-wrap">
-      <div class="hm-section-head hm-ds-section__head hm-reveal" data-hm-reveal>
+  <section class="hm-section" id="habit" data-chapter="03">
+    <div class="hm-wrap">
+      <div class="hm-section-head hm-reveal" data-hm-reveal>
         <div>
-          <span class="hm-section-no hm-ds-section__number">03 / HABIT LOOP</span>
-          <h2 class="hm-section-title hm-ds-section__title js-scramble">기능을 더하기보다,<br>하루의 반복 구조를 설계했습니다.</h2>
+          <span class="hm-section-no">03 / HABIT LOOP</span>
+          <h2 class="hm-section-title js-scramble">기능을 더하기보다,<br>하루의 반복 구조를 설계했습니다.</h2>
         </div>
-        <p class="hm-section-desc hm-ds-section__description">매일 작은 행동을 다시 시작하게 만들었습니다.</p>
+        <p class="hm-section-desc">스텝업의 핵심은 많은 기능이 아니라 걷고, 확인하고, 반응하고, 보상받고, 다시 돌아오는 짧은 루프였습니다.</p>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
           <span class="hm-subno">03.1 / DAILY LOOP</span>
-          <div><h3 class="hm-subtitle">걷기에서 끝나지 않고,<br>다음 방문으로 이어지는 흐름을 만들었습니다.</h3></div>
+          <div><h3 class="hm-subtitle">한 번의 사용보다,<br>다음 사용이 자연스럽게 이어지도록.</h3></div>
         </div>
         <div class="stepup-loop">
           <article><span>01</span><b>WALK</b><p>걷기</p></article><i>→</i>
           <article><span>02</span><b>CHECK</b><p>상태 확인</p></article><i>→</i>
           <article><span>03</span><b>INTERACT</b><p>메이트 반응</p></article><i>→</i>
-          <article><span>04</span><b>REWARD</b><p>보상</p></article><i>→</i>
+          <article><span>04</span><b>REWARD</b><p>보상·미션</p></article><i>→</i>
           <article><span>05</span><b>RETURN</b><p>다시 방문</p></article>
         </div>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
-          <span class="hm-subno">03.2 / PLATFORM SIGNAL</span>
-          <div><h3 class="hm-subtitle">출시 초기부터,<br>캐시슬라이드 이용자 안에서 빠르게 사용이 확산됐습니다.</h3></div>
+          <span class="hm-subno">03.2 / USAGE SIGNAL</span>
+          <div><h3 class="hm-subtitle">서비스가 성장하면서,<br>반복 사용도 함께 커졌습니다.</h3></div>
+        </div>
+        <div class="stepup-content">
+          <div class="hm-series-legend"><span><i></i>DAU / 기존 포트폴리오 내부 기록</span></div>
+          <div class="hm-month-series">
+            <div class="hm-series-row"><span>LAUNCH + 1M</span><div class="hm-series-track"><i style="--bar:4.45%"></i></div><b>20K+</b></div>
+            <div class="hm-series-row"><span>2019.08</span><div class="hm-series-track"><i style="--bar:100%"></i></div><b>450K</b></div>
+          </div>
+          <div class="hm-data-total"><span>DAU GROWTH / INTERNAL PORTFOLIO RECORD</span><strong data-hm-number>22.5×</strong></div>
+          <p class="chart-note">두 수치는 동일한 DAU 기준의 기존 포트폴리오 기록입니다. 외부 기사 수치와 혼합하지 않고 내부 성과 지표로 별도 표기했습니다.</p>
+        </div>
+      </div>
+
+      <div class="hm-subsection hm-reveal" data-hm-reveal>
+        <div class="hm-subhead">
+          <span class="hm-subno">03.3 / PLATFORM SHARE</span>
+          <div><h3 class="hm-subtitle">출시 초기부터,<br>기존 캐시슬라이드 사용자 안에서도 빠르게 자리 잡았습니다.</h3></div>
         </div>
         <div class="pie-layout">
-          <div class="pie" aria-label="캐시슬라이드 플랫폼 이용자 중 Stepup 이용 비중 약 20%">
-            <div class="pie-center" data-hm-number><strong>20%</strong><small>STEPUP USERS</small></div>
-          </div>
+          <div class="pie"><div class="pie-center"><strong data-hm-number>20%</strong><small>PLATFORM USERS</small></div></div>
           <div>
             <div class="legend">
-              <div class="legend-row" style="--c:var(--hm-blue)"><i></i><span>Stepup 이용자</span><b data-hm-number>20%</b></div>
-              <div class="legend-row" style="--c:rgba(255,255,255,.12)"><i></i><span>기타 캐시슬라이드 이용자</span><b data-hm-number>80%</b></div>
+              <div class="legend-row"><i style="--c:var(--hm-blue)"></i><span>Stepup 이용 비중</span><b data-hm-number>20%</b></div>
+              <div class="legend-row"><i style="--c:rgba(255,255,255,.12)"></i><span>기타 캐시슬라이드 플랫폼 이용</span><b data-hm-number>80%</b></div>
             </div>
-            <p class="chart-note">2018년 NBT 공개자료를 인용한 당시 보도 기준. 캐시슬라이드 플랫폼 이용자 중 약 20%가 Stepup을 이용한 것으로 소개됐습니다.</p>
+            <p class="chart-note"><span data-hm-number="normal">2018</span>년 NBT가 공개한 당시 설명 기준으로, 전체 캐시슬라이드 플랫폼 이용자의 약 <span data-hm-number="normal">20%</span>가 Stepup을 이용한 것으로 소개됐습니다.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="hm-section hm-ds-section" id="iteration" data-chapter="04">
-    <div class="hm-wrap hm-ds-wrap">
-      <div class="hm-section-head hm-ds-section__head hm-reveal" data-hm-reveal>
+  <section class="hm-section" id="iteration" data-chapter="04">
+    <div class="hm-wrap">
+      <div class="hm-section-head hm-reveal" data-hm-reveal>
         <div>
-          <span class="hm-section-no hm-ds-section__number">04 / ITERATION & SCALE</span>
-          <h2 class="hm-section-title hm-ds-section__title js-scramble">출시가 끝이 아니라,<br>사용자의 반응을 보며 계속 바꿨습니다.</h2>
+          <span class="hm-section-no">04 / ITERATION</span>
+          <h2 class="hm-section-title js-scramble">출시를 끝으로 보지 않고,<br>사용자의 반응을 계속 제품에 돌려 넣었습니다.</h2>
         </div>
-        <p class="hm-section-desc hm-ds-section__description">기획부터 출시 후 검증까지 전 과정에 참여했습니다.</p>
+        <p class="hm-section-desc">UX 설계·기획과 GUI, 개발 Follow-up에서 끝내지 않고 출시 후 UT·FGI와 지속적인 모니터링으로 기능과 경험을 점진적으로 개선했습니다.</p>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
-          <span class="hm-subno">04.1 / PROCESS</span>
-          <div><h3 class="hm-subtitle">제품을 만들고 끝내지 않고,<br>검증 결과를 다음 버전에 다시 연결했습니다.</h3></div>
+          <span class="hm-subno">04.1 / WORKING LOOP</span>
+          <div><h3 class="hm-subtitle">설계와 출시, 검증을<br>하나의 제품 사이클로 가져갔습니다.</h3></div>
         </div>
         <div class="stepup-process">
-          <article><span>01</span><h4>PLAN</h4><p>서비스 목표와 기능 구조 정의</p></article>
-          <article><span>02</span><h4>DESIGN</h4><p>UX 설계·기획·GUI 제작</p></article>
-          <article><span>03</span><h4>BUILD</h4><p>개발 Follow-up과 구현 조율</p></article>
-          <article><span>04</span><h4>RELEASE</h4><p>서비스 출시 및 행동 데이터 확인</p></article>
-          <article><span>05</span><h4>UT · FGI</h4><p>실사용 경험과 반응 검증</p></article>
-          <article><span>06</span><h4>ITERATE</h4><p>기능과 UX를 점진적으로 개선</p></article>
+          <article><span>01</span><h4>PLAN</h4><p>만보기에서 습관 형성으로 제품 목표와 경험 방향을 구체화했습니다.</p></article>
+          <article><span>02</span><h4>DESIGN</h4><p>UX 구조와 GUI를 직접 설계하고 주요 인터랙션과 보상 흐름을 연결했습니다.</p></article>
+          <article><span>03</span><h4>BUILD</h4><p>개발 Follow-up을 통해 의도한 경험이 실제 제품에서 유지되도록 조율했습니다.</p></article>
+          <article><span>04</span><h4>RELEASE</h4><p>서비스를 출시하고 실제 사용 데이터와 사용자 반응을 모니터링했습니다.</p></article>
+          <article><span>05</span><h4>UT / FGI</h4><p>UT와 FGI를 통해 기능 이해도와 사용 패턴, 개선 포인트를 확인했습니다.</p></article>
+          <article><span>06</span><h4>ITERATE</h4><p>확인된 문제와 반응을 다음 기능과 UX 개선에 지속적으로 반영했습니다.</p></article>
         </div>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
-          <span class="hm-subno">04.2 / PLATFORM EXPANSION</span>
-          <div><h3 class="hm-subtitle">안드로이드에서 얻은 학습을 바탕으로,<br>iOS까지 경험을 확장했습니다.</h3></div>
+          <span class="hm-subno">04.2 / SCALE</span>
+          <div><h3 class="hm-subtitle">안드로이드에서 얻은 경험을,<br>iOS 확장에도 이어갔습니다.</h3></div>
         </div>
         <div class="stepup-question-grid">
-          <article><span>ANDROID</span><h4>먼저 운영하며 사용 패턴을 확인</h4><p>초기 운영 과정에서 기능과 UX를 지속적으로 조정하고 실제 사용자 반응을 축적했습니다.</p></article>
-          <article class="shift"><span>iOS / 2018.07</span><h4>기존 계정과 경험을 이어서 확장</h4><p>2018년 7월 iOS로 서비스를 확대했고, 기존 캐시슬라이드·Stepup 계정을 연동해 플랫폼 전환에서도 사용 경험을 이어가게 했습니다.</p></article>
+          <article>
+            <span class="stepup-label"><span data-hm-number="normal">2018.07</span> / iOS</span>
+            <h4>플랫폼을 늘려도 경험은 끊기지 않게</h4>
+            <p>iOS 확장 당시 기존 안드로이드 운영 경험을 바탕으로 사용 환경과 편의성을 보완했고, 기존 캐시슬라이드·Stepup 계정이 이어지도록 경험의 연속성을 유지했습니다.</p>
+          </article>
+          <article class="shift">
+            <span class="stepup-label">ROLE</span>
+            <h4>캐릭터 제작을 제외한 제품 전 과정 참여</h4>
+            <p>기존 포트폴리오 기록 기준 UX 기획·설계, GUI, 개발 Follow-up, 출시 후 UT·FGI까지 전 과정에 참여했습니다. 캐릭터 원화 제작은 역할에서 제외합니다.</p>
+          </article>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="hm-section hm-ds-section" id="outcome" data-chapter="05">
-    <div class="hm-wrap hm-ds-wrap">
-      <div class="hm-section-head hm-ds-section__head hm-reveal" data-hm-reveal>
+  <section class="hm-section" id="outcome" data-chapter="05">
+    <div class="hm-wrap">
+      <div class="hm-section-head hm-reveal" data-hm-reveal>
         <div>
-          <span class="hm-section-no hm-ds-section__number">05 / OUTCOME</span>
-          <h2 class="hm-section-title hm-ds-section__title js-scramble">만보기에서 시작했지만,<br>반복해서 사용하는 서비스로 성장했습니다.</h2>
+          <span class="hm-section-no">05 / OUTCOME</span>
+          <h2 class="hm-section-title js-scramble">만보기에서 시작한 서비스는,<br>일상의 반복 경험으로 성장했습니다.</h2>
         </div>
-        <p class="hm-section-desc hm-ds-section__description">외부 공개 기록과 당시 내부 포트폴리오 수치를 구분했습니다.</p>
+        <p class="hm-section-desc">외부 공개 지표와 기존 포트폴리오 내부 기록을 구분해, 서비스가 실제 사용자 규모와 반복 사용 모두에서 성장한 흐름을 정리했습니다.</p>
       </div>
 
       <div class="hm-subsection hm-reveal" data-hm-reveal>
         <div class="hm-subhead">
-          <span class="hm-subno">05.1 / GROWTH SIGNALS</span>
-          <div><h3 class="hm-subtitle">한 번의 사용보다,<br>서비스가 생활 속에 남았는지를 봤습니다.</h3></div>
+          <span class="hm-subno">05.1 / MILESTONES</span>
+          <div><h3 class="hm-subtitle">숫자보다 중요한 것은,<br>그 숫자가 반복 사용에서 만들어졌다는 점이었습니다.</h3></div>
         </div>
-        <div class="narrative-signals stepup-content">
+        <div class="narrative-signals">
           <div class="behavior-grid">
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>500K+</b></div>
-              <h4>출시 약 5개월<br>신규 가입자</h4>
-              <p class="behavior-note">2018년 NBT 공개자료를 인용한 전자신문 보도 기준.</p>
+              <div class="behavior-value"><b>500K</b><span>+</span></div>
+              <h4>출시 약 <span data-hm-number="normal">5</span>개월 신규 가입자</h4>
+              <p class="behavior-note">NBT 공개 자료를 인용한 <span data-hm-number="normal">2018</span>년 보도 기준. 초기 서비스 확산 속도를 보여주는 외부 공개 지표입니다.</p>
             </article>
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>604,921</b></div>
-              <h4>2018.04<br>MAU</h4>
-              <p class="behavior-note">App Annie 분석치를 인용한 당시 공개 보도 기준.</p>
+              <div class="behavior-value"><b>604,921</b></div>
+              <h4><span data-hm-number="normal">2018.04</span> Stepup MAU</h4>
+              <p class="behavior-note">App Annie 분석치를 NBT가 공개하고 언론이 보도한 수치입니다. DAU와 혼합하지 않고 MAU로 별도 표시합니다.</p>
             </article>
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>20%</b></div>
-              <h4>플랫폼 내<br>Stepup 이용 비중</h4>
-              <p class="behavior-note">2018년 공개 당시 캐시슬라이드 플랫폼 이용자 대비 비중.</p>
+              <div class="behavior-value"><b>450K</b></div>
+              <h4><span data-hm-number="normal">2019.08</span> DAU</h4>
+              <p class="behavior-note">기존 포트폴리오에 기록된 내부 지표입니다. 외부 기사에서 독립 검증된 수치와 구분해 표기합니다.</p>
             </article>
             <article class="behavior-card">
-              <div class="behavior-value" data-hm-number><b>450K</b></div>
-              <h4>2019.08<br>DAU</h4>
-              <p class="behavior-note">당시 개인 포트폴리오에 기록한 내부 성과 수치. 외부 공개 수치와 구분해 표기했습니다.</p>
+              <div class="behavior-value"><b>2.24T</b><span>+</span></div>
+              <h4>장기 누적 걸음 기록</h4>
+              <p class="behavior-note">NBT 공식 아카이브가 <span data-hm-number="normal">2020.11</span> 기준 약 <span data-hm-number="normal">2</span>조 <span data-hm-number="normal">2,472</span>억 걸음을 소개한 장기 후행 지표입니다.</p>
             </article>
           </div>
         </div>
@@ -316,7 +357,7 @@
   </section>
 
   <footer class="hm-footer" id="contact">
-    <div class="hm-wrap hm-ds-wrap stepup-footer-inner">
+    <div class="hm-wrap stepup-footer-inner">
       <a href="./works.html">← Works</a>
       <div><span>NBT / CASHSLIDE STEPUP</span><a href="#top">Back to top ↑</a></div>
     </div>
