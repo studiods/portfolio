@@ -164,7 +164,7 @@ html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head 
   margin-top:var(--hm-title-to-subsection-gap)!important;
   padding-top:0!important;
 }
-html body.himart-page-body #live-main .hm-subsection{margin:0!important;padding:0!important}
+html body.himart-page-body #live-main .hm-subsection{margin:0!important;padding:var(--hm-space-component) 0 0!important}
 html body.himart-page-body #live-main .hm-subsection + .hm-subsection{margin-top:var(--hm-subsection-gap)!important}
 html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head){display:block!important;grid-template-columns:none!important;gap:0!important;margin:0!important}
 html body.himart-page-body #live-main .hm-subhead .hm-subno,
@@ -177,7 +177,7 @@ html body.himart-page-body #live-main .data-card-head > :is(.hm-card-no,.hm-roma
 }
 html body.himart-page-body #live-main .hm-subhead > div,
 html body.himart-page-body #live-main .data-card-head > div{width:100%!important;margin:0!important;padding:0!important}
-html body.himart-page-body #live-main .hm-subhead + :is(.stepup-content,.stepup-question-grid,.stepup-experience-grid,.narrative-signals,.pie-layout,.stepup-loop,.stepup-process,.reuse-proof-stack),
+html body.himart-page-body #live-main .hm-subhead + *,
 html body.himart-page-body #live-main .data-card-head + *{margin-top:var(--hm-subtitle-to-content)!important}
 html body.himart-page-body #live-main .hm-subtitle + .hm-subcopy,
 html body.himart-page-body #live-main .data-card-head h3 + .desc,
