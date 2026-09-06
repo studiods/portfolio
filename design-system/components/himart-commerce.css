@@ -26,5 +26,12 @@ html body.himart-commerce-page :is(.keyword-grid,.voice-stack,.ring-row,.sentime
 }
 
 @media(max-width:780px){
-  html body.himart-commerce-page .narrative-touchpoint-synthesis>h4{font-size:36px!important}
+  html body.himart-commerce-page .narrative-touchpoint-synthesis>h4{
+    font-size:var(--hm-type-subsection-mobile)!important;
+    line-height:1.2!important;
+  }
+  html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p{
+    font-size:var(--hm-type-group-mobile)!important;
+    line-height:1.35!important;
+  }
 }
