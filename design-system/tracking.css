@@ -1,4 +1,4 @@
-/* Portfolio Tracking System v1.0
+/* Portfolio Tracking System v1.1
    Shared by legacy portfolio pages and HIMART design-system pages.
    Text is another 10% tighter than the current site treatment.
    Numeric display components are intentionally not re-tracked here. */
@@ -55,6 +55,12 @@ html body.works-page-body .works-card-title{letter-spacing:-.0605em!important}
 html body.works-page-body :is(.works-card-company,.works-progress a){letter-spacing:.036em!important}
 html body.works-page-body .works-project-menu a{letter-spacing:-.022em!important}
 html body.works-page-body :is(.works-footer h3,.works-footer p,.works-footer a){letter-spacing:-.011em!important}
+
+/* ---------- WAYS ---------- */
+html body.ways-page .ways-pair h4{letter-spacing:-.044em!important}
+html body.ways-page .ways-flow span{letter-spacing:.045em!important}
+html body.ways-page .ways-flow h4{letter-spacing:-.044em!important}
+html body.ways-page .ways-conclusion h3{letter-spacing:-.0495em!important}
 
 /* ---------- REUSE / CASE-SPECIFIC TEXT ---------- */
 html body.reuse-current .reuse-proof-group .voice-group-title{letter-spacing:-.0495em!important}
