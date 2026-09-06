@@ -77,3 +77,18 @@
 - 중복 실행 방지: animation.js에서 난수 observer를 제거하고 scramble-final.js만 실행 주체로 유지
 - 정적 구문: 두 모듈 node --check 통과
 - 운영 보호: himart.html SHA 2e911968b521662e3a4493891b570cceaca8715a 유지
+
+
+## Ways 디자인 시스템 회귀 확인 (2026-09-06)
+
+- `himart-ways.html` 내부 `<style>` / `style=` / page-specific stylesheet가 없어야 한다.
+- Hero는 Himart/ReUse와 동일한 `hm-ds-hero hm-ds-hero--scroll-cover` → `hm-ds-hero__inner` → `hm-ds-hero__copy` + `hm-ds-hero__bottom` → `hm-ds-hero__meta` 구조여야 한다.
+- 01~04 모든 major section은 `hm-section hm-ds-section`, 모든 container는 `hm-wrap hm-ds-wrap`을 사용한다.
+- 원칙/역할의 Roman list는 `hm-ds-numbered-list`만 사용하며 번호·타이틀 동일 라인, 설명 하단 규칙을 유지한다.
+- AS-IS 4단계는 canonical segmented-bar 구조를 재사용하며 퍼센트 수치를 만들지 않는다.
+- TO-BE 7단계는 canonical HOME horizontal-bar 구조를 process progression으로 재사용하며 `01/07~07/07`만 표시한다.
+- `components/data-viz.css`는 `design-system/index.css`에서 한 번만 import되어야 한다.
+- `animation.js`의 `[data-hm-chart]` observer는 graph reveal의 단일 owner여야 한다.
+- Traffic SVG는 `viewBox=0 0 1160 330`, 기존 session/purchase/CVR 좌표를 유지하고 SVG 내부 새 font-family를 만들지 않는다.
+- 모바일 780px 이하에서 numbered list·split ratio·ring row·flow가 단일 열로 내려가며 가로 overflow가 없어야 한다.
+- GitHub Pages build 성공과 정적 구조 PASS를 확인한 뒤 브라우저 픽셀 검증을 별도 기록한다.

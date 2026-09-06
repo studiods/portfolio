@@ -31,9 +31,10 @@
 | Narrative | `components/narrative.css` | Synthesis, Journey narrative, Prototype intro |
 | Media | `components/media.css` | Prototype media grid/card/frame/caption |
 | Flow | `components/flow.css` | Journey flow group/node/label/responsive 구조 |
+| Data Viz | `components/data-viz.css` + `animation.js` | Ring, split ratio, segmented ratio, traffic SVG, horizontal bars와 단일 chart reveal |
 | Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, focused video playback, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
-| Motion | `animation.js` | Himart reveal, counter, hero scroll variable, viewport video control, single-video sequence |
+| Motion | `animation.js` | Himart reveal, counter, hero scroll variable, data-viz draw, viewport video control, single-video sequence |
 
 ## HIMART Hero component contract
 
@@ -59,6 +60,18 @@
 - title → description 간격은 공통 token `--hm-title-description-gap`(`20px`)을 사용한다.
 - 설명 최대 폭은 `--hm-title-description-max`(`40ch`)를 따르며 기본 contrast는 secondary text를 사용한다.
 - mobile에서는 번호/타이틀 크기를 `26px`로 낮추고 구조는 동일하게 유지한다.
+
+
+## HIMART Data Visualization component contract
+
+- `components/data-viz.css`가 Himart 계열의 수치·비율 시각화를 단독 소유하며 case page에 그래프용 `<style>` 또는 별도 page CSS를 만들지 않는다.
+- 원형 비율(`hm-ds-ring-row` / `hm-ds-ring-card`), 65:35 분할(`hm-ds-split-ratio`), 분할 막대(`hm-ds-segmented-bar`), Traffic SVG(`hm-ds-traffic`), 가로 막대(`hm-ds-home-bars`)를 공통 컴포넌트로 사용한다.
+- 컴포넌트의 구조·좌표·색상 문법은 승인된 Himart 그래프 소스에서 이관한다. Deep Blue `#0572CB`, Blue `#00A6ED`, New Blue `#00B8DE`, Green `#00EDBD`, Yellow `#F3EB01`, Red `#FA481B`를 유지한다.
+- 그래프 안의 폰트·행간·자간·본문 대비는 새 규칙을 만들지 않고 기존 `tokens.css`와 `typography.css` 값만 사용한다. SVG 내부에도 별도 font-family를 선언하지 않는다.
+- ENTRY CHANNEL 원본 비율 `52 / 31 / 10 / 6 / 1`, HOME 원본 값 `49.6 / 33.8 / 8.3 / 3.4 / 1.2 / 0.3`, Traffic SVG의 `1160×330` viewBox와 series 좌표는 원본 구조를 보존한다.
+- `animation.js`가 `[data-hm-chart]`를 한 번만 관찰해 `is-hm-chart-active`를 부여한다. Traffic chart의 line/bar stroke drawing도 이 단일 runtime이 담당하며 별도 page observer를 추가하지 않는다.
+- 실제 근거가 없는 백분율이나 성과 수치는 만들지 않는다. Ways의 AS-IS 분할 막대와 TO-BE 진행 막대는 각각 4단계/7단계라는 페이지에 이미 존재하는 구조만 시각화하며 성과 비율로 표현하지 않는다.
+- 신규 페이지에서 수치가 존재하면 위 컴포넌트 중 정보 의미에 맞는 것을 재사용하고, 그래프의 구조나 palette를 page에서 변형하지 않는다.
 
 ## WORKS component contract
 
