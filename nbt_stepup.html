@@ -8,15 +8,14 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./himart-narrative-v2-production.css?v=20260906-3">
-<link rel="stylesheet" href="./design-system/himart-system.css?v=20260907-2">
-<link rel="stylesheet" href="./design-system/components/nbt-stepup.css?v=20260906-1">
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260906-3">
+<link rel="stylesheet" href="./design-system/components/nbt-stepup.css?v=20260906-2">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
 </head>
-<body class="himart-page-body hm-ds-page nbt-stepup-page">
+<body class="himart-page-body himart-movie-page hm-ds-page nbt-stepup-page himart-narrative-ready">
 <main id="live-main">
 <header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
-  <img class="hm-movie-video hm-ds-hero__video" src="./assets/image/stepup.webp" alt="걸음 수를 넘어 일상 습관을 만드는 모바일 경험을 재구성한 대표 비주얼" decoding="async">
+  <div class="stepup-hero-media" aria-hidden="true"></div>
   <div class="hm-movie-overlay hm-ds-hero__overlay" aria-hidden="true"></div>
   <div class="hm-wrap hm-ds-wrap hm-ds-hero__inner">
     <div class="hm-movie-copy hm-ds-hero__copy">
@@ -24,7 +23,6 @@
       <p class="hm-lead hm-ds-hero__description">Earlier highlight / NBT</p>
     </div>
     <div class="hm-hero-bottom hm-ds-hero__bottom">
-      <div class="hm-hero-nav" aria-label="Previous and next content"><a href="#top" aria-label="Previous content">‹</a><a href="#concept" aria-label="Next content">›</a></div>
       <div class="hm-meta hm-ds-hero__meta">
         <div><span>ROLE</span><b>UX / PRODUCT DESIGN</b></div>
         <div><span>FOCUS</span><b>BEHAVIORAL UX</b></div>
@@ -52,7 +50,7 @@
     </div>
 
     <figure class="stepup-representative hm-reveal" data-hm-reveal>
-      <img src="./assets/image/stepup.webp" alt="걸음 수를 넘어 일상 습관을 만드는 모바일 경험을 재구성한 대표 비주얼" loading="lazy" decoding="async">
+      <div class="stepup-representative-media" role="img" aria-label="걸음 수를 넘어 일상 습관을 만드는 모바일 경험을 재구성한 대표 비주얼"></div>
       <figcaption><span>REPRESENTATIVE VISUAL</span><p>습관 형성이라는 프로젝트의 핵심 경험을 현재 포트폴리오 맥락에 맞게 재구성한 이미지입니다.</p></figcaption>
     </figure>
   </div>
@@ -88,15 +86,15 @@
 </section>
 
 <footer class="hm-footer" id="contact">
-  <div class="hm-wrap hm-ds-wrap">
+  <div class="hm-wrap hm-ds-wrap stepup-footer-inner">
     <a href="./works.html">← Works</a>
     <div><span>NBT CASE</span><a href="#top">Cashslide Stepup ↑</a></div>
   </div>
 </footer>
 </main>
 
-<script src="./design-system/animation.js?v=20260906-9"></script>
-<script src="./design-system/scramble-final.js?v=20260906-11"></script>
+<script src="./design-system/animation.js?v=20260906-10"></script>
+<script src="./design-system/scramble-final.js?v=20260906-12"></script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
 </body>
 </html>
