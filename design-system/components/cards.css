@@ -11,7 +11,59 @@
 .hm-ds-role__title{margin:20px 0 0}
 .hm-ds-role__body{margin:28px 0 0;color:var(--hm-text-body)}
 .hm-ds-role__keyword{display:block;margin-top:20px;color:var(--hm-blue);font:300 14px/1.4 var(--hm-font-ko)}
-@media(max-width:780px){.hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{grid-template-columns:1fr;gap:40px}.hm-ds-role-grid{gap:40px}.hm-ds-card__body,.hm-ds-role__body{margin-top:20px}}
+
+/*
+  Numbered editorial list.
+  Roman numeral and title share one baseline/size; supporting copy always sits below the title.
+*/
+.hm-ds-numbered-list{--hm-numbered-title-size:30px}
+.hm-ds-numbered-list>article{
+  display:grid!important;
+  grid-template-columns:max-content minmax(0,1fr)!important;
+  grid-template-rows:auto auto!important;
+  column-gap:20px!important;
+  row-gap:0!important;
+  align-content:start!important;
+  align-items:start!important;
+}
+.hm-ds-numbered-list>article>.hm-roman-no{
+  grid-column:1!important;
+  grid-row:1!important;
+  align-self:start!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:var(--hm-text-primary)!important;
+  font:300 var(--hm-numbered-title-size)/1.22 var(--hm-font-en)!important;
+  letter-spacing:normal!important;
+}
+.hm-ds-numbered-list>article>h4{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:start!important;
+  margin:0!important;
+  color:var(--hm-text-primary)!important;
+  font:100 var(--hm-numbered-title-size)/1.22 var(--hm-font-ko)!important;
+  letter-spacing:-.04em!important;
+}
+.hm-ds-numbered-list>article>p{
+  grid-column:2!important;
+  grid-row:2!important;
+  align-self:start!important;
+  max-width:var(--hm-title-description-max,40ch)!important;
+  margin:var(--hm-title-description-gap,20px) 0 0!important;
+  color:var(--hm-text-secondary)!important;
+  font:300 15px/1.55 var(--hm-font-ko)!important;
+  letter-spacing:normal!important;
+}
+
+@media(max-width:780px){
+  .hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{grid-template-columns:1fr;gap:40px}
+  .hm-ds-role-grid{gap:40px}
+  .hm-ds-card__body,.hm-ds-role__body{margin-top:20px}
+  .hm-ds-numbered-list{--hm-numbered-title-size:26px}
+  .hm-ds-numbered-list>article{column-gap:16px!important}
+}
 
 /* Transitional DOM mapping: Data/Narrative cards adopt one foundation. */
 .himart-movie-page .data-card,
