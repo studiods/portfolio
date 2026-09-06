@@ -25,11 +25,13 @@
   /*
     WORKS media runtime:
     - videos do not autoplay on page load;
-    - only the video whose media center is close to viewport center plays;
-    - leaving the focus band pauses at the current frame, reverse scroll resumes from that frame;
+    - the media center may sit anywhere inside the viewport 35%–65% band and remain focused;
+    - leaving that ±15vh focus band pauses immediately at the current frame;
+    - reverse scroll resumes from the paused frame when the media re-enters the band;
+    - only the closest eligible video plays, keeping decoder work bounded to one active video;
     - nearby media may upgrade preload from metadata to auto, but offscreen media is never force-played;
     - sequential clips use one video element. During source replacement the video fades to black,
-      avoiding the previous second decoder / hidden buffer while keeping the transition intentional.
+      avoiding a second decoder / hidden buffer while keeping the transition intentional.
   */
   const focusState = new WeakMap();
 
@@ -132,12 +134,13 @@
         const state = focusState.get(video);
         if (state) state.focused = false;
         video.pause();
+        video.closest('.works-card-media-link')?.classList.remove('is-video-focused');
       });
       return;
     }
 
     const viewportCenter = window.innerHeight * .5;
-    const focusTolerance = clamp(window.innerHeight * .065, 48, 72);
+    const focusTolerance = window.innerHeight * .15;
     let focusedVideo = null;
     let focusedDistance = Infinity;
 
@@ -157,22 +160,25 @@
       const state = focusState.get(video);
       if (!state) return;
       const shouldFocus = video === focusedVideo;
-
-      if (state.focused === shouldFocus) return;
-      state.focused = shouldFocus;
+      const mediaLink = video.closest('.works-card-media-link');
+      mediaLink?.classList.toggle('is-video-focused', shouldFocus);
 
       if (!shouldFocus) {
+        state.focused = false;
         video.pause();
         return;
       }
 
+      state.focused = true;
       video.preload = 'auto';
       if (state.switching) {
         revealCurrentSequenceFrame(state);
         return;
       }
-      const attempt = video.play();
-      if (attempt && attempt.catch) attempt.catch(() => {});
+      if (video.paused) {
+        const attempt = video.play();
+        if (attempt && attempt.catch) attempt.catch(() => {});
+      }
     });
   };
 
@@ -432,8 +438,14 @@
   window.addEventListener('scroll', requestUpdate, {passive:true});
   window.addEventListener('resize', requestUpdate);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) mediaVideos.forEach(({video}) => video.pause());
-    else requestUpdate();
+    if (document.hidden) {
+      mediaVideos.forEach(({video}) => {
+        const state = focusState.get(video);
+        if (state) state.focused = false;
+        video.pause();
+        video.closest('.works-card-media-link')?.classList.remove('is-video-focused');
+      });
+    } else requestUpdate();
   });
   runEntryScramble();
   updateTitle();
