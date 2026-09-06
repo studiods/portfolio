@@ -72,6 +72,37 @@ body.home-dark .showcase-project:hover .placeholder {
   background: #080808;
 }
 
+/* Representative visuals for archived projects. These are concept/portfolio imagery, not source screenshots. */
+body.home-dark #project-nbt .placeholder,
+body.home-dark #project-trenbe .placeholder,
+body.home-dark #project-yanolja .placeholder,
+body.home-dark #project-coupang .placeholder,
+body.home-dark #project-vinyl .placeholder{
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:cover;
+}
+body.home-dark #project-nbt .placeholder{background-image:url('./assets/image/stepup.webp')}
+body.home-dark #project-trenbe .placeholder{background-image:url('./assets/image/trenbe.webp')}
+body.home-dark #project-yanolja .placeholder{background-image:url('./assets/image/yanolja.webp')}
+body.home-dark #project-coupang .placeholder{background-image:url('./assets/image/coupang.webp')}
+body.home-dark #project-vinyl .placeholder{background-image:url('./assets/image/vinyl.webp')}
+body.home-dark #project-nbt .placeholder::before,
+body.home-dark #project-nbt .placeholder::after,
+body.home-dark #project-trenbe .placeholder::before,
+body.home-dark #project-trenbe .placeholder::after,
+body.home-dark #project-yanolja .placeholder::before,
+body.home-dark #project-yanolja .placeholder::after,
+body.home-dark #project-coupang .placeholder::before,
+body.home-dark #project-coupang .placeholder::after,
+body.home-dark #project-vinyl .placeholder::before,
+body.home-dark #project-vinyl .placeholder::after{display:none}
+body.home-dark #project-nbt:hover .placeholder,
+body.home-dark #project-trenbe:hover .placeholder,
+body.home-dark #project-yanolja:hover .placeholder,
+body.home-dark #project-coupang:hover .placeholder,
+body.home-dark #project-vinyl:hover .placeholder{background-color:#000}
+
 /* Light-canvas animation layers: black RGB becomes white while alpha and
    visibility remain exactly as the existing JS renders them. */
 body.home-dark .hero-state,
