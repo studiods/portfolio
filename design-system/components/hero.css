@@ -1,45 +1,154 @@
 @import url("../tokens.css");
 @import url("../typography.css");
 
-.hm-ds-hero{position:relative;min-height:100vh;overflow:hidden;background:var(--hm-bg-page);color:var(--hm-text-primary)}
-.hm-ds-hero__video,.hm-ds-hero__overlay{position:absolute;inset:0;width:100%;height:100%}
-.hm-ds-hero__video{object-fit:cover;z-index:0}
-.hm-ds-hero__overlay{background:#000;opacity:var(--hm-hero-overlay-opacity,.5);z-index:1;pointer-events:none;transition:opacity .12s linear}
-.hm-ds-hero__inner{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:40px}
-.hm-ds-hero__copy{margin-bottom:40px;opacity:var(--hm-hero-copy-opacity,1);transition:opacity .08s linear}
-.hm-ds-hero__title{margin:0;max-width:1280px}
-.hm-ds-hero__description{max-width:1000px;margin:20px 0 0;color:var(--hm-text-body);font:300 var(--hm-type-body)/1.5 var(--hm-font-ko);white-space:pre-line}
-
 /*
-  Canonical Himart movie-hero bottom rail.
-  The 40px desktop / 28px mobile viewport offset comes from the approved himart.html hero.
+  HIMART canonical Hero.
+  This component is the single owner of movie-hero layout, copy position,
+  bottom metadata rail and scroll-cover rendering. Legacy page bundles may
+  still contain old .hm-* selectors, so canonical hm-ds-* selectors use a
+  stable scoped lock instead of page-local overrides.
 */
-.hm-ds-hero__bottom{position:absolute;left:0;right:0;bottom:40px;margin:0;padding:0}
-.hm-ds-hero__meta{min-height:var(--hm-meta-height);height:var(--hm-meta-height);display:grid;grid-template-columns:1.4fr .95fr .95fr .9fr;margin:0;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-default);align-items:stretch}
-.hm-ds-hero__meta>div{display:flex;min-width:0;min-height:var(--hm-meta-height);height:var(--hm-meta-height);flex-direction:column;justify-content:center;align-items:flex-start;padding:0 18px 0 0;border-left:0;border-right:0}
-.hm-ds-hero__meta>div+div{padding-left:18px}
-.hm-ds-hero__meta span{display:block;margin:0 0 8px;color:var(--hm-text-secondary);font:400 12px/1 var(--hm-font-en);letter-spacing:normal}
-.hm-ds-hero__meta b{display:block;margin:0;color:var(--hm-text-primary);font:400 12px/1.35 var(--hm-font-en);letter-spacing:normal}
-
-/*
-  Reusable scroll-cover hero pattern.
-  The hero remains pinned while following sections physically rise over it.
-  animation.js only updates the shared overlay/copy variables; the component owns rendering.
-*/
-html body.himart-page-body .hm-ds-hero.hm-ds-hero--scroll-cover{
+html body.himart-page-body #live-main > .hm-ds-hero{
   position:sticky!important;
   top:0!important;
   z-index:1!important;
   width:100%!important;
   height:100svh!important;
   min-height:100svh!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:var(--hm-bg-page)!important;
+  color:var(--hm-text-primary)!important;
 }
-html body.himart-page-body .hm-ds-hero.hm-ds-hero--scroll-cover .hm-ds-hero__overlay{
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__video,
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__video{
+  object-fit:cover!important;
+  z-index:0!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
+  z-index:1!important;
+  pointer-events:none!important;
+  background:#000!important;
   opacity:var(--hm-hero-overlay-opacity,.5)!important;
+  transition:opacity .12s linear!important;
 }
-html body.himart-page-body .hm-ds-hero.hm-ds-hero--scroll-cover .hm-ds-hero__copy{
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__inner{
+  position:relative!important;
+  z-index:2!important;
+  width:min(calc(100% - 80px),var(--hm-container-wide))!important;
+  height:100%!important;
+  min-height:100%!important;
+  margin-inline:auto!important;
+  padding:0!important;
+  display:block!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__copy{
+  position:absolute!important;
+  top:50%!important;
+  left:0!important;
+  right:0!important;
+  margin:0!important;
+  transform:translateY(-50%)!important;
   opacity:var(--hm-hero-copy-opacity,1)!important;
+  transition:opacity .12s linear!important;
 }
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
+  max-width:1280px!important;
+  margin:0!important;
+  color:var(--hm-text-primary)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-hero)!important;
+  font-weight:100!important;
+  line-height:1.04!important;
+  letter-spacing:var(--hm-track-hero)!important;
+  word-break:keep-all!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
+  display:block!important;
+  max-width:var(--hm-hero-description-width)!important;
+  min-height:0!important;
+  margin:var(--hm-title-description-gap) 0 0!important;
+  padding:0!important;
+  color:var(--hm-text-secondary)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body)!important;
+  font-weight:300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  white-space:normal!important;
+  text-wrap:balance!important;
+  word-break:keep-all!important;
+}
+
+/* Approved himart.html bottom rail: desktop 40px / mobile 28px. */
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__bottom{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:40px!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta{
+  display:grid!important;
+  grid-template-columns:1.4fr .95fr .95fr .9fr!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-height:var(--hm-meta-height)!important;
+  height:var(--hm-meta-height)!important;
+  margin:0!important;
+  padding:0!important;
+  gap:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  border-bottom:1px solid var(--hm-line-default)!important;
+  box-sizing:border-box!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{
+  display:flex!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:var(--hm-meta-height)!important;
+  height:var(--hm-meta-height)!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  padding:0 18px 0 0!important;
+  border:0!important;
+  box-sizing:border-box!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{
+  padding-left:18px!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
+  display:block!important;
+  margin:0 0 8px!important;
+  color:var(--hm-text-secondary)!important;
+  opacity:1!important;
+  font:400 12px/1 var(--hm-font-en)!important;
+  letter-spacing:normal!important;
+  word-spacing:normal!important;
+}
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-text-primary)!important;
+  font:400 12px/1.35 var(--hm-font-en)!important;
+  letter-spacing:normal!important;
+  word-spacing:normal!important;
+  white-space:normal!important;
+  transform:none!important;
+}
+
+/* Current approved Hero does not expose previous/next arrow controls. */
+html body.himart-page-body #live-main > .hm-ds-hero .hm-hero-nav{display:none!important}
+
+/* Scroll cover: animation.js only changes opacity variables. */
 html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .hm-section{
   position:relative!important;
   z-index:2!important;
@@ -47,16 +156,35 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
 }
 
 @media(max-width:780px){
-  .hm-ds-hero__inner{padding-bottom:28px}
-  .hm-ds-hero__copy{margin-bottom:28px}
-  .hm-ds-hero__bottom{bottom:28px}
-  .hm-ds-hero__meta{grid-template-columns:1fr 1fr;height:auto;min-height:0}
-  .hm-ds-hero__meta>div{height:auto;min-height:64px;padding:12px 12px 12px 0}
-  .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px}
-  .hm-ds-hero__meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)}
-  .hm-ds-hero__meta b{font-size:11px}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__inner{
+    width:calc(100% - 36px)!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
+    font-size:clamp(38px,10vw,58px)!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
+    margin-top:var(--hm-title-description-gap)!important;
+    font-size:16px!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__bottom{
+    bottom:28px!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta{
+    grid-template-columns:1fr 1fr!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{
+    height:auto!important;
+    min-height:64px!important;
+    padding:12px 12px 12px 0!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{font-size:11px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .hm-ds-hero__overlay,.hm-ds-hero__copy{transition:none}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay,
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__copy{transition:none!important}
 }
