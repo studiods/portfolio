@@ -1,7 +1,7 @@
-@import url("./index.css?v=20260906-9");
+@import url("./index.css?v=20260906-10");
 
 /*
-  HIMART Shared System v1.5 — sole final-authority layer.
+  HIMART Shared System v1.6 — sole final-authority layer.
   Typography, tracking and spacing mirror the current himart.html production hierarchy.
 */
 :root{
@@ -130,13 +130,16 @@ html body.himart-page-body #live-main :is(.hm-number,[data-hm-number],.behavior-
 html body.himart-page-body #live-main :is(.behavior-value,.number-panel strong,.stepup-stat-number,.proof-item>strong,.sentiment-number){letter-spacing:var(--hm-track-data-number)!important}
 html body.himart-page-body #live-main [data-hm-number="normal"]{letter-spacing:normal!important}
 
-/* Section rhythm */
+/* Section rhythm: 200px top / 100px bottom, final section returns to 200px bottom. */
 html body.himart-page-body #live-main > .hm-section{
   position:relative!important;
   z-index:2!important;
   margin:0!important;
-  padding:var(--hm-space-section) 0!important;
+  padding:var(--hm-section-padding-top) 0 var(--hm-section-padding-bottom)!important;
   background:#000!important;
+}
+html body.himart-page-body #live-main > .hm-section:last-of-type{
+  padding-bottom:var(--hm-section-padding-bottom-last)!important;
 }
 html body.himart-page-body #live-main > .hm-section + .hm-section{margin-top:0!important}
 html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head{
@@ -227,7 +230,12 @@ html body.himart-page-body #live-main .data-list > .data-card:last-child{margin-
   html body.himart-page-body #live-main .hm-section-title{font-size:clamp(34px,9vw,42px)!important}
   html body.himart-page-body #live-main :is(.hm-subtitle,.narrative-title,.data-card-head h3,.prototype-intro h3,.sentiment-conclusion h4){font-size:clamp(28px,7.5vw,32px)!important}
   html body.himart-page-body #live-main :is(.hm-group-title,.problem-item h4,.proof-item h4,.signal-item h4,.behavior-card h4,.role-card h4,.flow-node h4,.direction-card h4,.stepup-card h4,.stepup-question-grid h4,.stepup-experience-grid h4,.stepup-process h4,.voice-group-title,.number-panel h4,.sentiment-title){font-size:clamp(22px,6vw,24px)!important}
-  html body.himart-page-body #live-main > .hm-section{padding:120px 0!important}
+  html body.himart-page-body #live-main > .hm-section{
+    padding:var(--hm-section-padding-top-mobile) 0 var(--hm-section-padding-bottom-mobile)!important;
+  }
+  html body.himart-page-body #live-main > .hm-section:last-of-type{
+    padding-bottom:var(--hm-section-padding-bottom-last-mobile)!important;
+  }
   html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area){margin-top:100px!important}
   html body.himart-page-body #live-main .hm-subsection + .hm-subsection,
   html body.himart-page-body #live-main .hm-section > .hm-wrap > .flow-area + .hm-subsection,
