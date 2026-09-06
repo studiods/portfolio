@@ -16,11 +16,6 @@ html body.ways-page{background:#000!important;color:#fff!important}
 .ways-hero .hm-kicker{margin-bottom:24px;color:rgba(255,255,255,.72)}
 .ways-hero .hm-title{font-size:clamp(58px,5.7vw,82px);line-height:1.04}
 .ways-hero .hm-lead{max-width:860px;margin:32px 0 0;color:rgba(255,255,255,.6);font-size:18px;line-height:1.55}
-.ways-hero .hm-meta{position:absolute;left:0;right:0;bottom:40px;display:flex!important;flex-wrap:nowrap;border-top:1px solid rgba(255,255,255,.2);border-bottom:1px solid rgba(255,255,255,.2)}
-.ways-hero .hm-meta>div{flex:1 1 auto;min-width:0;min-height:74px;padding:14px 18px 14px 0;display:flex;flex-direction:column;justify-content:center}
-.ways-hero .hm-meta>div+div{padding-left:18px;border-left:0}
-.ways-hero .hm-meta span{font:300 11px/1.2 'Averta PE',sans-serif;letter-spacing:.05em;color:rgba(255,255,255,.55)}
-.ways-hero .hm-meta b{margin-top:6px;font:300 12px/1.35 'Averta PE',sans-serif;letter-spacing:.02em;color:#fff}
 .ways-page .hm-section{background:#000!important;position:relative}
 .ways-page .hm-section-head{margin-bottom:100px}
 .ways-page .hm-section-desc,.ways-page .hm-subcopy,.ways-page .data-card-head .desc{color:rgba(255,255,255,.6)!important}
@@ -28,9 +23,6 @@ html body.ways-page{background:#000!important;color:#fff!important}
 .ways-page .ways-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:0;row-gap:1px}
 .ways-page .ways-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:0;row-gap:1px;background:#000;border-top:1px solid rgba(255,255,255,.16);border-bottom:1px solid rgba(255,255,255,.16);border-left:0;border-right:0}
 .ways-page .ways-list article{min-height:236px;padding:28px;background:#000}
-.ways-page .ways-list h4,.ways-page .ways-list p{margin:0}
-.ways-page .ways-list h4{font:100 30px/1.22 Pretendard,sans-serif;letter-spacing:-.04em}
-.ways-page .ways-list p{margin-top:26px;color:rgba(255,255,255,.6);font-size:15px;line-height:1.55}
 .ways-page .ways-pair{padding-top:28px;border-top:1px solid rgba(255,255,255,.25)}
 .ways-page .ways-pair+.ways-pair{margin-top:48px}
 .ways-page .ways-pair h4{margin:0;font:100 28px/1.3 Pretendard,sans-serif;letter-spacing:-.04em}
@@ -49,8 +41,6 @@ html body.ways-page{background:#000!important;color:#fff!important}
   .ways-hero .hm-movie-copy{top:50%;margin:0}
   .ways-hero .hm-title{font-size:clamp(42px,10vw,58px)}
   .ways-hero .hm-lead{margin-top:24px;font-size:16px}
-  .ways-hero .hm-meta{bottom:28px;flex-wrap:wrap}.ways-hero .hm-meta>div{flex:1 1 50%;}
-  .ways-hero .hm-meta>div:nth-child(3){border-left:0}
   .ways-page .ways-grid,.ways-page .ways-list,.ways-page .ways-flow{grid-template-columns:1fr}
   .ways-page .ways-list article{min-height:0}
   .ways-page .ways-flow article{min-height:0}
@@ -58,12 +48,12 @@ html body.ways-page{background:#000!important;color:#fff!important}
   .ways-page .ways-conclusion h3{font-size:36px}
 }
 </style>
-<link rel="stylesheet" href="./design-system/himart-system.css?v=20260907-3">
-  <link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260907-4">
+<link rel="stylesheet" href="./design-system/navigation.css?v=20260908-1">
 </head>
 <body class="himart-page-body himart-movie-page himart-narrative-ready ways-page">
 <main id="live-main">
-<header class="hm-hero hm-hero--system ways-hero hm-ds-hero" id="top" data-hm-hero data-hm-fade-distance="420">
+<header class="hm-hero hm-hero--system ways-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
   <video class="ways-hero__video hm-ds-hero__video" data-hm-video data-hm-video-sequence="./assets/ways_01.mp4|./assets/ways_02.mp4" autoplay muted playsinline preload="auto" aria-hidden="true">
     <source src="./assets/ways_01.mp4" type="video/mp4">
   </video>
@@ -73,11 +63,13 @@ html body.ways-page{background:#000!important;color:#fff!important}
       <h1 class="hm-title js-scramble hm-ds-hero__title">휘발되는 소통을 줄이고,<br>일이 남는 방식을 만들었습니다.</h1>
       <p class="hm-lead hm-ds-hero__description">협업의 맥락과 결정이 남는 구조를 설계했습니다.</p>
     </div>
-    <div class="hm-meta hm-ds-hero__meta">
-      <div><span>ROLE</span><b>UX DESIGN LEAD · PROCESS DESIGN · UX DIRECTION</b></div>
-      <div><span>FOCUS</span><b>COLLABORATION · OWNERSHIP · DECISION</b></div>
-      <div><span>SCOPE</span><b>PO · UX · BUSINESS · DEV</b></div>
-      <div><span>TOOLS</span><b>FIGMA · TEAMS · PLANNER · AI PROTOTYPE</b></div>
+    <div class="hm-hero-bottom hm-ds-hero__bottom">
+      <div class="hm-meta hm-ds-hero__meta">
+        <div><span>ROLE</span><b>UX DESIGN LEAD · PROCESS DESIGN · UX DIRECTION</b></div>
+        <div><span>FOCUS</span><b>COLLABORATION · OWNERSHIP · DECISION</b></div>
+        <div><span>SCOPE</span><b>PO · UX · BUSINESS · DEV</b></div>
+        <div><span>TOOLS</span><b>FIGMA · TEAMS · PLANNER · AI PROTOTYPE</b></div>
+      </div>
     </div>
   </div>
 </header>
@@ -105,7 +97,7 @@ html body.ways-page{background:#000!important;color:#fff!important}
 <section class="hm-section" id="data" data-chapter="02"><div class="hm-wrap">
   <div class="hm-section-head hm-reveal"><div><span class="hm-section-no">02</span><h2 class="hm-section-title js-scramble">문제·역할·결정을 분리하고,<br>다시 연결하는 기준을 만들었습니다.</h2><p class="hm-section-desc">PO·UX·개발·사업의 판단 기준을 다시 연결했습니다.</p></div></div>
   <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">02.1 / PRINCIPLES</span><div><h3 class="hm-subtitle">협업의 기준도 화면 설계처럼<br>단순한 질문으로 정리했습니다.</h3></div></div>
-    <div class="ways-list hm-no-vertical-lines">
+    <div class="ways-list hm-ds-numbered-list hm-no-vertical-lines">
       <article><span class="hm-roman-no">III.</span><h4>화면보다 문제를 먼저 봅니다.</h4><p>필요한 이유와 해결할 문제를 먼저 합의합니다.</p></article>
       <article><span class="hm-roman-no">IV.</span><h4>역할의 경계를 분명히 합니다.</h4><p>문제·UX·기술·실행 책임을 구분합니다.</p></article>
       <article><span class="hm-roman-no">V.</span><h4>말보다 동작으로 확인합니다.</h4><p>복잡한 흐름은 프로토타입으로 검토합니다.</p></article>
@@ -119,7 +111,7 @@ html body.ways-page{background:#000!important;color:#fff!important}
 <section class="hm-section" id="journey" data-chapter="03"><div class="hm-wrap">
   <div class="hm-section-head hm-reveal"><div><span class="hm-section-no">03</span><h2 class="hm-section-title js-scramble">결국 협업 흐름을,<br>문제에서 학습까지 이어지게 설계했습니다.</h2><p class="hm-section-desc">도구보다 맥락이 이어지는 흐름을 설계했습니다.</p></div></div>
   <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1 / TO-BE FLOW</span><div><h3 class="hm-subtitle">요청이 들어온 순간부터<br>판단이 남는 일곱 단계를 정의했습니다.</h3></div></div>
-    <div class="ways-list">
+    <div class="ways-list hm-ds-numbered-list">
       <article><span class="hm-roman-no">IX.</span><h4>문제 정의</h4><p>사용자와 사업의 문제를 먼저 맞춥니다.</p></article>
       <article><span class="hm-roman-no">X.</span><h4>요구조건</h4><p>정책·목표·조건과 제약을 문서화합니다.</p></article>
       <article><span class="hm-roman-no">XI.</span><h4>대안 설계</h4><p>UX가 흐름과 화면 대안을 구체화합니다.</p></article>
@@ -130,7 +122,7 @@ html body.ways-page{background:#000!important;color:#fff!important}
     </div>
   </div>
   <div class="hm-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.2 / ROLE</span><div><h3 class="hm-subtitle">누가 화면을 그리느냐보다,<br>어떤 판단을 책임지는지 다시 나눴습니다.</h3></div></div>
-    <div class="ways-list">
+    <div class="ways-list hm-ds-numbered-list">
       <article><span class="hm-roman-no">XVI.</span><h4>문제·정책·요구조건</h4><p>사업 목표와 정책, 해결할 문제를 정의합니다.<br><br>PROBLEM · REQUIREMENT</p></article>
       <article><span class="hm-roman-no">XVII.</span><h4>사용자 흐름·화면 대안</h4><p>문제에 맞는 구조와 인터랙션을 검증합니다.<br><br>FLOW · INTERACTION · PROTOTYPE</p></article>
       <article><span class="hm-roman-no">XVIII.</span><h4>기술 제약·구현 가능성</h4><p>설계 단계에서 기술 조건과 예외를 검토합니다.<br><br>FEASIBILITY · EXCEPTION</p></article>
