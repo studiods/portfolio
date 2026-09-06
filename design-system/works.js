@@ -1,4 +1,4 @@
-/* WORKS page controller — title state, project switcher, media and sticky project handoff. */
+/* WORKS page controller — title state, project switcher, media and centered project handoff. */
 (() => {
   'use strict';
 
@@ -7,11 +7,16 @@
 
   const title = document.querySelector('.works-page-title');
   const hero = document.querySelector('.works-hero');
+  const grid = document.querySelector('.works-grid');
   const cards = [...document.querySelectorAll('.works-grid .works-card')];
-  if (!title || !hero || !cards.length) return;
+  if (!title || !hero || !grid || !cards.length) return;
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+  const smoothstep = value => {
+    const t = clamp(value, 0, 1);
+    return t * t * (3 - 2 * t);
+  };
   const copies = cards.map(card => card.querySelector('.works-card-copy'));
 
   /* Keep authored video behavior without page-local CSS/JS overrides. */
@@ -130,46 +135,72 @@
 
   /*
     Desktop project-copy handoff:
-    - the title text itself settles 400px below compact WORKS;
-    - the 1px rule + 32px gap are accounted for when positioning the sticky group;
-    - as the next title approaches, the current title exits upward and loses opacity quickly.
+    - the current copy is fixed to the viewport vertical center;
+    - the next copy rises from below and eases into that same center position;
+    - the outgoing copy still moves upward by up to 96px;
+    - fade exponent changed from 3 to 1.5, making the opacity falloff about 50% less abrupt.
   */
   const updateProjectCopies = compact => {
     const isDesktop = window.innerWidth > 780;
     if (!isDesktop || !compact) {
       copies.forEach(copy => {
         if (!copy) return;
+        copy.style.setProperty('--works-copy-top', '50vh');
         copy.style.setProperty('--works-copy-opacity', '1');
         copy.style.setProperty('--works-copy-shift', '0px');
+        copy.style.removeProperty('--works-copy-z');
+        copy.style.pointerEvents = '';
       });
       return;
     }
 
-    const workRect = title.getBoundingClientRect();
-    const ruleAndGap = 33;
-    const titleGap = 400;
-    const targetTitleTop = workRect.bottom + titleGap;
-    const stickyGroupTop = targetTitleTop - ruleAndGap;
-    body.style.setProperty('--works-project-sticky-top', `${Math.round(stickyGroupTop)}px`);
-
+    const center = window.innerHeight * .5;
     const handoffDistance = clamp(window.innerHeight * .17, 140, 220);
+    const gridBottom = grid.getBoundingClientRect().bottom;
+
+    const easedIncomingOffset = rawDistance => {
+      if (rawDistance <= 0) return 0;
+      if (rawDistance >= handoffDistance) return rawDistance;
+      const u = rawDistance / handoffDistance;
+      /* Hermite curve: zero arrival velocity at center, unit velocity at the outer edge. */
+      return handoffDistance * (-u * u * u + 2 * u * u);
+    };
+
     copies.forEach((copy, index) => {
       if (!copy) return;
-      const nextCard = cards[index + 1];
-      if (!nextCard) {
-        copy.style.setProperty('--works-copy-opacity', '1');
-        copy.style.setProperty('--works-copy-shift', '0px');
-        return;
+      const rect = cards[index].getBoundingClientRect();
+      const cardCenter = rect.top + rect.height * .5;
+      const distanceBelowCenter = cardCenter - center;
+
+      let y = center;
+      let opacity = 1;
+      let shift = 0;
+
+      if (distanceBelowCenter > 0) {
+        y = center + easedIncomingOffset(distanceBelowCenter);
+        const arrival = clamp((center + handoffDistance - cardCenter) / handoffDistance, 0, 1);
+        opacity = smoothstep(arrival);
       }
 
-      const nextTitleTop = nextCard.getBoundingClientRect().top + ruleAndGap;
-      const fadeStart = targetTitleTop + handoffDistance;
-      const t = clamp((fadeStart - nextTitleTop) / handoffDistance, 0, 1);
-      const opacity = Math.pow(1 - t, 3);
-      const shift = -96 * t;
+      const nextCard = cards[index + 1];
+      const nextAnchor = nextCard
+        ? (() => {
+            const nextRect = nextCard.getBoundingClientRect();
+            return nextRect.top + nextRect.height * .5;
+          })()
+        : gridBottom;
 
+      const exit = clamp((center + handoffDistance - nextAnchor) / handoffDistance, 0, 1);
+      if (exit > 0) {
+        opacity *= Math.pow(1 - exit, 1.5);
+        shift = -96 * exit;
+      }
+
+      copy.style.setProperty('--works-copy-top', `${y.toFixed(1)}px`);
       copy.style.setProperty('--works-copy-opacity', opacity.toFixed(3));
       copy.style.setProperty('--works-copy-shift', `${shift.toFixed(1)}px`);
+      copy.style.setProperty('--works-copy-z', String(1000 + index));
+      copy.style.pointerEvents = opacity > .18 ? 'auto' : 'none';
     });
   };
 
