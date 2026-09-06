@@ -146,3 +146,15 @@
 2. 대상 페이지는 fresh cache version으로 검증한다.
 3. Typography fine tuning is performed after local font loading and line wrapping are stable.
 4. 공통 navigation 변경 시 Home / Works / detail page의 viewport center를 함께 검증한다.
+
+
+## Immersive storytelling component contract
+
+- `components/immersive-story.css`는 리포트형 정보 밀도를 깨기 위한 공통 스토리텔링 컴포넌트다. 페이지별 `<style>`로 재정의하지 않는다.
+- `hm-ds-impact`는 하나의 강한 문장 + 최소 핵심 지표를 크게 보여주는 구간이다. 숫자는 실제 근거가 있는 값만 사용한다.
+- `hm-ds-immersive-sequence` / `hm-ds-immersive-stage`는 이미지·영상이 화면 전체를 점유하는 sticky visual beat다. 텍스트는 짧은 결론과 키워드만 유지한다.
+- `hm-ds-visual-wall`은 실제 산출물·촬영·콘텐츠를 비대칭 12-column 구조로 배치한다. 실물 이미지가 없을 때 placeholder를 사용할 수 있지만 반드시 `PLACEHOLDER`로 표시한다.
+- `hm-ds-closing`은 case의 최종 역할/의미를 Hero scale의 한 문장으로 정리한다.
+- 신규 글꼴·type scale·palette를 만들지 않는다. typography, spacing, color는 `tokens.css`, `typography.css`, `spacing.css`를 그대로 사용한다.
+- 데이터가 필요한 순간에는 `data-viz.css`의 기존 Himart graph component를 사용하고, 설명·과정 구간에서는 시각 자료를 우선해 정보 밀도의 강약을 만든다.
+- 실제 검증되지 않은 KPI나 성과 수치를 시각적 완성도를 위해 만들지 않는다.
