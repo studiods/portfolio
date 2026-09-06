@@ -32,7 +32,7 @@ html body .top a{
   font-size:12px!important;
   font-weight:400!important;
   line-height:1.25!important;
-  letter-spacing:normal!important;
+  letter-spacing:var(--hm-track-nav,-.01em)!important;
   text-decoration:none!important;
   text-transform:none!important;
   opacity:1!important;
@@ -50,10 +50,7 @@ html body .top a::after{
 html body .top a:hover::after,
 html body .top a[aria-current="page"]::after{right:0!important}
 
-/* Works has no legacy absolute centering after its DS rebuild; use grid column 2 explicitly. */
-html body.works-page-body>.top{
-  z-index:2147483646!important;
-}
+html body.works-page-body>.top{z-index:2147483646!important}
 html body.works-page-body>.top .top-center{
   position:static!important;
   grid-column:2!important;
