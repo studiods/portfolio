@@ -89,8 +89,9 @@
 
   const placeSwitcher = () => {
     const rect = title.getBoundingClientRect();
+    const triggerHeight = trigger.getBoundingClientRect().height || 24;
     trigger.style.left = `${Math.round(rect.right + 24)}px`;
-    trigger.style.top = `${Math.round(rect.top + (rect.height - 18) / 2)}px`;
+    trigger.style.top = `${Math.round(rect.top + (rect.height - triggerHeight) / 2)}px`;
     menu.style.left = `${Math.round(rect.left)}px`;
     menu.style.top = `${Math.round(rect.bottom + 24)}px`;
   };
@@ -105,6 +106,20 @@
       menu.classList.add('is-open');
       placeSwitcher();
     }
+  });
+
+  const goToTop = () => {
+    if (!body.classList.contains('works-title-compact')) return;
+    closeMenu();
+    window.scrollTo({top:0, behavior:reduced ? 'auto' : 'smooth'});
+  };
+
+  title.addEventListener('click', goToTop);
+  title.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    if (!body.classList.contains('works-title-compact')) return;
+    event.preventDefault();
+    goToTop();
   });
 
   document.addEventListener('pointerdown', event => {
@@ -135,11 +150,11 @@
 
   /*
     Desktop project-copy handoff:
-    - there is no separate incoming animation or arrival fade;
     - each copy rises at the exact same scroll rate as its media, with both top edges aligned;
     - once the copy reaches viewport center it stops, while the media keeps scrolling;
-    - when the next copy reaches the lower 3/4 line, the outgoing copy begins a smooth fade/upward handoff;
-    - the outgoing copy reaches zero only as the incoming copy reaches center.
+    - the outgoing handoff now spans 100vh -> 50vh instead of 75vh -> 50vh, exactly doubling its scroll-height exposure;
+    - opacity stays visible longer with a squared progress before smoothstep;
+    - the outgoing copy can travel up to 192px, twice the previous 96px distance, before replacement completes.
   */
   const updateProjectCopies = () => {
     const isDesktop = window.innerWidth > 780;
@@ -157,7 +172,7 @@
 
     const viewportHeight = window.innerHeight;
     const center = viewportHeight * .5;
-    const handoffStart = viewportHeight * .75;
+    const handoffStart = viewportHeight;
     const gridBottom = grid.getBoundingClientRect().bottom;
 
     copies.forEach((copy, index) => {
@@ -167,7 +182,7 @@
       const copyHeight = copy.offsetHeight;
       const naturalCenter = cardRect.top + copyHeight * .5;
 
-      /* Natural scroll until centered; no easing, no arrival opacity animation. */
+      /* Natural scroll until centered; no separate incoming easing/fade. */
       const y = Math.max(center, naturalCenter);
       let opacity = 1;
       let shift = 0;
@@ -184,9 +199,10 @@
           0,
           1
         );
-        const eased = smoothstep(progress);
-        opacity = 1 - eased;
-        shift = -96 * eased;
+        const motion = smoothstep(progress);
+        const fade = smoothstep(progress * progress);
+        opacity = 1 - fade;
+        shift = -192 * motion;
       }
 
       copy.style.setProperty('--works-copy-top', `${y.toFixed(1)}px`);
@@ -204,7 +220,7 @@
   const updateTitle = () => {
     const range = Math.max(1, Math.min(520, hero.offsetHeight * .55));
     const p = reduced ? (window.scrollY > 32 ? 1 : 0) : clamp(window.scrollY / range, 0, 1);
-    const startSize = clamp(window.innerWidth * .09, 72, 160);
+    const startSize = clamp(window.innerWidth * .09,72,160);
     const endSize = 32;
     const startTop = window.innerHeight * .5;
     const endTop = window.innerWidth <= 780 ? 24 : 32;
@@ -218,7 +234,16 @@
 
     const compact = p >= .985;
     body.classList.toggle('works-title-compact', compact);
-    if (!compact) closeMenu();
+    if (compact) {
+      title.setAttribute('role', 'button');
+      title.setAttribute('tabindex', '0');
+      title.setAttribute('aria-label', 'WORKS 맨 위로 이동');
+    } else {
+      title.removeAttribute('role');
+      title.removeAttribute('tabindex');
+      title.removeAttribute('aria-label');
+      closeMenu();
+    }
     placeSwitcher();
     updateProjectCopies();
     updateProgress();
