@@ -77,14 +77,16 @@ html body.reuse-current .reuse-concern-chart::before{display:none!important;cont
 html body.reuse-current .reuse-concern-chart img{display:block!important;width:100%!important;height:auto!important}
 html body.reuse-current .reuse-concern-chart .chart-legend{display:flex!important;margin-top:var(--hm-space-20)!important}
 
-/* Reuse-specific content grouping. Layout spacing comes from shared tokens. */
-html body.reuse-current .prototype-intro{margin:0!important}
+/* Reuse-specific content grouping. All distances resolve to shared spacing tokens. */
+html body.reuse-current #live-main .prototype-intro.hm-subsection{padding-top:0!important}
+html body.reuse-current .prototype-intro{margin-left:0!important;margin-right:0!important}
 html body.reuse-current .prototype-intro h3,
 html body.reuse-current .prototype-intro p,
 html body.reuse-current .sentiment-conclusion h4,
 html body.reuse-current .sentiment-conclusion p{margin-left:0!important;margin-right:0!important}
 html body.reuse-current .phone-gallery{width:100%!important}
-html body.reuse-current .sentiment-conclusion{margin-bottom:0!important}
+html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:var(--hm-subtitle-to-content)!important}
+html body.reuse-current .sentiment-conclusion.hm-ds-subsection-gap{margin-top:var(--hm-subsection-gap)!important;margin-bottom:0!important}
 
 @media(max-width:980px){
   html body.reuse-current .reuse-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -94,4 +96,6 @@ html body.reuse-current .sentiment-conclusion{margin-bottom:0!important}
   html body.reuse-current .reuse-proof-grid{grid-template-columns:1fr!important;margin-top:56px!important}
   html body.reuse-current .reuse-proof-grid .proof-item{min-height:0!important}
   html body.reuse-current .reuse-proof-grid .proof-item>strong{font-size:68px!important}
+  html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:56px!important}
+  html body.reuse-current .sentiment-conclusion.hm-ds-subsection-gap{margin-top:var(--hm-space-80)!important}
 }
