@@ -1,7 +1,11 @@
 /* WORKS page component — page styling is owned by the design system. */
 
 body.works-page-body{
-  --works-project-rule-width:calc(100vw / 12);
+  --works-title-column:35vw;
+  --works-media-column:65vw;
+  --works-title-gutter:7vw;
+  --works-title-content-width:28vw;
+  --works-project-rule-width:8.75vw;
   --works-project-rule-gap:44px;
   --works-footer-gap:400px;
   margin:0;
@@ -52,6 +56,8 @@ body.works-page-body.works-title-compact .works-page-title{
   font-weight:200;
   line-height:1;
   letter-spacing:-.02em;
+  pointer-events:auto;
+  cursor:pointer;
 }
 body.works-page-body .works-page-title .entry-scramble-char{
   display:inline-block;
@@ -62,7 +68,7 @@ body.works-page-body .works-page-title .entry-scramble-char{
   letter-spacing:inherit;
 }
 
-/* Project stream: exact 1/3 copy + 2/3 media. Media rows touch with zero vertical gap. */
+/* Project stream: exact 7/20 copy + 13/20 media. Media rows touch with zero vertical gap. */
 body.works-page-body .works-grid{
   display:block;
   margin:0;
@@ -71,7 +77,7 @@ body.works-page-body .works-grid{
 body.works-page-body .works-card{
   position:relative;
   display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,2fr);
+  grid-template-columns:minmax(0,7fr) minmax(0,13fr);
   width:100%;
   min-height:0;
   margin:0;
@@ -83,10 +89,12 @@ body.works-page-body .works-card{
 
 /*
   Project copy contract:
+  - the left area is 7/20 of the viewport and media is 13/20;
+  - within the left area, 2/10 is intentionally empty and copy uses only the remaining 8/10;
   - while entering, copy top stays aligned with the corresponding media top;
   - once its center reaches the viewport center, the copy stops there while media keeps scrolling;
-  - the line above the title is exactly 1/4 of the 1/3 copy column = 1/12 viewport;
-  - the rule is white 30% and the rule-to-title gap is 44px;
+  - the rule above the title is 1/4 of the 7/20 title column, white 30%;
+  - the rule-to-title gap is 44px;
   - works.js owns only scroll-linked positioning and outgoing handoff opacity.
 */
 body.works-page-body .works-card-copy{
@@ -95,7 +103,8 @@ body.works-page-body .works-card-copy{
   grid-column:1;
   align-self:center;
   min-width:0;
-  padding:0 var(--hm-space-40) 0 var(--hm-inset-desktop);
+  width:var(--works-title-column);
+  padding:0 0 0 var(--works-title-gutter);
   opacity:var(--works-copy-opacity,1);
   will-change:top,opacity,transform;
 }
@@ -110,7 +119,7 @@ body.works-page-body .works-card-copy::before{
 body.works-page-body .works-card-title-link{
   display:block;
   width:fit-content;
-  max-width:100%;
+  max-width:var(--works-title-content-width);
   color:var(--hm-text-primary);
   text-decoration:none;
 }
@@ -128,6 +137,7 @@ body.works-page-body .works-card-title{
 }
 body.works-page-body .works-card-company{
   display:block;
+  max-width:var(--works-title-content-width);
   margin:var(--hm-space-20) 0 0;
   color:var(--hm-text-secondary);
   font-family:var(--hm-font-en);
@@ -143,7 +153,7 @@ body.works-page-body .works-card-company{
     position:fixed;
     top:var(--works-copy-top,110vh);
     left:0;
-    width:33.333333vw;
+    width:var(--works-title-column);
     transform:translateY(-50%) translateY(var(--works-copy-shift,0px));
   }
 }
@@ -240,8 +250,8 @@ body.works-page-body .works-progress a.is-active{color:var(--hm-blue)}
 body.works-page-body .works-title-menu-toggle{
   position:fixed;
   z-index:2147483647;
-  width:18px;
-  height:18px;
+  width:24px;
+  height:24px;
   margin:0;
   padding:0;
   border:0;
@@ -261,17 +271,18 @@ body.works-page-body.works-title-compact .works-title-menu-toggle{
 body.works-page-body .works-title-menu-toggle::before{
   content:"";
   position:absolute;
-  top:4px;
-  left:4px;
+  top:50%;
+  left:50%;
   width:7px;
   height:7px;
   border-right:1px solid currentColor;
   border-bottom:1px solid currentColor;
-  transform:rotate(45deg);
+  transform:translate(-50%,-65%) rotate(45deg);
+  transform-origin:center;
   transition:transform .18s ease;
 }
 body.works-page-body .works-title-menu-toggle[aria-expanded="true"]::before{
-  transform:translateY(3px) rotate(225deg);
+  transform:translate(-50%,-25%) rotate(225deg);
 }
 body.works-page-body .works-project-menu{
   position:fixed;
@@ -368,6 +379,8 @@ body.works-page-body .works-footer a{
     opacity:1!important;
     transform:none!important;
   }
+  body.works-page-body .works-card-title-link,
+  body.works-page-body .works-card-company{max-width:none}
   body.works-page-body .works-card-title{font-size:clamp(34px,9vw,52px)}
   body.works-page-body .works-card-media-link{
     grid-column:1;
