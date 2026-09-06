@@ -1,0 +1,36 @@
+name: Rebuild portfolio image assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.asset-upload/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rebuild WebP assets from safe text chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/image
+          names=(himart-team himart-automation trenbe yanolja stepup coupang vinyl)
+          for name in "${names[@]}"; do
+            cat ".asset-upload/${name}"/part-*.txt | tr -d '\n\r' | base64 --decode > "assets/image/${name}.webp"
+            test -s "assets/image/${name}.webp"
+            file "assets/image/${name}.webp" | grep -qi 'Web/P image'
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/image
+          git rm -r .asset-upload
+          git rm .github/workflows/rebuild-portfolio-assets.yml
+          git commit -m "Rebuild generated portfolio image assets"
+          git push origin HEAD:main
