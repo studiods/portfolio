@@ -1,7 +1,7 @@
 /*
-  HIMART Editorial Restraint v1.0
+  HIMART Editorial Restraint v1.1
   Small English eyebrow/kicker labels are optional, not a default decoration.
-  Use them only when they carry necessary structure or provenance.
+  Quantitative evidence always carries a standardized source note.
 */
 
 /* Default: suppress decorative English eyebrow labels. */
@@ -32,4 +32,49 @@ html body.himart-page-body #live-main .hm-ds-evidence-stat :is(.proof-label,.pro
 }
 html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
   margin-top:0!important;
+}
+
+/*
+  Quantitative source-note contract.
+  Every graph, chart, data block or numerical evidence visualization must expose its actual source.
+  The authored/runtime text must begin with the literal prefix `SOURCE -`.
+*/
+html body.himart-page-body #live-main :is(
+  .hm-source,
+  .hm-ds-source-note,
+  .reuse-proof-source,
+  [data-hm-source-note]
+){
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:32px 0 0!important;
+  padding:14px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--hm-line-faint)!important;
+  background:transparent!important;
+  color:rgba(255,255,255,.46)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-base)!important;
+  word-break:keep-all!important;
+  overflow-wrap:break-word!important;
+  box-sizing:border-box!important;
+}
+
+/* The 32px evidence-to-source distance is invariant on mobile as well. */
+@media(max-width:780px){
+  html body.himart-page-body #live-main :is(
+    .hm-source,
+    .hm-ds-source-note,
+    .reuse-proof-source,
+    [data-hm-source-note]
+  ){
+    margin-top:32px!important;
+    padding-top:14px!important;
+    font-size:11px!important;
+    line-height:1.5!important;
+  }
 }
