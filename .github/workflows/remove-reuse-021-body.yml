@@ -1,0 +1,79 @@
+name: Remove Reuse 02.1 body copy
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-reuse-021-body.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove all body copy under Reuse 02.1 titles
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('himart-reuse.html')
+          text = p.read_text()
+          start_marker = '<article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.1</span>'
+          end_marker = '<div class="hm-source hm-ds-source-note">SOURCE - 번개장터 안전거래 조사'
+          start = text.find(start_marker)
+          end = text.find(end_marker, start)
+          if start < 0 or end < 0:
+              raise SystemExit('Reuse 02.1 section markers not found')
+
+          section = text[start:end]
+          updated, count = re.subn(r'<p class="hm-ds-table__body">.*?</p>', '', section, flags=re.S)
+          if count != 10:
+              raise SystemExit(f'Expected 10 body paragraphs in 02.1, removed {count}')
+          text = text[:start] + updated + text[end:]
+          p.write_text(text)
+          PY
+      - name: Verify Reuse 02.1 titles remain and body copy is gone
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          text = Path('himart-reuse.html').read_text()
+          start = text.find('<span class="hm-card-no">02.1</span>')
+          end = text.find('<span class="hm-card-no">02.2</span>', start)
+          if start < 0 or end < 0:
+              raise SystemExit('02.1 / 02.2 boundaries not found')
+          section = text[start:end]
+          required_titles = [
+              '상품 상태가 설명과 다를 수 있다',
+              '실사진 · 상태 등급 · 기능 검수',
+              '오래 쓸 수 있을지 확신하기 어렵다',
+              '기능 점검 · 2년 무상 보증 사전 노출',
+              '무엇을 수리·점검했는지 알 수 없다',
+              '상품화·검수 과정과 점검 기준 공개',
+              '이전 사용 흔적과 청결·위생이 걱정된다',
+              '클리닝 · 세척 · 소독 과정 공개',
+              '문제가 생기면 누가 책임지는지 불분명하다',
+              '하이마트 판매 · 배송 · 설치 · A/S 연결',
+          ]
+          for title in required_titles:
+              if title not in section:
+                  raise SystemExit(f'Missing title: {title}')
+          if 'hm-ds-table__body' in section:
+              raise SystemExit('02.1 body paragraph remains')
+          if '실물을 볼 수 없어 외관과 기능 상태를 확신하기 어려웠습니다.' in section:
+              raise SystemExit('Requested example body text remains')
+          print('PASS - all 10 02.1 title-under-body texts removed')
+          PY
+      - name: Commit change and remove temporary workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/remove-reuse-021-body.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add himart-reuse.html .github/workflows/remove-reuse-021-body.yml
+          git commit -m "Remove Reuse 02.1 supporting body copy"
+          git push
