@@ -15,32 +15,14 @@ jobs:
       - name: Apply grouped proof layout
         shell: bash
         env:
-          HTML_B64: PGRpdiBjbGFzcz0icmV1c2UtcHJvb2YtbWFwIGhtLWRzLXN1YnRpdGxlLXRvLWNvbnRlbnQiIGFyaWEtbGFiZWw9IuykkeygoOqwgOyghOydmCDrtoTri6jrqqjOyZCDrtoTri6jrqqjsnbQg7ZmV7J247ZWYIOqwgOuKpe2VnCDtlbTqsrAg6re87KeAIj4KICA8c2VjdGlvbiBjbGFzcz0icmV1c2UtcHJvb2YtYmFuZCByZXVzZS1wcm9vZi1iYW5kLS1hbnhpZXR5IiBhcmlhLWxhYmVsPSLrtoTri6jrqqjsmpAiPgogICAgPHNwYW4gY2xhc3M9InJldXNlLXByb29mLWJhbmRfX2xhYmVsIj7rtoTri6jrqqjsmpA8L3NwYW4+CiAgICA8ZGl2IGNsYXNzPSJyZXVzZS1wcm9vZi1iYW5kX19ub2RlcyI+CiAgICAgIDxkaXYgY2xhc3M9InJldXNlLWNvbmZpZGVuY2Utbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlLS1hbnhpZXR5Ij48aDQ+7IOB7ZKIIOyDge2DnOqwgDxicj7shKTrqoXqs7wg64uk66W8IOyImCDsnojripTrk6QuPC9oND48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0icmV1c2UtY29uZmlkZW5jZS1ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUtLWFueGlldHkiPjxoND7smKTrrZgg7JP4IOyImCDsnojsnYzsp4AsIOusuOygnOqwgCDsg53quLDrqbQg64mE6rCAgOyxhOydhOyngCDquLDtlbTrrtoTri4nrqoXtlZjri6Q8L2g0PjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJyZXVzZS1jb25maWRlbmNlLW5vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZS0tYW54aWV0eSI+PGg0Puu무엇을 수리·점검했는지 알 수 없다</h4></div>
-      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>이전 사용 흔적과 청결·위생이 걱정된다</h4></div>
-    </div>
-  </section>
-
-  <div class="reuse-proof-map__arrow" aria-hidden="true">
-    <svg viewBox="0 0 400 32" preserveAspectRatio="xMidYMid meet"><polyline points="0,0 200,32 400,0"></polyline></svg>
-  </div>
-
-  <section class="reuse-proof-band reuse-proof-band--solution" aria-label="확인 가능한 근거">
-    <span class="reuse-proof-band__label">확인 가능한 근거</span>
-    <div class="reuse-proof-band__nodes">
-      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>실사진 · 상태 등급 ·<br>기능 검수</h4></div>
-      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>기능 점검 · 2년 무상 보증 사전 노출 · 하이마트 판매 · 배송 · 설치 · A/S 연결</h4></div>
-      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>상품화·검수 과정과<br>점검 기준 공개</h4></div>
-      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>클리닝 · 세척<br>· 소독 과정 공개</h4></div>
-    </div>
-  </section>
-</div>
+          HTML_B64: PGRpdiBjbGFzcz0icmV1c2UtcHJvb2YtbWFwIGhtLWRzLXN1YnRpdGxlLXRvLWNvbnRlbnQiIGFyaWEtbGFiZWw9IuykkeqzoOqwgOyghOydmCDrtojslYgg7JqU7IaM7JmAIO2ZleyduCDqsIDriqXtlZwg7ZW06rKwIOq3vOqxsCI+CiAgPHNlY3Rpb24gY2xhc3M9InJldXNlLXByb29mLWJhbmQgcmV1c2UtcHJvb2YtYmFuZC0tYW54aWV0eSIgYXJpYS1sYWJlbD0i67aI7JWIIOyalOyGjCI+CiAgICA8c3BhbiBjbGFzcz0icmV1c2UtcHJvb2YtYmFuZF9fbGFiZWwiPuu2iOyViCDsmpTshow8L3NwYW4+CiAgICA8ZGl2IGNsYXNzPSJyZXVzZS1wcm9vZi1iYW5kX19ub2RlcyI+CiAgICAgIDxkaXYgY2xhc3M9InJldXNlLWNvbmZpZGVuY2Utbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlLS1hbnhpZXR5Ij48aDQ+7IOB7ZKIIOyDge2DnOqwgDxicj7shKTrqoXqs7wg64uk66W8IOyImCDsnojri6QuPC9oND48L2Rpdj4KICAgICAgPGRpdiBjbGFzcz0icmV1c2UtY29uZmlkZW5jZS1ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUtLWFueGlldHkiPjxoND7smKTrnpgg7JO4IOyImCDsnojsnYTsp4AsIOusuOygnOqwgCDsg53quLDrqbQg64iE6rCAIOyxheyehOyngOuKlOyngCDrtojrtoTrqoXtlZjri6Q8L2g0PjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJyZXVzZS1jb25maWRlbmNlLW5vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZS0tYW54aWV0eSI+PGg0PuustOyXh+ydhCDsiJjrpqzCt+ygkOqygO2WiOuKlOyngCDslYwg7IiYIOyXhuuLpDwvaDQ+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9InJldXNlLWNvbmZpZGVuY2Utbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlLS1hbnhpZXR5Ij48aDQ+7J207KCEIOyCrOyaqSDtnZTsoIHqs7wg7LKt6rKwwrfsnITsg53snbQg6rGx7KCV65Cc64ukPC9oND48L2Rpdj4KICAgIDwvZGl2PgogIDwvc2VjdGlvbj4KCiAgPGRpdiBjbGFzcz0icmV1c2UtcHJvb2YtbWFwX19hcnJvdyIgYXJpYS1oaWRkZW49InRydWUiPgogICAgPHN2ZyB2aWV3Qm94PSIwIDAgNDAwIDMyIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij48cG9seWxpbmUgcG9pbnRzPSIwLDAgMjAwLDMyIDQwMCwwIj48L3BvbHlsaW5lPjwvc3ZnPgogIDwvZGl2PgoKICA8c2VjdGlvbiBjbGFzcz0icmV1c2UtcHJvb2YtYmFuZCByZXVzZS1wcm9vZi1iYW5kLS1zb2x1dGlvbiIgYXJpYS1sYWJlbD0i7ZmV7J24IOqwgOuKpe2VnCDqt7zqsbAiPgogICAgPHNwYW4gY2xhc3M9InJldXNlLXByb29mLWJhbmRfX2xhYmVsIj7tmZXsnbgg6rCA64ql7ZWcIOq3vOqxsDwvc3Bhbj4KICAgIDxkaXYgY2xhc3M9InJldXNlLXByb29mLWJhbmRfX25vZGVzIj4KICAgICAgPGRpdiBjbGFzcz0icmV1c2UtY29uZmlkZW5jZS1ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUtLXNvbHV0aW9uIj48aDQ+7Iuk7IKs7KeEIMK3IOyDge2DnCDrk7HquIkgwrc8YnI+6riw64qlIOqygOyImDwvaDQ+PC9kaXY+CiAgICAgIDxkaXYgY2xhc3M9InJldXNlLWNvbmZpZGVuY2Utbm9kZSByZXVzZS1wcm9vZi1tYXBfX25vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlLS1zb2x1dGlvbiI+PGg0Puq4sOuKpSDsoJDqsoAgwrcgMuuFhCDrrLTsg4Eg67O07KadIOyCrOyghCDrhbjstpwgwrcg7ZWY7J2066eI7Yq4IO2MkOunpCDCtyDrsLDshqEgwrcg7ISk7LmYIMK3IEEvUyDsl7DqsrA8L2g0PjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJyZXVzZS1jb25maWRlbmNlLW5vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZS0tc29sdXRpb24iPjxoND7sg4HtkojtmZTCt+qygOyImCDqs7zsoJXqs7w8YnI+7KCQ6rKAIOq4sOykgCDqs7XqsJw8L2g0PjwvZGl2PgogICAgICA8ZGl2IGNsYXNzPSJyZXVzZS1jb25maWRlbmNlLW5vZGUgcmV1c2UtcHJvb2YtbWFwX19ub2RlIHJldXNlLXByb29mLW1hcF9fbm9kZS0tc29sdXRpb24iPjxoND7tgbTrpqzri50gwrcg7IS47LKZPGJyPsK3IOyGjOuPhSDqs7zsoJUg6rO16rCcPC9oND48L2Rpdj4KICAgIDwvZGl2PgogIDwvc2VjdGlvbj4KPC9kaXY+
           CSS_B64: LyogMDIuMSBjaXJjdWxhciBwcm9vZiBtYXAgdjIg4oCUIGdyb3VwZWQgdW5jZXJ0YWludHkgYW5kIHByb29mIGJhbmRzLiAqLwpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtbWFwewogIGRpc3BsYXk6ZmxleDsKICB3aWR0aDoxMDAlOwogIGZsZXgtZGlyZWN0aW9uOmNvbHVtbjsKICBhbGlnbi1pdGVtczpjZW50ZXI7Cn0KaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLWJhbmR7CiAgcG9zaXRpb246cmVsYXRpdmU7CiAgd2lkdGg6MTAwJTsKICBwYWRkaW5nOjUycHggMjhweCAyOHB4OwogIGJvcmRlcjoxcHggc29saWQ7CiAgYm9yZGVyLXJhZGl1czo5OTlweDsKICBib3gtc2l6aW5nOmJvcmRlci1ib3g7Cn0KaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLWJhbmQtLWFueGlldHl7CiAgYm9yZGVyLWNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsLjMwKTsKfQpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtYmFuZC0tc29sdXRpb257CiAgYm9yZGVyLWNvbG9yOnZhcigtLWhtLWJsdWUpOwp9Cmh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1iYW5kX19sYWJlbHsKICBwb3NpdGlvbjphYnNvbHV0ZTsKICB0b3A6MThweDsKICBsZWZ0OjUwJTsKICB0cmFuc2Zvcm06dHJhbnNsYXRlWCgtNTAlKTsKICBmb250LWZhbWlseTp2YXIoLS1obS1mb250LWtvKTsKICBmb250LXNpemU6MTBweDsKICBmb250LXdlaWdodDozMDA7CiAgbGluZS1oZWlnaHQ6MTsKICBsZXR0ZXItc3BhY2luZzp2YXIoLS1obS10cmFjay1ub3RlKTsKICB3aGl0ZS1zcGFjZTpub3dyYXA7Cn0KaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLWJhbmQtLWFueGlldHkgLnJldXNlLXByb29mLWJhbmRfX2xhYmVsewogIGNvbG9yOnJnYmEoMjU1LDI1NSwyNTUsLjMwKTsKfQpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtYmFuZC0tc29sdXRpb24gLnJldXNlLXByb29mLWJhbmRfX2xhYmVsewogIGNvbG9yOnZhcigtLWhtLWJsdWUpOwp9Cmh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1iYW5kX19ub2Rlc3sKICBkaXNwbGF5OmdyaWQ7CiAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOnJlcGVhdCg0LG1pbm1heCgwLDFmcikpOwogIGdhcDoyOHB4OwogIHdpZHRoOjEwMCU7CiAgYWxpZ24taXRlbXM6Y2VudGVyOwp9Cmh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1tYXBfX25vZGV7CiAgd2lkdGg6MTAwJTsKICBtaW4td2lkdGg6MDsKfQpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtbWFwX19ub2RlIGg0ewogIG1heC13aWR0aDoxNmNoOwogIG1hcmdpbjowOwp9Cmh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1tYXBfX25vZGUtLWFueGlldHl7CiAgb3BhY2l0eTouMzA7Cn0KaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLW1hcF9fbm9kZS0tYW54aWV0eSBoNHsKICBjb2xvcjojZmZmIWltcG9ydGFudDsKICBmb250LWZhbWlseTp2YXIoLS1obS1mb250LWtvKSFpbXBvcnRhbnQ7CiAgZm9udC1zaXplOjI0cHghaW1wb3J0YW50OwogIGZvbnQtd2VpZ2h0OjEwMCFpbXBvcnRhbnQ7CiAgbGluZS1oZWlnaHQ6MS4yMjsKfQpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtbWFwX19ub2RlLS1zb2x1dGlvbnsKICBvcGFjaXR5Oi42MDsKICBib3JkZXItY29sb3I6dmFyKC0taG0tYmx1ZSk7CiAgYmFja2dyb3VuZDojMDAwOwp9Cmh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1tYXBfX25vZGUtLXNvbHV0aW9uIGg0ewogIGNvbG9yOnZhcigtLWhtLWJsdWUpIWltcG9ydGFudDsKICBmb250LWZhbWlseTp2YXIoLS1obS1mb250LWtvKSFpbXBvcnRhbnQ7CiAgZm9udC1zaXplOjI0cHghaW1wb3J0YW50OwogIGZvbnQtd2VpZ2h0OjMwMCFpbXBvcnRhbnQ7CiAgbGluZS1oZWlnaHQ6MS4yMjsKfQpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtbWFwX19hcnJvd3sKICBkaXNwbGF5OmZsZXg7CiAgd2lkdGg6MTAwJTsKICBoZWlnaHQ6MTYwcHg7CiAgZmxleDowIDAgMTYwcHg7CiAgYWxpZ24taXRlbXM6Y2VudGVyOwogIGp1c3RpZnktY29udGVudDpjZW50ZXI7Cn0KaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLW1hcF9fYXJyb3cgc3ZnewogIGRpc3BsYXk6YmxvY2s7CiAgd2lkdGg6NDAwcHg7CiAgaGVpZ2h0OjMycHg7CiAgbWF4LXdpZHRoOjgwdnc7CiAgb3ZlcmZsb3c6dmlzaWJsZTsKfQpodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtbWFwX19hcnJvdyBwb2x5bGluZXsKICBmaWxsOm5vbmU7CiAgc3Ryb2tlOnJnYmEoMjU1LDI1NSwyNTUsLjMwKTsKICBzdHJva2Utd2lkdGg6MTsKICB2ZWN0b3ItZWZmZWN0Om5vbi1zY2FsaW5nLXN0cm9rZTsKICBzdHJva2UtbGluZWNhcDpzcXVhcmU7CiAgc3Ryb2tlLWxpbmVqb2luOm1pdGVyOwp9CkBtZWRpYShtYXgtd2lkdGg6OTgwcHgpewogIGh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1iYW5kX19ub2Rlc3tnYXA6MjBweH0KICBodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtYmFuZHtwYWRkaW5nLWxlZnQ6MjJweDtwYWRkaW5nLXJpZ2h0OjIycHh9Cn0KQG1lZGlhKG1heC13aWR0aDo3ODBweCl7CiAgaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLWJhbmR7CiAgICBwYWRkaW5nOjQ4cHggMjBweCAyMHB4OwogICAgYm9yZGVyLXJhZGl1czo1NnB4OwogIH0KICBodG1sIGJvZHkucmV1c2UtY3VycmVudCAucmV1c2UtcHJvb2YtYmFuZF9fbm9kZXN7CiAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6cmVwZWF0KDIsbWlubWF4KDAsMWZyKSk7CiAgICBnYXA6MThweDsKICB9CiAgaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLW1hcF9fbm9kZXsKICAgIHdpZHRoOjEwMCU7CiAgICBoZWlnaHQ6YXV0bzsKICAgIGFzcGVjdC1yYXRpbzoxLzE7CiAgICBwYWRkaW5nOjE4cHg7CiAgfQogIGh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1tYXBfX25vZGUtLWFueGlldHkgaDQsCiAgaHRtbCBib2R5LnJldXNlLWN1cnJlbnQgLnJldXNlLXByb29mLW1hcF9fbm9kZS0tc29sdXRpb24gaDR7CiAgICBmb250LXNpemU6Y2xhbXAoMThweCw1LjJ2dywyNHB4KSFpbXBvcnRhbnQ7CiAgfQogIGh0bWwgYm9keS5yZXVzZS1jdXJyZW50IC5yZXVzZS1wcm9vZi1tYXBfX2Fycm93IHN2Z3sKICAgIHdpZHRoOm1pbig0MDBweCw3NnZ3KTsKICAgIGhlaWdodDozMnB4OwogIH0KfQo=
         run: |
           python - <<'PY'
           from pathlib import Path
-          import base64
-          html = base64.b64decode(Path('/dev/stdin').read_text()) if False else base64.b64decode(__import__('os').environ['HTML_B64']).decode()
-          css = base64.b64decode(__import__('os').environ['CSS_B64']).decode()
+          import base64, os
+          html = base64.b64decode(os.environ['HTML_B64']).decode()
+          css = base64.b64decode(os.environ['CSS_B64']).decode()
 
           p=Path('himart-reuse.html'); t=p.read_text()
           start=t.find('<div class="reuse-proof-map hm-ds-subtitle-to-content"')
@@ -48,6 +30,7 @@ jobs:
           if start<0 or source_start<0: raise SystemExit('02.1 markers not found')
           source_end=t.find('</div>', source_start)+len('</div>')
           t=t[:start]+html+t[source_end:]
+          if './design-system/himart-system.css?v=20260907-38' not in t: raise SystemExit('page cache marker not found')
           t=t.replace('./design-system/himart-system.css?v=20260907-38','./design-system/himart-system.css?v=20260907-39',1)
           p.write_text(t)
 
@@ -57,11 +40,13 @@ jobs:
           p.write_text(c[:pos]+css)
 
           p=Path('design-system/index.css'); i=p.read_text()
+          if './components/reuse-confidence.css?v=20260907-6' not in i: raise SystemExit('component cache marker not found')
           i=i.replace('HIMART Design System v3.8','HIMART Design System v3.9',1)
           i=i.replace('./components/reuse-confidence.css?v=20260907-6','./components/reuse-confidence.css?v=20260907-7',1)
           p.write_text(i)
 
           p=Path('design-system/himart-system.css'); s=p.read_text()
+          if './index.css?v=20260907-33' not in s: raise SystemExit('system cache marker not found')
           s=s.replace('./index.css?v=20260907-33','./index.css?v=20260907-34',1)
           s=s.replace('HIMART Shared System v2.7','HIMART Shared System v2.8',1)
           p.write_text(s)
