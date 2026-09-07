@@ -1,0 +1,221 @@
+name: Rebuild Reuse 02.1 proof map
+on:
+  push:
+    paths:
+      - '.github/workflows/rebuild-reuse-021-proof-map.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Rebuild Reuse 02.1
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Replace the old 5-row table with 4 matched circular pairs.
+          p = Path('himart-reuse.html')
+          t = p.read_text()
+          start = t.find('<div class="reuse-trust-table-v2 hm-ds-table hm-ds-table--stack-mobile hm-ds-subtitle-to-content"')
+          if start < 0:
+              raise SystemExit('02.1 table start marker not found')
+          end_marker = '\n<div class="hm-source hm-ds-source-note">SOURCE - 번개장터'
+          end = t.find(end_marker, start)
+          if end < 0:
+              raise SystemExit('02.1 source marker not found')
+
+          replacement = '''<div class="reuse-proof-map hm-ds-subtitle-to-content" aria-label="중고가전의 불안 요소와 확인 가능한 해결 근거">
+  <article class="reuse-proof-pair">
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>상품 상태가 설명과 다를 수 있다</h4></div>
+    <div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 120 64" preserveAspectRatio="xMidYMid meet"><path d="M60 0 V54 M48 42 L60 54 L72 42"></path></svg></div>
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>실사진 · 상태 등급 · 기능 검수</h4></div>
+  </article>
+  <article class="reuse-proof-pair">
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>오래 쓸 수 있을지, 문제가 생기면 누가 책임지는지 불분명하다</h4></div>
+    <div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 120 64" preserveAspectRatio="xMidYMid meet"><path d="M60 0 V54 M48 42 L60 54 L72 42"></path></svg></div>
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>기능 점검 · 2년 무상 보증 사전 노출 · 하이마트 판매 · 배송 · 설치 · A/S 연결</h4></div>
+  </article>
+  <article class="reuse-proof-pair">
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>무엇을 수리·점검했는지 알 수 없다</h4></div>
+    <div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 120 64" preserveAspectRatio="xMidYMid meet"><path d="M60 0 V54 M48 42 L60 54 L72 42"></path></svg></div>
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>상품화·검수 과정과 점검 기준 공개</h4></div>
+  </article>
+  <article class="reuse-proof-pair">
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>이전 사용 흔적과 청결·위생이 걱정된다</h4></div>
+    <div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 120 64" preserveAspectRatio="xMidYMid meet"><path d="M60 0 V54 M48 42 L60 54 L72 42"></path></svg></div>
+    <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>클리닝 · 세척 · 소독 과정 공개</h4></div>
+  </article>
+</div>'''
+          t = t[:start] + replacement + t[end:]
+          t = t.replace('./design-system/himart-system.css?v=20260907-36','./design-system/himart-system.css?v=20260907-37',1)
+          p.write_text(t)
+
+          # 2) Replace the old 02.1 table styling with the circular proof-map component.
+          p = Path('design-system/components/reuse-confidence.css')
+          c = p.read_text()
+          section_start = c.find('/* 02.1 — uncertainty → visible proof. */')
+          section_end = c.find('/* 02.2 — Reuse purchase journey', section_start)
+          if section_start < 0 or section_end < 0:
+              raise SystemExit('02.1 CSS section markers not found')
+
+          new_section = '''/* 02.1 — uncertainty → visible proof. Four aligned pairs reuse the same circle geometry as 02.2. */
+html body.reuse-current .reuse-proof-map{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:28px;
+  width:100%;
+  align-items:start;
+}
+html body.reuse-current .reuse-proof-pair{
+  display:flex;
+  min-width:0;
+  flex-direction:column;
+  align-items:center;
+}
+html body.reuse-current .reuse-proof-map__node{
+  width:100%;
+  min-width:0;
+}
+html body.reuse-current .reuse-proof-map__node h4{
+  max-width:16ch;
+  margin:0;
+}
+html body.reuse-current .reuse-proof-map__arrow{
+  display:flex;
+  width:120px;
+  height:64px;
+  flex:0 0 64px;
+  align-items:center;
+  justify-content:center;
+}
+html body.reuse-current .reuse-proof-map__arrow svg{
+  display:block;
+  width:120px;
+  height:64px;
+  overflow:visible;
+}
+html body.reuse-current .reuse-proof-map__arrow path{
+  fill:none;
+  stroke:var(--hm-blue);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
+html body.reuse-current .reuse-proof-map__node--solution{
+  border-color:var(--hm-blue);
+  background:var(--hm-blue);
+}
+html body.reuse-current .reuse-proof-map__node--solution h4{
+  color:#000!important;
+  font-size:24px!important;
+  font-weight:300;
+  line-height:1.22;
+}
+
+'''
+          c = c[:section_start] + new_section + c[section_end:]
+
+          # Remove now-unused mobile rules for the legacy 02.1 table.
+          legacy_mobile = re.compile(
+              r'\n  html body\.reuse-current \.reuse-trust-table-v2\{.*?\n  html body\.reuse-current \.reuse-trust-table-v2 \.hm-ds-table__title\{\n    font-size:var\(--hm-type-group-mobile\)!important;\n  \}\n',
+              re.S
+          )
+          c, n = legacy_mobile.subn('\n', c, count=1)
+          if n != 1:
+              raise SystemExit(f'legacy mobile table CSS removal count={n}')
+
+          # Add mobile behavior for the new matched pairs while keeping each top→arrow→bottom relationship intact.
+          mobile_marker = '@media(max-width:780px){\n'
+          mobile_insert = '''@media(max-width:780px){
+  html body.reuse-current .reuse-proof-map{
+    grid-template-columns:1fr;
+    gap:var(--hm-space-40);
+  }
+  html body.reuse-current .reuse-proof-map__node{
+    width:var(--hm-mobile-circle-size);
+    height:var(--hm-mobile-circle-size);
+    aspect-ratio:1/1;
+    padding:22px;
+  }
+  html body.reuse-current .reuse-proof-map__node--solution h4{
+    font-size:24px!important;
+  }
+'''
+          if mobile_marker not in c:
+              raise SystemExit('mobile media marker not found')
+          c = c.replace(mobile_marker, mobile_insert, 1)
+          p.write_text(c)
+
+          # 3) Cache chain.
+          p = Path('design-system/index.css')
+          i = p.read_text()
+          if './components/reuse-confidence.css?v=20260907-4' not in i:
+              raise SystemExit('reuse-confidence cache marker not found')
+          i = i.replace('HIMART Design System v3.5','HIMART Design System v3.6',1)
+          i = i.replace('./components/reuse-confidence.css?v=20260907-4','./components/reuse-confidence.css?v=20260907-5',1)
+          p.write_text(i)
+
+          p = Path('design-system/himart-system.css')
+          s = p.read_text()
+          if './index.css?v=20260907-31' not in s:
+              raise SystemExit('index cache marker not found')
+          s = s.replace('./index.css?v=20260907-31','./index.css?v=20260907-32',1)
+          s = s.replace('HIMART Shared System v2.5','HIMART Shared System v2.6',1)
+          p.write_text(s)
+          PY
+
+      - name: Verify 02.1 structure and styling
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          h = Path('himart-reuse.html').read_text()
+          c = Path('design-system/components/reuse-confidence.css').read_text()
+          i = Path('design-system/index.css').read_text()
+          s = Path('design-system/himart-system.css').read_text()
+          block = h.split('<div class="reuse-proof-map hm-ds-subtitle-to-content"',1)[1].split('<div class="hm-source hm-ds-source-note">SOURCE - 번개장터',1)[0]
+          checks = {
+            'four matched pairs': block.count('class="reuse-proof-pair"') == 4,
+            'four upper nodes': block.count('reuse-proof-map__node--anxiety') == 4,
+            'four blue solution nodes': block.count('reuse-proof-map__node--solution') == 4,
+            'four down arrows': block.count('class="reuse-proof-map__arrow"') == 4,
+            'merged responsibility title': '오래 쓸 수 있을지, 문제가 생기면 누가 책임지는지 불분명하다' in block,
+            'required two-year warranty wording': '2년 무상 보증 사전 노출' in block,
+            'merged Himart responsibility proof': '하이마트 판매 · 배송 · 설치 · A/S 연결' in block,
+            'old separate responsibility row gone': '>문제가 생기면 누가 책임지는지 불분명하다<' not in block,
+            'legacy table removed from page': 'reuse-trust-table-v2' not in block,
+            'arrow 120px wide': 'width:120px;' in c,
+            'arrow 64px high': 'height:64px;' in c,
+            'arrow 1px stroke': 'stroke-width:1;' in c,
+            'solution circles blue': 'background:var(--hm-blue);' in c,
+            'solution text black': 'color:#000!important;' in c,
+            'solution text 24px': 'font-size:24px!important;' in c,
+            'reuse component cache bumped': './components/reuse-confidence.css?v=20260907-5' in i,
+            'shared system cache bumped': './index.css?v=20260907-32' in s,
+            'reuse page cache bumped': './design-system/himart-system.css?v=20260907-37' in h,
+          }
+          failed=[]
+          for name, ok in checks.items():
+              print(('PASS' if ok else 'FAIL') + ' - ' + name)
+              if not ok: failed.append(name)
+          if failed:
+              sys.exit('Verification failed: ' + ', '.join(failed))
+          PY
+
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/rebuild-reuse-021-proof-map.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Rebuild Reuse 02.1 as four matched proof circles"
+          git push
