@@ -14,7 +14,7 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
   margin:0 !important;
   padding:0 !important;
   font-family:var(--hm-font-ko,var(--hm-ko)) !important;
-  font-size:clamp(40px,3.6vw,52px) !important;
+  font-size:var(--hm-type-section) !important;
   font-weight:100 !important;
   line-height:1.14 !important;
   letter-spacing:var(--hm-track-section) !important;
@@ -29,19 +29,19 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
     gap:20px !important;
   }
   html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
-    font-size:clamp(30px,7.2vw,42px) !important;
+    font-size:var(--hm-type-section-mobile) !important;
     line-height:1.2 !important;
   }
 }
 @media (max-width:700px){
   html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
-    font-size:clamp(28px,7vw,36px) !important;
+    font-size:var(--hm-type-section-mobile) !important;
   }
 }
 
 @media (max-width:780px){
   html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
-    font-size:clamp(30px,6.8vw,38px) !important;
+    font-size:var(--hm-type-section-mobile) !important;
     line-height:1.18 !important;
   }
 }
@@ -225,7 +225,7 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
   max-width:none !important;
   min-width:0 !important;
   box-sizing:border-box !important;
-  font-size:42px !important;
+  font-size:var(--hm-type-subsection) !important;
   line-height:1.18 !important;
   letter-spacing:var(--hm-track-subsection) !important;
   word-break:keep-all !important;
@@ -248,7 +248,7 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhe
     .journey-block-title,
     .data-bridge-title,
     .data-card-head h3
-  ){font-size:36px !important;line-height:1.2 !important;}
+  ){font-size:var(--hm-type-subsection-mobile) !important;line-height:1.2 !important;}
 }
 
 
