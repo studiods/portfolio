@@ -410,7 +410,7 @@ html body.reuse-current .reuse-uncertainty-panel__label{
   display:block!important;
   margin:0!important;
   color:var(--hm-blue)!important;
-  font:100 16px/1.3 var(--hm-font-ko)!important;
+  font:300 16px/1.3 var(--hm-font-ko)!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
@@ -424,7 +424,7 @@ html body.reuse-current .reuse-uncertainty-panel p{
   max-width:none!important;
   margin:auto 0 0!important;
   color:var(--hm-blue)!important;
-  font:100 var(--hm-type-comparison)/var(--hm-leading-comparison) var(--hm-font-ko)!important;
+  font:300 var(--hm-type-comparison)/var(--hm-leading-comparison) var(--hm-font-ko)!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
@@ -448,12 +448,12 @@ html body.reuse-current .reuse-uncertainty-panel.is-anxiety p{
   }
   html body.reuse-current .reuse-uncertainty-panel__label{
     font-size:16px!important;
-    font-weight:100!important;
+    font-weight:300!important;
   }
   html body.reuse-current .reuse-uncertainty-panel p{
     gap:6px!important;
     font-size:28px!important;
     line-height:1.3!important;
-    font-weight:100!important;
+    font-weight:300!important;
   }
 }
