@@ -142,6 +142,27 @@
     ]
   };
 
+  const mountReuseCondensedCopy = () => {
+    const file = (location.pathname.split('/').pop() || '').toLowerCase();
+    if (file !== 'himart-reuse.html') return;
+
+    const replacements = new Map([
+      ['거짓된 상품 정보와 실제 상품 상태의 차이가 가장 큰 비금전적 불안 요인이었습니다.', '상품 정보와 실제 상태의 차이가 가장 큰 불안이었습니다.'],
+      ['판매자가 설명한 내용과 실제 제품 사이의 차이를 거래 위험으로 인식했습니다.', '설명과 실제 제품의 차이를 거래 위험으로 봤습니다.'],
+      ['계좌·주소·실명 등 개인정보 노출도 거래 장벽이었습니다.', '개인정보 노출도 거래 장벽이었습니다.'],
+      ['배송 지연과 누락도 거래가 끝날 때까지 불안을 남겼습니다.', '배송 지연·누락도 거래 불안 요인이었습니다.'],
+      ['중고 제품을 구매할 때 실제 제품 상태가 핵심 판단 근거였습니다.', '실제 제품 상태가 구매의 핵심 기준이었습니다.'],
+      ['상품 정보만큼 누가 판매하는지 역시 구매 판단에 영향을 줬습니다.', '판매자 신용도 구매 판단에 영향을 줬습니다.'],
+      ['안전결제 만족 이유 중 가장 높은 응답은 ‘사기 걱정 없이 안전하다’였습니다.', '안전결제는 ‘사기 걱정 없음’이 가장 큰 만족 이유였습니다.'],
+      ['리퍼비시 제품을 전문적으로 판매하는 매장을 방문해보고 싶다는 요구가 높았습니다.', '리퍼비시 전문 매장 방문 의향이 높았습니다.']
+    ]);
+
+    document.querySelectorAll('.reuse-proof-stack .proof-item p').forEach(node => {
+      const next = replacements.get(node.textContent.trim());
+      if (next) node.textContent = next;
+    });
+  };
+
   const mountSourceNotes = () => {
     if (!document.body.classList.contains('himart-page-body')) return;
 
@@ -166,6 +187,7 @@
     const active = currentPage();
     mountNavigation(active);
     if (active === 'works') mountProgress();
+    mountReuseCondensedCopy();
     mountSourceNotes();
   };
 
