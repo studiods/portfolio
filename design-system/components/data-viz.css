@@ -3,7 +3,7 @@
 @import url("../spacing.css");
 
 /*
-  HIMART Data Visualization System v1.0
+  HIMART Data Visualization System v1.1
   Canonical geometry is migrated from the approved Himart graphs:
   ring ratio / 65:35 split / segmented ratio / traffic SVG / horizontal bars.
   Typography, tracking, spacing and line contrast are inherited from existing tokens only.
@@ -105,7 +105,7 @@
   flex-direction:column;
   overflow:hidden;
   padding:30px 32px 34px;
-  border-top:2px solid var(--hm-blue);
+  border-top:1px solid var(--hm-blue);
   background:#050505;
 }
 .hm-ds-split-ratio__block.is-negative,.sentiment-block.negative{
