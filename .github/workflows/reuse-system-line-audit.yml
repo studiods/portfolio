@@ -1,0 +1,176 @@
+name: Audit and normalize Reuse line and spacing system
+on:
+  push:
+    paths:
+      - '.github/workflows/reuse-system-line-audit.yml'
+permissions:
+  contents: write
+jobs:
+  audit-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Normalize shared neutral card lines and token spacing
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('design-system/components/cards.css')
+          t = p.read_text()
+          replacements = {
+            '.hm-ds-card{border-top:1px solid var(--hm-line-strong);padding-top:20px}':
+              '.hm-ds-card{border-top:1px solid var(--hm-line-weak);padding-top:var(--hm-space-20)}',
+            '.hm-ds-card__label{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:.04em}':
+              '.hm-ds-card__label{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}',
+            '.hm-ds-card__title{margin:20px 0 0;color:var(--hm-text-primary)}':
+              '.hm-ds-card__title{margin:var(--hm-space-20) 0 0;color:var(--hm-text-primary)}',
+            '.hm-ds-card__body{margin:24px 0 0;color:var(--hm-text-body)}':
+              '.hm-ds-card__body{margin:var(--hm-space-24) 0 0;color:var(--hm-text-body)}',
+            '.hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}':
+              '.hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--hm-space-40)}',
+            '.hm-ds-role-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:50px 28px}':
+              '.hm-ds-role-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--hm-space-50) var(--hm-space-28)}',
+            '.hm-ds-role__title{margin:20px 0 0}':
+              '.hm-ds-role__title{margin:var(--hm-space-20) 0 0}',
+            '.hm-ds-role__body{margin:28px 0 0;color:var(--hm-text-body)}':
+              '.hm-ds-role__body{margin:var(--hm-space-28) 0 0;color:var(--hm-text-body)}',
+            '.hm-ds-role__keyword{display:block;margin-top:20px;color:var(--hm-blue);font:300 14px/1.4 var(--hm-font-ko)}':
+              '.hm-ds-role__keyword{display:block;margin-top:var(--hm-space-20);color:var(--hm-blue);font:300 14px/1.4 var(--hm-font-ko)}',
+            '  border-top:1px solid var(--hm-line-strong);\n  padding-top:20px;':
+              '  border-top:1px solid var(--hm-line-weak);\n  padding-top:var(--hm-space-20);',
+            '  margin-top:20px;\n  color:var(--hm-text-primary);':
+              '  margin-top:var(--hm-space-20);\n  color:var(--hm-text-primary);',
+            '  margin-top:20px;\n  color:var(--hm-text-tertiary);':
+              '  margin-top:var(--hm-space-20);\n  color:var(--hm-text-tertiary);',
+            '  .hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{grid-template-columns:1fr;gap:40px}':
+              '  .hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{grid-template-columns:1fr;gap:var(--hm-space-40)}',
+            '  .hm-ds-role-grid{gap:40px}':
+              '  .hm-ds-role-grid{gap:var(--hm-space-40)}',
+            '  .hm-ds-card__body,.hm-ds-role__body{margin-top:20px}':
+              '  .hm-ds-card__body,.hm-ds-role__body{margin-top:var(--hm-space-20)}',
+          }
+          for old,new in replacements.items():
+              if old in t:
+                  t = t.replace(old,new)
+          p.write_text(t)
+
+          p = Path('design-system/himart-system.css')
+          t = p.read_text()
+          t = t.replace('@import url("./index.css?v=20260907-6");', '@import url("./index.css?v=20260907-7");')
+          marker = '/* Neutral structural divider contract — generic content rules are quiet; semantic data accents may override. */'
+          if marker not in t:
+              anchor = '/* Tables and boxed information never use vertical dividers. */'
+              block = '''/* Neutral structural divider contract — generic content rules are quiet; semantic data accents may override. */\nhtml body.himart-page-body #live-main :is(\n  .hm-ds-card,\n  .data-card,\n  .role-card,\n  .problem-item,\n  .signal-item\n){\n  border-top:1px solid var(--hm-line-weak)!important;\n  padding-top:var(--hm-space-20)!important;\n}\n\n'''
+              if anchor not in t:
+                  raise SystemExit('himart-system anchor missing')
+              t = t.replace(anchor, block + anchor)
+          p.write_text(t)
+
+          p = Path('design-system/index.css')
+          t = p.read_text().replace('components/cards.css?v=20260906-2', 'components/cards.css?v=20260907-3')
+          p.write_text(t)
+
+          # Any production/detail page already on the current shared system gets the new cache chain.
+          for p in Path('.').glob('*.html'):
+              t = p.read_text()
+              nt = t.replace('design-system/himart-system.css?v=20260907-9', 'design-system/himart-system.css?v=20260907-10')
+              if nt != t:
+                  p.write_text(nt)
+
+          p = Path('design-system/README.md')
+          t = p.read_text()
+          heading = '## Line / spacing contract'
+          if heading not in t:
+              t += '''\n\n## Line / spacing contract\n\n- 중립적인 카드·콘텐츠 구분선은 `--hm-line-weak`(white 14%)을 기본으로 사용한다. 정보 위계가 아니라 구조만 구분하는 라인에 `--hm-line-strong`을 사용하지 않는다.\n- 보조 source/divider는 `--hm-line-faint`를 사용한다.\n- 데이터 의미를 직접 표현하는 positive/negative/accent line은 해당 Data Viz/Case component의 semantic color를 유지할 수 있으며 neutral divider 규칙으로 덮어쓰지 않는다.\n- 카드 상단 line → label 간격은 `--hm-space-20`, subsection title → content는 `--hm-subtitle-to-content`, major title → first subsection은 `--hm-title-to-subsection-gap`, sibling subsection/card 간격은 `--hm-subsection-gap`을 사용한다.\n- case page에서 neutral line opacity나 위 간격을 raw px/rgba 값으로 새로 정의하지 않는다. 공통 component와 token을 사용한다.\n'''
+              p.write_text(t)
+          PY
+
+      - name: Cross-check Reuse page against design-system contracts
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          cards = Path('design-system/components/cards.css').read_text()
+          syscss = Path('design-system/himart-system.css').read_text()
+          reusecss = Path('design-system/components/reuse.css').read_text()
+          reuse = Path('himart-reuse.html').read_text()
+          tokens = Path('design-system/tokens.css').read_text()
+          index = Path('design-system/index.css').read_text()
+          readme = Path('design-system/README.md').read_text()
+
+          checks = {
+            'neutral card foundation uses weak line': '.hm-ds-card{border-top:1px solid var(--hm-line-weak);padding-top:var(--hm-space-20)}' in cards,
+            'transitional cards no strong neutral line': 'border-top:1px solid var(--hm-line-strong)' not in cards,
+            'final authority neutral divider uses weak line': 'border-top:1px solid var(--hm-line-weak)!important' in syscss and '.data-card,' in syscss,
+            'neutral divider excludes proof semantic card': re.search(r'Neutral structural divider contract[\s\S]*?\{',syscss) is not None and '.proof-item' not in syscss.split('Neutral structural divider contract',1)[1].split('){',1)[0],
+            'reuse negative semantic accent preserved': 'rgba(250,72,27,.55)' in reusecss,
+            'reuse positive semantic accent preserved': 'rgba(0,166,237,.45)' in reusecss,
+            'reuse source separator remains faint': 'border-top:1px solid var(--hm-line-faint)!important' in reusecss,
+            'reuse outer graph border uses default token': 'border:1px solid var(--hm-line-default)!important' in reusecss,
+            'reuse has no page-local style tag': '<style' not in reuse.lower(),
+            'reuse data cards opt into DS card': all('hm-ds-card' in tag for tag in re.findall(r'<article class="([^"]*data-card[^"]*)"', reuse)),
+            'reuse role cards opt into DS card': all('hm-ds-card' in tag for tag in re.findall(r'<article class="([^"]*role-card[^"]*)"', reuse)),
+            'major to first content is tokenized 160': '--hm-title-to-subsection-gap:160px' in tokens and 'margin-top:var(--hm-title-to-subsection-gap)!important' in syscss,
+            'sibling card/subsection gap tokenized 100': '--hm-subsection-gap:100px' in tokens and '.data-list > .data-card + .data-card{margin-top:var(--hm-subsection-gap)!important}' in syscss,
+            'subtitle to content tokenized 80': '--hm-subtitle-to-content:80px' in tokens and 'margin-top:var(--hm-subtitle-to-content)!important' in syscss,
+            'card line to content uses 20 token': 'padding-top:var(--hm-space-20)' in cards,
+            'line token hierarchy intact': all(x in tokens for x in ['--hm-line-strong:rgba(255,255,255,.4)','--hm-line-default:rgba(255,255,255,.24)','--hm-line-weak:rgba(255,255,255,.14)','--hm-line-faint:rgba(255,255,255,.1)']),
+            'cards cache bumped': 'components/cards.css?v=20260907-3' in index,
+            'nested index cache bumped': 'index.css?v=20260907-7' in syscss,
+            'reuse outer system cache bumped': 'himart-system.css?v=20260907-10' in reuse,
+            'design system contract documented': '## Line / spacing contract' in readme,
+          }
+
+          # Audit all Reuse border declarations to ensure only DS tokens or intentional semantic data accents remain.
+          borders = [line.strip() for line in reusecss.splitlines() if 'border' in line and ':' in line]
+          allowed_fragments = ('var(--hm-line-', 'rgba(250,72,27,.55)', 'rgba(0,166,237,.45)', 'border:0', 'border-left:0')
+          unexpected = [line for line in borders if not any(f in line for f in allowed_fragments)]
+          checks['reuse border declarations audited'] = not unexpected
+          if unexpected:
+              print('Unexpected Reuse border declarations:')
+              print('\n'.join(unexpected))
+
+          # All Reuse layout distances outside responsive exceptions should resolve to shared spacing/system tokens.
+          suspicious = []
+          for line in reusecss.splitlines():
+              s=line.strip()
+              if re.search(r'(margin|padding|gap)(?:-[a-z]+)?:[^;]*(?:[1-9][0-9]*)px', s):
+                  # typography/media geometry exceptions are not vertical rhythm; flag only layout declarations.
+                  if not any(k in s for k in ['min-height','font-size','width','height']):
+                      suspicious.append(s)
+          # Existing responsive 56px is an approved mobile alias for subtitle-to-content from spacing.css.
+          suspicious = [s for s in suspicious if '56px' not in s]
+          checks['reuse desktop spacing has no raw px rhythm overrides'] = not suspicious
+          if suspicious:
+              print('Suspicious Reuse spacing declarations:')
+              print('\n'.join(suspicious))
+
+          failed=[]
+          for name,ok in checks.items():
+              print(('PASS' if ok else 'FAIL')+' - '+name)
+              if not ok: failed.append(name)
+          if failed:
+              print('FAILED:', ', '.join(failed))
+              sys.exit(1)
+          PY
+
+          echo '--- Reuse neutral/semantic line audit ---'
+          grep -nE 'border-(top|bottom|left|right)|border:' design-system/components/reuse.css || true
+          echo '--- Shared neutral line audit ---'
+          grep -nE 'hm-line-(strong|weak|faint|default)' design-system/components/cards.css design-system/himart-system.css | head -80
+
+      - name: Commit normalized design-system state and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/reuse-system-line-audit.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Normalize Reuse lines and spacing to design system"
+          git push
