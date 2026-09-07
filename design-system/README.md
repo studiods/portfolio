@@ -182,3 +182,12 @@
 - title animation은 page lifecycle당 1회만 실행한다. 스크롤로 화면을 벗어났다가 재진입해도 다시 난수화하지 않는다.
 - visibilitychange/pagehide/error/중단 상황에서는 현재 난수 문자를 모두 원래 문자로 settle한 뒤 원본 HTML을 복원한다. 랜덤 glyph가 정지 화면으로 남는 상태를 허용하지 않는다.
 - 다른 runtime이 animation 중 title DOM을 교체하면 detached scramble span은 더 이상 DOM을 쓰지 않으며, 새 authored DOM을 우선한다.
+
+
+## Line / spacing contract
+
+- 중립적인 카드·콘텐츠 구분선은 `--hm-line-weak`(white 14%)을 기본으로 사용한다. 정보 위계가 아니라 구조만 구분하는 라인에 `--hm-line-strong`을 사용하지 않는다.
+- 보조 source/divider는 `--hm-line-faint`를 사용한다.
+- 데이터 의미를 직접 표현하는 positive/negative/accent line은 Data Viz/Case component의 semantic color를 유지할 수 있으며 neutral divider 규칙으로 덮어쓰지 않는다.
+- 카드 상단 line → label 간격은 `--hm-space-20`, subsection title → content는 `--hm-subtitle-to-content`, major title → first subsection은 `--hm-title-to-subsection-gap`, sibling subsection/card 간격은 `--hm-subsection-gap`을 사용한다.
+- case page에서 neutral line opacity나 주요 vertical rhythm을 raw px/rgba 값으로 새로 정의하지 않는다. 공통 component와 token을 사용한다.

@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260907-6");
+@import url("./index.css?v=20260907-7");
 
 /*
   HIMART Shared System v2.0 — sole final-authority layer.
@@ -221,6 +221,18 @@ html body.himart-page-body #live-main .data-card-head h3 + .desc,
 html body.himart-page-body #live-main .narrative-title + .narrative-copy,
 html body.himart-page-body #live-main .prototype-intro h3 + p,
 html body.himart-page-body #live-main .sentiment-conclusion h4 + p{margin-top:var(--hm-title-description-gap)!important}
+
+/* Neutral structural divider contract — generic content rules are quiet; semantic data accents may override. */
+html body.himart-page-body #live-main :is(
+  .hm-ds-card,
+  .data-card,
+  .role-card,
+  .problem-item,
+  .signal-item
+){
+  border-top:1px solid var(--hm-line-weak)!important;
+  padding-top:var(--hm-space-20)!important;
+}
 
 /* Tables and boxed information never use vertical dividers. */
 html body.himart-page-body #live-main :is(table,thead,tbody,tfoot,tr,th,td),

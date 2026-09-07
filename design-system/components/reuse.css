@@ -132,7 +132,7 @@ html body.reuse-current .number-panel>strong{
   font-variant-numeric:tabular-nums!important;
 }
 html body.reuse-current .number-panel h4{margin:var(--hm-space-32) 0 0!important}
-html body.reuse-current .number-panel p{margin:auto 0 0!important;max-width:40ch!important}
+html body.reuse-current .number-panel p{margin:auto 0 0!important;max-width:var(--hm-title-description-max)!important}
 html body.reuse-current .hm-source{
   display:block!important;
   margin-top:var(--hm-space-20)!important;
@@ -153,9 +153,9 @@ html body.reuse-current .reuse-concern-chart .chart-legend{
   display:flex!important;
   margin-top:var(--hm-space-20)!important;
   color:var(--hm-text-secondary)!important;
-  font:300 13px/1.4 var(--hm-font-ko)!important;
+  font:300 var(--hm-type-note)/1.4 var(--hm-font-ko)!important;
 }
-html body.reuse-current .reuse-concern-chart .chart-legend span{display:inline-flex!important;align-items:center!important;gap:10px!important}
+html body.reuse-current .reuse-concern-chart .chart-legend span{display:inline-flex!important;align-items:center!important;gap:var(--hm-space-14)!important}
 html body.reuse-current .reuse-concern-chart .chart-legend i{display:block!important;width:22px!important;height:2px!important;background:var(--c)!important}
 
 /* Role keyword uses the shared Role semantic. */
