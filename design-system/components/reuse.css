@@ -41,7 +41,7 @@ html body.reuse-current .reuse-proof-grid .proof-item{
   display:flex!important;
   flex-direction:column!important;
   min-width:0!important;
-  min-height:360px!important;
+  min-height:320px!important;
   padding:var(--hm-space-24) 0 0!important;
   border:0!important;
   border-top:1px solid rgba(250,72,27,.55)!important;
@@ -54,15 +54,27 @@ html body.reuse-current .reuse-proof-positive .reuse-proof-grid .proof-item .pro
 html body.reuse-current .reuse-proof-positive .reuse-proof-grid .proof-item>strong{color:var(--hm-blue)!important}
 html body.reuse-current .reuse-proof-grid .proof-item>strong{
   display:block!important;
-  margin:var(--hm-space-20) 0 0!important;
+  margin:0!important;
   font:300 84px/.98 var(--hm-font-en)!important;
   letter-spacing:var(--hm-track-data-number)!important;
   font-variant-numeric:tabular-nums!important;
 }
 html body.reuse-current .reuse-proof-grid .proof-item>strong span{font-size:.38em!important;line-height:1!important}
-html body.reuse-current .reuse-proof-grid .proof-item .proof-compare{display:block;margin-top:var(--hm-space-14)!important}
+html body.reuse-current .reuse-proof-grid .proof-item .proof-compare{display:none!important;margin:0!important}
 html body.reuse-current .reuse-proof-grid .proof-item h4{margin:var(--hm-space-20) 0 0!important;min-height:0!important}
-html body.reuse-current .reuse-proof-grid .proof-item p{margin:var(--hm-space-40) 0 0!important;padding:0!important;min-height:0!important}
+html body.reuse-current .reuse-proof-grid .proof-item p{margin:var(--hm-space-24) 0 0!important;padding:0!important;min-height:0!important}
+html body.reuse-current .reuse-proof-source{
+  display:block!important;
+  margin:var(--hm-space-20) 0 0!important;
+  padding-top:var(--hm-space-14)!important;
+  border-top:1px solid var(--hm-line-faint)!important;
+  color:var(--hm-text-tertiary)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
 
 /* Summary comparison */
 html body.reuse-current .sentiment-title{margin:0!important}
