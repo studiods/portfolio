@@ -182,7 +182,7 @@ html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + 
   html body.reuse-current .reuse-confidence-arrow{transform:rotate(90deg);font-size:26px}
 }
 
-/* 02.1 circular proof map v2 — grouped uncertainty and proof bands. */
+/* 02.1 circular proof map v3 — grouped proof bands with cut labels. */
 html body.reuse-current .reuse-proof-map{
   display:flex;
   width:100%;
@@ -198,25 +198,27 @@ html body.reuse-current .reuse-proof-band{
   box-sizing:border-box;
 }
 html body.reuse-current .reuse-proof-band--anxiety{
-  border-color:rgba(255,255,255,.30);
+  border-color:rgba(255,255,255,.40);
 }
 html body.reuse-current .reuse-proof-band--solution{
-  border-color:var(--hm-blue);
+  border-color:rgba(0,166,237,.40);
 }
 html body.reuse-current .reuse-proof-band__label{
   position:absolute;
-  top:18px;
+  top:0;
   left:50%;
-  transform:translateX(-50%);
+  transform:translate(-50%,-50%);
+  padding:0 14px;
+  background:#000;
   font-family:var(--hm-font-ko);
-  font-size:10px;
+  font-size:12px;
   font-weight:300;
   line-height:1;
   letter-spacing:var(--hm-track-note);
   white-space:nowrap;
 }
 html body.reuse-current .reuse-proof-band--anxiety .reuse-proof-band__label{
-  color:rgba(255,255,255,.30);
+  color:rgba(255,255,255,.40);
 }
 html body.reuse-current .reuse-proof-band--solution .reuse-proof-band__label{
   color:var(--hm-blue);
@@ -237,17 +239,17 @@ html body.reuse-current .reuse-proof-map__node h4{
   margin:0;
 }
 html body.reuse-current .reuse-proof-map__node--anxiety{
-  opacity:.30;
+  opacity:1;
 }
 html body.reuse-current .reuse-proof-map__node--anxiety h4{
-  color:#fff!important;
+  color:rgba(255,255,255,.60)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:24px!important;
   font-weight:100!important;
   line-height:1.22;
 }
 html body.reuse-current .reuse-proof-map__node--solution{
-  opacity:.60;
+  opacity:1;
   border-color:var(--hm-blue);
   background:#000;
 }
@@ -268,14 +270,14 @@ html body.reuse-current .reuse-proof-map__arrow{
 }
 html body.reuse-current .reuse-proof-map__arrow svg{
   display:block;
-  width:400px;
-  height:32px;
+  width:300px;
+  height:48px;
   max-width:80vw;
   overflow:visible;
 }
 html body.reuse-current .reuse-proof-map__arrow polyline{
   fill:none;
-  stroke:rgba(255,255,255,.30);
+  stroke:rgba(255,255,255,.50);
   stroke-width:1;
   vector-effect:non-scaling-stroke;
   stroke-linecap:square;
@@ -305,7 +307,7 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
     font-size:clamp(18px,5.2vw,24px)!important;
   }
   html body.reuse-current .reuse-proof-map__arrow svg{
-    width:min(400px,76vw);
-    height:32px;
+    width:min(300px,74vw);
+    height:48px;
   }
 }
