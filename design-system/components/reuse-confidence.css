@@ -182,18 +182,50 @@ html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + 
   html body.reuse-current .reuse-confidence-arrow{transform:rotate(90deg);font-size:26px}
 }
 
-/* 02.1 circular proof map v1 */
+/* 02.1 circular proof map v2 — grouped uncertainty and proof bands. */
 html body.reuse-current .reuse-proof-map{
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  align-items:center;
+}
+html body.reuse-current .reuse-proof-band{
+  position:relative;
+  width:100%;
+  padding:52px 28px 28px;
+  border:1px solid;
+  border-radius:999px;
+  box-sizing:border-box;
+}
+html body.reuse-current .reuse-proof-band--anxiety{
+  border-color:rgba(255,255,255,.30);
+}
+html body.reuse-current .reuse-proof-band--solution{
+  border-color:var(--hm-blue);
+}
+html body.reuse-current .reuse-proof-band__label{
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--hm-font-ko);
+  font-size:10px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:var(--hm-track-note);
+  white-space:nowrap;
+}
+html body.reuse-current .reuse-proof-band--anxiety .reuse-proof-band__label{
+  color:rgba(255,255,255,.30);
+}
+html body.reuse-current .reuse-proof-band--solution .reuse-proof-band__label{
+  color:var(--hm-blue);
+}
+html body.reuse-current .reuse-proof-band__nodes{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   gap:28px;
   width:100%;
-  align-items:start;
-}
-html body.reuse-current .reuse-proof-pair{
-  display:flex;
-  min-width:0;
-  flex-direction:column;
   align-items:center;
 }
 html body.reuse-current .reuse-proof-map__node{
@@ -204,36 +236,18 @@ html body.reuse-current .reuse-proof-map__node h4{
   max-width:16ch;
   margin:0;
 }
+html body.reuse-current .reuse-proof-map__node--anxiety{
+  opacity:.30;
+}
 html body.reuse-current .reuse-proof-map__node--anxiety h4{
-  color:rgba(255,255,255,.60)!important;
+  color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:24px!important;
   font-weight:100!important;
   line-height:1.22;
 }
-html body.reuse-current .reuse-proof-map__arrow{
-  display:flex;
-  width:120px;
-  height:160px;
-  flex:0 0 160px;
-  align-items:center;
-  justify-content:center;
-}
-html body.reuse-current .reuse-proof-map__arrow svg{
-  display:block;
-  width:120px;
-  height:64px;
-  overflow:visible;
-}
-html body.reuse-current .reuse-proof-map__arrow polyline{
-  fill:none;
-  stroke:rgba(255,255,255,.40);
-  stroke-width:1;
-  vector-effect:non-scaling-stroke;
-  stroke-linecap:square;
-  stroke-linejoin:miter;
-}
 html body.reuse-current .reuse-proof-map__node--solution{
+  opacity:.60;
   border-color:var(--hm-blue);
   background:#000;
 }
@@ -244,11 +258,54 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
   font-weight:300!important;
   line-height:1.22;
 }
+html body.reuse-current .reuse-proof-map__arrow{
+  display:flex;
+  width:100%;
+  height:160px;
+  flex:0 0 160px;
+  align-items:center;
+  justify-content:center;
+}
+html body.reuse-current .reuse-proof-map__arrow svg{
+  display:block;
+  width:400px;
+  height:32px;
+  max-width:80vw;
+  overflow:visible;
+}
+html body.reuse-current .reuse-proof-map__arrow polyline{
+  fill:none;
+  stroke:rgba(255,255,255,.30);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
 @media(max-width:980px){
-  html body.reuse-current .reuse-proof-map{gap:22px}
+  html body.reuse-current .reuse-proof-band__nodes{gap:20px}
+  html body.reuse-current .reuse-proof-band{padding-left:22px;padding-right:22px}
 }
 @media(max-width:780px){
-  html body.reuse-current .reuse-proof-map{grid-template-columns:1fr;gap:var(--hm-space-40)}
-  html body.reuse-current .reuse-proof-map__node{width:var(--hm-mobile-circle-size);height:var(--hm-mobile-circle-size);aspect-ratio:1/1;padding:22px}
-  html body.reuse-current .reuse-proof-map__node--solution h4{font-size:24px!important}
+  html body.reuse-current .reuse-proof-band{
+    padding:48px 20px 20px;
+    border-radius:56px;
+  }
+  html body.reuse-current .reuse-proof-band__nodes{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+  }
+  html body.reuse-current .reuse-proof-map__node{
+    width:100%;
+    height:auto;
+    aspect-ratio:1/1;
+    padding:18px;
+  }
+  html body.reuse-current .reuse-proof-map__node--anxiety h4,
+  html body.reuse-current .reuse-proof-map__node--solution h4{
+    font-size:clamp(18px,5.2vw,24px)!important;
+  }
+  html body.reuse-current .reuse-proof-map__arrow svg{
+    width:min(400px,76vw);
+    height:32px;
+  }
 }
