@@ -278,7 +278,6 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   }
 }
 
-
 /* 02.2 — focus-driven sequential confidence pulse. */
 @keyframes reuse-confidence-line-pulse{
   0%{border-color:var(--hm-line-default)}
@@ -288,17 +287,27 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
 @keyframes reuse-confidence-trust-pulse{
   0%{background-color:rgba(0,166,237,0)}
   50%{background-color:rgba(0,166,237,.20)}
-  100%{background-color:rgba(0,166,237,0)}
+  100%{background-color:rgba(0,166,237,.20)}
 }
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
   animation:reuse-confidence-line-pulse 2s ease-in-out 1;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
-  animation:reuse-confidence-trust-pulse 2s ease-in-out 1;
+  animation:reuse-confidence-trust-pulse 2s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
+  background-color:rgba(0,166,237,.20)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+  background-color:rgba(0,166,237,0)!important;
+  transition:background-color 2s ease-in-out!important;
 }
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
     animation:none!important;
+  }
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+    transition:none!important;
   }
 }
