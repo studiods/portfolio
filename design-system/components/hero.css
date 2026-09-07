@@ -1,4 +1,4 @@
-@import url("../tokens.css?v=20260907-8");
+@import url("../tokens.css?v=20260907-17");
 @import url("../typography.css");
 
 /*
@@ -140,12 +140,17 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{
   padding-left:0!important;
 }
+
+/* Hero bottom metadata rail typography: Averta PE Thin for both label and value. */
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
   display:block!important;
-  margin:0 0 var(--hm-meta-label-value-gap)!important;
+  margin:0 0 var(--hm-meta-line-gap)!important;
   color:var(--hm-text-secondary)!important;
   opacity:1!important;
-  font:400 12px/1 var(--hm-font-en)!important;
+  font-family:var(--hm-meta-font-family)!important;
+  font-size:12px!important;
+  font-weight:var(--hm-meta-font-weight)!important;
+  line-height:1!important;
   letter-spacing:var(--hm-track-note)!important;
   word-spacing:normal!important;
 }
@@ -153,7 +158,10 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
   display:block!important;
   margin:0!important;
   color:var(--hm-text-primary)!important;
-  font:400 12px/1.35 var(--hm-font-en)!important;
+  font-family:var(--hm-meta-font-family)!important;
+  font-size:12px!important;
+  font-weight:var(--hm-meta-font-weight)!important;
+  line-height:1.35!important;
   letter-spacing:var(--hm-track-note)!important;
   word-spacing:normal!important;
   white-space:nowrap!important;
@@ -212,11 +220,15 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px!important;padding-right:0!important}
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)!important}
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
-    margin-bottom:var(--hm-meta-label-value-gap)!important;
+    margin-bottom:var(--hm-meta-line-gap)!important;
+    font-family:var(--hm-meta-font-family)!important;
     font-size:var(--hm-type-note-mobile)!important;
+    font-weight:var(--hm-meta-font-weight)!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
+    font-family:var(--hm-meta-font-family)!important;
     font-size:var(--hm-type-note-mobile)!important;
+    font-weight:var(--hm-meta-font-weight)!important;
     line-height:1.45!important;
     white-space:normal!important;
     word-break:normal!important;
