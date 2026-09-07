@@ -32,6 +32,9 @@
   --hm-type-body:16px;
   --hm-type-note:12px;
   --hm-type-source:10px;
+  /* Comparison panel rhythm: keyword text follows the group leading system. */
+  --hm-type-comparison:28px;
+  --hm-leading-comparison:1.3;
 
   /* Canonical mobile hierarchy.
      Hero must remain visually dominant; every lower title is strictly smaller. */
