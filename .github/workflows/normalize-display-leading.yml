@@ -1,0 +1,125 @@
+name: Normalize display text leading
+on:
+  push:
+    paths:
+      - '.github/workflows/normalize-display-leading.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Normalize shared leading rules
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new, required=True):
+              p=Path(path); t=p.read_text()
+              if old not in t:
+                  if required: raise SystemExit(f'missing pattern in {path}: {old[:80]}')
+                  return False
+              p.write_text(t.replace(old,new))
+              return True
+
+          # Promote the already-used 1.3 group leading into a canonical token.
+          p=Path('design-system/tokens.css'); t=p.read_text()
+          t=t.replace('  --hm-type-source:10px;\n  /* Comparison panel rhythm: keyword text follows the group leading system. */\n  --hm-type-comparison:28px;\n  --hm-leading-comparison:1.3;',
+                      '  --hm-type-source:10px;\n  /* Canonical display/group leading. Multi-line comparison and synthesis copy reuse this value. */\n  --hm-leading-group:1.3;\n  /* Comparison panel rhythm: keyword text follows the group leading system. */\n  --hm-type-comparison:28px;\n  --hm-leading-comparison:var(--hm-leading-group);')
+          p.write_text(t)
+
+          # Typography foundation: bind group role to the canonical leading token.
+          replace('design-system/typography.css',
+                  '.hm-ds-group{font:100 var(--hm-type-group)/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-group)}',
+                  '.hm-ds-group{font:100 var(--hm-type-group)/var(--hm-leading-group) var(--hm-font-ko);letter-spacing:var(--hm-track-group)}')
+
+          # Generic synthesis component uses the same system leading.
+          replace('design-system/components/narrative.css',
+                  '.hm-ds-synthesis__card p{margin:20px 0 0;color:var(--hm-text-primary);font:300 var(--hm-type-card-title)/1.45 var(--hm-font-ko)}',
+                  '.hm-ds-synthesis__card p{margin:20px 0 0;color:var(--hm-text-primary);font:300 var(--hm-type-card-title)/var(--hm-leading-group) var(--hm-font-ko)}')
+
+          # Himart production synthesis cards: same leading as the canonical group/display rhythm.
+          replace('design-system/components/himart-commerce.css',
+                  'font:300 var(--hm-type-card-title)/1.45 var(--hm-font-ko)!important;',
+                  'font:300 var(--hm-type-card-title)/var(--hm-leading-group) var(--hm-font-ko)!important;')
+          replace('design-system/components/himart-commerce.css',
+                  'line-height:1.35!important;',
+                  'line-height:var(--hm-leading-group)!important;')
+
+          # Reuse comparison: remove extra inter-row gap and rely only on canonical line-height.
+          replace('design-system/components/reuse.css',
+                  'gap:8px!important;\n  max-width:none!important;',
+                  'gap:0!important;\n  max-width:none!important;')
+          replace('design-system/components/reuse.css',
+                  'font:300 var(--hm-type-comparison)/var(--hm-leading-comparison) var(--hm-font-ko)!important;',
+                  'font:300 var(--hm-type-comparison)/var(--hm-leading-group) var(--hm-font-ko)!important;')
+          replace('design-system/components/reuse.css',
+                  'gap:6px!important;\n    font-size:28px!important;',
+                  'gap:0!important;\n    font-size:28px!important;')
+          replace('design-system/components/reuse.css',
+                  'line-height:1.3!important;\n    font-weight:300!important;',
+                  'line-height:var(--hm-leading-group)!important;\n    font-weight:300!important;')
+
+          # Cache chain.
+          p=Path('design-system/index.css'); t=p.read_text()
+          t=t.replace('tokens.css?v=20260907-11','tokens.css?v=20260907-12')
+          t=t.replace('typography.css?v=20260907-7','typography.css?v=20260907-8')
+          t=t.replace('components/narrative.css?v=20260907-2','components/narrative.css?v=20260907-3')
+          t=t.replace('components/reuse.css?v=20260907-17','components/reuse.css?v=20260907-18')
+          p.write_text(t)
+
+          p=Path('design-system/himart-system.css'); t=p.read_text().replace('index.css?v=20260907-27','index.css?v=20260907-28'); p.write_text(t)
+
+          p=Path('himart-reuse.html'); t=p.read_text().replace('himart-system.css?v=20260907-33','himart-system.css?v=20260907-34'); p.write_text(t)
+          p=Path('himart.html'); t=p.read_text().replace('himart-system.css?v=20260907-25','himart-system.css?v=20260907-26').replace('himart-commerce.css?v=20260907-2','himart-commerce.css?v=20260907-3'); p.write_text(t)
+
+          # Document the contract in the design system README if absent.
+          p=Path('design-system/README.md'); t=p.read_text()
+          marker='### Multi-line display leading'
+          if marker not in t:
+              t += '''\n\n### Multi-line display leading\n\n- Multi-line group/display copy uses `--hm-leading-group: 1.3`.\n- Comparison keyword stacks and narrative synthesis cards must use this same leading instead of page-specific values.\n- Do not add flex/grid row gaps between lines that are semantically one sentence/block; line-height alone owns the vertical rhythm.\n'''
+              p.write_text(t)
+          PY
+      - name: Verify shared leading contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          files={p:Path(p).read_text() for p in [
+            'design-system/tokens.css','design-system/typography.css','design-system/components/reuse.css',
+            'design-system/components/narrative.css','design-system/components/himart-commerce.css',
+            'design-system/index.css','design-system/himart-system.css','himart-reuse.html','himart.html']}
+          checks={
+            'group leading token': '--hm-leading-group:1.3' in files['design-system/tokens.css'],
+            'comparison aliases group leading': '--hm-leading-comparison:var(--hm-leading-group)' in files['design-system/tokens.css'],
+            'group typography uses token': '/var(--hm-leading-group)' in files['design-system/typography.css'],
+            'reuse desktop gap removed': 'gap:0!important;\n  max-width:none!important;' in files['design-system/components/reuse.css'],
+            'reuse mobile gap removed': 'gap:0!important;\n    font-size:28px!important;' in files['design-system/components/reuse.css'],
+            'reuse uses group leading': 'var(--hm-type-comparison)/var(--hm-leading-group)' in files['design-system/components/reuse.css'],
+            'himart synthesis uses group leading': 'var(--hm-type-card-title)/var(--hm-leading-group)' in files['design-system/components/himart-commerce.css'],
+            'generic synthesis uses group leading': 'var(--hm-type-card-title)/var(--hm-leading-group)' in files['design-system/components/narrative.css'],
+            'no old synthesis 1.45': '/1.45 var(--hm-font-ko)' not in files['design-system/components/himart-commerce.css'] and '/1.45 var(--hm-font-ko)' not in files['design-system/components/narrative.css'],
+            'reuse cache': 'components/reuse.css?v=20260907-18' in files['design-system/index.css'],
+            'system cache': 'index.css?v=20260907-28' in files['design-system/himart-system.css'],
+            'reuse page cache': 'himart-system.css?v=20260907-34' in files['himart-reuse.html'],
+            'himart page cache': 'himart-system.css?v=20260907-26' in files['himart.html'] and 'himart-commerce.css?v=20260907-3' in files['himart.html'],
+          }
+          bad=[]
+          for k,v in checks.items():
+              print(('PASS' if v else 'FAIL')+' - '+k)
+              if not v: bad.append(k)
+          if bad: raise SystemExit('failed: '+', '.join(bad))
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/normalize-display-leading.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Normalize comparison and synthesis line-height"
+          git push
