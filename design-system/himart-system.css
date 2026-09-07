@@ -312,7 +312,7 @@ html body.himart-page-body #live-main .data-list > .data-card:last-child{margin-
   html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.journey-block-copy,.behavior-note,.role-card p,.flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,.sentiment-keywords){
     font-size:var(--hm-type-body-mobile)!important;
   }
-  html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.hm-source,.phone-meta span,.phone-meta b){
+  html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
     font-size:var(--hm-type-note-mobile)!important;
   }
 
