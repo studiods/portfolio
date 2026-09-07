@@ -1,0 +1,126 @@
+name: Set global subtitle-content gap to 40px
+on:
+  push:
+    paths:
+      - '.github/workflows/global-subtitle-content-gap-40.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply 40px subtitle-to-content rhythm globally
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Foundation tokens: one global semantic value for desktop/mobile.
+          p=Path('design-system/tokens.css')
+          t=p.read_text()
+          t=t.replace('--hm-space-subtitle-content:80px;','--hm-space-subtitle-content:40px;')
+          t=t.replace('--hm-subtitle-to-content:80px;','--hm-subtitle-to-content:40px;')
+          p.write_text(t)
+
+          # 2) Spacing utility: remove the legacy 80/56 split and use the 40px token everywhere.
+          p=Path('design-system/spacing.css')
+          t=p.read_text()
+          t=t.replace('.hm-ds-subtitle-to-content{margin-top:var(--hm-space-80)}','.hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}')
+          t=t.replace('.hm-ds-subtitle-to-content{margin-top:56px}', '.hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}')
+          p.write_text(t)
+
+          # 3) Reuse mobile exceptions must no longer override the global semantic rhythm.
+          p=Path('design-system/components/reuse.css')
+          t=p.read_text()
+          t=t.replace('html body.reuse-current .reuse-proof-grid{grid-template-columns:1fr!important;margin-top:56px!important}',
+                      'html body.reuse-current .reuse-proof-grid{grid-template-columns:1fr!important;margin-top:var(--hm-subtitle-to-content)!important}')
+          t=t.replace('html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:56px!important}',
+                      'html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:var(--hm-subtitle-to-content)!important}')
+          p.write_text(t)
+
+          # 4) Bump nested cache chain.
+          p=Path('design-system/index.css')
+          t=p.read_text()
+          t=re.sub(r'tokens\.css\?v=[^"\)]+', 'tokens.css?v=20260907-7', t)
+          t=re.sub(r'spacing\.css\?v=[^"\)]+', 'spacing.css?v=20260907-1', t)
+          t=re.sub(r'components/reuse\.css\?v=[^"\)]+', 'components/reuse.css?v=20260907-6', t)
+          p.write_text(t)
+
+          p=Path('design-system/himart-system.css')
+          t=p.read_text()
+          t=re.sub(r'index\.css\?v=[^"\)]+', 'index.css?v=20260907-10', t, count=1)
+          p.write_text(t)
+
+          # 5) Every HTML consumer receives a fresh outer cache key.
+          for p in Path('.').rglob('*.html'):
+              t=p.read_text(errors='ignore')
+              nt=re.sub(r'(design-system/himart-system\.css)\?v=[^"\']+', r'\1?v=20260907-14', t)
+              nt=re.sub(r'(design-system/index\.css)\?v=[^"\']+', r'\1?v=20260907-12', nt)
+              if nt != t:
+                  p.write_text(nt)
+
+          # 6) Design-system documentation.
+          p=Path('design-system/README.md')
+          t=p.read_text()
+          heading='## Subtitle → content spacing contract'
+          block='''\n\n## Subtitle → content spacing contract\n\n- 소타이틀/중간 타이틀 바로 아래의 실제 콘텐츠 시작 간격은 desktop/mobile 모두 `40px`로 통일한다.\n- semantic token은 `--hm-subtitle-to-content:40px`이며 utility는 `hm-ds-subtitle-to-content`를 사용한다.\n- 페이지별 `80px`, mobile `56px` 예외를 만들지 않는다. Reuse evidence grid, media grid 등 동일 의미의 간격은 이 token을 재사용한다.\n- 타이틀 자체의 설명문(`title → description`) 간격 `20px`, 큰 section title → subsection 간격 `160px`, subsection 간 간격 `100px`은 별개의 계층이므로 변경하지 않는다.\n'''
+          if heading in t:
+              t=re.sub(r'\n## Subtitle → content spacing contract\n.*?(?=\n## |\Z)', block, t, flags=re.S)
+          else:
+              t += block
+          p.write_text(t)
+          PY
+      - name: Cross-check 40px contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+          tok=Path('design-system/tokens.css').read_text()
+          sp=Path('design-system/spacing.css').read_text()
+          reuse=Path('design-system/components/reuse.css').read_text()
+          index=Path('design-system/index.css').read_text()
+          hs=Path('design-system/himart-system.css').read_text()
+          readme=Path('design-system/README.md').read_text()
+          checks={
+            'semantic subtitle token 40': '--hm-subtitle-to-content:40px;' in tok,
+            'legacy semantic subtitle token 80 removed': '--hm-subtitle-to-content:80px;' not in tok,
+            'space subtitle token 40': '--hm-space-subtitle-content:40px;' in tok,
+            'utility desktop uses 40 token': '.hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}' in sp,
+            'utility mobile 56 removed': '.hm-ds-subtitle-to-content{margin-top:56px}' not in sp,
+            'reuse evidence mobile uses semantic token': 'reuse-proof-grid{grid-template-columns:1fr!important;margin-top:var(--hm-subtitle-to-content)!important}' in reuse,
+            'reuse phone mobile 56 removed': 'phone-gallery.hm-ds-subtitle-to-content{margin-top:56px!important}' not in reuse,
+            'index token cache bumped': 'tokens.css?v=20260907-7' in index,
+            'index spacing cache bumped': 'spacing.css?v=20260907-1' in index,
+            'index reuse cache bumped': 'components/reuse.css?v=20260907-6' in index,
+            'himart-system index cache bumped': 'index.css?v=20260907-10' in hs,
+            'readme contract 40': 'semantic token은 `--hm-subtitle-to-content:40px`' in readme,
+            'title-description remains 20': '--hm-title-description-gap:20px;' in tok,
+            'title-to-subsection remains 160': '--hm-title-to-subsection-gap:160px;' in tok,
+            'subsection gap remains 100': '--hm-subsection-gap:100px;' in tok,
+          }
+          html='\n'.join(p.read_text(errors='ignore') for p in Path('.').rglob('*.html'))
+          if 'design-system/himart-system.css' in html:
+              checks['all himart-system HTML refs fresh'] = not re.search(r'design-system/himart-system\.css\?v=(?!20260907-14)', html)
+          if 'design-system/index.css' in html:
+              checks['all direct index HTML refs fresh'] = not re.search(r'design-system/index\.css\?v=(?!20260907-12)', html)
+          failed=[]
+          for name,ok in checks.items():
+              print(('PASS' if ok else 'FAIL')+' - '+name)
+              if not ok: failed.append(name)
+          if failed:
+              print('FAILED:', ', '.join(failed)); sys.exit(1)
+          PY
+      - name: Commit and remove one-time workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/global-subtitle-content-gap-40.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Set global subtitle-to-content spacing to 40px"
+          git push
