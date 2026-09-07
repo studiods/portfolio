@@ -17,6 +17,7 @@ html body.himart-page-body{font-family:var(--hm-font-ko);font-weight:300;letter-
 .hm-ds-group{font:100 var(--hm-type-group)/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-group)}
 .hm-ds-body,.hm-section-desc,.hm-subcopy{font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);letter-spacing:var(--hm-track-body)}
 .hm-ds-note{font:400 var(--hm-type-note)/1.4 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.hm-ds-source-note{font:300 var(--hm-type-source)/1.5 var(--hm-font-ko);letter-spacing:var(--hm-track-base)}
 
 /* Numeric glyph blocks are exempt from the new text tracking rule. */
 .hm-ds-number,[data-hm-number]{font-family:var(--hm-font-en);font-variant-numeric:tabular-nums;letter-spacing:var(--hm-track-data-number)!important}
