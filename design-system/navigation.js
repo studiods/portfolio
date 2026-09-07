@@ -161,6 +161,22 @@
       const next = replacements.get(node.textContent.trim());
       if (next) node.textContent = next;
     });
+
+    const titleBreaks = new Map([
+      ['실제 상태가 다를까 걱정했습니다.', '실제 상태가 다를까<br>걱정했습니다.'],
+      ['설명과 실물이 다를 수 있다고 봤습니다.', '설명과 실물이<br>다를 수 있다고 봤습니다.'],
+      ['개인정보 제공도 부담이었습니다.', '개인정보 제공도<br>부담이었습니다.'],
+      ['결제 후 배송까지 불안했습니다.', '결제 후 배송까지<br>불안했습니다.'],
+      ['제품 상태를 가장 중요하게 봤습니다.', '제품 상태를 가장<br>중요하게 봤습니다.'],
+      ['판매자의 신용도도 확인했습니다.', '판매자의 신용도도<br>확인했습니다.'],
+      ['안전하다고 느낄 때 안심했습니다.', '안전하다고 느낄 때<br>안심했습니다.'],
+      ['전문 판매처를 확인하고 싶었습니다.', '전문 판매처를<br>확인하고 싶었습니다.']
+    ]);
+
+    document.querySelectorAll('.reuse-proof-stack .proof-item h4').forEach(node => {
+      const next = titleBreaks.get(node.textContent.trim());
+      if (next) node.innerHTML = next;
+    });
   };
 
   const mountSourceNotes = () => {
