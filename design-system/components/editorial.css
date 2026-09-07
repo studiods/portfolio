@@ -1,5 +1,5 @@
 /*
-  HIMART Editorial Restraint v1.6
+  HIMART Editorial Restraint v1.7
   Small English eyebrow/kicker labels are optional, not a default decoration.
   Quantitative evidence always carries a standardized source note.
 */
@@ -36,7 +36,7 @@ html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
 
 /*
   Canonical non-hero supporting-description contract.
-  Every explanatory sentence that supports a title inside a major content section uses white 60%.
+  Every explanatory sentence that supports a title inside a major content section uses white 50%.
   Hero copy is intentionally excluded. Semantic data colors and SOURCE notes keep their own roles.
   - Use color alpha, never element opacity, so nested content is not dimmed twice.
   - -webkit-text-fill-color closes legacy/WebKit overrides that can otherwise keep an older color.
@@ -68,8 +68,8 @@ html body.himart-page-body #live-main :is(#brand,#data,#journey,#direction) :is(
   .hm-ds-flow__node>p,
   .hm-ds-numbered-list>article>p
 ){
-  color:var(--hm-description-color,rgba(255,255,255,.60))!important;
-  -webkit-text-fill-color:var(--hm-description-color,rgba(255,255,255,.60))!important;
+  color:var(--hm-description-color,rgba(255,255,255,.50))!important;
+  -webkit-text-fill-color:var(--hm-description-color,rgba(255,255,255,.50))!important;
   opacity:1!important;
 }
 
