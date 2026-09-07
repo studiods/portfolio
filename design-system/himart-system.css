@@ -20,6 +20,7 @@
   --hm-type-body:16px;
   --hm-type-note:12px;
   --hm-type-source:10px;
+  --hm-meta-label-value-gap:0px;
 }
 
 html body.himart-page-body,
@@ -385,4 +386,8 @@ html body.himart-page-body #live-main .data-list > .data-card:last-child{margin-
   html body.himart-page-body .hm-footer{padding:60px 0 32px!important}
   html body.himart-page-body .hm-footer > .hm-wrap{display:block!important}
   html body.himart-page-body .hm-footer > .hm-wrap > div{margin-top:20px!important;flex-wrap:wrap!important}
+}
+/* Hero metadata contract: label and value share one vertical baseline with no gap. */
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
+  margin-bottom:var(--hm-meta-label-value-gap)!important;
 }
