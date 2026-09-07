@@ -227,3 +227,10 @@
 - 두 간격은 서로 다른 semantic token이다. `40px` content gap을 중타이틀 → 소타이틀 관계에 재사용하지 않는다.
 - `hm-ds-subtitle-to-smalltitle`은 중타이틀 다음에 작은 타이틀 그룹 wrapper가 오는 경우 사용한다. 표준 direct sibling인 `hm-group-title`, `hm-ds-group-title`, `voice-group-title`, `sentiment-title`은 spacing foundation이 자동으로 80px을 적용한다.
 - Desktop/Mobile 모두 이 의미 관계는 동일하게 유지한다. 화면 폭 때문에 임의로 56px/40px 등으로 축소하지 않는다.
+
+
+### Multi-line display leading
+
+- Multi-line group/display copy uses `--hm-leading-group: 1.3`.
+- Comparison keyword stacks and narrative synthesis cards must use this same leading instead of page-specific values.
+- Do not add flex/grid row gaps between lines that are semantically one sentence/block; line-height alone owns the vertical rhythm.
