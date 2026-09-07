@@ -187,7 +187,7 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
   opacity:.6 !important;
 }
 
-/* Final shared canvas + intermediate-title lock (design-system token: 42px). */
+/* Final shared canvas + intermediate-title lock (design-system token: 32px). */
 html body:is(.himart-wide-test-page,.himart-movie-page){
   background:#000 !important;
 }
