@@ -282,7 +282,7 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
 /* 02.2 — focus-driven sequential confidence pulse. */
 @keyframes reuse-confidence-line-pulse{
   0%{border-color:var(--hm-line-default)}
-  50%{border-color:rgba(255,255,255,.80)}
+  50%{border-color:rgba(255,255,255,.50)}
   100%{border-color:var(--hm-line-default)}
 }
 @keyframes reuse-confidence-trust-pulse{
