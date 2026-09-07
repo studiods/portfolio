@@ -10,9 +10,9 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const STEP_DELAY = 600;
-  const PULSE_DURATION = 2000;
+  const PULSE_DURATION = 1700;
   const FINAL_HOLD = 2000;
-  const RESET_DURATION = 2000;
+  const RESET_DURATION = 1700;
   const RESTART_DELAY = 2000;
   const STANDARD_CLASS = 'is-flow-pulse-standard';
   const TRUST_CLASS = 'is-flow-pulse-trust';
