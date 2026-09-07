@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260907-17");
+@import url("./index.css?v=20260907-20");
 
 /*
   HIMART Shared System v2.4 — sole final-authority layer.
@@ -79,7 +79,7 @@ html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead{
   line-clamp:none!important;
 }
 
-/* Canonical type hierarchy: 64 / 52 / 42 / 28 / 16 / 12 */
+/* Canonical type hierarchy: 64 / 52 / 32 / 22 / 16 / 12 / 10(source) */
 html body.himart-page-body #live-main .hm-section-title{
   margin:0!important;
   padding:0!important;
@@ -143,12 +143,21 @@ html body.himart-page-body #live-main :is(
   -webkit-box-orient:initial!important;
 }
 
-html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.hm-source,.phone-meta span,.phone-meta b){
+html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
   font-family:var(--hm-font-en)!important;
   font-size:var(--hm-type-note)!important;
   font-weight:400!important;
   line-height:1.2!important;
   letter-spacing:var(--hm-track-note)!important;
+}
+
+/* Source notes are a distinct 10px role; ordinary labels remain 12px. */
+html body.himart-page-body #live-main :is(.hm-source,.hm-ds-source-note,.reuse-proof-source,[data-hm-source-note]){
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-source)!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-base)!important;
 }
 
 /* Global tracking: authored Korean/English text uses the sitewide tracking tokens.
