@@ -24,107 +24,113 @@ jobs:
           pos = c.find(marker)
           if pos < 0:
               raise SystemExit('proof map v3 marker not found')
-          c = c[:pos] + '''/* 02.1 circular proof map v4 — unframed groups, responsive type, proportional arrow. */
-html body.reuse-current .reuse-proof-map{
-  display:flex;
-  width:100%;
-  flex-direction:column;
-  align-items:center;
-}
-html body.reuse-current .reuse-proof-band{
-  width:100%;
-  box-sizing:border-box;
-}
-html body.reuse-current .reuse-proof-band__label{
-  display:none;
-}
-html body.reuse-current .reuse-proof-band__nodes{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:28px;
-  width:100%;
-  align-items:center;
-}
-html body.reuse-current .reuse-proof-map__node{
-  width:100%;
-  min-width:0;
-}
-html body.reuse-current .reuse-proof-map__node h4{
-  max-width:16ch;
-  margin:0;
-  font-size:clamp(18px,10cqi,24px)!important;
-}
-html body.reuse-current .reuse-proof-map__node--anxiety{
-  opacity:1;
-}
-html body.reuse-current .reuse-proof-map__node--anxiety h4{
-  color:rgba(255,255,255,.60)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-weight:100!important;
-  line-height:1.22;
-}
-html body.reuse-current .reuse-proof-map__node--solution{
-  opacity:1;
-  border-color:var(--hm-blue);
-  background:#000;
-}
-html body.reuse-current .reuse-proof-map__node--solution h4{
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-weight:300!important;
-  line-height:1.22;
-}
-html body.reuse-current .reuse-proof-map__arrow{
-  display:flex;
-  width:100%;
-  height:160px;
-  flex:0 0 160px;
-  align-items:center;
-  justify-content:center;
-}
-html body.reuse-current .reuse-proof-map__arrow svg{
-  display:block;
-  width:25%;
-  height:48px;
-  max-width:none;
-  overflow:visible;
-}
-html body.reuse-current .reuse-proof-map__arrow polyline{
-  fill:none;
-  stroke:rgba(255,255,255,.50);
-  stroke-width:1;
-  vector-effect:non-scaling-stroke;
-  stroke-linecap:square;
-  stroke-linejoin:miter;
-}
-@media(max-width:980px){
-  html body.reuse-current .reuse-proof-band__nodes{gap:20px}
-}
-@media(max-width:780px){
-  html body.reuse-current .reuse-proof-band__nodes{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:18px;
-  }
-  html body.reuse-current .reuse-proof-map__node{
-    width:100%;
-    height:auto;
-    aspect-ratio:1/1;
-    padding:18px;
-  }
-  html body.reuse-current .reuse-proof-map__node h4{
-    font-size:clamp(18px,10cqi,24px)!important;
-  }
-  html body.reuse-current .reuse-proof-map__arrow svg{
-    width:25%;
-    height:48px;
-  }
-}
-'''
+          lines = [
+              '/* 02.1 circular proof map v4 — unframed groups, responsive type, proportional arrow. */',
+              'html body.reuse-current .reuse-proof-map{',
+              '  display:flex;',
+              '  width:100%;',
+              '  flex-direction:column;',
+              '  align-items:center;',
+              '}',
+              'html body.reuse-current .reuse-proof-band{',
+              '  width:100%;',
+              '  box-sizing:border-box;',
+              '}',
+              'html body.reuse-current .reuse-proof-band__label{',
+              '  display:none;',
+              '}',
+              'html body.reuse-current .reuse-proof-band__nodes{',
+              '  display:grid;',
+              '  grid-template-columns:repeat(4,minmax(0,1fr));',
+              '  gap:28px;',
+              '  width:100%;',
+              '  align-items:center;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__node{',
+              '  width:100%;',
+              '  min-width:0;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__node h4{',
+              '  max-width:16ch;',
+              '  margin:0;',
+              '  font-size:clamp(18px,10cqi,24px)!important;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__node--anxiety{',
+              '  opacity:1;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__node--anxiety h4{',
+              '  color:rgba(255,255,255,.60)!important;',
+              '  font-family:var(--hm-font-ko)!important;',
+              '  font-weight:100!important;',
+              '  line-height:1.22;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__node--solution{',
+              '  opacity:1;',
+              '  border-color:var(--hm-blue);',
+              '  background:#000;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__node--solution h4{',
+              '  color:var(--hm-blue)!important;',
+              '  font-family:var(--hm-font-ko)!important;',
+              '  font-weight:300!important;',
+              '  line-height:1.22;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__arrow{',
+              '  display:flex;',
+              '  width:100%;',
+              '  height:160px;',
+              '  flex:0 0 160px;',
+              '  align-items:center;',
+              '  justify-content:center;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__arrow svg{',
+              '  display:block;',
+              '  width:25%;',
+              '  height:48px;',
+              '  max-width:none;',
+              '  overflow:visible;',
+              '}',
+              'html body.reuse-current .reuse-proof-map__arrow polyline{',
+              '  fill:none;',
+              '  stroke:rgba(255,255,255,.50);',
+              '  stroke-width:1;',
+              '  vector-effect:non-scaling-stroke;',
+              '  stroke-linecap:square;',
+              '  stroke-linejoin:miter;',
+              '}',
+              '@media(max-width:980px){',
+              '  html body.reuse-current .reuse-proof-band__nodes{gap:20px}',
+              '}',
+              '@media(max-width:780px){',
+              '  html body.reuse-current .reuse-proof-band__nodes{',
+              '    grid-template-columns:repeat(2,minmax(0,1fr));',
+              '    gap:18px;',
+              '  }',
+              '  html body.reuse-current .reuse-proof-map__node{',
+              '    width:100%;',
+              '    height:auto;',
+              '    aspect-ratio:1/1;',
+              '    padding:18px;',
+              '  }',
+              '  html body.reuse-current .reuse-proof-map__node h4{',
+              '    font-size:clamp(18px,10cqi,24px)!important;',
+              '  }',
+              '  html body.reuse-current .reuse-proof-map__arrow svg{',
+              '    width:25%;',
+              '    height:48px;',
+              '  }',
+              '}',
+              ''
+          ]
+          c = c[:pos] + '\n'.join(lines)
           p.write_text(c)
 
           p = Path('himart-reuse.html')
           h = p.read_text()
-          h = h.replace('preserveAspectRatio="xMidYMid meet"><polyline points="0,0 150,48 300,0"','preserveAspectRatio="none"><polyline points="0,0 150,48 300,0"',1)
+          old = 'preserveAspectRatio="xMidYMid meet"><polyline points="0,0 150,48 300,0"'
+          if old not in h:
+              raise SystemExit('arrow markup marker missing')
+          h = h.replace(old, 'preserveAspectRatio="none"><polyline points="0,0 150,48 300,0"', 1)
           if './design-system/himart-system.css?v=20260908-40' not in h:
               raise SystemExit('page cache marker missing')
           h = h.replace('./design-system/himart-system.css?v=20260908-40','./design-system/himart-system.css?v=20260908-41',1)
@@ -159,15 +165,15 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
           s = Path('design-system/himart-system.css').read_text()
           block = c.split('/* 02.1 circular proof map v4',1)[1]
           checks = {
-            'outer pill lines removed': 'border-radius:999px' not in block and 'reuse-proof-band--anxiety' not in block and 'reuse-proof-band--solution' not in block,
-            'pill labels hidden': '.reuse-proof-band__label{\n  display:none;' in block,
-            'arrow quarter width': 'width:25%;' in block,
-            'arrow remains 48 high': 'height:48px;' in block,
-            'arrow stretches exact width': 'preserveAspectRatio="none"' in h,
-            'responsive circle type': 'font-size:clamp(18px,10cqi,24px)!important;' in block,
-            'component cache': './components/reuse-confidence.css?v=20260908-9' in i,
-            'system cache': './index.css?v=20260908-36' in s,
-            'page cache': './design-system/himart-system.css?v=20260908-41' in h,
+              'outer pill lines removed': 'border-radius:999px' not in block and 'reuse-proof-band--anxiety' not in block and 'reuse-proof-band--solution' not in block,
+              'pill labels hidden': '.reuse-proof-band__label{\n  display:none;' in block,
+              'arrow quarter width': 'width:25%;' in block,
+              'arrow 48 high': 'height:48px;' in block,
+              'arrow exact responsive width': 'preserveAspectRatio="none"' in h,
+              'responsive circle type': 'font-size:clamp(18px,10cqi,24px)!important;' in block,
+              'component cache': './components/reuse-confidence.css?v=20260908-9' in i,
+              'system cache': './index.css?v=20260908-36' in s,
+              'page cache': './design-system/himart-system.css?v=20260908-41' in h,
           }
           failed=[]
           for k,v in checks.items():
