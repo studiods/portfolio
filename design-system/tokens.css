@@ -1,6 +1,7 @@
-/* HIMART Design System v2.2 — foundation tokens
+/* HIMART Design System v2.3 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
-   Semantic text contrast is owned here only; component/page layers consume these tokens and do not redefine them. */
+   Semantic text contrast and shared Hero meta typography are owned here only;
+   component/page layers consume these tokens and do not redefine them. */
 :root{
   --hm-bg-page:#000;
   --hm-bg-section:#000;
@@ -22,6 +23,7 @@
   --hm-red:#FA481B;
 
   --hm-font-en:"Averta PE",Arial,sans-serif;
+  --hm-font-en-thin:"Averta PE",Arial,sans-serif;
   --hm-font-en-extralight:"Averta PE ExtraLight","Averta PE",Arial,sans-serif;
   --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
 
@@ -97,9 +99,15 @@
   --hm-title-to-subsection-gap:160px;
   --hm-section-head-to-subsection:160px;
   --hm-subsection-gap:100px;
+
+  /* Hero bottom metadata rail: Averta PE Thin with a 4px label-to-value gap. */
   --hm-meta-height:74px;
   --hm-meta-column-gap:24px;
-  --hm-meta-label-value-gap:0px;
+  --hm-meta-font-family:var(--hm-font-en-thin);
+  --hm-meta-font-weight:300;
+  --hm-meta-line-gap:4px;
+  --hm-meta-label-value-gap:var(--hm-meta-line-gap);
+
   --hm-mobile-inset:18px;
   --hm-container-editorial:1100px;
   --hm-container-wide:1360px;
