@@ -1,0 +1,125 @@
+name: Tune Reuse 02.1 proof map
+on:
+  push:
+    paths:
+      - '.github/workflows/tune-reuse-proof-map.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply Reuse 02.1 tuning
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Page markup: first title line break + period, replace all existing arrows with open arrowheads only.
+          p = Path('himart-reuse.html')
+          h = p.read_text()
+          old_title = '<h4>상품 상태가 설명과 다를 수 있다</h4>'
+          new_title = '<h4>상품 상태가<br>설명과 다를 수 있다.</h4>'
+          if old_title not in h:
+              raise SystemExit('first proof title marker not found')
+          h = h.replace(old_title, new_title, 1)
+
+          old_arrow = '<div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 120 64" preserveAspectRatio="xMidYMid meet"><path d="M60 0 V54 M48 42 L60 54 L72 42"></path></svg></div>'
+          new_arrow = '<div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 120 64" preserveAspectRatio="xMidYMid meet"><polyline points="0,0 60,64 120,0"></polyline></svg></div>'
+          count = h.count(old_arrow)
+          if count != 4:
+              raise SystemExit(f'expected 4 existing arrows, found {count}')
+          h = h.replace(old_arrow, new_arrow)
+
+          if './design-system/himart-system.css?v=20260907-37' not in h:
+              raise SystemExit('reuse page cache marker not found')
+          h = h.replace('./design-system/himart-system.css?v=20260907-37','./design-system/himart-system.css?v=20260907-38',1)
+          p.write_text(h)
+
+          # Component styling.
+          p = Path('design-system/components/reuse-confidence.css')
+          c = p.read_text()
+
+          c = c.replace('''html body.reuse-current .reuse-proof-map__node h4{\n  max-width:16ch;\n  margin:0;\n}\n''','''html body.reuse-current .reuse-proof-map__node h4{\n  max-width:16ch;\n  margin:0;\n}\nhtml body.reuse-current .reuse-proof-map__node--anxiety h4{\n  color:rgba(255,255,255,.60)!important;\n  font-family:var(--hm-font-ko)!important;\n  font-size:24px!important;\n  font-weight:100!important;\n  line-height:1.22;\n}\n''',1)
+
+          old_arrow_css = '''html body.reuse-current .reuse-proof-map__arrow{\n  display:flex;\n  width:120px;\n  height:64px;\n  flex:0 0 64px;\n  align-items:center;\n  justify-content:center;\n}\nhtml body.reuse-current .reuse-proof-map__arrow svg{\n  display:block;\n  width:120px;\n  height:64px;\n  overflow:visible;\n}\nhtml body.reuse-current .reuse-proof-map__arrow path{\n  fill:none;\n  stroke:var(--hm-blue);\n  stroke-width:1;\n  vector-effect:non-scaling-stroke;\n  stroke-linecap:square;\n  stroke-linejoin:miter;\n}\n'''
+          new_arrow_css = '''html body.reuse-current .reuse-proof-map__arrow{\n  display:flex;\n  width:120px;\n  height:160px;\n  flex:0 0 160px;\n  align-items:center;\n  justify-content:center;\n}\nhtml body.reuse-current .reuse-proof-map__arrow svg{\n  display:block;\n  width:120px;\n  height:64px;\n  overflow:visible;\n}\nhtml body.reuse-current .reuse-proof-map__arrow polyline{\n  fill:none;\n  stroke:rgba(255,255,255,.40);\n  stroke-width:1;\n  vector-effect:non-scaling-stroke;\n  stroke-linecap:square;\n  stroke-linejoin:miter;\n}\n'''
+          if old_arrow_css not in c:
+              raise SystemExit('proof arrow CSS marker not found')
+          c = c.replace(old_arrow_css, new_arrow_css, 1)
+
+          old_solution = '''html body.reuse-current .reuse-proof-map__node--solution{\n  border-color:var(--hm-blue);\n  background:var(--hm-blue);\n}\nhtml body.reuse-current .reuse-proof-map__node--solution h4{\n  color:#000!important;\n  font-size:24px!important;\n  font-weight:300;\n  line-height:1.22;\n}\n'''
+          new_solution = '''html body.reuse-current .reuse-proof-map__node--solution{\n  border-color:var(--hm-blue);\n  background:#000;\n}\nhtml body.reuse-current .reuse-proof-map__node--solution h4{\n  color:var(--hm-blue)!important;\n  font-family:var(--hm-font-ko)!important;\n  font-size:24px!important;\n  font-weight:300!important;\n  line-height:1.22;\n}\n'''
+          if old_solution not in c:
+              raise SystemExit('solution circle CSS marker not found')
+          c = c.replace(old_solution, new_solution, 1)
+          p.write_text(c)
+
+          # Cache chain.
+          p = Path('design-system/index.css')
+          i = p.read_text()
+          if './components/reuse-confidence.css?v=20260907-5' not in i:
+              raise SystemExit('reuse-confidence cache marker not found')
+          i = i.replace('HIMART Design System v3.6','HIMART Design System v3.7',1)
+          i = i.replace('./components/reuse-confidence.css?v=20260907-5','./components/reuse-confidence.css?v=20260907-6',1)
+          p.write_text(i)
+
+          p = Path('design-system/himart-system.css')
+          s = p.read_text()
+          if './index.css?v=20260907-32' not in s:
+              raise SystemExit('index cache marker not found')
+          s = s.replace('./index.css?v=20260907-32','./index.css?v=20260907-33',1)
+          s = s.replace('HIMART Shared System v2.6','HIMART Shared System v2.7',1)
+          p.write_text(s)
+          PY
+
+      - name: Verify requested visual rules
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          h = Path('himart-reuse.html').read_text()
+          c = Path('design-system/components/reuse-confidence.css').read_text()
+          i = Path('design-system/index.css').read_text()
+          s = Path('design-system/himart-system.css').read_text()
+          block = h.split('<div class="reuse-proof-map hm-ds-subtitle-to-content"',1)[1].split('<div class="hm-source hm-ds-source-note">SOURCE - 번개장터',1)[0]
+          checks = {
+            'first title line break and period': '상품 상태가<br>설명과 다를 수 있다.' in block,
+            'old arrow path removed': 'M60 0 V54 M48 42 L60 54 L72 42' not in block,
+            'four new arrowheads': block.count('<polyline points="0,0 60,64 120,0"></polyline>') == 4,
+            'circle gap 160px': 'height:160px;' in c and 'flex:0 0 160px;' in c,
+            'arrow graphic width 120': 'width:120px;' in c,
+            'arrow graphic height 64': 'height:64px;' in c,
+            'arrow white 40': 'stroke:rgba(255,255,255,.40);' in c,
+            'arrow 1px': 'stroke-width:1;' in c,
+            'bottom circle no fill': 'background:#000;' in c,
+            'bottom border blue': 'border-color:var(--hm-blue);' in c,
+            'bottom text blue': 'color:var(--hm-blue)!important;' in c,
+            'bottom Pretendard Light 24': 'font-size:24px!important;' in c and 'font-weight:300!important;' in c,
+            'top text white 60': 'color:rgba(255,255,255,.60)!important;' in c,
+            'top Pretendard Thin 24': 'font-weight:100!important;' in c and 'font-family:var(--hm-font-ko)!important;' in c,
+            'component cache bumped': './components/reuse-confidence.css?v=20260907-6' in i,
+            'shared cache bumped': './index.css?v=20260907-33' in s,
+            'page cache bumped': './design-system/himart-system.css?v=20260907-38' in h,
+          }
+          failed=[]
+          for name, ok in checks.items():
+              print(('PASS' if ok else 'FAIL') + ' - ' + name)
+              if not ok: failed.append(name)
+          if failed:
+              sys.exit('Verification failed: ' + ', '.join(failed))
+          PY
+
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/tune-reuse-proof-map.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Tune Reuse 02.1 proof circles and arrows"
+          git push
