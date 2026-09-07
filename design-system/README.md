@@ -170,3 +170,15 @@
 
 - 42px 중타이틀(`.hm-subtitle`, `.hm-ds-subsection__title`)은 항상 `--hm-track-subsection`을 사용한다. `letter-spacing:0` page/compatibility override를 금지한다.
 - 12px subsection label(`.hm-subno`, `.hm-card-no`)은 Averta PE + `--hm-track-note`를 사용한다. Reuse의 `01.1 / RESEARCH SIGNALS`, `01.2 / SUMMARY`도 예외를 두지 않는다.
+
+
+## Scramble motion contract
+
+- `scramble-final.js`가 Himart 계열 Hero/major section title의 난수 애니메이션을 단독 소유한다. 페이지별 난수 runtime을 추가하지 않는다.
+- 원본 HTML(`br`, inline span 포함)을 animation 시작 전에 immutable source로 캡처한다.
+- 애니메이션 중 각 글자는 독립된 `hm-scramble-char` 단위로 난수를 표시하며 왼쪽에서 오른쪽 순서로 원래 글자로 resolve된다.
+- 한 번 원래 글자로 resolve된 문자는 다시 난수로 돌아가지 않는다.
+- 마지막 글자가 resolve된 다음 frame에 원본 HTML을 복원한다. 따라서 종료 순간 전체 문장이 갑자기 교체되어 보이면 안 된다.
+- title animation은 page lifecycle당 1회만 실행한다. 스크롤로 화면을 벗어났다가 재진입해도 다시 난수화하지 않는다.
+- visibilitychange/pagehide/error/중단 상황에서는 현재 난수 문자를 모두 원래 문자로 settle한 뒤 원본 HTML을 복원한다. 랜덤 glyph가 정지 화면으로 남는 상태를 허용하지 않는다.
+- 다른 runtime이 animation 중 title DOM을 교체하면 detached scramble span은 더 이상 DOM을 쓰지 않으며, 새 authored DOM을 우선한다.
