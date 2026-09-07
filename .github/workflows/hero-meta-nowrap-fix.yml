@@ -1,0 +1,145 @@
+name: Finalize Hero meta rail and 64px token
+on:
+  push:
+    paths:
+      - '.github/workflows/hero-meta-nowrap-fix.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply canonical Hero rules
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Foundation tokens: 64px is the only current desktop Hero size.
+          p=Path('design-system/tokens.css')
+          t=p.read_text()
+          t=t.replace('/* HIMART Design System v1.8 — foundation tokens','/* HIMART Design System v1.9 — foundation tokens')
+          assert '--hm-type-hero:64px;' in t
+          if '--hm-meta-column-gap:' not in t:
+              t=t.replace('  --hm-meta-height:74px;','  --hm-meta-height:74px;\n  --hm-meta-column-gap:24px;')
+          p.write_text(t)
+
+          # 2) Hero desktop metadata rail: content width first, remaining width distributed automatically.
+          p=Path('design-system/components/hero.css')
+          t=p.read_text()
+          t=t.replace('../tokens.css?v=20260907-3','../tokens.css?v=20260907-8')
+          old='''  grid-template-columns:1.4fr .95fr .95fr .9fr!important;\n  align-items:stretch!important;\n  width:100%!important;\n  min-height:var(--hm-meta-height)!important;\n  height:var(--hm-meta-height)!important;\n  margin:0!important;\n  padding:0!important;\n  gap:0!important;'''
+          new='''  grid-template-columns:repeat(4,max-content)!important;\n  justify-content:space-between!important;\n  align-items:stretch!important;\n  width:100%!important;\n  min-height:var(--hm-meta-height)!important;\n  height:var(--hm-meta-height)!important;\n  margin:0!important;\n  padding:0!important;\n  column-gap:var(--hm-meta-column-gap)!important;\n  row-gap:0!important;'''
+          assert old in t, 'canonical fixed desktop meta grid not found'
+          t=t.replace(old,new)
+          t=t.replace('''  min-width:0!important;\n  width:100%!important;\n  min-height:var(--hm-meta-height)!important;''','''  min-width:max-content!important;\n  width:auto!important;\n  min-height:var(--hm-meta-height)!important;''',1)
+          t=t.replace('''  padding:0 18px 0 0!important;\n  border:0!important;''','''  padding:0!important;\n  border:0!important;''',1)
+          t=t.replace('''html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{\n  padding-left:18px!important;\n}''','''html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{\n  padding-left:0!important;\n}''')
+          t=t.replace('''  white-space:normal!important;\n  transform:none!important;''','''  white-space:nowrap!important;\n  transform:none!important;''',1)
+
+          # Mobile remains the approved 2x2 rail. It owns its own width/wrap reset.
+          mobile='@media(max-width:780px)'
+          assert mobile in t
+          t=t.replace('''    grid-auto-rows:auto!important;\n    align-items:stretch!important;\n    height:auto!important;''','''    grid-auto-rows:auto!important;\n    justify-content:stretch!important;\n    align-items:stretch!important;\n    column-gap:0!important;\n    row-gap:0!important;\n    height:auto!important;''',1)
+          t=t.replace('''  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{\n    height:auto!important;''','''  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{\n    width:100%!important;\n    min-width:0!important;\n    height:auto!important;''',1)
+          t=t.replace('''    line-height:1.45!important;\n    word-break:normal!important;''','''    line-height:1.45!important;\n    white-space:normal!important;\n    word-break:normal!important;''',1)
+          p.write_text(t)
+
+          # 3) Cache chain: stale hero.css -> tokens.css?v=... was able to keep an older 82px response alive.
+          p=Path('design-system/index.css')
+          t=p.read_text().replace('HIMART Design System v2.7','HIMART Design System v2.8')
+          t=t.replace('./tokens.css?v=20260907-7','./tokens.css?v=20260907-8')
+          t=t.replace('./components/hero.css?v=20260907-2','./components/hero.css?v=20260907-4')
+          p.write_text(t)
+
+          p=Path('design-system/himart-system.css')
+          t=p.read_text().replace('./index.css?v=20260907-14','./index.css?v=20260907-15')
+          t=t.replace('HIMART Shared System v2.1','HIMART Shared System v2.2')
+          p.write_text(t)
+
+          for p in Path('.').glob('*.html'):
+              t=p.read_text()
+              nt=re.sub(r'\.\/design-system\/himart-system\.css\?v=[0-9-]+','./design-system/himart-system.css?v=20260907-17',t)
+              if nt!=t: p.write_text(nt)
+
+          # 4) Current DS docs. Historical baseline prose may mention old observations, but no current definition may say 82px.
+          p=Path('design-system/README.md')
+          t=p.read_text()
+          t=t.replace('Desktop Hero title은 `--hm-type-hero:64px`을 사용한다. page-local 82px override를 만들지 않는다.','Desktop Hero title은 `--hm-type-hero:64px`을 단일 기준으로 사용하며 page-local 크기 override를 만들지 않는다.')
+          t=t.replace('Hero meta는 `hm-ds-hero__meta`가 단일 소유한다. 4열 비율은 `1.4fr / .95fr / .95fr / .9fr`, 기본 높이는 `74px`이다.','Hero meta는 `hm-ds-hero__meta`가 단일 소유한다. Desktop은 각 항목의 실제 텍스트 폭(`max-content`)을 우선하고 남은 공간을 `space-between`으로 가변 배분해 ROLE/FOCUS/SCOPE/TEAM 값이 한 줄을 유지한다. 최소 column gap은 `--hm-meta-column-gap:24px`, 기본 높이는 `74px`이다. Mobile 2×2에서는 가독성을 위해 줄바꿈을 허용한다.')
+          p.write_text(t)
+
+          p=Path('HIMART_DESIGN_SYSTEM_v1.md')
+          t=p.read_text().replace('| `type.hero` | 82px | Hero title |','| `type.hero` | 64px | Hero title |')
+          p.write_text(t)
+
+          p=Path('design-system/qa-matrix.md')
+          t=p.read_text().replace('Hero 82px, Chapter 52px','Hero 64px, Chapter 52px')
+          if '## Hero metadata single-line 회귀 확인' not in t:
+              t += '''\n\n## Hero metadata single-line 회귀 확인 (2026-09-07)\n\n- Desktop Hero meta는 고정 비율 column 대신 `repeat(4,max-content)` + `space-between`으로 실제 문자열 길이에 맞춰 공간을 배분한다.\n- Desktop ROLE/FOCUS/SCOPE/TEAM 값은 `white-space:nowrap`으로 한 줄을 유지한다.\n- 최소 항목 간격은 `--hm-meta-column-gap:24px`을 사용한다.\n- Mobile ≤780px는 기존 2×2 구조를 유지하고 좁은 폭에서는 `white-space:normal`로 줄바꿈을 허용한다.\n- canonical Hero title token은 Desktop `64px`이다.\n'''
+          p.write_text(t)
+          PY
+
+      - name: Cross-check Hero system
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+          token=Path('design-system/tokens.css').read_text()
+          hero=Path('design-system/components/hero.css').read_text()
+          idx=Path('design-system/index.css').read_text()
+          syscss=Path('design-system/himart-system.css').read_text()
+          readme=Path('design-system/README.md').read_text()
+          qa=Path('design-system/qa-matrix.md').read_text()
+          baseline=Path('HIMART_DESIGN_SYSTEM_v1.md').read_text()
+          desktop=hero.split('@media(max-width:780px)',1)[0]
+          mobile=hero.split('@media(max-width:780px)',1)[1]
+          checks={
+            'hero token exactly 64': '--hm-type-hero:64px;' in token,
+            'meta gap token 24': '--hm-meta-column-gap:24px;' in token,
+            'hero nested token cache current': '../tokens.css?v=20260907-8' in hero,
+            'desktop content-aware tracks': 'grid-template-columns:repeat(4,max-content)!important;' in desktop,
+            'desktop space-between': 'justify-content:space-between!important;' in desktop,
+            'desktop values nowrap': 'white-space:nowrap!important;' in desktop,
+            'fixed desktop ratio removed': '1.4fr .95fr .95fr .9fr' not in desktop,
+            'mobile remains 2x2': 'grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;' in mobile,
+            'mobile allows wrapping': 'white-space:normal!important;' in mobile,
+            'index token v8': './tokens.css?v=20260907-8' in idx,
+            'index hero v4': './components/hero.css?v=20260907-4' in idx,
+            'shared index v15': './index.css?v=20260907-15' in syscss,
+            'README current hero definition': '`--hm-type-hero:64px`을 단일 기준' in readme,
+            'README content-aware meta': '실제 텍스트 폭(`max-content`)' in readme,
+            'baseline type table corrected': '| `type.hero` | 64px | Hero title |' in baseline,
+            'QA current Hero size': 'Hero 64px, Chapter 52px' in qa,
+            'README has no 82px current rule': '82px' not in readme,
+            'QA has no Hero 82px rule': 'Hero 82px' not in qa,
+          }
+          consumers=[]
+          for p in Path('.').glob('*.html'):
+              t=p.read_text()
+              if 'design-system/himart-system.css?v=' in t:
+                  consumers.append((p.name,'himart-system.css?v=20260907-17' in t))
+          checks['all shared-system HTML caches aligned']=bool(consumers) and all(ok for _,ok in consumers)
+          failed=[]
+          for name,ok in checks.items():
+              print(('PASS' if ok else 'FAIL')+' - '+name)
+              if not ok: failed.append(name)
+          print('HTML consumers:', ', '.join(n for n,_ in consumers))
+          if failed:
+              print('FAILED:', ', '.join(failed)); sys.exit(1)
+          PY
+
+      - name: Commit final state and remove temporary workflows
+        shell: bash
+        run: |
+          rm -f .github/workflows/hero-meta-nowrap.yml .github/workflows/hero-meta-nowrap-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Make Hero meta rail content-aware and align 64px title token"
+          git push
