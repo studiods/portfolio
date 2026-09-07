@@ -1,17 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 330">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 320">
   <style>
-    text{font-family:Arial,sans-serif;fill:rgba(255,255,255,.46);font-size:12px}
+    text{font-family:Pretendard,Arial,sans-serif;fill:rgba(255,255,255,.46);font-size:12px}
     .grid{stroke:rgba(255,255,255,.12);stroke-width:1}
     .concern{fill:none;stroke:#00A6ED;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
     .dot{fill:#F3EB01}
-    .value{fill:#fff;font-size:14px}
+    .value{font-family:"Averta PE",Arial,sans-serif;fill:#fff;font-size:14px}
     .label{fill:rgba(255,255,255,.56);font-size:12px}
   </style>
-  <text x="0" y="22">USED PURCHASE CONCERNS</text>
-  <text x="0" y="58">60%</text><text x="0" y="125">40%</text><text x="0" y="192">20%</text><text x="0" y="258">0%</text>
-  <line class="grid" x1="90" y1="50" x2="1070" y2="50"/><line class="grid" x1="90" y1="117" x2="1070" y2="117"/><line class="grid" x1="90" y1="183" x2="1070" y2="183"/><line class="grid" x1="90" y1="250" x2="1070" y2="250"/>
-  <polyline class="concern" points="145,81 370,101 595,113 820,134 1045,146"/>
-  <circle class="dot" cx="145" cy="81" r="4"/><circle class="dot" cx="370" cy="101" r="4"/><circle class="dot" cx="595" cy="113" r="4"/><circle class="dot" cx="820" cy="134" r="4"/><circle class="dot" cx="1045" cy="146" r="4"/>
-  <text class="value" x="130" y="68">50.8%</text><text class="value" x="355" y="88">44.6%</text><text class="value" x="580" y="100">37.7%</text><text class="value" x="805" y="121">34.6%</text><text class="value" x="1030" y="133">31.1%</text>
-  <text class="label" x="113" y="300">외관·기능</text><text class="label" x="347" y="300">사기 위험</text><text class="label" x="572" y="300">위조품</text><text class="label" x="799" y="300">위생</text><text class="label" x="1006" y="300">A/S·반품</text>
+  <text x="0" y="55">80%</text><text x="0" y="105">60%</text><text x="0" y="155">40%</text><text x="0" y="205">20%</text><text x="0" y="255">0%</text>
+  <line class="grid" x1="90" y1="50" x2="1070" y2="50"/><line class="grid" x1="90" y1="100" x2="1070" y2="100"/><line class="grid" x1="90" y1="150" x2="1070" y2="150"/><line class="grid" x1="90" y1="200" x2="1070" y2="200"/><line class="grid" x1="90" y1="250" x2="1070" y2="250"/>
+  <polyline class="concern" points="180,76 450,109 720,174 990,175"/>
+  <circle class="dot" cx="180" cy="76" r="4"/><circle class="dot" cx="450" cy="109" r="4"/><circle class="dot" cx="720" cy="174" r="4"/><circle class="dot" cx="990" cy="175" r="4"/>
+  <text class="value" x="162" y="63">69.6%</text><text class="value" x="432" y="96">56.6%</text><text class="value" x="702" y="161">30.4%</text><text class="value" x="972" y="162">29.9%</text>
+  <text class="label" x="134" y="296">선입금 사기</text><text class="label" x="385" y="296">상품정보·상태 사기</text><text class="label" x="670" y="296">개인정보 노출</text><text class="label" x="934" y="296">배송 지연·누락</text>
 </svg>
