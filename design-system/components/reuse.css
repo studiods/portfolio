@@ -76,7 +76,7 @@ html body.reuse-current .reuse-proof-source{
   border-top:1px solid var(--hm-line-faint)!important;
   color:var(--hm-text-tertiary)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:var(--hm-type-note)!important;
+  font-size:var(--hm-type-source)!important;
   font-weight:300!important;
   line-height:1.5!important;
   letter-spacing:var(--hm-track-body)!important;
