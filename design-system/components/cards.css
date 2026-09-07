@@ -46,7 +46,7 @@
   The container owns the canonical two-column / no-vertical-divider layout used by Ways.
 */
 .hm-ds-numbered-list{
-  --hm-numbered-title-size:30px;
+  --hm-numbered-title-size:var(--hm-type-group);
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   column-gap:var(--hm-space-80)!important;
@@ -114,7 +114,7 @@
   .hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{grid-template-columns:1fr;gap:var(--hm-space-40)}
   .hm-ds-role-grid{gap:var(--hm-space-40)}
   .hm-ds-card__body,.hm-ds-role__body{margin-top:var(--hm-space-20)}
-  .hm-ds-numbered-list{--hm-numbered-title-size:26px;grid-template-columns:1fr!important;column-gap:0!important}
+  .hm-ds-numbered-list{--hm-numbered-title-size:var(--hm-type-group-mobile);grid-template-columns:1fr!important;column-gap:0!important}
   .hm-ds-numbered-list>article{min-height:0!important;column-gap:16px!important;padding:var(--hm-space-28) 0!important}
   .hm-ds-numbered-list>article:nth-last-child(-n+2){border-bottom:1px solid var(--hm-line-weak)!important}
   .hm-ds-numbered-list>article:last-child{border-bottom:0!important}
@@ -147,5 +147,5 @@
 .himart-movie-page .data-card .hm-source{
   margin-top:var(--hm-space-20);
   color:var(--hm-text-tertiary);
-  font:300 12px/1.4 var(--hm-font-ko);
+  font:300 var(--hm-type-source)/1.5 var(--hm-font-ko);
 }
