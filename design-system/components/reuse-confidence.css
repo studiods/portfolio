@@ -72,7 +72,7 @@ html body.reuse-current .reuse-confidence-flow{
 }
 html body.reuse-current .reuse-confidence-row{
   display:grid;
-  grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr);
+  grid-template-columns:minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr);
   align-items:center;
   gap:0;
   width:100%;
@@ -117,7 +117,7 @@ html body.reuse-current .reuse-confidence-node p{
 }
 html body.reuse-current .reuse-confidence-node.is-trust{
   border-color:var(--hm-blue);
-  background:rgba(0,166,237,.20);
+  background:#000;
 }
 html body.reuse-current .reuse-confidence-node.is-trust>span,
 html body.reuse-current .reuse-confidence-node.is-trust h4{
@@ -128,7 +128,7 @@ html body.reuse-current .reuse-confidence-node.is-trust p{
 }
 html body.reuse-current .reuse-confidence-arrow{
   color:rgba(255,255,255,.48);
-  font:100 30px/1 var(--hm-font-en);
+  font:100 31.5px/1 var(--hm-font-en);
   text-align:center;
 }
 html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + .reuse-confidence-arrow{
@@ -137,7 +137,7 @@ html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + 
 
 @media(max-width:980px){
   html body.reuse-current .reuse-confidence-row{
-    grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr);
+    grid-template-columns:minmax(0,1fr) 24.2px minmax(0,1fr) 24.2px minmax(0,1fr) 24.2px minmax(0,1fr);
   }
 }
 
@@ -275,5 +275,30 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   html body.reuse-current .reuse-proof-map__arrow svg{
     width:20%;
     height:48px;
+  }
+}
+
+
+/* 02.2 — focus-driven sequential confidence pulse. */
+@keyframes reuse-confidence-line-pulse{
+  0%{border-color:var(--hm-line-default)}
+  60%{border-color:rgba(255,255,255,1)}
+  100%{border-color:var(--hm-line-default)}
+}
+@keyframes reuse-confidence-trust-pulse{
+  0%{background-color:rgba(0,166,237,0)}
+  70%{background-color:rgba(0,166,237,.20)}
+  100%{background-color:rgba(0,166,237,0)}
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
+  animation:reuse-confidence-line-pulse 1s linear 1;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+  animation:reuse-confidence-trust-pulse 1s linear 1;
+}
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+    animation:none!important;
   }
 }
