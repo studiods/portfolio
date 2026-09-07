@@ -170,7 +170,7 @@
 
 ## Subsection tracking contract
 
-- 42px 중타이틀(`.hm-subtitle`, `.hm-ds-subsection__title`)은 항상 `--hm-track-subsection`을 사용한다. `letter-spacing:0` page/compatibility override를 금지한다.
+- 32px 중타이틀(`.hm-subtitle`, `.hm-ds-subsection__title`)은 항상 `--hm-track-subsection`을 사용한다. `letter-spacing:0` page/compatibility override를 금지한다.
 - 12px subsection label(`.hm-subno`, `.hm-card-no`)은 Averta PE + `--hm-track-note`를 사용한다. Reuse의 `01.1 / RESEARCH SIGNALS`, `01.2 / SUMMARY`도 예외를 두지 않는다.
 
 
@@ -198,7 +198,7 @@
 ## Evidence stat card contract
 
 - `hm-ds-evidence-stat`는 4열/2열 등의 수치 근거 카드 묶음에 사용한다.
-- 숫자 아래 카드 타이틀은 `--hm-type-card-title`을 사용하며 desktop 기준 `24px`이다.
+- 숫자 아래 카드 타이틀은 `--hm-type-card-title`을 사용하며 desktop 기준 `22px`이다.
 - 카드 타이틀은 authored `<br>`로 줄을 고정하지 않고 `word-break:keep-all` + `text-wrap:pretty`로 문맥에 맞게 자연스럽게 줄바꿈한다.
 - evidence card는 `min-height`나 grid stretch로 빈 하단 영역을 만들지 않는다. 컨텐츠 실제 높이(`min-height:0`, `height:auto`, `align-self:start`)만 사용한다.
 - 동일한 `hm-ds-evidence-stat`를 사용하는 다른 case/영역도 위 규칙을 그대로 상속한다.
@@ -222,8 +222,8 @@
 
 ## Semantic title spacing contract
 
-- 중타이틀(`--hm-type-subsection:42px`) → 소타이틀/그룹 타이틀(`--hm-type-group:28px`) 간격은 `--hm-subtitle-to-smalltitle:80px`을 사용한다.
-- 소타이틀/그룹 타이틀(`28px`) → 바로 아래 실제 콘텐츠/그래프/카드 간격은 `--hm-subtitle-to-content:40px`을 사용한다.
+- 중타이틀(`--hm-type-subsection:32px`) → 소타이틀/그룹 타이틀(`--hm-type-group:22px`) 간격은 `--hm-subtitle-to-smalltitle:80px`을 사용한다.
+- 소타이틀/그룹 타이틀(`22px`) → 바로 아래 실제 콘텐츠/그래프/카드 간격은 `--hm-subtitle-to-content:40px`을 사용한다.
 - 두 간격은 서로 다른 semantic token이다. `40px` content gap을 중타이틀 → 소타이틀 관계에 재사용하지 않는다.
 - `hm-ds-subtitle-to-smalltitle`은 중타이틀 다음에 작은 타이틀 그룹 wrapper가 오는 경우 사용한다. 표준 direct sibling인 `hm-group-title`, `hm-ds-group-title`, `voice-group-title`, `sentiment-title`은 spacing foundation이 자동으로 80px을 적용한다.
 - Desktop/Mobile 모두 이 의미 관계는 동일하게 유지한다. 화면 폭 때문에 임의로 56px/40px 등으로 축소하지 않는다.
