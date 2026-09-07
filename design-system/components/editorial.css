@@ -1,8 +1,17 @@
 /*
-  HIMART Editorial Restraint v1.7
+  HIMART Editorial Restraint v1.8
   Small English eyebrow/kicker labels are optional, not a default decoration.
   Quantitative evidence always carries a standardized source note.
 */
+
+/*
+  Canonical supporting-copy token authority.
+  All non-hero explanatory copy uses white 50%. Hero copy keeps its own treatment.
+  !important is intentional here because legacy case bundles still redefine the same custom property.
+*/
+html body.himart-page-body{
+  --hm-description-color:rgba(255,255,255,.50)!important;
+}
 
 /* Default: suppress decorative English eyebrow labels. */
 html body.himart-page-body #live-main :is(.hm-eyebrow,.hm-ds-eyebrow,[data-hm-eyebrow]){
@@ -36,12 +45,14 @@ html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
 
 /*
   Canonical non-hero supporting-description contract.
-  Every explanatory sentence that supports a title inside a major content section uses white 50%.
-  Hero copy is intentionally excluded. Semantic data colors and SOURCE notes keep their own roles.
-  - Use color alpha, never element opacity, so nested content is not dimmed twice.
-  - -webkit-text-fill-color closes legacy/WebKit overrides that can otherwise keep an older color.
+  The selector deliberately starts below #live-main and does NOT include .hm-lead,
+  so Hero description copy is excluded. Semantic titles, data values, SOURCE notes,
+  chart labels and intentional blue/red comparison text keep their own roles.
+
+  Use color alpha, never element opacity, so nested content is not dimmed twice.
+  -webkit-text-fill-color closes legacy/WebKit overrides that can otherwise retain an older color.
 */
-html body.himart-page-body #live-main :is(#brand,#data,#journey,#direction) :is(
+html body.himart-page-body #live-main :is(
   .hm-section-desc,
   .hm-ds-section__description,
   .hm-subcopy,
@@ -56,20 +67,33 @@ html body.himart-page-body #live-main :is(#brand,#data,#journey,#direction) :is(
   .stepup-question-grid p,
   .stepup-experience-grid p,
   .stepup-process p,
+  .stepup-loop article>p,
   .problem-item>p,
   .proof-item>p,
   .signal-item>p,
+  .behavior-card>p,
   .role-card>p,
   .flow-node>p,
   .number-panel>p,
   .prototype-intro>p,
   .prototype-case-copy>p,
   .sentiment-conclusion>p,
+  .sentiment-keywords,
+  .conclusion-card>p,
+  .direction-card>p,
+  .ring-card>p,
   .hm-ds-flow__node>p,
-  .hm-ds-numbered-list>article>p
+  .hm-ds-numbered-list>article>p,
+  .hm-ds-table__body,
+  .hm-ds-media-card__description,
+  .hm-ds-media-card>.phone-meta>p,
+  .hm-ds-media-bleed__caption>span,
+  .reuse-confidence-node>p,
+  .reuse-research-callout>p,
+  .phone-meta>p
 ){
-  color:var(--hm-description-color,rgba(255,255,255,.50))!important;
-  -webkit-text-fill-color:var(--hm-description-color,rgba(255,255,255,.50))!important;
+  color:var(--hm-description-color)!important;
+  -webkit-text-fill-color:var(--hm-description-color)!important;
   opacity:1!important;
 }
 
@@ -96,6 +120,8 @@ html body.himart-page-body #live-main :is(
   border-top:1px solid var(--hm-line-faint)!important;
   background:transparent!important;
   color:rgba(255,255,255,.30)!important;
+  -webkit-text-fill-color:rgba(255,255,255,.30)!important;
+  opacity:1!important;
   font-family:var(--hm-font-ko)!important;
   font-size:10px!important;
   font-weight:300!important;
@@ -117,6 +143,8 @@ html body.himart-page-body #live-main :is(
     margin-top:32px!important;
     padding-top:14px!important;
     color:rgba(255,255,255,.30)!important;
+    -webkit-text-fill-color:rgba(255,255,255,.30)!important;
+    opacity:1!important;
     font-size:10px!important;
     line-height:1.5!important;
   }
