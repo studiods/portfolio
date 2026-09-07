@@ -35,7 +35,7 @@
   /* Canonical display/group leading. Multi-line comparison and synthesis copy reuse this value. */
   --hm-leading-group:1.3;
   /* Comparison panel rhythm: keyword text follows the group leading system. */
-  --hm-type-comparison:28px;
+  --hm-type-comparison:32px;
   --hm-leading-comparison:var(--hm-leading-group);
 
   /* Canonical mobile hierarchy.

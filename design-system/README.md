@@ -234,3 +234,5 @@
 - Multi-line group/display copy uses `--hm-leading-group: 1.3`.
 - Comparison keyword stacks and narrative synthesis cards must use this same leading instead of page-specific values.
 - Do not add flex/grid row gaps between lines that are semantically one sentence/block; line-height alone owns the vertical rhythm.
+
+- Comparison display text uses `--hm-type-comparison: 32px` with `--hm-leading-group` for Reuse trust/anxiety keywords and the matching Himart synthesis copy.

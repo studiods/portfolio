@@ -16,7 +16,7 @@ html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card b
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.positive b{color:var(--hm-blue)!important}
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.negative b{color:var(--hm-red)!important}
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p{
-  font:300 var(--hm-type-card-title)/var(--hm-leading-group) var(--hm-font-ko)!important;
+  font:300 var(--hm-type-comparison)/var(--hm-leading-group) var(--hm-font-ko)!important;
   color:#fff!important;
 }
 
