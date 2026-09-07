@@ -30,7 +30,7 @@
 .hm-ds-subtitle-to-smalltitle{margin-top:var(--hm-subtitle-to-smalltitle)}
 .hm-ds-rule{border-top:1px solid var(--hm-line-faint)}
 
-/* Semantic title rhythm: middle title (42px) → small title/group title (28px) = 80px.
+/* Semantic title rhythm: middle title (32px) → small title/group title (22px) = 80px.
    Small title → its actual content remains 40px via --hm-subtitle-to-content. */
 html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head) + :is(
   .hm-group-title,.hm-ds-group-title,.voice-group-title,.sentiment-title,.hm-ds-subtitle-to-smalltitle
