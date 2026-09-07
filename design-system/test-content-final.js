@@ -22,7 +22,7 @@
   const apply = () => {
     /* Runtime CSS is injected asynchronously; keep this lock last in the cascade. */
     const lead = document.querySelector('.hm-movie-copy .hm-lead');
-    html(lead, '화면 개선부터 시작하지 않았습니다. 고객 인식과 실제 유입·탐색·이탈을 확인한 뒤<br>전체 구매 여정의 역할을 다시 정의했습니다.');
+    html(lead, '고객 인식과 실제 이용 흐름을 확인해,<br>구매 여정을 다시 정의했습니다.');
 
     const directionTitle = document.querySelector('#direction .hm-section-title');
     html(directionTitle, '앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고,<br>내부 검증을 반복하고 있습니다.');

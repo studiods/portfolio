@@ -57,7 +57,9 @@
 
 ## Text integrity / wrapping contract
 
-- Hero description은 고정 2줄/3줄 clamp를 사용하지 않는다. `word-break:keep-all` + `text-wrap:pretty`로 문맥에 가까운 자연 줄바꿈을 사용한다.
+- Hero description은 Desktop/Mobile 모두 **최대 2줄**이다. 3줄 이상으로 보이면 CSS로 숨기지 않고 원문 copy 자체를 축약한다.
+- Hero description의 2줄 제한을 위해 `line-clamp`, `text-overflow:ellipsis`, 고정 높이, `overflow:hidden`을 사용하지 않는다. 두 줄 안에서 `word-break:keep-all` + `text-wrap:pretty`를 사용하며, 의미 단위가 분명할 때 한 개의 `<br>`만 허용한다.
+- HTML의 초기 Hero description과 content runtime이 교체하는 Hero description은 동일한 문장을 사용해 로딩 전후 줄 수와 위치가 바뀌지 않게 한다.
 - Mobile Hero description은 `--hm-hero-description-width-mobile`을 사용하고 화면 내부 container의 최대 88%까지만 사용해 좌우 여백을 남긴다.
 - Hero/section/subsection/card/flow 등 모든 prose는 authored text 전체를 표시한다. `text-overflow:ellipsis`, 숫자형 `line-clamp`, JS substring/slice 기반 말줄임을 금지한다.
 - `scramble-final.js`는 타이틀 scramble만 담당하며 본문 텍스트를 변경하거나 자르지 않는다.

@@ -69,6 +69,10 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
   letter-spacing:var(--hm-track-hero)!important;
   word-break:keep-all!important;
 }
+/* Hero description authoring contract:
+   - maximum two rendered lines on desktop and mobile;
+   - if copy would become three or more lines, shorten the authored sentence itself;
+   - never enforce the limit with line-clamp, ellipsis, fixed height or hidden overflow. */
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
   display:block!important;
   width:fit-content!important;

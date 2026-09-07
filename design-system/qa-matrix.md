@@ -103,3 +103,13 @@
 - Hero와 모든 prose role은 `height:auto`, `max-height:none`, `overflow:visible`, `white-space:normal` 계약을 갖는다.
 - 실제 media/chart의 clipping용 `overflow:hidden`은 허용하며 prose selector에는 사용하지 않는다.
 - GitHub Pages build/deploy 성공을 확인한다.
+
+
+## Hero description 2-line 회귀 확인 (2026-09-07)
+
+- 모든 case Hero의 설명은 Desktop/Mobile에서 최대 2줄을 목표로 작성한다.
+- 3줄 이상이 필요한 문장은 UI에서 자르지 않고 copy를 축약한다.
+- `line-clamp`, ellipsis, fixed-height clipping으로 2줄처럼 보이게 만들지 않는다.
+- `himart.html` 초기 Hero copy와 `test-content-final.js` runtime copy는 동일해야 한다.
+- Hero description 내부 강제 줄바꿈은 의미 단위 기준 최대 1개의 `<br>`만 허용한다.
+- Reuse / Ways / Stepup 등 기존 case Hero description도 짧은 원문 전체를 노출해야 한다.
