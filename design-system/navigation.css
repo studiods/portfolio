@@ -1,5 +1,5 @@
 @import url("./tracking.css?v=20260906-2");
-@import url("./components/editorial.css?v=20260907-5");
+@import url("./components/editorial.css?v=20260907-6");
 
 /* Portfolio global navigation — canonical source based on index.html. */
 html body .top{
@@ -64,6 +64,17 @@ html body.portfolio-progress-page>.top .top-center{
   grid-column:2!important;
   justify-self:center!important;
   transform:none!important;
+}
+
+/*
+  Final cascade lock for Reuse quantitative evidence descriptions.
+  cards.css retains a legacy .himart-movie-page .proof-item p rule using --hm-text-body (50%).
+  Reuse evidence descriptions must follow the canonical description role (white 60%), identical to .hm-subcopy.
+  This stylesheet is loaded after himart-system.css, so this rule is intentionally the final authority.
+*/
+html body.himart-page-body.reuse-current #live-main .reuse-proof-stack .hm-ds-evidence-stat>.proof-item>p{
+  color:rgba(255,255,255,.60)!important;
+  opacity:1!important;
 }
 
 @media(max-width:850px){
