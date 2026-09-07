@@ -23,14 +23,15 @@
   --hm-font-en-extralight:"Averta PE ExtraLight","Averta PE",Arial,sans-serif;
   --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
 
-  /* Desktop type hierarchy: hero / major / middle / small / body / note */
+  /* Desktop type hierarchy: hero / major / middle / group / body / note / source */
   --hm-type-hero:64px;
   --hm-type-section:52px;
-  --hm-type-subsection:42px;
-  --hm-type-group:28px;
-  --hm-type-card-title:24px;
+  --hm-type-subsection:32px;
+  --hm-type-group:22px;
+  --hm-type-card-title:22px;
   --hm-type-body:16px;
   --hm-type-note:12px;
+  --hm-type-source:10px;
 
   /* Canonical mobile hierarchy.
      Hero must remain visually dominant; every lower title is strictly smaller. */
@@ -40,6 +41,7 @@
   --hm-type-group-mobile:clamp(19px,5vw,23px);
   --hm-type-body-mobile:15px;
   --hm-type-note-mobile:11px;
+  --hm-type-source-mobile:10px;
 
   /* Mobile circular journey geometry. */
   --hm-mobile-circle-size:clamp(168px,50vw,200px);
