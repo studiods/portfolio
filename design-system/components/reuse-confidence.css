@@ -10,6 +10,7 @@ html body.reuse-current .reuse-trust-table-v2{
 html body.reuse-current .reuse-trust-table-v2 .hm-ds-table__row{
   grid-template-columns:var(--hm-table-columns)!important;
   min-height:124px;
+  border-bottom:1px solid var(--hm-line-faint)!important;
 }
 html body.reuse-current .reuse-trust-table-v2 .hm-ds-table__bridge{
   width:40px;
@@ -34,7 +35,7 @@ html body.reuse-current .reuse-trust-table__master-arrow svg{
   overflow:visible;
 }
 html body.reuse-current .reuse-trust-table__master-arrow path{
-  fill:none;
+  fill:var(--hm-blue);
   stroke:var(--hm-blue);
   stroke-width:1;
   vector-effect:non-scaling-stroke;
@@ -49,15 +50,14 @@ html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution
 html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--anxiety .hm-ds-table__title{
   color:rgba(255,255,255,.58);
 }
-html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--anxiety .hm-ds-table__body{
-  color:rgba(255,255,255,.38);
+html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--anxiety .hm-ds-table__body,
+html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution .hm-ds-table__body{
+  margin-top:4px!important;
+  color:rgba(255,255,255,.70)!important;
 }
 html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution .hm-ds-table__title{
   color:#fff;
   font-weight:300;
-}
-html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution .hm-ds-table__body{
-  color:var(--hm-text-secondary);
 }
 
 /* 02.2 — Reuse purchase journey with confidence moments inserted into the ordinary flow. */
