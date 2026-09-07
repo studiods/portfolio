@@ -14,8 +14,11 @@ html body.reuse-current .reuse-proof-stack{
 }
 html body.reuse-current .reuse-proof-group .voice-group-title{
   display:block;
+  max-width:42ch!important;
   margin:0!important;
   color:#fff!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
 }
 html body.reuse-current .reuse-proof-group .voice-group-title strong{
   color:var(--hm-red)!important;
@@ -36,12 +39,15 @@ html body.reuse-current .reuse-proof-grid{
   gap:var(--hm-space-28)!important;
   width:100%!important;
   margin-top:var(--hm-subtitle-to-content)!important;
+  align-items:start!important;
 }
 html body.reuse-current .reuse-proof-grid .proof-item{
   display:flex!important;
   flex-direction:column!important;
   min-width:0!important;
-  min-height:320px!important;
+  min-height:0!important;
+  height:auto!important;
+  align-self:start!important;
   padding:var(--hm-space-24) 0 0!important;
   border:0!important;
   border-top:1px solid rgba(250,72,27,.55)!important;
@@ -61,7 +67,7 @@ html body.reuse-current .reuse-proof-grid .proof-item>strong{
 }
 html body.reuse-current .reuse-proof-grid .proof-item>strong span{font-size:.38em!important;line-height:1!important}
 html body.reuse-current .reuse-proof-grid .proof-item .proof-compare{display:none!important;margin:0!important}
-html body.reuse-current .reuse-proof-grid .proof-item h4{margin:var(--hm-space-20) 0 0!important;min-height:0!important}
+html body.reuse-current .reuse-proof-grid .proof-item h4{margin:var(--hm-space-20) 0 0!important;min-height:0!important;text-wrap:pretty!important;word-break:keep-all!important}
 html body.reuse-current .reuse-proof-grid .proof-item p{margin:var(--hm-space-24) 0 0!important;padding:0!important;min-height:0!important}
 html body.reuse-current .reuse-proof-source{
   display:block!important;

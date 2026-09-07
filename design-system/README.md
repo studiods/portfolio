@@ -191,3 +191,12 @@
 - 데이터 의미를 직접 표현하는 positive/negative/accent line은 Data Viz/Case component의 semantic color를 유지할 수 있으며 neutral divider 규칙으로 덮어쓰지 않는다.
 - 카드 상단 line → label 간격은 `--hm-space-20`, subsection title → content는 `--hm-subtitle-to-content`, major title → first subsection은 `--hm-title-to-subsection-gap`, sibling subsection/card 간격은 `--hm-subsection-gap`을 사용한다.
 - case page에서 neutral line opacity나 주요 vertical rhythm을 raw px/rgba 값으로 새로 정의하지 않는다. 공통 component와 token을 사용한다.
+
+
+## Evidence stat card contract
+
+- `hm-ds-evidence-stat`는 4열/2열 등의 수치 근거 카드 묶음에 사용한다.
+- 숫자 아래 카드 타이틀은 `--hm-type-card-title`을 사용하며 desktop 기준 `24px`이다.
+- 카드 타이틀은 authored `<br>`로 줄을 고정하지 않고 `word-break:keep-all` + `text-wrap:pretty`로 문맥에 맞게 자연스럽게 줄바꿈한다.
+- evidence card는 `min-height`나 grid stretch로 빈 하단 영역을 만들지 않는다. 컨텐츠 실제 높이(`min-height:0`, `height:auto`, `align-self:start`)만 사용한다.
+- 동일한 `hm-ds-evidence-stat`를 사용하는 다른 case/영역도 위 규칙을 그대로 상속한다.

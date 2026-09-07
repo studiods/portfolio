@@ -13,6 +13,23 @@
 .hm-ds-role__body{margin:var(--hm-space-28) 0 0;color:var(--hm-text-body)}
 .hm-ds-role__keyword{display:block;margin-top:var(--hm-space-20);color:var(--hm-blue);font:300 14px/1.4 var(--hm-font-ko)}
 
+/* Evidence stat cards: compact title + content-height cards; never reserve flex dead space. */
+.hm-ds-evidence-stat{
+  align-items:start!important;
+}
+.hm-ds-evidence-stat>.proof-item{
+  align-self:start!important;
+  min-height:0!important;
+  height:auto!important;
+}
+.hm-ds-evidence-stat>.proof-item h4{
+  max-width:100%!important;
+  font-size:var(--hm-type-card-title)!important;
+  line-height:1.28!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+}
+
 /*
   Numbered editorial list.
   Roman numeral and title share one baseline/size; supporting copy always sits below the title.
