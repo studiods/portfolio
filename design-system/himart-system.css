@@ -11,6 +11,15 @@
   --hm-description-max-chars:40ch;
   --hm-inner-number-max:12px;
   --hm-hero-ratio:16 / 9;
+  /* Final internal-page type scale: 64 / 52 / 32 / 22 / 16 / 12 / 10(source). */
+  --hm-type-hero:64px;
+  --hm-type-section:52px;
+  --hm-type-subsection:32px;
+  --hm-type-group:22px;
+  --hm-type-card-title:22px;
+  --hm-type-body:16px;
+  --hm-type-note:12px;
+  --hm-type-source:10px;
 }
 
 html body.himart-page-body,
