@@ -1,0 +1,66 @@
+name: Finalize Reuse trust table visual treatment
+on:
+  push:
+    paths:
+      - '.github/workflows/reuse-trust-table-fill.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Finalize shared cache chain
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p=Path('design-system/himart-system.css')
+          t=p.read_text()
+          t=t.replace('./index.css?v=20260907-16','./index.css?v=20260907-17')
+          t=t.replace('HIMART Shared System v2.3','HIMART Shared System v2.4')
+          p.write_text(t)
+
+          p=Path('himart-reuse.html')
+          t=p.read_text().replace('himart-system.css?v=20260907-18','himart-system.css?v=20260907-19')
+          p.write_text(t)
+          PY
+      - name: Verify Reuse trust table rules
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          css=Path('design-system/components/reuse-confidence.css').read_text()
+          idx=Path('design-system/index.css').read_text()
+          syscss=Path('design-system/himart-system.css').read_text()
+          page=Path('himart-reuse.html').read_text()
+          checks={
+            'triangle filled blue':'fill:var(--hm-blue);' in css,
+            'triangle stroke blue':'stroke:var(--hm-blue);' in css,
+            'title body gap 4':'margin-top:4px!important;' in css,
+            'description opacity 70': 'rgba(255,255,255,.70)!important;' in css,
+            'row divider 10 percent':'border-bottom:1px solid var(--hm-line-faint)!important;' in css,
+            'component cache v2':'reuse-confidence.css?v=20260907-2' in idx,
+            'shared index cache v17':'index.css?v=20260907-17' in syscss,
+            'reuse page cache v19':'himart-system.css?v=20260907-19' in page,
+          }
+          failed=[]
+          for k,v in checks.items():
+            print(('PASS' if v else 'FAIL')+' - '+k)
+            if not v: failed.append(k)
+          if failed:
+            print('FAILED:',', '.join(failed)); sys.exit(1)
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/reuse-trust-table-fill.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Refine Reuse trust table fill and text treatment"
+          git push
