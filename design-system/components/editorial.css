@@ -1,5 +1,5 @@
 /*
-  HIMART Editorial Restraint v1.1
+  HIMART Editorial Restraint v1.2
   Small English eyebrow/kicker labels are optional, not a default decoration.
   Quantitative evidence always carries a standardized source note.
 */
@@ -53,7 +53,7 @@ html body.himart-page-body #live-main :is(
   border:0!important;
   border-top:1px solid var(--hm-line-faint)!important;
   background:transparent!important;
-  color:rgba(255,255,255,.46)!important;
+  color:rgba(255,255,255,.40)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:12px!important;
   font-weight:300!important;
@@ -64,7 +64,7 @@ html body.himart-page-body #live-main :is(
   box-sizing:border-box!important;
 }
 
-/* The 32px evidence-to-source distance is invariant on mobile as well. */
+/* The 32px evidence-to-source distance and 12px source typography are invariant on mobile as well. */
 @media(max-width:780px){
   html body.himart-page-body #live-main :is(
     .hm-source,
@@ -74,7 +74,7 @@ html body.himart-page-body #live-main :is(
   ){
     margin-top:32px!important;
     padding-top:14px!important;
-    font-size:11px!important;
+    font-size:12px!important;
     line-height:1.5!important;
   }
 }
