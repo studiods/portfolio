@@ -1,0 +1,73 @@
+name: Adjust Reuse 02.2 motion duration
+on:
+  push:
+    paths:
+      - '.github/workflows/adjust-reuse-motion-duration.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply and verify duration change
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('design-system/reuse-confidence-motion.js')
+          s = p.read_text()
+          s = s.replace('const STEP_DELAY = 450;', 'const STEP_DELAY = 600;', 1)
+          s = s.replace('const PULSE_DURATION = 1500;', 'const PULSE_DURATION = 2000;', 1)
+          if 'const STEP_DELAY = 600;' not in s or 'const PULSE_DURATION = 2000;' not in s:
+              raise SystemExit('motion timing update failed')
+          p.write_text(s)
+
+          p = Path('design-system/components/reuse-confidence.css')
+          s = p.read_text()
+          count = s.count('animation:reuse-confidence-line-pulse 1.5s ease-in-out 1;') + s.count('animation:reuse-confidence-trust-pulse 1.5s ease-in-out 1;')
+          if count != 2:
+              raise SystemExit(f'expected two 1.5s animation declarations, found {count}')
+          s = s.replace('animation:reuse-confidence-line-pulse 1.5s ease-in-out 1;', 'animation:reuse-confidence-line-pulse 2s ease-in-out 1;', 1)
+          s = s.replace('animation:reuse-confidence-trust-pulse 1.5s ease-in-out 1;', 'animation:reuse-confidence-trust-pulse 2s ease-in-out 1;', 1)
+          if '50%{border-color:rgba(255,255,255,.60)}' not in s:
+              raise SystemExit('60 percent opacity marker missing')
+          p.write_text(s)
+
+          def bump(path, pattern):
+              p = Path(path)
+              t = p.read_text()
+              m = re.search(pattern, t)
+              if not m:
+                  raise SystemExit(f'cache marker missing in {path}')
+              old = m.group(0)
+              prefix, num = m.group(1), int(m.group(2))
+              new = f'{prefix}{num + 1}'
+              p.write_text(t.replace(old, new, 1))
+
+          bump('design-system/index.css', r'(reuse-confidence\.css\?v=\d{8}-)(\d+)')
+          bump('design-system/himart-system.css', r'(index\.css\?v=\d{8}-)(\d+)')
+          bump('himart-reuse.html', r'(himart-system\.css\?v=\d{8}-)(\d+)')
+          bump('himart-reuse.html', r'(reuse-confidence-motion\.js\?v=\d{8}-)(\d+)')
+
+          js = Path('design-system/reuse-confidence-motion.js').read_text()
+          css = Path('design-system/components/reuse-confidence.css').read_text()
+          assert 'const STEP_DELAY = 600;' in js
+          assert 'const PULSE_DURATION = 2000;' in js
+          assert 'animation:reuse-confidence-line-pulse 2s ease-in-out 1;' in css
+          assert 'animation:reuse-confidence-trust-pulse 2s ease-in-out 1;' in css
+          assert '50%{border-color:rgba(255,255,255,.60)}' in css
+          PY
+      - name: Commit changes
+        shell: bash
+        run: |
+          rm -f .github/workflows/adjust-reuse-motion-duration.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Set Reuse 02.2 motion duration to two seconds"
+          git push
