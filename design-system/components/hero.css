@@ -142,7 +142,7 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{
 }
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
   display:block!important;
-  margin:0 0 8px!important;
+  margin:0 0 var(--hm-meta-label-value-gap)!important;
   color:var(--hm-text-secondary)!important;
   opacity:1!important;
   font:400 12px/1 var(--hm-font-en)!important;
@@ -212,7 +212,7 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px!important;padding-right:0!important}
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)!important}
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
-    margin-bottom:8px!important;
+    margin-bottom:var(--hm-meta-label-value-gap)!important;
     font-size:var(--hm-type-note-mobile)!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
