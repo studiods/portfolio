@@ -1,0 +1,69 @@
+name: Set comparison display size to 32px
+on:
+  push:
+    paths:
+      - '.github/workflows/comparison-size-32.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply shared 32px comparison display size
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace(path, old, new):
+              p=Path(path); t=p.read_text()
+              if old not in t:
+                  raise SystemExit(f'missing pattern in {path}: {old}')
+              p.write_text(t.replace(old,new))
+
+          replace('design-system/tokens.css', '--hm-type-comparison:28px;', '--hm-type-comparison:32px;')
+          replace('design-system/components/narrative.css', 'font:300 var(--hm-type-card-title)/var(--hm-leading-group) var(--hm-font-ko)', 'font:300 var(--hm-type-comparison)/var(--hm-leading-group) var(--hm-font-ko)')
+          replace('design-system/components/himart-commerce.css', 'font:300 var(--hm-type-card-title)/var(--hm-leading-group) var(--hm-font-ko)!important;', 'font:300 var(--hm-type-comparison)/var(--hm-leading-group) var(--hm-font-ko)!important;')
+
+          replace('design-system/index.css', './tokens.css?v=20260907-12', './tokens.css?v=20260907-13')
+          replace('design-system/index.css', './components/narrative.css?v=20260907-3', './components/narrative.css?v=20260907-4')
+          replace('design-system/himart-system.css', './index.css?v=20260907-28', './index.css?v=20260907-29')
+          replace('himart-reuse.html', './design-system/himart-system.css?v=20260907-34', './design-system/himart-system.css?v=20260907-35')
+          replace('himart.html', './design-system/components/himart-commerce.css?v=20260907-3', './design-system/components/himart-commerce.css?v=20260907-4')
+          replace('himart.html', './design-system/himart-system.css?v=20260907-26', './design-system/himart-system.css?v=20260907-27')
+
+          readme=Path('design-system/README.md')
+          t=readme.read_text()
+          marker='- Comparison display text uses `--hm-type-comparison: 32px` with `--hm-leading-group` for Reuse trust/anxiety keywords and the matching Himart synthesis copy.'
+          if marker not in t:
+              t += '\n' + marker + '\n'
+              readme.write_text(t)
+          PY
+      - name: Verify
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          checks={
+            'comparison token 32': '--hm-type-comparison:32px;' in Path('design-system/tokens.css').read_text(),
+            'reuse uses comparison token': 'font:300 var(--hm-type-comparison)/var(--hm-leading-group)' in Path('design-system/components/reuse.css').read_text(),
+            'generic synthesis uses comparison token': 'font:300 var(--hm-type-comparison)/var(--hm-leading-group)' in Path('design-system/components/narrative.css').read_text(),
+            'himart synthesis uses comparison token': 'font:300 var(--hm-type-comparison)/var(--hm-leading-group)' in Path('design-system/components/himart-commerce.css').read_text(),
+            'old 28 token removed': '--hm-type-comparison:28px;' not in Path('design-system/tokens.css').read_text(),
+            'reuse cache bumped': 'himart-system.css?v=20260907-35' in Path('himart-reuse.html').read_text(),
+            'himart cache bumped': 'himart-commerce.css?v=20260907-4' in Path('himart.html').read_text() and 'himart-system.css?v=20260907-27' in Path('himart.html').read_text(),
+          }
+          bad=[k for k,v in checks.items() if not v]
+          for k,v in checks.items(): print(('PASS' if v else 'FAIL'),k)
+          if bad: raise SystemExit(', '.join(bad))
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/comparison-size-32.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Set comparison and synthesis display text to 32px"
+          git push
