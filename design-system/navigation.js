@@ -1,5 +1,6 @@
 /*
   Portfolio global navigation + global right-side chapter navigator.
+  Also owns the migration/runtime layer for the canonical quantitative SOURCE note.
   HOME / ABOUT / CONTACT never receive the right-side navigator.
 */
 (() => {
@@ -85,10 +86,87 @@
     update();
   };
 
+  /* ---------- Canonical quantitative SOURCE system ---------- */
+  const sourceSelector = '.hm-source,.hm-ds-source-note,.reuse-proof-source,[data-hm-source-note]';
+
+  const cleanSourceText = value => (value || '')
+    .replace(/^\s*(?:SOURCE|출처)\s*(?:[·•\-–—:]\s*)?/i, '')
+    .trim();
+
+  const normalizeSourceNote = node => {
+    if (!node) return;
+    const clean = cleanSourceText(node.textContent);
+    if (!clean) return;
+    node.classList.add('hm-ds-source-note');
+    node.setAttribute('data-hm-source-note', 'true');
+    node.textContent = `SOURCE - ${clean}`;
+  };
+
+  const closestEvidenceScope = anchor => anchor && anchor.closest(
+    '.data-card,.hm-subsection,.reuse-proof-group,.voice-group,.narrative-signals'
+  );
+
+  const sourceScopeHasNote = anchor => {
+    if (!anchor) return true;
+    const next = anchor.nextElementSibling;
+    if (next && next.matches(sourceSelector)) return true;
+    const scope = closestEvidenceScope(anchor);
+    if (!scope) return false;
+    const notes = [...scope.querySelectorAll(sourceSelector)];
+    return notes.some(note => note.compareDocumentPosition(anchor) & Node.DOCUMENT_POSITION_PRECEDING);
+  };
+
+  const insertSourceNote = (anchor, source) => {
+    const clean = cleanSourceText(source);
+    if (!anchor || !clean || sourceScopeHasNote(anchor)) return;
+    const note = document.createElement('div');
+    note.className = 'hm-ds-source-note';
+    note.setAttribute('data-hm-source-note', 'true');
+    note.textContent = `SOURCE - ${clean}`;
+    anchor.insertAdjacentElement('afterend', note);
+  };
+
+  const pageSourceRegistry = {
+    'himart.html': [
+      ['#brand .voice-stack', '하이마트 고객 VOC·리뷰 키워드 분석 · 내부 분류 결과'],
+      ['#brand .sentiment-graph', '하이마트 고객 VOC·리뷰 키워드 분석 · 긍정/부정 키워드 비중'],
+      ['#data .flow-area', '하이마트 온라인 이용 패턴 분석 v31 / 온라인 백데이터 퍼널_3 PDP·장바구니·구매완료 · 2026 H1']
+    ],
+    'himart-ways.html': [
+      ['#brand .hm-ds-segmented-chart', '하이마트 UX디자인팀 협업 프로세스 AS-IS 정리 · 내부 업무 흐름 분석'],
+      ['#journey .hm-ds-home-bars', '하이마트 UX디자인팀 TO-BE 협업 프로세스 정의 · 7단계 운영 구조']
+    ],
+    'nbt_stepup.html': [
+      ['#strategy .behavior-grid', 'NBT 스텝업 공개 서비스 정책 및 2018년 보도자료 · 50보당 1캐시 / 목표 달성 최대 1,000캐시 / 월 약 6,000캐시 / 60여 제휴처'],
+      ['#outcome .behavior-grid', '전자신문 2018.05 / ZDNet Korea 2018.05 / NBT 공식 아카이브 / 기존 포트폴리오 내부 기록 2019.08']
+    ]
+  };
+
+  const mountSourceNotes = () => {
+    if (!document.body.classList.contains('himart-page-body')) return;
+
+    /* Migrate every legacy SOURCE · / 출처 · note to the single literal prefix. */
+    document.querySelectorAll(sourceSelector).forEach(normalizeSourceNote);
+
+    /* Future authoring contract: put the exact provenance on the evidence node. */
+    document.querySelectorAll('#live-main [data-source]').forEach(anchor => {
+      insertSourceNote(anchor, anchor.getAttribute('data-source'));
+    });
+
+    /* Current-page migration for quantitative visuals that predate the contract. */
+    const file = (location.pathname.split('/').pop() || '').toLowerCase();
+    (pageSourceRegistry[file] || []).forEach(([selector, source]) => {
+      document.querySelectorAll(selector).forEach(anchor => insertSourceNote(anchor, source));
+    });
+
+    document.querySelectorAll(sourceSelector).forEach(normalizeSourceNote);
+  };
+
   const mount = () => {
     const active = currentPage();
     mountNavigation(active);
     if (active === 'works') mountProgress();
+    mountSourceNotes();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once:true});
