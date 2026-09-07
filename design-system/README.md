@@ -35,9 +35,11 @@
 | Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, focused video playback, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
 | Motion | `animation.js` | Himart reveal, counter, hero scroll variable, data-viz draw, viewport video control, single-video sequence |
+| Progress | `components/progress.css` + `navigation.js` | WORKS/상세 페이지 우측 주요 영역 번호, focus 상태, HOME/ABOUT/CONTACT 제외 |
 
 ## HIMART Hero component contract
 
+- Desktop Hero title은 `--hm-type-hero:64px`을 사용한다. page-local 82px override를 만들지 않는다.
 - Himart/ReUse movie Hero의 canonical DOM은 `hm-ds-hero hm-ds-hero--scroll-cover` → `hm-ds-hero__inner` → `hm-ds-hero__copy` + `hm-ds-hero__bottom` → `hm-ds-hero__meta` 순서로 통일한다.
 - `components/hero.css`가 Hero의 position/height/copy center/bottom rail/meta typography를 단독 소유하며, `final-tuning.css`나 case page에서 Hero selector를 다시 정의하지 않는다.
 - Legacy `himart-narrative-v2-production.css`의 `.himart-wide-test-page`/`.hm-hero-bottom` 규칙은 이전 호환성용이며 canonical `hm-ds-*` Hero selector가 항상 우선한다.
@@ -147,14 +149,24 @@
 3. Typography fine tuning is performed after local font loading and line wrapping are stable.
 4. 공통 navigation 변경 시 Home / Works / detail page의 viewport center를 함께 검증한다.
 
+## Scramble animation contract
 
-## Immersive storytelling component contract
+- 난수 타이틀 애니메이션의 원본은 렌더링 시작 전 `originalHTML`로 고정하며, 애니메이션 도중 작성된 원문을 substring/slice로 재구성하지 않는다.
+- scramble frame은 `requestAnimationFrame` 기반으로만 갱신하고 각 실행에 generation token을 부여한다. 취소된 이전 frame은 DOM에 다시 쓸 수 없다.
+- scroll 이탈, visibility change, pagehide, 예외 종료 시 마지막 write는 반드시 원본 `innerHTML` 복원이다. `<br>`을 포함한 authored markup 전체를 복원해 난수 glyph가 잔존하지 않게 한다.
+- 외부 runtime이 animation 중 title DOM 자체를 교체한 경우 기존 scramble은 즉시 무효화하고 새 DOM을 덮어쓰지 않는다.
+- Hero는 한 번만 실행하고, section title은 viewport 재진입 시 재실행할 수 있으나 같은 element에 두 animation이 동시에 존재할 수 없다.
 
-- `components/immersive-story.css`는 리포트형 정보 밀도를 깨기 위한 공통 스토리텔링 컴포넌트다. 페이지별 `<style>`로 재정의하지 않는다.
-- `hm-ds-impact`는 하나의 강한 문장 + 최소 핵심 지표를 크게 보여주는 구간이다. 숫자는 실제 근거가 있는 값만 사용한다.
-- `hm-ds-immersive-sequence` / `hm-ds-immersive-stage`는 이미지·영상이 화면 전체를 점유하는 sticky visual beat다. 텍스트는 짧은 결론과 키워드만 유지한다.
-- `hm-ds-visual-wall`은 실제 산출물·촬영·콘텐츠를 비대칭 12-column 구조로 배치한다. 실물 이미지가 없을 때 placeholder를 사용할 수 있지만 반드시 `PLACEHOLDER`로 표시한다.
-- `hm-ds-closing`은 case의 최종 역할/의미를 Hero scale의 한 문장으로 정리한다.
-- 신규 글꼴·type scale·palette를 만들지 않는다. typography, spacing, color는 `tokens.css`, `typography.css`, `spacing.css`를 그대로 사용한다.
-- 데이터가 필요한 순간에는 `data-viz.css`의 기존 Himart graph component를 사용하고, 설명·과정 구간에서는 시각 자료를 우선해 정보 밀도의 강약을 만든다.
-- 실제 검증되지 않은 KPI나 성과 수치를 시각적 완성도를 위해 만들지 않는다.
+## Global right-side navigator contract
+
+- 우측 navigator는 `navigation.js`가 DOM에서 자동 생성하고 `components/progress.css`가 표현을 단독 소유한다. page-local progress JS/CSS를 추가하지 않는다.
+- 적용 범위는 WORKS와 project detail page다. HOME(`index.html`), ABOUT, CONTACT 영역에는 생성하지 않는다.
+- 상세 페이지는 `#live-main > section.hm-section` 중 `.hm-section-title`을 가진 큰 챕터 수만큼 `01, 02…`를 생성한다. WORKS는 `.works-grid .works-card` 수만큼 생성한다.
+- 기본 번호는 white `20%`, viewport 중앙 focus line이 해당 큰 영역 안에 들어오면 해당 번호만 white `100%`가 된다. active 상태에 blue/accent color를 사용하지 않는다.
+- 기존 `.hm-progress`와 `.works-progress`는 legacy markup으로 간주하고 shared runtime이 제거한다.
+- GNB의 3-column grid에서 중앙 배치는 `.portfolio-progress-page` 범위에만 `grid-column:2`를 적용한다. generic `.top-center`에는 grid-column을 주지 않아 HOME의 기존 absolute centering과 충돌하지 않게 한다.
+
+## Subsection tracking contract
+
+- 42px 중타이틀(`.hm-subtitle`, `.hm-ds-subsection__title`)은 항상 `--hm-track-subsection`을 사용한다. `letter-spacing:0` page/compatibility override를 금지한다.
+- 12px subsection label(`.hm-subno`, `.hm-card-no`)은 Averta PE + `--hm-track-note`를 사용한다. Reuse의 `01.1 / RESEARCH SIGNALS`, `01.2 / SUMMARY`도 예외를 두지 않는다.

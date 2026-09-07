@@ -33,7 +33,7 @@
     main.innerHTML=sourceMain.innerHTML;
     const transform=document.createElement('script');
     transform.src='./himart-live-transform.js?v=d8f97ef';
-    transform.onload=()=>{const boot=document.createElement('script');boot.src='./himart-live-boot.js?v=9f74114';document.body.appendChild(boot)};
+    transform.onload=()=>{const boot=document.createElement('script');boot.src='./himart-live-boot.js?v=20260907-2';document.body.appendChild(boot)};
     document.body.appendChild(transform);
   }catch(err){
     main.innerHTML='<div class="hm-wrap" style="padding-top:180px;min-height:70vh"><h1 style="font-size:42px;font-weight:100">테스트 페이지를 불러오지 못했습니다.</h1></div>';

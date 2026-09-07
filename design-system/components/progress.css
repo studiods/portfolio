@@ -1,0 +1,44 @@
+@import url("../tokens.css");
+
+/*
+  Portfolio global right-side navigator.
+  Scope: WORKS + project detail pages only. HOME / ABOUT / CONTACT are excluded by navigation.js.
+  The active state never uses the Himart accent palette: idle is white 20%, focused is white 100%.
+*/
+html body.portfolio-progress-page :is(.hm-progress,.works-progress){display:none!important}
+
+html body .hm-global-progress{
+  position:fixed;
+  z-index:2147483640;
+  top:50%;
+  right:18px;
+  display:grid;
+  gap:8px;
+  margin:0;
+  padding:0;
+  transform:translateY(-50%);
+}
+html body .hm-global-progress a{
+  display:block;
+  margin:0;
+  padding:0;
+  color:rgba(255,255,255,.20);
+  font-family:var(--hm-font-en);
+  font-size:10px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:.04em!important;
+  text-decoration:none;
+  transition:color .18s ease;
+}
+html body .hm-global-progress a:hover,
+html body .hm-global-progress a:focus-visible{color:rgba(255,255,255,.60)}
+html body .hm-global-progress a.is-active,
+html body .hm-global-progress a[aria-current="true"]{color:rgba(255,255,255,1)}
+
+@media(max-width:780px){
+  html body .hm-global-progress{right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .hm-global-progress a{transition:none}
+}

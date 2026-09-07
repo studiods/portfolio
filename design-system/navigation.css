@@ -52,8 +52,13 @@ html body .top a::after{
 html body .top a:hover::after,
 html body .top a[aria-current="page"]::after{right:0!important}
 
-html body.works-page-body>.top{z-index:2147483646!important}
-html body.works-page-body>.top .top-center{
+/*
+  Detail-page centering lock.
+  Do NOT put grid-column on the generic .top-center: HOME keeps its legacy absolute centering contract.
+  navigation.js assigns .portfolio-progress-page only to WORKS and project detail pages.
+*/
+html body.portfolio-progress-page>.top{z-index:2147483646!important}
+html body.portfolio-progress-page>.top .top-center{
   position:static!important;
   grid-column:2!important;
   justify-self:center!important;

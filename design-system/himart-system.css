@@ -1,7 +1,7 @@
-@import url("./index.css?v=20260907-5");
+@import url("./index.css?v=20260907-6");
 
 /*
-  HIMART Shared System v1.9 — sole final-authority layer.
+  HIMART Shared System v2.0 — sole final-authority layer.
   Typography, tracking and spacing mirror the current himart.html production hierarchy.
 */
 :root{
@@ -79,7 +79,7 @@ html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead{
   line-clamp:none!important;
 }
 
-/* Canonical type hierarchy: 82 / 52 / 42 / 28 / 16 / 12 */
+/* Canonical type hierarchy: 64 / 52 / 42 / 28 / 16 / 12 */
 html body.himart-page-body #live-main .hm-section-title{
   margin:0!important;
   padding:0!important;

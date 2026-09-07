@@ -24,7 +24,7 @@
   --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
 
   /* Desktop type hierarchy: hero / major / middle / small / body / note */
-  --hm-type-hero:82px;
+  --hm-type-hero:64px;
   --hm-type-section:52px;
   --hm-type-subsection:42px;
   --hm-type-group:28px;
