@@ -4,13 +4,13 @@
 .hm-ds-card{border-top:1px solid var(--hm-line-weak);padding-top:var(--hm-space-20)}
 .hm-ds-card__label{display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
 .hm-ds-card__title{margin:var(--hm-space-20) 0 0;color:var(--hm-text-primary)}
-.hm-ds-card__body{margin:var(--hm-space-24) 0 0;color:var(--hm-text-body)}
+.hm-ds-card__body{margin:var(--hm-space-24) 0 0;color:var(--hm-description-color)}
 .hm-ds-stat__value{margin-top:16px;color:var(--hm-blue);font:300 clamp(44px,4.5vw,72px)/.98 var(--hm-font-en);letter-spacing:-.045em}
 .hm-ds-stat__unit{font-size:.46em;letter-spacing:-.02em}
 .hm-ds-signal-grid,.hm-ds-role-grid,.hm-ds-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--hm-space-40)}
 .hm-ds-role-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--hm-space-50) var(--hm-space-28)}
 .hm-ds-role__title{margin:var(--hm-space-20) 0 0}
-.hm-ds-role__body{margin:var(--hm-space-28) 0 0;color:var(--hm-text-body)}
+.hm-ds-role__body{margin:var(--hm-space-28) 0 0;color:var(--hm-description-color)}
 .hm-ds-role__keyword{display:block;margin-top:var(--hm-space-20);color:var(--hm-blue);font:300 14px/1.4 var(--hm-font-ko)}
 
 /* Evidence stat cards: compact title + content-height cards; never reserve flex dead space. */
@@ -34,6 +34,7 @@
 .hm-ds-evidence-stat>.proof-item p{
   max-width:100%!important;
   margin-top:var(--hm-space-24)!important;
+  color:var(--hm-description-color)!important;
   font-size:var(--hm-type-body)!important;
   line-height:1.5!important;
   text-wrap:pretty!important;
@@ -102,7 +103,7 @@
   align-self:start!important;
   max-width:var(--hm-title-description-max,40ch)!important;
   margin:var(--hm-title-description-gap,20px) 0 0!important;
-  color:var(--hm-text-secondary)!important;
+  color:var(--hm-description-color)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:var(--hm-type-body)!important;
   font-weight:300!important;
@@ -142,7 +143,7 @@
 .himart-movie-page .problem-item p,
 .himart-movie-page .proof-item p,
 .himart-movie-page .signal-item p{
-  color:var(--hm-text-body);
+  color:var(--hm-description-color);
 }
 .himart-movie-page .data-card .hm-source{
   margin-top:var(--hm-space-20);
