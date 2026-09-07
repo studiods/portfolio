@@ -1,5 +1,5 @@
 /*
-  HIMART Editorial Restraint v1.3
+  HIMART Editorial Restraint v1.4
   Small English eyebrow/kicker labels are optional, not a default decoration.
   Quantitative evidence always carries a standardized source note.
 */
@@ -33,6 +33,9 @@ html body.himart-page-body #live-main .hm-ds-evidence-stat :is(.proof-label,.pro
 html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
   margin-top:0!important;
 }
+
+/* Authoring / implementation notes never appear in the published portfolio. */
+html body.himart-page-body #live-main .reuse-media-note{display:none!important}
 
 /*
   Quantitative source-note contract.
