@@ -1,5 +1,5 @@
 /*
-  HIMART Editorial Restraint v1.4
+  HIMART Editorial Restraint v1.5
   Small English eyebrow/kicker labels are optional, not a default decoration.
   Quantitative evidence always carries a standardized source note.
 */
@@ -32,6 +32,16 @@ html body.himart-page-body #live-main .hm-ds-evidence-stat :is(.proof-label,.pro
 }
 html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
   margin-top:0!important;
+}
+
+/*
+  Evidence-description contract.
+  Supporting copy below quantitative proof cards uses the exact same 60% description color
+  as section/subsection descriptions. Do not stack element opacity on top of the RGBA token.
+*/
+html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item p{
+  color:var(--hm-description-color,rgba(255,255,255,.60))!important;
+  opacity:1!important;
 }
 
 /* Authoring / implementation notes never appear in the published portfolio. */
