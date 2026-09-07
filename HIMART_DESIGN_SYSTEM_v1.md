@@ -46,7 +46,7 @@
 
 | Token | Observed value | 사용 |
 |---|---:|---|
-| `type.hero` | 82px | Hero title |
+| `type.hero` | 64px | Hero title |
 | `type.section` | 42px | 장 제목 |
 | `type.subsection` | 28px | 데이터·여정 제목 |
 | `type.group` | 22px | 카드 그룹 제목 |

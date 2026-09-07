@@ -62,7 +62,7 @@
 ## 최종 확인 기록 (2026-09-05)
 
 - 새 캐시 로드 확인: `index.css?v=20260906-1`, `animation.js?v=20260906-3`, `test-content-final.js?v=20260905-2`.
-- PC 1363×936: 로컬 폰트 로드 완료, Hero 82px, Chapter 52px, Chapter 헤더 2열.
+- PC 1363×936: 로컬 폰트 로드 완료, Hero 64px, Chapter 52px, Chapter 헤더 2열.
 - 스크롤 회귀: reveal 대상 24개 중 현재 viewport 진입 대상이 `is-visible`로 전환됨.
 - 페이지 코드 오류/경고: 애플리케이션 오류 없음(브라우저 확장 메타데이터 오류 1건은 외부 확장).
 - 모바일: ≤780px에서 1열 스택 및 Chapter 30–38px clamp 규칙을 소스에서 확인. 실제 모바일 viewport 캡처는 별도 디바이스 확인 필요.
@@ -113,3 +113,12 @@
 - `himart.html` 초기 Hero copy와 `test-content-final.js` runtime copy는 동일해야 한다.
 - Hero description 내부 강제 줄바꿈은 의미 단위 기준 최대 1개의 `<br>`만 허용한다.
 - Reuse / Ways / Stepup 등 기존 case Hero description도 짧은 원문 전체를 노출해야 한다.
+
+
+## Hero metadata single-line 회귀 확인 (2026-09-07)
+
+- Desktop Hero meta는 고정 비율 column 대신 `repeat(4,max-content)` + `space-between`으로 실제 문자열 길이에 맞춰 공간을 배분한다.
+- Desktop ROLE/FOCUS/SCOPE/TEAM 값은 `white-space:nowrap`으로 한 줄을 유지한다.
+- 최소 항목 간격은 `--hm-meta-column-gap:24px`을 사용한다.
+- Mobile ≤780px는 기존 2×2 구조를 유지하고 좁은 폭에서는 `white-space:normal`로 줄바꿈을 허용한다.
+- canonical Hero title token은 Desktop `64px`이다.
