@@ -1,0 +1,116 @@
+name: Separate middle-small and small-content spacing
+on:
+  push:
+    paths:
+      - '.github/workflows/semantic-title-spacing-80-40.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply semantic 80/40 title rhythm
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Tokens: keep small-title -> content at 40, introduce middle-title -> small-title at 80.
+          p=Path('design-system/tokens.css')
+          t=p.read_text()
+          if '--hm-space-subtitle-smalltitle:' not in t:
+              t=t.replace('  --hm-space-subtitle-content:40px;\n', '  --hm-space-subtitle-content:40px;\n  --hm-space-subtitle-smalltitle:80px;\n')
+          if '--hm-subtitle-to-smalltitle:' not in t:
+              t=t.replace('  --hm-subtitle-to-content:40px;\n', '  --hm-subtitle-to-content:40px;\n  --hm-subtitle-to-smalltitle:80px;\n')
+          p.write_text(t)
+
+          # 2) Spacing utility + automatic semantic relationship for standard DS title classes.
+          p=Path('design-system/spacing.css')
+          t=p.read_text()
+          if '.hm-ds-subtitle-to-smalltitle' not in t:
+              t=t.replace('.hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}\n', '.hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}\n.hm-ds-subtitle-to-smalltitle{margin-top:var(--hm-subtitle-to-smalltitle)}\n')
+              marker='.hm-ds-rule{border-top:1px solid var(--hm-line-faint)}\n'
+              rule='''\n/* Semantic title rhythm: middle title (42px) → small title/group title (28px) = 80px.\n   Small title → its actual content remains 40px via --hm-subtitle-to-content. */\nhtml body.himart-page-body #live-main :is(.hm-subhead,.data-card-head) + :is(\n  .hm-group-title,.hm-ds-group-title,.voice-group-title,.sentiment-title,.hm-ds-subtitle-to-smalltitle\n){margin-top:var(--hm-subtitle-to-smalltitle)!important}\n'''
+              t=t.replace(marker, marker+rule)
+          p.write_text(t)
+
+          # 3) Reuse: 01.1 middle title -> proof-group small title stack uses the 80px semantic utility.
+          p=Path('himart-reuse.html')
+          t=p.read_text()
+          t=t.replace('<div class="reuse-proof-stack">','<div class="reuse-proof-stack hm-ds-subtitle-to-smalltitle">')
+          p.write_text(t)
+
+          # 4) Design-system documentation: explicitly separate the two distances.
+          p=Path('design-system/README.md')
+          t=p.read_text()
+          heading='## Semantic title spacing contract'
+          block='''\n\n## Semantic title spacing contract\n\n- 중타이틀(`--hm-type-subsection:42px`) → 소타이틀/그룹 타이틀(`--hm-type-group:28px`) 간격은 `--hm-subtitle-to-smalltitle:80px`을 사용한다.\n- 소타이틀/그룹 타이틀(`28px`) → 바로 아래 실제 콘텐츠/그래프/카드 간격은 `--hm-subtitle-to-content:40px`을 사용한다.\n- 두 간격은 서로 다른 semantic token이다. `40px` content gap을 중타이틀 → 소타이틀 관계에 재사용하지 않는다.\n- `hm-ds-subtitle-to-smalltitle`은 중타이틀 다음에 작은 타이틀 그룹 wrapper가 오는 경우 사용한다. 표준 direct sibling인 `hm-group-title`, `hm-ds-group-title`, `voice-group-title`, `sentiment-title`은 spacing foundation이 자동으로 80px을 적용한다.\n- Desktop/Mobile 모두 이 의미 관계는 동일하게 유지한다. 화면 폭 때문에 임의로 56px/40px 등으로 축소하지 않는다.\n'''
+          if heading not in t:
+              t += block
+          p.write_text(t)
+
+          # 5) Cache chain: bump inner design-system dependencies and every page using himart-system.
+          p=Path('design-system/index.css')
+          t=p.read_text()
+          t=re.sub(r'tokens\.css\?v=[^"\)]+', 'tokens.css?v=20260907-7', t)
+          t=re.sub(r'spacing\.css\?v=[^"\)]+', 'spacing.css?v=20260907-4', t)
+          p.write_text(t)
+
+          p=Path('design-system/himart-system.css')
+          t=p.read_text()
+          t=re.sub(r'index\.css\?v=[^"\)]+', 'index.css?v=20260907-11', t, count=1)
+          p.write_text(t)
+
+          for p in Path('.').glob('*.html'):
+              t=p.read_text()
+              nt=re.sub(r'himart-system\.css\?v=[^"\']+', 'himart-system.css?v=20260907-15', t)
+              if nt != t:
+                  p.write_text(nt)
+          PY
+      - name: Cross-check semantic spacing contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+          tokens=Path('design-system/tokens.css').read_text()
+          spacing=Path('design-system/spacing.css').read_text()
+          reuse=Path('himart-reuse.html').read_text()
+          readme=Path('design-system/README.md').read_text()
+          index=Path('design-system/index.css').read_text()
+          system=Path('design-system/himart-system.css').read_text()
+          checks={
+            'middle-to-small token is 80px': '--hm-subtitle-to-smalltitle:80px;' in tokens,
+            'middle-to-small spacing alias is 80px': '--hm-space-subtitle-smalltitle:80px;' in tokens,
+            'small-to-content remains 40px': '--hm-subtitle-to-content:40px;' in tokens and '--hm-space-subtitle-content:40px;' in tokens,
+            '80px utility exists': '.hm-ds-subtitle-to-smalltitle{margin-top:var(--hm-subtitle-to-smalltitle)}' in spacing,
+            'standard small titles auto-map to 80px': '.voice-group-title' in spacing and '.sentiment-title' in spacing and 'var(--hm-subtitle-to-smalltitle)!important' in spacing,
+            'reuse proof stack uses 80px semantic utility': 'reuse-proof-stack hm-ds-subtitle-to-smalltitle' in reuse,
+            'reuse proof grid remains 40px content gap': 'reuse-proof-grid' in reuse,
+            'contract documented': '## Semantic title spacing contract' in readme and '--hm-subtitle-to-content:40px' in readme and '--hm-subtitle-to-smalltitle:80px' in readme,
+            'tokens cache bumped': 'tokens.css?v=20260907-7' in index,
+            'spacing cache bumped': 'spacing.css?v=20260907-4' in index,
+            'index cache bumped': 'index.css?v=20260907-11' in system,
+          }
+          # Ensure no design-system source accidentally reverts the semantic content gap to 80px.
+          checks['no 80px subtitle-content token'] = '--hm-subtitle-to-content:80px' not in tokens
+          failed=[]
+          for name,ok in checks.items():
+              print(('PASS' if ok else 'FAIL')+' - '+name)
+              if not ok: failed.append(name)
+          if failed:
+              print('FAILED:', ', '.join(failed)); sys.exit(1)
+          PY
+      - name: Commit and remove one-time workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/semantic-title-spacing-80-40.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Separate middle-to-small and small-to-content spacing"
+          git push
