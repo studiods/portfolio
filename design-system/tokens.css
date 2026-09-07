@@ -62,6 +62,7 @@
   --hm-space-micro:20px;
   --hm-space-component:40px;
   --hm-space-subtitle-content:40px;
+  --hm-space-subtitle-smalltitle:80px;
   --hm-space-subsection:100px;
   --hm-space-title-subsection:160px;
   --hm-space-section:200px;
@@ -83,6 +84,7 @@
   --hm-hero-description-width:32ch;
   --hm-hero-description-width-mobile:38ch;
   --hm-subtitle-to-content:40px;
+  --hm-subtitle-to-smalltitle:80px;
   --hm-title-to-subsection-gap:160px;
   --hm-section-head-to-subsection:160px;
   --hm-subsection-gap:100px;

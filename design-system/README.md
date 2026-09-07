@@ -216,3 +216,12 @@
 - semantic token은 `--hm-subtitle-to-content:40px`이며 utility는 `hm-ds-subtitle-to-content`를 사용한다.
 - 페이지별 `80px`, mobile `56px` 예외를 만들지 않는다. Reuse evidence grid, media grid 등 동일 의미의 간격은 이 token을 재사용한다.
 - 타이틀 자체의 설명문(`title → description`) 간격 `20px`, 큰 section title → subsection 간격 `160px`, subsection 간 간격 `100px`은 별개의 계층이므로 변경하지 않는다.
+
+
+## Semantic title spacing contract
+
+- 중타이틀(`--hm-type-subsection:42px`) → 소타이틀/그룹 타이틀(`--hm-type-group:28px`) 간격은 `--hm-subtitle-to-smalltitle:80px`을 사용한다.
+- 소타이틀/그룹 타이틀(`28px`) → 바로 아래 실제 콘텐츠/그래프/카드 간격은 `--hm-subtitle-to-content:40px`을 사용한다.
+- 두 간격은 서로 다른 semantic token이다. `40px` content gap을 중타이틀 → 소타이틀 관계에 재사용하지 않는다.
+- `hm-ds-subtitle-to-smalltitle`은 중타이틀 다음에 작은 타이틀 그룹 wrapper가 오는 경우 사용한다. 표준 direct sibling인 `hm-group-title`, `hm-ds-group-title`, `voice-group-title`, `sentiment-title`은 spacing foundation이 자동으로 80px을 적용한다.
+- Desktop/Mobile 모두 이 의미 관계는 동일하게 유지한다. 화면 폭 때문에 임의로 56px/40px 등으로 축소하지 않는다.
