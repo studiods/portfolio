@@ -176,23 +176,97 @@ html body.reuse-current .reuse-concern-chart .chart-legend{
 html body.reuse-current .reuse-concern-chart .chart-legend span{display:inline-flex!important;align-items:center!important;gap:var(--hm-space-14)!important}
 html body.reuse-current .reuse-concern-chart .chart-legend i{display:block!important;width:22px!important;height:2px!important;background:var(--c)!important}
 
-/* Reuse trust map — anxiety on the left, visible proof on the right. */
-html body.reuse-current .reuse-trust-map{
+/* 02.1 — magnitude dot plot. A common 0—100 scale makes independent survey percentages directly comparable. */
+html body.reuse-current .reuse-dot-plot{
   display:grid;
   width:100%;
-  border-top:1px solid var(--hm-line-default);
+  gap:0;
+  border-top:1px solid var(--hm-line-weak);
 }
-html body.reuse-current .reuse-trust-row{
+html body.reuse-current .reuse-dot-axis,
+html body.reuse-current .reuse-dot-row{
   display:grid;
-  grid-template-columns:minmax(220px,.8fr) 72px minmax(0,1.6fr);
+  grid-template-columns:minmax(220px,.72fr) minmax(0,1.8fr) 76px;
+  gap:var(--hm-space-20);
   align-items:center;
-  min-height:124px;
+}
+html body.reuse-current .reuse-dot-axis{min-height:42px;border-bottom:1px solid var(--hm-line-faint)}
+html body.reuse-current .reuse-dot-axis__scale{
+  display:flex;
+  justify-content:space-between;
+  color:var(--hm-text-tertiary);
+  font:400 10px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.reuse-current .reuse-dot-row{
+  min-height:92px;
   border-bottom:1px solid var(--hm-line-weak);
 }
-html body.reuse-current .reuse-trust-row__anxiety,
-html body.reuse-current .reuse-trust-row__proof{
+html body.reuse-current .reuse-dot-row__label{
+  color:var(--hm-text-secondary);
+  font:300 var(--hm-type-body)/1.45 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+html body.reuse-current .reuse-dot-row__track{
+  position:relative;
+  height:34px;
+  background:
+    linear-gradient(to right,transparent 0,transparent calc(50% - .5px),var(--hm-line-faint) calc(50% - .5px),var(--hm-line-faint) calc(50% + .5px),transparent calc(50% + .5px)),
+    linear-gradient(to right,var(--hm-line-default),var(--hm-line-default)) center/100% 1px no-repeat;
+}
+html body.reuse-current .reuse-dot-row__track::before,
+html body.reuse-current .reuse-dot-row__track::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:1px;
+  height:12px;
+  transform:translateY(-50%);
+  background:var(--hm-line-weak);
+}
+html body.reuse-current .reuse-dot-row__track::before{left:0}
+html body.reuse-current .reuse-dot-row__track::after{right:0}
+html body.reuse-current .reuse-dot-row__dot{
+  position:absolute;
+  top:50%;
+  left:calc(var(--value) * 1%);
+  width:16px;
+  height:16px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:var(--c,var(--hm-blue));
+  box-shadow:0 0 0 5px rgba(0,0,0,.72);
+}
+html body.reuse-current .reuse-dot-row__value{
+  color:#fff;
+  font:300 24px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-data-number);
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+
+/* 02.2 — three evidence forms in one row: proportion, paired requirements, qualitative evidence. */
+html body.reuse-current .reuse-evidence-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--hm-space-24);
+  width:100%;
+}
+html body.reuse-current .reuse-evidence-card{
+  display:flex;
+  min-width:0;
+  min-height:440px;
+  flex-direction:column;
+  padding:var(--hm-space-24) 0 0;
+  border-top:1px solid var(--hm-line-default);
+}
+html body.reuse-current .reuse-evidence-card.is-yellow{border-top-color:rgba(243,235,1,.55)}
+html body.reuse-current .reuse-evidence-card.is-blue{border-top-color:rgba(0,166,237,.55)}
+html body.reuse-current .reuse-evidence-card.is-neutral{border-top-color:var(--hm-line-strong)}
+html body.reuse-current .reuse-evidence-card h4{
   margin:0;
-  color:var(--hm-text-primary);
+  color:#fff;
   font-family:var(--hm-font-ko);
   font-size:var(--hm-type-group);
   font-weight:100;
@@ -200,20 +274,150 @@ html body.reuse-current .reuse-trust-row__proof{
   letter-spacing:var(--hm-track-group);
   word-break:keep-all;
 }
-html body.reuse-current .reuse-trust-row__anxiety{color:var(--hm-red)}
-html body.reuse-current .reuse-trust-row__proof{color:#fff}
-html body.reuse-current .reuse-trust-row__proof span{
-  display:block;
-  margin-top:8px;
+html body.reuse-current .reuse-evidence-card>p{
+  max-width:34ch;
+  margin:var(--hm-space-20) 0 0;
   color:var(--hm-text-body);
-  font-size:var(--hm-type-body);
-  font-weight:300;
-  line-height:1.55;
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
   letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
 }
-html body.reuse-current .reuse-trust-row__arrow{
+html body.reuse-current .reuse-evidence-ring{
+  width:min(82%,260px)!important;
+  margin:var(--hm-space-20) auto 0!important;
+  align-self:center;
+}
+html body.reuse-current .reuse-evidence-ring .pct{font-size:clamp(48px,4vw,64px)!important}
+html body.reuse-current .reuse-dual-stat{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0;
+  width:100%;
+  margin-top:auto;
+  border-top:1px solid var(--hm-line-weak);
+  border-bottom:1px solid var(--hm-line-weak);
+}
+html body.reuse-current .reuse-dual-stat>div{
+  min-width:0;
+  padding:var(--hm-space-24) var(--hm-space-20) var(--hm-space-24) 0;
+}
+html body.reuse-current .reuse-dual-stat>div+div{
+  padding-left:var(--hm-space-20);
+  border-left:1px solid var(--hm-line-weak);
+}
+html body.reuse-current .reuse-dual-stat strong{
+  display:block;
   color:var(--hm-blue);
-  font:300 34px/1 var(--hm-font-en);
+  font:300 clamp(58px,5vw,82px)/.95 var(--hm-font-en);
+  letter-spacing:var(--hm-track-data-number);
+  font-variant-numeric:tabular-nums;
+}
+html body.reuse-current .reuse-dual-stat span{
+  display:block;
+  margin-top:var(--hm-space-14);
+  color:var(--hm-text-secondary);
+  font:300 14px/1.45 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+html body.reuse-current .reuse-evidence-word{
+  display:flex;
+  min-height:210px;
+  align-items:flex-end;
+  margin-top:auto;
+  padding:var(--hm-space-24) 0;
+  border-top:1px solid var(--hm-line-weak);
+  border-bottom:1px solid var(--hm-line-weak);
+}
+html body.reuse-current .reuse-evidence-word strong{
+  color:#fff;
+  font:100 clamp(38px,3.7vw,58px)/1.06 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-section);
+  word-break:keep-all;
+}
+
+/* 02.3 — dual capsule transformation based on the canonical Himart circular journey grammar. */
+html body.reuse-current .reuse-dual-flow{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr);
+  gap:var(--hm-space-24);
+  width:100%;
+  align-items:center;
+}
+html body.reuse-current .reuse-flow-capsule{
+  position:relative;
+  min-width:0;
+  padding:56px var(--hm-space-32) var(--hm-space-32);
+  border:1px solid rgba(250,72,27,.7);
+  border-radius:180px;
+  background:#000;
+}
+html body.reuse-current .reuse-flow-capsule--solution{border-color:rgba(0,166,237,.82)}
+html body.reuse-current .reuse-flow-capsule__label{
+  position:absolute;
+  top:0;
+  left:50%;
+  width:max-content;
+  max-width:82%;
+  padding:0 var(--hm-space-14);
+  transform:translate(-50%,-50%);
+  background:#000;
+  color:var(--hm-red);
+  font:400 var(--hm-type-note)/1.35 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  text-align:center;
+  word-break:keep-all;
+}
+html body.reuse-current .reuse-flow-capsule--solution .reuse-flow-capsule__label{color:var(--hm-blue)}
+html body.reuse-current .reuse-flow-capsule__grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--hm-space-20);
+}
+html body.reuse-current .reuse-flow-circle{
+  display:flex;
+  min-width:0;
+  aspect-ratio:1/1;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(20px,2.4vw,32px);
+  border:1px solid var(--hm-line-default);
+  border-radius:50%;
+  text-align:center;
+  box-sizing:border-box;
+  container-type:inline-size;
+}
+html body.reuse-current .reuse-flow-circle>span{
+  color:var(--hm-red);
+  font:400 11px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.reuse-current .reuse-flow-capsule--solution .reuse-flow-circle>span{color:var(--hm-blue)}
+html body.reuse-current .reuse-flow-circle h4{
+  margin:clamp(10px,5cqi,16px) 0 0;
+  color:#fff;
+  font-family:var(--hm-font-ko);
+  font-size:clamp(16px,9.4cqi,24px);
+  font-weight:100;
+  line-height:1.22;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+html body.reuse-current .reuse-flow-circle p{
+  max-width:16ch!important;
+  margin:clamp(8px,4.5cqi,14px) 0 0!important;
+  color:var(--hm-text-body)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:clamp(11px,5.8cqi,14px)!important;
+  font-weight:300!important;
+  line-height:1.45!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.reuse-current .reuse-dual-flow__arrow{
+  color:var(--hm-blue);
+  font:100 52px/1 var(--hm-font-en);
   text-align:center;
 }
 
@@ -278,6 +482,8 @@ html body.reuse-current .sentiment-conclusion p{margin-top:var(--hm-title-descri
 
 @media(max-width:980px){
   html body.reuse-current .reuse-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.reuse-current .reuse-evidence-grid{grid-template-columns:1fr 1fr}
+  html body.reuse-current .reuse-evidence-card:last-child{grid-column:1/-1;min-height:320px}
 }
 @media(max-width:780px){
   html body.reuse-current .reuse-proof-stack{gap:var(--hm-space-80)}
@@ -293,17 +499,36 @@ html body.reuse-current .sentiment-conclusion p{margin-top:var(--hm-title-descri
   html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:var(--hm-subtitle-to-content)!important}
   html body.reuse-current .sentiment-conclusion.hm-ds-subsection-gap{margin-top:var(--hm-space-80)!important}
 
-  html body.reuse-current .reuse-trust-row{
-    grid-template-columns:1fr 28px;
-    gap:10px;
-    min-height:0;
-    padding:24px 0;
+  html body.reuse-current .reuse-dot-axis,
+  html body.reuse-current .reuse-dot-row{grid-template-columns:1fr 58px;gap:12px}
+  html body.reuse-current .reuse-dot-axis>span:first-child,
+  html body.reuse-current .reuse-dot-axis>span:last-child{display:none}
+  html body.reuse-current .reuse-dot-axis__scale{grid-column:1;grid-row:1}
+  html body.reuse-current .reuse-dot-row{padding:18px 0;min-height:0}
+  html body.reuse-current .reuse-dot-row__label{grid-column:1/-1;font-size:var(--hm-type-body-mobile)}
+  html body.reuse-current .reuse-dot-row__track{grid-column:1;grid-row:2}
+  html body.reuse-current .reuse-dot-row__value{grid-column:2;grid-row:2;font-size:20px}
+
+  html body.reuse-current .reuse-evidence-grid{grid-template-columns:1fr;gap:var(--hm-space-40)}
+  html body.reuse-current .reuse-evidence-card,
+  html body.reuse-current .reuse-evidence-card:last-child{grid-column:auto;min-height:0}
+  html body.reuse-current .reuse-evidence-card h4{font-size:var(--hm-type-group-mobile)}
+  html body.reuse-current .reuse-evidence-card>p{font-size:var(--hm-type-body-mobile)}
+  html body.reuse-current .reuse-dual-stat strong{font-size:clamp(52px,17vw,72px)}
+  html body.reuse-current .reuse-evidence-word{min-height:150px}
+  html body.reuse-current .reuse-evidence-word strong{font-size:var(--hm-type-section-mobile)}
+
+  html body.reuse-current .reuse-dual-flow{grid-template-columns:1fr;gap:var(--hm-space-32)}
+  html body.reuse-current .reuse-flow-capsule{
+    width:min(100%,340px);
+    margin-inline:auto;
+    padding:44px 18px 24px;
+    border-radius:120px;
   }
-  html body.reuse-current .reuse-trust-row__anxiety,
-  html body.reuse-current .reuse-trust-row__proof{font-size:var(--hm-type-group-mobile)}
-  html body.reuse-current .reuse-trust-row__arrow{grid-column:2;grid-row:1;font-size:24px}
-  html body.reuse-current .reuse-trust-row__proof{grid-column:1/-1;margin-top:8px}
-  html body.reuse-current .reuse-trust-row__proof span{font-size:var(--hm-type-body-mobile)}
+  html body.reuse-current .reuse-flow-capsule__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  html body.reuse-current .reuse-flow-circle{padding:16px}
+  html body.reuse-current .reuse-dual-flow__arrow{transform:rotate(90deg);font-size:40px}
+
   html body.reuse-current .reuse-research-callout h4{font-size:var(--hm-type-group-mobile)}
   html body.reuse-current .reuse-research-callout p{font-size:var(--hm-type-body-mobile)}
   html body.reuse-current .reuse-media-note{font-size:11px}
