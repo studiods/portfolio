@@ -219,6 +219,11 @@ html body.himart-page-body #live-main .hm-subhead > div,
 html body.himart-page-body #live-main .data-card-head > div{width:100%!important;margin:0!important;padding:0!important}
 html body.himart-page-body #live-main .hm-subhead + *,
 html body.himart-page-body #live-main .data-card-head + *{margin-top:var(--hm-subtitle-to-content)!important}
+
+/* Prototype explanation → media row uses the same shared 80px content rhythm. */
+html body.himart-page-body #live-main .hm-ds-prototype-grid + .hm-ds-media-grid{
+  margin-top:var(--hm-subtitle-to-content)!important;
+}
 html body.himart-page-body #live-main .hm-subtitle + .hm-subcopy,
 html body.himart-page-body #live-main .data-card-head h3 + .desc,
 html body.himart-page-body #live-main .narrative-title + .narrative-copy,
