@@ -1,13 +1,14 @@
-/* HIMART Design System v2.1 — foundation tokens
-   Canonical hierarchy is taken from the current himart.html production treatment. */
+/* HIMART Design System v2.2 — foundation tokens
+   Canonical hierarchy is taken from the current himart.html production treatment.
+   Semantic text contrast is owned here only; component/page layers consume these tokens and do not redefine them. */
 :root{
   --hm-bg-page:#000;
   --hm-bg-section:#000;
   --hm-text-primary:#fff;
   --hm-text-emphasis:rgba(255,255,255,.8);
   --hm-text-secondary:rgba(255,255,255,.6);
-  --hm-text-body:rgba(255,255,255,.5);
-  --hm-description-color:rgba(255,255,255,.5);
+  --hm-text-body:rgba(255,255,255,.5)!important;
+  --hm-description-color:var(--hm-text-body)!important;
   --hm-text-tertiary:rgba(255,255,255,.38);
   --hm-line-strong:rgba(255,255,255,.4);
   --hm-line-default:rgba(255,255,255,.24);
