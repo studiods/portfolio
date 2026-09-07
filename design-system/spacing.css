@@ -26,7 +26,7 @@
 .hm-ds-section-gap{margin-top:var(--hm-space-200)}
 .hm-ds-subsection-gap{margin-top:var(--hm-space-100)}
 .hm-ds-title-to-subsection{margin-top:var(--hm-space-160)}
-.hm-ds-subtitle-to-content{margin-top:var(--hm-space-80)}
+.hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}
 .hm-ds-rule{border-top:1px solid var(--hm-line-faint)}
 
 /* Major section boundary utility: 200px top / 100px bottom / final 200px bottom. */
@@ -38,7 +38,7 @@
   .hm-ds-section-gap{margin-top:var(--hm-space-120)}
   .hm-ds-subsection-gap{margin-top:var(--hm-space-80)}
   .hm-ds-title-to-subsection{margin-top:var(--hm-space-100)}
-  .hm-ds-subtitle-to-content{margin-top:56px}
+  .hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}
   .hm-ds-section-pad{padding:var(--hm-section-padding-top-mobile) 0 var(--hm-section-padding-bottom-mobile)}
   .hm-ds-section-pad:last-of-type{padding-bottom:var(--hm-section-padding-bottom-last-mobile)}
 }

@@ -198,7 +198,7 @@ html body.reuse-current .sentiment-conclusion p{margin-top:var(--hm-title-descri
 }
 @media(max-width:780px){
   html body.reuse-current .reuse-proof-stack{gap:var(--hm-space-80)}
-  html body.reuse-current .reuse-proof-grid{grid-template-columns:1fr!important;margin-top:56px!important}
+  html body.reuse-current .reuse-proof-grid{grid-template-columns:1fr!important;margin-top:var(--hm-subtitle-to-content)!important}
   html body.reuse-current .reuse-proof-grid .proof-item{min-height:0!important}
   html body.reuse-current .reuse-proof-grid .proof-item>strong{font-size:68px!important}
   html body.reuse-current .sentiment-graph{grid-template-columns:1fr!important}
@@ -207,6 +207,6 @@ html body.reuse-current .sentiment-conclusion p{margin-top:var(--hm-title-descri
   html body.reuse-current .number-pair{grid-template-columns:1fr!important;gap:var(--hm-space-24)!important}
   html body.reuse-current .number-panel{min-height:260px!important;padding:var(--hm-space-24)!important}
   html body.reuse-current .number-panel>strong{font-size:clamp(68px,20vw,100px)!important}
-  html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:56px!important}
+  html body.reuse-current .phone-gallery.hm-ds-subtitle-to-content{margin-top:var(--hm-subtitle-to-content)!important}
   html body.reuse-current .sentiment-conclusion.hm-ds-subsection-gap{margin-top:var(--hm-space-80)!important}
 }

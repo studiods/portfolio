@@ -208,3 +208,11 @@
 - 두 줄을 맞추기 위해 `line-clamp`, ellipsis, JS substring을 사용하지 않는다. 길어지면 authored copy 자체를 축약한다.
 - 설명은 `word-break:keep-all` + `text-wrap:pretty`를 사용해 문맥 단위로 자연스럽게 줄바꿈한다.
 - 현재 Reuse의 `voice-group-title` → evidence grid 간격은 기존 `--hm-subtitle-to-content` 규칙(Desktop 80px / Mobile 56px)을 그대로 유지한다. 40px 변경은 별도 승인 전까지 적용하지 않는다.
+
+
+## Subtitle → content spacing contract
+
+- 소타이틀/중간 타이틀 바로 아래의 실제 콘텐츠 시작 간격은 desktop/mobile 모두 `40px`로 통일한다.
+- semantic token은 `--hm-subtitle-to-content:40px`이며 utility는 `hm-ds-subtitle-to-content`를 사용한다.
+- 페이지별 `80px`, mobile `56px` 예외를 만들지 않는다. Reuse evidence grid, media grid 등 동일 의미의 간격은 이 token을 재사용한다.
+- 타이틀 자체의 설명문(`title → description`) 간격 `20px`, 큰 section title → subsection 간격 `160px`, subsection 간 간격 `100px`은 별개의 계층이므로 변경하지 않는다.
