@@ -235,21 +235,21 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
 html body.reuse-current .reuse-proof-map__arrow{
   display:flex;
   width:100%;
-  height:160px;
-  flex:0 0 160px;
+  height:120px;
+  flex:0 0 120px;
   align-items:center;
   justify-content:center;
 }
 html body.reuse-current .reuse-proof-map__arrow svg{
   display:block;
-  width:25%;
+  width:20%;
   height:48px;
   max-width:none;
   overflow:visible;
 }
 html body.reuse-current .reuse-proof-map__arrow polyline{
   fill:none;
-  stroke:rgba(255,255,255,.50);
+  stroke:rgba(255,255,255,.30);
   stroke-width:1;
   vector-effect:non-scaling-stroke;
   stroke-linecap:square;
@@ -273,7 +273,7 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
     font-size:clamp(18px,10cqi,24px)!important;
   }
   html body.reuse-current .reuse-proof-map__arrow svg{
-    width:25%;
+    width:20%;
     height:48px;
   }
 }
