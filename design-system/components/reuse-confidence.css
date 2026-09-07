@@ -282,19 +282,19 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
 /* 02.2 — focus-driven sequential confidence pulse. */
 @keyframes reuse-confidence-line-pulse{
   0%{border-color:var(--hm-line-default)}
-  60%{border-color:rgba(255,255,255,1)}
+  50%{border-color:rgba(255,255,255,.80)}
   100%{border-color:var(--hm-line-default)}
 }
 @keyframes reuse-confidence-trust-pulse{
   0%{background-color:rgba(0,166,237,0)}
-  70%{background-color:rgba(0,166,237,.20)}
+  50%{background-color:rgba(0,166,237,.20)}
   100%{background-color:rgba(0,166,237,0)}
 }
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
-  animation:reuse-confidence-line-pulse 1s linear 1;
+  animation:reuse-confidence-line-pulse 2s ease-in-out 1;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
-  animation:reuse-confidence-trust-pulse 1s linear 1;
+  animation:reuse-confidence-trust-pulse 2s ease-in-out 1;
 }
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
