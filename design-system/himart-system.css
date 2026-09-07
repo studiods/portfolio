@@ -194,7 +194,10 @@ html body.himart-page-body #live-main .hm-section-head .hm-section-desc{
   margin:var(--hm-title-description-gap) 0 0!important;
   padding:0!important;
 }
-html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area){
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
+  margin-top:var(--hm-title-to-subsection-gap)!important;
+}
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + :is(.data-list,.flow-area){
   margin-top:var(--hm-title-to-subsection-gap)!important;
   padding-top:0!important;
 }
