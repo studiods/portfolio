@@ -1,4 +1,4 @@
-# Quantitative SOURCE System v1.0
+# Quantitative SOURCE System v1.1
 
 적용 범위: Himart Design System을 사용하는 현재/신규 모든 Case Study 페이지.
 
@@ -8,6 +8,8 @@
 - 출처는 해당 데이터/그래프 영역의 **바로 다음 요소**에 배치한다.
 - 데이터 영역과 SOURCE 사이의 상단 간격은 PC/Mobile 모두 **32px 고정**이다.
 - SOURCE 영역 상단에는 공통 faint divider를 두고 divider와 텍스트 사이에는 14px을 둔다.
+- SOURCE 전체 텍스트는 PC/Mobile 모두 **12px**로 고정한다.
+- SOURCE 전체 텍스트 색상은 **White 40% (`rgba(255,255,255,.40)`)**로 고정한다.
 - 출처 문구는 반드시 리터럴 **`SOURCE -`** 로 시작한다. `SOURCE ·`, `출처 ·`, `SOURCE:` 등 다른 표기는 사용하지 않는다.
 - `SOURCE -` 뒤에는 실제 보고서·조사·백데이터·공개 기사·내부 문서명과 시점/버전을 가능한 한 구체적으로 명시한다.
 - 정확한 원 출처가 있는데 `내부 데이터`, `리서치 자료`처럼 뭉뚱그린 표현을 사용하지 않는다.
