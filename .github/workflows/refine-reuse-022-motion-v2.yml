@@ -1,0 +1,86 @@
+name: Refine Reuse 02.2 pulse timing
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-reuse-022-motion-v2.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply motion timing changes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('design-system/components/reuse-confidence.css')
+          c = p.read_text()
+          replacements = [
+              ('60%{border-color:rgba(255,255,255,1)}', '50%{border-color:rgba(255,255,255,.80)}'),
+              ('70%{background-color:rgba(0,166,237,.20)}', '50%{background-color:rgba(0,166,237,.20)}'),
+              ('animation:reuse-confidence-line-pulse 1s linear 1;', 'animation:reuse-confidence-line-pulse 2s ease-in-out 1;'),
+              ('animation:reuse-confidence-trust-pulse 1s linear 1;', 'animation:reuse-confidence-trust-pulse 2s ease-in-out 1;'),
+          ]
+          for old, new in replacements:
+              if old not in c:
+                  raise SystemExit(f'CSS marker missing: {old}')
+              c = c.replace(old, new, 1)
+          p.write_text(c)
+
+          p = Path('design-system/reuse-confidence-motion.js')
+          j = p.read_text()
+          for old, new in [
+              ('const STEP_DELAY = 700;', 'const STEP_DELAY = 1000;'),
+              ('const PULSE_DURATION = 1000;', 'const PULSE_DURATION = 2000;'),
+          ]:
+              if old not in j:
+                  raise SystemExit(f'JS marker missing: {old}')
+              j = j.replace(old, new, 1)
+          p.write_text(j)
+
+          p = Path('design-system/index.css')
+          i = p.read_text()
+          if './components/reuse-confidence.css?v=20260908-11' not in i:
+              raise SystemExit('component cache marker missing')
+          i = i.replace('HIMART Design System v4.3', 'HIMART Design System v4.4', 1)
+          i = i.replace('./components/reuse-confidence.css?v=20260908-11', './components/reuse-confidence.css?v=20260908-12', 1)
+          p.write_text(i)
+
+          p = Path('design-system/himart-system.css')
+          s = p.read_text()
+          if './index.css?v=20260908-38' not in s:
+              raise SystemExit('system cache marker missing')
+          s = s.replace('./index.css?v=20260908-38', './index.css?v=20260908-39', 1)
+          s = s.replace('HIMART Shared System v3.2', 'HIMART Shared System v3.3', 1)
+          p.write_text(s)
+
+          p = Path('himart-reuse.html')
+          h = p.read_text()
+          if './design-system/himart-system.css?v=20260908-43' not in h:
+              raise SystemExit('page css cache marker missing')
+          if './design-system/reuse-confidence-motion.js?v=20260908-1' not in h:
+              raise SystemExit('page js cache marker missing')
+          h = h.replace('./design-system/himart-system.css?v=20260908-43', './design-system/himart-system.css?v=20260908-44', 1)
+          h = h.replace('./design-system/reuse-confidence-motion.js?v=20260908-1', './design-system/reuse-confidence-motion.js?v=20260908-2', 1)
+          p.write_text(h)
+
+          assert '50%{border-color:rgba(255,255,255,.80)}' in c
+          assert '50%{background-color:rgba(0,166,237,.20)}' in c
+          assert 'reuse-confidence-line-pulse 2s ease-in-out 1' in c
+          assert 'reuse-confidence-trust-pulse 2s ease-in-out 1' in c
+          assert 'const STEP_DELAY = 1000;' in j
+          assert 'const PULSE_DURATION = 2000;' in j
+          assert './design-system/reuse-confidence-motion.js?v=20260908-2' in h
+          PY
+
+          rm -f .github/workflows/refine-reuse-022-motion-v2.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Refine Reuse 02.2 pulse timing"
+          git push
