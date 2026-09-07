@@ -182,7 +182,7 @@ html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + 
   html body.reuse-current .reuse-confidence-arrow{transform:rotate(90deg);font-size:26px}
 }
 
-/* 02.1 circular proof map v3 — grouped proof bands with cut labels. */
+/* 02.1 circular proof map v4 — unframed groups, responsive type, proportional arrow. */
 html body.reuse-current .reuse-proof-map{
   display:flex;
   width:100%;
@@ -190,38 +190,11 @@ html body.reuse-current .reuse-proof-map{
   align-items:center;
 }
 html body.reuse-current .reuse-proof-band{
-  position:relative;
   width:100%;
-  padding:52px 28px 28px;
-  border:1px solid;
-  border-radius:999px;
   box-sizing:border-box;
 }
-html body.reuse-current .reuse-proof-band--anxiety{
-  border-color:rgba(255,255,255,.40);
-}
-html body.reuse-current .reuse-proof-band--solution{
-  border-color:rgba(0,166,237,.40);
-}
 html body.reuse-current .reuse-proof-band__label{
-  position:absolute;
-  top:0;
-  left:50%;
-  transform:translate(-50%,-50%);
-  padding:0 14px;
-  background:#000;
-  font-family:var(--hm-font-ko);
-  font-size:12px;
-  font-weight:300;
-  line-height:1;
-  letter-spacing:var(--hm-track-note);
-  white-space:nowrap;
-}
-html body.reuse-current .reuse-proof-band--anxiety .reuse-proof-band__label{
-  color:rgba(255,255,255,.40);
-}
-html body.reuse-current .reuse-proof-band--solution .reuse-proof-band__label{
-  color:var(--hm-blue);
+  display:none;
 }
 html body.reuse-current .reuse-proof-band__nodes{
   display:grid;
@@ -237,6 +210,7 @@ html body.reuse-current .reuse-proof-map__node{
 html body.reuse-current .reuse-proof-map__node h4{
   max-width:16ch;
   margin:0;
+  font-size:clamp(18px,10cqi,24px)!important;
 }
 html body.reuse-current .reuse-proof-map__node--anxiety{
   opacity:1;
@@ -244,7 +218,6 @@ html body.reuse-current .reuse-proof-map__node--anxiety{
 html body.reuse-current .reuse-proof-map__node--anxiety h4{
   color:rgba(255,255,255,.60)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:24px!important;
   font-weight:100!important;
   line-height:1.22;
 }
@@ -256,7 +229,6 @@ html body.reuse-current .reuse-proof-map__node--solution{
 html body.reuse-current .reuse-proof-map__node--solution h4{
   color:var(--hm-blue)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:24px!important;
   font-weight:300!important;
   line-height:1.22;
 }
@@ -270,9 +242,9 @@ html body.reuse-current .reuse-proof-map__arrow{
 }
 html body.reuse-current .reuse-proof-map__arrow svg{
   display:block;
-  width:300px;
+  width:25%;
   height:48px;
-  max-width:80vw;
+  max-width:none;
   overflow:visible;
 }
 html body.reuse-current .reuse-proof-map__arrow polyline{
@@ -285,13 +257,8 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
 }
 @media(max-width:980px){
   html body.reuse-current .reuse-proof-band__nodes{gap:20px}
-  html body.reuse-current .reuse-proof-band{padding-left:22px;padding-right:22px}
 }
 @media(max-width:780px){
-  html body.reuse-current .reuse-proof-band{
-    padding:48px 20px 20px;
-    border-radius:56px;
-  }
   html body.reuse-current .reuse-proof-band__nodes{
     grid-template-columns:repeat(2,minmax(0,1fr));
     gap:18px;
@@ -302,12 +269,11 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
     aspect-ratio:1/1;
     padding:18px;
   }
-  html body.reuse-current .reuse-proof-map__node--anxiety h4,
-  html body.reuse-current .reuse-proof-map__node--solution h4{
-    font-size:clamp(18px,5.2vw,24px)!important;
+  html body.reuse-current .reuse-proof-map__node h4{
+    font-size:clamp(18px,10cqi,24px)!important;
   }
   html body.reuse-current .reuse-proof-map__arrow svg{
-    width:min(300px,74vw);
+    width:25%;
     height:48px;
   }
 }
