@@ -1,0 +1,50 @@
+name: Refresh Reuse table scale cache
+on:
+  push:
+    paths:
+      - '.github/workflows/reuse-table-scale-cache.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Refresh Reuse page cache and verify component
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('himart-reuse.html')
+          t=p.read_text()
+          t=t.replace('himart-system.css?v=20260907-30','himart-system.css?v=20260907-31')
+          p.write_text(t)
+
+          css=Path('design-system/components/reuse-confidence.css').read_text()
+          idx=Path('design-system/index.css').read_text()
+          system=Path('design-system/himart-system.css').read_text()
+          checks={
+            'desktop trust title 28px':'font-size:28px!important' in css,
+            'row height reduced to 100px':'min-height:100px' in css,
+            'vertical padding uses 14px token':'padding:var(--hm-space-14) var(--hm-space-32)' in css,
+            'mobile row remains fluid':'min-height:0;' in css,
+            'component cache v3':'reuse-confidence.css?v=20260907-3' in idx,
+            'index cache v25':'index.css?v=20260907-25' in system,
+            'reuse page cache v31':'himart-system.css?v=20260907-31' in p.read_text(),
+          }
+          for name,ok in checks.items():
+              print(('PASS' if ok else 'FAIL')+' - '+name)
+          if not all(checks.values()):
+              raise SystemExit(1)
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/reuse-table-scale-cache.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Apply Reuse trust table scale update"
+          git push
