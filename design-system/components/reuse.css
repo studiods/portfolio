@@ -420,9 +420,12 @@ html body.reuse-current .reuse-uncertainty-panel.is-anxiety .reuse-uncertainty-p
 html body.reuse-current .reuse-uncertainty-panel p{
   display:flex!important;
   flex-direction:column!important;
+  align-items:flex-end!important;
   gap:0!important;
+  width:100%!important;
   max-width:none!important;
   margin:auto 0 0!important;
+  text-align:right!important;
   color:var(--hm-blue)!important;
   font:300 var(--hm-type-comparison)/var(--hm-leading-group) var(--hm-font-ko)!important;
   letter-spacing:var(--hm-track-group)!important;
@@ -430,6 +433,8 @@ html body.reuse-current .reuse-uncertainty-panel p{
 }
 html body.reuse-current .reuse-uncertainty-panel p span{
   display:block!important;
+  width:100%!important;
+  text-align:right!important;
 }
 html body.reuse-current .reuse-uncertainty-panel.is-anxiety p{
   color:var(--hm-red)!important;
