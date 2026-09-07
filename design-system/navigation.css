@@ -1,8 +1,12 @@
 @import url("./tracking.css?v=20260906-2");
-@import url("./components/editorial.css?v=20260907-9");
+@import url("./components/editorial.css?v=20260907-10");
 
-/* Final runtime bridge: supporting description text uses the canonical white 50% token. */
-html body.himart-page-body{--hm-description-color:rgba(255,255,255,.5)!important}
+/*
+  Navigation owns navigation only.
+  Supporting-copy contrast is defined exclusively in tokens.css;
+  editorial.css is reloaded here only as a final compatibility pass for legacy pages
+  that still load page-specific CSS after himart-system.css.
+*/
 
 /* Portfolio global navigation — canonical source based on index.html. */
 html body .top{
