@@ -1,0 +1,104 @@
+name: Align Reuse uncertainty copy bottom right
+on:
+  push:
+    paths:
+      - '.github/workflows/reuse-uncertainty-align.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Align uncertainty comparison copy
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('design-system/components/reuse.css')
+          t = p.read_text()
+          old = '''html body.reuse-current .reuse-uncertainty-panel p{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+  max-width:none!important;
+  margin:auto 0 0!important;'''
+          new = '''html body.reuse-current .reuse-uncertainty-panel p{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:auto 0 0!important;
+  text-align:right!important;'''
+          if old not in t:
+              raise SystemExit('target uncertainty paragraph rule not found')
+          t = t.replace(old, new, 1)
+          old_span = '''html body.reuse-current .reuse-uncertainty-panel p span{
+  display:block!important;
+}'''
+          new_span = '''html body.reuse-current .reuse-uncertainty-panel p span{
+  display:block!important;
+  width:100%!important;
+  text-align:right!important;
+}'''
+          if old_span not in t:
+              raise SystemExit('target uncertainty span rule not found')
+          t = t.replace(old_span, new_span, 1)
+          p.write_text(t)
+
+          p = Path('design-system/index.css')
+          t = p.read_text()
+          t = t.replace('./components/reuse.css?v=20260907-18','./components/reuse.css?v=20260907-19')
+          p.write_text(t)
+
+          p = Path('design-system/himart-system.css')
+          t = p.read_text()
+          t = t.replace('./index.css?v=20260907-29','./index.css?v=20260907-30')
+          p.write_text(t)
+
+          p = Path('himart-reuse.html')
+          t = p.read_text()
+          t = t.replace('./design-system/himart-system.css?v=20260907-35','./design-system/himart-system.css?v=20260907-36')
+          p.write_text(t)
+          PY
+      - name: Verify alignment and cache chain
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          css=Path('design-system/components/reuse.css').read_text()
+          idx=Path('design-system/index.css').read_text()
+          syscss=Path('design-system/himart-system.css').read_text()
+          page=Path('himart-reuse.html').read_text()
+          checks={
+            'bottom placement remains': 'margin:auto 0 0!important' in css,
+            'right alignment': 'text-align:right!important' in css,
+            'flex end alignment': 'align-items:flex-end!important' in css,
+            'full width copy': 'width:100%!important' in css.split('html body.reuse-current .reuse-uncertainty-panel p{',1)[1].split('}',1)[0],
+            'all rows right aligned': 'html body.reuse-current .reuse-uncertainty-panel p span{\n  display:block!important;\n  width:100%!important;\n  text-align:right!important;' in css,
+            'reuse cache bumped': './components/reuse.css?v=20260907-19' in idx,
+            'system cache bumped': './index.css?v=20260907-30' in syscss,
+            'page cache bumped': './design-system/himart-system.css?v=20260907-36' in page,
+          }
+          failed=[]
+          for name,ok in checks.items():
+              print(('PASS' if ok else 'FAIL')+' - '+name)
+              if not ok: failed.append(name)
+          if failed:
+              sys.exit(1)
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/reuse-uncertainty-align.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Align Reuse uncertainty copy bottom right"
+          git push
