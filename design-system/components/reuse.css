@@ -352,10 +352,9 @@ html body.reuse-current .sentiment-conclusion p{margin-top:var(--hm-title-descri
 
 
 /* 01.2 — Trust / uncertainty comparison.
-   The two-column composition mirrors the transition-touchpoint graph:
+   Reuse the 01.3 transition-touchpoint semantic gradients:
    trust stays on the left in blue; uncertainty stays on the right in red.
-   Each semantic panel owns one 1px accent rule so the shared neutral divider
-   cannot flatten the meaning of the two sides. */
+   The comparison uses horizontal panels without a vertical divider. */
 html body.reuse-current .reuse-uncertainty-graph{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
@@ -364,34 +363,48 @@ html body.reuse-current .reuse-uncertainty-graph{
   margin-top:var(--hm-subtitle-to-content)!important;
   background:transparent!important;
 }
-html body.reuse-current .reuse-uncertainty-graph__title{
-  grid-column:1 / -1!important;
-  margin:0 0 var(--hm-space-40)!important;
-  color:#fff!important;
-  font:100 var(--hm-type-group)/1.3 var(--hm-font-ko)!important;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
-}
 html body.reuse-current .reuse-uncertainty-panel{
+  position:relative!important;
   display:flex!important;
   flex-direction:column!important;
   justify-content:space-between!important;
   min-width:0!important;
-  min-height:360px!important;
+  min-height:280px!important;
   margin:0!important;
-  padding:var(--hm-space-32) var(--hm-space-32) var(--hm-space-40)!important;
+  padding:var(--hm-space-28) var(--hm-space-32) var(--hm-space-32)!important;
   border:0!important;
-  border-top:1px solid var(--hm-line-default)!important;
+  border-top:1px solid var(--hm-blue)!important;
   background:transparent!important;
+  overflow:hidden!important;
 }
-html body.reuse-current .reuse-uncertainty-panel.is-trust{
-  border-top-color:var(--hm-blue)!important;
+html body.reuse-current .reuse-uncertainty-panel::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0 0 auto!important;
+  height:66.666%!important;
+  pointer-events:none!important;
+  background:linear-gradient(to bottom,
+    rgba(0,166,237,.128) 0%,
+    rgba(0,166,237,.0768) 44%,
+    rgba(0,166,237,.032) 70%,
+    transparent 100%)!important;
 }
 html body.reuse-current .reuse-uncertainty-panel.is-anxiety{
   border-top-color:var(--hm-red)!important;
 }
+html body.reuse-current .reuse-uncertainty-panel.is-anxiety::before{
+  background:linear-gradient(to bottom,
+    rgba(250,72,27,.128) 0%,
+    rgba(250,72,27,.0768) 44%,
+    rgba(250,72,27,.032) 70%,
+    transparent 100%)!important;
+}
 html body.reuse-current .reuse-uncertainty-panel + .reuse-uncertainty-panel{
-  border-left:1px solid var(--hm-line-faint)!important;
+  border-left:0!important;
+}
+html body.reuse-current .reuse-uncertainty-panel > *{
+  position:relative!important;
+  z-index:1!important;
 }
 html body.reuse-current .reuse-uncertainty-panel__label{
   display:block!important;
@@ -405,12 +418,18 @@ html body.reuse-current .reuse-uncertainty-panel.is-anxiety .reuse-uncertainty-p
   color:var(--hm-red)!important;
 }
 html body.reuse-current .reuse-uncertainty-panel p{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:8px!important;
   max-width:none!important;
   margin:auto 0 0!important;
   color:var(--hm-blue)!important;
-  font:100 var(--hm-type-subsection)/1.22 var(--hm-font-ko)!important;
-  letter-spacing:var(--hm-track-subsection)!important;
+  font:100 var(--hm-type-group)/1.35 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
+}
+html body.reuse-current .reuse-uncertainty-panel p span{
+  display:block!important;
 }
 html body.reuse-current .reuse-uncertainty-panel.is-anxiety p{
   color:var(--hm-red)!important;
@@ -420,17 +439,18 @@ html body.reuse-current .reuse-uncertainty-panel.is-anxiety p{
     grid-template-columns:1fr!important;
   }
   html body.reuse-current .reuse-uncertainty-panel{
-    min-height:280px!important;
-    padding:var(--hm-space-24) 0 var(--hm-space-32)!important;
+    min-height:220px!important;
+    padding:var(--hm-space-24) 0 var(--hm-space-24)!important;
   }
   html body.reuse-current .reuse-uncertainty-panel + .reuse-uncertainty-panel{
-    margin-top:var(--hm-space-24)!important;
+    margin-top:var(--hm-space-32)!important;
     border-left:0!important;
   }
   html body.reuse-current .reuse-uncertainty-panel__label{
     font-size:var(--hm-type-group-mobile)!important;
   }
   html body.reuse-current .reuse-uncertainty-panel p{
-    font-size:var(--hm-type-subsection-mobile)!important;
+    gap:6px!important;
+    font-size:var(--hm-type-group-mobile)!important;
   }
 }
