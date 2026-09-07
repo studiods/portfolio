@@ -30,6 +30,16 @@
   word-break:keep-all!important;
 }
 
+/* Evidence body copy contract: authored to fit within two lines; never clamp or ellipsize. */
+.hm-ds-evidence-stat>.proof-item p{
+  max-width:100%!important;
+  margin-top:var(--hm-space-24)!important;
+  font-size:var(--hm-type-body)!important;
+  line-height:1.5!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+}
+
 /*
   Numbered editorial list.
   Roman numeral and title share one baseline/size; supporting copy always sits below the title.

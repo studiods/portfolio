@@ -200,3 +200,11 @@
 - 카드 타이틀은 authored `<br>`로 줄을 고정하지 않고 `word-break:keep-all` + `text-wrap:pretty`로 문맥에 맞게 자연스럽게 줄바꿈한다.
 - evidence card는 `min-height`나 grid stretch로 빈 하단 영역을 만들지 않는다. 컨텐츠 실제 높이(`min-height:0`, `height:auto`, `align-self:start`)만 사용한다.
 - 동일한 `hm-ds-evidence-stat`를 사용하는 다른 case/영역도 위 규칙을 그대로 상속한다.
+
+
+## Evidence stat copy contract
+
+- `hm-ds-evidence-stat`의 설명 문구는 4-column desktop 카드 기준 최대 2줄 안에 들어오도록 짧게 작성한다.
+- 두 줄을 맞추기 위해 `line-clamp`, ellipsis, JS substring을 사용하지 않는다. 길어지면 authored copy 자체를 축약한다.
+- 설명은 `word-break:keep-all` + `text-wrap:pretty`를 사용해 문맥 단위로 자연스럽게 줄바꿈한다.
+- 현재 Reuse의 `voice-group-title` → evidence grid 간격은 기존 `--hm-subtitle-to-content` 규칙(Desktop 80px / Mobile 56px)을 그대로 유지한다. 40px 변경은 별도 승인 전까지 적용하지 않는다.
