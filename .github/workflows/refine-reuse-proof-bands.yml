@@ -1,0 +1,269 @@
+name: Refine Reuse 02.1 grouped proof circles
+on:
+  push:
+    paths:
+      - '.github/workflows/refine-reuse-proof-bands.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply grouped proof layout
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # HTML: restructure 02.1 as top group -> one centered arrow -> bottom group, and remove this section's source.
+          p = Path('himart-reuse.html')
+          t = p.read_text()
+          start = t.find('<div class="reuse-proof-map hm-ds-subtitle-to-content"')
+          if start < 0:
+              raise SystemExit('reuse proof map start not found')
+          source_start = t.find('\n<div class="hm-source hm-ds-source-note">SOURCE - 번개장터', start)
+          if source_start < 0:
+              raise SystemExit('02.1 source not found')
+          source_end = t.find('</div>', source_start)
+          if source_end < 0:
+              raise SystemExit('02.1 source end not found')
+          source_end += len('</div>')
+
+          replacement = '''<div class="reuse-proof-map hm-ds-subtitle-to-content" aria-label="중고가전의 불안 요소와 확인 가능한 해결 근거">
+  <section class="reuse-proof-band reuse-proof-band--anxiety" aria-label="불안 요소">
+    <span class="reuse-proof-band__label">불안 요소</span>
+    <div class="reuse-proof-band__nodes">
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>상품 상태가<br>설명과 다를 수 있다.</h4></div>
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>오래 쓸 수 있을지, 문제가 생기면 누가 책임지는지 불분명하다</h4></div>
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>무엇을 수리·점검했는지 알 수 없다</h4></div>
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>이전 사용 흔적과 청결·위생이 걱정된다</h4></div>
+    </div>
+  </section>
+
+  <div class="reuse-proof-map__arrow" aria-hidden="true">
+    <svg viewBox="0 0 400 32" preserveAspectRatio="xMidYMid meet"><polyline points="0,0 200,32 400,0"></polyline></svg>
+  </div>
+
+  <section class="reuse-proof-band reuse-proof-band--solution" aria-label="확인 가능한 근거">
+    <span class="reuse-proof-band__label">확인 가능한 근거</span>
+    <div class="reuse-proof-band__nodes">
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>실사진 · 상태 등급 ·<br>기능 검수</h4></div>
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>기능 점검 · 2년 무상 보증 사전 노출 · 하이마트 판매 · 배송 · 설치 · A/S 연결</h4></div>
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>상품화·검수 과정과<br>점검 기준 공개</h4></div>
+      <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>클리닝 · 세척<br>· 소독 과정 공개</h4></div>
+    </div>
+  </section>
+</div>'''
+          t = t[:start] + replacement + t[source_end:]
+          if './design-system/himart-system.css?v=20260907-38' not in t:
+              raise SystemExit('reuse page cache marker not found')
+          t = t.replace('./design-system/himart-system.css?v=20260907-38','./design-system/himart-system.css?v=20260907-39',1)
+          p.write_text(t)
+
+          # CSS: replace current proof-map rules with grouped pill outlines and one arrow.
+          p = Path('design-system/components/reuse-confidence.css')
+          c = p.read_text()
+          marker = '/* 02.1 circular proof map v1 */'
+          pos = c.find(marker)
+          if pos < 0:
+              raise SystemExit('proof map CSS marker not found')
+          c = c[:pos] + '''/* 02.1 circular proof map v2 — grouped uncertainty and proof bands. */
+html body.reuse-current .reuse-proof-map{
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  align-items:center;
+}
+html body.reuse-current .reuse-proof-band{
+  position:relative;
+  width:100%;
+  padding:52px 28px 28px;
+  border:1px solid;
+  border-radius:999px;
+  box-sizing:border-box;
+}
+html body.reuse-current .reuse-proof-band--anxiety{
+  border-color:rgba(255,255,255,.30);
+}
+html body.reuse-current .reuse-proof-band--solution{
+  border-color:var(--hm-blue);
+}
+html body.reuse-current .reuse-proof-band__label{
+  position:absolute;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--hm-font-ko);
+  font-size:10px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:var(--hm-track-note);
+  white-space:nowrap;
+}
+html body.reuse-current .reuse-proof-band--anxiety .reuse-proof-band__label{
+  color:rgba(255,255,255,.30);
+}
+html body.reuse-current .reuse-proof-band--solution .reuse-proof-band__label{
+  color:var(--hm-blue);
+}
+html body.reuse-current .reuse-proof-band__nodes{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:28px;
+  width:100%;
+  align-items:center;
+}
+html body.reuse-current .reuse-proof-map__node{
+  width:100%;
+  min-width:0;
+}
+html body.reuse-current .reuse-proof-map__node h4{
+  max-width:16ch;
+  margin:0;
+}
+html body.reuse-current .reuse-proof-map__node--anxiety{
+  opacity:.30;
+}
+html body.reuse-current .reuse-proof-map__node--anxiety h4{
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:24px!important;
+  font-weight:100!important;
+  line-height:1.22;
+}
+html body.reuse-current .reuse-proof-map__node--solution{
+  opacity:.60;
+  border-color:var(--hm-blue);
+  background:#000;
+}
+html body.reuse-current .reuse-proof-map__node--solution h4{
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:24px!important;
+  font-weight:300!important;
+  line-height:1.22;
+}
+html body.reuse-current .reuse-proof-map__arrow{
+  display:flex;
+  width:100%;
+  height:160px;
+  flex:0 0 160px;
+  align-items:center;
+  justify-content:center;
+}
+html body.reuse-current .reuse-proof-map__arrow svg{
+  display:block;
+  width:400px;
+  height:32px;
+  max-width:80vw;
+  overflow:visible;
+}
+html body.reuse-current .reuse-proof-map__arrow polyline{
+  fill:none;
+  stroke:rgba(255,255,255,.30);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
+@media(max-width:980px){
+  html body.reuse-current .reuse-proof-band__nodes{gap:20px}
+  html body.reuse-current .reuse-proof-band{padding-left:22px;padding-right:22px}
+}
+@media(max-width:780px){
+  html body.reuse-current .reuse-proof-band{
+    padding:48px 20px 20px;
+    border-radius:56px;
+  }
+  html body.reuse-current .reuse-proof-band__nodes{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+  }
+  html body.reuse-current .reuse-proof-map__node{
+    width:100%;
+    height:auto;
+    aspect-ratio:1/1;
+    padding:18px;
+  }
+  html body.reuse-current .reuse-proof-map__node--anxiety h4,
+  html body.reuse-current .reuse-proof-map__node--solution h4{
+    font-size:clamp(18px,5.2vw,24px)!important;
+  }
+  html body.reuse-current .reuse-proof-map__arrow svg{
+    width:min(400px,76vw);
+    height:32px;
+  }
+}
+'''
+          p.write_text(c)
+
+          # Cache chain.
+          p = Path('design-system/index.css')
+          i = p.read_text()
+          if './components/reuse-confidence.css?v=20260907-6' not in i:
+              raise SystemExit('reuse-confidence cache marker not found')
+          i = i.replace('HIMART Design System v3.8','HIMART Design System v3.9',1)
+          i = i.replace('./components/reuse-confidence.css?v=20260907-6','./components/reuse-confidence.css?v=20260907-7',1)
+          p.write_text(i)
+
+          p = Path('design-system/himart-system.css')
+          s = p.read_text()
+          if './index.css?v=20260907-33' not in s:
+              raise SystemExit('index cache marker not found')
+          s = s.replace('./index.css?v=20260907-33','./index.css?v=20260907-34',1)
+          s = s.replace('HIMART Shared System v2.7','HIMART Shared System v2.8',1)
+          p.write_text(s)
+          PY
+
+      - name: Verify grouped proof layout
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          h = Path('himart-reuse.html').read_text()
+          c = Path('design-system/components/reuse-confidence.css').read_text()
+          i = Path('design-system/index.css').read_text()
+          s = Path('design-system/himart-system.css').read_text()
+          block = h.split('<div class="reuse-proof-map hm-ds-subtitle-to-content"',1)[1].split('</article>',1)[0]
+          checks = {
+            'single arrow': block.count('class="reuse-proof-map__arrow"') == 1,
+            'arrow 400x32': 'viewBox="0 0 400 32"' in block and 'width:400px;' in c and 'height:32px;' in c,
+            'arrow white 30': 'stroke:rgba(255,255,255,.30);' in c,
+            'top pill label': '>불안 요소</span>' in block,
+            'bottom pill label': '>확인 가능한 근거</span>' in block,
+            'labels 10px': 'font-size:10px;' in c,
+            'top pill white 30': 'border-color:rgba(255,255,255,.30);' in c,
+            'bottom pill blue': 'reuse-proof-band--solution' in c and 'border-color:var(--hm-blue);' in c,
+            'top circles opacity 30': 'reuse-proof-map__node--anxiety{\n  opacity:.30;' in c,
+            'bottom circles opacity 60': 'reuse-proof-map__node--solution{\n  opacity:.60;' in c,
+            'bottom text light 24': 'font-size:24px!important;' in c and 'font-weight:300!important;' in c,
+            'first solution linebreak': '실사진 · 상태 등급 ·<br>기능 검수' in block,
+            'third solution linebreak': '상품화·검수 과정과<br>점검 기준 공개' in block,
+            'fourth solution linebreak': '클리닝 · 세척<br>· 소독 과정 공개' in block,
+            'two-year warranty preserved': '2년 무상 보증 사전 노출' in block,
+            '02.1 source removed': 'SOURCE - 번개장터 안전거래 조사' not in block,
+            'component cache': './components/reuse-confidence.css?v=20260907-7' in i,
+            'system cache': './index.css?v=20260907-34' in s,
+            'page cache': './design-system/himart-system.css?v=20260907-39' in h,
+          }
+          failed=[]
+          for name, ok in checks.items():
+              print(('PASS' if ok else 'FAIL') + ' - ' + name)
+              if not ok: failed.append(name)
+          if failed:
+              sys.exit('Verification failed: ' + ', '.join(failed))
+          PY
+
+      - name: Commit and clean workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/refine-reuse-proof-bands.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Group Reuse 02.1 proof circles with single arrow"
+          git push
