@@ -8,8 +8,8 @@
   if (!nodes.length) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const STEP_DELAY = 1000;
-  const PULSE_DURATION = 2000;
+  const STEP_DELAY = 450;
+  const PULSE_DURATION = 1500;
   const CYCLE_PAUSE = 1500;
   const CYCLE_DURATION = ((nodes.length - 1) * STEP_DELAY) + PULSE_DURATION + CYCLE_PAUSE;
   const STANDARD_CLASS = 'is-flow-pulse-standard';
