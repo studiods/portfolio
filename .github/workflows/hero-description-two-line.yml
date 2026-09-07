@@ -1,0 +1,129 @@
+name: Enforce two-line hero description contract
+on:
+  push:
+    paths:
+      - '.github/workflows/hero-description-two-line.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Shorten Himart hero description and register design-system contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          short_html = '고객 인식과 실제 이용 흐름을 확인해,<br>구매 여정을 다시 정의했습니다.'
+
+          # 1) Source HTML and runtime must own the exact same two-line copy.
+          p = Path('himart.html')
+          t = p.read_text()
+          t = re.sub(
+              r'(<p class="hm-lead hm-ds-hero__description">).*?(</p>)',
+              lambda m: m.group(1) + short_html + m.group(2),
+              t,
+              count=1,
+              flags=re.S,
+          )
+          t = t.replace('test-content-final.js?v=20260905-2', 'test-content-final.js?v=20260907-1')
+          p.write_text(t)
+
+          p = Path('design-system/test-content-final.js')
+          t = p.read_text()
+          t = re.sub(
+              r"html\(lead,\s*'[^']*'\);",
+              "html(lead, '" + short_html + "');",
+              t,
+              count=1,
+          )
+          p.write_text(t)
+
+          # 2) Put the rule in the Hero owner itself without introducing truncation CSS.
+          p = Path('design-system/components/hero.css')
+          t = p.read_text()
+          marker = 'html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{'
+          note = '''/* Hero description authoring contract:\n   - maximum two rendered lines on desktop and mobile;\n   - if copy would become three or more lines, shorten the authored sentence itself;\n   - never enforce the limit with line-clamp, ellipsis, fixed height or hidden overflow. */\n'''
+          if note not in t:
+              t = t.replace(marker, note + marker, 1)
+          p.write_text(t)
+
+          # 3) Replace the old natural-wrap-only documentation with the stronger two-line rule.
+          p = Path('design-system/README.md')
+          t = p.read_text()
+          old = '- Hero description은 고정 2줄/3줄 clamp를 사용하지 않는다. `word-break:keep-all` + `text-wrap:pretty`로 문맥에 가까운 자연 줄바꿈을 사용한다.'
+          new = '''- Hero description은 Desktop/Mobile 모두 **최대 2줄**이다. 3줄 이상으로 보이면 CSS로 숨기지 않고 원문 copy 자체를 축약한다.\n- Hero description의 2줄 제한을 위해 `line-clamp`, `text-overflow:ellipsis`, 고정 높이, `overflow:hidden`을 사용하지 않는다. 두 줄 안에서 `word-break:keep-all` + `text-wrap:pretty`를 사용하며, 의미 단위가 분명할 때 한 개의 `<br>`만 허용한다.\n- HTML의 초기 Hero description과 content runtime이 교체하는 Hero description은 동일한 문장을 사용해 로딩 전후 줄 수와 위치가 바뀌지 않게 한다.'''
+          if old in t:
+              t = t.replace(old, new, 1)
+          elif 'Hero description은 Desktop/Mobile 모두 **최대 2줄**' not in t:
+              anchor = '## Text integrity / wrapping contract\n\n'
+              t = t.replace(anchor, anchor + new + '\n', 1)
+          p.write_text(t)
+
+          # 4) QA contract.
+          p = Path('design-system/qa-matrix.md')
+          t = p.read_text()
+          heading = '## Hero description 2-line 회귀 확인 (2026-09-07)'
+          if heading not in t:
+              t += '''\n\n## Hero description 2-line 회귀 확인 (2026-09-07)\n\n- 모든 case Hero의 설명은 Desktop/Mobile에서 최대 2줄을 목표로 작성한다.\n- 3줄 이상이 필요한 문장은 UI에서 자르지 않고 copy를 축약한다.\n- `line-clamp`, ellipsis, fixed-height clipping으로 2줄처럼 보이게 만들지 않는다.\n- `himart.html` 초기 Hero copy와 `test-content-final.js` runtime copy는 동일해야 한다.\n- Hero description 내부 강제 줄바꿈은 의미 단위 기준 최대 1개의 `<br>`만 허용한다.\n- Reuse / Ways / Stepup 등 기존 case Hero description도 짧은 원문 전체를 노출해야 한다.\n'''
+              p.write_text(t)
+          PY
+      - name: Cross-check hero copy contract
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, sys
+
+          expected = '고객 인식과 실제 이용 흐름을 확인해,<br>구매 여정을 다시 정의했습니다.'
+          h = Path('himart.html').read_text()
+          r = Path('design-system/test-content-final.js').read_text()
+          hero = Path('design-system/components/hero.css').read_text()
+          readme = Path('design-system/README.md').read_text()
+          qa = Path('design-system/qa-matrix.md').read_text()
+
+          checks = {
+            'source copy exact': expected in h,
+            'runtime copy exact': expected in r,
+            'source/runtime cache bumped': 'test-content-final.js?v=20260907-1' in h,
+            'one explicit break only': expected.count('<br>') == 1,
+            'hero owner documents max two lines': 'maximum two rendered lines' in hero,
+            'no clamp added for hero': '-webkit-line-clamp:2' not in hero and 'line-clamp:2' not in hero,
+            'no ellipsis added for hero': 'text-overflow:ellipsis' not in hero.replace(' ',''),
+            'design-system contract documented': 'Desktop/Mobile 모두 **최대 2줄**' in readme,
+            'qa contract documented': 'Hero description 2-line 회귀 확인' in qa,
+          }
+
+          # Current case hero descriptions are intentionally short; no authored hero description may contain >1 <br>.
+          for file in ['himart.html','himart-reuse.html','himart-ways.html','nbt_stepup.html']:
+              s = Path(file).read_text()
+              m = re.search(r'<p class="[^"]*hm-lead[^"]*"[^>]*>(.*?)</p>', s, re.S)
+              checks[file + ' hero found'] = bool(m)
+              if m:
+                  raw = m.group(1)
+                  plain = re.sub(r'<[^>]+>', '', raw)
+                  checks[file + ' <=1 forced break'] = raw.count('<br>') <= 1
+                  checks[file + ' concise authored copy'] = len(re.sub(r'\s+', '', plain)) <= 44
+
+          failed = [name for name, ok in checks.items() if not ok]
+          for name, ok in checks.items():
+              print(('PASS' if ok else 'FAIL') + ' - ' + name)
+          if failed:
+              print('FAILED:', ', '.join(failed))
+              sys.exit(1)
+          PY
+          node --check design-system/test-content-final.js
+      - name: Commit and remove one-time workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/hero-description-two-line.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Enforce two-line Hero description copy contract"
+          git push
