@@ -1,17 +1,11 @@
 /*
-  HIMART Editorial Restraint v1.8
+  HIMART Editorial Restraint v1.9
   Small English eyebrow/kicker labels are optional, not a default decoration.
   Quantitative evidence always carries a standardized source note.
-*/
 
-/*
-  Canonical supporting-copy token authority.
-  All non-hero explanatory copy uses white 50%. Hero copy keeps its own treatment.
-  !important is intentional here because legacy case bundles still redefine the same custom property.
+  Supporting-copy contrast is NOT defined here.
+  `tokens.css` is the single authority for --hm-text-body / --hm-description-color.
 */
-html body.himart-page-body{
-  --hm-description-color:rgba(255,255,255,.50)!important;
-}
 
 /* Default: suppress decorative English eyebrow labels. */
 html body.himart-page-body #live-main :is(.hm-eyebrow,.hm-ds-eyebrow,[data-hm-eyebrow]){
@@ -45,8 +39,8 @@ html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
 
 /*
   Canonical non-hero supporting-description contract.
-  The selector deliberately starts below #live-main and does NOT include .hm-lead,
-  so Hero description copy is excluded. Semantic titles, data values, SOURCE notes,
+  All explanatory copy consumes --hm-description-color from tokens.css.
+  Hero copy is intentionally excluded. Semantic titles, data values, SOURCE notes,
   chart labels and intentional blue/red comparison text keep their own roles.
 
   Use color alpha, never element opacity, so nested content is not dimmed twice.
@@ -120,8 +114,6 @@ html body.himart-page-body #live-main :is(
   border-top:1px solid var(--hm-line-faint)!important;
   background:transparent!important;
   color:rgba(255,255,255,.30)!important;
-  -webkit-text-fill-color:rgba(255,255,255,.30)!important;
-  opacity:1!important;
   font-family:var(--hm-font-ko)!important;
   font-size:10px!important;
   font-weight:300!important;
@@ -143,8 +135,6 @@ html body.himart-page-body #live-main :is(
     margin-top:32px!important;
     padding-top:14px!important;
     color:rgba(255,255,255,.30)!important;
-    -webkit-text-fill-color:rgba(255,255,255,.30)!important;
-    opacity:1!important;
     font-size:10px!important;
     line-height:1.5!important;
   }
