@@ -1,0 +1,82 @@
+name: Finalize scramble v3
+on:
+  push:
+    paths:
+      - '.github/workflows/scramble-v3-finalize.yml'
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Refresh scramble cache references
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          changed=[]
+          for p in Path('.').glob('*.html'):
+              t=p.read_text()
+              nt=re.sub(r'(?<=scramble-final\.js\?v=)[A-Za-z0-9._-]+','20260907-3',t)
+              if nt!=t:
+                  p.write_text(nt)
+                  changed.append(str(p))
+          print('UPDATED HTML:', ', '.join(changed) if changed else 'none')
+
+          p=Path('design-system/README.md')
+          t=p.read_text()
+          heading='## Scramble motion contract'
+          block='''\n\n## Scramble motion contract\n\n- `scramble-final.js`가 Himart 계열 Hero/major section title의 난수 애니메이션을 단독 소유한다. 페이지별 난수 runtime을 추가하지 않는다.\n- 원본 HTML(`br`, inline span 포함)을 animation 시작 전에 immutable source로 캡처한다.\n- 애니메이션 중 각 글자는 독립된 `hm-scramble-char` 단위로 난수를 표시하며 왼쪽에서 오른쪽 순서로 원래 글자로 resolve된다.\n- 한 번 원래 글자로 resolve된 문자는 다시 난수로 돌아가지 않는다.\n- 마지막 글자가 resolve된 다음 frame에 원본 HTML을 복원한다. 따라서 종료 순간 전체 문장이 갑자기 교체되어 보이면 안 된다.\n- title animation은 page lifecycle당 1회만 실행한다. 스크롤로 화면을 벗어났다가 재진입해도 다시 난수화하지 않는다.\n- visibilitychange/pagehide/error/중단 상황에서는 현재 난수 문자를 모두 원래 문자로 settle한 뒤 원본 HTML을 복원한다. 랜덤 glyph가 정지 화면으로 남는 상태를 허용하지 않는다.\n- 다른 runtime이 animation 중 title DOM을 교체하면 detached scramble span은 더 이상 DOM을 쓰지 않으며, 새 authored DOM을 우선한다.\n'''
+          if heading not in t:
+              t += block
+          else:
+              start=t.index(heading)
+              nxt=t.find('\n## ',start+len(heading))
+              if nxt<0: t=t[:start]+block.lstrip('\n')+'\n'
+              else: t=t[:start]+block.lstrip('\n')+'\n'+t[nxt+1:]
+          p.write_text(t)
+          PY
+      - name: Cross-check runtime invariants
+        shell: bash
+        run: |
+          node --check design-system/scramble-final.js
+          python - <<'PY'
+          from pathlib import Path
+          import re,sys
+          js=Path('design-system/scramble-final.js').read_text()
+          reuse=Path('himart-reuse.html').read_text()
+          pages=[p for p in Path('.').glob('*.html') if 'scramble-final.js' in p.read_text()]
+          checks={
+            'per-char spans': "hm-scramble-char" in js,
+            'immutable original HTML': 'originalHTML' in js and 'restoreAuthoredHTML' in js,
+            'resolved char lock': "dataset.hmResolved === '1'" in js,
+            'last char settles before restore': 'resolved === count' in js and 'settle(element, false)' in js,
+            'runs once': 'observer.unobserve(element)' in js and 'state?.completed' in js,
+            'no scroll re-arm listener': "addEventListener('scroll'" not in js and 'addEventListener("scroll"' not in js,
+            'interrupt settle': 'finishAll' in js and 'visibilitychange' in js and 'pagehide' in js,
+            'reuse authored title present': '신뢰 경험으로 문제를 확장했습니다.' in reuse,
+            'reuse cache v3': 'scramble-final.js?v=20260907-3' in reuse,
+            'all scramble pages cache v3': all('scramble-final.js?v=20260907-3' in p.read_text() for p in pages),
+            'README contract': 'Scramble motion contract' in Path('design-system/README.md').read_text(),
+          }
+          failed=[]
+          for k,v in checks.items():
+              print(('PASS' if v else 'FAIL')+' - '+k)
+              if not v: failed.append(k)
+          if failed:
+              print('FAILED:',', '.join(failed)); sys.exit(1)
+          print('SCRAMBLE PAGES:', len(pages))
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/scramble-v3-finalize.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Finalize per-character scramble design-system contract"
+          git push
