@@ -371,7 +371,7 @@ html body.reuse-current .reuse-uncertainty-panel{
   min-width:0!important;
   min-height:360px!important;
   margin:0!important;
-  padding:var(--hm-space-32) var(--hm-space-36) var(--hm-space-40)!important;
+  padding:var(--hm-space-32) var(--hm-space-32) var(--hm-space-40)!important;
   border:0!important;
   border-top:1px solid var(--hm-line-default)!important;
   background:transparent!important;
