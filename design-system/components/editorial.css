@@ -1,0 +1,35 @@
+/*
+  HIMART Editorial Restraint v1.0
+  Small English eyebrow/kicker labels are optional, not a default decoration.
+  Use them only when they carry necessary structure or provenance.
+*/
+
+/* Default: suppress decorative English eyebrow labels. */
+html body.himart-page-body #live-main :is(.hm-eyebrow,.hm-ds-eyebrow,[data-hm-eyebrow]){
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* Explicit opt-in for a genuinely necessary eyebrow. */
+html body.himart-page-body #live-main :is(.hm-eyebrow,.hm-ds-eyebrow).hm-ds-eyebrow--required,
+html body.himart-page-body #live-main [data-hm-eyebrow="required"]{
+  display:block!important;
+  margin:0 0 var(--hm-space-14,14px)!important;
+  color:var(--hm-text-tertiary)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+
+/* Minimal evidence stat: number first. No decorative label above or compare-caption below. */
+html body.himart-page-body #live-main .hm-ds-evidence-stat :is(.proof-label,.proof-compare){
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.himart-page-body #live-main .hm-ds-evidence-stat .proof-item>strong{
+  margin-top:0!important;
+}
