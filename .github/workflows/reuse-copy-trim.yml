@@ -1,0 +1,54 @@
+name: Trim Reuse comparison copy
+on:
+  push:
+    paths:
+      - '.github/workflows/reuse-copy-trim.yml'
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove redundant Reuse comparison copy
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('himart-reuse.html')
+          t=p.read_text()
+          t=t.replace('금전적 위험을 제외해도 불안은 상품 상태·내구성·위생·사후 책임에 남았습니다. 구매 전 확인할 수 있는 요소로 나눴습니다.','금전적 위험을 제외해도 불안은 상품 상태·내구성·위생·사후 책임에 남았습니다.')
+          t=t.replace('<span>→ 확인할 수 있어야 구매를 판단합니다.</span>','')
+          t=t.replace('<span>→ 확인할 수 없을수록 구매를 망설입니다.</span>','')
+          p.write_text(t)
+          PY
+      - name: Verify
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          t=Path('himart-reuse.html').read_text()
+          checks={
+            'trust arrow sentence removed':'→ 확인할 수 있어야 구매를 판단합니다.' not in t,
+            'anxiety arrow sentence removed':'→ 확인할 수 없을수록 구매를 망설입니다.' not in t,
+            'summary tail removed':'구매 전 확인할 수 있는 요소로 나눴습니다.' not in t,
+            'summary core retained':'금전적 위험을 제외해도 불안은 상품 상태·내구성·위생·사후 책임에 남았습니다.' in t,
+          }
+          failed=[]
+          for name,ok in checks.items():
+            print(('PASS' if ok else 'FAIL')+' - '+name)
+            if not ok: failed.append(name)
+          if failed: sys.exit(1)
+          PY
+      - name: Commit and remove workflow
+        shell: bash
+        run: |
+          rm -f .github/workflows/reuse-copy-trim.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Trim redundant Reuse comparison copy"
+          git push
