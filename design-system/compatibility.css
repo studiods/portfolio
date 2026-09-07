@@ -4,7 +4,7 @@
    Remove selectors gradually as the HTML is migrated to hm-ds-* classes. */
 .himart-movie-page,.himart-movie-page #live-main{background:var(--hm-bg-page);color:var(--hm-text-primary)}
 .himart-movie-page .hm-title,.himart-movie-page .hm-section-title,.himart-movie-page .hm-subtitle,.himart-movie-page .journey-block-title{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:-.045em}
-.himart-movie-page .hm-section-desc,.himart-movie-page .hm-subcopy,.himart-movie-page .narrative-copy,.himart-movie-page .problem-item p,.himart-movie-page .proof-item p,.himart-movie-page .signal-item p,.himart-movie-page .role-card p{font-family:var(--hm-font-ko);font-weight:300;color:var(--hm-text-body)}
+.himart-movie-page .hm-section-desc,.himart-movie-page .hm-subcopy,.himart-movie-page .narrative-copy,.himart-movie-page .problem-item p,.himart-movie-page .proof-item p,.himart-movie-page .signal-item p,.himart-movie-page .role-card p{font-family:var(--hm-font-ko);font-weight:300;color:var(--hm-description-color)}
 .himart-movie-page .hm-section-no,.himart-movie-page .hm-subno,.himart-movie-page .hm-role-name{font-family:var(--hm-font-en);color:var(--hm-blue)}
 .himart-movie-page .hm-meta{border-color:var(--hm-line-default)}
 .himart-movie-page .hm-meta span{color:var(--hm-text-secondary)}
@@ -30,7 +30,7 @@
     html body.himart-movie-page #live-main #journey .journey-role-grid h4,
     html body.himart-movie-page #live-main #journey .role-grid h4{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:28px!important;line-height:1.25!important;font-weight:100!important;letter-spacing:-.045em!important}
     html body.himart-movie-page #live-main #journey .journey-role-grid p,
-    html body.himart-movie-page #live-main #journey .role-grid p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.55!important;font-weight:300!important;color:rgba(255,255,255,.5)!important}
+    html body.himart-movie-page #live-main #journey .role-grid p{font-family:Pretendard,var(--hm-ko),sans-serif!important;font-size:16px!important;line-height:1.55!important;font-weight:300!important;color:var(--hm-description-color)!important;opacity:1!important}
     html body.himart-movie-page #live-main #journey .journey-role-grid small,
     html body.himart-movie-page #live-main #journey .role-grid .hm-role-name{font-family:'Averta PE',sans-serif!important;font-weight:400!important}
     html body.himart-movie-page #live-main .hm-movie-hero .hm-meta span{color:rgba(255,255,255,.5)!important}
