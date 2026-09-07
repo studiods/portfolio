@@ -364,6 +364,14 @@ html body.reuse-current .reuse-uncertainty-graph{
   margin-top:var(--hm-subtitle-to-content)!important;
   background:transparent!important;
 }
+html body.reuse-current .reuse-uncertainty-graph__title{
+  grid-column:1 / -1!important;
+  margin:0 0 var(--hm-space-40)!important;
+  color:#fff!important;
+  font:100 var(--hm-type-group)/1.3 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
 html body.reuse-current .reuse-uncertainty-panel{
   display:flex!important;
   flex-direction:column!important;
