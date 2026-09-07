@@ -1,0 +1,93 @@
+@import url("../tokens.css");
+@import url("../typography.css");
+@import url("../spacing.css");
+
+/* HIMART Design System — Table component
+   Tables use horizontal rules only. Vertical divider lines are prohibited.
+   A page may define its own semantic column widths through --hm-table-columns. */
+.hm-ds-table{
+  display:block;
+  width:100%;
+  border-top:1px solid var(--hm-line-default);
+  background:transparent;
+}
+.hm-ds-table__head,
+.hm-ds-table__row{
+  display:grid;
+  grid-template-columns:var(--hm-table-columns,repeat(2,minmax(0,1fr)));
+  width:100%;
+  min-width:0;
+  border-bottom:1px solid var(--hm-line-weak);
+}
+.hm-ds-table__head{
+  min-height:54px;
+  align-items:center;
+}
+.hm-ds-table__row{
+  min-height:132px;
+  align-items:stretch;
+}
+.hm-ds-table__cell,
+.hm-ds-table__bridge{
+  min-width:0;
+  border-left:0;
+  border-right:0;
+  box-sizing:border-box;
+}
+.hm-ds-table__cell{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:var(--hm-space-24) 0;
+}
+.hm-ds-table__head .hm-ds-table__cell{
+  padding:var(--hm-space-14) 0;
+  color:var(--hm-text-secondary);
+  font:400 var(--hm-type-note)/1.35 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-note);
+}
+.hm-ds-table__bridge{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 var(--hm-space-14);
+}
+.hm-ds-table__title{
+  margin:0;
+  color:var(--hm-text-primary);
+  font-family:var(--hm-font-ko);
+  font-size:var(--hm-type-group);
+  font-weight:100;
+  line-height:1.3;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+.hm-ds-table__body{
+  margin:var(--hm-space-14) 0 0;
+  color:var(--hm-text-body);
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+.hm-ds-table__meta{
+  display:block;
+  margin-top:var(--hm-space-14);
+  color:var(--hm-text-tertiary);
+  font:400 var(--hm-type-note)/1.45 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+
+@media(max-width:780px){
+  .hm-ds-table--stack-mobile .hm-ds-table__head{display:none}
+  .hm-ds-table--stack-mobile .hm-ds-table__row{
+    grid-template-columns:1fr;
+    min-height:0;
+    padding:var(--hm-space-24) 0;
+  }
+  .hm-ds-table--stack-mobile .hm-ds-table__cell{padding:0}
+  .hm-ds-table--stack-mobile .hm-ds-table__bridge{padding:var(--hm-space-20) 0}
+  .hm-ds-table__title{font-size:var(--hm-type-group-mobile)}
+  .hm-ds-table__body{font-size:var(--hm-type-body-mobile)}
+  .hm-ds-table__meta{font-size:var(--hm-type-note-mobile)}
+}
