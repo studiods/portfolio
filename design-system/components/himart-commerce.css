@@ -6,7 +6,7 @@
 
 /* Himart-only narrative synthesis treatment moved out of himart.html. */
 html body.himart-commerce-page .narrative-touchpoint-synthesis>h4{
-  font:100 42px/1.18 var(--hm-font-ko)!important;
+  font:100 var(--hm-type-subsection)/1.18 var(--hm-font-ko)!important;
   color:#fff!important;
 }
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card b{
@@ -16,7 +16,7 @@ html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card b
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.positive b{color:var(--hm-blue)!important}
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.negative b{color:var(--hm-red)!important}
 html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p{
-  font:300 24px/1.45 var(--hm-font-ko)!important;
+  font:300 var(--hm-type-card-title)/1.45 var(--hm-font-ko)!important;
   color:#fff!important;
 }
 
