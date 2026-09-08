@@ -64,6 +64,17 @@ html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution
   font-weight:300;
 }
 
+@property --reuse-confidence-title-color{
+  syntax:"<color>";
+  inherits:false;
+  initial-value:#fff;
+}
+@property --reuse-confidence-desc-color{
+  syntax:"<color>";
+  inherits:false;
+  initial-value:rgba(255,255,255,.60);
+}
+
 /* 02.2 — Reuse purchase journey with confidence moments inserted into the ordinary flow. */
 html body.reuse-current .reuse-confidence-flow{
   display:grid;
@@ -103,7 +114,8 @@ html body.reuse-current .reuse-confidence-node>span{
 }
 html body.reuse-current .reuse-confidence-node h4{
   margin:clamp(12px,6cqi,18px) 0 0;
-  color:#fff;
+  --reuse-confidence-title-color:#fff;
+  color:var(--reuse-confidence-title-color)!important;
   font-family:var(--hm-font-ko);
   font-size:clamp(18px,10cqi,26px);
   font-weight:300!important;
@@ -115,7 +127,8 @@ html body.reuse-current .reuse-confidence-node h4{
 html body.reuse-current .reuse-confidence-node p{
   max-width:17ch!important;
   margin:clamp(9px,5cqi,14px) 0 0!important;
-  color:var(--hm-description-color)!important;
+  --reuse-confidence-desc-color:var(--hm-description-color);
+  color:var(--reuse-confidence-desc-color)!important;
   font:300 clamp(11px,6cqi,14px)/1.45 var(--hm-font-ko)!important;
   font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-body)!important;
@@ -129,10 +142,12 @@ html body.reuse-current .reuse-confidence-node.is-trust>span{
   color:var(--hm-text-tertiary);
 }
 html body.reuse-current .reuse-confidence-node.is-trust h4{
-  color:#fff;
+  --reuse-confidence-title-color:#fff;
+  color:var(--reuse-confidence-title-color)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-trust p{
-  color:var(--hm-description-color)!important;
+  --reuse-confidence-desc-color:var(--hm-description-color);
+  color:var(--reuse-confidence-desc-color)!important;
 }
 html body.reuse-current .reuse-confidence-copy-group{
   display:flex;
@@ -299,7 +314,7 @@ html body.reuse-current .reuse-proof-map__node--solution{
   background:#000;
 }
 html body.reuse-current .reuse-proof-map__node--solution h4{
-  color:var(--hm-blue)!important;
+  color:var(--reuse-proof-copy-color)!important;
   font-family:var(--hm-font-ko)!important;
   font-weight:300!important;
   line-height:1.22;
@@ -371,24 +386,24 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   50%,100%{color:var(--hm-blue)}
 }
 @keyframes reuse-confidence-trust-title-pulse{
-  0%{color:#fff}
-  22%{color:#000}
-  100%{color:#000}
+  0%{--reuse-confidence-title-color:#fff}
+  22%{--reuse-confidence-title-color:#000}
+  100%{--reuse-confidence-title-color:#000}
 }
 @keyframes reuse-confidence-trust-base-title-pulse{
-  0%{color:#fff}
-  22%{color:#000}
-  100%{color:#000}
+  0%{--reuse-confidence-title-color:#fff}
+  22%{--reuse-confidence-title-color:#000}
+  100%{--reuse-confidence-title-color:#000}
 }
 @keyframes reuse-confidence-trust-desc-pulse{
-  0%{color:var(--hm-description-color)}
-  22%{color:rgba(0,0,0,.60)}
-  100%{color:rgba(0,0,0,.60)}
+  0%{--reuse-confidence-desc-color:var(--hm-description-color)}
+  22%{--reuse-confidence-desc-color:rgba(0,0,0,.60)}
+  100%{--reuse-confidence-desc-color:rgba(0,0,0,.60)}
 }
 @keyframes reuse-confidence-trust-base-desc-pulse{
-  0%{color:var(--hm-description-color)}
-  22%{color:rgba(0,0,0,.60)}
-  100%{color:rgba(0,0,0,.60)}
+  0%{--reuse-confidence-desc-color:var(--hm-description-color)}
+  22%{--reuse-confidence-desc-color:rgba(0,0,0,.60)}
+  100%{--reuse-confidence-desc-color:rgba(0,0,0,.60)}
 }
 @keyframes reuse-confidence-copy-base-return{
   0%{transform:translateY(-104%);opacity:.18}
