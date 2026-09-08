@@ -5,8 +5,7 @@
   - each visible character resolves to its final glyph independently and never becomes random again;
   - after the final character resolves, authored HTML is restored on the next frame so there is no visible jump;
   - each title runs once per page lifecycle. Scrolling away never re-arms the scramble;
-  - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title;
-  - wide-editorial test pages defer chapter-title scramble until the sticky-title handoff moment.
+  - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title.
 */
 (() => {
   'use strict';
@@ -17,12 +16,8 @@
   const stateByElement = new WeakMap();
   const activeAnimations = new Set();
   const observed = new WeakSet();
-  const wideDeferredChapters = [];
-  let wideTriggerRaf = 0;
-  let wideTriggerMounted = false;
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
-  const isWideEditorialTest = () => document.body?.classList.contains('hm-wide-editorial-test');
 
   const cloneWithCharacters = (node, chars) => {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -191,93 +186,17 @@
     });
   };
 
-  const legacyViewportReady = element => {
-    const rect = element.getBoundingClientRect();
-    const rootTop = 0;
-    const rootBottom = window.innerHeight * .94;
-    const visible = Math.max(0, Math.min(rect.bottom, rootBottom) - Math.max(rect.top, rootTop));
-    const ratio = visible / Math.max(1, rect.height);
-    return ratio >= .24;
-  };
-
-  const updateWideChapterTriggers = () => {
-    wideTriggerRaf = 0;
-    if (!wideDeferredChapters.length) return;
-
-    const wide = window.matchMedia?.('(min-width:1600px)').matches;
-    const stickyTop = window.innerHeight * .14;
-
-    wideDeferredChapters.forEach((title, index) => {
-      const state = stateByElement.get(title);
-      if (!state || state.completed || state.running || !document.contains(title)) return;
-
-      if (!wide) {
-        if (legacyViewportReady(title)) startScramble(title, 'chapter');
-        return;
-      }
-
-      const head = title.closest('.hm-section-head');
-      if (!head) return;
-      const rect = head.getBoundingClientRect();
-      const atStickyAnchor = rect.top <= stickyTop + 1 && rect.bottom > stickyTop;
-
-      if (index === 0) {
-        /* First chapter: play only when the left title reaches its fixed 14vh position. */
-        if (atStickyAnchor) startScramble(title, 'chapter');
-        return;
-      }
-
-      const previousTitle = wideDeferredChapters[index - 1];
-      const previousHead = previousTitle?.closest('.hm-section-head');
-      const previousRect = previousHead?.getBoundingClientRect();
-      const meetsPreviousTitle = !!previousRect && rect.top <= previousRect.bottom + 1 && rect.bottom > 0;
-
-      /*
-        Following chapters: start exactly at the sticky handoff, when the incoming
-        title touches the title above it. atStickyAnchor is a safe fallback for
-        restored/deep scroll positions where the collision happened before load.
-      */
-      if (meetsPreviousTitle || atStickyAnchor) startScramble(title, 'chapter');
-    });
-  };
-
-  const requestWideChapterUpdate = () => {
-    if (!wideTriggerRaf) wideTriggerRaf = requestAnimationFrame(updateWideChapterTriggers);
-  };
-
-  const mountWideChapterTriggers = () => {
-    if (wideTriggerMounted || !isWideEditorialTest()) return;
-    wideTriggerMounted = true;
-    window.addEventListener('scroll', requestWideChapterUpdate, {passive:true});
-    window.addEventListener('resize', requestWideChapterUpdate);
-    requestWideChapterUpdate();
-  };
-
   const register = (element, kind, observer) => {
     if (!element || observed.has(element)) return;
     captureSource(element);
     observed.add(element);
 
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || !observer) {
       const state = stateByElement.get(element);
       if (state) state.completed = true;
       return;
     }
-
     element.dataset.hmScrambleKind = kind;
-
-    if (kind === 'chapter' && isWideEditorialTest()) {
-      wideDeferredChapters.push(element);
-      mountWideChapterTriggers();
-      requestWideChapterUpdate();
-      return;
-    }
-
-    if (!observer) {
-      const state = stateByElement.get(element);
-      if (state) state.completed = true;
-      return;
-    }
     observer.observe(element);
   };
 
@@ -296,14 +215,13 @@
     const hero = document.querySelector(heroSelector);
     if (hero) register(hero, 'hero', observer);
     document.querySelectorAll(titleSelector).forEach(title => register(title, 'chapter', observer));
-    requestWideChapterUpdate();
   };
 
   const finishAll = () => [...activeAnimations].forEach(element => settle(element, true));
 
   const initialise = () => {
     scan();
-    if (!observer && !isWideEditorialTest()) {
+    if (!observer) {
       const hero = document.querySelector(heroSelector);
       if (hero) startScramble(hero, 'hero');
       document.querySelectorAll(titleSelector).forEach(title => startScramble(title, 'chapter'));
@@ -334,8 +252,5 @@
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', waitForContentReady, {once:true});
   else waitForContentReady();
-  addEventListener('load', () => {
-    setTimeout(scan, 0);
-    requestWideChapterUpdate();
-  }, {once:true});
+  addEventListener('load', () => setTimeout(scan, 0), {once:true});
 })();
