@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HIMART — Wide Editorial Test Loader</title>
+<style>
+html,body{margin:0;min-height:100%;background:#000;color:#fff}
+body{font-family:Arial,sans-serif}
+.hm-wide-loader{min-height:100vh;display:grid;place-items:center;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.45)}
+</style>
+</head>
+<body>
+<div class="hm-wide-loader">LOADING HIMART WIDE EDITORIAL TEST…</div>
+<script>
+(async()=>{
+  'use strict';
+  try{
+    const response=await fetch('./himart.html?wide-source=20260908-1',{cache:'no-store'});
+    if(!response.ok)throw new Error('himart.html load failed');
+    let html=await response.text();
+
+    html=html
+      .replace('<title>하이마트 온라인 구매여정 — Movie Test</title>','<title>하이마트 온라인 구매여정 — Wide Editorial Test</title>')
+      .replace('</head>',
+        '<link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-10-himart">' +
+        '<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260908-2">' +
+        '</head>')
+      .replace('<body class="','<body class="hm-wide-editorial-test hm-wide-himart-test ')
+      .replace('./design-system/scramble-final.js?v=20260907-3','./design-system/scramble-final.js?v=20260908-himart-wide-1')
+      .replace('./design-system/navigation.js?v=20260907-4','./design-system/navigation.js?v=20260908-himart-wide-1')
+      .replace('</body>',
+        '<script src="./design-system/himart-wide-editorial-adapter.js?v=20260908-1"><' + '/script>' +
+        '</body>');
+
+    document.open();
+    document.write(html);
+    document.close();
+  }catch(error){
+    document.body.innerHTML='<div class="hm-wide-loader">페이지를 불러오지 못했습니다.</div>';
+    console.error(error);
+  }
+})();
+</script>
+</body>
+</html>
