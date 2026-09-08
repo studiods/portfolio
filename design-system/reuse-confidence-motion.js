@@ -18,6 +18,7 @@
   const TRUST_CLASS = 'is-flow-pulse-trust';
   const HELD_CLASS = 'is-flow-trust-held';
   const RESET_CLASS = 'is-flow-trust-resetting';
+  const COPY_ACTIVE_CLASS = 'is-copy-trust-active';
 
   let active = false;
   let inFocus = false;
@@ -39,13 +40,20 @@
     }
   };
 
+  const setCopyState = (node, trustActive) => {
+    if (!node.classList.contains('is-trust')) return;
+    const baseCopy = node.querySelector('[data-reuse-copy-base]');
+    const trustCopy = node.querySelector('[data-reuse-copy-trust]');
+    node.classList.toggle(COPY_ACTIVE_CLASS, trustActive);
+    if (baseCopy) baseCopy.setAttribute('aria-hidden', trustActive ? 'true' : 'false');
+    if (trustCopy) trustCopy.setAttribute('aria-hidden', trustActive ? 'false' : 'true');
+  };
+
   const clearNodeClasses = () => {
-    nodes.forEach((node) => node.classList.remove(
-      STANDARD_CLASS,
-      TRUST_CLASS,
-      HELD_CLASS,
-      RESET_CLASS
-    ));
+    nodes.forEach((node) => {
+      node.classList.remove(STANDARD_CLASS, TRUST_CLASS, HELD_CLASS, RESET_CLASS, COPY_ACTIVE_CLASS);
+      setCopyState(node, false);
+    });
   };
 
   const stop = () => {
@@ -59,6 +67,7 @@
     void node.offsetWidth;
 
     if (node.classList.contains('is-trust')) {
+      setCopyState(node, true);
       node.classList.add(TRUST_CLASS);
       schedule(() => {
         if (!active) return;
@@ -80,14 +89,15 @@
     trustNodes.forEach((node) => {
       node.classList.remove(TRUST_CLASS, RESET_CLASS);
       node.classList.add(HELD_CLASS);
+      setCopyState(node, true);
     });
 
     resetFrame = window.requestAnimationFrame(() => {
       resetFrame = window.requestAnimationFrame(() => {
         if (!active) return;
         trustNodes.forEach((node) => {
-          node.classList.add(RESET_CLASS);
-          node.classList.remove(HELD_CLASS);
+node.classList.add(RESET_CLASS);
+node.classList.remove(HELD_CLASS);
         });
         resetFrame = 0;
       });
@@ -95,7 +105,10 @@
 
     schedule(() => {
       if (!active) return;
-      trustNodes.forEach((node) => node.classList.remove(RESET_CLASS, HELD_CLASS, TRUST_CLASS));
+      trustNodes.forEach((node) => {
+        node.classList.remove(RESET_CLASS, HELD_CLASS, TRUST_CLASS, COPY_ACTIVE_CLASS);
+        setCopyState(node, false);
+      });
       schedule(() => {
         if (active && inFocus && !document.hidden && !reducedMotion.matches) runCycle();
       }, RESTART_DELAY);

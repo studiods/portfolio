@@ -92,6 +92,10 @@ html body.reuse-current .reuse-confidence-node{
   box-sizing:border-box;
   container-type:inline-size;
 }
+html body.reuse-current .reuse-confidence-flow .reuse-confidence-node{
+  width:90%;
+  margin-inline:auto;
+}
 html body.reuse-current .reuse-confidence-node>span{
   color:var(--hm-text-tertiary);
   font:400 11px/1 var(--hm-font-en);
@@ -128,13 +132,53 @@ html body.reuse-current .reuse-confidence-node.is-trust h4{
 html body.reuse-current .reuse-confidence-node.is-trust p{
   color:var(--hm-description-color)!important;
 }
+html body.reuse-current .reuse-confidence-copy-mask{
+  position:relative;
+  width:100%;
+  min-height:clamp(94px,38cqi,118px);
+  margin-top:clamp(12px,6cqi,18px);
+  overflow:hidden;
+}
+html body.reuse-current .reuse-confidence-copy{
+  position:absolute;
+  inset:0;
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  will-change:transform,opacity;
+  transition:transform 1.7s ease-in-out,opacity 1.7s ease-in-out;
+}
+html body.reuse-current .reuse-confidence-copy h4{
+  margin:0!important;
+}
+html body.reuse-current .reuse-confidence-copy p{
+  margin:clamp(9px,5cqi,14px) 0 0!important;
+}
+html body.reuse-current .reuse-confidence-copy--base{
+  transform:translateY(0);
+  opacity:1;
+}
+html body.reuse-current .reuse-confidence-copy--trust{
+  transform:translateY(-104%);
+  opacity:.18;
+}
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-copy--base{
+  transform:translateY(104%);
+  opacity:0;
+}
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-copy--trust{
+  transform:translateY(0);
+  opacity:1;
+}
 html body.reuse-current .reuse-confidence-arrow{
   color:rgba(255,255,255,.48);
-  font:100 31.5px/1 var(--hm-font-en);
+  font:100 34.65px/1 var(--hm-font-en);
   text-align:center;
 }
 html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + .reuse-confidence-arrow{
-  color:var(--hm-blue);
+  color:rgba(255,255,255,.48);
 }
 
 @media(max-width:980px){
@@ -179,9 +223,20 @@ html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + 
     aspect-ratio:1/1;
     padding:22px;
   }
+  html body.reuse-current .reuse-confidence-flow .reuse-confidence-node{
+    width:calc(var(--hm-mobile-circle-size) * .9);
+    height:calc(var(--hm-mobile-circle-size) * .9);
+  }
   html body.reuse-current .reuse-confidence-node h4{font-size:var(--hm-type-group-mobile)}
   html body.reuse-current .reuse-confidence-node p{font-size:13px!important}
-  html body.reuse-current .reuse-confidence-arrow{transform:rotate(90deg);font-size:26px}
+  html body.reuse-current .reuse-confidence-arrow{
+    transform:rotate(90deg);
+    font-size:28.6px;
+    color:rgba(255,255,255,.48);
+  }
+  html body.reuse-current .reuse-confidence-copy-mask{
+    min-height:104px;
+  }
 }
 
 /* 02.1 circular proof map v4 — unframed groups, responsive type, proportional arrow. */
@@ -304,6 +359,14 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   0%{color:#fff}
   50%,100%{color:var(--hm-blue)}
 }
+@keyframes reuse-confidence-copy-base-return{
+  0%{transform:translateY(-104%);opacity:.18}
+  100%{transform:translateY(0);opacity:1}
+}
+@keyframes reuse-confidence-copy-trust-exit{
+  0%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(104%);opacity:0}
+}
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
   animation:reuse-confidence-line-pulse 1.7s ease-in-out 1;
 }
@@ -313,7 +376,7 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
   animation:reuse-confidence-trust-number-pulse 1.7s ease-in-out 1 forwards;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4{
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-copy--trust h4{
   animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
@@ -321,7 +384,7 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
   background-color:rgba(0,166,237,.20)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held h4{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-copy--trust h4{
   color:var(--hm-blue)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
@@ -333,20 +396,29 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span{
   color:var(--hm-text-tertiary)!important;
   transition:color 1.7s ease-in-out!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting h4{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust h4{
   color:#fff!important;
   transition:color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--base{
+  animation:reuse-confidence-copy-base-return 1.7s ease-in-out both;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust{
+  animation:reuse-confidence-copy-trust-exit 1.7s ease-in-out both;
 }
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust,
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span,
-  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4{
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-copy--trust h4,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--base,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust{
     animation:none!important;
   }
+  html body.reuse-current .reuse-confidence-copy,
   html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting,
   html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span,
-  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting h4{
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust h4{
     transition:none!important;
   }
 }
