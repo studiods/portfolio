@@ -1,33 +1,83 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v2
+  HIMART Wide Editorial Layout — TEST ONLY v3
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
   Contract
   - < 1600px: no layout override; the canonical Himart design system remains unchanged.
   - >= 1600px: 01–04 major sections opt into the wide editorial split.
-  - Left major title is CSS-sticky, matching the index.html WORKS principle (no scroll-position JS).
-  - The sticky title is constrained by its own major section, so the next chapter naturally pushes it away.
-  - Hero, navigation, footer, typography, color, component internals and motion remain owned by the canonical design system.
+  - Left major title is CSS-sticky, matching the index.html WORKS principle (no JS position control).
+  - The next chapter keeps a 100px visual collision gap before the current sticky title is pushed away.
+  - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
+  - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
+  - Right-rail authored .hm-reveal blocks use one shared bottom-up reveal treatment.
+  - Hero, navigation, footer, typography, color and component internals remain owned by the canonical design system.
   - Existing DOM order is preserved. The test only removes the visual box of .hm-wrap with display:contents at wide sizes.
 */
 
 @media (min-width:1600px){
+  html body.himart-page-body.hm-wide-editorial-test{
+    --hm-wide-title-collision-gap:100px;
+    --hm-wide-left-min:400px;
+    --hm-wide-left-max:440px;
+    --hm-wide-column-gap-min:80px;
+    --hm-wide-column-gap-max:100px;
+    --hm-wide-right-max:1060px;
+    --hm-wide-edge-min:64px;
+    --hm-wide-rise-distance:48px;
+  }
+
   /*
-    1920px viewport => 1600px editorial canvas.
-    1600px viewport => 1472px canvas, preserving a minimum 64px viewport inset.
+    Full-bleed black section plane + centered editorial rails.
+    At 1920px the inner composition tops out at 1600px and leaves 160px per side.
+    At 1600px the outer tracks never fall below 64px.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section{
-    width:min(calc(100% - 128px),1600px)!important;
+    position:relative!important;
+    isolation:isolate!important;
+    width:100%!important;
     max-width:none!important;
-    margin-inline:auto!important;
+    margin:0!important;
+    padding-right:0!important;
+    padding-left:0!important;
     display:grid!important;
-    grid-template-columns:minmax(400px,440px) minmax(0,1fr)!important;
-    column-gap:clamp(80px,5.2vw,100px)!important;
+    grid-template-columns:
+      minmax(var(--hm-wide-edge-min),1fr)
+      minmax(var(--hm-wide-left-min),var(--hm-wide-left-max))
+      minmax(var(--hm-wide-column-gap-min),var(--hm-wide-column-gap-max))
+      minmax(0,var(--hm-wide-right-max))
+      minmax(var(--hm-wide-edge-min),1fr)!important;
+    column-gap:0!important;
     grid-auto-flow:row!important;
     grid-auto-rows:auto!important;
     align-items:start!important;
     overflow:visible!important;
+    background:#000!important;
+  }
+
+  /* Edge-to-edge black backing remains independent from the centered content canvas. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section::before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:0 50%;
+    width:100vw;
+    transform:translateX(-50%);
+    background:#000;
+    pointer-events:none;
+  }
+
+  /*
+    01 keeps the canonical Hero-to-content opening space.
+    From 02 onward the next title begins exactly 100px after the previous section boundary:
+    section top padding + the canonical 32px title inset = 100px.
+    This makes the sticky title release only when its protected 100px lower gap meets the incoming title.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section{
+    padding-top:var(--hm-section-padding-top)!important;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#data,#journey,#direction).hm-section{
+    padding-top:calc(var(--hm-wide-title-collision-gap) - var(--hm-rule-to-section-number))!important;
   }
 
   /*
@@ -37,21 +87,23 @@
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap{
     display:contents!important;
+    background:transparent!important;
   }
 
   /* Every authored content block runs in the right evidence rail by default. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > *{
-    grid-column:2!important;
+    grid-column:4!important;
     min-width:0!important;
     width:100%!important;
   }
 
   /*
     Left narrative rail — same interaction principle as index.html .project-copy:
-    position:sticky + viewport-relative top, with no JS scroll calculation.
+    position:sticky + viewport-relative top. Browser sticky containment owns movement;
+    runtime code only changes the exit-opacity variable while the title is being pushed.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
-    grid-column:1!important;
+    grid-column:2!important;
     position:sticky!important;
     top:14vh!important;
     align-self:start!important;
@@ -61,6 +113,7 @@
     margin:0!important;
     padding-top:var(--hm-rule-to-section-number)!important;
     z-index:3!important;
+    will-change:opacity;
   }
 
   /*
@@ -102,6 +155,38 @@
     margin-top:var(--hm-subsection-gap)!important;
   }
 
+  /*
+    Shared wide reveal: authored content rises softly from below as it enters the viewport.
+    The existing design-system IntersectionObserver owns activation by adding .is-visible.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-reveal:not(.hm-section-head),
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target:not(.hm-section-head){
+    opacity:0!important;
+    transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
+    transition:
+      opacity .72s ease,
+      transform .96s cubic-bezier(.22,1,.36,1)!important;
+    will-change:opacity,transform;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-reveal.is-visible:not(.hm-section-head),
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target.is-visible:not(.hm-section-head){
+    opacity:1!important;
+    transform:none!important;
+  }
+
+  /* Major title entrance + sticky exit fade are composed through one runtime variable. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal{
+    opacity:0!important;
+    transform:translate3d(0,32px,0)!important;
+    transition:
+      opacity .68s ease,
+      transform .88s cubic-bezier(.22,1,.36,1)!important;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal.is-visible{
+    opacity:var(--hm-wide-title-exit-opacity,1)!important;
+    transform:none!important;
+  }
+
   /* Wide evidence stays inside the right rail instead of forcing horizontal overflow. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > * :is(
     .reuse-proof-stack,
@@ -120,5 +205,13 @@
   ){
     min-width:0!important;
     max-width:100%!important;
+  }
+}
+
+@media (min-width:1600px) and (prefers-reduced-motion:reduce){
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section :is(.hm-reveal,.wide-rise-target){
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
   }
 }
