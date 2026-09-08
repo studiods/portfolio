@@ -1,8 +1,8 @@
 /* HIMART REUSE 02.1 — anxiety-to-proof transfer motion. */
 
 html body.reuse-current .reuse-proof-map{
-  /* One shared master timeline. Individual phases are percentage-based. */
-  --reuse-proof-lane-duration:2s;
+  /* Single shared timeline only. Phase timing remains percentage-based. */
+  --reuse-proof-lane-duration:3.15s;
 }
 
 html body.reuse-current .reuse-proof-map__node{
@@ -16,7 +16,8 @@ html body.reuse-current .reuse-proof-map__node > h4{
   z-index:3;
 }
 
-/* Top circle: 6-o'clock comet, 5% stronger glow, slow start -> faster finish. */
+/* Top circle: 6-o'clock comet with restrained acceleration.
+   Final rotation speed is about 1.45x the opening speed. */
 html body.reuse-current .reuse-proof-sweep{
   position:absolute;
   z-index:4;
@@ -50,16 +51,17 @@ html body.reuse-current .reuse-proof-sweep{
     drop-shadow(0 0 15.75px rgba(255,255,255,.252));
 }
 
-/* Ring ends exactly at 6 o'clock at 62.5%. Connector begins on that same frame. */
+/* 0~39.68% = the same one-turn ring phase as before.
+   Equal time slices move 20% -> 44% -> 71% -> 100% of the circle,
+   keeping the acceleration moderate rather than abrupt. */
 @keyframes reuse-proof-lane-ring{
-  0%{
-    transform:rotate(0deg);
-    opacity:0;
-    animation-timing-function:cubic-bezier(.72,.02,.98,.42);
-  }
-  2%{opacity:1}
-  62.5%{transform:rotate(360deg);opacity:1}
-  62.55%{transform:rotate(360deg);opacity:0}
+  0%{transform:rotate(0deg);opacity:0}
+  .8%{opacity:1}
+  9.92%{transform:rotate(72deg);opacity:1}
+  19.84%{transform:rotate(158.4deg);opacity:1}
+  29.76%{transform:rotate(255.6deg);opacity:1}
+  39.68%{transform:rotate(360deg);opacity:1}
+  39.73%{transform:rotate(360deg);opacity:0}
   100%{transform:rotate(360deg);opacity:0}
 }
 
@@ -95,63 +97,66 @@ html body.reuse-current .reuse-proof-connector svg{
   overflow:visible!important;
 }
 
-/* Self-erasing travelling dash. No line remains behind it. */
+/* Moving light is about 3x longer than before (15 -> 45 path units).
+   Glow is intentionally held at 50% strength while travelling downward. */
 html body.reuse-current .reuse-proof-connector__active{
   fill:none;
   stroke:#fff;
   stroke-width:1.35;
   vector-effect:non-scaling-stroke;
   stroke-linecap:round;
-  stroke-dasharray:15 100;
-  stroke-dashoffset:15;
+  stroke-dasharray:45 100;
+  stroke-dashoffset:45;
   opacity:0;
   filter:
-    drop-shadow(0 0 3px rgba(255,255,255,.94))
-    drop-shadow(0 0 8px rgba(255,255,255,.40));
+    drop-shadow(0 0 4px rgba(255,255,255,.50))
+    drop-shadow(0 0 10px rgba(255,255,255,.25));
 }
 
-/* Same master timeline: connector starts at the exact ring hand-off frame.
-   First third of connector travel is white; the remainder is blue glow. */
+/* Connector begins on the exact 6-o'clock hand-off frame.
+   First third stays white; the rest becomes blue. The trail erases itself. */
 @keyframes reuse-proof-lane-connector{
-  0%,62.49%{
+  0%,39.67%{
     stroke:#fff;
-    stroke-dashoffset:15;
+    stroke-dashoffset:45;
     opacity:0;
     filter:
-      drop-shadow(0 0 3px rgba(255,255,255,.94))
-      drop-shadow(0 0 8px rgba(255,255,255,.40));
+      drop-shadow(0 0 4px rgba(255,255,255,.50))
+      drop-shadow(0 0 10px rgba(255,255,255,.25));
   }
-  62.5%{
+  39.68%{
     stroke:#fff;
-    stroke-dashoffset:15;
+    stroke-dashoffset:45;
     opacity:1;
     filter:
-      drop-shadow(0 0 3px rgba(255,255,255,.94))
-      drop-shadow(0 0 8px rgba(255,255,255,.40));
+      drop-shadow(0 0 4px rgba(255,255,255,.50))
+      drop-shadow(0 0 10px rgba(255,255,255,.25));
   }
-  69%{
+  43.9%{
     stroke:#fff;
+    stroke-dashoffset:-3;
+    opacity:1;
     filter:
-      drop-shadow(0 0 3px rgba(255,255,255,.94))
-      drop-shadow(0 0 8px rgba(255,255,255,.40));
+      drop-shadow(0 0 4px rgba(255,255,255,.50))
+      drop-shadow(0 0 10px rgba(255,255,255,.25));
   }
-  69.2%{
+  44.1%{
     stroke:var(--hm-blue);
+    stroke-dashoffset:-5;
+    opacity:1;
     filter:
-      drop-shadow(0 0 4px rgba(0,166,237,1))
-      drop-shadow(0 0 11px rgba(0,166,237,.72))
-      drop-shadow(0 0 19px rgba(0,166,237,.34));
+      drop-shadow(0 0 4px rgba(0,166,237,.50))
+      drop-shadow(0 0 11px rgba(0,166,237,.25));
   }
-  82.2%{
+  52.1%{
     stroke:var(--hm-blue);
     stroke-dashoffset:-94;
     opacity:1;
     filter:
-      drop-shadow(0 0 4px rgba(0,166,237,1))
-      drop-shadow(0 0 11px rgba(0,166,237,.72))
-      drop-shadow(0 0 19px rgba(0,166,237,.34));
+      drop-shadow(0 0 4px rgba(0,166,237,.50))
+      drop-shadow(0 0 11px rgba(0,166,237,.25));
   }
-  82.5%,100%{
+  52.38%,100%{
     stroke:var(--hm-blue);
     stroke-dashoffset:-100;
     opacity:0;
@@ -162,28 +167,16 @@ html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proo
   animation:reuse-proof-lane-connector var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* Lower proof circle: top -> bottom gradient fill, fast start -> slow finish. */
+/* Lower proof circle: no directional wipe. The whole circle changes from black
+   to blue over the final 1.5s of the master timeline. The opening change is
+   deliberately slow and the final change is about 1.45x faster. */
 html body.reuse-current .reuse-proof-map__node--solution{
   background:#000!important;
   border-color:var(--hm-blue)!important;
 }
 
 html body.reuse-current .reuse-proof-map__node--solution::before{
-  content:"";
-  position:absolute;
-  z-index:1;
-  inset:-1px;
-  border-radius:50%;
-  background:linear-gradient(
-    180deg,
-    rgba(76,202,255,1) 0%,
-    var(--hm-blue) 34%,
-    rgba(0,166,237,.98) 72%,
-    rgba(0,139,205,1) 100%
-  );
-  clip-path:inset(0 0 100% 0 round 50%);
-  opacity:1;
-  pointer-events:none;
+  content:none!important;
 }
 
 html body.reuse-current .reuse-proof-map__node--solution h4{
@@ -193,24 +186,24 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
 }
 
 @keyframes reuse-proof-lane-fill{
-  0%,82.49%{clip-path:inset(0 0 100% 0 round 50%)}
-  82.5%{
-    clip-path:inset(0 0 100% 0 round 50%);
-    animation-timing-function:cubic-bezier(.12,.78,.22,1);
-  }
-  100%{clip-path:inset(0 0 0 0 round 50%)}
+  0%,52.37%{background-color:#000}
+  52.38%{background-color:#000}
+  64.29%{background-color:#00212f}
+  76.19%{background-color:#004968}
+  88.10%{background-color:#0076a8}
+  100%{background-color:var(--hm-blue)}
 }
 
 @keyframes reuse-proof-lane-copy{
-  0%,82.49%{color:var(--hm-blue)}
-  82.5%{
-    color:var(--hm-blue);
-    animation-timing-function:cubic-bezier(.12,.78,.22,1);
-  }
-  100%{color:#000}
+  0%,52.37%{color:var(--hm-blue)}
+  52.38%{color:var(--hm-blue)}
+  64.29%{color:#33b8f1}
+  76.19%{color:#70cdf5}
+  88.10%{color:#b5e5fa}
+  100%{color:#fff}
 }
 
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::before{
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running{
   animation:reuse-proof-lane-fill var(--reuse-proof-lane-duration) linear 1 both;
 }
 
@@ -219,9 +212,9 @@ html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h
 }
 
 /* Five-second final hold then coordinated dissolve to base. */
-html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::before{
-  clip-path:inset(0 0 100% 0 round 50%)!important;
-  transition:clip-path 1200ms ease-in-out!important;
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
+  background:#000!important;
+  transition:background-color 1200ms ease-in-out!important;
   animation:none!important;
 }
 
@@ -254,11 +247,11 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-connect
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep,
   html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proof-connector__active,
-  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::before,
+  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running,
   html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
     animation:none!important;
   }
-  html body.reuse-current .reuse-proof-map__node--solution::before,
+  html body.reuse-current .reuse-proof-map__node--solution,
   html body.reuse-current .reuse-proof-map__node--solution h4,
   html body.reuse-current .reuse-proof-connector__active{
     transition:none!important;
