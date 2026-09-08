@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial — HIMART adapter TEST ONLY v2
+  HIMART Wide Editorial — HIMART adapter TEST ONLY v3
   Applies the current REUSE wide-editorial contract to the current himart.html runtime DOM.
 
   Shared behavior remains owned by wide-editorial-test.css:
@@ -33,6 +33,8 @@
     width:100%!important;
     margin:0!important;
     padding:0!important;
+    container-type:inline-size!important;
+    container-name:hm-wide-right-rail;
   }
 
   /*
@@ -109,6 +111,150 @@
     transform:none!important;
     transition:none!important;
     animation:none!important;
+  }
+
+  /*
+    03.1 / JOURNEY FLOW — fluid circle contract for the narrower right rail.
+    The old production rule locks every circle to as much as 292px. In the split layout
+    four nodes + three arrows can therefore overflow the available right-rail width.
+    The new size is derived from the actual right-rail container width, with a sensible
+    minimum and maximum. Typography and inner spacing scale from the same container so
+    the circle never shrinks without its contents shrinking with it.
+  */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail{
+    --hm-wide-journey-arrow-size:clamp(14px,1.8cqw,20px);
+    --hm-wide-journey-gap:clamp(8px,1.05cqw,12px);
+    --hm-wide-journey-node-size:clamp(
+      172px,
+      calc((100cqw - (var(--hm-wide-journey-arrow-size) * 3) - (var(--hm-wide-journey-gap) * 6)) / 4),
+      236px
+    );
+    --hm-wide-journey-node-pad:clamp(14px,1.85cqw,22px);
+    --hm-wide-journey-no-size:clamp(9px,1.05cqw,12px);
+    --hm-wide-journey-title-size:clamp(18px,2.35cqw,26px);
+    --hm-wide-journey-copy-size:clamp(11px,1.2cqw,13px);
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .journey-flow-row{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    gap:var(--hm-wide-journey-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .flow-node{
+    flex:0 0 var(--hm-wide-journey-node-size)!important;
+    width:var(--hm-wide-journey-node-size)!important;
+    min-width:var(--hm-wide-journey-node-size)!important;
+    max-width:var(--hm-wide-journey-node-size)!important;
+    height:var(--hm-wide-journey-node-size)!important;
+    min-height:var(--hm-wide-journey-node-size)!important;
+    max-height:var(--hm-wide-journey-node-size)!important;
+    aspect-ratio:1/1!important;
+    padding:var(--hm-wide-journey-node-pad)!important;
+    border-radius:50%!important;
+    box-sizing:border-box!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .flow-node .hm-card-no{
+    margin:0 0 clamp(10px,1.25cqw,15px)!important;
+    font-size:var(--hm-wide-journey-no-size)!important;
+    line-height:1.2!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .flow-node h4{
+    margin:0!important;
+    font-size:var(--hm-wide-journey-title-size)!important;
+    line-height:1.24!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .flow-node p{
+    margin:clamp(10px,1.45cqw,16px) 0 0!important;
+    max-width:84%!important;
+    font-size:var(--hm-wide-journey-copy-size)!important;
+    line-height:1.42!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .flow-arrow{
+    flex:0 0 var(--hm-wide-journey-arrow-size)!important;
+    width:var(--hm-wide-journey-arrow-size)!important;
+    min-width:var(--hm-wide-journey-arrow-size)!important;
+    height:clamp(34px,4cqw,44px)!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .flow-arrow::before{
+    width:clamp(12px,1.45cqw,16px)!important;
+    height:clamp(12px,1.45cqw,16px)!important;
+  }
+
+  /* Keep the blue grouping capsules attached to the fluid node geometry. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .journey-row-group{
+    top:calc(var(--hm-wide-journey-gap) * -1.5)!important;
+    height:calc(var(--hm-wide-journey-node-size) + (var(--hm-wide-journey-gap) * 3))!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .row-top .journey-row-group{
+    left:calc(var(--hm-wide-journey-gap) * -1.5)!important;
+    width:calc((var(--hm-wide-journey-node-size) * 2) + var(--hm-wide-journey-arrow-size) + (var(--hm-wide-journey-gap) * 5))!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-flow-block .row-bottom .journey-row-group{
+    left:calc(var(--hm-wide-journey-node-size) + var(--hm-wide-journey-arrow-size) + (var(--hm-wide-journey-gap) * 2))!important;
+    width:calc((var(--hm-wide-journey-node-size) * 2) + var(--hm-wide-journey-arrow-size) + (var(--hm-wide-journey-gap) * 5))!important;
+  }
+
+  /*
+    Expanded button content — 03.1 / JOURNEY SIGNALS.
+    It is a cloned production flow inside details.journey-more, so explicitly map the
+    same fluid circle + typography rule to that clone as requested.
+  */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-row.row4{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    gap:var(--hm-wide-journey-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-node{
+    flex:0 0 var(--hm-wide-journey-node-size)!important;
+    width:var(--hm-wide-journey-node-size)!important;
+    min-width:var(--hm-wide-journey-node-size)!important;
+    max-width:var(--hm-wide-journey-node-size)!important;
+    height:var(--hm-wide-journey-node-size)!important;
+    min-height:var(--hm-wide-journey-node-size)!important;
+    max-height:var(--hm-wide-journey-node-size)!important;
+    aspect-ratio:1/1!important;
+    padding:var(--hm-wide-journey-node-pad)!important;
+    border-radius:50%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    box-sizing:border-box!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-node .hm-card-no{
+    margin:0 0 clamp(10px,1.25cqw,15px)!important;
+    font-size:var(--hm-wide-journey-no-size)!important;
+    line-height:1.2!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-node h4{
+    margin:0!important;
+    font-size:var(--hm-wide-journey-title-size)!important;
+    line-height:1.24!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-node p{
+    margin:clamp(10px,1.45cqw,16px) 0 0!important;
+    max-width:84%!important;
+    font-size:var(--hm-wide-journey-copy-size)!important;
+    line-height:1.42!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-arrow{
+    flex:0 0 var(--hm-wide-journey-arrow-size)!important;
+    width:var(--hm-wide-journey-arrow-size)!important;
+    min-width:var(--hm-wide-journey-arrow-size)!important;
+    height:clamp(34px,4cqw,44px)!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner .journey-signal-subsection .flow-arrow::before{
+    width:clamp(12px,1.45cqw,16px)!important;
+    height:clamp(12px,1.45cqw,16px)!important;
   }
 }
 
