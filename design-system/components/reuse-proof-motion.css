@@ -1,5 +1,11 @@
 /* HIMART REUSE 02.1 — anxiety-to-proof transfer motion. */
 
+@property --reuse-proof-copy-color{
+  syntax:"<color>";
+  inherits:false;
+  initial-value:#00a6ed;
+}
+
 html body.reuse-current .reuse-proof-map{
   /* Single shared timeline only. Phase timing remains percentage-based. */
   --reuse-proof-lane-duration:3.15s;
@@ -51,9 +57,9 @@ html body.reuse-current .reuse-proof-sweep{
     drop-shadow(0 0 15.75px rgba(255,255,255,.252));
 }
 
-/* 0~39.68% = the same one-turn ring phase as before.
+/* 0~39.68% = one ring rotation.
    Equal time slices move 20% -> 44% -> 71% -> 100% of the circle,
-   keeping the acceleration moderate rather than abrupt. */
+   keeping the final speed to roughly 1.45x the opening speed. */
 @keyframes reuse-proof-lane-ring{
   0%{transform:rotate(0deg);opacity:0}
   .8%{opacity:1}
@@ -167,11 +173,10 @@ html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proo
   animation:reuse-proof-lane-connector var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* Lower proof circle: no directional wipe. The whole circle changes from black
-   to blue over the final 1.5s of the master timeline. The opening change is
-   deliberately slow and the final change is about 1.45x faster. */
+/* Lower proof circle: no directional wipe. The entire circle changes from black
+   to blue during the final 1.5s. It starts slowly and ends about 1.45x faster. */
 html body.reuse-current .reuse-proof-map__node--solution{
-  background:#000!important;
+  background-color:#000;
   border-color:var(--hm-blue)!important;
 }
 
@@ -182,7 +187,8 @@ html body.reuse-current .reuse-proof-map__node--solution::before{
 html body.reuse-current .reuse-proof-map__node--solution h4{
   position:relative;
   z-index:3;
-  color:var(--hm-blue)!important;
+  --reuse-proof-copy-color:#00a6ed;
+  color:var(--reuse-proof-copy-color)!important;
 }
 
 @keyframes reuse-proof-lane-fill{
@@ -195,12 +201,12 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
 }
 
 @keyframes reuse-proof-lane-copy{
-  0%,52.37%{color:var(--hm-blue)}
-  52.38%{color:var(--hm-blue)}
-  64.29%{color:#33b8f1}
-  76.19%{color:#70cdf5}
-  88.10%{color:#b5e5fa}
-  100%{color:#fff}
+  0%,52.37%{--reuse-proof-copy-color:#00a6ed}
+  52.38%{--reuse-proof-copy-color:#00a6ed}
+  64.29%{--reuse-proof-copy-color:#33b8f1}
+  76.19%{--reuse-proof-copy-color:#70cdf5}
+  88.10%{--reuse-proof-copy-color:#b5e5fa}
+  100%{--reuse-proof-copy-color:#fff}
 }
 
 html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running{
@@ -213,14 +219,14 @@ html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h
 
 /* Five-second final hold then coordinated dissolve to base. */
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
-  background:#000!important;
+  background-color:#000!important;
   transition:background-color 1200ms ease-in-out!important;
   animation:none!important;
 }
 
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{
-  color:var(--hm-blue)!important;
-  transition:color 1200ms ease-in-out!important;
+  --reuse-proof-copy-color:#00a6ed!important;
+  transition:--reuse-proof-copy-color 1200ms ease-in-out!important;
   animation:none!important;
 }
 
