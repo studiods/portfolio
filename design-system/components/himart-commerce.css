@@ -20,6 +20,30 @@ html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p
   color:#fff!important;
 }
 
+/* 01.3 / TRANSITION TOUCHPOINT
+   Remove the inherited white card rule. The accent line now matches the exact
+   width of each card's blue/red gradient field: 1px, 100% opacity. */
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card{
+  position:relative!important;
+  border-top:0!important;
+}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  top:0;
+  left:0;
+  right:0;
+  width:100%;
+  height:1px;
+  background:var(--hm-blue);
+  opacity:1;
+  pointer-events:none;
+}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card.negative::after{
+  background:var(--hm-red);
+}
+
 /* The values below are data, not layout overrides. The HTML continues to provide --pct / --c / width / height values. */
 html body.himart-commerce-page :is(.keyword-grid,.voice-stack,.ring-row,.sentiment-graph,.pie-layout,.chart-wrap,.hbars,.landing-stack,.search-slope,.pdp-columns){
   min-width:0;
