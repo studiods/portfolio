@@ -16,6 +16,7 @@
   const stateByElement = new WeakMap();
   const activeAnimations = new Set();
   const observed = new WeakSet();
+  const WIDE_CHAPTER_FOCUS_DELAY = 1000;
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
 
@@ -205,8 +206,19 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const element = entry.target;
+          const kind = element.dataset.hmScrambleKind || 'chapter';
           observer.unobserve(element);
-          startScramble(element, element.dataset.hmScrambleKind || 'chapter');
+
+          /*
+            Wide editorial chapter titles first complete their visual focus/rise,
+            then start the scramble one second later. Hero and canonical pages keep
+            their existing immediate trigger behavior.
+          */
+          if (kind === 'chapter' && document.body?.classList.contains('hm-wide-editorial-test')) {
+            window.setTimeout(() => startScramble(element, kind), WIDE_CHAPTER_FOCUS_DELAY);
+            return;
+          }
+          startScramble(element, kind);
         });
       }, {threshold:.24, rootMargin:'0px 0px -6% 0px'})
     : null;
