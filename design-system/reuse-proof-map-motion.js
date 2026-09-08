@@ -11,8 +11,6 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  // One lane is exactly 2.0s: ring 1.25s -> connector 0.40s -> fill 0.35s.
-  // Preserve the existing overlap rule: the next lane starts at 30% (0.60s).
   const LANE_DURATION = 2000;
   const STAGGER = LANE_DURATION * 0.30;
   const RING_DURATION = 1250;
@@ -95,20 +93,14 @@
     solution.classList.remove(SOLUTION_FILLED_CLASS);
     void anxiety.offsetWidth;
 
-    // 0.00s -> 1.25s: comet-like white glow leaves 6 o'clock, runs clockwise,
-    // and returns to 6 o'clock. The base border behind it is immediately visible again.
     anxiety.classList.add(RING_CLASS);
 
-    // 1.25s -> 1.65s: immediately hand off downward. This is 1.5x faster
-    // than the previous 600ms connector motion. Its moving dash deletes its own trail.
     schedule(() => {
       if (!active || !inFocus) return;
       anxiety.classList.remove(RING_CLASS);
       connector.classList.add(CONNECTOR_RUN_CLASS);
     }, RING_DURATION);
 
-    // At contact with the lower blue circle, remove the connector immediately
-    // and start the accelerating fill. 0.35s later the lane reaches exactly 2.0s.
     schedule(() => {
       if (!active || !inFocus) return;
       connector.classList.remove(CONNECTOR_RUN_CLASS);
