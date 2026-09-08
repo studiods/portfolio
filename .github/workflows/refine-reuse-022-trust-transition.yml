@@ -1,0 +1,209 @@
+name: Refine Reuse 02.2 trust transition
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refine-reuse-022-trust-transition.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply neutral trust default and animated trust state
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          css_path = Path('design-system/components/reuse-confidence.css')
+          css = css_path.read_text()
+
+          old_base = '''html body.reuse-current .reuse-confidence-node.is-trust{
+  border-color:var(--hm-blue);
+  background:#000;
+}
+html body.reuse-current .reuse-confidence-node.is-trust>span,
+html body.reuse-current .reuse-confidence-node.is-trust h4{
+  color:var(--hm-blue);
+}
+html body.reuse-current .reuse-confidence-node.is-trust p{
+  color:var(--hm-description-color)!important;
+}'''
+          new_base = '''html body.reuse-current .reuse-confidence-node.is-trust{
+  border-color:var(--hm-line-default);
+  background:#000;
+}
+html body.reuse-current .reuse-confidence-node.is-trust>span{
+  color:var(--hm-text-tertiary);
+}
+html body.reuse-current .reuse-confidence-node.is-trust h4{
+  color:#fff;
+}
+html body.reuse-current .reuse-confidence-node.is-trust p{
+  color:var(--hm-description-color)!important;
+}'''
+          if old_base not in css:
+              raise SystemExit('02.2 trust base block not found')
+          css = css.replace(old_base, new_base, 1)
+
+          old_motion = '''/* 02.2 — focus-driven sequential confidence pulse. */
+@keyframes reuse-confidence-line-pulse{
+  0%{border-color:var(--hm-line-default)}
+  50%{border-color:rgba(255,255,255,.60)}
+  100%{border-color:var(--hm-line-default)}
+}
+@keyframes reuse-confidence-trust-pulse{
+  0%{background-color:rgba(0,166,237,0)}
+  50%{background-color:rgba(0,166,237,.20)}
+  100%{background-color:rgba(0,166,237,.20)}
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
+  animation:reuse-confidence-line-pulse 1.7s ease-in-out 1;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+  animation:reuse-confidence-trust-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
+  background-color:rgba(0,166,237,.20)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+  background-color:rgba(0,166,237,0)!important;
+  transition:background-color 1.7s ease-in-out!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+    animation:none!important;
+  }
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+    transition:none!important;
+  }
+}'''
+          new_motion = '''/* 02.2 — focus-driven sequential confidence pulse. */
+@keyframes reuse-confidence-line-pulse{
+  0%{border-color:var(--hm-line-default)}
+  50%{border-color:rgba(255,255,255,.60)}
+  100%{border-color:var(--hm-line-default)}
+}
+@keyframes reuse-confidence-trust-pulse{
+  0%{
+    border-color:var(--hm-line-default);
+    background-color:rgba(0,166,237,0);
+  }
+  50%,100%{
+    border-color:var(--hm-blue);
+    background-color:rgba(0,166,237,.20);
+  }
+}
+@keyframes reuse-confidence-trust-number-pulse{
+  0%{color:var(--hm-text-tertiary)}
+  50%,100%{color:var(--hm-blue)}
+}
+@keyframes reuse-confidence-trust-title-pulse{
+  0%{color:#fff}
+  50%,100%{color:var(--hm-blue)}
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
+  animation:reuse-confidence-line-pulse 1.7s ease-in-out 1;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+  animation:reuse-confidence-trust-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
+  animation:reuse-confidence-trust-number-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4{
+  animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
+  border-color:var(--hm-blue)!important;
+  background-color:rgba(0,166,237,.20)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held h4{
+  color:var(--hm-blue)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+  border-color:var(--hm-line-default)!important;
+  background-color:rgba(0,166,237,0)!important;
+  transition:border-color 1.7s ease-in-out,background-color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span{
+  color:var(--hm-text-tertiary)!important;
+  transition:color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting h4{
+  color:#fff!important;
+  transition:color 1.7s ease-in-out!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4{
+    animation:none!important;
+  }
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting h4{
+    transition:none!important;
+  }
+}'''
+          if old_motion not in css:
+              raise SystemExit('02.2 motion block not found')
+          css = css.replace(old_motion, new_motion, 1)
+          css_path.write_text(css)
+
+          index_path = Path('design-system/index.css')
+          index = index_path.read_text()
+          old = '@import url("./components/reuse-confidence.css?v=20260908-17");'
+          new = '@import url("./components/reuse-confidence.css?v=20260908-20");'
+          if old not in index:
+              raise SystemExit('reuse-confidence cache import not found')
+          index_path.write_text(index.replace(old, new, 1).replace('HIMART Design System v4.7', 'HIMART Design System v4.8', 1))
+
+          system_path = Path('design-system/himart-system.css')
+          system = system_path.read_text()
+          old = '@import url("./index.css?v=20260908-44");'
+          new = '@import url("./index.css?v=20260908-45");'
+          if old not in system:
+              raise SystemExit('index cache import not found')
+          system_path.write_text(system.replace(old, new, 1).replace('HIMART Shared System v3.6', 'HIMART Shared System v3.7', 1))
+
+          page_path = Path('himart-reuse.html')
+          page = page_path.read_text()
+          old = './design-system/himart-system.css?v=20260908-49'
+          new = './design-system/himart-system.css?v=20260908-50'
+          if old not in page:
+              raise SystemExit('himart-system page cache link not found')
+          page_path.write_text(page.replace(old, new, 1))
+          PY
+
+      - name: Verify 02.2 trust transition
+        shell: bash
+        run: |
+          grep -q 'border-color:var(--hm-line-default);' design-system/components/reuse-confidence.css
+          grep -q 'reuse-confidence-trust-number-pulse' design-system/components/reuse-confidence.css
+          grep -q 'reuse-confidence-trust-title-pulse' design-system/components/reuse-confidence.css
+          grep -q 'background-color:rgba(0,166,237,.20)' design-system/components/reuse-confidence.css
+          grep -q 'reuse-confidence.css?v=20260908-20' design-system/index.css
+          grep -q 'index.css?v=20260908-45' design-system/himart-system.css
+          grep -q 'himart-system.css?v=20260908-50' himart-reuse.html
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          rm -f .github/workflows/refine-reuse-022-trust-transition.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Refine Reuse 02.2 trust state animation'
+          git push origin main
