@@ -1,4 +1,4 @@
-@import url("../tokens.css?v=20260908-18");
+@import url("../tokens.css?v=20260908-19");
 @import url("../typography.css");
 
 /*
@@ -59,7 +59,7 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__copy{
   transition:opacity .12s linear!important;
 }
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
-  max-width:1280px!important;
+  max-width:var(--hm-hero-copy-max-width)!important;
   margin:0!important;
   color:var(--hm-text-primary)!important;
   font-family:var(--hm-font-ko)!important;
@@ -70,9 +70,10 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
   word-break:keep-all!important;
 }
 /* Hero description authoring contract:
-   - maximum two rendered lines on desktop and mobile;
-   - if copy would become three or more lines, shorten the authored sentence itself;
-   - never enforce the limit with line-clamp, ellipsis, fixed height or hidden overflow. */
+   - title and description share the same maximum copy rail;
+   - descriptions use natural word-unit wrapping only when they exceed that rail;
+   - do not author hard <br> solely to force a visual line break;
+   - never clamp, ellipsize, fix height or hide overflow. */
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
   display:block!important;
   width:fit-content!important;
