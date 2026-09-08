@@ -80,7 +80,7 @@ html body.reuse-current .reuse-proof-connector__active{
   stroke-linecap:round;
 }
 html body.reuse-current .reuse-proof-connector__base{
-  stroke:rgba(255,255,255,.12);
+  stroke:rgba(255,255,255,0);
 }
 html body.reuse-current .reuse-proof-connector__active{
   stroke:#fff;
@@ -98,6 +98,7 @@ html body.reuse-current .reuse-proof-connector.is-proof-connector-running .reuse
 html body.reuse-current .reuse-proof-connector.is-proof-connector-held .reuse-proof-connector__active{
   stroke-dashoffset:0;
   opacity:.30;
+  transition:opacity 400ms ease;
 }
 
 /* Lower proof circle: blue outline -> blue fill / black copy. */
