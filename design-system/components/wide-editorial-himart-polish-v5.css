@@ -1,0 +1,45 @@
+/* HIMART Wide Editorial polish — TEST ONLY v5
+   Keeps the REUSE wide contract intact while correcting Himart-specific rhythm.
+   Canonical divider-to-label spacing consumes --hm-rule-to-section-number from tokens.css.
+*/
+
+@media (min-width:1600px){
+  /* Medium-title divider rhythm: the divider stays on the chapter start line,
+     while the actual label/title starts at the canonical 32px design-system inset. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main .hm-wide-right-rail > :is(
+    .narrative-block,
+    .journey-flow-block,
+    .journey-role-block
+  ){
+    padding-top:var(--hm-rule-to-section-number)!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #brand .hm-wide-right-rail > .narrative-touchpoint-synthesis{
+    padding-top:var(--hm-rule-to-section-number)!important;
+  }
+
+  /* STANDARD UX / HIMART DIFFERENCE use article-level top rules. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .hm-wide-right-rail > .design-rule > article{
+    padding-top:var(--hm-rule-to-section-number)!important;
+  }
+
+  /* 03.2 ROLE DEFINITION is intentionally page-specific for now, not a shared DS rule. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .journey-role-grid h4{
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+    text-wrap:pretty!important;
+  }
+}
+
+/* Current Himart wide-test footer only: remove the upper divider and tighten label → case link. */
+html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap{
+  border-top:0!important;
+  padding-top:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap > div{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  gap:16px!important;
+}
