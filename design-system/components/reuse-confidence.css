@@ -137,25 +137,22 @@ html body.reuse-current .reuse-confidence-copy-group{
   width:100%;
   flex-direction:column;
   align-items:center;
-  gap:clamp(8px,4cqi,12px);
+  gap:clamp(9px,5cqi,14px);
   margin-top:clamp(12px,6cqi,18px);
 }
 html body.reuse-current .reuse-confidence-title-mask,
 html body.reuse-current .reuse-confidence-desc-mask{
   position:relative;
+  display:grid;
   width:100%;
+  height:auto;
   overflow:hidden;
-}
-html body.reuse-current .reuse-confidence-title-mask{
-  height:clamp(44px,24cqi,64px);
-}
-html body.reuse-current .reuse-confidence-desc-mask{
-  height:clamp(40px,19cqi,54px);
 }
 html body.reuse-current .reuse-confidence-title,
 html body.reuse-current .reuse-confidence-desc{
-  position:absolute;
-  inset:0;
+  position:relative;
+  inset:auto;
+  grid-area:1/1;
   display:flex;
   width:100%;
   align-items:center;
@@ -249,11 +246,9 @@ html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + 
     font-size:28.6px;
     color:rgba(255,255,255,.48);
   }
-  html body.reuse-current .reuse-confidence-title-mask{
-    height:56px;
-  }
+  html body.reuse-current .reuse-confidence-title-mask,
   html body.reuse-current .reuse-confidence-desc-mask{
-    height:48px;
+    height:auto;
   }
 }
 
