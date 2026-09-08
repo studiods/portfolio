@@ -172,6 +172,6 @@
   if (typeof reducedMotion.addEventListener === 'function') {
     reducedMotion.addEventListener('change', handleMotionChange);
   } else if (typeof reducedMotion.addListener === 'function') {
-    reducedMotion.addListener('change', handleMotionChange);
+    reducedMotion.addListener(handleMotionChange);
   }
 })();
