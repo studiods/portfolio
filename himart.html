@@ -16,7 +16,7 @@ body{font-family:Arial,sans-serif}
 (async()=>{
   'use strict';
   try{
-    const response=await fetch('./himart.html?wide-source=20260908-2',{cache:'no-store'});
+    const response=await fetch('./himart_backup_02/himart.html?wide-source=20260908-3',{cache:'no-store'});
     if(!response.ok)throw new Error('himart.html load failed');
     let html=await response.text();
 
