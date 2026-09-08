@@ -75,12 +75,12 @@ html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .r
 }
 
 /* The former centre-line animation is removed. This element now serves only as
-   the fixed 80px breathing room between the upper and lower circle rows. */
+   the fixed 64px breathing room between the upper and lower circle rows. */
 html body.reuse-current .reuse-proof-map__arrow{
   display:block!important;
   width:100%!important;
-  height:80px!important;
-  flex:0 0 80px!important;
+  height:64px!important;
+  flex:0 0 64px!important;
   pointer-events:none!important;
 }
 
@@ -224,8 +224,8 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__no
 
 @media(max-width:780px){
   html body.reuse-current .reuse-proof-map__arrow{
-    height:80px!important;
-    flex-basis:80px!important;
+    height:64px!important;
+    flex-basis:64px!important;
   }
 }
 
