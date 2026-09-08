@@ -1,32 +1,32 @@
-/* HIMART Wide Editorial polish — TEST ONLY v5.1
+/* HIMART Wide Editorial polish — TEST ONLY v5.2
    Keeps the REUSE wide contract intact while correcting Himart-specific rhythm.
-   Canonical divider-to-label spacing consumes --hm-rule-to-section-number from tokens.css.
+   Canonical medium-title divider spacing consumes --hm-space-component from tokens.css.
 */
 
 @media (min-width:1600px){
   /* Medium-title divider rhythm: the divider stays on the chapter start line,
-     while the actual label/title starts at the canonical 32px design-system inset.
+     while the actual label/title starts at the canonical 40px component inset.
      These selectors intentionally outrank the earlier wide first-child zero-inset locks. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-block,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .narrative-block,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .journey-flow-block,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .journey-role-block{
-    padding-top:var(--hm-rule-to-section-number)!important;
+    padding-top:var(--hm-space-component)!important;
   }
 
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-block:first-child,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .narrative-block:first-child{
-    padding-top:var(--hm-rule-to-section-number)!important;
+    padding-top:var(--hm-space-component)!important;
   }
 
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-touchpoint-synthesis{
-    padding-top:var(--hm-rule-to-section-number)!important;
+    padding-top:var(--hm-space-component)!important;
   }
 
   /* STANDARD UX / HIMART DIFFERENCE use article-level top rules. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child > article,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule > article{
-    padding-top:var(--hm-rule-to-section-number)!important;
+    padding-top:var(--hm-space-component)!important;
   }
 
   /* 03.2 ROLE DEFINITION is intentionally page-specific for now, not a shared DS rule. */
