@@ -90,7 +90,13 @@
   const resetCycle = () => {
     if (!active || !inFocus || document.hidden || reducedMotion.matches) return;
 
+    /* Install reset transitions while every lower node is still in its completed
+       blue/black-text animation state. Force a style resolution, then remove the
+       active class so the browser transitions from that exact visual state back
+       to black background + Himart-blue copy without a snap. */
     map.classList.add(RESET_CLASS);
+    void map.offsetWidth;
+
     anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
     solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
 
