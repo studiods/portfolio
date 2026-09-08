@@ -361,7 +361,7 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   }
   50%,100%{
     border-color:var(--hm-blue);
-    background-color:rgba(0,166,237,.20);
+    background-color:rgba(0,166,237,1);
   }
 }
 @keyframes reuse-confidence-trust-number-pulse{
@@ -369,8 +369,12 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   50%,100%{color:var(--hm-blue)}
 }
 @keyframes reuse-confidence-trust-title-pulse{
-  0%{color:#fff}
-  50%,100%{color:var(--hm-blue)}
+  0%,50%{color:#fff}
+  100%{color:#000}
+}
+@keyframes reuse-confidence-trust-desc-pulse{
+  0%,50%{color:var(--hm-description-color)}
+  100%{color:rgba(0,0,0,.60)}
 }
 @keyframes reuse-confidence-copy-base-return{
   0%{transform:translateY(-104%);opacity:.18}
@@ -392,13 +396,21 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--trust h4{
   animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
 }
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--trust p{
+  animation:reuse-confidence-trust-desc-pulse 1.7s ease-in-out 1 forwards;
+}
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
   border-color:var(--hm-blue)!important;
   background-color:rgba(0,166,237,.20)!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust h4{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span{
   color:var(--hm-blue)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust h4{
+  color:#000!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--trust p{
+  color:rgba(0,0,0,.60)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
   border-color:var(--hm-line-default)!important;
@@ -411,6 +423,10 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span{
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--trust h4{
   color:#fff!important;
+  transition:color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--trust p{
+  color:var(--hm-description-color)!important;
   transition:color 1.7s ease-in-out!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--base,
