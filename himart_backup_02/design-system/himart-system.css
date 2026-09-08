@@ -1,0 +1,393 @@
+@import url("./index.css?v=20260908-47");
+
+/*
+  HIMART Shared System v3.9 — sole final-authority layer.
+  Typography, tracking and spacing mirror the current himart.html production hierarchy.
+  Semantic text contrast is consumed from tokens.css and is not redefined here.
+*/
+:root{
+  --hm-bg-page:#000000;
+  --hm-bg-section:#000000;
+  --hm-description-max-chars:40ch;
+  --hm-inner-number-max:12px;
+  --hm-hero-ratio:16 / 9;
+  /* Final internal-page type scale: 64 / 52 / 32 / 22 / 16 / 12 / 10(source). */
+  --hm-type-hero:64px;
+  --hm-type-section:52px;
+  --hm-type-subsection:32px;
+  --hm-type-group:22px;
+  --hm-type-card-title:22px;
+  --hm-type-body:16px;
+  --hm-type-note:12px;
+  --hm-type-source:10px;
+  --hm-meta-label-value-gap:0px;
+}
+
+html body.himart-page-body,
+html body.himart-page-body #live-main,
+html body.himart-page-body #live-main > section,
+html body.himart-page-body #live-main > footer,
+html body.himart-page-body .hm-section,
+html body.himart-page-body .hm-ds-section,
+html body.himart-page-body .hm-footer{background-color:var(--hm-bg-page)!important}
+
+/* Canvas */
+html body.himart-page-body #live-main .hm-wrap,
+html body.himart-page-body #live-main .hm-ds-wrap{
+  width:min(calc(100% - 80px),var(--hm-container-wide))!important;
+  max-width:none!important;
+  margin-inline:auto!important;
+}
+
+/* Hero */
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero){
+  position:relative!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  aspect-ratio:var(--hm-hero-ratio)!important;
+  overflow:hidden!important;
+  background-color:var(--hm-bg-page)!important;
+}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) :is(.hm-movie-video,.ways-hero__image){width:100%!important;height:100%!important;object-fit:cover!important}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-movie-copy{
+  position:absolute!important;
+  top:50%!important;
+  left:0!important;
+  right:0!important;
+  transform:translateY(-50%)!important;
+  margin:0!important;
+}
+html body.himart-page-body #live-main .hm-title{
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-hero)!important;
+  font-weight:100!important;
+  line-height:1.04!important;
+  letter-spacing:var(--hm-track-hero)!important;
+  word-break:keep-all!important;
+}
+html body.himart-page-body #live-main .hm-title.stepup-en,
+html body.himart-page-body #live-main .stepup-en{
+  font-family:var(--hm-font-en)!important;
+  font-weight:300!important;
+}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead{
+  width:fit-content!important;
+  max-width:var(--hm-hero-description-width)!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  margin-top:var(--hm-title-description-gap)!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  white-space:normal!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+  -webkit-line-clamp:unset!important;
+  line-clamp:none!important;
+}
+
+/* Canonical type hierarchy: 64 / 52 / 32 / 22 / 16 / 12 / 10(source) */
+html body.himart-page-body #live-main .hm-section-title{
+  margin:0!important;
+  padding:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-section)!important;
+  font-weight:100!important;
+  line-height:1.12!important;
+  letter-spacing:var(--hm-track-section)!important;
+  word-break:keep-all!important;
+}
+html body.himart-page-body #live-main :is(.hm-subtitle,.narrative-title,.data-card-head h3,.prototype-intro h3,.sentiment-conclusion h4){
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-subsection)!important;
+  font-weight:100!important;
+  line-height:1.18!important;
+  letter-spacing:var(--hm-track-subsection)!important;
+  word-break:keep-all!important;
+}
+html body.himart-page-body #live-main :is(.hm-group-title,.problem-item h4,.proof-item h4,.signal-item h4,.behavior-card h4,.role-card h4,.flow-node h4,.direction-card h4,.stepup-card h4,.stepup-question-grid h4,.stepup-experience-grid h4,.stepup-process h4,.voice-group-title,.number-panel h4,.sentiment-title){
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group)!important;
+  font-weight:100!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.behavior-note,.stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p,.role-card p,.flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,.sentiment-keywords){
+  max-width:var(--hm-description-max-chars)!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body)!important;
+  font-weight:300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* Text integrity contract: authored prose is never shortened, clamped or ellipsized. */
+html body.himart-page-body #live-main :is(
+  .hm-lead,.hm-ds-hero__description,.hm-section-desc,.hm-ds-section__description,.hm-subcopy,.hm-ds-subsection__description,
+  .data-card-head .desc,.hm-ds-card__body,.hm-ds-role__body,.narrative-copy,.journey-block-copy,.behavior-note,
+  .stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p,.role-card p,.hm-ds-flow__node p,
+  .flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.prototype-case-copy p,.sentiment-conclusion p,
+  .sentiment-keywords,.hm-ds-numbered-list>article>p,.phone-meta p
+){
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  white-space:normal!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+  overflow-wrap:break-word!important;
+  -webkit-line-clamp:unset!important;
+  line-clamp:none!important;
+  -webkit-box-orient:initial!important;
+}
+
+html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+
+/* Source notes are a distinct 10px role; ordinary labels remain 12px. */
+html body.himart-page-body #live-main :is(.hm-source,.hm-ds-source-note,.reuse-proof-source,[data-hm-source-note]){
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-source)!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-base)!important;
+}
+
+/* Global tracking: authored Korean/English text uses the sitewide tracking tokens.
+   Dedicated numeric display components are explicitly excluded below. */
+html body.himart-page-body :is(p,li,button,label,summary,input,textarea,a){letter-spacing:var(--hm-track-base)!important}
+html body.himart-page-body #live-main :is(.hm-number,[data-hm-number],.behavior-value,.number-panel strong,.pie-center,.legend-row b,.stepup-stat-number,.proof-item>strong,.sentiment-number){
+  font-family:var(--hm-font-en)!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html body.himart-page-body #live-main :is(.behavior-value,.number-panel strong,.stepup-stat-number,.proof-item>strong,.sentiment-number){letter-spacing:var(--hm-track-data-number)!important}
+html body.himart-page-body #live-main [data-hm-number="normal"]{letter-spacing:normal!important}
+
+/* Section rhythm: 200px top / 100px bottom, final section returns to 200px bottom. */
+html body.himart-page-body #live-main > .hm-section{
+  position:relative!important;
+  z-index:2!important;
+  margin:0!important;
+  padding:var(--hm-section-padding-top) 0 var(--hm-section-padding-bottom)!important;
+  background:#000!important;
+}
+html body.himart-page-body #live-main > .hm-section:last-of-type{
+  padding-bottom:var(--hm-section-padding-bottom-last)!important;
+}
+html body.himart-page-body #live-main > .hm-section + .hm-section{margin-top:0!important}
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head{
+  display:block!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  margin:0!important;
+  padding-top:var(--hm-rule-to-section-number)!important;
+  border-top:0!important;
+  background:transparent!important;
+}
+html body.himart-page-body #live-main .hm-section-head > div{margin:0!important;padding:0!important}
+html body.himart-page-body #live-main .hm-section-head .hm-section-no{
+  display:block!important;
+  margin:0 0 16px!important;
+  padding:0!important;
+  color:var(--hm-blue)!important;
+}
+html body.himart-page-body #live-main .hm-section-head .hm-section-desc{
+  display:block!important;
+  margin:var(--hm-title-description-gap) 0 0!important;
+  padding:0!important;
+}
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
+  margin-top:var(--hm-title-to-subsection-gap)!important;
+}
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + :is(.data-list,.flow-area){
+  margin-top:var(--hm-title-to-subsection-gap)!important;
+  padding-top:0!important;
+}
+html body.himart-page-body #live-main .hm-subsection{margin:0!important;padding:var(--hm-space-component) 0 0!important}
+html body.himart-page-body #live-main .hm-subsection + .hm-subsection,
+html body.himart-page-body #live-main .hm-section > .hm-wrap > .flow-area + .hm-subsection,
+html body.himart-page-body #live-main .data-list > .data-card + .data-card{margin-top:var(--hm-subsection-gap)!important}
+html body.himart-page-body #live-main .hm-subsection.hm-ds-subsection-gap{margin-top:var(--hm-subsection-gap)!important}
+html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head){display:block!important;grid-template-columns:none!important;gap:0!important;margin:0!important}
+html body.himart-page-body #live-main .hm-subhead .hm-subno,
+html body.himart-page-body #live-main .data-card-head > :is(.hm-card-no,.hm-roman-no){
+  display:block!important;
+  width:auto!important;
+  margin:0 0 18px!important;
+  padding:0!important;
+  color:var(--hm-blue)!important;
+}
+html body.himart-page-body #live-main .hm-subhead > div,
+html body.himart-page-body #live-main .data-card-head > div{width:100%!important;margin:0!important;padding:0!important}
+html body.himart-page-body #live-main .hm-subhead + *,
+html body.himart-page-body #live-main .data-card-head + *{margin-top:var(--hm-subtitle-to-content)!important}
+
+/* Prototype explanation → media row uses the same shared 80px content rhythm. */
+html body.himart-page-body #live-main .hm-ds-prototype-grid + .hm-ds-media-grid{
+  margin-top:var(--hm-subtitle-to-content)!important;
+}
+html body.himart-page-body #live-main .hm-subtitle + .hm-subcopy,
+html body.himart-page-body #live-main .data-card-head h3 + .desc,
+html body.himart-page-body #live-main .narrative-title + .narrative-copy,
+html body.himart-page-body #live-main .prototype-intro h3 + p,
+html body.himart-page-body #live-main .sentiment-conclusion h4 + p{margin-top:var(--hm-title-description-gap)!important}
+
+/* Neutral structural divider contract — generic content rules are quiet; semantic data accents may override. */
+html body.himart-page-body #live-main :is(
+  .hm-ds-card,
+  .data-card,
+  .role-card,
+  .problem-item,
+  .signal-item
+){
+  border-top:1px solid var(--hm-line-weak)!important;
+  padding-top:var(--hm-space-20)!important;
+}
+
+/* Tables and boxed information never use vertical dividers. */
+html body.himart-page-body #live-main :is(table,thead,tbody,tfoot,tr,th,td),
+html body.himart-page-body #live-main :is(.hm-card,.data-card,.role-card,.flow-node,.ways-list > article,.ways-grid > article,.ways-flow > article){border-left:0!important;border-right:0!important}
+html body.himart-page-body #live-main :is(table,th,td){border-inline-start:0!important;border-inline-end:0!important}
+
+/* Shared GNB */
+html body.himart-page-body .hm-gnb{
+  position:fixed!important;inset:0 0 auto!important;z-index:100!important;
+  display:flex!important;justify-content:center!important;align-items:center!important;
+  width:100%!important;min-height:64px!important;margin:0!important;padding:0 40px!important;
+  color:#fff!important;background:transparent!important;
+}
+html body.himart-page-body .hm-gnb .top-center{display:flex!important;justify-content:center!important;align-items:center!important;gap:32px!important;margin:0 auto!important;padding:0!important}
+html body.himart-page-body .hm-gnb a{
+  position:relative!important;display:block!important;padding:8px 0!important;color:#fff!important;
+  font-family:var(--hm-font-en)!important;font-size:14px!important;font-weight:400!important;line-height:1!important;
+  letter-spacing:var(--hm-track-nav)!important;opacity:.72!important;
+}
+html body.himart-page-body .hm-gnb a[aria-current="page"]{opacity:1!important}
+html body.himart-page-body .hm-gnb a[aria-current="page"]::after{content:""!important;position:absolute!important;right:0!important;bottom:2px!important;left:0!important;height:1px!important;background:#fff!important}
+
+/* Shared footer */
+html body.himart-page-body .hm-footer{position:relative!important;z-index:2!important;padding:80px 0 40px!important;background:#000!important}
+html body.himart-page-body .hm-footer > .hm-wrap{display:flex!important;justify-content:space-between!important;gap:var(--hm-space-40)!important;padding-top:16px!important;border-top:1px solid var(--hm-line-default)!important}
+html body.himart-page-body .hm-footer a,
+html body.himart-page-body .hm-footer span{font-family:var(--hm-font-en)!important;font-size:12px!important;font-weight:400!important;line-height:1.5!important;letter-spacing:var(--hm-track-base)!important}
+html body.himart-page-body .hm-footer span{color:var(--hm-text-tertiary)!important}
+html body.himart-page-body .hm-footer > .hm-wrap > div{display:flex!important;gap:var(--hm-space-20)!important}
+
+html body.himart-page-body #live-main > .hm-section > .hm-wrap > :last-child,
+html body.himart-page-body #live-main .data-list > .data-card:last-child{margin-bottom:0!important}
+
+/* Canonical mobile final authority. This block deliberately sits after every shared/component import. */
+@media(max-width:780px){
+  html body.himart-page-body #live-main .hm-wrap,
+  html body.himart-page-body #live-main .hm-ds-wrap{width:calc(100% - 36px)!important}
+
+  html body.himart-page-body #live-main .hm-title,
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
+    font-size:var(--hm-type-hero-mobile)!important;
+    line-height:1.08!important;
+  }
+
+  /* High-specificity major-title lock prevents legacy wide-page rules from exceeding the hero. */
+  html body.himart-page-body #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title,
+  html body.himart-page-body #live-main .hm-section-title{
+    font-size:var(--hm-type-section-mobile)!important;
+    line-height:1.16!important;
+  }
+
+  html body.himart-page-body #live-main :is(.hm-subtitle,.narrative-title,.journey-block-title,.data-bridge-title,.data-card-head h3,.prototype-intro h3,.sentiment-conclusion h4){
+    font-size:var(--hm-type-subsection-mobile)!important;
+    line-height:1.2!important;
+  }
+  html body.himart-page-body #live-main :is(.hm-group-title,.problem-item h4,.proof-item h4,.signal-item h4,.behavior-card h4,.role-card h4,.flow-node h4,.direction-card h4,.stepup-card h4,.stepup-question-grid h4,.stepup-experience-grid h4,.stepup-process h4,.voice-group-title,.number-panel h4,.sentiment-title){
+    font-size:var(--hm-type-group-mobile)!important;
+    line-height:1.3!important;
+  }
+  html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.journey-block-copy,.behavior-note,.role-card p,.flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,.sentiment-keywords){
+    font-size:var(--hm-type-body-mobile)!important;
+  }
+  html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
+    font-size:var(--hm-type-note-mobile)!important;
+  }
+
+  /* Mobile hero rail: true 2×2 grid, equal column starts and top-aligned content. */
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__bottom{bottom:28px!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    grid-auto-rows:auto!important;
+    align-items:stretch!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    gap:0!important;
+    padding:0!important;
+    border-top:1px solid var(--hm-line-default)!important;
+    border-bottom:1px solid var(--hm-line-default)!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div{
+    display:flex!important;
+    width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    min-height:88px!important;
+    flex-direction:column!important;
+    justify-content:flex-start!important;
+    align-items:flex-start!important;
+    margin:0!important;
+    padding:14px 12px 14px 0!important;
+    border:0!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div+div{padding-left:0!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(2n){padding-left:12px!important;padding-right:0!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)!important}
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
+    margin:0 0 8px!important;
+    font-size:var(--hm-type-note-mobile)!important;
+    line-height:1!important;
+  }
+  html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta b{
+    margin:0!important;
+    font-size:var(--hm-type-note-mobile)!important;
+    line-height:1.45!important;
+    word-break:normal!important;
+    overflow-wrap:break-word!important;
+  }
+
+  html body.himart-page-body #live-main > .hm-section{
+    padding:var(--hm-section-padding-top-mobile) 0 var(--hm-section-padding-bottom-mobile)!important;
+  }
+  html body.himart-page-body #live-main > .hm-section:last-of-type{
+    padding-bottom:var(--hm-section-padding-bottom-last-mobile)!important;
+  }
+  html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area){margin-top:100px!important}
+  html body.himart-page-body #live-main .hm-subsection + .hm-subsection,
+  html body.himart-page-body #live-main .hm-section > .hm-wrap > .flow-area + .hm-subsection,
+  html body.himart-page-body #live-main .data-list > .data-card + .data-card{margin-top:80px!important}
+  html body.himart-page-body #live-main .hm-subhead + *,
+  html body.himart-page-body #live-main .data-card-head + *{margin-top:56px!important}
+  html body.himart-page-body .hm-footer{padding:60px 0 32px!important}
+  html body.himart-page-body .hm-footer > .hm-wrap{display:block!important}
+  html body.himart-page-body .hm-footer > .hm-wrap > div{margin-top:20px!important;flex-wrap:wrap!important}
+}
+/* Hero metadata contract: label and value share one vertical baseline with no gap. */
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__meta span{
+  margin-bottom:var(--hm-meta-label-value-gap)!important;
+}
