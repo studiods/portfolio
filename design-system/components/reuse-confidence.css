@@ -116,12 +116,14 @@ html body.reuse-current .reuse-confidence-node p{
   word-break:keep-all!important;
 }
 html body.reuse-current .reuse-confidence-node.is-trust{
-  border-color:var(--hm-blue);
+  border-color:var(--hm-line-default);
   background:#000;
 }
-html body.reuse-current .reuse-confidence-node.is-trust>span,
+html body.reuse-current .reuse-confidence-node.is-trust>span{
+  color:var(--hm-text-tertiary);
+}
 html body.reuse-current .reuse-confidence-node.is-trust h4{
-  color:var(--hm-blue);
+  color:#fff;
 }
 html body.reuse-current .reuse-confidence-node.is-trust p{
   color:var(--hm-description-color)!important;
@@ -285,9 +287,22 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   100%{border-color:var(--hm-line-default)}
 }
 @keyframes reuse-confidence-trust-pulse{
-  0%{background-color:rgba(0,166,237,0)}
-  50%{background-color:rgba(0,166,237,.20)}
-  100%{background-color:rgba(0,166,237,.20)}
+  0%{
+    border-color:var(--hm-line-default);
+    background-color:rgba(0,166,237,0);
+  }
+  50%,100%{
+    border-color:var(--hm-blue);
+    background-color:rgba(0,166,237,.20);
+  }
+}
+@keyframes reuse-confidence-trust-number-pulse{
+  0%{color:var(--hm-text-tertiary)}
+  50%,100%{color:var(--hm-blue)}
+}
+@keyframes reuse-confidence-trust-title-pulse{
+  0%{color:#fff}
+  50%,100%{color:var(--hm-blue)}
 }
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
   animation:reuse-confidence-line-pulse 1.7s ease-in-out 1;
@@ -295,19 +310,43 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
   animation:reuse-confidence-trust-pulse 1.7s ease-in-out 1 forwards;
 }
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
+  animation:reuse-confidence-trust-number-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4{
+  animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
+}
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
+  border-color:var(--hm-blue)!important;
   background-color:rgba(0,166,237,.20)!important;
 }
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held h4{
+  color:var(--hm-blue)!important;
+}
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+  border-color:var(--hm-line-default)!important;
   background-color:rgba(0,166,237,0)!important;
-  transition:background-color 1.7s ease-in-out!important;
+  transition:border-color 1.7s ease-in-out,background-color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span{
+  color:var(--hm-text-tertiary)!important;
+  transition:color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting h4{
+  color:#fff!important;
+  transition:color 1.7s ease-in-out!important;
 }
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
-  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4{
     animation:none!important;
   }
-  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting h4{
     transition:none!important;
   }
 }
