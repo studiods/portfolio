@@ -1,8 +1,11 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v1
+  HIMART Wide Editorial adapter — TEST ONLY v2
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
+
+  v2 also removes authored <br> elements from the LEFT major titles only, replacing
+  them with normal spaces so the browser can wrap the title naturally by words.
 */
 (() => {
   'use strict';
@@ -10,6 +13,23 @@
   const isTargetPage = () =>
     document.body?.classList.contains('hm-wide-editorial-test') &&
     document.body?.classList.contains('hm-wide-himart-test');
+
+  const normalizeMajorTitle = head => {
+    const title = head?.querySelector('.hm-section-title');
+    if (!title) return;
+    title.querySelectorAll('br').forEach(br => br.replaceWith(document.createTextNode(' ')));
+    title.normalize();
+  };
+
+  const watchMajorTitle = head => {
+    const title = head?.querySelector('.hm-section-title');
+    if (!title || title.dataset.hmWideWordWrapWatch === '1') return;
+    title.dataset.hmWideWordWrapWatch = '1';
+    normalizeMajorTitle(head);
+
+    const observer = new MutationObserver(() => normalizeMajorTitle(head));
+    observer.observe(title, {childList:true, subtree:true});
+  };
 
   const mount = () => {
     if (!isTargetPage() || window.__hmWideHimartAdapterMounted) return;
@@ -21,6 +41,8 @@
       const wrap = section.querySelector(':scope > .hm-wrap');
       const head = wrap?.querySelector(':scope > .hm-section-head');
       if (!wrap || !head) return;
+
+      watchMajorTitle(head);
 
       let rail = wrap.querySelector(':scope > .hm-wide-right-rail');
       if (!rail) {
