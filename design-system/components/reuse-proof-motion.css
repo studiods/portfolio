@@ -22,8 +22,8 @@ html body.reuse-current .reuse-proof-map__node > h4{
   z-index:3;
 }
 
-/* Top circle: 6-o'clock comet with restrained acceleration.
-   Final rotation speed is about 1.45x the opening speed. */
+/* Top circle: exact 6-o'clock comet with restrained acceleration.
+   The line now fades naturally from 30% to 100% opacity over the first .5s. */
 html body.reuse-current .reuse-proof-sweep{
   position:absolute;
   z-index:4;
@@ -33,11 +33,11 @@ html body.reuse-current .reuse-proof-sweep{
   height:calc(100% + 2px);
   border-radius:50%;
   pointer-events:none;
-  opacity:0;
+  opacity:.30;
   transform:rotate(0deg);
   transform-origin:50% 50%;
   background:conic-gradient(
-    from 180deg,
+    from 150deg,
     rgba(255,255,255,0) 0deg,
     rgba(255,255,255,.10) 7deg,
     rgba(255,255,255,.34) 15deg,
@@ -57,15 +57,15 @@ html body.reuse-current .reuse-proof-sweep{
     drop-shadow(0 0 15.75px rgba(255,255,255,.252));
 }
 
-/* 0~39.68% = one ring rotation.
-   Equal time slices move 20% -> 44% -> 71% -> 100% of the circle,
-   keeping the final speed to roughly 1.45x the opening speed. */
+/* 0~39.68% = one ring rotation. 15.87% of the master timeline is .5s.
+   The final rotation speed remains roughly 1.45x the opening speed. */
 @keyframes reuse-proof-lane-ring{
-  0%{transform:rotate(0deg);opacity:0}
-  .8%{opacity:1}
-  9.92%{transform:rotate(72deg);opacity:1}
+  0%{transform:rotate(0deg);opacity:.30}
+  9.92%{transform:rotate(72deg);opacity:.74}
+  15.87%{opacity:1}
   19.84%{transform:rotate(158.4deg);opacity:1}
   29.76%{transform:rotate(255.6deg);opacity:1}
+  36.83%{transform:rotate(330deg);opacity:1}
   39.68%{transform:rotate(360deg);opacity:1}
   39.73%{transform:rotate(360deg);opacity:0}
   100%{transform:rotate(360deg);opacity:0}
@@ -103,8 +103,8 @@ html body.reuse-current .reuse-proof-connector svg{
   overflow:visible!important;
 }
 
-/* Moving light is about 3x longer than before (15 -> 45 path units).
-   Glow is intentionally held at 50% strength while travelling downward. */
+/* Moving light is about 3x longer than the original segment.
+   Glow remains at the previously requested 50% strength. */
 html body.reuse-current .reuse-proof-connector__active{
   fill:none;
   stroke:#fff;
@@ -173,8 +173,8 @@ html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proo
   animation:reuse-proof-lane-connector var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* Lower proof circle: no directional wipe. The entire circle changes from black
-   to blue during the final 1.5s. It starts slowly and ends about 1.45x faster. */
+/* Lower proof circle. A matching white comet starts at 12 o'clock when the
+   upper comet is around 5 o'clock, then travels counter-clockwise. */
 html body.reuse-current .reuse-proof-map__node--solution{
   background-color:#000;
   border-color:var(--hm-blue)!important;
@@ -184,6 +184,57 @@ html body.reuse-current .reuse-proof-map__node--solution::before{
   content:none!important;
 }
 
+html body.reuse-current .reuse-proof-map__node--solution::after{
+  content:"";
+  position:absolute;
+  z-index:4;
+  inset:-1px;
+  display:block;
+  width:calc(100% + 2px);
+  height:calc(100% + 2px);
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transform:rotate(0deg);
+  transform-origin:50% 50%;
+  background:conic-gradient(
+    from -30deg,
+    rgba(255,255,255,0) 0deg,
+    rgba(255,255,255,.10) 7deg,
+    rgba(255,255,255,.34) 15deg,
+    rgba(255,255,255,.72) 23deg,
+    rgba(255,255,255,1) 30deg,
+    rgba(255,255,255,.72) 37deg,
+    rgba(255,255,255,.34) 45deg,
+    rgba(255,255,255,.10) 53deg,
+    rgba(255,255,255,0) 60deg,
+    rgba(255,255,255,0) 360deg
+  );
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
+  filter:
+    drop-shadow(0 0 3.15px rgba(255,255,255,1))
+    drop-shadow(0 0 8.4px rgba(255,255,255,.525))
+    drop-shadow(0 0 15.75px rgba(255,255,255,.252));
+}
+
+/* Start at 36.83% (upper ring near 5 o'clock). One lower revolution takes
+   roughly 1s; at 60.64% it reaches about 3 o'clock and the fill begins. */
+@keyframes reuse-proof-lower-ring{
+  0%,36.82%{transform:rotate(0deg);opacity:0}
+  36.83%{transform:rotate(0deg);opacity:.30}
+  43.18%{opacity:1}
+  44.77%{transform:rotate(-90deg);opacity:1}
+  52.71%{transform:rotate(-180deg);opacity:1}
+  60.64%{transform:rotate(-270deg);opacity:1}
+  68.58%{transform:rotate(-360deg);opacity:1}
+  68.63%,100%{transform:rotate(-360deg);opacity:0}
+}
+
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after{
+  animation:reuse-proof-lower-ring var(--reuse-proof-lane-duration) linear 1 both;
+}
+
 html body.reuse-current .reuse-proof-map__node--solution h4{
   position:relative;
   z-index:3;
@@ -191,22 +242,25 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
   color:var(--reuse-proof-copy-color)!important;
 }
 
+/* Fill begins as the lower comet reaches ~3 o'clock. Compared with the prior
+   1.5s change, this finishes slightly faster (~1.24s), with a fast opening and
+   progressively softer finish. */
 @keyframes reuse-proof-lane-fill{
-  0%,52.37%{background-color:#000}
-  52.38%{background-color:#000}
-  64.29%{background-color:#00212f}
-  76.19%{background-color:#004968}
-  88.10%{background-color:#0076a8}
+  0%,60.63%{background-color:#000}
+  60.64%{
+    background-color:#000;
+    animation-timing-function:cubic-bezier(.14,.72,.24,1);
+  }
   100%{background-color:var(--hm-blue)}
 }
 
 @keyframes reuse-proof-lane-copy{
-  0%,52.37%{--reuse-proof-copy-color:#00a6ed}
-  52.38%{--reuse-proof-copy-color:#00a6ed}
-  64.29%{--reuse-proof-copy-color:#33b8f1}
-  76.19%{--reuse-proof-copy-color:#70cdf5}
-  88.10%{--reuse-proof-copy-color:#b5e5fa}
-  100%{--reuse-proof-copy-color:#fff}
+  0%,60.63%{--reuse-proof-copy-color:#00a6ed}
+  60.64%{
+    --reuse-proof-copy-color:#00a6ed;
+    animation-timing-function:cubic-bezier(.14,.72,.24,1);
+  }
+  100%{--reuse-proof-copy-color:#000}
 }
 
 html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running{
@@ -221,6 +275,11 @@ html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
   background-color:#000!important;
   transition:background-color 1200ms ease-in-out!important;
+  animation:none!important;
+}
+
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after{
+  opacity:0!important;
   animation:none!important;
 }
 
@@ -254,6 +313,7 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-connect
   html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep,
   html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proof-connector__active,
   html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running,
+  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after,
   html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
     animation:none!important;
   }
