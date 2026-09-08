@@ -164,9 +164,9 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
   font-variation-settings:"wght" 300;
 }
 
-/* Fill begins near 3 o'clock. The whole circle changes together, opening a bit
-   faster and easing progressively into the final blue state. Copy becomes black
-   and gains a little weight while the circle is held in its completed state. */
+/* Fill begins near 3 o'clock. The circle keeps its existing fill timing,
+   while the already-visible and newly revealed copy turns black quickly.
+   Copy remains Pretendard Light (300) in every state. */
 @keyframes reuse-proof-lane-fill{
   0%,57.99%{background-color:#000}
   58%{
@@ -186,9 +186,13 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
     font-variation-settings:"wght" 300;
     animation-timing-function:cubic-bezier(.14,.72,.24,1);
   }
-  97.4%,100%{
+  66%{
     --reuse-proof-copy-color:#000;
-    font-variation-settings:"wght" 400;
+    font-variation-settings:"wght" 300;
+  }
+  100%{
+    --reuse-proof-copy-color:#000;
+    font-variation-settings:"wght" 300;
   }
 }
 
