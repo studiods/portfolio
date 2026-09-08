@@ -401,7 +401,7 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confid
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
   border-color:var(--hm-blue)!important;
-  background-color:rgba(0,166,237,.20)!important;
+  background-color:rgba(0,166,237,1)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span{
   color:var(--hm-blue)!important;
