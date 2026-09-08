@@ -371,19 +371,23 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   50%,100%{color:var(--hm-blue)}
 }
 @keyframes reuse-confidence-trust-title-pulse{
-  0%,50%{color:#fff}
+  0%{color:#fff}
+  22%{color:#000}
   100%{color:#000}
 }
 @keyframes reuse-confidence-trust-base-title-pulse{
-  0%,50%{color:#fff}
+  0%{color:#fff}
+  22%{color:#000}
   100%{color:#000}
 }
 @keyframes reuse-confidence-trust-desc-pulse{
-  0%,50%{color:var(--hm-description-color)}
+  0%{color:var(--hm-description-color)}
+  22%{color:rgba(0,0,0,.60)}
   100%{color:rgba(0,0,0,.60)}
 }
 @keyframes reuse-confidence-trust-base-desc-pulse{
-  0%,50%{color:var(--hm-description-color)}
+  0%{color:var(--hm-description-color)}
+  22%{color:rgba(0,0,0,.60)}
   100%{color:rgba(0,0,0,.60)}
 }
 @keyframes reuse-confidence-copy-base-return{
