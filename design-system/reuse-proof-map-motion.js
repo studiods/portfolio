@@ -6,8 +6,8 @@
 
   const anxietyNodes = Array.from(map.querySelectorAll('.reuse-proof-map__node--anxiety'));
   const solutionNodes = Array.from(map.querySelectorAll('.reuse-proof-map__node--solution'));
-  const connectorStage = map.querySelector('.reuse-proof-map__arrow');
-  if (!anxietyNodes.length || anxietyNodes.length !== solutionNodes.length || !connectorStage) return;
+  const spacer = map.querySelector('.reuse-proof-map__arrow');
+  if (!anxietyNodes.length || anxietyNodes.length !== solutionNodes.length || !spacer) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const STAGGER_RATIO = 0.30;
@@ -35,10 +35,10 @@
 
   const cssTimeToMs = (value) => {
     const token = String(value || '').trim();
-    if (!token) return 2000;
-    if (token.endsWith('ms')) return Number.parseFloat(token) || 2000;
-    if (token.endsWith('s')) return (Number.parseFloat(token) || 2) * 1000;
-    return Number.parseFloat(token) || 2000;
+    if (!token) return 3150;
+    if (token.endsWith('ms')) return Number.parseFloat(token) || 3150;
+    if (token.endsWith('s')) return (Number.parseFloat(token) || 3.15) * 1000;
+    return Number.parseFloat(token) || 3150;
   };
 
   const getLaneDuration = () => {
@@ -56,29 +56,15 @@
     });
   };
 
-  const buildConnectors = () => {
-    connectorStage.innerHTML = '';
-    return anxietyNodes.map((_, index) => {
-      const connector = document.createElement('div');
-      connector.className = 'reuse-proof-connector';
-      connector.dataset.proofConnector = String(index);
-      connector.innerHTML = `
-        <svg viewBox="0 0 12 120" preserveAspectRatio="none" aria-hidden="true">
-          <line class="reuse-proof-connector__active" x1="6" y1="0" x2="6" y2="120" pathLength="100"></line>
-        </svg>`;
-      connectorStage.appendChild(connector);
-      return connector;
-    });
-  };
-
+  /* The centre connector no longer carries motion or graphics. Keep the authored
+     element only as the fixed spacing block between the two circle rows. */
+  spacer.replaceChildren();
   ensureSweepRings();
-  const connectors = buildConnectors();
 
   const clearState = () => {
     map.classList.remove(RESET_CLASS);
     anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
     solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
-    connectors.forEach((connector) => connector.classList.remove(ACTIVE_CLASS));
   };
 
   const stop = () => {
@@ -92,18 +78,12 @@
 
     const anxiety = anxietyNodes[index];
     const solution = solutionNodes[index];
-    const connector = connectors[index];
 
     anxiety.classList.remove(ACTIVE_CLASS);
-    connector.classList.remove(ACTIVE_CLASS);
     solution.classList.remove(ACTIVE_CLASS);
     void anxiety.offsetWidth;
 
-    // One synchronized timeline owns ring, hand-off, connector and fill.
-    // Phase timing is expressed only as percentages in CSS, so there is no
-    // separate per-animation second setting and no JS buffer between phases.
     anxiety.classList.add(ACTIVE_CLASS);
-    connector.classList.add(ACTIVE_CLASS);
     solution.classList.add(ACTIVE_CLASS);
   };
 
@@ -112,7 +92,6 @@
 
     map.classList.add(RESET_CLASS);
     anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
-    connectors.forEach((connector) => connector.classList.remove(ACTIVE_CLASS));
     solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
 
     schedule(() => {
