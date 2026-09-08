@@ -7,11 +7,11 @@
 <style>
 html,body{margin:0;min-height:100%;background:#000;color:#fff}
 body{font-family:Arial,sans-serif}
-.hm-wide-loader{min-height:100vh;display:grid;place-items:center;font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.45)}
+.hm-wide-loader{min-height:100vh;background:#000}
 </style>
 </head>
 <body>
-<div class="hm-wide-loader">LOADING HIMART WIDE EDITORIAL TEST…</div>
+<div class="hm-wide-loader" aria-hidden="true"></div>
 <script>
 (async()=>{
   'use strict';
@@ -30,7 +30,7 @@ body{font-family:Arial,sans-serif}
         '<link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-10-himart">' +
         '<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260908-3">' +
         '<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-journey-v4.css?v=20260908-2">' +
-        '<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-polish-v5.css?v=20260908-1">' +
+        '<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-polish-v5.css?v=20260908-2">' +
         '</head>')
       .replace('<body class="','<body class="hm-wide-booting hm-wide-editorial-test hm-wide-himart-test ')
       .replace('./design-system/scramble-final.js?v=20260907-3','./design-system/scramble-final.js?v=20260908-himart-wide-2')
@@ -43,7 +43,7 @@ body{font-family:Arial,sans-serif}
     document.write(html);
     document.close();
   }catch(error){
-    document.body.innerHTML='<div class="hm-wide-loader">페이지를 불러오지 못했습니다.</div>';
+    document.body.innerHTML='<div class="hm-wide-loader" style="display:grid;place-items:center;color:rgba(255,255,255,.45);font-size:12px">페이지를 불러오지 못했습니다.</div>';
     console.error(error);
   }
 })();
