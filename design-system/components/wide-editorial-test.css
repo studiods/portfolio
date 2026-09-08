@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v5
+  HIMART Wide Editorial Layout — TEST ONLY v6
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -12,7 +12,7 @@
   - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
-  - Hero, navigation, footer, typography, color and component internals remain owned by the canonical design system.
+  - Hero, navigation, footer typography, color and component internals remain owned by the canonical design system.
   - Existing DOM order is preserved. The test only removes the visual box of .hm-wrap with display:contents at wide sizes.
 */
 
@@ -228,6 +228,13 @@
     62%{opacity:1;transform:translate3d(0,var(--hm-wide-rise-overshoot),0)}
     100%{opacity:1;transform:translate3d(0,0,0)}
   }
+}
+
+/* Test page footer navigation: previous / next links stay fully white on black. */
+html body.himart-page-body.hm-wide-editorial-test .hm-footer a{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  opacity:1!important;
 }
 
 @media (min-width:1600px) and (prefers-reduced-motion:reduce){
