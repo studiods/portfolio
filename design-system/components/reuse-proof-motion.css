@@ -5,7 +5,7 @@
 html body.reuse-current .reuse-proof-map__node{
   position:relative;
   isolation:isolate;
-  overflow:hidden;
+  overflow:visible;
 }
 
 html body.reuse-current .reuse-proof-map__node > h4{
