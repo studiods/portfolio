@@ -85,7 +85,7 @@ html body.reuse-current .reuse-confidence-node{
   align-items:center;
   justify-content:center;
   padding:clamp(20px,2.2vw,30px);
-  border:1px solid #fff!important;
+  border:1px solid var(--hm-line-default);
   border-radius:50%;
   background:#000;
   text-align:center;
@@ -116,29 +116,17 @@ html body.reuse-current .reuse-confidence-node p{
   word-break:keep-all!important;
 }
 html body.reuse-current .reuse-confidence-node.is-trust{
-  border-color:#fff!important;
-  background:#000!important;
+  border-color:var(--hm-blue);
+  background:#000;
 }
 html body.reuse-current .reuse-confidence-node.is-trust>span,
 html body.reuse-current .reuse-confidence-node.is-trust h4{
-  color:#fff!important;
-  font-weight:100!important;
+  color:var(--hm-blue);
 }
 html body.reuse-current .reuse-confidence-node.is-trust p{
   color:var(--hm-description-color)!important;
 }
 
-/* Trust nodes turn blue only while the sequential animation is active or held. */
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
-  border-color:var(--hm-blue)!important;
-}
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span,
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust h4,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held h4{
-  color:var(--hm-blue)!important;
-}
 html body.reuse-current .reuse-confidence-arrow{
   color:rgba(255,255,255,.48);
   font:100 31.5px/1 var(--hm-font-en);
@@ -306,10 +294,6 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
   animation:reuse-confidence-line-pulse 1.7s ease-in-out 1;
 }
 
-/* The first sequential animation is intentionally restrained to 70% opacity. */
-html body.reuse-current .reuse-confidence-row:first-child > .reuse-confidence-node:first-child.is-flow-pulse-standard{
-  opacity:.7!important;
-}
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
   animation:reuse-confidence-trust-pulse 1.7s ease-in-out 1 forwards;
 }
