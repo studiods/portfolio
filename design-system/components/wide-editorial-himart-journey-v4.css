@@ -1,0 +1,90 @@
+/* HIMART Wide Editorial — journey fluid refinement TEST ONLY v4
+   Extends the v3 wide test without touching production himart.html.
+   - 03.2 / JOURNEY REDESIGN uses the same fluid circle system as 03.1 / JOURNEY SIGNALS.
+   - Expanded journey rows keep one circle scale across row4 / row3.
+   - Left major titles wrap only at word boundaries after the test adapter removes authored <br> breaks.
+*/
+
+@media (min-width:1600px){
+  /* Major-title rail: natural word-unit wrapping. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head .hm-section-title{
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+    hyphens:none!important;
+    text-wrap:wrap!important;
+  }
+
+  /*
+    Expanded JOURNEY ANALYSIS: apply one fluid geometry contract to both
+    03.1 / JOURNEY SIGNALS and 03.2 / JOURNEY REDESIGN.
+  */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row:is(.row4,.row3){
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    justify-content:space-between!important;
+    align-items:center!important;
+    gap:var(--hm-wide-journey-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
+    flex:0 0 var(--hm-wide-journey-node-size)!important;
+    width:var(--hm-wide-journey-node-size)!important;
+    min-width:var(--hm-wide-journey-node-size)!important;
+    max-width:var(--hm-wide-journey-node-size)!important;
+    height:var(--hm-wide-journey-node-size)!important;
+    min-height:var(--hm-wide-journey-node-size)!important;
+    max-height:var(--hm-wide-journey-node-size)!important;
+    aspect-ratio:1/1!important;
+    padding:var(--hm-wide-journey-node-pad)!important;
+    border:1px solid rgba(255,255,255,.20)!important;
+    border-radius:50%!important;
+    background:#050505!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    box-sizing:border-box!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node .hm-card-no{
+    margin:0 0 clamp(10px,1.25cqw,15px)!important;
+    font-size:var(--hm-wide-journey-no-size)!important;
+    line-height:1.2!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node h4{
+    margin:0!important;
+    font-size:var(--hm-wide-journey-title-size)!important;
+    line-height:1.24!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node p{
+    margin:clamp(10px,1.45cqw,16px) 0 0!important;
+    max-width:84%!important;
+    font-size:var(--hm-wide-journey-copy-size)!important;
+    line-height:1.42!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow{
+    flex:0 0 var(--hm-wide-journey-arrow-size)!important;
+    width:var(--hm-wide-journey-arrow-size)!important;
+    min-width:var(--hm-wide-journey-arrow-size)!important;
+    height:clamp(34px,4cqw,44px)!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow::before{
+    width:clamp(12px,1.45cqw,16px)!important;
+    height:clamp(12px,1.45cqw,16px)!important;
+  }
+
+  /* Production group rules contain fixed pixel line widths; in the split rail they must follow the available width. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-group{
+    --line-left:0px!important;
+    --line-width:100%!important;
+    min-width:0!important;
+  }
+}
