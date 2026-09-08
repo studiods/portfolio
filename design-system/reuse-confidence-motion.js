@@ -2,27 +2,42 @@
   'use strict';
 
   const flow = document.querySelector('.reuse-confidence-flow');
-  if (!flow) return;
+  const stage = flow && flow.querySelector('[data-reuse-confidence-stage]');
+  if (!flow || !stage) return;
 
-  const nodes = Array.from(flow.querySelectorAll('.reuse-confidence-node'));
-  const trustNodes = nodes.filter((node) => node.classList.contains('is-trust'));
-  if (!nodes.length) return;
+  const allItems = Array.from(stage.querySelectorAll('.reuse-confidence-item'));
+  const trustItems = allItems
+    .filter((item) => item.classList.contains('is-trust-item'))
+    .sort((a, b) => Number(a.dataset.trustStep) - Number(b.dataset.trustStep));
+
+  if (!allItems.length || !trustItems.length) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const STEP_DELAY = 600;
-  const PULSE_DURATION = 1700;
-  const FINAL_HOLD = 2000;
-  const RESET_DURATION = 1700;
-  const RESTART_DELAY = 2000;
-  const STANDARD_CLASS = 'is-flow-pulse-standard';
-  const TRUST_CLASS = 'is-flow-pulse-trust';
-  const HELD_CLASS = 'is-flow-trust-held';
-  const RESET_CLASS = 'is-flow-trust-resetting';
+  const INITIAL_DELAY = 450;
+  const STEP_INTERVAL = 620;
+  const MOVE_DURATION = 700;
+  const ENTER_DURATION = 520;
+  const MOVE_EASING = 'cubic-bezier(.22,.8,.28,1)';
+  const ENTER_EASING = 'cubic-bezier(.16,.84,.32,1)';
 
-  let active = false;
   let inFocus = false;
+  let hasPlayed = false;
   let timers = [];
-  let resetFrame = 0;
+  let animations = [];
+
+  const visibleItems = () => allItems.filter((item) => !item.classList.contains('is-pending'));
+
+  const clearTimers = () => {
+    timers.forEach((timer) => window.clearTimeout(timer));
+    timers = [];
+  };
+
+  const clearAnimations = () => {
+    animations.forEach((animation) => {
+      try { animation.cancel(); } catch (_) {}
+    });
+    animations = [];
+  };
 
   const schedule = (callback, delay) => {
     const timer = window.setTimeout(callback, delay);
@@ -30,122 +45,210 @@
     return timer;
   };
 
-  const clearTimers = () => {
-    timers.forEach((timer) => window.clearTimeout(timer));
-    timers = [];
-    if (resetFrame) {
-      window.cancelAnimationFrame(resetFrame);
-      resetFrame = 0;
-    }
+  const readRects = (items) => {
+    const map = new Map();
+    items.forEach((item) => map.set(item.dataset.flowKey, item.getBoundingClientRect()));
+    return map;
   };
 
-  const clearNodeClasses = () => {
-    nodes.forEach((node) => node.classList.remove(
-      STANDARD_CLASS,
-      TRUST_CLASS,
-      HELD_CLASS,
-      RESET_CLASS
-    ));
+  const markFlowEnds = () => {
+    const items = visibleItems();
+    items.forEach((item) => item.classList.remove('is-row-end', 'is-last-visible'));
+    if (!items.length) return;
+
+    const rows = [];
+    items.forEach((item) => {
+      const top = Math.round(item.getBoundingClientRect().top);
+      let row = rows.find((candidate) => Math.abs(candidate.top - top) <= 2);
+      if (!row) {
+        row = { top, items: [] };
+        rows.push(row);
+      }
+      row.items.push(item);
+    });
+
+    rows.forEach((row) => {
+      row.items.sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+      row.items[row.items.length - 1].classList.add('is-row-end');
+    });
+    items[items.length - 1].classList.add('is-last-visible');
   };
 
-  const stop = () => {
-    active = false;
+  const animateExistingItems = (beforeRects, items) => {
+    items.forEach((item) => {
+      const before = beforeRects.get(item.dataset.flowKey);
+      if (!before) return;
+      const after = item.getBoundingClientRect();
+      const dx = before.left - after.left;
+      const dy = before.top - after.top;
+      if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+
+      const animation = item.animate(
+        [
+          { transform: `translate(${dx}px, ${dy}px)` },
+          { transform: 'translate(0, 0)' }
+        ],
+        {
+          duration: MOVE_DURATION,
+          easing: MOVE_EASING,
+          fill: 'both'
+        }
+      );
+      animations.push(animation);
+      animation.finished.finally(() => {
+        try { animation.cancel(); } catch (_) {}
+      });
+    });
+  };
+
+  const animateTrustEntry = (item, anchorRect) => {
+    const node = item.querySelector('.reuse-confidence-node');
+    if (!node) return;
+
+    const finalRect = node.getBoundingClientRect();
+    const anchorCenterX = anchorRect.left + (anchorRect.width / 2);
+    const anchorCenterY = anchorRect.top + (anchorRect.height / 2);
+    const finalCenterX = finalRect.left + (finalRect.width / 2);
+    const finalCenterY = finalRect.top + (finalRect.height / 2);
+    const dx = anchorCenterX - finalCenterX;
+    const dy = anchorCenterY - finalCenterY;
+
+    item.classList.add('is-entering');
+
+    const opacityAnimation = item.animate(
+      [{ opacity: 0.2 }, { opacity: 1 }],
+      {
+        duration: ENTER_DURATION,
+        easing: ENTER_EASING,
+        fill: 'both'
+      }
+    );
+
+    const nodeAnimation = node.animate(
+      [
+        { transform: `translate(${dx}px, ${dy}px) scale(.84)` },
+        { transform: 'translate(0, 0) scale(1)' }
+      ],
+      {
+        duration: MOVE_DURATION,
+        easing: MOVE_EASING,
+        fill: 'both'
+      }
+    );
+
+    animations.push(opacityAnimation, nodeAnimation);
+
+    Promise.allSettled([opacityAnimation.finished, nodeAnimation.finished]).then(() => {
+      item.classList.remove('is-entering');
+      try { opacityAnimation.cancel(); } catch (_) {}
+      try { nodeAnimation.cancel(); } catch (_) {}
+      markFlowEnds();
+    });
+  };
+
+  const revealTrustItem = (item) => {
+    if (!inFocus || !item.classList.contains('is-pending')) return;
+
+    const currentItems = visibleItems();
+    const beforeRects = readRects(currentItems);
+    const anchor = stage.querySelector(`[data-flow-key="${item.dataset.anchorKey}"]`);
+    const anchorRect = anchor
+      ? anchor.getBoundingClientRect()
+      : currentItems[currentItems.length - 1].getBoundingClientRect();
+
+    item.classList.remove('is-pending');
+    item.removeAttribute('aria-hidden');
+
+    void stage.offsetWidth;
+
+    markFlowEnds();
+    animateExistingItems(beforeRects, currentItems);
+    animateTrustEntry(item, anchorRect);
+  };
+
+  const showFinalStateWithoutMotion = () => {
     clearTimers();
-    clearNodeClasses();
+    clearAnimations();
+    trustItems.forEach((item) => {
+      item.classList.remove('is-pending', 'is-entering');
+      item.removeAttribute('aria-hidden');
+    });
+    markFlowEnds();
+    hasPlayed = true;
   };
 
-  const pulseNode = (node) => {
-    node.classList.remove(STANDARD_CLASS, TRUST_CLASS, HELD_CLASS, RESET_CLASS);
-    void node.offsetWidth;
+  const reset = () => {
+    clearTimers();
+    clearAnimations();
+    trustItems.forEach((item) => {
+      item.classList.add('is-pending');
+      item.classList.remove('is-entering');
+      item.setAttribute('aria-hidden', 'true');
+      item.style.removeProperty('opacity');
+      item.style.removeProperty('transform');
+      const node = item.querySelector('.reuse-confidence-node');
+      if (node) node.style.removeProperty('transform');
+    });
+    allItems.forEach((item) => item.classList.remove('is-row-end', 'is-last-visible'));
+    hasPlayed = false;
+    requestAnimationFrame(markFlowEnds);
+  };
 
-    if (node.classList.contains('is-trust')) {
-      node.classList.add(TRUST_CLASS);
-      schedule(() => {
-        if (!active) return;
-        node.classList.remove(TRUST_CLASS);
-        node.classList.add(HELD_CLASS);
-      }, PULSE_DURATION);
+  const play = () => {
+    if (!inFocus || hasPlayed || document.hidden) return;
+
+    if (reducedMotion.matches) {
+      showFinalStateWithoutMotion();
       return;
     }
 
-    node.classList.add(STANDARD_CLASS);
-    schedule(() => {
-      node.classList.remove(STANDARD_CLASS);
-    }, PULSE_DURATION);
-  };
-
-  const beginGlobalReset = () => {
-    if (!active || document.hidden || reducedMotion.matches) return;
-
-    trustNodes.forEach((node) => {
-      node.classList.remove(TRUST_CLASS, RESET_CLASS);
-      node.classList.add(HELD_CLASS);
-    });
-
-    resetFrame = window.requestAnimationFrame(() => {
-      resetFrame = window.requestAnimationFrame(() => {
-        if (!active) return;
-        trustNodes.forEach((node) => {
-          node.classList.add(RESET_CLASS);
-          node.classList.remove(HELD_CLASS);
-        });
-        resetFrame = 0;
-      });
-    });
-
-    schedule(() => {
-      if (!active) return;
-      trustNodes.forEach((node) => node.classList.remove(RESET_CLASS, HELD_CLASS, TRUST_CLASS));
+    hasPlayed = true;
+    trustItems.forEach((item, index) => {
       schedule(() => {
-        if (active && inFocus && !document.hidden && !reducedMotion.matches) runCycle();
-      }, RESTART_DELAY);
-    }, RESET_DURATION);
-  };
-
-  const runCycle = () => {
-    if (!active || !inFocus || reducedMotion.matches || document.hidden) return;
-
-    clearTimers();
-    clearNodeClasses();
-
-    nodes.forEach((node, index) => {
-      schedule(() => {
-        if (active && inFocus && !document.hidden) pulseNode(node);
-      }, index * STEP_DELAY);
+        if (inFocus && !document.hidden) revealTrustItem(item);
+      }, INITIAL_DELAY + (index * STEP_INTERVAL));
     });
-
-    const sequenceEnd = ((nodes.length - 1) * STEP_DELAY) + PULSE_DURATION;
-    schedule(beginGlobalReset, sequenceEnd + FINAL_HOLD);
-  };
-
-  const start = () => {
-    if (active || reducedMotion.matches || document.hidden || !inFocus) return;
-    active = true;
-    runCycle();
   };
 
   const observer = new IntersectionObserver((entries) => {
     const entry = entries[0];
     inFocus = Boolean(entry && entry.isIntersecting);
-    if (inFocus) start();
-    else stop();
+
+    if (inFocus) {
+      markFlowEnds();
+      play();
+    } else {
+      reset();
+    }
   }, {
     root: null,
-    rootMargin: '-25% 0px -25% 0px',
-    threshold: 0.15
+    rootMargin: '-18% 0px -18% 0px',
+    threshold: 0.18
   });
 
   observer.observe(flow);
+  requestAnimationFrame(markFlowEnds);
+
+  window.addEventListener('resize', () => {
+    if (!inFocus) return;
+    requestAnimationFrame(markFlowEnds);
+  }, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop();
-    else if (inFocus) start();
+    if (document.hidden) {
+      reset();
+    } else if (inFocus) {
+      play();
+    }
   });
 
   const handleMotionChange = () => {
-    if (reducedMotion.matches) stop();
-    else if (inFocus) start();
+    if (!inFocus) return;
+    reset();
+    if (reducedMotion.matches) showFinalStateWithoutMotion();
+    else play();
   };
+
   if (typeof reducedMotion.addEventListener === 'function') {
     reducedMotion.addEventListener('change', handleMotionChange);
   } else if (typeof reducedMotion.addListener === 'function') {
