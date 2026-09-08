@@ -5,7 +5,8 @@
   - each visible character resolves to its final glyph independently and never becomes random again;
   - after the final character resolves, authored HTML is restored on the next frame so there is no visible jump;
   - each title runs once per page lifecycle. Scrolling away never re-arms the scramble;
-  - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title.
+  - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title;
+  - wide-editorial chapter titles begin scrambling only after their actual rise/reveal has started.
 */
 (() => {
   'use strict';
@@ -16,9 +17,13 @@
   const stateByElement = new WeakMap();
   const activeAnimations = new Set();
   const observed = new WeakSet();
-  const WIDE_CHAPTER_FOCUS_DELAY = 1000;
+  const WIDE_CHAPTER_RISE_SYNC_DELAY = 90;
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
+  const isWideEditorialChapter = (element, kind) =>
+    kind === 'chapter' &&
+    document.body?.classList.contains('hm-wide-editorial-test') &&
+    !!element.closest('.hm-section-head');
 
   const cloneWithCharacters = (node, chars) => {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -187,6 +192,45 @@
     });
   };
 
+  /*
+    Wide editorial titles must not use their own viewport intersection as the trigger.
+    A sticky/grid title can intersect well before the visible rise begins, which lets the
+    scramble finish offscreen. Instead, watch the parent reveal unit and start only after
+    animation.js adds .is-visible. A short 90ms sync delay lets the title visibly begin
+    moving upward before the random glyphs start, so both motions are seen together.
+  */
+  const registerWideChapterRiseTrigger = (element, kind, fallbackObserver) => {
+    const head = element.closest('.hm-section-head');
+    if (!head || !('MutationObserver' in window)) {
+      fallbackObserver?.observe(element);
+      return;
+    }
+
+    let mutationObserver = null;
+    let timer = 0;
+
+    const launch = () => {
+      if (!head.classList.contains('is-visible')) return;
+      mutationObserver?.disconnect();
+      mutationObserver = null;
+      if (timer) return;
+      timer = window.setTimeout(() => {
+        timer = 0;
+        if (!document.contains(element)) return;
+        startScramble(element, kind);
+      }, WIDE_CHAPTER_RISE_SYNC_DELAY);
+    };
+
+    if (head.classList.contains('is-visible')) {
+      requestAnimationFrame(launch);
+      return;
+    }
+
+    mutationObserver = new MutationObserver(launch);
+    mutationObserver.observe(head, {attributes:true, attributeFilter:['class']});
+    requestAnimationFrame(launch);
+  };
+
   const register = (element, kind, observer) => {
     if (!element || observed.has(element)) return;
     captureSource(element);
@@ -198,6 +242,12 @@
       return;
     }
     element.dataset.hmScrambleKind = kind;
+
+    if (isWideEditorialChapter(element, kind)) {
+      registerWideChapterRiseTrigger(element, kind, observer);
+      return;
+    }
+
     observer.observe(element);
   };
 
@@ -206,19 +256,8 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const element = entry.target;
-          const kind = element.dataset.hmScrambleKind || 'chapter';
           observer.unobserve(element);
-
-          /*
-            Wide editorial chapter titles first complete their visual focus/rise,
-            then start the scramble one second later. Hero and canonical pages keep
-            their existing immediate trigger behavior.
-          */
-          if (kind === 'chapter' && document.body?.classList.contains('hm-wide-editorial-test')) {
-            window.setTimeout(() => startScramble(element, kind), WIDE_CHAPTER_FOCUS_DELAY);
-            return;
-          }
-          startScramble(element, kind);
+          startScramble(element, element.dataset.hmScrambleKind || 'chapter');
         });
       }, {threshold:.24, rootMargin:'0px 0px -6% 0px'})
     : null;
