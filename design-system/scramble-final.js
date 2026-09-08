@@ -3,7 +3,9 @@
   Contract:
   - authored HTML is the immutable source of truth;
   - each visible character resolves to its final glyph independently and never becomes random again;
-  - after the final character resolves, authored HTML is restored on the next frame so there is no visible jump;
+  - normal pages restore authored HTML after completion;
+  - Himart wide-test chapter titles keep their already-resolved character DOM after completion,
+    avoiding a second visual reflow caused solely by swapping spans back to text nodes;
   - each title runs once per page lifecycle. Scrolling away never re-arms the scramble;
   - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title;
   - wide-editorial chapter titles begin scrambling only after their actual rise/reveal has started.
@@ -23,6 +25,11 @@
   const isWideEditorialChapter = (element, kind) =>
     kind === 'chapter' &&
     document.body?.classList.contains('hm-wide-editorial-test') &&
+    !!element.closest('.hm-section-head');
+  const isHimartWideChapter = (element, state) =>
+    state?.kind === 'chapter' &&
+    document.body?.classList.contains('hm-wide-editorial-test') &&
+    document.body?.classList.contains('hm-wide-himart-test') &&
     !!element.closest('.hm-section-head');
 
   const cloneWithCharacters = (node, chars) => {
@@ -83,7 +90,10 @@
     }
 
     const finalize = () => {
-      if (document.contains(element) && ownsAnimatedDOM(element, state)) restoreAuthoredHTML(element, state);
+      const preserveResolvedMarkup = !immediate && isHimartWideChapter(element, state);
+      if (!preserveResolvedMarkup && document.contains(element) && ownsAnimatedDOM(element, state)) {
+        restoreAuthoredHTML(element, state);
+      }
       state.completed = true;
       state.running = false;
       activeAnimations.delete(element);
@@ -168,7 +178,7 @@
       });
 
       if (resolved === count || elapsed >= totalDuration) {
-        /* All visible glyphs are final BEFORE the original markup is restored. */
+        /* All visible glyphs are already final before settle; wide Himart keeps this exact DOM. */
         settle(element, false);
         return;
       }
