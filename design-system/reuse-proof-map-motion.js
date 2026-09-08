@@ -10,19 +10,12 @@
   if (!anxietyNodes.length || anxietyNodes.length !== solutionNodes.length || !connectorStage) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  const LANE_DURATION = 2000;
-  const STAGGER = LANE_DURATION * 0.30;
-  const RING_DURATION = 1250;
-  const CONNECTOR_DURATION = 400;
-  const FILL_DURATION = 350;
+  const STAGGER_RATIO = 0.30;
   const FINAL_HOLD = 5000;
   const RESET_DURATION = 1200;
   const RESTART_DELAY = 900;
 
-  const RING_CLASS = 'is-proof-ring-running';
-  const CONNECTOR_RUN_CLASS = 'is-proof-connector-running';
-  const SOLUTION_FILLED_CLASS = 'is-proof-solution-filled';
+  const ACTIVE_CLASS = 'is-proof-lane-running';
   const RESET_CLASS = 'is-proof-resetting';
 
   let timers = [];
@@ -38,6 +31,19 @@
   const clearTimers = () => {
     timers.forEach((timer) => window.clearTimeout(timer));
     timers = [];
+  };
+
+  const cssTimeToMs = (value) => {
+    const token = String(value || '').trim();
+    if (!token) return 2000;
+    if (token.endsWith('ms')) return Number.parseFloat(token) || 2000;
+    if (token.endsWith('s')) return (Number.parseFloat(token) || 2) * 1000;
+    return Number.parseFloat(token) || 2000;
+  };
+
+  const getLaneDuration = () => {
+    const styles = window.getComputedStyle(map);
+    return cssTimeToMs(styles.getPropertyValue('--reuse-proof-lane-duration'));
   };
 
   const ensureSweepRings = () => {
@@ -70,9 +76,9 @@
 
   const clearState = () => {
     map.classList.remove(RESET_CLASS);
-    anxietyNodes.forEach((node) => node.classList.remove(RING_CLASS));
-    solutionNodes.forEach((node) => node.classList.remove(SOLUTION_FILLED_CLASS));
-    connectors.forEach((connector) => connector.classList.remove(CONNECTOR_RUN_CLASS));
+    anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
+    solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
+    connectors.forEach((connector) => connector.classList.remove(ACTIVE_CLASS));
   };
 
   const stop = () => {
@@ -88,38 +94,26 @@
     const solution = solutionNodes[index];
     const connector = connectors[index];
 
-    anxiety.classList.remove(RING_CLASS);
-    connector.classList.remove(CONNECTOR_RUN_CLASS);
-    solution.classList.remove(SOLUTION_FILLED_CLASS);
+    anxiety.classList.remove(ACTIVE_CLASS);
+    connector.classList.remove(ACTIVE_CLASS);
+    solution.classList.remove(ACTIVE_CLASS);
     void anxiety.offsetWidth;
 
-    anxiety.classList.add(RING_CLASS);
-
-    schedule(() => {
-      if (!active || !inFocus) return;
-      anxiety.classList.remove(RING_CLASS);
-      connector.classList.add(CONNECTOR_RUN_CLASS);
-    }, RING_DURATION);
-
-    schedule(() => {
-      if (!active || !inFocus) return;
-      connector.classList.remove(CONNECTOR_RUN_CLASS);
-      solution.classList.add(SOLUTION_FILLED_CLASS);
-    }, RING_DURATION + CONNECTOR_DURATION);
-
-    schedule(() => {
-      if (!active || !inFocus) return;
-      solution.classList.add(SOLUTION_FILLED_CLASS);
-    }, RING_DURATION + CONNECTOR_DURATION + FILL_DURATION);
+    // One synchronized timeline owns ring, hand-off, connector and fill.
+    // Phase timing is expressed only as percentages in CSS, so there is no
+    // separate per-animation second setting and no JS buffer between phases.
+    anxiety.classList.add(ACTIVE_CLASS);
+    connector.classList.add(ACTIVE_CLASS);
+    solution.classList.add(ACTIVE_CLASS);
   };
 
   const resetCycle = () => {
     if (!active || !inFocus || document.hidden || reducedMotion.matches) return;
 
     map.classList.add(RESET_CLASS);
-    anxietyNodes.forEach((node) => node.classList.remove(RING_CLASS));
-    connectors.forEach((connector) => connector.classList.remove(CONNECTOR_RUN_CLASS));
-    solutionNodes.forEach((node) => node.classList.remove(SOLUTION_FILLED_CLASS));
+    anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
+    connectors.forEach((connector) => connector.classList.remove(ACTIVE_CLASS));
+    solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
 
     schedule(() => {
       if (!active) return;
@@ -135,11 +129,14 @@
     clearTimers();
     clearState();
 
+    const laneDuration = getLaneDuration();
+    const stagger = laneDuration * STAGGER_RATIO;
+
     anxietyNodes.forEach((_, index) => {
-      schedule(() => runLane(index), index * STAGGER);
+      schedule(() => runLane(index), index * stagger);
     });
 
-    const finalLaneEnd = ((anxietyNodes.length - 1) * STAGGER) + LANE_DURATION;
+    const finalLaneEnd = ((anxietyNodes.length - 1) * stagger) + laneDuration;
     schedule(resetCycle, finalLaneEnd + FINAL_HOLD);
   };
 
@@ -175,6 +172,6 @@
   if (typeof reducedMotion.addEventListener === 'function') {
     reducedMotion.addEventListener('change', handleMotionChange);
   } else if (typeof reducedMotion.addListener === 'function') {
-    reducedMotion.addListener(handleMotionChange);
+    reducedMotion.addListener('change', handleMotionChange);
   }
 })();
