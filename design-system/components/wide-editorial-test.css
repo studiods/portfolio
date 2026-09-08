@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v4
+  HIMART Wide Editorial Layout — TEST ONLY v5
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -7,10 +7,11 @@
   - < 1600px: no layout override; the canonical Himart design system remains unchanged.
   - >= 1600px: 01–04 major sections opt into the wide editorial split.
   - Left major title is CSS-sticky, matching the index.html WORKS principle (no JS position control).
-  - No extra title-collision gap is added between chapters; existing section rhythm provides the spacing.
+  - No extra title-collision gap is added between chapters; existing title collision spacing remains 0px.
+  - Right-rail major chapter content starts 400px after the previous chapter content boundary.
   - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
-  - Right-rail authored .hm-reveal blocks rise from below and settle with a subtle magnetic snap.
+  - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
   - Hero, navigation, footer, typography, color and component internals remain owned by the canonical design system.
   - Existing DOM order is preserved. The test only removes the visual box of .hm-wrap with display:contents at wide sizes.
 */
@@ -18,14 +19,15 @@
 @media (min-width:1600px){
   html body.himart-page-body.hm-wide-editorial-test{
     --hm-wide-title-collision-gap:0px;
+    --hm-wide-major-content-gap:400px;
     --hm-wide-left-min:400px;
     --hm-wide-left-max:440px;
     --hm-wide-column-gap-min:80px;
     --hm-wide-column-gap-max:100px;
     --hm-wide-right-max:1060px;
     --hm-wide-edge-min:64px;
-    --hm-wide-rise-distance:52px;
-    --hm-wide-magnetic-ease:cubic-bezier(.18,1.28,.30,1);
+    --hm-wide-rise-distance:56px;
+    --hm-wide-rise-overshoot:-7px;
   }
 
   /* Full-bleed black section plane + centered editorial rails. */
@@ -65,7 +67,8 @@
 
   /*
     01 keeps the canonical Hero-to-content opening space.
-    From 02 onward no additional collision spacing is introduced.
+    From 02 onward no title-collision padding is introduced.
+    The 400px chapter rhythm is applied only to the RIGHT content rail below.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section{
     padding-top:var(--hm-section-padding-top)!important;
@@ -85,6 +88,7 @@
     width:100%!important;
   }
 
+  /* Sticky major-title rail. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
     grid-column:2!important;
     position:sticky!important;
@@ -125,16 +129,21 @@
     max-width:32ch!important;
   }
 
-  /* First right-hand block aligns with its chapter title. */
+  /* 01 starts with the canonical opening rhythm. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
     margin-top:0!important;
     padding-top:var(--hm-rule-to-section-number)!important;
   }
+
+  /*
+    Major chapter spacing: 02–04 right-rail content begins 400px lower.
+    The left major titles still collide/release with 0px additional spacing.
+  */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
     margin-top:0!important;
-    padding-top:0!important;
+    padding-top:var(--hm-wide-major-content-gap)!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap + .hm-wrap > .hm-subsection:first-child{
@@ -142,31 +151,53 @@
   }
 
   /*
-    Magnetic rise: content enters from below, slightly overshoots its final Y position,
-    then settles back as if softly attracted to the layout baseline.
+    Magnetic reveal unit = medium-title content block.
+    Start almost opaque so the eye can read the motion, overshoot by 7px,
+    then settle onto the layout baseline. Nested reveal nodes are neutralized
+    so one subsection moves as a single authored unit rather than in fragments.
   */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-reveal:not(.hm-section-head),
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target:not(.hm-section-head){
-    opacity:0!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal{
+    opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
-    transition:
-      opacity .58s ease-out,
-      transform .88s var(--hm-wide-magnetic-ease)!important;
+    transition:none!important;
     will-change:opacity,transform;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-reveal.is-visible:not(.hm-section-head),
+
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible{
+    animation:hm-wide-magnetic-rise .76s cubic-bezier(.22,.78,.22,1) both!important;
+  }
+
+  /* Child motion is absorbed into the subsection-level magnetic unit. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#journey,#direction).hm-section .hm-subsection.hm-reveal .hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-card.hm-reveal .hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+
+  /* Standalone reveal blocks keep the canonical design-system motion. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target:not(.hm-section-head){
+    opacity:0!important;
+    transform:translate3d(0,40px,0)!important;
+    transition:opacity .58s ease-out,transform .82s cubic-bezier(.22,1,.36,1)!important;
+  }
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target.is-visible:not(.hm-section-head){
     opacity:1!important;
-    transform:translate3d(0,0,0)!important;
+    transform:none!important;
   }
 
   /* Major title entrance + sticky exit fade are composed through one runtime variable. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal{
     opacity:0!important;
     transform:translate3d(0,32px,0)!important;
-    transition:
-      opacity .68s ease,
-      transform .88s cubic-bezier(.22,1,.36,1)!important;
+    transition:opacity .68s ease,transform .88s cubic-bezier(.22,1,.36,1)!important;
   }
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal.is-visible{
     opacity:var(--hm-wide-title-exit-opacity,1)!important;
@@ -191,6 +222,12 @@
     min-width:0!important;
     max-width:100%!important;
   }
+
+  @keyframes hm-wide-magnetic-rise{
+    0%{opacity:.88;transform:translate3d(0,var(--hm-wide-rise-distance),0)}
+    62%{opacity:1;transform:translate3d(0,var(--hm-wide-rise-overshoot),0)}
+    100%{opacity:1;transform:translate3d(0,0,0)}
+  }
 }
 
 @media (min-width:1600px) and (prefers-reduced-motion:reduce){
@@ -198,5 +235,6 @@
     opacity:1!important;
     transform:none!important;
     transition:none!important;
+    animation:none!important;
   }
 }
