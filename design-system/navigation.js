@@ -210,3 +210,69 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once:true});
   else mount();
 })();
+
+/*
+  TEST-ONLY wide editorial sticky-title exit treatment.
+  Guarded by .hm-wide-editorial-test so production Himart / Reuse pages are untouched.
+  CSS sticky owns all movement; this runtime only derives opacity from the amount
+  the browser has already pushed the current title above its 14vh sticky anchor.
+*/
+(() => {
+  'use strict';
+
+  const mountWideEditorialExit = () => {
+    if (!document.body.classList.contains('hm-wide-editorial-test')) return;
+    if (window.__hmWideEditorialExitMounted) return;
+    window.__hmWideEditorialExitMounted = true;
+
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const wideQuery = window.matchMedia('(min-width:1600px)');
+    const sections = [...document.querySelectorAll('#live-main > :is(#brand,#data,#journey,#direction).hm-section')];
+    const heads = sections.map(section => section.querySelector('.hm-section-head')).filter(Boolean);
+    if (!heads.length) return;
+
+    /* Ensure the canonical reveal observer sees any newly authored test targets. */
+    window.__hmAnimationScan?.();
+
+    let raf = 0;
+    const reset = () => heads.forEach(head => head.style.removeProperty('--hm-wide-title-exit-opacity'));
+
+    const update = () => {
+      raf = 0;
+      if (!wideQuery.matches || reduce) {
+        reset();
+        return;
+      }
+
+      const stickyTop = window.innerHeight * 0.14;
+      heads.forEach((head, index) => {
+        if (index === heads.length - 1 || !head.classList.contains('is-visible')) {
+          head.style.setProperty('--hm-wide-title-exit-opacity', '1');
+          return;
+        }
+
+        const rect = head.getBoundingClientRect();
+        const pushed = Math.max(0, stickyTop - rect.top);
+        const fadeDistance = Math.max(120, Math.min(220, rect.height * 0.9));
+        const progress = Math.min(1, pushed / fadeDistance);
+        const opacity = Math.max(0.08, 1 - progress * 0.92);
+        head.style.setProperty('--hm-wide-title-exit-opacity', opacity.toFixed(3));
+      });
+    };
+
+    const requestUpdate = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', requestUpdate, {passive:true});
+    window.addEventListener('resize', requestUpdate);
+    wideQuery.addEventListener?.('change', requestUpdate);
+    update();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountWideEditorialExit, {once:true});
+  } else {
+    mountWideEditorialExit();
+  }
+})();
