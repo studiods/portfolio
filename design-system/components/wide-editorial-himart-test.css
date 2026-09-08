@@ -1,6 +1,6 @@
 /*
-  HIMART Wide Editorial — HIMART adapter TEST ONLY v1
-  Reuses the canonical REUSE wide-editorial rules and only maps structural differences in himart.html.
+  HIMART Wide Editorial — HIMART adapter TEST ONLY v2
+  Applies the current REUSE wide-editorial contract to the current himart.html runtime DOM.
 
   Shared behavior remains owned by wide-editorial-test.css:
   - >=1600px left sticky major-title rail + right scrolling content rail
@@ -8,94 +8,115 @@
   - zero extra title-collision gap
   - full-bleed black section plane
   - major-title 30% -> 100% rise treatment
-  - subsection-level magnetic reveal
-  - sticky exit fade + scramble timing via shared runtime
+  - sticky exit fade / scramble behavior
+
+  This adapter only solves the structural difference: himart.html rewrites each chapter
+  at runtime (narrative-block / principle-grid / design-rule). A test-only JS groups every
+  post-title child into .hm-wide-right-rail after that rewrite is complete.
 */
 
 @media (min-width:1600px){
-  /*
-    himart.html has different direct-child counts from REUSE.
-    Extend each sticky title across the whole chapter content area so it remains
-    sticky until the next major chapter takes over.
-  */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head{
-    grid-row:1 / span 4!important;
+  /* One row, two rails. The right rail owns the row height, so the left sticky title
+     remains sticky for the complete chapter regardless of how many runtime blocks exist. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:start!important;
+    margin:0!important;
+    padding:0!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head{
-    grid-row:1 / span 2!important;
-  }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head{
-    grid-row:1 / span 2!important;
-  }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head{
-    grid-row:1 / span 2!important;
-  }
-
-  /*
-    CHAPTER START ALIGNMENT — exact same rule as the current REUSE test.
-    The requested 200px rhythm belongs to the section boundary only.
-    Once that boundary is reached, both the left major-title head and the first
-    actual right-rail content unit start at y=0 with no inherited margin/padding.
-  */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head{
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{
+    grid-column:4!important;
+    grid-row:1!important;
+    align-self:start!important;
+    min-width:0!important;
+    width:100%!important;
     margin:0!important;
     padding:0!important;
   }
 
-  /* 01: major title ↔ 01.1 */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
-
-  /* 02: major title ↔ 02.1 */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .data-list > .data-card:first-child,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .data-list > .data-card:first-child > .data-card-head{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
-
-  /* 03: major title ↔ first journey flow. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .flow-area,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .flow-area > .flow-groups,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .flow-area .flow-group:first-child,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .flow-area .flow-label{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
-
-  /* 04: major title ↔ prototype intro. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .prototype-intro,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .prototype-intro > h3,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .prototype-intro > p{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
-
   /*
-    Structural mapping for the shared magnetic motion.
-    REUSE starts 03/04 with subsection/flow blocks; HIMART starts 03 with a flow
-    and 04 with a prototype intro. Treat those as the same medium-content unit.
+    Exact chapter-start alignment.
+    The 200px gap is already owned by the section boundary in wide-editorial-test.css.
+    No additional top margin/padding may remain on the first right-rail block.
   */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .prototype-intro.hm-reveal{
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* 01 / 02 current runtime: first content is a narrative-block.
+     Remove its legacy 34px top padding so narrative-subno starts on the major-title line. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data).hm-section .hm-wide-right-rail > .narrative-block:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data).hm-section .hm-wide-right-rail > .narrative-block:first-child > .narrative-subno{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* 03 current runtime: first content is the three-principle grid.
+     Remove its legacy 58px top margin and each card's 24px top inset so the first
+     visible labels start exactly on the same y-line as the left 03 label. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .principle-grid:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .principle-grid:first-child > .principle-item{
+    padding-top:0!important;
+  }
+
+  /* 04 current runtime: first content is design-rule.
+     Remove its legacy 30px top padding; the article labels become the actual top line. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child > article{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* Raw-DOM fallbacks: keep the same alignment even if the narrative runtime is delayed. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child > .hm-subhead,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child > .data-card-head,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .flow-area:first-child,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .flow-area:first-child > .flow-groups,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .prototype-intro:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* Magnetic reveal at the same authored unit level used by the REUSE wide test.
+     Runtime Himart blocks are direct children of the right rail, so each medium block
+     rises as one unit rather than fragmenting its nested cards/charts. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal{
     opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
     transition:none!important;
     will-change:opacity,transform;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal.is-visible,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .prototype-intro.hm-reveal.is-visible{
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal.is-visible,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal.is-in{
     animation:hm-wide-magnetic-rise .76s cubic-bezier(.22,.78,.22,1) both!important;
   }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal .hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
 
-  /* Keep the first content rail aligned to the grid start, regardless of legacy component rules. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head + *{
-    align-self:start!important;
+@media (min-width:1600px) and (prefers-reduced-motion:reduce){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main .hm-wide-right-rail > .hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
   }
 }
