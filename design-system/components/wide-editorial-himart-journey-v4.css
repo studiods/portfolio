@@ -2,19 +2,9 @@
    Extends the v3 wide test without touching production himart.html.
    - 03.2 / JOURNEY REDESIGN uses the same fluid circle system as 03.1 / JOURNEY SIGNALS.
    - Expanded journey rows keep one circle scale across row4 / row3.
-   - Left major titles wrap only at word boundaries after the test adapter removes authored <br> breaks.
 */
 
 @media (min-width:1600px){
-  /* Major-title rail: natural word-unit wrapping. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head .hm-section-title{
-    white-space:normal!important;
-    word-break:keep-all!important;
-    overflow-wrap:normal!important;
-    hyphens:none!important;
-    text-wrap:wrap!important;
-  }
-
   /*
     Expanded JOURNEY ANALYSIS: apply one fluid geometry contract to both
     03.1 / JOURNEY SIGNALS and 03.2 / JOURNEY REDESIGN.
