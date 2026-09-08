@@ -11,8 +11,8 @@
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const STAGGER_RATIO = 0.30;
-  const FINAL_HOLD = 5000;
-  const RESET_DURATION = 1200;
+  const FINAL_HOLD = 6000;
+  const RESET_DURATION = 2000;
   const RESTART_DELAY = 900;
 
   const ACTIVE_CLASS = 'is-proof-lane-running';
@@ -90,10 +90,11 @@
   const resetCycle = () => {
     if (!active || !inFocus || document.hidden || reducedMotion.matches) return;
 
-    /* Install reset transitions while every lower node is still in its completed
-       blue/black-text animation state. Force a style resolution, then remove the
-       active class so the browser transitions from that exact visual state back
-       to black background + Himart-blue copy without a snap. */
+    /* Keep the completed state untouched for six full seconds. As the seventh
+       second begins, install the reset transitions while every lower node is
+       still blue with black copy. Resolve that state first, then remove the
+       active animation so background, copy color and variable weight all ease
+       back to their base values instead of snapping. */
     map.classList.add(RESET_CLASS);
     void map.offsetWidth;
 
