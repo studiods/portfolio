@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v7
+  HIMART Wide Editorial Layout — TEST ONLY v8
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -7,8 +7,8 @@
   - < 1600px: no layout override; the canonical Himart design system remains unchanged.
   - >= 1600px: 01–04 major sections opt into the wide editorial split.
   - Left major title is CSS-sticky, matching the index.html WORKS principle (no JS position control).
-  - No extra title-collision gap is added between chapters; existing title collision spacing remains 0px.
-  - Right-rail major chapter content starts 200px after the previous chapter content boundary.
+  - Title-only collision spacing remains 0px.
+  - Major chapter rhythm is 200px and is applied to the whole incoming chapter, so left title and right content rise from the same horizontal start line.
   - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
@@ -67,14 +67,15 @@
 
   /*
     01 keeps the canonical Hero-to-content opening space.
-    From 02 onward no title-collision padding is introduced.
-    The 200px chapter rhythm is applied only to the RIGHT content rail below.
+    From 02 onward the 200px major-chapter rhythm is applied to the SECTION itself,
+    not only to the right rail. This keeps the incoming left title and right content
+    on one common start line while preserving 0px title-only collision spacing.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section{
     padding-top:var(--hm-section-padding-top)!important;
   }
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#data,#journey,#direction).hm-section{
-    padding-top:var(--hm-wide-title-collision-gap)!important;
+    padding-top:var(--hm-wide-major-content-gap)!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap{
@@ -100,10 +101,10 @@
     margin:0!important;
     padding-top:var(--hm-rule-to-section-number)!important;
     z-index:3!important;
-    will-change:opacity;
+    will-change:opacity,transform;
   }
 
-  /* Incoming chapter titles add no extra top inset in the wide test. */
+  /* 02–04 start exactly at their shared chapter line; no extra title inset. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
     padding-top:0!important;
   }
@@ -129,21 +130,27 @@
     max-width:32ch!important;
   }
 
-  /* 01 starts with the canonical opening rhythm. */
+  /* 01 keeps the same canonical inset on both rails. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
     margin-top:0!important;
     padding-top:var(--hm-rule-to-section-number)!important;
   }
 
   /*
-    Major chapter spacing: 02–04 right-rail content begins 200px lower.
-    The left major titles still collide/release with 0px additional spacing.
+    02–04 no longer add 200px inside the right rail. The section already owns that
+    spacing, so the first right-hand block shares the exact same grid-row start as
+    the left major title.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
     margin-top:0!important;
-    padding-top:var(--hm-wide-major-content-gap)!important;
+    padding-top:0!important;
+    align-self:start!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card:first-child{
+    margin-top:0!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap + .hm-wrap > .hm-subsection:first-child{
@@ -155,11 +162,14 @@
     Start almost opaque so the eye can read the motion, overshoot by 7px,
     then settle onto the layout baseline. Nested reveal nodes are neutralized
     so one subsection moves as a single authored unit rather than in fragments.
+    The first 04 flow is included only so the chapter's left/right entry motion
+    begins from the same 56px rise distance.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card.hm-reveal,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal{
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
     opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
     transition:none!important;
@@ -169,7 +179,8 @@
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card.hm-reveal.is-visible,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible{
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal.is-visible{
     animation:hm-wide-magnetic-rise .76s cubic-bezier(.22,.78,.22,1) both!important;
   }
 
@@ -193,10 +204,14 @@
     transform:none!important;
   }
 
-  /* Major title rises in from 30% opacity, but reaches full opacity quickly while movement continues. */
+  /*
+    Major title uses the same 56px entry distance as the first right-hand content,
+    so both rails visibly rise from one horizontal baseline. Opacity still ramps
+    quickly from 30% to full while the positional motion continues.
+  */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal{
     opacity:.3!important;
-    transform:translate3d(0,32px,0)!important;
+    transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
     transition:opacity .24s ease-out,transform .88s cubic-bezier(.22,1,.36,1)!important;
   }
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal.is-visible{
