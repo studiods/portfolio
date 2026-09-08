@@ -42,11 +42,11 @@
 
   const setCopyState = (node, trustActive) => {
     if (!node.classList.contains('is-trust')) return;
-    const baseCopy = node.querySelector('[data-reuse-copy-base]');
-    const trustCopy = node.querySelector('[data-reuse-copy-trust]');
+    const baseCopies = node.querySelectorAll('[data-reuse-copy-base]');
+    const trustCopies = node.querySelectorAll('[data-reuse-copy-trust]');
     node.classList.toggle(COPY_ACTIVE_CLASS, trustActive);
-    if (baseCopy) baseCopy.setAttribute('aria-hidden', trustActive ? 'true' : 'false');
-    if (trustCopy) trustCopy.setAttribute('aria-hidden', trustActive ? 'false' : 'true');
+    baseCopies.forEach((copy) => copy.setAttribute('aria-hidden', trustActive ? 'true' : 'false'));
+    trustCopies.forEach((copy) => copy.setAttribute('aria-hidden', trustActive ? 'false' : 'true'));
   };
 
   const clearNodeClasses = () => {
