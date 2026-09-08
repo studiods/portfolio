@@ -1,0 +1,555 @@
+name: Refine Reuse 02.2 copy switch motion
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refine-reuse-022-copy-switch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply 02.2 circle scale, arrow and copy-switch motion
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          css_path = Path('design-system/components/reuse-confidence.css')
+          css = css_path.read_text()
+          layout_marker = '/* 02.2 — Reuse purchase journey with confidence moments inserted into the ordinary flow. */'
+          proof_marker = '/* 02.1 circular proof map v4 — unframed groups, responsive type, proportional arrow. */'
+          motion_marker = '/* 02.2 — focus-driven sequential confidence pulse. */'
+          if layout_marker not in css or proof_marker not in css or motion_marker not in css:
+              raise SystemExit('required 02.2 CSS markers not found')
+
+          prefix, after_layout = css.split(layout_marker, 1)
+          _, proof_and_motion = after_layout.split(proof_marker, 1)
+          proof_body, _ = proof_and_motion.split(motion_marker, 1)
+
+          new_layout = r'''/* 02.2 — Reuse purchase journey with confidence moments inserted into the ordinary flow. */
+html body.reuse-current .reuse-confidence-flow{
+  display:grid;
+  gap:var(--hm-space-40);
+  width:100%;
+}
+html body.reuse-current .reuse-confidence-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr);
+  align-items:center;
+  gap:0;
+  width:100%;
+}
+html body.reuse-current .reuse-confidence-node{
+  display:flex;
+  aspect-ratio:1/1;
+  min-width:0;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(20px,2.2vw,30px);
+  border:1px solid var(--hm-line-default);
+  border-radius:50%;
+  background:#000;
+  text-align:center;
+  box-sizing:border-box;
+  container-type:inline-size;
+}
+html body.reuse-current .reuse-confidence-flow .reuse-confidence-node{
+  width:90%;
+  margin-inline:auto;
+}
+html body.reuse-current .reuse-confidence-node>span{
+  color:var(--hm-text-tertiary);
+  font:400 11px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.reuse-current .reuse-confidence-node h4{
+  margin:clamp(12px,6cqi,18px) 0 0;
+  color:#fff;
+  font-family:var(--hm-font-ko);
+  font-size:clamp(18px,10cqi,26px);
+  font-weight:100;
+  line-height:1.22;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+html body.reuse-current .reuse-confidence-node p{
+  max-width:17ch!important;
+  margin:clamp(9px,5cqi,14px) 0 0!important;
+  color:var(--hm-description-color)!important;
+  font:300 clamp(11px,6cqi,14px)/1.45 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.reuse-current .reuse-confidence-node.is-trust{
+  border-color:var(--hm-line-default);
+  background:#000;
+}
+html body.reuse-current .reuse-confidence-node.is-trust>span{
+  color:var(--hm-text-tertiary);
+}
+html body.reuse-current .reuse-confidence-node.is-trust h4{
+  color:#fff;
+}
+html body.reuse-current .reuse-confidence-node.is-trust p{
+  color:var(--hm-description-color)!important;
+}
+html body.reuse-current .reuse-confidence-copy-mask{
+  position:relative;
+  width:100%;
+  min-height:clamp(94px,38cqi,118px);
+  margin-top:clamp(12px,6cqi,18px);
+  overflow:hidden;
+}
+html body.reuse-current .reuse-confidence-copy{
+  position:absolute;
+  inset:0;
+  display:flex;
+  width:100%;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  will-change:transform,opacity;
+  transition:transform 1.7s ease-in-out,opacity 1.7s ease-in-out;
+}
+html body.reuse-current .reuse-confidence-copy h4{
+  margin:0!important;
+}
+html body.reuse-current .reuse-confidence-copy p{
+  margin:clamp(9px,5cqi,14px) 0 0!important;
+}
+html body.reuse-current .reuse-confidence-copy--base{
+  transform:translateY(0);
+  opacity:1;
+}
+html body.reuse-current .reuse-confidence-copy--trust{
+  transform:translateY(-104%);
+  opacity:.18;
+}
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-copy--base{
+  transform:translateY(104%);
+  opacity:0;
+}
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-copy--trust{
+  transform:translateY(0);
+  opacity:1;
+}
+html body.reuse-current .reuse-confidence-arrow{
+  color:rgba(255,255,255,.48);
+  font:100 34.65px/1 var(--hm-font-en);
+  text-align:center;
+}
+html body.reuse-current .reuse-confidence-row .reuse-confidence-node.is-trust + .reuse-confidence-arrow{
+  color:rgba(255,255,255,.48);
+}
+
+@media(max-width:980px){
+  html body.reuse-current .reuse-confidence-row{
+    grid-template-columns:minmax(0,1fr) 24.2px minmax(0,1fr) 24.2px minmax(0,1fr) 24.2px minmax(0,1fr);
+  }
+}
+
+@media(max-width:780px){
+  html body.reuse-current .reuse-trust-table-v2{
+    overflow:visible;
+  }
+  html body.reuse-current .reuse-trust-table-v2 .hm-ds-table__row{
+    display:grid;
+    grid-template-columns:1fr!important;
+    min-height:0;
+    padding:0;
+  }
+  html body.reuse-current .reuse-trust-table-v2 .hm-ds-table__bridge,
+  html body.reuse-current .reuse-trust-table__master-arrow{
+    display:none;
+  }
+  html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--anxiety{
+    padding:var(--hm-space-24) 0;
+  }
+  html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution{
+    padding:var(--hm-space-24) 18px;
+  }
+  html body.reuse-current .reuse-trust-table-v2 .hm-ds-table__title{
+    font-size:var(--hm-type-group-mobile)!important;
+  }
+
+  html body.reuse-current .reuse-confidence-flow{gap:var(--hm-space-24)}
+  html body.reuse-current .reuse-confidence-row{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  html body.reuse-current .reuse-confidence-node{
+    width:var(--hm-mobile-circle-size);
+    height:var(--hm-mobile-circle-size);
+    aspect-ratio:1/1;
+    padding:22px;
+  }
+  html body.reuse-current .reuse-confidence-flow .reuse-confidence-node{
+    width:calc(var(--hm-mobile-circle-size) * .9);
+    height:calc(var(--hm-mobile-circle-size) * .9);
+  }
+  html body.reuse-current .reuse-confidence-node h4{font-size:var(--hm-type-group-mobile)}
+  html body.reuse-current .reuse-confidence-node p{font-size:13px!important}
+  html body.reuse-current .reuse-confidence-arrow{
+    transform:rotate(90deg);
+    font-size:28.6px;
+    color:rgba(255,255,255,.48);
+  }
+  html body.reuse-current .reuse-confidence-copy-mask{
+    min-height:104px;
+  }
+}'''
+
+          new_motion = r'''/* 02.2 — focus-driven sequential confidence pulse. */
+@keyframes reuse-confidence-line-pulse{
+  0%{border-color:var(--hm-line-default)}
+  50%{border-color:rgba(255,255,255,.60)}
+  100%{border-color:var(--hm-line-default)}
+}
+@keyframes reuse-confidence-trust-pulse{
+  0%{
+    border-color:var(--hm-line-default);
+    background-color:rgba(0,166,237,0);
+  }
+  50%,100%{
+    border-color:var(--hm-blue);
+    background-color:rgba(0,166,237,.20);
+  }
+}
+@keyframes reuse-confidence-trust-number-pulse{
+  0%{color:var(--hm-text-tertiary)}
+  50%,100%{color:var(--hm-blue)}
+}
+@keyframes reuse-confidence-trust-title-pulse{
+  0%{color:#fff}
+  50%,100%{color:var(--hm-blue)}
+}
+@keyframes reuse-confidence-copy-base-return{
+  0%{transform:translateY(-104%);opacity:.18}
+  100%{transform:translateY(0);opacity:1}
+}
+@keyframes reuse-confidence-copy-trust-exit{
+  0%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(104%);opacity:0}
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard{
+  animation:reuse-confidence-line-pulse 1.7s ease-in-out 1;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
+  animation:reuse-confidence-trust-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
+  animation:reuse-confidence-trust-number-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-copy--trust h4{
+  animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
+  border-color:var(--hm-blue)!important;
+  background-color:rgba(0,166,237,.20)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-copy--trust h4{
+  color:var(--hm-blue)!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
+  border-color:var(--hm-line-default)!important;
+  background-color:rgba(0,166,237,0)!important;
+  transition:border-color 1.7s ease-in-out,background-color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span{
+  color:var(--hm-text-tertiary)!important;
+  transition:color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust h4{
+  color:#fff!important;
+  transition:color 1.7s ease-in-out!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--base{
+  animation:reuse-confidence-copy-base-return 1.7s ease-in-out both;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust{
+  animation:reuse-confidence-copy-trust-exit 1.7s ease-in-out both;
+}
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-standard,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span,
+  html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-copy--trust h4,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--base,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust{
+    animation:none!important;
+  }
+  html body.reuse-current .reuse-confidence-copy,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-copy--trust h4{
+    transition:none!important;
+  }
+}'''
+
+          css = prefix + new_layout + '\n\n' + proof_marker + proof_body + new_motion + '\n'
+          css_path.write_text(css)
+
+          page_path = Path('himart-reuse.html')
+          page = page_path.read_text()
+          old_flow = '''<div class="reuse-confidence-flow hm-ds-subtitle-to-content" aria-label="중고가전 구매 흐름 속 신뢰 요소">
+  <div class="reuse-confidence-row">
+    <article class="reuse-confidence-node"><span>01</span><h4>중고가전 발견</h4><p>상품과 가격을 보고 탐색을 시작합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>02</span><h4>상태 확인</h4><p>실사진·상태 등급으로 실제 상태를 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>03</span><h4>검수 확인</h4><p>상품화·기능 점검 과정을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>04</span><h4>비교·판단</h4><p>가격과 조건을 비교해 후보를 좁힙니다.</p></article>
+  </div>
+  <div class="reuse-confidence-row">
+    <article class="reuse-confidence-node is-trust"><span>05</span><h4>보증 확인</h4><p>2년 무상 보증으로 고장 이후까지 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>06</span><h4>결제</h4><p>구매 조건을 확인하고 결제를 완료합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>07</span><h4>배송·설치</h4><p>일정과 설치 조건을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>08</span><h4>A/S·관리</h4><p>판매 이후에도 하이마트가 책임을 이어갑니다.</p></article>
+  </div>
+</div>'''
+          new_flow = '''<div class="reuse-confidence-flow hm-ds-subtitle-to-content" aria-label="중고가전 구매 흐름 속 신뢰 요소">
+  <div class="reuse-confidence-row">
+    <article class="reuse-confidence-node"><span>01</span><h4>중고가전 발견</h4><p>상품과 가격을 보고 탐색을 시작합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>02</span><div class="reuse-confidence-copy-mask"><div class="reuse-confidence-copy reuse-confidence-copy--base" data-reuse-copy-base><h4>상품 정보 확인</h4><p>사진과 설명을 보고 제품 상태를 가늠합니다.</p></div><div class="reuse-confidence-copy reuse-confidence-copy--trust" data-reuse-copy-trust aria-hidden="true"><h4>상태 확인</h4><p>실사진·상태 등급으로 실제 상태를 확인합니다.</p></div></div></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>03</span><div class="reuse-confidence-copy-mask"><div class="reuse-confidence-copy reuse-confidence-copy--base" data-reuse-copy-base><h4>판매자·거래 확인</h4><p>판매 주체와 거래 조건을 확인합니다.</p></div><div class="reuse-confidence-copy reuse-confidence-copy--trust" data-reuse-copy-trust aria-hidden="true"><h4>검수 확인</h4><p>상품화·기능 점검 과정을 확인합니다.</p></div></div></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>04</span><h4>비교·판단</h4><p>가격과 조건을 비교해 후보를 좁힙니다.</p></article>
+  </div>
+  <div class="reuse-confidence-row">
+    <article class="reuse-confidence-node is-trust"><span>05</span><div class="reuse-confidence-copy-mask"><div class="reuse-confidence-copy reuse-confidence-copy--base" data-reuse-copy-base><h4>구매 조건 확인</h4><p>반품·환불 등 구매 조건을 확인합니다.</p></div><div class="reuse-confidence-copy reuse-confidence-copy--trust" data-reuse-copy-trust aria-hidden="true"><h4>보증 확인</h4><p>2년 무상 보증으로 고장 이후까지 확인합니다.</p></div></div></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>06</span><h4>결제</h4><p>구매 조건을 확인하고 결제를 완료합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>07</span><h4>배송·설치</h4><p>일정과 설치 조건을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>08</span><div class="reuse-confidence-copy-mask"><div class="reuse-confidence-copy reuse-confidence-copy--base" data-reuse-copy-base><h4>사용·문의</h4><p>사용 중 문제가 생기면 판매자에게 문의합니다.</p></div><div class="reuse-confidence-copy reuse-confidence-copy--trust" data-reuse-copy-trust aria-hidden="true"><h4>A/S·관리</h4><p>판매 이후에도 하이마트가 책임을 이어갑니다.</p></div></div></article>
+  </div>
+</div>'''
+          if old_flow not in page:
+              raise SystemExit('current 02.2 flow markup not found')
+          page = page.replace(old_flow, new_flow, 1)
+          page = page.replace('./design-system/himart-system.css?v=20260908-50', './design-system/himart-system.css?v=20260908-51', 1)
+          page = page.replace('./design-system/reuse-confidence-motion.js?v=20260908-6', './design-system/reuse-confidence-motion.js?v=20260908-7', 1)
+          page_path.write_text(page)
+
+          js_path = Path('design-system/reuse-confidence-motion.js')
+          js_path.write_text(r'''(() => {
+  'use strict';
+
+  const flow = document.querySelector('.reuse-confidence-flow');
+  if (!flow) return;
+
+  const nodes = Array.from(flow.querySelectorAll('.reuse-confidence-node'));
+  const trustNodes = nodes.filter((node) => node.classList.contains('is-trust'));
+  if (!nodes.length) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const STEP_DELAY = 600;
+  const PULSE_DURATION = 1700;
+  const FINAL_HOLD = 2000;
+  const RESET_DURATION = 1700;
+  const RESTART_DELAY = 2000;
+  const STANDARD_CLASS = 'is-flow-pulse-standard';
+  const TRUST_CLASS = 'is-flow-pulse-trust';
+  const HELD_CLASS = 'is-flow-trust-held';
+  const RESET_CLASS = 'is-flow-trust-resetting';
+  const COPY_ACTIVE_CLASS = 'is-copy-trust-active';
+
+  let active = false;
+  let inFocus = false;
+  let timers = [];
+  let resetFrame = 0;
+
+  const schedule = (callback, delay) => {
+    const timer = window.setTimeout(callback, delay);
+    timers.push(timer);
+    return timer;
+  };
+
+  const clearTimers = () => {
+    timers.forEach((timer) => window.clearTimeout(timer));
+    timers = [];
+    if (resetFrame) {
+      window.cancelAnimationFrame(resetFrame);
+      resetFrame = 0;
+    }
+  };
+
+  const setCopyState = (node, trustActive) => {
+    if (!node.classList.contains('is-trust')) return;
+    const baseCopy = node.querySelector('[data-reuse-copy-base]');
+    const trustCopy = node.querySelector('[data-reuse-copy-trust]');
+    node.classList.toggle(COPY_ACTIVE_CLASS, trustActive);
+    if (baseCopy) baseCopy.setAttribute('aria-hidden', trustActive ? 'true' : 'false');
+    if (trustCopy) trustCopy.setAttribute('aria-hidden', trustActive ? 'false' : 'true');
+  };
+
+  const clearNodeClasses = () => {
+    nodes.forEach((node) => {
+      node.classList.remove(STANDARD_CLASS, TRUST_CLASS, HELD_CLASS, RESET_CLASS, COPY_ACTIVE_CLASS);
+      setCopyState(node, false);
+    });
+  };
+
+  const stop = () => {
+    active = false;
+    clearTimers();
+    clearNodeClasses();
+  };
+
+  const pulseNode = (node) => {
+    node.classList.remove(STANDARD_CLASS, TRUST_CLASS, HELD_CLASS, RESET_CLASS);
+    void node.offsetWidth;
+
+    if (node.classList.contains('is-trust')) {
+      setCopyState(node, true);
+      node.classList.add(TRUST_CLASS);
+      schedule(() => {
+        if (!active) return;
+        node.classList.remove(TRUST_CLASS);
+        node.classList.add(HELD_CLASS);
+      }, PULSE_DURATION);
+      return;
+    }
+
+    node.classList.add(STANDARD_CLASS);
+    schedule(() => {
+      node.classList.remove(STANDARD_CLASS);
+    }, PULSE_DURATION);
+  };
+
+  const beginGlobalReset = () => {
+    if (!active || document.hidden || reducedMotion.matches) return;
+
+    trustNodes.forEach((node) => {
+      node.classList.remove(TRUST_CLASS, RESET_CLASS);
+      node.classList.add(HELD_CLASS);
+      setCopyState(node, true);
+    });
+
+    resetFrame = window.requestAnimationFrame(() => {
+      resetFrame = window.requestAnimationFrame(() => {
+        if (!active) return;
+        trustNodes.forEach((node) => {
+          node.classList.add(RESET_CLASS);
+          node.classList.remove(HELD_CLASS);
+        });
+        resetFrame = 0;
+      });
+    });
+
+    schedule(() => {
+      if (!active) return;
+      trustNodes.forEach((node) => {
+        node.classList.remove(RESET_CLASS, HELD_CLASS, TRUST_CLASS, COPY_ACTIVE_CLASS);
+        setCopyState(node, false);
+      });
+      schedule(() => {
+        if (active && inFocus && !document.hidden && !reducedMotion.matches) runCycle();
+      }, RESTART_DELAY);
+    }, RESET_DURATION);
+  };
+
+  const runCycle = () => {
+    if (!active || !inFocus || reducedMotion.matches || document.hidden) return;
+
+    clearTimers();
+    clearNodeClasses();
+
+    nodes.forEach((node, index) => {
+      schedule(() => {
+        if (active && inFocus && !document.hidden) pulseNode(node);
+      }, index * STEP_DELAY);
+    });
+
+    const sequenceEnd = ((nodes.length - 1) * STEP_DELAY) + PULSE_DURATION;
+    schedule(beginGlobalReset, sequenceEnd + FINAL_HOLD);
+  };
+
+  const start = () => {
+    if (active || reducedMotion.matches || document.hidden || !inFocus) return;
+    active = true;
+    runCycle();
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    const entry = entries[0];
+    inFocus = Boolean(entry && entry.isIntersecting);
+    if (inFocus) start();
+    else stop();
+  }, {
+    root: null,
+    rootMargin: '-25% 0px -25% 0px',
+    threshold: 0.15
+  });
+
+  observer.observe(flow);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else if (inFocus) start();
+  });
+
+  const handleMotionChange = () => {
+    if (reducedMotion.matches) stop();
+    else if (inFocus) start();
+  };
+  if (typeof reducedMotion.addEventListener === 'function') {
+    reducedMotion.addEventListener('change', handleMotionChange);
+  } else if (typeof reducedMotion.addListener === 'function') {
+    reducedMotion.addListener(handleMotionChange);
+  }
+})();
+''')
+
+          index_path = Path('design-system/index.css')
+          index = index_path.read_text()
+          old = '@import url("./components/reuse-confidence.css?v=20260908-20");'
+          new = '@import url("./components/reuse-confidence.css?v=20260908-21");'
+          if old not in index:
+              raise SystemExit('reuse-confidence cache import not found')
+          index = index.replace(old, new, 1).replace('HIMART Design System v4.8', 'HIMART Design System v4.9', 1)
+          index_path.write_text(index)
+
+          system_path = Path('design-system/himart-system.css')
+          system = system_path.read_text()
+          old = '@import url("./index.css?v=20260908-45");'
+          new = '@import url("./index.css?v=20260908-46");'
+          if old not in system:
+              raise SystemExit('index cache import not found')
+          system = system.replace(old, new, 1).replace('HIMART Shared System v3.7', 'HIMART Shared System v3.8', 1)
+          system_path.write_text(system)
+          PY
+
+      - name: Verify 02.2 copy switch
+        shell: bash
+        run: |
+          grep -q 'width:90%' design-system/components/reuse-confidence.css
+          grep -q 'font:100 34.65px/1' design-system/components/reuse-confidence.css
+          grep -q 'reuse-confidence-copy-base-return' design-system/components/reuse-confidence.css
+          grep -q 'data-reuse-copy-base' himart-reuse.html
+          grep -q '상품 정보 확인' himart-reuse.html
+          grep -q '판매자·거래 확인' himart-reuse.html
+          grep -q '구매 조건 확인' himart-reuse.html
+          grep -q '사용·문의' himart-reuse.html
+          grep -q "COPY_ACTIVE_CLASS = 'is-copy-trust-active'" design-system/reuse-confidence-motion.js
+          grep -q 'reuse-confidence.css?v=20260908-21' design-system/index.css
+          grep -q 'index.css?v=20260908-46' design-system/himart-system.css
+          grep -q 'himart-system.css?v=20260908-51' himart-reuse.html
+          grep -q 'reuse-confidence-motion.js?v=20260908-7' himart-reuse.html
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          rm -f .github/workflows/refine-reuse-022-copy-switch.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Refine Reuse 02.2 copy transition motion'
+          git push origin main
