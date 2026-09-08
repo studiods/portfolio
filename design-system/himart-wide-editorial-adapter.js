@@ -1,11 +1,12 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v4
+  HIMART Wide Editorial adapter — TEST ONLY v5
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
 
-  v4 rolls back the wide-only major-title word-wrap normalization completely.
-  Major-title line breaks now remain exactly as authored by the current Himart runtime.
+  v5 also owns the test-only boot lock. The fetched Himart document stays hidden until
+  the runtime rewrite and rail grouping have completed, preventing raw-content / unstyled FOUC.
+  Major-title line breaks remain exactly as authored by the current Himart runtime.
 */
 (() => {
   'use strict';
@@ -14,8 +15,18 @@
     document.body?.classList.contains('hm-wide-editorial-test') &&
     document.body?.classList.contains('hm-wide-himart-test');
 
+  const releaseBootLock = () => {
+    if (!document.body) return;
+    document.body.classList.remove('hm-wide-booting');
+    document.getElementById('hm-wide-boot-lock')?.remove();
+  };
+
   const mount = () => {
-    if (!isTargetPage() || window.__hmWideHimartAdapterMounted) return;
+    if (!isTargetPage()) return;
+    if (window.__hmWideHimartAdapterMounted) {
+      releaseBootLock();
+      return;
+    }
 
     const sections = [...document.querySelectorAll('#live-main > :is(#brand,#data,#journey,#direction).hm-section')];
     if (!sections.length) return;
@@ -40,12 +51,19 @@
     window.__hmWideHimartAdapterMounted = true;
     window.__hmAnimationScan?.();
     window.dispatchEvent(new Event('resize'));
+
+    /* Allow one paint-preparation frame after the final DOM grouping, then reveal. */
+    requestAnimationFrame(() => requestAnimationFrame(releaseBootLock));
   };
 
   const ready = () => document.body?.classList.contains('himart-narrative-ready');
 
   const start = () => {
     if (!isTargetPage()) return;
+
+    /* Never leave the page permanently hidden if a future runtime changes its ready contract. */
+    window.setTimeout(releaseBootLock, 5000);
+
     if (ready()) {
       requestAnimationFrame(() => requestAnimationFrame(mount));
       return;
@@ -58,7 +76,7 @@
     });
     observer.observe(document.body, {attributes:true, attributeFilter:['class']});
 
-    /* Fail-safe for a future runtime that stops toggling the current ready class. */
+    /* Structural fail-safe: try mounting even if the current ready class disappears later. */
     window.setTimeout(() => {
       observer.disconnect();
       mount();
