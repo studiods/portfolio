@@ -106,8 +106,7 @@ html body.reuse-current .reuse-confidence-node h4{
   color:#fff;
   font-family:var(--hm-font-ko);
   font-size:clamp(18px,10cqi,26px);
-  font-weight:300!important;
-  font-variation-settings:"wght" 300;
+  font-weight:100;
   line-height:1.22;
   letter-spacing:var(--hm-track-group);
   word-break:keep-all;
@@ -117,7 +116,6 @@ html body.reuse-current .reuse-confidence-node p{
   margin:clamp(9px,5cqi,14px) 0 0!important;
   color:var(--hm-description-color)!important;
   font:300 clamp(11px,6cqi,14px)/1.45 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
@@ -374,15 +372,7 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   0%,50%{color:#fff}
   100%{color:#000}
 }
-@keyframes reuse-confidence-trust-base-title-pulse{
-  0%,50%{color:#fff}
-  100%{color:#000}
-}
 @keyframes reuse-confidence-trust-desc-pulse{
-  0%,50%{color:var(--hm-description-color)}
-  100%{color:rgba(0,0,0,.60)}
-}
-@keyframes reuse-confidence-trust-base-desc-pulse{
   0%,50%{color:var(--hm-description-color)}
   100%{color:rgba(0,0,0,.60)}
 }
@@ -403,12 +393,10 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust{
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
   animation:reuse-confidence-trust-number-pulse 1.7s ease-in-out 1 forwards;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--trust h4,
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--base h4{
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--trust h4{
   animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--trust p,
-html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--base p{
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--trust p{
   animation:reuse-confidence-trust-desc-pulse 1.7s ease-in-out 1 forwards;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
@@ -418,12 +406,10 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span{
   color:var(--hm-blue)!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust h4,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--base h4{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust h4{
   color:#000!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--trust p,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--base p{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--trust p{
   color:rgba(0,0,0,.60)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
@@ -435,16 +421,12 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting>span{
   color:var(--hm-text-tertiary)!important;
   transition:color 1.7s ease-in-out!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--trust h4,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--base h4{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--trust h4{
   color:#fff!important;
-  font-weight:300!important;
   transition:color 1.7s ease-in-out!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--trust p,
-html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--base p{
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--trust p{
   color:var(--hm-description-color)!important;
-  font-weight:300!important;
   transition:color 1.7s ease-in-out!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--base,
