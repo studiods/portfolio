@@ -13,12 +13,12 @@
   if (!allItems.length || !trustItems.length) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const INITIAL_DELAY = 450;
-  const STEP_INTERVAL = 620;
-  const MOVE_DURATION = 700;
-  const ENTER_DURATION = 520;
-  const MOVE_EASING = 'cubic-bezier(.22,.8,.28,1)';
-  const ENTER_EASING = 'cubic-bezier(.16,.84,.32,1)';
+  const INITIAL_DELAY = 585;
+  const STEP_INTERVAL = 806;
+  const MOVE_DURATION = 910;
+  const ENTER_DURATION = 676;
+  const MOVE_EASING = 'cubic-bezier(.22,.72,.24,1)';
+  const ENTER_EASING = 'cubic-bezier(.22,.72,.24,1)';
 
   let inFocus = false;
   let hasPlayed = false;
@@ -37,6 +37,11 @@
       try { animation.cancel(); } catch (_) {}
     });
     animations = [];
+    stage.querySelectorAll('.reuse-confidence-ghost').forEach((ghost) => ghost.remove());
+    allItems.forEach((item) => {
+      item.style.removeProperty('opacity');
+      item.style.removeProperty('transform');
+    });
   };
 
   const schedule = (callback, delay) => {
@@ -74,7 +79,62 @@
     items[items.length - 1].classList.add('is-last-visible');
   };
 
+  const animateWrappedItem = (item, before, after, stageRect) => {
+    const ghost = item.cloneNode(true);
+    ghost.classList.add('reuse-confidence-ghost');
+    ghost.classList.remove('is-row-end', 'is-last-visible');
+    ghost.removeAttribute('data-flow-key');
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.style.left = `${before.left - stageRect.left}px`;
+    ghost.style.top = `${before.top - stageRect.top}px`;
+    ghost.style.width = `${before.width}px`;
+    ghost.style.height = `${before.height}px`;
+    stage.appendChild(ghost);
+
+    const exitDistance = (stageRect.right - before.right) + before.width * 1.12;
+    const entryDx = (stageRect.left - after.width * 1.12) - after.left;
+    const exitDuration = Math.round(MOVE_DURATION * 0.72);
+    const entryDelay = Math.round(MOVE_DURATION * 0.24);
+    const entryDuration = Math.round(MOVE_DURATION * 0.76);
+
+    const ghostAnimation = ghost.animate(
+      [
+        { transform: 'translateX(0)', opacity: 1 },
+        { transform: `translateX(${exitDistance}px)`, opacity: 0.18 }
+      ],
+      {
+        duration: exitDuration,
+        easing: MOVE_EASING,
+        fill: 'both'
+      }
+    );
+
+    const entryAnimation = item.animate(
+      [
+        { transform: `translateX(${entryDx}px)`, opacity: 0.16 },
+        { transform: `translateX(${entryDx * 0.42}px)`, opacity: 0.48, offset: 0.42 },
+        { transform: 'translateX(0)', opacity: 1 }
+      ],
+      {
+        duration: entryDuration,
+        delay: entryDelay,
+        easing: MOVE_EASING,
+        fill: 'both'
+      }
+    );
+
+    animations.push(ghostAnimation, entryAnimation);
+    Promise.allSettled([ghostAnimation.finished, entryAnimation.finished]).then(() => {
+      ghost.remove();
+      try { ghostAnimation.cancel(); } catch (_) {}
+      try { entryAnimation.cancel(); } catch (_) {}
+    });
+  };
+
   const animateExistingItems = (beforeRects, items) => {
+    const stageRect = stage.getBoundingClientRect();
+    const singleColumn = window.matchMedia('(max-width:780px)').matches;
+
     items.forEach((item) => {
       const before = beforeRects.get(item.dataset.flowKey);
       if (!before) return;
@@ -82,6 +142,12 @@
       const dx = before.left - after.left;
       const dy = before.top - after.top;
       if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) return;
+
+      const changedRow = !singleColumn && Math.abs(before.top - after.top) > 4;
+      if (changedRow) {
+        animateWrappedItem(item, before, after, stageRect);
+        return;
+      }
 
       const animation = item.animate(
         [
@@ -116,7 +182,11 @@
     item.classList.add('is-entering');
 
     const opacityAnimation = item.animate(
-      [{ opacity: 0.2 }, { opacity: 1 }],
+      [
+        { opacity: 0.16 },
+        { opacity: 0.48, offset: 0.42 },
+        { opacity: 1 }
+      ],
       {
         duration: ENTER_DURATION,
         easing: ENTER_EASING,
@@ -126,7 +196,7 @@
 
     const nodeAnimation = node.animate(
       [
-        { transform: `translate(${dx}px, ${dy}px) scale(.84)` },
+        { transform: `translate(${dx}px, ${dy}px) scale(.90)` },
         { transform: 'translate(0, 0) scale(1)' }
       ],
       {

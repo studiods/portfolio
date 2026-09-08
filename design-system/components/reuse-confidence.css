@@ -71,12 +71,15 @@ html body.reuse-current .reuse-confidence-flow{
 }
 html body.reuse-current .reuse-confidence-stage{
   --reuse-flow-gap:30.8px;
+  position:relative;
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   column-gap:var(--reuse-flow-gap);
   row-gap:var(--hm-space-40);
   width:100%;
   align-items:center;
+  overflow:hidden;
+  isolation:isolate;
 }
 html body.reuse-current .reuse-confidence-item{
   position:relative;
@@ -150,7 +153,7 @@ html body.reuse-current .reuse-confidence-node p{
   word-break:keep-all!important;
 }
 html body.reuse-current .reuse-confidence-item.is-trust-item .reuse-confidence-node{
-  width:76%;
+  width:100%;
   border-color:var(--hm-blue);
   background:#000;
 }
@@ -166,6 +169,19 @@ html body.reuse-current .reuse-confidence-item.is-trust-item .reuse-confidence-n
 }
 html body.reuse-current .reuse-confidence-item.is-entering{
   z-index:4;
+}
+html body.reuse-current .reuse-confidence-ghost{
+  position:absolute!important;
+  z-index:8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0!important;
+  pointer-events:none;
+  will-change:transform,opacity;
+}
+html body.reuse-current .reuse-confidence-ghost::after{
+  display:none!important;
 }
 
 @media(max-width:980px){
@@ -211,7 +227,7 @@ html body.reuse-current .reuse-confidence-item.is-entering{
     font-size:13px!important;
   }
   html body.reuse-current .reuse-confidence-item.is-trust-item .reuse-confidence-node{
-    width:78%;
+    width:100%;
   }
   html body.reuse-current .reuse-confidence-item.is-trust-item .reuse-confidence-node h4{
     font-size:clamp(16px,8cqi,21px);
