@@ -1,65 +1,120 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY
-  Purpose: validate a large-screen split layout without changing the canonical case-study system.
+  HIMART Wide Editorial Layout — TEST ONLY v2
+  Purpose: validate the index.html WORKS interaction pattern inside a case study:
+  a sticky major-title rail on the left while evidence/content scrolls on the right.
 
   Contract
-  - < 1600px: no layout override; existing design-system layout remains unchanged.
-  - >= 1600px: opted-in major section uses a left narrative rail + right content rail.
+  - < 1600px: no layout override; the canonical Himart design system remains unchanged.
+  - >= 1600px: 01–04 major sections opt into the wide editorial split.
+  - Left major title is CSS-sticky, matching the index.html WORKS principle (no scroll-position JS).
+  - The sticky title is constrained by its own major section, so the next chapter naturally pushes it away.
   - Hero, navigation, footer, typography, color, component internals and motion remain owned by the canonical design system.
-  - DOM order is unchanged so reveal / observer behavior remains stable.
+  - Existing DOM order is preserved. The test only removes the visual box of .hm-wrap with display:contents at wide sizes.
 */
 
 @media (min-width:1600px){
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap{
+  /*
+    1920px viewport => 1600px editorial canvas.
+    1600px viewport => 1472px canvas, preserving a minimum 64px viewport inset.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section{
     width:min(calc(100% - 128px),1600px)!important;
     max-width:none!important;
+    margin-inline:auto!important;
     display:grid!important;
     grid-template-columns:minmax(400px,440px) minmax(0,1fr)!important;
-    column-gap:clamp(80px,6vw,120px)!important;
-    row-gap:0!important;
+    column-gap:clamp(80px,5.2vw,100px)!important;
+    grid-auto-flow:row!important;
+    grid-auto-rows:auto!important;
     align-items:start!important;
-    margin-inline:auto!important;
+    overflow:visible!important;
   }
 
-  /* Left narrative rail: major number / title / section description. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-section-head{
-    grid-column:1!important;
-    grid-row:1!important;
-    min-width:0!important;
-    width:100%!important;
-    margin:0!important;
-    padding-top:var(--hm-rule-to-section-number)!important;
-    align-self:start!important;
-  }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-section-head .hm-section-title{
-    width:100%!important;
-    max-width:440px!important;
-  }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-section-head .hm-section-desc{
-    max-width:32ch!important;
+  /*
+    Some Reuse chapters use more than one hm-wrap (notably 03).
+    Removing only the wrapper box lets every authored subsection participate
+    in one chapter-level grid without changing source order or animation hooks.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap{
+    display:contents!important;
   }
 
-  /* Right evidence rail: subsection content keeps its existing component rules. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-subsection{
+  /* Every authored content block runs in the right evidence rail by default. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > *{
     grid-column:2!important;
     min-width:0!important;
     width:100%!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-section-head + .hm-subsection{
-    grid-row:1!important;
+
+  /*
+    Left narrative rail — same interaction principle as index.html .project-copy:
+    position:sticky + viewport-relative top, with no JS scroll calculation.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
+    grid-column:1!important;
+    position:sticky!important;
+    top:14vh!important;
+    align-self:start!important;
+    width:100%!important;
+    min-width:0!important;
+    height:fit-content!important;
+    margin:0!important;
+    padding-top:var(--hm-rule-to-section-number)!important;
+    z-index:3!important;
+  }
+
+  /*
+    Make the sticky grid area as tall as the complete chapter content.
+    This is important for 03, whose content is authored across two hm-wrap nodes.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head{
+    grid-row:1 / span 2!important;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head{
+    grid-row:1 / span 1!important;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head{
+    grid-row:1 / span 4!important;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head{
+    grid-row:1 / span 5!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
+    width:100%!important;
+    max-width:440px!important;
+  }
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-desc{
+    max-width:32ch!important;
+  }
+
+  /* First right-hand block aligns to the same top rhythm as the left chapter rail. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
     margin-top:0!important;
     padding-top:var(--hm-rule-to-section-number)!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-subsection + .hm-subsection{
+
+  /* 03 is split across two source wrappers; restore the canonical subsection rhythm at that seam. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap + .hm-wrap > .hm-subsection:first-child{
     margin-top:var(--hm-subsection-gap)!important;
   }
 
-  /* Prevent wide evidence components from overflowing the right rail. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-ds-wide-editorial-section > .hm-wrap > .hm-subsection :is(
+  /* Wide evidence stays inside the right rail instead of forcing horizontal overflow. */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > * :is(
     .reuse-proof-stack,
     .reuse-proof-grid,
     .reuse-uncertainty-graph,
+    .reuse-proof-map,
+    .reuse-confidence-flow,
     .hm-ds-evidence-stat,
+    .hm-ds-role-grid,
+    .hm-ds-media-grid,
+    .hm-ds-journey,
+    .flow-area,
+    .data-viz,
     .hm-source,
     .hm-ds-source-note
   ){
