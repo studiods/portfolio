@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v6
+  HIMART Wide Editorial Layout — TEST ONLY v7
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -8,7 +8,7 @@
   - >= 1600px: 01–04 major sections opt into the wide editorial split.
   - Left major title is CSS-sticky, matching the index.html WORKS principle (no JS position control).
   - No extra title-collision gap is added between chapters; existing title collision spacing remains 0px.
-  - Right-rail major chapter content starts 400px after the previous chapter content boundary.
+  - Right-rail major chapter content starts 200px after the previous chapter content boundary.
   - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
@@ -19,7 +19,7 @@
 @media (min-width:1600px){
   html body.himart-page-body.hm-wide-editorial-test{
     --hm-wide-title-collision-gap:0px;
-    --hm-wide-major-content-gap:400px;
+    --hm-wide-major-content-gap:200px;
     --hm-wide-left-min:400px;
     --hm-wide-left-max:440px;
     --hm-wide-column-gap-min:80px;
@@ -68,7 +68,7 @@
   /*
     01 keeps the canonical Hero-to-content opening space.
     From 02 onward no title-collision padding is introduced.
-    The 400px chapter rhythm is applied only to the RIGHT content rail below.
+    The 200px chapter rhythm is applied only to the RIGHT content rail below.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section{
     padding-top:var(--hm-section-padding-top)!important;
@@ -136,7 +136,7 @@
   }
 
   /*
-    Major chapter spacing: 02–04 right-rail content begins 400px lower.
+    Major chapter spacing: 02–04 right-rail content begins 200px lower.
     The left major titles still collide/release with 0px additional spacing.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
@@ -193,11 +193,11 @@
     transform:none!important;
   }
 
-  /* Major title entrance + sticky exit fade are composed through one runtime variable. */
+  /* Major title rises in from 30% opacity, but reaches full opacity quickly while movement continues. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal{
-    opacity:0!important;
+    opacity:.3!important;
     transform:translate3d(0,32px,0)!important;
-    transition:opacity .68s ease,transform .88s cubic-bezier(.22,1,.36,1)!important;
+    transition:opacity .24s ease-out,transform .88s cubic-bezier(.22,1,.36,1)!important;
   }
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal.is-visible{
     opacity:var(--hm-wide-title-exit-opacity,1)!important;
