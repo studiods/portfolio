@@ -1,0 +1,166 @@
+/* STEPUP — Himart wide editorial adapter.
+   Desktop only: left sticky major-title rail, right scrolling content rail.
+   Below 1600px the canonical StepUp layout remains unchanged. */
+
+@media (min-width:1600px){
+  html body.nbt-stepup-page.hm-wide-stepup-ready{
+    --hm-wide-title-collision-gap:0px;
+    --hm-wide-major-content-gap:200px;
+    --hm-wide-left-min:400px;
+    --hm-wide-left-max:440px;
+    --hm-wide-column-gap-min:80px;
+    --hm-wide-column-gap-max:100px;
+    --hm-wide-right-max:1060px;
+    --hm-wide-edge-min:64px;
+    --hm-wide-rise-distance:56px;
+    --hm-wide-rise-overshoot:-7px;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section{
+    position:relative!important;
+    isolation:isolate!important;
+    display:grid!important;
+    grid-template-columns:
+      minmax(var(--hm-wide-edge-min),1fr)
+      minmax(var(--hm-wide-left-min),var(--hm-wide-left-max))
+      minmax(var(--hm-wide-column-gap-min),var(--hm-wide-column-gap-max))
+      minmax(0,var(--hm-wide-right-max))
+      minmax(var(--hm-wide-edge-min),1fr)!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding-right:0!important;
+    padding-left:0!important;
+    column-gap:0!important;
+    align-items:start!important;
+    overflow:visible!important;
+    background:#000!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section::before{
+    content:"";
+    position:absolute;
+    z-index:-1;
+    inset:0 50%;
+    width:100vw;
+    transform:translateX(-50%);
+    background:#000;
+    pointer-events:none;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > #reframe.hm-section{
+    padding-top:var(--hm-section-padding-top)!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > :is(#strategy,#habit,#iteration,#outcome).hm-section{
+    padding-top:var(--hm-wide-major-content-gap)!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section > .hm-wrap{
+    display:contents!important;
+    background:transparent!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section > .hm-wrap > *{
+    grid-column:4!important;
+    min-width:0!important;
+    width:100%!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section > .hm-wrap > .hm-section-head{
+    grid-column:2!important;
+    grid-row:1!important;
+    position:sticky!important;
+    top:14vh!important;
+    align-self:start!important;
+    width:100%!important;
+    min-width:0!important;
+    height:fit-content!important;
+    margin:0!important;
+    padding:0!important;
+    z-index:3!important;
+    will-change:opacity,transform;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-section-head .hm-section-title{
+    width:100%!important;
+    max-width:440px!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-section-head .hm-section-desc{
+    max-width:32ch!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail{
+    grid-column:4!important;
+    grid-row:1!important;
+    align-self:start!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+    container-type:inline-size!important;
+    container-name:stepup-wide-right-rail;
+  }
+
+  /* The shared component inset starts the right-hand medium-title block. */
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail > :first-child{
+    margin-top:0!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail > .hm-reveal{
+    opacity:.88!important;
+    transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
+    transition:none!important;
+    will-change:opacity,transform;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail > .hm-reveal.is-visible{
+    animation:stepup-wide-magnetic-rise .76s cubic-bezier(.22,.78,.22,1) both!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail > .hm-reveal .hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-section-head.hm-reveal{
+    opacity:.3!important;
+    transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
+    transition:opacity .24s ease-out,transform .88s cubic-bezier(.22,1,.36,1)!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-section-head.hm-reveal.is-visible{
+    opacity:var(--hm-wide-title-exit-opacity,1)!important;
+    transform:none!important;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail :is(
+    .stepup-question-grid,
+    .stepup-experience-grid,
+    .stepup-process,
+    .behavior-grid,
+    .narrative-signals,
+    .stepup-final-statement
+  ){
+    min-width:0!important;
+    max-width:100%!important;
+  }
+
+  @keyframes stepup-wide-magnetic-rise{
+    0%{opacity:.88;transform:translate3d(0,var(--hm-wide-rise-distance),0)}
+    62%{opacity:1;transform:translate3d(0,var(--hm-wide-rise-overshoot),0)}
+    100%{opacity:1;transform:translate3d(0,0,0)}
+  }
+}
+
+@media (min-width:1600px) and (prefers-reduced-motion:reduce){
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section :is(.hm-reveal,.wide-rise-target){
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
