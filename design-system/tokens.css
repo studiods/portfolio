@@ -1,4 +1,4 @@
-/* HIMART Design System v2.4 — foundation tokens
+/* HIMART Design System v2.5 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
    Semantic text contrast and shared Hero meta typography are owned here only;
    component/page layers consume these tokens and do not redefine them. */
@@ -92,8 +92,11 @@
   --hm-rule-to-section-number:32px;
   --hm-title-description-gap:20px;
   --hm-title-description-max:40ch;
-  --hm-hero-description-width:32ch;
-  --hm-hero-description-width-mobile:38ch;
+  /* Hero title and description share one copy rail. Descriptions wrap naturally only
+     when their text exceeds this rail; authored hard line breaks are not the default. */
+  --hm-hero-copy-max-width:1280px;
+  --hm-hero-description-width:var(--hm-hero-copy-max-width);
+  --hm-hero-description-width-mobile:100%;
   --hm-subtitle-to-content:40px;
   --hm-subtitle-to-smalltitle:80px;
   --hm-title-to-subsection-gap:160px;
