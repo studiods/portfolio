@@ -1,11 +1,12 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v2
+  HIMART Wide Editorial adapter — TEST ONLY v3
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
 
-  v2 also removes authored <br> elements from the LEFT major titles only, replacing
-  them with normal spaces so the browser can wrap the title naturally by words.
+  v3 keeps left major titles on natural word wrapping, but prevents the title normalizer
+  from observing its own DOM mutations. This avoids a mutation cascade while production
+  runtime scripts continue to rewrite title markup.
 */
 (() => {
   'use strict';
@@ -16,19 +17,34 @@
 
   const normalizeMajorTitle = head => {
     const title = head?.querySelector('.hm-section-title');
-    if (!title) return;
-    title.querySelectorAll('br').forEach(br => br.replaceWith(document.createTextNode(' ')));
+    if (!title) return false;
+
+    const breaks = [...title.querySelectorAll('br')];
+    if (!breaks.length) return false;
+
+    breaks.forEach(br => br.replaceWith(document.createTextNode(' ')));
     title.normalize();
+    return true;
   };
 
   const watchMajorTitle = head => {
     const title = head?.querySelector('.hm-section-title');
     if (!title || title.dataset.hmWideWordWrapWatch === '1') return;
     title.dataset.hmWideWordWrapWatch = '1';
+
+    const observe = observer => {
+      observer.observe(title, {childList:true, subtree:true});
+    };
+
     normalizeMajorTitle(head);
 
-    const observer = new MutationObserver(() => normalizeMajorTitle(head));
-    observer.observe(title, {childList:true, subtree:true});
+    const observer = new MutationObserver(() => {
+      if (!title.querySelector('br')) return;
+      observer.disconnect();
+      normalizeMajorTitle(head);
+      observe(observer);
+    });
+    observe(observer);
   };
 
   const mount = () => {
