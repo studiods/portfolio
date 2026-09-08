@@ -10,17 +10,20 @@
   if (!anxietyNodes.length || anxietyNodes.length !== solutionNodes.length || !connectorStage) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const LANE_DURATION = 2500;
+
+  // One lane is exactly 2.0s: ring 1.25s -> connector 0.40s -> fill 0.35s.
+  // Preserve the existing overlap rule: the next lane starts at 30% (0.60s).
+  const LANE_DURATION = 2000;
   const STAGGER = LANE_DURATION * 0.30;
-  const RING_DURATION = 1500;
-  const CONNECTOR_DURATION = 600;
+  const RING_DURATION = 1250;
+  const CONNECTOR_DURATION = 400;
+  const FILL_DURATION = 350;
   const FINAL_HOLD = 5000;
   const RESET_DURATION = 1200;
   const RESTART_DELAY = 900;
 
   const RING_CLASS = 'is-proof-ring-running';
   const CONNECTOR_RUN_CLASS = 'is-proof-connector-running';
-  const CONNECTOR_HELD_CLASS = 'is-proof-connector-held';
   const SOLUTION_FILLED_CLASS = 'is-proof-solution-filled';
   const RESET_CLASS = 'is-proof-resetting';
 
@@ -42,19 +45,10 @@
   const ensureSweepRings = () => {
     anxietyNodes.forEach((node) => {
       if (node.querySelector('.reuse-proof-sweep')) return;
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('class', 'reuse-proof-sweep');
-      svg.setAttribute('viewBox', '0 0 100 100');
-      svg.setAttribute('aria-hidden', 'true');
-
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('class', 'reuse-proof-sweep__ring');
-      circle.setAttribute('cx', '50');
-      circle.setAttribute('cy', '50');
-      circle.setAttribute('r', '49');
-      circle.setAttribute('pathLength', '100');
-      svg.appendChild(circle);
-      node.appendChild(svg);
+      const sweep = document.createElement('span');
+      sweep.className = 'reuse-proof-sweep';
+      sweep.setAttribute('aria-hidden', 'true');
+      node.appendChild(sweep);
     });
   };
 
@@ -66,7 +60,6 @@
       connector.dataset.proofConnector = String(index);
       connector.innerHTML = `
         <svg viewBox="0 0 12 120" preserveAspectRatio="none" aria-hidden="true">
-          <line class="reuse-proof-connector__base" x1="6" y1="0" x2="6" y2="120" pathLength="100"></line>
           <line class="reuse-proof-connector__active" x1="6" y1="0" x2="6" y2="120" pathLength="100"></line>
         </svg>`;
       connectorStage.appendChild(connector);
@@ -81,7 +74,7 @@
     map.classList.remove(RESET_CLASS);
     anxietyNodes.forEach((node) => node.classList.remove(RING_CLASS));
     solutionNodes.forEach((node) => node.classList.remove(SOLUTION_FILLED_CLASS));
-    connectors.forEach((connector) => connector.classList.remove(CONNECTOR_RUN_CLASS, CONNECTOR_HELD_CLASS));
+    connectors.forEach((connector) => connector.classList.remove(CONNECTOR_RUN_CLASS));
   };
 
   const stop = () => {
@@ -98,24 +91,34 @@
     const connector = connectors[index];
 
     anxiety.classList.remove(RING_CLASS);
-    connector.classList.remove(CONNECTOR_RUN_CLASS, CONNECTOR_HELD_CLASS);
+    connector.classList.remove(CONNECTOR_RUN_CLASS);
     solution.classList.remove(SOLUTION_FILLED_CLASS);
     void anxiety.offsetWidth;
 
+    // 0.00s -> 1.25s: comet-like white glow leaves 6 o'clock, runs clockwise,
+    // and returns to 6 o'clock. The base border behind it is immediately visible again.
     anxiety.classList.add(RING_CLASS);
 
+    // 1.25s -> 1.65s: immediately hand off downward. This is 1.5x faster
+    // than the previous 600ms connector motion. Its moving dash deletes its own trail.
     schedule(() => {
       if (!active || !inFocus) return;
       anxiety.classList.remove(RING_CLASS);
       connector.classList.add(CONNECTOR_RUN_CLASS);
     }, RING_DURATION);
 
+    // At contact with the lower blue circle, remove the connector immediately
+    // and start the accelerating fill. 0.35s later the lane reaches exactly 2.0s.
     schedule(() => {
       if (!active || !inFocus) return;
       connector.classList.remove(CONNECTOR_RUN_CLASS);
-      connector.classList.add(CONNECTOR_HELD_CLASS);
       solution.classList.add(SOLUTION_FILLED_CLASS);
     }, RING_DURATION + CONNECTOR_DURATION);
+
+    schedule(() => {
+      if (!active || !inFocus) return;
+      solution.classList.add(SOLUTION_FILLED_CLASS);
+    }, RING_DURATION + CONNECTOR_DURATION + FILL_DURATION);
   };
 
   const resetCycle = () => {
@@ -123,12 +126,11 @@
 
     map.classList.add(RESET_CLASS);
     anxietyNodes.forEach((node) => node.classList.remove(RING_CLASS));
-    solutionNodes.forEach((node) => node.classList.remove(SOLUTION_FILLED_CLASS));
     connectors.forEach((connector) => connector.classList.remove(CONNECTOR_RUN_CLASS));
+    solutionNodes.forEach((node) => node.classList.remove(SOLUTION_FILLED_CLASS));
 
     schedule(() => {
       if (!active) return;
-      connectors.forEach((connector) => connector.classList.remove(CONNECTOR_HELD_CLASS));
       map.classList.remove(RESET_CLASS);
       schedule(() => {
         if (active && inFocus && !document.hidden && !reducedMotion.matches) runCycle();
