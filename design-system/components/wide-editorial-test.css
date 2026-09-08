@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v8
+  HIMART Wide Editorial Layout — TEST ONLY v9
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -9,6 +9,7 @@
   - Left major title is CSS-sticky, matching the index.html WORKS principle (no JS position control).
   - Title-only collision spacing remains 0px.
   - Major chapter rhythm is 200px and is applied to the whole incoming chapter, so left title and right content rise from the same horizontal start line.
+  - The left rail consumes a runtime baseline offset measured from the RIGHT rail's first actual visible content anchor, not from its wrapper/margin/padding box.
   - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
@@ -28,6 +29,7 @@
     --hm-wide-edge-min:64px;
     --hm-wide-rise-distance:56px;
     --hm-wide-rise-overshoot:-7px;
+    --hm-wide-baseline-offset:0px;
   }
 
   /* Full-bleed black section plane + centered editorial rails. */
@@ -89,7 +91,12 @@
     width:100%!important;
   }
 
-  /* Sticky major-title rail. */
+  /*
+    Sticky major-title rail.
+    --hm-wide-baseline-offset is calculated against the first actual visible right-rail
+    content line (01.1 / 02.1 / 03.1 / 04 flow label), so wrapper padding/margins do
+    not distort the visual alignment.
+  */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
     grid-column:2!important;
     position:sticky!important;
@@ -98,7 +105,7 @@
     width:100%!important;
     min-width:0!important;
     height:fit-content!important;
-    margin:0!important;
+    margin:var(--hm-wide-baseline-offset,0px) 0 0!important;
     padding-top:var(--hm-rule-to-section-number)!important;
     z-index:3!important;
     will-change:opacity,transform;
