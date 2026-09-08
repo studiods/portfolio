@@ -8,7 +8,7 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./design-system/himart-system.css?v=20260908-51">
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260908-49">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-5">
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-ready himart-narrative-ready himart-movie-page reuse-current">
@@ -101,44 +101,18 @@
 </article>
 
 <article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.2</span><div><h3>보증과 클리닝을 구매 후 서비스가 아니라,<br>구매 전에 확신을 만드는 근거로 앞당겼습니다.</h3><p class="desc">구매 흐름 중간마다 상태·검수·청결·보증 정보를 넣어 이탈 전에 확신을 보강했습니다.</p></div></div>
-<div class="reuse-confidence-flow hm-ds-subtitle-to-content" aria-label="기본 중고가전 구매 흐름 사이에 신뢰 근거가 추가되는 과정">
-  <div class="reuse-confidence-stage" data-reuse-confidence-stage>
-    <div class="reuse-confidence-item" data-flow-key="base-01">
-      <article class="reuse-confidence-node"><span>01</span><h4>중고가전 발견</h4><p>상품과 가격을 보고 탐색을 시작합니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-02">
-      <article class="reuse-confidence-node"><span>02</span><h4>상품 탐색</h4><p>조건과 후보를 살펴보며 구매 대상을 좁힙니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item is-trust-item is-pending" data-flow-key="trust-01" data-trust-step="1" data-anchor-key="base-02" aria-hidden="true">
-      <article class="reuse-confidence-node is-trust"><span>TRUST 01</span><h4>실사진 ·<br>상태 등급</h4></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-03">
-      <article class="reuse-confidence-node"><span>03</span><h4>상품 상세 확인</h4><p>상세 정보와 구매 조건을 확인합니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item is-trust-item is-pending" data-flow-key="trust-02" data-trust-step="2" data-anchor-key="base-03" aria-hidden="true">
-      <article class="reuse-confidence-node is-trust"><span>TRUST 02</span><h4>기능 점검 ·<br>검수 결과</h4></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-04">
-      <article class="reuse-confidence-node"><span>04</span><h4>비교 · 판단</h4><p>가격과 조건을 비교해 후보를 결정합니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item is-trust-item is-pending" data-flow-key="trust-03" data-trust-step="3" data-anchor-key="base-04" aria-hidden="true">
-      <article class="reuse-confidence-node is-trust"><span>TRUST 03</span><h4>클리닝 ·<br>위생 기준</h4></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-05">
-      <article class="reuse-confidence-node"><span>05</span><h4>구매 결정</h4><p>제품과 조건을 확인하고 구매 여부를 판단합니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item is-trust-item is-pending" data-flow-key="trust-04" data-trust-step="4" data-anchor-key="base-05" aria-hidden="true">
-      <article class="reuse-confidence-node is-trust"><span>TRUST 04</span><h4>2년 무상<br>보증</h4></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-06">
-      <article class="reuse-confidence-node"><span>06</span><h4>결제</h4><p>구매 조건을 확인하고 결제를 완료합니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-07">
-      <article class="reuse-confidence-node"><span>07</span><h4>배송 · 설치</h4><p>일정과 설치 조건을 확인합니다.</p></article>
-    </div>
-    <div class="reuse-confidence-item" data-flow-key="base-08">
-      <article class="reuse-confidence-node"><span>08</span><h4>사용 · A/S</h4><p>사용 이후에도 관리와 수리 흐름을 이어갑니다.</p></article>
-    </div>
+<div class="reuse-confidence-flow hm-ds-subtitle-to-content" aria-label="중고가전 구매 흐름 속 신뢰 요소">
+  <div class="reuse-confidence-row">
+    <article class="reuse-confidence-node"><span>01</span><h4>중고가전 발견</h4><p>상품과 가격을 보고 탐색을 시작합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>02</span><h4>상태 확인</h4><p>실사진·상태 등급으로 실제 상태를 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>03</span><h4>검수 확인</h4><p>상품화·기능 점검 과정을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>04</span><h4>비교·판단</h4><p>가격과 조건을 비교해 후보를 좁힙니다.</p></article>
+  </div>
+  <div class="reuse-confidence-row">
+    <article class="reuse-confidence-node is-trust"><span>05</span><h4>보증 확인</h4><p>2년 무상 보증으로 고장 이후까지 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>06</span><h4>결제</h4><p>구매 조건을 확인하고 결제를 완료합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node"><span>07</span><h4>배송·설치</h4><p>일정과 설치 조건을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
+    <article class="reuse-confidence-node is-trust"><span>08</span><h4>A/S·관리</h4><p>판매 이후에도 하이마트가 책임을 이어갑니다.</p></article>
   </div>
 </div>
 </article>
@@ -187,7 +161,7 @@
 </main>
 
 <footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart.html">온라인 구매여정 다시 보기 →</a></div></div></footer>
-<script src="./design-system/reuse-confidence-motion.js?v=20260908-8"></script>
+<script src="./design-system/reuse-confidence-motion.js?v=20260908-6"></script>
 <script src="./design-system/animation.js?v=20260906-14"></script>
 <script src="./design-system/scramble-final.js?v=20260907-3"></script>
 <script src="./himart-live-boot.js?v=20260907-2"></script>
