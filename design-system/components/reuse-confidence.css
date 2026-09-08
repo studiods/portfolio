@@ -74,6 +74,11 @@ html body.reuse-current .reuse-trust-table-v2 .reuse-trust-table__cell--solution
   inherits:false;
   initial-value:rgba(255,255,255,.60);
 }
+@property --reuse-confidence-number-color{
+  syntax:"<color>";
+  inherits:false;
+  initial-value:#777;
+}
 
 /* 02.2 — Reuse purchase journey with confidence moments inserted into the ordinary flow. */
 html body.reuse-current .reuse-confidence-flow{
@@ -108,8 +113,11 @@ html body.reuse-current .reuse-confidence-flow .reuse-confidence-node{
   margin-inline:auto;
 }
 html body.reuse-current .reuse-confidence-node>span{
-  color:var(--hm-text-tertiary);
-  font:400 11px/1 var(--hm-font-en);
+  --reuse-confidence-number-color:var(--hm-text-tertiary);
+  color:var(--reuse-confidence-number-color)!important;
+  font:300 11px/1 var(--hm-font-en);
+  font-weight:300;
+  font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-note);
 }
 html body.reuse-current .reuse-confidence-node h4{
@@ -382,8 +390,9 @@ html body.reuse-current .reuse-proof-map__arrow polyline{
   }
 }
 @keyframes reuse-confidence-trust-number-pulse{
-  0%{color:var(--hm-text-tertiary)}
-  50%,100%{color:var(--hm-blue)}
+  0%{--reuse-confidence-number-color:var(--hm-text-tertiary)}
+  22%{--reuse-confidence-number-color:#000}
+  100%{--reuse-confidence-number-color:#000}
 }
 @keyframes reuse-confidence-trust-title-pulse{
   0%{--reuse-confidence-title-color:#fff}
@@ -435,7 +444,10 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
   background-color:rgba(0,166,237,1)!important;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span{
-  color:var(--hm-blue)!important;
+  --reuse-confidence-number-color:#000;
+  color:#000!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust h4,
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--base h4{
