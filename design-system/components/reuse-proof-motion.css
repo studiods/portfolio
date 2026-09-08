@@ -1,5 +1,10 @@
 /* HIMART REUSE 02.1 — anxiety-to-proof transfer motion. */
 
+html body.reuse-current .reuse-proof-map{
+  /* One shared master timeline. Individual phases are percentage-based. */
+  --reuse-proof-lane-duration:2s;
+}
+
 html body.reuse-current .reuse-proof-map__node{
   position:relative;
   isolation:isolate;
@@ -11,7 +16,7 @@ html body.reuse-current .reuse-proof-map__node > h4{
   z-index:3;
 }
 
-/* Top circle: a short 6-o'clock comet with soft head/tail gradient + glow. */
+/* Top circle: 6-o'clock comet, 5% stronger glow, slow start -> faster finish. */
 html body.reuse-current .reuse-proof-sweep{
   position:absolute;
   z-index:4;
@@ -40,20 +45,26 @@ html body.reuse-current .reuse-proof-sweep{
   -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
   mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
   filter:
-    drop-shadow(0 0 3px rgba(255,255,255,.96))
-    drop-shadow(0 0 8px rgba(255,255,255,.50))
-    drop-shadow(0 0 15px rgba(255,255,255,.24));
+    drop-shadow(0 0 3.15px rgba(255,255,255,1))
+    drop-shadow(0 0 8.4px rgba(255,255,255,.525))
+    drop-shadow(0 0 15.75px rgba(255,255,255,.252));
 }
 
-@keyframes reuse-proof-ring-sweep{
-  0%{transform:rotate(0deg);opacity:0}
+/* Ring ends exactly at 6 o'clock at 62.5%. Connector begins on that same frame. */
+@keyframes reuse-proof-lane-ring{
+  0%{
+    transform:rotate(0deg);
+    opacity:0;
+    animation-timing-function:cubic-bezier(.72,.02,.98,.42);
+  }
   2%{opacity:1}
-  98%{opacity:1}
+  62.5%{transform:rotate(360deg);opacity:1}
+  62.55%{transform:rotate(360deg);opacity:0}
   100%{transform:rotate(360deg);opacity:0}
 }
 
-html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-ring-running .reuse-proof-sweep{
-  animation:reuse-proof-ring-sweep 1250ms linear 1 both;
+html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep{
+  animation:reuse-proof-lane-ring var(--reuse-proof-lane-duration) linear 1 both;
 }
 
 /* Four one-to-one connector lanes. */
@@ -84,7 +95,7 @@ html body.reuse-current .reuse-proof-connector svg{
   overflow:visible!important;
 }
 
-/* Self-erasing moving dash: nothing remains behind the moving segment. */
+/* Self-erasing travelling dash. No line remains behind it. */
 html body.reuse-current .reuse-proof-connector__active{
   fill:none;
   stroke:#fff;
@@ -99,10 +110,10 @@ html body.reuse-current .reuse-proof-connector__active{
     drop-shadow(0 0 8px rgba(255,255,255,.40));
 }
 
-/* 0~1/3 path = white glow, after 1/3 = Himart-blue glow.
-   The dash disappears immediately at lower-circle contact. */
-@keyframes reuse-proof-connector-travel{
-  0%{
+/* Same master timeline: connector starts at the exact ring hand-off frame.
+   First third of connector travel is white; the remainder is blue glow. */
+@keyframes reuse-proof-lane-connector{
+  0%,62.49%{
     stroke:#fff;
     stroke-dashoffset:15;
     opacity:0;
@@ -110,21 +121,28 @@ html body.reuse-current .reuse-proof-connector__active{
       drop-shadow(0 0 3px rgba(255,255,255,.94))
       drop-shadow(0 0 8px rgba(255,255,255,.40));
   }
-  4%{opacity:1}
-  32.5%{
+  62.5%{
+    stroke:#fff;
+    stroke-dashoffset:15;
+    opacity:1;
+    filter:
+      drop-shadow(0 0 3px rgba(255,255,255,.94))
+      drop-shadow(0 0 8px rgba(255,255,255,.40));
+  }
+  69%{
     stroke:#fff;
     filter:
       drop-shadow(0 0 3px rgba(255,255,255,.94))
       drop-shadow(0 0 8px rgba(255,255,255,.40));
   }
-  33.5%{
+  69.2%{
     stroke:var(--hm-blue);
     filter:
       drop-shadow(0 0 4px rgba(0,166,237,1))
       drop-shadow(0 0 11px rgba(0,166,237,.72))
       drop-shadow(0 0 19px rgba(0,166,237,.34));
   }
-  96%{
+  82.2%{
     stroke:var(--hm-blue);
     stroke-dashoffset:-94;
     opacity:1;
@@ -133,22 +151,21 @@ html body.reuse-current .reuse-proof-connector__active{
       drop-shadow(0 0 11px rgba(0,166,237,.72))
       drop-shadow(0 0 19px rgba(0,166,237,.34));
   }
-  100%{
+  82.5%,100%{
     stroke:var(--hm-blue);
     stroke-dashoffset:-100;
     opacity:0;
   }
 }
 
-html body.reuse-current .reuse-proof-connector.is-proof-connector-running .reuse-proof-connector__active{
-  animation:reuse-proof-connector-travel 400ms linear 1 both;
+html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proof-connector__active{
+  animation:reuse-proof-lane-connector var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* Lower proof circle: slow start -> accelerating expansion -> final snap. */
+/* Lower proof circle: top -> bottom gradient fill, fast start -> slow finish. */
 html body.reuse-current .reuse-proof-map__node--solution{
   background:#000!important;
   border-color:var(--hm-blue)!important;
-  transition:border-color 1200ms ease-in-out;
 }
 
 html body.reuse-current .reuse-proof-map__node--solution::before{
@@ -157,8 +174,14 @@ html body.reuse-current .reuse-proof-map__node--solution::before{
   z-index:1;
   inset:-1px;
   border-radius:50%;
-  background:var(--hm-blue);
-  clip-path:circle(0% at 50% 50%);
+  background:linear-gradient(
+    180deg,
+    rgba(76,202,255,1) 0%,
+    var(--hm-blue) 34%,
+    rgba(0,166,237,.98) 72%,
+    rgba(0,139,205,1) 100%
+  );
+  clip-path:inset(0 0 100% 0 round 50%);
   opacity:1;
   pointer-events:none;
 }
@@ -167,30 +190,37 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
   position:relative;
   z-index:3;
   color:var(--hm-blue)!important;
-  transition:color 100ms ease 235ms;
 }
 
-@keyframes reuse-proof-solution-fill-snap{
-  0%{clip-path:circle(0% at 50% 50%)}
-  42%{clip-path:circle(4% at 50% 50%)}
-  66%{clip-path:circle(13% at 50% 50%)}
-  82%{clip-path:circle(29% at 50% 50%)}
-  92%{clip-path:circle(49% at 50% 50%)}
-  97%{clip-path:circle(61% at 50% 50%)}
-  100%{clip-path:circle(72% at 50% 50%)}
+@keyframes reuse-proof-lane-fill{
+  0%,82.49%{clip-path:inset(0 0 100% 0 round 50%)}
+  82.5%{
+    clip-path:inset(0 0 100% 0 round 50%);
+    animation-timing-function:cubic-bezier(.12,.78,.22,1);
+  }
+  100%{clip-path:inset(0 0 0 0 round 50%)}
 }
 
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-solution-filled::before{
-  animation:reuse-proof-solution-fill-snap 350ms cubic-bezier(.76,.02,.97,.62) 1 both;
+@keyframes reuse-proof-lane-copy{
+  0%,82.49%{color:var(--hm-blue)}
+  82.5%{
+    color:var(--hm-blue);
+    animation-timing-function:cubic-bezier(.12,.78,.22,1);
+  }
+  100%{color:#000}
 }
 
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-solution-filled h4{
-  color:#000!important;
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::before{
+  animation:reuse-proof-lane-fill var(--reuse-proof-lane-duration) linear 1 both;
+}
+
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
+  animation:reuse-proof-lane-copy var(--reuse-proof-lane-duration) linear 1 both;
 }
 
 /* Five-second final hold then coordinated dissolve to base. */
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::before{
-  clip-path:circle(0% at 50% 50%)!important;
+  clip-path:inset(0 0 100% 0 round 50%)!important;
   transition:clip-path 1200ms ease-in-out!important;
   animation:none!important;
 }
@@ -198,6 +228,7 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__no
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{
   color:var(--hm-blue)!important;
   transition:color 1200ms ease-in-out!important;
+  animation:none!important;
 }
 
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-connector__active{
@@ -221,9 +252,10 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-connect
 }
 
 @media(prefers-reduced-motion:reduce){
-  html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-ring-running .reuse-proof-sweep,
-  html body.reuse-current .reuse-proof-connector.is-proof-connector-running .reuse-proof-connector__active,
-  html body.reuse-current .reuse-proof-map__node--solution.is-proof-solution-filled::before{
+  html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep,
+  html body.reuse-current .reuse-proof-connector.is-proof-lane-running .reuse-proof-connector__active,
+  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::before,
+  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
     animation:none!important;
   }
   html body.reuse-current .reuse-proof-map__node--solution::before,
