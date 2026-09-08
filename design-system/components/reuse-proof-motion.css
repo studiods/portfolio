@@ -1,0 +1,163 @@
+/* HIMART REUSE 02.1 — anxiety-to-proof transfer motion.
+   A short white sweep starts at 6 o'clock, travels clockwise, then hands off
+   through the vertical connector to the matching blue proof node. */
+
+html body.reuse-current .reuse-proof-map__node{
+  position:relative;
+  isolation:isolate;
+  overflow:visible;
+}
+
+html body.reuse-current .reuse-proof-map__node > h4{
+  position:relative;
+  z-index:2;
+}
+
+/* Top-circle moving highlight. The base border remains untouched so the area
+   behind the travelling white segment immediately returns to the dim line. */
+html body.reuse-current .reuse-proof-sweep{
+  position:absolute;
+  z-index:4;
+  inset:-1px;
+  display:block;
+  width:calc(100% + 2px);
+  height:calc(100% + 2px);
+  overflow:visible;
+  pointer-events:none;
+  transform:rotate(90deg);
+  transform-origin:50% 50%;
+}
+html body.reuse-current .reuse-proof-sweep__ring{
+  fill:none;
+  stroke:#fff;
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:round;
+  stroke-dasharray:12 88;
+  stroke-dashoffset:0;
+  opacity:0;
+}
+@keyframes reuse-proof-ring-sweep{
+  0%{stroke-dashoffset:0;opacity:0}
+  3%{opacity:1}
+  96%{opacity:1}
+  100%{stroke-dashoffset:-100;opacity:0}
+}
+html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-ring-running .reuse-proof-sweep__ring{
+  animation:reuse-proof-ring-sweep 1500ms linear 1 both;
+}
+
+/* Four one-to-one connectors between the upper and lower circles. */
+html body.reuse-current .reuse-proof-map__arrow{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:28px!important;
+  width:100%!important;
+  height:120px!important;
+  flex:0 0 120px!important;
+  align-items:stretch!important;
+  justify-content:stretch!important;
+}
+html body.reuse-current .reuse-proof-connector{
+  position:relative;
+  display:flex;
+  width:100%;
+  height:120px;
+  align-items:stretch;
+  justify-content:center;
+}
+html body.reuse-current .reuse-proof-connector svg{
+  display:block!important;
+  width:12px!important;
+  height:120px!important;
+  overflow:visible!important;
+}
+html body.reuse-current .reuse-proof-connector__base,
+html body.reuse-current .reuse-proof-connector__active{
+  fill:none;
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:round;
+}
+html body.reuse-current .reuse-proof-connector__base{
+  stroke:rgba(255,255,255,.12);
+}
+html body.reuse-current .reuse-proof-connector__active{
+  stroke:#fff;
+  stroke-dasharray:100;
+  stroke-dashoffset:100;
+  opacity:0;
+}
+@keyframes reuse-proof-connector-draw{
+  0%{stroke-dashoffset:100;opacity:1}
+  100%{stroke-dashoffset:0;opacity:1}
+}
+html body.reuse-current .reuse-proof-connector.is-proof-connector-running .reuse-proof-connector__active{
+  animation:reuse-proof-connector-draw 600ms cubic-bezier(.22,.74,.22,1) 1 both;
+}
+html body.reuse-current .reuse-proof-connector.is-proof-connector-held .reuse-proof-connector__active{
+  stroke-dashoffset:0;
+  opacity:.30;
+}
+
+/* Lower proof circle: blue outline -> blue fill / black copy. */
+html body.reuse-current .reuse-proof-map__node--solution{
+  transition:background-color 400ms ease,border-color 400ms ease;
+}
+html body.reuse-current .reuse-proof-map__node--solution h4{
+  transition:color 400ms ease;
+}
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-solution-filled{
+  border-color:var(--hm-blue)!important;
+  background:var(--hm-blue)!important;
+}
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-solution-filled h4{
+  color:#000!important;
+}
+
+/* Final 5-second hold ends in one coordinated dissolve back to the base state. */
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
+  transition-duration:1200ms!important;
+  transition-timing-function:ease-in-out!important;
+}
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{
+  transition-duration:1200ms!important;
+  transition-timing-function:ease-in-out!important;
+}
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-connector__active{
+  opacity:0!important;
+  transition:opacity 1200ms ease-in-out!important;
+}
+
+@media(max-width:980px){
+  html body.reuse-current .reuse-proof-map__arrow{gap:20px!important}
+}
+
+@media(max-width:780px){
+  /* 02.1 becomes a 2-column layout on mobile. Keep the transfer relationship
+     readable without forcing long crossing lines. */
+  html body.reuse-current .reuse-proof-map__arrow{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:18px!important;
+    height:88px!important;
+    flex-basis:88px!important;
+  }
+  html body.reuse-current .reuse-proof-connector{
+    height:88px;
+  }
+  html body.reuse-current .reuse-proof-connector svg{
+    height:88px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-ring-running .reuse-proof-sweep__ring,
+  html body.reuse-current .reuse-proof-connector.is-proof-connector-running .reuse-proof-connector__active{
+    animation:none!important;
+  }
+  html body.reuse-current .reuse-proof-map__node--solution,
+  html body.reuse-current .reuse-proof-map__node--solution h4,
+  html body.reuse-current .reuse-proof-connector__active{
+    transition:none!important;
+  }
+}
