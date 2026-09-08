@@ -22,7 +22,8 @@ html body.reuse-current .reuse-proof-map__node > h4{
 }
 
 /* Upper circle: exact 6-o'clock comet. It starts fully transparent and fades
-   to 100% while already moving around the circle. */
+   to 100% while already moving around the circle. On the return trip it begins
+   fading near 4 o'clock and reaches 0% exactly as it comes back to 6 o'clock. */
 html body.reuse-current .reuse-proof-sweep{
   position:absolute;
   z-index:4;
@@ -62,9 +63,9 @@ html body.reuse-current .reuse-proof-sweep{
   15.87%{opacity:1}
   19.84%{transform:rotate(158.4deg);opacity:1}
   29.76%{transform:rotate(255.6deg);opacity:1}
-  36.83%{transform:rotate(330deg);opacity:1}
-  39.68%{transform:rotate(360deg);opacity:1}
-  39.73%{transform:rotate(360deg);opacity:0}
+  33.98%{transform:rotate(300deg);opacity:1}
+  36.83%{transform:rotate(330deg);opacity:.5}
+  39.68%{transform:rotate(360deg);opacity:0}
   100%{transform:rotate(360deg);opacity:0}
 }
 
@@ -187,22 +188,21 @@ html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h
   animation:reuse-proof-lane-copy var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* Five-second final hold then coordinated dissolve to base. */
+/* Five-second final hold then coordinated return to the base state. The reset
+   class installs the transition first; JS removes the active animation only
+   after forcing that state to resolve, so blue drains naturally and copy moves
+   from black back to Himart blue instead of snapping. */
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
-  background-color:#000!important;
-  transition:background-color 1200ms ease-in-out!important;
-  animation:none!important;
+  transition:background-color 1200ms cubic-bezier(.22,1,.36,1)!important;
 }
 
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after{
   opacity:0!important;
-  animation:none!important;
+  transition:opacity 240ms ease!important;
 }
 
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{
-  --reuse-proof-copy-color:#00a6ed!important;
-  transition:--reuse-proof-copy-color 1200ms ease-in-out!important;
-  animation:none!important;
+  transition:--reuse-proof-copy-color 1200ms cubic-bezier(.22,1,.36,1)!important;
 }
 
 @media(max-width:780px){
