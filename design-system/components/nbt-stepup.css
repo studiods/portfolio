@@ -8,6 +8,7 @@ html body.nbt-stepup-page a{color:inherit;text-decoration:none}
 html body.nbt-stepup-page #live-main{position:relative;background:#000!important}
 
 /* HERO — Himart layout, Stepup visual only. */
+.stepup-hero-video{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center center;background:#000}
 html body.nbt-stepup-page #live-main .hm-movie-hero{position:sticky!important;top:0!important;z-index:1!important;padding:0!important}
 .stepup-hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;background:#050505}
 .stepup-hero-media::before{content:"";position:absolute;right:-7vw;top:-15vw;width:64vw;height:64vw;border-radius:50%;background:#ffd900;opacity:.9}
