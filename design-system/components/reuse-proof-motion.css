@@ -166,12 +166,12 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   html body.reuse-current #brand .reuse-trust-equation__brand-logo{width:56px;margin-top:16px}
 }
 
-/* REUSE 01.3 — reduce only the spacing between the five equation contents by exactly 10%.
-   Four original space-between gaps become 90% of their previous width; the removed
-   10% is split equally across the two outer edges so the whole equation remains centered. */
+/* REUSE 01.3 — tighten the already-reduced equation gaps by another 10%.
+   Internal gaps are now 81% of the original space-between width while the whole
+   equation remains centered by distributing the released space to both outer edges. */
 @media(min-width:781px){
   html body.reuse-current #brand .reuse-trust-equation__visual{
-    grid-template-columns:minmax(0,.222222fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,.222222fr);
+    grid-template-columns:minmax(0,.469136fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,.469136fr);
     justify-content:stretch;
   }
   html body.reuse-current #brand .reuse-trust-equation__brand{grid-column:2}
@@ -181,6 +181,6 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   html body.reuse-current #brand .reuse-trust-equation__result{grid-column:10}
 }
 @media(max-width:780px){
-  html body.reuse-current #brand .reuse-trust-equation__visual{row-gap:19.8px}
+  html body.reuse-current #brand .reuse-trust-equation__visual{row-gap:17.82px}
   html body.reuse-current #brand .reuse-trust-equation__visual > *{grid-column:1!important}
 }
