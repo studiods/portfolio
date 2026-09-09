@@ -23,6 +23,12 @@
     { type: 'video', src: './assets/movies/reuse_02.mp4' }
   ];
 
+  const AI_VIDEO_MEDIA = [
+    './assets/movies/reuse_04.mp4',
+    './assets/movies/reuse_03.mp4',
+    './assets/movies/reuse_01.mp4'
+  ];
+
   const galleries = Array.from(document.querySelectorAll('.reuse-production-gallery'));
   if (!galleries.length) return;
 
@@ -75,7 +81,8 @@
 
   const controllers = new Map();
 
-  galleries.forEach((gallery, galleryIndex) => {
+  /* Galleries 01–02 retain the timed rolling behavior. */
+  galleries.slice(0, 2).forEach((gallery, galleryIndex) => {
     const slides = Array.from(gallery.querySelectorAll('.reuse-production-gallery__slide'));
     const prev = gallery.querySelector('[data-reuse-gallery-prev]');
     const next = gallery.querySelector('[data-reuse-gallery-next]');
@@ -136,9 +143,7 @@
       clearVideoFallback();
       try { video.currentTime = 0; } catch (_) {}
       const playPromise = video.play();
-      if (playPromise?.catch) {
-        playPromise.catch(() => scheduleVideoFallback(video));
-      }
+      if (playPromise?.catch) playPromise.catch(() => scheduleVideoFallback(video));
       return true;
     };
 
@@ -205,7 +210,6 @@
         return;
       }
 
-      /* Force the incoming 95% / 20%-black state to paint before transition. */
       void incoming.offsetWidth;
       current.classList.add('is-exiting');
       incoming.classList.add('is-entering');
@@ -227,9 +231,7 @@
         if (!inView || document.hidden || busy || slide !== slides[index]) return;
         move(1, true);
       });
-
       video.addEventListener('playing', clearVideoFallback);
-
       ['pause', 'waiting', 'stalled'].forEach((eventName) => {
         video.addEventListener(eventName, () => {
           if (suppressVideoPauseFallback || slide !== slides[index]) return;
@@ -276,6 +278,148 @@
     controllers.set(gallery, controller);
     settle();
   });
+
+  /* Gallery 03: manually started AI video playlist with hover controls while playing. */
+  const setupAiVideoGallery = (gallery) => {
+    if (!gallery) return;
+    const viewport = gallery.querySelector('.reuse-production-gallery__viewport');
+    const status = gallery.querySelector('[data-reuse-gallery-status]');
+    if (!viewport) return;
+
+    gallery.classList.add('reuse-production-gallery--video-player', 'is-video-idle');
+    gallery.querySelectorAll(':scope > .reuse-production-gallery__nav').forEach((button) => button.hidden = true);
+
+    const slide = document.createElement('article');
+    slide.className = 'reuse-production-gallery__slide is-active reuse-video-player__slide';
+    slide.setAttribute('aria-hidden', 'false');
+
+    const media = document.createElement('div');
+    media.className = 'reuse-production-gallery__media reuse-video-player__media';
+
+    const video = document.createElement('video');
+    video.src = AI_VIDEO_MEDIA[0];
+    video.playsInline = true;
+    video.preload = 'metadata';
+    video.loop = false;
+    video.controls = false;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('data-reuse-ai-video', '');
+
+    media.appendChild(video);
+    slide.appendChild(media);
+
+    const veil = document.createElement('div');
+    veil.className = 'reuse-video-player__veil';
+    veil.setAttribute('aria-hidden', 'true');
+
+    viewport.replaceChildren(slide, veil);
+
+    const controls = document.createElement('div');
+    controls.className = 'reuse-video-player__controls';
+    controls.innerHTML = `
+      <button class="reuse-video-player__skip reuse-video-player__skip--prev" type="button" aria-label="이전 영상">
+        <svg viewBox="0 0 44 44" aria-hidden="true"><polyline points="23,12 13,22 23,32"></polyline><polyline points="34,12 24,22 34,32"></polyline></svg>
+      </button>
+      <button class="reuse-video-player__toggle" type="button" aria-label="재생">
+        <svg class="reuse-video-player__icon reuse-video-player__icon--play" viewBox="0 0 48 48" aria-hidden="true"><polyline points="17,11 36,24 17,37 17,11"></polyline></svg>
+        <svg class="reuse-video-player__icon reuse-video-player__icon--pause" viewBox="0 0 48 48" aria-hidden="true"><line x1="18" y1="12" x2="18" y2="36"></line><line x1="30" y1="12" x2="30" y2="36"></line></svg>
+      </button>
+      <button class="reuse-video-player__skip reuse-video-player__skip--next" type="button" aria-label="다음 영상">
+        <svg viewBox="0 0 44 44" aria-hidden="true"><polyline points="10,12 20,22 10,32"></polyline><polyline points="21,12 31,22 21,32"></polyline></svg>
+      </button>`;
+    gallery.appendChild(controls);
+
+    const toggle = controls.querySelector('.reuse-video-player__toggle');
+    const prev = controls.querySelector('.reuse-video-player__skip--prev');
+    const next = controls.querySelector('.reuse-video-player__skip--next');
+    let index = 0;
+    let inView = false;
+    let userStarted = false;
+
+    const updateStatus = () => {
+      if (status) status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(AI_VIDEO_MEDIA.length).padStart(2, '0')}`;
+    };
+
+    const syncState = () => {
+      const playing = !video.paused && !video.ended;
+      gallery.classList.toggle('is-video-playing', playing);
+      gallery.classList.toggle('is-video-paused', userStarted && !playing);
+      gallery.classList.toggle('is-video-idle', !userStarted);
+      if (toggle) toggle.setAttribute('aria-label', playing ? '일시정지' : '재생');
+    };
+
+    const play = () => {
+      userStarted = true;
+      const promise = video.play();
+      if (promise?.catch) promise.catch(() => syncState());
+      syncState();
+    };
+
+    const pause = () => {
+      video.pause();
+      userStarted = true;
+      syncState();
+    };
+
+    const load = (targetIndex, autoplay = false) => {
+      index = (targetIndex + AI_VIDEO_MEDIA.length) % AI_VIDEO_MEDIA.length;
+      video.pause();
+      video.src = AI_VIDEO_MEDIA[index];
+      video.load();
+      updateStatus();
+      if (autoplay) {
+        userStarted = true;
+        const onReady = () => {
+          video.removeEventListener('canplay', onReady);
+          if (inView && !document.hidden) play();
+        };
+        video.addEventListener('canplay', onReady, { once: true });
+      } else {
+        syncState();
+      }
+    };
+
+    toggle?.addEventListener('click', () => {
+      if (video.paused || video.ended) play();
+      else pause();
+    });
+    prev?.addEventListener('click', () => load(index - 1, userStarted && !video.paused));
+    next?.addEventListener('click', () => load(index + 1, userStarted && !video.paused));
+
+    video.addEventListener('play', syncState);
+    video.addEventListener('playing', syncState);
+    video.addEventListener('pause', syncState);
+    video.addEventListener('ended', () => load(index + 1, true));
+
+    gallery.addEventListener('keydown', (event) => {
+      if (event.key === ' ' || event.key === 'Enter') {
+        if (event.target.closest('button')) return;
+        event.preventDefault();
+        if (video.paused || video.ended) play();
+        else pause();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        load(index - 1, userStarted && !video.paused);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        load(index + 1, userStarted && !video.paused);
+      }
+    });
+
+    const controller = {
+      setInView(value) {
+        inView = value;
+        if (!inView && !video.paused) pause();
+      },
+      resume() {},
+      pause() { if (!video.paused) pause(); }
+    };
+    controllers.set(gallery, controller);
+    updateStatus();
+    syncState();
+  };
+
+  setupAiVideoGallery(galleries[2]);
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
