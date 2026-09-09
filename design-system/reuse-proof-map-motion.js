@@ -1,17 +1,10 @@
 (() => {
   'use strict';
 
-  /*
-    REUSE 03.1 — authoritative LANDING → ACTION source.
-    This DOM is intentionally synchronized to the approved HIMART 02.6 graph:
-    52.2 / 27.6 / 9.3 / 6.6 / 4.3 with the shared landing-action component.
-    The source graph must be rendered from this exact structure, not recreated
-    by a secondary visualization rule.
-  */
+  /* REUSE 03.1 — authoritative LANDING → ACTION source. */
   const syncLandingActionSource = () => {
     const source = document.querySelector('#journey .reuse-image-evidence');
     if (!source) return;
-
     source.outerHTML = `
 <div class="data-viz landing-stack reuse-image-evidence">
   <div class="landing-chart landing-chart--verbatim">
@@ -34,8 +27,6 @@
 </div>`;
   };
 
-  /* Execute before the motion map initializes so no later component can restore
-     the retired 03.1 chart structure. */
   syncLandingActionSource();
 
   const map = document.querySelector('.reuse-proof-map');
@@ -112,7 +103,6 @@
     map.classList.add(RESET_CLASS);
     void map.offsetWidth;
     anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
-    solutionNodes.forEach((node) => solutionNodes.forEach(() => {}));
     solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
     schedule(() => {
       if (!active) return;
@@ -153,5 +143,5 @@
     else if (inFocus) start();
   };
   if (typeof reducedMotion.addEventListener === 'function') reducedMotion.addEventListener('change', handleMotionChange);
-  else if (typeof reducedMotion.addListener === 'function') reducedMotion.addListener(handleMotionChange);
+  else if (typeof reducedMotion.addListener === 'function') reducedMotion.addListener('change', handleMotionChange);
 })();
