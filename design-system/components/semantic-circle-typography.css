@@ -1,6 +1,6 @@
 /* HIMART Design System — semantic circle typography + divider rhythm.
    This layer is intentionally page-agnostic. Page-specific highlighted states may opt out
-   only with a more specific state selector (Reuse 02.2 blue-filled confidence circles). */
+   only with a more specific state selector (Reuse confidence/proof circle states). */
 :root{
   --hm-type-circle-number:28px;
   --hm-circle-title-weight:100;
@@ -32,8 +32,9 @@ html body.himart-page-body #live-main :is(
   font-variation-settings:"wght" 100!important;
 }
 
-/* Reuse exception is deliberately scoped to 02.2 only. 02.1 proof circles keep their
-   own previously approved Thin/Light weights. Default/reset = Thin; blue-filled = Regular. */
+/* Reuse 02.2 confidence circles use the shared semantic state below.
+   Reuse 02.1 lower proof circles use the same Thin(100) / Regular(400) tokens,
+   with fill/reset timing owned by reuse-proof-motion.css. */
 html body.reuse-current .reuse-confidence-flow .reuse-confidence-node h4{
   font-family:var(--hm-font-ko)!important;
   font-weight:var(--hm-circle-title-weight)!important;
