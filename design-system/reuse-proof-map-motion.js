@@ -1,80 +1,83 @@
 (() => {
   'use strict';
 
-  /* REUSE 02.6 — authoritative LANDING → ACTION source. */
+  /* REUSE 02.1 / shared motion */
   const inject02_1ArrowRule = () => {
     if (document.getElementById('reuse-02-1-arrow-rule')) return;
     const style = document.createElement('style');
     style.id = 'reuse-02-1-arrow-rule';
     style.textContent = `
-      html body.reuse-current .reuse-proof-map__arrow{
-        display:grid!important;
-        grid-template-columns:repeat(4,minmax(0,1fr))!important;
-        gap:28px!important;
-        width:100%!important;
-        height:64px!important;
-        min-height:64px!important;
-        flex:0 0 64px!important;
-        align-items:center!important;
-        justify-items:center!important;
-      }
-      html body.reuse-current .reuse-proof-map__arrow-item{
-        position:relative!important;
-        display:block!important;
-        width:40px!important;
-        height:32px!important;
-      }
-      /* 1px white line, 30% opacity, downward open arrow head only. */
-      html body.reuse-current .reuse-proof-map__arrow-item::before,
-      html body.reuse-current .reuse-proof-map__arrow-item::after{
-        content:""!important;
-        position:absolute!important;
-        top:7px!important;
-        width:22px!important;
-        height:1px!important;
-        background:rgba(255,255,255,.30)!important;
-      }
-      html body.reuse-current .reuse-proof-map__arrow-item::before{
-        left:0!important;
-        transform:rotate(38deg)!important;
-        transform-origin:left center!important;
-      }
-      html body.reuse-current .reuse-proof-map__arrow-item::after{
-        right:0!important;
-        transform:rotate(-38deg)!important;
-        transform-origin:right center!important;
-      }
-      @media(max-width:780px){
-        html body.reuse-current .reuse-proof-map__arrow{
-          grid-template-columns:repeat(2,minmax(0,1fr))!important;
-          gap:18px!important;
-          height:56px!important;
-          min-height:56px!important;
-          flex-basis:56px!important;
-        }
-      }
+      html body.reuse-current .reuse-proof-map__arrow{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:28px!important;width:100%!important;height:64px!important;min-height:64px!important;flex:0 0 64px!important;align-items:center!important;justify-items:center!important}
+      html body.reuse-current .reuse-proof-map__arrow-item{position:relative!important;display:block!important;width:40px!important;height:32px!important}
+      html body.reuse-current .reuse-proof-map__arrow-item::before,html body.reuse-current .reuse-proof-map__arrow-item::after{content:""!important;position:absolute!important;top:7px!important;width:22px!important;height:1px!important;background:rgba(255,255,255,.30)!important}
+      html body.reuse-current .reuse-proof-map__arrow-item::before{left:0!important;transform:rotate(38deg)!important;transform-origin:left center!important}
+      html body.reuse-current .reuse-proof-map__arrow-item::after{right:0!important;transform:rotate(-38deg)!important;transform-origin:right center!important}
+      @media(max-width:780px){html body.reuse-current .reuse-proof-map__arrow{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important;height:56px!important;min-height:56px!important;flex-basis:56px!important}}
     `;
     document.head.appendChild(style);
   };
 
-  const syncLandingActionSource = () => {
-    const source = document.querySelector('#journey .reuse-image-evidence');
+  /*
+    REUSE 03.1 — use the canonical HIMART 02.5 / HOME horizontal-bar component.
+    No local bar geometry is authored here. Only the data values and labels change.
+  */
+  const syncTrustChart = () => {
+    const source = document.querySelector('#journey .reuse-image-evidence, #journey .reuse-image-trust-chart');
     if (!source) return;
+
     source.outerHTML = `
-<div class="data-viz landing-stack reuse-image-evidence">
-  <div class="landing-chart landing-chart--verbatim">
-    <h4>기획전 시작 후 첫 다음 행동</h4>
-    <div class="stackbar" aria-hidden="true">
-      <i style="width:52.2%;--c:var(--hm-red)"></i><i style="width:27.6%;--c:var(--hm-blue)"></i><i style="width:9.3%;--c:var(--hm-newblue)"></i><i style="width:6.6%;--c:var(--hm-green)"></i><i style="width:4.3%;--c:var(--hm-yellow)"></i>
-    </div>
-    <div class="stacklabels"><div><b>52.2%</b>바로 종료</div><div><b>27.6%</b>기획전 재탐색 후 종료</div><div><b>9.3%</b>상품 도달</div><div><b>6.6%</b>검색/카테고리 도달</div></div>
-    <div class="landing-research-signal"><span>RESEARCH SIGNAL</span><p>가격이 중고를 보게 만들었다면, 신뢰할 수 있는 근거가 선택을 완성하게 해야 했습니다.</p><small>리서치에서 확인된 핵심 판단 기준 · 상품 상태 · 판매자 신뢰 · 거래 안전성 · 전문 판매처</small></div>
+<div class="data-viz hm-ds-home-bars reuse-trust-home-bars" data-hm-chart>
+  <div class="reuse-trust-chart-title">중고거래에서 중요하게 보는 요소</div>
+  <div class="hm-ds-home-bar hm-ds-home-bar--blue" data-value="67.7">
+    <span class="hm-ds-home-bar__label">판매자 신뢰</span>
+    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:100%"></div></div>
+    <b class="hm-ds-home-bar__value">67.7%</b>
   </div>
+  <div class="hm-ds-home-bar hm-ds-home-bar--blue-new" data-value="58.6">
+    <span class="hm-ds-home-bar__label">거래 편리성</span>
+    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:86.56%"></div></div>
+    <b class="hm-ds-home-bar__value">58.6%</b>
+  </div>
+  <div class="hm-ds-home-bar hm-ds-home-bar--green" data-value="49.8">
+    <span class="hm-ds-home-bar__label">상품 상태 확인</span>
+    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:73.56%"></div></div>
+    <b class="hm-ds-home-bar__value">49.8%</b>
+  </div>
+  <div class="hm-ds-home-bar hm-ds-home-bar--yellow" data-value="48.3">
+    <span class="hm-ds-home-bar__label">가격</span>
+    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:71.34%"></div></div>
+    <b class="hm-ds-home-bar__value">48.3%</b>
+  </div>
+  <div class="hm-ds-home-bar hm-ds-home-bar--white-34" data-value="29.0">
+    <span class="hm-ds-home-bar__label">안전결제</span>
+    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:42.84%"></div></div>
+    <b class="hm-ds-home-bar__value">29.0%</b>
+  </div>
+  <div class="hm-ds-home-bar hm-ds-home-bar--white-18" data-value="10.9">
+    <span class="hm-ds-home-bar__label">플랫폼 대응</span>
+    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:16.10%"></div></div>
+    <b class="hm-ds-home-bar__value">10.9%</b>
+  </div>
+  <div class="hm-source hm-ds-source-note">SOURCE · 전자신문 × 오픈서베이, 중고거래 플랫폼 이용 행태 조사, 2025 / 전국 20–59세 1,002명</div>
 </div>`;
   };
 
+  /* The HOME component has 18px row rhythm; preserve it and only change the requested title size. */
+  const injectTrustChartTitleRule = () => {
+    if (document.getElementById('reuse-trust-chart-title-rule')) return;
+    const style = document.createElement('style');
+    style.id = 'reuse-trust-chart-title-rule';
+    style.textContent = `
+      html body.reuse-current #journey .reuse-trust-home-bars{display:grid!important;gap:var(--hm-space-18)!important;width:100%!important;min-height:0!important;margin:0!important}
+      html body.reuse-current #journey .reuse-trust-home-bars .reuse-trust-chart-title{grid-column:1/-1!important;margin:0 0 10px!important;color:var(--hm-text-primary)!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.3!important;letter-spacing:var(--hm-track-body)!important}
+      html body.reuse-current #journey .reuse-trust-home-bars .hm-source{grid-column:1/-1!important}
+    `;
+    document.head.appendChild(style);
+  };
+
   inject02_1ArrowRule();
-  syncLandingActionSource();
+  syncTrustChart();
+  injectTrustChartTitleRule();
 
   const map = document.querySelector('.reuse-proof-map');
   if (!map) return;
@@ -98,18 +101,10 @@
   const cssTimeToMs = (value) => { const token = String(value || '').trim(); if (!token) return 2205; if (token.endsWith('ms')) return Number.parseFloat(token) || 2205; if (token.endsWith('s')) return (Number.parseFloat(token) || 2.205) * 1000; return Number.parseFloat(token) || 2205; };
   const getLaneDuration = () => cssTimeToMs(window.getComputedStyle(map).getPropertyValue('--reuse-proof-lane-duration'));
   const ensureSweepRings = () => { anxietyNodes.forEach((node) => { if (node.querySelector('.reuse-proof-sweep')) return; const sweep = document.createElement('span'); sweep.className = 'reuse-proof-sweep'; sweep.setAttribute('aria-hidden','true'); node.appendChild(sweep); }); };
-
-  /* Four vertical connectors: one arrow head for each upper/lower circle pair. */
   spacer.replaceChildren();
   spacer.setAttribute('aria-hidden','true');
-  for (let index = 0; index < anxietyNodes.length; index += 1) {
-    const arrow = document.createElement('span');
-    arrow.className = 'reuse-proof-map__arrow-item';
-    arrow.setAttribute('aria-hidden','true');
-    spacer.appendChild(arrow);
-  }
+  for (let index = 0; index < anxietyNodes.length; index += 1) { const arrow = document.createElement('span'); arrow.className = 'reuse-proof-map__arrow-item'; arrow.setAttribute('aria-hidden','true'); spacer.appendChild(arrow); }
   ensureSweepRings();
-
   const clearState = () => { map.classList.remove(RESET_CLASS); anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS)); solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS)); };
   const stop = () => { active = false; clearTimers(); clearState(); };
   const runLane = (index) => { if (!active || !inFocus || document.hidden || reducedMotion.matches) return; const anxiety = anxietyNodes[index]; const solution = solutionNodes[index]; anxiety.classList.remove(ACTIVE_CLASS); solution.classList.remove(ACTIVE_CLASS); void anxiety.offsetWidth; anxiety.classList.add(ACTIVE_CLASS); solution.classList.add(ACTIVE_CLASS); };
