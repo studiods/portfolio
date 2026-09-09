@@ -258,7 +258,7 @@
       });
     };
     const requestUpdate = () => {
-      if (!raf) return;
+      if (raf) return;
       raf = requestAnimationFrame(update);
     };
 
