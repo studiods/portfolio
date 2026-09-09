@@ -48,6 +48,11 @@ html body.reuse-current .reuse-confidence-flow .reuse-confidence-node.is-flow-tr
   font-variation-settings:"wght" 100!important;
 }
 
+/* Reuse 03.2 image-order circles use a fixed 24px title role. */
+html body.reuse-current .reuse-image-order-flow .reuse-confidence-node h4{
+  font-size:24px!important;
+}
+
 /* Divider → first label/title spacing is a component-internal rule. Wide editorial
    chapter alignment may remove external top spacing, but must not collapse this 40px inset. */
 html body.himart-page-body #live-main #journey .journey-flow-block{
