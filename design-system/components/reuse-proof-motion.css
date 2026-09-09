@@ -29,3 +29,36 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__no
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{--reuse-proof-copy-color:#00a6ed;font-weight:300!important;font-variation-settings:"wght" 300;transition:--reuse-proof-copy-color 2000ms cubic-bezier(.42,0,.58,1),font-variation-settings 2000ms cubic-bezier(.42,0,.58,1)!important}
 @media(max-width:780px){html body.reuse-current .reuse-proof-map__arrow{width:100%!important;height:64px!important;flex-basis:64px!important}.reuse-proof-map__arrow::before{background-size:56px 24px,56px 24px,56px 24px,56px 24px!important}}
 @media(prefers-reduced-motion:reduce){html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep,html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running,html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after,html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{animation:none!important}html body.reuse-current .reuse-proof-map__node--solution,html body.reuse-current .reuse-proof-map__node--solution h4{transition:none!important}}
+
+/* 2026-09-09 final Reuse geometry/type authority.
+   02.1 arrows use the exact same grid tracks/gaps as the circles instead of percentage positions. */
+html body.reuse-current #data .reuse-proof-map__arrow{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:28px!important;
+  align-items:center!important;
+  justify-items:center!important;
+}
+html body.reuse-current #data .reuse-proof-map__arrow::before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+html body.reuse-current #data .reuse-proof-map__arrow > .reuse-proof-map__arrow-item{
+  display:block!important;
+  visibility:visible!important;
+}
+@media(max-width:980px) and (min-width:781px){
+  html body.reuse-current #data .reuse-proof-map__arrow{gap:20px!important}
+}
+
+/* 02.2 / 03.2 circle typography: title 22px, supporting copy 12px. */
+html body.reuse-current #data .reuse-confidence-flow .reuse-confidence-node h4,
+html body.reuse-current #journey .reuse-image-order-flow .reuse-confidence-node h4{
+  font-size:22px!important;
+}
+html body.reuse-current #data .reuse-confidence-flow .reuse-confidence-node p,
+html body.reuse-current #journey .reuse-image-order-flow .reuse-confidence-node p{
+  font-size:12px!important;
+  line-height:1.45!important;
+}
