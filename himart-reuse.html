@@ -11,12 +11,94 @@
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260909-5">
 <link rel="stylesheet" href="./design-system/components/reuse-proof-motion.css?v=20260909-4">
 <link rel="stylesheet" href="./design-system/components/reuse-confidence.css?v=20260909-7">
-<link rel="stylesheet" href="./design-system/components/reuse-image-evidence.css?v=20260909-5">
-<link rel="stylesheet" href="./design-system/components/reuse-production-gallery.css?v=20260909-3">
+<link rel="stylesheet" href="./design-system/components/reuse-image-evidence.css?v=20260909-6">
+<link rel="stylesheet" href="./design-system/components/reuse-production-gallery.css?v=20260909-4">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-3">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-5">
 <link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260909-2">
 <link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260909-1">
+<style id="hm-reuse-chart-final">
+/* Final page-level authority: prevents legacy data-viz rules from removing the
+   Reuse 03.1 in-bar labels or reverting the 03.3 4:3 media ratio. */
+html body.reuse-current #journey .reuse-image-evidence .stackbar{
+  position:relative!important;
+  display:flex!important;
+  height:128px!important;
+  min-height:128px!important;
+  overflow:hidden!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>i{
+  display:block!important;
+  height:100%!important;
+  flex:0 0 auto!important;
+  background:var(--c)!important;
+  opacity:1!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{
+  position:absolute!important;
+  z-index:10!important;
+  inset:0!important;
+  display:grid!important;
+  grid-template-columns:53fr 39fr 5.6fr 2.4fr!important;
+  margin:0!important;
+  padding:0!important;
+  gap:0!important;
+  width:100%!important;
+  height:100%!important;
+  pointer-events:none!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:0!important;
+  padding:0 16px!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.25!important;
+  text-align:center!important;
+  white-space:nowrap!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(1){grid-column:1!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(2){grid-column:2!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div span{display:block!important;color:#fff!important;font:inherit!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
+  display:block!important;
+  margin:6px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-en-thin)!important;
+  font-size:32px!important;
+  font-weight:300!important;
+  line-height:1!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stacklegend{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px!important;
+  margin-top:32px!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{
+  display:block!important;
+  padding-top:10px!important;
+  border-top:2px solid var(--c)!important;
+  color:rgba(255,255,255,.7)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+}
+html body.reuse-current .reuse-production-gallery{aspect-ratio:4/3!important}
+@media(max-width:780px){
+  html body.reuse-current #journey .reuse-image-evidence .stackbar{height:116px!important;min-height:116px!important}
+  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{font-size:18px!important;padding:0 6px!important}
+  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{font-size:28px!important}
+  html body.reuse-current #journey .reuse-image-evidence .stacklegend{grid-template-columns:1fr!important}
+}
+</style>
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-ready himart-narrative-ready himart-movie-page reuse-current hm-wide-editorial-test">
 <main id="live-main">
