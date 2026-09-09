@@ -118,7 +118,7 @@ html body.reuse-current .reuse-production-gallery__media > :is(img,video,picture
   object-fit:cover;
 }
 
-/* Static lower-third gradient: 60% black at the bottom fading to 0% at the top. */
+/* Static lower-40% gradient: 60% black at the bottom fading to 0% at the top. */
 html body.reuse-current .reuse-production-gallery::after{
   content:"";
   position:absolute;
@@ -126,7 +126,7 @@ html body.reuse-current .reuse-production-gallery::after{
   right:0;
   bottom:0;
   left:0;
-  height:33.3333%;
+  height:40%;
   pointer-events:none;
   background:linear-gradient(to top,rgba(0,0,0,.60) 0%,rgba(0,0,0,0) 100%);
 }
@@ -168,7 +168,7 @@ html body.reuse-current .reuse-production-gallery__copy h4{
 html body.reuse-current .reuse-production-gallery__copy p{
   margin:10px 0 0!important;
   max-width:62ch!important;
-  color:rgba(255,255,255,.70)!important;
+  color:rgba(255,255,255,.90)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:16px!important;
   font-weight:100!important;
