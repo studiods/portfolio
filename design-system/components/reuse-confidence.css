@@ -434,10 +434,14 @@ html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust>span{
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--trust h4,
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--base h4{
   animation:reuse-confidence-trust-title-pulse 1.7s ease-in-out 1 forwards;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--trust p,
 html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--base p{
   animation:reuse-confidence-trust-desc-pulse 1.7s ease-in-out 1 forwards;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held{
   border-color:var(--hm-blue)!important;
@@ -452,10 +456,14 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-held>span{
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust h4,
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--base h4{
   color:#000!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--trust p,
 html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--base p{
   color:rgba(0,0,0,.60)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300;
 }
 html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting{
   border-color:var(--hm-line-default)!important;
