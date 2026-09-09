@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HIMART REUSE — Fixed Graph</title>
+<style>html,body{margin:0;min-height:100%;background:#000;color:#fff}.loader{min-height:100vh;background:#000}</style>
+</head>
+<body><div class="loader" aria-hidden="true"></div>
+<script>
+(async()=>{
+  try{
+    const r=await fetch('./himart-reuse.html?force=20260909-graph-final',{cache:'no-store'});
+    if(!r.ok) throw new Error('himart-reuse.html load failed');
+    let html=await r.text();
+    html=html.replace('</body>',`<style id="reuse-graph-final">
+html body.reuse-current #journey .reuse-image-evidence{display:block!important;width:100%!important;min-width:0!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart{position:relative!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin:0 0 34px!important;padding:0!important;font-size:0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-weight:300!important;line-height:1.4!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4:after{content:"기획전 시작 후 첫 다음 행동"!important;display:block!important;font-size:16px!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-weight:300!important;line-height:1.4!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar{position:relative!important;display:block!important;width:100%!important;height:182px!important;margin:0!important;padding:0!important;overflow:hidden!important;background:linear-gradient(to right,#1674C5 0%,#1674C5 52.2%,#0D96CF 52.2%,#0D96CF 79.8%,#15A3B8 79.8%,#15A3B8 89.1%,#0CC8A8 89.1%,#0CC8A8 95.7%,#E2D400 95.7%,#E2D400 100%)!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i{display:none!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels{position:absolute!important;z-index:2!important;left:0!important;top:0!important;width:100%!important;height:182px!important;margin:0!important;padding:0!important;display:block!important;pointer-events:none!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{position:absolute!important;bottom:20px!important;margin:0!important;padding:0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:0!important;font-weight:300!important;line-height:1.05!important;white-space:pre-line!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1){left:1.1%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1):after{content:"종료\\A52.2%"!important;font-size:22px!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2){left:53.3%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2):after{content:"재탐색\\A27.6%"!important;font-size:22px!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3){left:80.9%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3):after{content:"상품\\A9.3%"!important;font-size:22px!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4){left:90.2%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4):after{content:"검색\\A6.6%"!important;font-size:22px!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels:after{content:"기타\\A4.3%"!important;position:absolute!important;left:97.1%!important;bottom:20px!important;transform:translateX(-50%)!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:22px!important;font-weight:300!important;line-height:1.05!important;white-space:pre-line!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels b{display:none!important}
+</style><script>
+(()=>{
+ const sync=()=>{const s=document.querySelector('#journey .reuse-image-evidence');if(!s)return;const html='<div class="data-viz landing-stack reuse-image-evidence"><div class="landing-chart landing-chart--verbatim"><h4>기획전 시작 후 첫 다음 행동</h4><div class="stackbar"><i style="width:52.2%"></i><i style="width:27.6%"></i><i style="width:9.3%"></i><i style="width:6.6%"></i><i style="width:4.3%"></i></div><div class="stacklabels"><div><b>52.2%</b>바로 종료</div><div><b>27.6%</b>기획전 재탐색 후 종료</div><div><b>9.3%</b>상품 도달</div><div><b>6.6%</b>검색/카테고리 도달</div></div></div></div>';s.outerHTML=html};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});else sync();})();
+<'/script></body>`);
+    document.open();document.write(html);document.close();
+  }catch(e){document.body.innerHTML='<div class="loader" style="display:grid;place-items:center;color:rgba(255,255,255,.45);font:12px Arial">페이지를 불러오지 못했습니다.</div>';console.error(e)}
+})();
+</script></body></html>
