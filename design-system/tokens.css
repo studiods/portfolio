@@ -16,6 +16,7 @@
   --hm-line-weak:rgba(255,255,255,.14);
   --hm-line-faint:rgba(255,255,255,.1);
   --hm-blue-deep:#0572CB;
+  --hm-blue-mid:#008DDD;
   --hm-blue:#00A6ED;
   --hm-blue-new:#00B8DE;
   --hm-green:#00EDBD;
@@ -36,6 +37,15 @@
   --hm-type-body:16px;
   --hm-type-note:12px;
   --hm-type-source:10px;
+
+  /* Stacked-bar chart: Korean label above the value, both Light. */
+  --hm-chart-inbar-label-size:22px;
+  --hm-chart-inbar-value-size:32px;
+  --hm-chart-inbar-label-leading:1.25;
+  --hm-chart-inbar-value-leading:1;
+  --hm-chart-legend-gap:32px;
+  --hm-chart-legend-line:2px;
+
   /* Canonical display/group leading. Multi-line comparison and synthesis copy reuse this value. */
   --hm-leading-group:1.3;
   /* Comparison panel rhythm: keyword text follows the group leading system. */
