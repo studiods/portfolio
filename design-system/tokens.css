@@ -97,7 +97,8 @@
   --hm-hero-copy-max-width:1280px;
   --hm-hero-description-width:var(--hm-hero-copy-max-width);
   --hm-hero-description-width-mobile:100%;
-  --hm-subtitle-to-content:40px;
+  /* Standard subtitle-to-content rhythm; special media graphs override locally. */
+  --hm-subtitle-to-content:80px;
   --hm-subtitle-to-smalltitle:80px;
   --hm-title-to-subsection-gap:160px;
   --hm-section-head-to-subsection:160px;
