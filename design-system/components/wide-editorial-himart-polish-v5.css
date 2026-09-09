@@ -1,4 +1,4 @@
-/* HIMART Wide Editorial polish — TEST ONLY v5.3
+/* HIMART Wide Editorial polish — TEST ONLY v5.4
    Keeps the REUSE wide contract intact while correcting Himart-specific rhythm.
    Canonical medium-title divider spacing consumes --hm-space-component from tokens.css.
 */
@@ -23,20 +23,58 @@
     padding-top:var(--hm-space-component)!important;
   }
 
-  /* Chapter-start baseline lock.
-     The first right-rail block owns the divider itself, so it must never carry any
-     margin or vertical reveal translation above that divider. The line therefore sits
-     on the exact same grid start as the left major-title rail. The 40px divider →
-     medium-title inset remains intact below the line. */
+  /*
+    CHAPTER-START BASELINE CONTRACT
+    --------------------------------
+    Root cause of the visible misalignment was asymmetric reveal geometry:
+    wide-editorial-test.css moved the left major title down by 56px, while this polish
+    layer had already cancelled that translation on the first right-rail block.
+    During scroll-in the two authored baselines were therefore 56px apart even though
+    their grid row / margin origin was identical.
+
+    The chapter start must use the browser's natural scroll movement only. Both the
+    sticky major-title head and the first right-rail divider are locked to transform:none.
+    Opacity is synchronized at section level by himart-wide-editorial-adapter.js, so
+    independent IntersectionObserver timing can no longer create a visual phase offset.
+  */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
     margin-top:0!important;
   }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head.hm-reveal,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal{
     transform:none!important;
+    animation:none!important;
+    will-change:opacity!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal.is-visible,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal.is-in{
-    animation:hm-wide-first-rail-fade .4s ease both!important;
+
+  /* Generic reveal classes may be applied independently by animation.js, but they are
+     intentionally ignored for the chapter-start pair. One section class owns both. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
+    transform:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal{
+    opacity:.3!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
+    opacity:.88!important;
+  }
+
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head.hm-reveal{
+    opacity:var(--hm-wide-title-exit-opacity,1)!important;
+    transform:none!important;
+    animation:none!important;
+    transition:opacity .4s ease!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible .hm-wide-right-rail > :first-child.hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    animation:none!important;
+    transition:opacity .4s ease!important;
   }
 
   /* STANDARD UX / HIMART DIFFERENCE use article-level top rules. */
@@ -52,11 +90,6 @@
     overflow-wrap:normal!important;
     text-wrap:pretty!important;
   }
-}
-
-@keyframes hm-wide-first-rail-fade{
-  from{opacity:.88}
-  to{opacity:1}
 }
 
 /* Current Himart wide-test footer only: remove the upper divider and tighten label → case link. */
