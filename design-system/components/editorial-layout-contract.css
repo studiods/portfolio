@@ -1,0 +1,81 @@
+/* HIMART editorial layout contract v1.0
+   Final authority for wide left-title / right-content pages.
+   The legacy wide files still contain historical resets, but this file is loaded last
+   and owns the baseline line-to-content rhythm for both Himart and Reuse. */
+
+:root{
+  --hm-editorial-line-to-title:40px;
+}
+
+@media (min-width:1600px){
+  /* Keep the two rails on the same authored row. */
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > .hm-section > .hm-wrap > .hm-section-head{
+    margin:0!important;
+    padding:0!important;
+    align-self:start!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail{
+    margin:0!important;
+    padding:0!important;
+    align-self:start!important;
+  }
+
+  /* Adapter path: Himart's script groups post-head content into the right rail. */
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail > :first-child{
+    margin-top:0!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail > :is(
+    .hm-subsection,
+    .flow-area,
+    .prototype-intro,
+    .narrative-block,
+    .design-rule
+  ):first-child{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail > .data-list:first-child
+  > .data-card:first-child{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+    margin-top:0!important;
+  }
+
+  /* Direct DOM path: Reuse is not adapter-grouped, so the same contract is
+     applied to its first content unit without depending on legacy exceptions. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#data,#journey,#direction) > .hm-wrap
+  > :is(.hm-subsection,.data-list,.flow-area,.prototype-intro):first-child{
+    margin-top:0!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#journey,#direction) > .hm-wrap
+  > .hm-subsection:first-child{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data > .hm-wrap > .data-list:first-child
+  > .data-card:first-child{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+    margin-top:0!important;
+  }
+
+  /* Prevent the global structural rule from reintroducing a second gap on
+     elements whose line is already owned by this contract. */
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main .hm-editorial-layout-contract-owned{
+    margin-top:0!important;
+  }
+}
