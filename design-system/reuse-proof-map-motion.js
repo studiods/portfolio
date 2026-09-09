@@ -1,10 +1,16 @@
 (() => {
   'use strict';
 
-  /* REUSE 03.1 — authoritative LANDING → ACTION source. */
+  /*
+    REUSE 02.6 — authoritative LANDING → ACTION source.
+    The bar is the actual behavior data. Research is shown as a separate
+    evidence layer so research percentages are not falsely presented as
+    causes of the observed behavior.
+  */
   const syncLandingActionSource = () => {
     const source = document.querySelector('#journey .reuse-image-evidence');
     if (!source) return;
+
     source.outerHTML = `
 <div class="data-viz landing-stack reuse-image-evidence">
   <div class="landing-chart landing-chart--verbatim">
@@ -22,8 +28,12 @@
       <div><b>9.3%</b>상품 도달</div>
       <div><b>6.6%</b>검색/카테고리 도달</div>
     </div>
+    <div class="landing-research-signal">
+      <span>RESEARCH SIGNAL</span>
+      <p>실제 상태 불일치 56.6% · 제품 상태 중요 68.9% · 판매자 신용 37.6% · 안전결제 만족 79.4%</p>
+      <small>고객은 상품 상태와 판매 주체, 거래 안전성을 확인할 수 있을 때 구매 판단의 확신을 얻었습니다.</small>
+    </div>
   </div>
-  <div class="landing-chart" aria-hidden="true" style="display:none!important"></div>
 </div>`;
   };
 
