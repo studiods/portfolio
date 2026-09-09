@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="./design-system/components/reuse-proof-motion.css?v=20260909-4">
 <link rel="stylesheet" href="./design-system/components/reuse-confidence.css?v=20260909-7">
 <link rel="stylesheet" href="./design-system/components/reuse-image-evidence.css?v=20260909-7">
-<link rel="stylesheet" href="./design-system/components/reuse-image-trust-chart.css?v=20260909-1">
+<link rel="stylesheet" href="./design-system/components/reuse-image-trust-chart.css?v=20260909-2">
 <link rel="stylesheet" href="./design-system/components/reuse-production-gallery.css?v=20260909-4">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260909-12-reuse">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-5">
@@ -92,7 +92,7 @@ html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{
   font-weight:300!important;
   line-height:1.4!important;
 }
-html body.reuse-current .reuse-production-gallery{aspect-ratio:4/3!important}
+html body.reuse-current .reuse-production-gallery{aspect-ratio:16/9!important}
 @media(max-width:780px){
   html body.reuse-current #journey .reuse-image-evidence .stackbar{height:116px!important;min-height:116px!important}
   html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{font-size:18px!important;padding:0 6px!important}
@@ -216,19 +216,14 @@ html body.reuse-current .reuse-production-gallery{aspect-ratio:4/3!important}
 <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">상품을 직접 볼 수 없기에,<br>사진이 가장 중요한 신뢰 정보였습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">화면만 설계하지 않고 실제 상품을 어떻게 상품화하고 촬영하고 보여줄지까지 직접 관여했습니다.</p></div>
 
 <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">중고 제품을 판단하기 위해,<br>고객은 먼저 이미지를 확인했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">중고 거래에서는 실제 상태를 직접 확인할 수 없기 때문에 사진이 상태·사용 흔적·손상을 판단하는 첫 번째 시각적 근거가 됩니다.</p></div></div>
-<figure class="reuse-image-trust-chart hm-ds-subtitle-to-content" aria-label="정확하고 상세한 상품 이미지가 거래 신뢰에 중요한 정도">
-  <figcaption>정확하고 상세한 상품 이미지는<br>거래 신뢰를 판단하는 핵심 정보였습니다.</figcaption>
+<figure class="reuse-image-trust-chart hm-ds-subtitle-to-content" aria-label="사진 이미지가 온라인 가전 구매 판단에 미치는 영향">
+  <figcaption>사진 이미지는 가전 구매 판단에<br>중요한 정보였습니다.</figcaption>
   <div class="reuse-image-trust-chart__bar">
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--highest"><span>최고 중요도</span><strong>53%</strong></div>
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--high"><span>6–9점 중요</span><strong>39%</strong></div>
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--neutral" aria-hidden="true"></div>
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--low" aria-hidden="true"></div>
+    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--primary"><span>매우 또는 대단히 영향</span><strong>82%</strong></div>
+    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--secondary"><span>그 외 응답</span><strong>18%</strong></div>
   </div>
-  <div class="reuse-image-trust-chart__legend" aria-label="낮은 중요도 구간">
-    <div class="reuse-image-trust-chart__legend-item reuse-image-trust-chart__legend-item--neutral"><span>5점 보통</span><strong>5.6%</strong></div>
-    <div class="reuse-image-trust-chart__legend-item reuse-image-trust-chart__legend-item--low"><span>1–4점 낮음</span><strong>2.4%</strong></div>
-  </div>
-  <template data-source="reuse-image-trust">Besedo, The Effects of Fraud and Poor Content Quality on Online Marketplaces, 2023 · n=703. 상품 이미지의 신뢰 형성 중요도: 10점 53%, 6점 이상 92%, 4점 이하 2.4%. 100% 상호배타 구간으로 6–9점 39%, 5점 5.6%를 산출.</template>
+  <div class="reuse-image-trust-chart__legend">온라인 구매자의 상품 이미지 영향도 조사 <strong>82%</strong> — 매우 또는 대단히 영향 / Field Agent 조사, 미국 스마트폰 사용자 대상</div>
+  <template data-source="reuse-image-trust">Field Agent 조사: 미국 스마트폰 사용자 중 82%가 상품 이미지·사진이 구매에 매우 또는 대단히 큰 영향을 준다고 응답. 연구는 가전 전용 표본이 아니므로 온라인 가전 구매 판단에 대한 참고 지표로 사용.</template>
 </figure>
 </div>
 </div>
@@ -316,5 +311,6 @@ html body.reuse-current .reuse-production-gallery{aspect-ratio:4/3!important}
 <script src="./design-system/scramble-final.js?v=20260907-3"></script>
 <script src="./himart-live-boot.js?v=20260907-2"></script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
+<script src="./design-system/components/reuse-image-trust-chart.js?v=20260909-1"></script>
 </body>
 </html>
