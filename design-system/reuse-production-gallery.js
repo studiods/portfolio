@@ -1,27 +1,68 @@
-(() => {
+(async () => {
   'use strict';
 
   const HOLD_MS = 2500;
   const TRANSITION_MS = 720;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-  /* Current files in assets/image/himart/reuse, intentionally ordered by filename number.
-     GitHub Pages cannot enumerate a repository directory at runtime, so this manifest is the
-     browser-safe source of truth for 03.3 gallery 01. */
-  const STUDIO_MEDIA = [
+  const REUSE_MEDIA_DIR = 'assets/image/himart/reuse';
+  const REUSE_MEDIA_API = `https://api.github.com/repos/studiods/portfolio/contents/${REUSE_MEDIA_DIR}?ref=main`;
+  const IMAGE_EXTENSIONS = /\.(?:avif|gif|jpe?g|png|webp)$/i;
+
+  /*
+    GitHub Pages is a static host and cannot enumerate a directory by itself.
+    Gallery 01 therefore reads the public GitHub Contents API on page load, filters
+    image files in assets/image/himart/reuse and sorts them by the final number in
+    each filename. New numbered images uploaded to that folder are picked up without
+    another code edit. This fallback is kept only for temporary API/rate-limit failure.
+  */
+  const FALLBACK_STUDIO_MEDIA = [
     './assets/image/himart/reuse/reuse_studiio_01.png',
-    './assets/image/himart/reuse/reuse_studiio_02.png'
+    './assets/image/himart/reuse/reuse_studiio_02.png',
+    './assets/image/himart/reuse/reuse_studiio_03.png',
+    './assets/image/himart/reuse/reuse_studiio_04.png'
   ];
+
+  const trailingNumber = (name = '') => {
+    const stem = name.replace(/\.[^.]+$/, '');
+    const match = stem.match(/(\d+)(?!.*\d)/);
+    return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
+  };
+
+  const loadStudioMedia = async () => {
+    try {
+      const response = await fetch(`${REUSE_MEDIA_API}&_=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { Accept: 'application/vnd.github+json' }
+      });
+      if (!response.ok) throw new Error(`Reuse media directory request failed: ${response.status}`);
+
+      const entries = await response.json();
+      if (!Array.isArray(entries)) throw new Error('Reuse media directory response is not an array');
+
+      const numberedImages = entries
+        .filter((entry) => entry?.type === 'file' && IMAGE_EXTENSIONS.test(entry.name || ''))
+        .map((entry) => ({ entry, order: trailingNumber(entry.name) }))
+        .filter(({ order }) => Number.isFinite(order))
+        .sort((a, b) => a.order - b.order || a.entry.name.localeCompare(b.entry.name, 'ko', { numeric: true }))
+        .map(({ entry }) => new URL(`./${entry.path}`, window.location.href).href);
+
+      return numberedImages.length ? numberedImages : FALLBACK_STUDIO_MEDIA;
+    } catch (error) {
+      console.warn('[Reuse gallery] directory auto-discovery failed; using fallback manifest.', error);
+      return FALLBACK_STUDIO_MEDIA;
+    }
+  };
 
   const galleries = Array.from(document.querySelectorAll('.reuse-production-gallery'));
   if (!galleries.length) return;
 
-  const buildStudioSlides = (gallery) => {
+  const buildStudioSlides = (gallery, sources) => {
     const viewport = gallery?.querySelector('.reuse-production-gallery__viewport');
-    if (!viewport || !STUDIO_MEDIA.length) return;
+    if (!viewport || !sources.length) return;
 
     const fragment = document.createDocumentFragment();
-    STUDIO_MEDIA.forEach((src, index) => {
+    sources.forEach((src, index) => {
       const slide = document.createElement('article');
       slide.className = `reuse-production-gallery__slide${index === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
@@ -43,12 +84,13 @@
     viewport.replaceChildren(fragment);
   };
 
-  buildStudioSlides(galleries[0]);
+  const studioMedia = await loadStudioMedia();
+  buildStudioSlides(galleries[0], studioMedia);
 
-  const controllers = [];
+  const controllers = new Map();
 
   galleries.forEach((gallery) => {
-    let slides = Array.from(gallery.querySelectorAll('.reuse-production-gallery__slide'));
+    const slides = Array.from(gallery.querySelectorAll('.reuse-production-gallery__slide'));
     const prev = gallery.querySelector('[data-reuse-gallery-prev]');
     const next = gallery.querySelector('[data-reuse-gallery-next]');
     const status = gallery.querySelector('[data-reuse-gallery-status]');
@@ -158,19 +200,15 @@
       resume() { if (inView) schedule(); },
       pause() { clearTimer(); }
     };
-    controllers.push(controller);
+    controllers.set(gallery, controller);
     settle();
   });
 
   if ('IntersectionObserver' in window) {
-    const byGallery = new Map();
-    galleries.forEach((gallery, index) => {
-      if (controllers[index]) byGallery.set(gallery, controllers[index]);
-    });
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => byGallery.get(entry.target)?.setInView(entry.isIntersecting));
+      entries.forEach((entry) => controllers.get(entry.target)?.setInView(entry.isIntersecting));
     }, { threshold: 0.20, rootMargin: '0px 0px -5% 0px' });
-    byGallery.forEach((_, gallery) => observer.observe(gallery));
+    controllers.forEach((_, gallery) => observer.observe(gallery));
   } else {
     controllers.forEach((controller) => controller.setInView(true));
   }
