@@ -1,10 +1,19 @@
-/* HIMART REUSE 03 — production storytelling gallery.
+/* HIMART REUSE 03 — production storytelling galleries.
    Media slots intentionally remain source-agnostic so real images/videos can be inserted later. */
 
 /* 03.2 image-order flow keeps the 02.2 circle grammar, but its sequence numbers are blue. */
 html body.reuse-current .reuse-image-order-flow .reuse-confidence-node > span{
   --reuse-confidence-number-color:var(--hm-blue);
   color:var(--hm-blue)!important;
+}
+
+/* 03.3: four independent 16:9 galleries. Each gallery owns one persistent caption;
+   only the media changes when the user moves between images. */
+html body.reuse-current .reuse-production-gallery-list{
+  display:flex;
+  flex-direction:column;
+  gap:80px;
+  width:100%;
 }
 
 html body.reuse-current .reuse-production-gallery{
@@ -51,8 +60,8 @@ html body.reuse-current .reuse-production-gallery__media > :is(img,video,picture
   object-fit:cover;
 }
 
-/* Lower quarter: 50% black at the bottom fading to 0% at the top. */
-html body.reuse-current .reuse-production-gallery__slide::after{
+/* Static lower-quarter gradient: 50% black at the bottom fading to 0% at the top. */
+html body.reuse-current .reuse-production-gallery::after{
   content:"";
   position:absolute;
   z-index:2;
@@ -64,6 +73,7 @@ html body.reuse-current .reuse-production-gallery__slide::after{
   background:linear-gradient(to top,rgba(0,0,0,.50) 0%,rgba(0,0,0,0) 100%);
 }
 
+/* Persistent caption layer. Number/title/copy never swap with the gallery image. */
 html body.reuse-current .reuse-production-gallery__copy{
   position:absolute;
   z-index:3;
@@ -71,6 +81,18 @@ html body.reuse-current .reuse-production-gallery__copy{
   bottom:32px;
   width:min(760px,calc(100% - 64px));
   text-align:left;
+  pointer-events:none;
+}
+
+html body.reuse-current .reuse-production-gallery__number{
+  display:block;
+  margin:0 0 10px;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
 }
 
 html body.reuse-current .reuse-production-gallery__copy h4{
@@ -151,10 +173,17 @@ html body.reuse-current .reuse-production-gallery__status{
 }
 
 @media(max-width:780px){
+  html body.reuse-current .reuse-production-gallery-list{
+    gap:48px;
+  }
   html body.reuse-current .reuse-production-gallery__copy{
     left:18px;
     bottom:18px;
     width:calc(100% - 36px);
+  }
+  html body.reuse-current .reuse-production-gallery__number{
+    margin-bottom:7px;
+    font-size:10px!important;
   }
   html body.reuse-current .reuse-production-gallery__copy h4{
     font-size:clamp(16px,4.8vw,22px)!important;
