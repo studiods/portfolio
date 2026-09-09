@@ -1,68 +1,37 @@
-(async () => {
+(() => {
   'use strict';
 
   const HOLD_MS = 2500;
+  const GALLERY_02_INITIAL_HOLD_MS = 5000;
+  const VIDEO_STOP_FALLBACK_MS = 3000;
   const TRANSITION_MS = 720;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-  const REUSE_MEDIA_DIR = 'assets/image/himart/reuse';
-  const REUSE_MEDIA_API = `https://api.github.com/repos/studiods/portfolio/contents/${REUSE_MEDIA_DIR}?ref=main`;
-  const IMAGE_EXTENSIONS = /\.(?:avif|gif|jpe?g|png|webp)$/i;
-
-  /*
-    GitHub Pages is a static host and cannot enumerate a directory by itself.
-    Gallery 01 therefore reads the public GitHub Contents API on page load, filters
-    image files in assets/image/himart/reuse and sorts them by the final number in
-    each filename. New numbered images uploaded to that folder are picked up without
-    another code edit. This fallback is kept only for temporary API/rate-limit failure.
-  */
-  const FALLBACK_STUDIO_MEDIA = [
+  const STUDIO_MEDIA = [
     './assets/image/himart/reuse/reuse_studiio_01.png',
     './assets/image/himart/reuse/reuse_studiio_02.png',
     './assets/image/himart/reuse/reuse_studiio_03.png',
-    './assets/image/himart/reuse/reuse_studiio_04.png'
+    './assets/image/himart/reuse/reuse_studiio_04.png',
+    './assets/image/himart/reuse/reuse_studiio_05.png',
+    './assets/image/himart/reuse/reuse_studiio_06.png'
+  ].map((src) => ({ type: 'image', src }));
+
+  const SHOOTING_MEDIA = [
+    { type: 'image', src: './assets/image/himart/reuse/reuse_shooting_01.png' },
+    { type: 'image', src: './assets/image/himart/reuse/reuse_shooting_02.png' },
+    { type: 'image', src: './assets/image/himart/reuse/reuse_shooting_03.png' },
+    { type: 'video', src: './assets/movies/reuse_02.mp4' }
   ];
-
-  const trailingNumber = (name = '') => {
-    const stem = name.replace(/\.[^.]+$/, '');
-    const match = stem.match(/(\d+)(?!.*\d)/);
-    return match ? Number(match[1]) : Number.POSITIVE_INFINITY;
-  };
-
-  const loadStudioMedia = async () => {
-    try {
-      const response = await fetch(`${REUSE_MEDIA_API}&_=${Date.now()}`, {
-        cache: 'no-store',
-        headers: { Accept: 'application/vnd.github+json' }
-      });
-      if (!response.ok) throw new Error(`Reuse media directory request failed: ${response.status}`);
-
-      const entries = await response.json();
-      if (!Array.isArray(entries)) throw new Error('Reuse media directory response is not an array');
-
-      const numberedImages = entries
-        .filter((entry) => entry?.type === 'file' && IMAGE_EXTENSIONS.test(entry.name || ''))
-        .map((entry) => ({ entry, order: trailingNumber(entry.name) }))
-        .filter(({ order }) => Number.isFinite(order))
-        .sort((a, b) => a.order - b.order || a.entry.name.localeCompare(b.entry.name, 'ko', { numeric: true }))
-        .map(({ entry }) => new URL(`./${entry.path}`, window.location.href).href);
-
-      return numberedImages.length ? numberedImages : FALLBACK_STUDIO_MEDIA;
-    } catch (error) {
-      console.warn('[Reuse gallery] directory auto-discovery failed; using fallback manifest.', error);
-      return FALLBACK_STUDIO_MEDIA;
-    }
-  };
 
   const galleries = Array.from(document.querySelectorAll('.reuse-production-gallery'));
   if (!galleries.length) return;
 
-  const buildStudioSlides = (gallery, sources) => {
+  const buildSlides = (gallery, items) => {
     const viewport = gallery?.querySelector('.reuse-production-gallery__viewport');
-    if (!viewport || !sources.length) return;
+    if (!viewport || !items.length) return;
 
     const fragment = document.createDocumentFragment();
-    sources.forEach((src, index) => {
+    items.forEach((item, index) => {
       const slide = document.createElement('article');
       slide.className = `reuse-production-gallery__slide${index === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
@@ -70,26 +39,43 @@
       const media = document.createElement('div');
       media.className = 'reuse-production-gallery__media';
 
-      const image = document.createElement('img');
-      image.src = src;
-      image.alt = '';
-      image.loading = index === 0 ? 'eager' : 'lazy';
-      image.decoding = 'async';
-      image.draggable = false;
+      if (item.type === 'video') {
+        const video = document.createElement('video');
+        video.src = item.src;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.preload = 'metadata';
+        video.loop = false;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('data-reuse-gallery-video', '');
+        media.appendChild(video);
+      } else {
+        const image = document.createElement('img');
+        image.src = item.src;
+        image.alt = '';
+        image.loading = index === 0 ? 'eager' : 'lazy';
+        image.decoding = 'async';
+        image.draggable = false;
+        media.appendChild(image);
+      }
 
-      media.appendChild(image);
       slide.appendChild(media);
       fragment.appendChild(slide);
     });
     viewport.replaceChildren(fragment);
   };
 
-  const studioMedia = await loadStudioMedia();
-  buildStudioSlides(galleries[0], studioMedia);
+  /* 03.3 Gallery 01: studio environment, fixed 01–06 sequence only. */
+  buildSlides(galleries[0], STUDIO_MEDIA);
+
+  /* 03.3 Gallery 02: shooting 01–03, then reuse_02.mp4, then back to 01. */
+  if (galleries[1]) buildSlides(galleries[1], SHOOTING_MEDIA);
 
   const controllers = new Map();
 
-  galleries.forEach((gallery) => {
+  galleries.forEach((gallery, galleryIndex) => {
     const slides = Array.from(gallery.querySelectorAll('.reuse-production-gallery__slide'));
     const prev = gallery.querySelector('[data-reuse-gallery-prev]');
     const next = gallery.querySelector('[data-reuse-gallery-next]');
@@ -98,17 +84,62 @@
 
     let index = Math.max(0, slides.findIndex((slide) => slide.classList.contains('is-active')));
     let timer = 0;
+    let videoFallbackTimer = 0;
     let busy = false;
     let inView = false;
+    let firstAdvanceDone = false;
+    let suppressVideoPauseFallback = false;
+
+    const isSequencedVideoGallery = galleryIndex === 1;
 
     const clearTimer = () => {
       if (timer) window.clearTimeout(timer);
       timer = 0;
     };
 
+    const clearVideoFallback = () => {
+      if (videoFallbackTimer) window.clearTimeout(videoFallbackTimer);
+      videoFallbackTimer = 0;
+    };
+
+    const activeVideo = () => slides[index]?.querySelector('video[data-reuse-gallery-video]') || null;
+
     const updateStatus = () => {
       if (!status) return;
       status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    };
+
+    const pauseVideo = (video, { reset = false } = {}) => {
+      if (!video) return;
+      suppressVideoPauseFallback = true;
+      video.pause();
+      if (reset) {
+        try { video.currentTime = 0; } catch (_) {}
+      }
+      window.setTimeout(() => { suppressVideoPauseFallback = false; }, 0);
+    };
+
+    const scheduleVideoFallback = (video) => {
+      clearVideoFallback();
+      if (!isSequencedVideoGallery || !video || !inView || document.hidden || busy || video.ended) return;
+      videoFallbackTimer = window.setTimeout(() => {
+        videoFallbackTimer = 0;
+        if (!inView || document.hidden || busy || video.ended || !video.paused) return;
+        move(1, true);
+      }, VIDEO_STOP_FALLBACK_MS);
+    };
+
+    const playActiveVideo = () => {
+      const video = activeVideo();
+      if (!video || !inView || document.hidden || busy) return false;
+      clearTimer();
+      clearVideoFallback();
+      try { video.currentTime = 0; } catch (_) {}
+      const playPromise = video.play();
+      if (playPromise?.catch) {
+        playPromise.catch(() => scheduleVideoFallback(video));
+      }
+      return true;
     };
 
     const settle = () => {
@@ -117,24 +148,35 @@
         slide.classList.toggle('is-active', active);
         slide.classList.remove('is-next', 'is-entering', 'is-exiting');
         slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+        if (!active) pauseVideo(slide.querySelector('video[data-reuse-gallery-video]'), { reset: true });
       });
       gallery.classList.remove('is-reverse');
       updateStatus();
     };
 
-    const schedule = () => {
+    const schedule = (delayOverride = null) => {
       clearTimer();
+      clearVideoFallback();
       if (!inView || document.hidden || busy || slides.length < 2) return;
-      timer = window.setTimeout(() => move(1, true), HOLD_MS);
+
+      if (isSequencedVideoGallery && activeVideo()) {
+        playActiveVideo();
+        return;
+      }
+
+      const delay = delayOverride ?? (!firstAdvanceDone && galleryIndex === 1 ? GALLERY_02_INITIAL_HOLD_MS : HOLD_MS);
+      timer = window.setTimeout(() => move(1, true), delay);
     };
 
-    const transitionTo = (targetIndex, direction = 1) => {
+    const transitionTo = (targetIndex, direction = 1, automatic = false) => {
       if (busy || slides.length < 2 || targetIndex === index) return;
       clearTimer();
+      clearVideoFallback();
       busy = true;
 
       const current = slides[index];
       const incoming = slides[targetIndex];
+      pauseVideo(current.querySelector('video[data-reuse-gallery-video]'));
       gallery.classList.toggle('is-reverse', direction < 0);
 
       slides.forEach((slide, i) => {
@@ -150,33 +192,51 @@
       incoming.classList.add('is-next');
       incoming.setAttribute('aria-hidden', 'true');
 
-      if (reducedMotion) {
+      const complete = () => {
         index = targetIndex;
         busy = false;
+        if (automatic) firstAdvanceDone = true;
         settle();
-        schedule();
+        if (!playActiveVideo()) schedule(HOLD_MS);
+      };
+
+      if (reducedMotion) {
+        complete();
         return;
       }
 
-      /* Force the 95% / 20%-black incoming state to paint before the transition starts. */
+      /* Force the incoming 95% / 20%-black state to paint before transition. */
       void incoming.offsetWidth;
       current.classList.add('is-exiting');
       incoming.classList.add('is-entering');
-
-      window.setTimeout(() => {
-        index = targetIndex;
-        busy = false;
-        settle();
-        schedule();
-      }, TRANSITION_MS + 30);
+      window.setTimeout(complete, TRANSITION_MS + 30);
     };
 
     function move(delta, automatic = false) {
       if (busy || slides.length < 2) return;
       const targetIndex = (index + delta + slides.length) % slides.length;
-      transitionTo(targetIndex, delta < 0 ? -1 : 1);
-      if (!automatic) clearTimer();
+      transitionTo(targetIndex, delta < 0 ? -1 : 1, automatic);
     }
+
+    slides.forEach((slide) => {
+      const video = slide.querySelector('video[data-reuse-gallery-video]');
+      if (!video) return;
+
+      video.addEventListener('ended', () => {
+        clearVideoFallback();
+        if (!inView || document.hidden || busy || slide !== slides[index]) return;
+        move(1, true);
+      });
+
+      video.addEventListener('playing', clearVideoFallback);
+
+      ['pause', 'waiting', 'stalled'].forEach((eventName) => {
+        video.addEventListener(eventName, () => {
+          if (suppressVideoPauseFallback || slide !== slides[index]) return;
+          scheduleVideoFallback(video);
+        });
+      });
+    });
 
     prev?.addEventListener('click', () => move(-1));
     next?.addEventListener('click', () => move(1));
@@ -194,12 +254,25 @@
     const controller = {
       setInView(value) {
         inView = value;
-        if (inView) schedule();
-        else clearTimer();
+        if (inView) {
+          if (!playActiveVideo()) schedule();
+        } else {
+          clearTimer();
+          clearVideoFallback();
+          pauseVideo(activeVideo());
+        }
       },
-      resume() { if (inView) schedule(); },
-      pause() { clearTimer(); }
+      resume() {
+        if (!inView) return;
+        if (!playActiveVideo()) schedule();
+      },
+      pause() {
+        clearTimer();
+        clearVideoFallback();
+        pauseVideo(activeVideo());
+      }
     };
+
     controllers.set(gallery, controller);
     settle();
   });
