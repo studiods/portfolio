@@ -8,7 +8,8 @@
     avoiding a second visual reflow caused solely by swapping spans back to text nodes;
   - each title runs once per page lifecycle. Scrolling away never re-arms the scramble;
   - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title;
-  - wide-editorial chapter titles begin scrambling only after their actual rise/reveal has started.
+  - wide-editorial chapter titles begin scrambling only after their actual rise/reveal has started;
+  - Himart wide-editorial titles wait for the canonical narrative runtime before source capture.
 */
 (() => {
   'use strict';
@@ -31,6 +32,12 @@
     document.body?.classList.contains('hm-wide-editorial-test') &&
     document.body?.classList.contains('hm-wide-himart-test') &&
     !!element.closest('.hm-section-head');
+  const isHimartWidePage = () =>
+    document.body?.classList.contains('hm-wide-editorial-test') &&
+    document.body?.classList.contains('hm-wide-himart-test');
+  const isContentReady = () =>
+    document.body?.classList.contains('himart-narrative-ready') &&
+    (!isHimartWidePage() || document.body?.classList.contains('narrative-v2-final-ready'));
 
   const cloneWithCharacters = (node, chars) => {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -98,6 +105,7 @@
       state.running = false;
       activeAnimations.delete(element);
       element.removeAttribute('data-hm-scramble-active');
+      element.setAttribute('data-hm-scramble-complete', 'true');
       stateByElement.set(element, state);
     };
 
@@ -129,6 +137,7 @@
     stateByElement.set(element, state);
     activeAnimations.add(element);
     element.setAttribute('data-hm-scramble-active', 'true');
+    element.removeAttribute('data-hm-scramble-complete');
     element.setAttribute('data-hm-scramble-kind', kind);
     element.setAttribute('aria-label', originalText.replace(/\s+/g, ' ').trim());
 
@@ -290,12 +299,12 @@
   };
 
   const waitForContentReady = () => {
-    if (document.body?.classList.contains('himart-narrative-ready')) {
+    if (isContentReady()) {
       initialise();
       return;
     }
     const timer = setInterval(() => {
-      if (!document.body?.classList.contains('himart-narrative-ready')) return;
+      if (!isContentReady()) return;
       clearInterval(timer);
       initialise();
     }, 16);
@@ -303,7 +312,9 @@
       clearInterval(timer);
       initialise();
     }, 12000);
-    document.addEventListener('himart:narrative-ready', initialise, {once:true});
+    document.addEventListener('himart:narrative-ready', () => {
+      if (isContentReady()) initialise();
+    }, {once:true});
   };
 
   document.addEventListener('visibilitychange', () => {
