@@ -9,7 +9,8 @@
   - each title runs once per page lifecycle. Scrolling away never re-arms the scramble;
   - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title;
   - wide-editorial chapter titles begin scrambling only after their actual rise/reveal has started;
-  - Himart wide-editorial titles wait for the canonical narrative runtime before source capture.
+  - Himart wide-editorial titles wait for the canonical narrative runtime before source capture;
+  - legacy same-text title guards may not replace active/resolved scramble markup.
 */
 (() => {
   'use strict';
@@ -23,6 +24,7 @@
   const WIDE_CHAPTER_RISE_SYNC_DELAY = 90;
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
+  const normalizeText = value => (value || '').replace(/\s+/g, ' ').trim();
   const isWideEditorialChapter = (element, kind) =>
     kind === 'chapter' &&
     document.body?.classList.contains('hm-wide-editorial-test') &&
@@ -81,6 +83,53 @@
     element.innerHTML = state.originalHTML;
   };
 
+  /*
+    content-runtime.js still contains an old canonical-title guard which compares
+    innerHTML, not visible text. Per-character scramble markup is therefore treated as
+    "different" even after every glyph has resolved, and the guard rewrites the H2 once
+    more. Rebuild the same resolved/active character DOM inside the same mutation
+    checkpoint whenever that legacy guard writes the exact same canonical text.
+    Because MutationObserver callbacks run before the next paint, the redundant raw-text
+    rewrite never becomes a second visible title change.
+  */
+  const repairCanonicalRewrite = (element, state) => {
+    if (!isHimartWideChapter(element, state) || !document.contains(element)) return false;
+    if (ownsAnimatedDOM(element, state)) return true;
+    if (normalizeText(element.textContent) !== normalizeText(state.originalText)) return false;
+
+    const chars = buildAnimatedMarkup(element, state.originalHTML);
+    if (!chars.length) return false;
+    state.chars = chars;
+
+    const elapsed = performance.now() - state.startedAt;
+    chars.forEach((char, index) => {
+      const resolveAt = state.randomPhase + index * state.stagger;
+      if (state.completed || elapsed >= resolveAt) {
+        char.textContent = char.dataset.hmFinalChar || '';
+        char.dataset.hmResolved = '1';
+      } else {
+        char.textContent = randomGlyph();
+        char.removeAttribute('data-hm-resolved');
+      }
+    });
+    return true;
+  };
+
+  const protectCanonicalMarkup = (element, state) => {
+    if (!isHimartWideChapter(element, state) || !('MutationObserver' in window) || state.canonicalObserver) return;
+    const mutationObserver = new MutationObserver(() => {
+      const live = stateByElement.get(element);
+      if (live !== state || !document.contains(element)) {
+        mutationObserver.disconnect();
+        return;
+      }
+      if (ownsAnimatedDOM(element, state)) return;
+      repairCanonicalRewrite(element, state);
+    });
+    mutationObserver.observe(element, {childList:true, subtree:true, characterData:true});
+    state.canonicalObserver = mutationObserver;
+  };
+
   const settle = (element, immediate = false) => {
     const state = stateByElement.get(element);
     if (!state || state.completed) return;
@@ -124,6 +173,11 @@
     const chars = buildAnimatedMarkup(element, originalHTML);
     if (!chars.length) return false;
 
+    const count = chars.length;
+    const stagger = Math.max(10, Math.min(22, 520 / Math.max(1, count)));
+    const randomPhase = 250;
+    const totalDuration = randomPhase + (count - 1) * stagger + 80;
+
     state = {
       originalHTML,
       originalText,
@@ -132,7 +186,11 @@
       completed:false,
       raf:0,
       startedAt:performance.now(),
-      kind
+      kind,
+      stagger,
+      randomPhase,
+      totalDuration,
+      canonicalObserver:null
     };
     stateByElement.set(element, state);
     activeAnimations.add(element);
@@ -140,11 +198,8 @@
     element.removeAttribute('data-hm-scramble-complete');
     element.setAttribute('data-hm-scramble-kind', kind);
     element.setAttribute('aria-label', originalText.replace(/\s+/g, ' ').trim());
+    protectCanonicalMarkup(element, state);
 
-    const count = chars.length;
-    const stagger = Math.max(10, Math.min(22, 520 / Math.max(1, count)));
-    const randomPhase = 250;
-    const totalDuration = randomPhase + (count - 1) * stagger + 80;
     let lastRandomBucket = -1;
 
     const frame = now => {
@@ -153,16 +208,20 @@
       if (!document.contains(element)) {
         state.completed = true;
         activeAnimations.delete(element);
+        state.canonicalObserver?.disconnect();
         return;
       }
 
       if (!ownsAnimatedDOM(element, state)) {
-        /* Another runtime replaced this title. Its authored DOM wins; detached random spans can no longer paint. */
-        state.running = false;
-        state.completed = true;
-        activeAnimations.delete(element);
-        element.removeAttribute('data-hm-scramble-active');
-        return;
+        if (!repairCanonicalRewrite(element, state) || !ownsAnimatedDOM(element, state)) {
+          /* A genuinely different runtime title wins. Do not fight real content changes. */
+          state.running = false;
+          state.completed = true;
+          activeAnimations.delete(element);
+          state.canonicalObserver?.disconnect();
+          element.removeAttribute('data-hm-scramble-active');
+          return;
+        }
       }
 
       const elapsed = now - state.startedAt;
@@ -176,7 +235,7 @@
           resolved += 1;
           return;
         }
-        const resolveAt = randomPhase + index * stagger;
+        const resolveAt = state.randomPhase + index * state.stagger;
         if (elapsed >= resolveAt) {
           char.textContent = char.dataset.hmFinalChar || '';
           char.dataset.hmResolved = '1';
@@ -186,7 +245,7 @@
         }
       });
 
-      if (resolved === count || elapsed >= totalDuration) {
+      if (resolved === count || elapsed >= state.totalDuration) {
         /* All visible glyphs are already final before settle; wide Himart keeps this exact DOM. */
         settle(element, false);
         return;
@@ -207,7 +266,8 @@
       running:false,
       completed:false,
       raf:0,
-      kind:null
+      kind:null,
+      canonicalObserver:null
     });
   };
 
