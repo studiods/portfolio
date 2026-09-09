@@ -1,13 +1,15 @@
-/* HIMART editorial layout contract v1.1
-   Final authority for wide left-title / right-content pages.
-   The legacy wide files still contain historical resets, but this file is loaded last
-   and owns the baseline line-to-content rhythm for both Himart and Reuse.
+/* HIMART editorial layout contract v2.0
+   FINAL authority for every >=1600px left-title / right-content case-study layout.
 
-   Medium-title contract:
+   Medium-title contract
    - divider: 1px / --hm-line-weak
-   - divider -> number/title: 40px / --hm-space-component
-   - only the first content unit paired with a major title may have margin-top:0
-   - later subsections keep the canonical subsection gap
+   - divider -> medium number/title: 40px / --hm-space-component
+   - the first right-side unit shares its divider Y-origin with the left major-title rail
+   - later medium-title units keep their authored/canonical subsection spacing
+
+   This file must be loaded AFTER every page/wide-layout stylesheet. Older wide files
+   contain historical `padding-top:0!important` alignment resets; the selectors below
+   intentionally match/beat those selectors so the divider contract cannot disappear.
 */
 
 :root{
@@ -15,97 +17,137 @@
 }
 
 @media (min-width:1600px){
-  /* Keep the two rails on the same authored row. */
+  /* ------------------------------------------------------------
+     Shared rail baseline
+     ------------------------------------------------------------ */
   html body.himart-page-body.hm-wide-editorial-test
-  #live-main > .hm-section > .hm-wrap > .hm-section-head{
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-section-head{
     margin:0!important;
     padding:0!important;
     align-self:start!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test
-  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail{
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail{
     margin:0!important;
     padding:0!important;
     align-self:start!important;
   }
 
-  /* Adapter path: Himart's script groups post-head content into the right rail. */
+  /* The first authored unit never adds an extra chapter-start margin. */
   html body.himart-page-body.hm-wide-editorial-test
-  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail > :first-child{
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > :first-child{
     margin-top:0!important;
   }
 
+  /* ------------------------------------------------------------
+     Canonical medium-title units — adapter-grouped pages
+     HIMART runtime + STEPUP
+     ------------------------------------------------------------ */
   html body.himart-page-body.hm-wide-editorial-test
-  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail > :is(
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > :is(
     .hm-subsection,
-    .flow-area,
-    .prototype-intro,
-    .narrative-block,
+    .narrative-problem,
+    .narrative-reality,
+    .narrative-signals,
+    .narrative-touchpoint-synthesis,
+    .brand-synthesis,
+    .journey-flow-block,
+    .journey-role-block,
     .design-rule
-  ):first-child{
+  ){
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test
-  #live-main > .hm-section > .hm-wrap > .hm-wide-right-rail > .data-list:first-child
-  > .data-card:first-child{
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
-    margin-top:0!important;
-  }
-
-  /*
-    Direct DOM path: Reuse is not adapter-grouped.
-    Previous v1.0 used `.hm-subsection:first-child`, which was structurally wrong for
-    03.1 because .hm-section-head is the first child of the first wrapper. It also
-    accidentally matched 03.2 because that subsection is the first child of the second
-    wrapper, resetting its canonical 100px subsection gap.
-
-    Use the actual authored relationship instead: section-head + first content.
-  */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #brand > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #journey > .hm-wrap > .hm-section-head + .hm-subsection{
-    margin-top:0!important;
-  }
-
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #data > .hm-wrap > .hm-section-head + .data-list{
-    margin-top:0!important;
-  }
-
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #data > .hm-wrap > .hm-section-head + .data-list
-  > .data-card:first-child{
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
-    margin-top:0!important;
-  }
-
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #direction > .hm-wrap > .hm-section-head + .flow-area{
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
-    margin-top:0!important;
-  }
-
-  /* Every Reuse medium-title subsection owns its divider explicitly.
-     This is deliberately broader than the chapter-start rule so 03.1 / 03.2 / 03.3
-     cannot lose their lines when layout-alignment resets change. Spacing between later
-     subsections remains owned by --hm-subsection-gap. */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > :is(#brand,#journey,#direction) > .hm-wrap > .hm-subsection{
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > .data-list > .data-card{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
-  /* Prevent the global structural rule from reintroducing a second gap on
-     elements whose line is already owned by this contract. */
   html body.himart-page-body.hm-wide-editorial-test
-  #live-main .hm-editorial-layout-contract-owned{
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > .data-list:first-child > .data-card:first-child{
     margin-top:0!important;
+  }
+
+  /* Runtime HIMART medium blocks that are not always authored as hm-subsection. */
+  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section
+  .hm-wide-right-rail > :is(
+    .narrative-problem,
+    .narrative-reality,
+    .narrative-signals,
+    .narrative-touchpoint-synthesis,
+    .brand-synthesis,
+    .journey-flow-block,
+    .journey-role-block,
+    .design-rule,
+    .hm-subsection
+  ){
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  /* ------------------------------------------------------------
+     REUSE — direct DOM path (no right-rail adapter)
+     Every actual medium title receives the same line + 40px rule.
+     ------------------------------------------------------------ */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#journey,#direction).hm-section
+  > .hm-wrap > .hm-subsection.hm-ds-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .data-list > .data-card{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  /* Exact chapter-start relationships. The line itself is the right-rail baseline. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
+    margin-top:0!important;
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child{
+    margin-top:0!important;
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  /* Direction starts with a flow visual rather than a medium title: align it but do
+     not invent a divider. The following 04.x hm-subsections still receive the rule. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* STEPUP uses a right-rail adapter and every numbered medium block is hm-subsection. */
+  html body.himart-page-body.hm-wide-editorial-test.nbt-stepup-page
+  #live-main > :is(#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  .hm-wide-right-rail > .hm-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
   }
 }
