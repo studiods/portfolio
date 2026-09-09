@@ -92,7 +92,19 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   white-space:nowrap;
 }
 html body.reuse-current #brand .reuse-trust-equation__brand{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
   letter-spacing:-.065em;
+}
+html body.reuse-current #brand .reuse-trust-equation__brand-text{
+  display:block;
+}
+html body.reuse-current #brand .reuse-trust-equation__brand-logo{
+  display:block;
+  width:72px;
+  height:auto;
+  margin:16px 0 0;
 }
 html body.reuse-current #brand .reuse-trust-equation__plus,
 html body.reuse-current #brand .reuse-trust-equation__equals{
@@ -100,7 +112,7 @@ html body.reuse-current #brand .reuse-trust-equation__equals{
   text-align:center;
 }
 html body.reuse-current #brand .reuse-trust-equation__equals{
-  color:rgba(255,255,255,.60);
+  color:#fff;
 }
 html body.reuse-current #brand .reuse-trust-equation__list{
   display:grid;
@@ -135,6 +147,7 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   html body.reuse-current #brand .reuse-trust-equation__equals,
   html body.reuse-current #brand .reuse-trust-equation__result{font-size:82px}
   html body.reuse-current #brand .reuse-trust-equation__list{font-size:15px}
+  html body.reuse-current #brand .reuse-trust-equation__brand-logo{width:64px}
 }
 @media(max-width:780px){
   html body.reuse-current #brand .reuse-trust-equation__visual{
@@ -150,4 +163,5 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   html body.reuse-current #brand .reuse-trust-equation__result{font-size:64px}
   html body.reuse-current #brand .reuse-trust-equation__list{font-size:16px;gap:2px}
   html body.reuse-current #brand .reuse-trust-equation__list span{white-space:normal}
+  html body.reuse-current #brand .reuse-trust-equation__brand-logo{width:56px;margin-top:16px}
 }
