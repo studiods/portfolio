@@ -1,9 +1,6 @@
-/* HIMART REUSE 03.1 — marketplace image-trust evidence.
-   Visual grammar intentionally mirrors HIMART 02.6 / LANDING → ACTION:
-   - one 100% horizontal segmented bar
-   - identical 54px bar height
-   - identical 4-column labels, type sizes, weight and spacing
-   - original HIMART color order with yellow removed: red / blue / new blue / green
+/* HIMART REUSE 03.1 — use the exact LANDING → ACTION graph grammar.
+   The requested visual is the same five-part horizontal stacked bar used by
+   HIMART 02.6: 52.2 / 27.6 / 9.3 / 6.6 / 4.3, with labels inside the bar.
 */
 
 html body.reuse-current #journey .reuse-image-evidence{
@@ -14,6 +11,7 @@ html body.reuse-current #journey .reuse-image-evidence{
 }
 
 html body.reuse-current #journey .reuse-image-evidence .landing-chart{
+  position:relative!important;
   width:100%!important;
   max-width:none!important;
   margin-top:0!important;
@@ -21,8 +19,9 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart{
   border-top:0!important;
 }
 
+/* Exact graph heading treatment. */
 html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-  margin:0 0 24px!important;
+  margin:0 0 34px!important;
   padding:0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
@@ -32,81 +31,137 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
   letter-spacing:var(--hm-track-body)!important;
 }
 
+/* The requested graph is a single five-part 100% bar. */
 html body.reuse-current #journey .reuse-image-evidence .stackbar{
-  display:flex!important;
+  position:relative!important;
+  display:block!important;
   width:100%!important;
-  height:54px!important;
+  height:182px!important;
   gap:0!important;
   overflow:hidden!important;
-  background:transparent!important;
+  background:linear-gradient(to right,
+    #1674C5 0%,
+    #1674C5 52.2%,
+    #0D96CF 52.2%,
+    #0D96CF 79.8%,
+    #15A3B8 79.8%,
+    #15A3B8 89.1%,
+    #0CC8A8 89.1%,
+    #0CC8A8 95.7%,
+    #E2D400 95.7%,
+    #E2D400 100%)!important;
 }
 
+/* Authored i elements are retained for DOM compatibility but the bar itself
+   is rendered as the exact five-segment LANDING → ACTION treatment above. */
 html body.reuse-current #journey .reuse-image-evidence .stackbar i{
-  display:block!important;
-  flex:0 0 auto!important;
-  height:100%!important;
-  min-width:0!important;
-  background:var(--c)!important;
-  transform:none!important;
-  transition:none!important;
+  display:none!important;
 }
 
-/* The four authored research bands total 100%: 53 / 39 / 5.6 / 2.4. */
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(1){width:53%!important;--c:var(--hm-blue)!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(2){width:39%!important;--c:var(--hm-blue-new)!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(3){width:5.6%!important;--c:#16A8C1!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(4){width:2.4%!important;--c:#18B7A4!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(n+5){display:none!important}
-
+/* Labels sit inside the lower area of the bar, matching the reference image. */
 html body.reuse-current #journey .reuse-image-evidence .stacklabels{
-  display:grid!important;
-  grid-template-columns:repeat(4,1fr)!important;
-  gap:12px!important;
+  position:absolute!important;
+  z-index:2!important;
+  left:0!important;
+  top:calc(22px + 34px)!important;
   width:100%!important;
-  margin-top:18px!important;
-  align-items:start!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
-  min-width:0!important;
+  height:182px!important;
+  margin:0!important;
   padding:0!important;
-  color:rgba(255,255,255,.70)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:14px!important;
-  font-weight:300!important;
-  line-height:1.5!important;
-  text-align:left!important;
+  display:block!important;
+  pointer-events:none!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels b{
-  display:block!important;
-  margin:0 0 4px!important;
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div,
+html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
+  position:absolute!important;
+  bottom:20px!important;
+  margin:0!important;
+  padding:0!important;
+  min-width:0!important;
   color:#fff!important;
-  font-family:var(--hm-font-en)!important;
+  font-family:var(--hm-font-ko)!important;
   font-size:22px!important;
   font-weight:300!important;
-  line-height:1!important;
-  letter-spacing:var(--hm-track-data-number)!important;
+  line-height:1.05!important;
+  letter-spacing:var(--hm-track-body)!important;
+  text-align:left!important;
+  white-space:pre-line!important;
+}
+
+/* Hide the old four labels and author the five requested labels through CSS,
+   allowing the existing HTML to remain backward-compatible. */
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
+  display:block!important;
+  font-size:0!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div b{
+  display:none!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1){
+  left:1.1%!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1)::after{
+  content:"종료\A52.2%"!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2){
+  left:53.3%!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2)::after{
+  content:"재탐색\A27.6%"!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3){
+  left:80.9%!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3)::after{
+  content:"상품\A9.3%"!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4){
+  left:90.2%!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4)::after{
+  content:"검색\A6.6%"!important;
+}
+
+/* Fifth label is added without changing the existing markup. */
+html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
+  content:"기타\A4.3%"!important;
+  left:97.1%!important;
+  transform:translateX(-50%)!important;
+}
+
+/* The reference graph has no external four-column legend underneath. */
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div::before{
+  content:none!important;
 }
 
 @media(max-width:780px){
   html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-    margin-bottom:18px!important;
-    font-size:18px!important;
+    margin-bottom:22px!important;
+    font-size:16px!important;
     line-height:1.35!important;
   }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels{
-    grid-template-columns:1fr 1fr!important;
-    gap:10px 14px!important;
+  html body.reuse-current #journey .reuse-image-evidence .stackbar{
+    height:140px!important;
   }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
-    font-size:12px!important;
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels{
+    top:44px!important;
+    height:140px!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels>div,
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
+    bottom:16px!important;
+    font-size:16px!important;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current #journey .reuse-image-evidence .stackbar i{
-    transform:none!important;
-    transition:none!important;
+    display:none!important;
   }
 }
