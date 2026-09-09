@@ -6,7 +6,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parent.parent
-FRAME_DIR = ROOT / "assets" / "about-ascii"
+FRAME_DIR = ROOT / "assets" / "image" / "about-ascii"
 OUTPUT = ROOT / "about-ascii-data.js"
 WIDTH = 288
 HEIGHT = 162
