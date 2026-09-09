@@ -128,8 +128,6 @@
 
   const pageSourceRegistry = {
     'himart.html': [
-      ['#brand .voice-stack', '하이마트 고객 VOC·리뷰 키워드 분석 · 내부 분류 결과'],
-      ['#brand .sentiment-graph', '하이마트 고객 VOC·리뷰 키워드 분석 · 긍정/부정 키워드 비중'],
       ['#data .flow-area', '하이마트 온라인 이용 패턴 분석 v31 / 온라인 백데이터 퍼널_3 PDP·장바구니·구매완료 · 2026 H1']
     ],
     'himart-ways.html': [
@@ -259,9 +257,9 @@
         head.style.setProperty('--hm-wide-title-exit-opacity', opacity.toFixed(3));
       });
     };
-
     const requestUpdate = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+      if (!raf) return;
+      raf = requestAnimationFrame(update);
     };
 
     window.addEventListener('scroll', requestUpdate, {passive:true});
