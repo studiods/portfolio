@@ -1,6 +1,6 @@
 /* HIMART Design System v5.2 — static style entrypoint
    Animation remains separate: load design-system/animation.js explicitly. */
-@import url("./tokens.css?v=20260908-19");
+@import url("./tokens.css?v=20260909-1");
 @import url("./typography.css?v=20260907-8");
 @import url("./spacing.css?v=20260907-4");
 @import url("./layout.css");
