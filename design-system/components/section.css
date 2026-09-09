@@ -7,7 +7,16 @@
 .hm-ds-section__number,.hm-ds-subnumber{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
 .hm-ds-section__title{margin:0}
 .hm-ds-section__description{margin:20px 0 0;max-width:900px;color:var(--hm-text-body)}
-.hm-ds-subsection{margin-top:var(--hm-space-subsection)}
+
+/* Canonical medium-title divider contract.
+   Every authored subsection begins with a faint horizontal rule, then keeps the
+   shared 40px component gap before its number/title. Chapter-to-subsection distance
+   remains owned separately by the section rhythm tokens. */
+.hm-ds-subsection{
+  margin-top:var(--hm-space-subsection);
+  padding-top:var(--hm-space-component);
+  border-top:1px solid var(--hm-line-faint);
+}
 .hm-ds-subsection__title{margin:0}
 .hm-ds-subsection__description{margin:20px 0 0;color:var(--hm-text-body)}
 @media(max-width:780px){
@@ -18,8 +27,12 @@
   .hm-ds-section__description{margin-top:16px}
 }
 
-/* Transitional subsection mapping. */
-.himart-movie-page .hm-subsection{margin-top:var(--hm-space-subsection)}
+/* Transitional subsection mapping follows the same canonical divider contract. */
+.himart-movie-page .hm-subsection{
+  margin-top:var(--hm-space-subsection);
+  padding-top:var(--hm-space-component);
+  border-top:1px solid var(--hm-line-faint);
+}
 .himart-movie-page .hm-subhead{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;align-items:start}
 .himart-movie-page .hm-subno{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
 .himart-movie-page .hm-subtitle{margin:0;color:var(--hm-text-primary)}
