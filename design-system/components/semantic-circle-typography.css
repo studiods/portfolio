@@ -17,8 +17,8 @@ html body.himart-page-body #live-main #brand .ring-card .pct{
   letter-spacing:var(--hm-track-data-number)!important;
 }
 
-/* Ordinary circle/card titles stay Pretendard Thin. This prevents legacy component
-   rules (400/500) from leaking into the current design-system hierarchy. */
+/* Ordinary Himart circle/card titles stay Pretendard Thin. This prevents legacy
+   component rules (400/500) from leaking into the current design-system hierarchy. */
 html body.himart-page-body #live-main :is(
   #brand .ring-card h4,
   #brand .conclusion-card h5,
@@ -32,17 +32,18 @@ html body.himart-page-body #live-main :is(
   font-variation-settings:"wght" 100!important;
 }
 
-/* Reuse 02.2 default/reset state is also Thin. Only its blue-filled active state is Regular. */
-html body.reuse-current .reuse-confidence-node h4{
+/* Reuse exception is deliberately scoped to 02.2 only. 02.1 proof circles keep their
+   own previously approved Thin/Light weights. Default/reset = Thin; blue-filled = Regular. */
+html body.reuse-current .reuse-confidence-flow .reuse-confidence-node h4{
   font-family:var(--hm-font-ko)!important;
   font-weight:var(--hm-circle-title-weight)!important;
   font-variation-settings:"wght" 100!important;
 }
-html body.reuse-current .reuse-confidence-node:is(.is-flow-pulse-trust,.is-flow-trust-held) :is(.reuse-confidence-title--trust,.reuse-confidence-title--base) h4{
+html body.reuse-current .reuse-confidence-flow .reuse-confidence-node:is(.is-flow-pulse-trust,.is-flow-trust-held) :is(.reuse-confidence-title--trust,.reuse-confidence-title--base) h4{
   font-weight:var(--hm-circle-highlight-title-weight)!important;
   font-variation-settings:"wght" 400!important;
 }
-html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting :is(.reuse-confidence-title--trust,.reuse-confidence-title--base) h4{
+html body.reuse-current .reuse-confidence-flow .reuse-confidence-node.is-flow-trust-resetting :is(.reuse-confidence-title--trust,.reuse-confidence-title--base) h4{
   font-weight:var(--hm-circle-title-weight)!important;
   font-variation-settings:"wght" 100!important;
 }
