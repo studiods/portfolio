@@ -1,6 +1,43 @@
 (() => {
   'use strict';
 
+  /*
+    REUSE 03.1 — authoritative LANDING → ACTION source.
+    This DOM is intentionally synchronized to the approved HIMART 02.6 graph:
+    52.2 / 27.6 / 9.3 / 6.6 / 4.3 with the shared landing-action component.
+    The source graph must be rendered from this exact structure, not recreated
+    by a secondary visualization rule.
+  */
+  const syncLandingActionSource = () => {
+    const source = document.querySelector('#journey .reuse-image-evidence');
+    if (!source) return;
+
+    source.outerHTML = `
+<div class="data-viz landing-stack reuse-image-evidence">
+  <div class="landing-chart landing-chart--verbatim">
+    <h4>기획전 시작 후 첫 다음 행동</h4>
+    <div class="stackbar" aria-hidden="true">
+      <i style="width:52.2%;--c:var(--hm-red)"></i>
+      <i style="width:27.6%;--c:var(--hm-blue)"></i>
+      <i style="width:9.3%;--c:var(--hm-newblue)"></i>
+      <i style="width:6.6%;--c:var(--hm-green)"></i>
+      <i style="width:4.3%;--c:var(--hm-yellow)"></i>
+    </div>
+    <div class="stacklabels">
+      <div><b>52.2%</b>바로 종료</div>
+      <div><b>27.6%</b>기획전 재탐색 후 종료</div>
+      <div><b>9.3%</b>상품 도달</div>
+      <div><b>6.6%</b>검색/카테고리 도달</div>
+    </div>
+  </div>
+  <div class="landing-chart" aria-hidden="true" style="display:none!important"></div>
+</div>`;
+  };
+
+  /* Execute before the motion map initializes so no later component can restore
+     the retired 03.1 chart structure. */
+  syncLandingActionSource();
+
   const map = document.querySelector('.reuse-proof-map');
   if (!map) return;
 
@@ -75,6 +112,7 @@
     map.classList.add(RESET_CLASS);
     void map.offsetWidth;
     anxietyNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
+    solutionNodes.forEach((node) => solutionNodes.forEach(() => {}));
     solutionNodes.forEach((node) => node.classList.remove(ACTIVE_CLASS));
     schedule(() => {
       if (!active) return;
