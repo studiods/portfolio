@@ -1,78 +1,172 @@
-/* HIMART Wide Editorial — journey fluid refinement TEST ONLY v4
-   Extends the v3 wide test without touching production himart.html.
-   - 03.2 / JOURNEY REDESIGN uses the same fluid circle system as 03.1 / JOURNEY SIGNALS.
-   - Expanded journey rows keep one circle scale across row4 / row3.
-*/
+/* HIMART Wide Editorial — fluid journey geometry v5
+   One responsive circle contract for 03.1 JOURNEY FLOW, 03.1 JOURNEY SIGNALS
+   and 03.2 JOURNEY REDESIGN. Mobile <=860px keeps the existing vertical path. */
 
-@media (min-width:1600px){
-  /*
-    Expanded JOURNEY ANALYSIS: apply one fluid geometry contract to both
-    03.1 / JOURNEY SIGNALS and 03.2 / JOURNEY REDESIGN.
-  */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row:is(.row4,.row3){
-    display:flex!important;
-    flex-wrap:nowrap!important;
-    justify-content:space-between!important;
+@media (min-width:861px){
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ){
+    --hm-journey-arrow:clamp(14px,1.45vw,20px);
+    --hm-journey-gap:clamp(6px,.7vw,10px);
+    --hm-journey-node-pad:clamp(12px,1.45vw,22px);
+  }
+
+  /* Main 03.1 flow: four equal fluid circle columns always consume exactly the
+     available row width instead of inheriting the legacy 210–292px fixed circles. */
+  html body.himart-wide-test-page #journey .journey-flow-block .flow-row.row4{
+    position:relative!important;
+    display:grid!important;
+    grid-template-columns:
+      minmax(0,1fr) var(--hm-journey-arrow)
+      minmax(0,1fr) var(--hm-journey-arrow)
+      minmax(0,1fr) var(--hm-journey-arrow)
+      minmax(0,1fr)!important;
     align-items:center!important;
-    gap:var(--hm-wide-journey-gap)!important;
+    justify-content:stretch!important;
+    column-gap:var(--hm-journey-gap)!important;
     width:100%!important;
     min-width:0!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
-    flex:0 0 var(--hm-wide-journey-node-size)!important;
-    width:var(--hm-wide-journey-node-size)!important;
-    min-width:var(--hm-wide-journey-node-size)!important;
-    max-width:var(--hm-wide-journey-node-size)!important;
-    height:var(--hm-wide-journey-node-size)!important;
-    min-height:var(--hm-wide-journey-node-size)!important;
-    max-height:var(--hm-wide-journey-node-size)!important;
+  /* Expanded SIGNALS / REDESIGN: the same no-overflow contract. */
+  html body.himart-wide-test-page #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row.row4{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:var(--hm-journey-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  html body.himart-wide-test-page #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row.row3{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:var(--hm-journey-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  /* Circle geometry and typography scale together. cqi is based on each circle,
+     so smaller circles automatically reduce number/title/body without a breakpoint jump. */
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ) .flow-node{
+    flex:1 1 0!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:252px!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
     aspect-ratio:1/1!important;
-    padding:var(--hm-wide-journey-node-pad)!important;
+    padding:var(--hm-journey-node-pad)!important;
     border:1px solid rgba(255,255,255,.20)!important;
     border-radius:50%!important;
-    background:#050505!important;
+    background:#000!important;
     display:flex!important;
     flex-direction:column!important;
     align-items:center!important;
     justify-content:center!important;
     text-align:center!important;
     box-sizing:border-box!important;
+    container-type:inline-size!important;
   }
-
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node .hm-card-no{
-    margin:0 0 clamp(10px,1.25cqw,15px)!important;
-    font-size:var(--hm-wide-journey-no-size)!important;
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ) .flow-node .hm-card-no{
+    margin:0 0 clamp(8px,5cqi,14px)!important;
+    font-size:clamp(9px,5cqi,12px)!important;
     line-height:1.2!important;
   }
-
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node h4{
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ) .flow-node h4{
     margin:0!important;
-    font-size:var(--hm-wide-journey-title-size)!important;
+    font-family:var(--hm-font-ko)!important;
+    font-size:clamp(16px,10.5cqi,26px)!important;
+    font-weight:100!important;
+    font-variation-settings:"wght" 100!important;
     line-height:1.24!important;
   }
-
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-node p{
-    margin:clamp(10px,1.45cqw,16px) 0 0!important;
-    max-width:84%!important;
-    font-size:var(--hm-wide-journey-copy-size)!important;
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ) .flow-node p{
+    margin:clamp(8px,5.5cqi,15px) 0 0!important;
+    max-width:86%!important;
+    font-size:clamp(10px,6cqi,14px)!important;
     line-height:1.42!important;
   }
-
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow{
-    flex:0 0 var(--hm-wide-journey-arrow-size)!important;
-    width:var(--hm-wide-journey-arrow-size)!important;
-    min-width:var(--hm-wide-journey-arrow-size)!important;
-    height:clamp(34px,4cqw,44px)!important;
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ) .flow-arrow{
+    flex:0 0 var(--hm-journey-arrow)!important;
+    width:var(--hm-journey-arrow)!important;
+    min-width:var(--hm-journey-arrow)!important;
+    height:clamp(32px,3.4vw,44px)!important;
+  }
+  html body.himart-wide-test-page #journey :is(
+    .journey-flow-block,
+    .journey-signal-subsection,
+    .journey-redesign-subsection
+  ) .flow-arrow::before{
+    width:clamp(11px,1.2vw,16px)!important;
+    height:clamp(11px,1.2vw,16px)!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow::before{
-    width:clamp(12px,1.45cqw,16px)!important;
-    height:clamp(12px,1.45cqw,16px)!important;
+  /* Production SIGNALS can contain grouped 'tablet' clusters. Let the cluster own
+     space in proportion to its contained nodes rather than keeping old fixed widths. */
+  html body.himart-wide-test-page #journey .journey-signal-subsection .wide-flow-cluster{
+    min-width:0!important;
+    max-width:100%!important;
+    width:auto!important;
+  }
+  html body.himart-wide-test-page #journey .journey-signal-subsection .wide-flow-cluster--alert{
+    flex:3 1 0!important;
+  }
+  html body.himart-wide-test-page #journey .journey-signal-subsection .wide-flow-cluster--focus{
+    flex:2 1 0!important;
+  }
+  html body.himart-wide-test-page #journey .journey-signal-subsection .wide-flow-cluster-inner{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:var(--hm-journey-gap)!important;
+    min-width:0!important;
   }
 
-  /* Production group rules contain fixed pixel line widths; in the split rail they must follow the available width. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #journey .hm-wide-right-rail .journey-more-inner :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-group{
+  /* Main-flow grouping capsules follow percentages of the actual row instead of old
+     fixed node variables, so they cannot extend beyond the content rail. */
+  html body.himart-wide-test-page #journey .journey-flow-block .journey-row-group{
+    top:calc(var(--hm-journey-gap) * -1.5)!important;
+    height:calc(100% + (var(--hm-journey-gap) * 3))!important;
+    max-width:100%!important;
+  }
+  html body.himart-wide-test-page #journey .journey-flow-block .row-top .journey-row-group{
+    left:0!important;
+    width:50%!important;
+  }
+  html body.himart-wide-test-page #journey .journey-flow-block .row-bottom .journey-row-group{
+    left:25%!important;
+    width:50%!important;
+  }
+
+  /* Legacy semantic line widths were authored in fixed pixels. */
+  html body.himart-wide-test-page #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-group{
     --line-left:0px!important;
     --line-width:100%!important;
     min-width:0!important;
