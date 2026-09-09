@@ -78,3 +78,82 @@ html body.portfolio-progress-page>.top .top-center{
   html body .top .top-center{gap:22px!important}
   html body .top a{font-size:11px!important}
 }
+
+/* 2026-09-09 — REUSE 02.2 copy transition.
+   The trust-state title/description must cross-dissolve in place when the circle fills blue.
+   No vertical travel is allowed in either direction. The existing state classes from
+   reuse-confidence-motion.js are intentionally preserved; this is a presentation-only override. */
+html body.reuse-current .reuse-confidence-title,
+html body.reuse-current .reuse-confidence-desc{
+  transform:translateY(0)!important;
+  transition:opacity .72s cubic-bezier(.4,0,.2,1)!important;
+  will-change:opacity;
+}
+html body.reuse-current .reuse-confidence-title--base,
+html body.reuse-current .reuse-confidence-desc--base{
+  transform:translateY(0)!important;
+  opacity:1;
+}
+html body.reuse-current .reuse-confidence-title--trust,
+html body.reuse-current .reuse-confidence-desc--trust{
+  transform:translateY(0)!important;
+  opacity:0;
+}
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-title--base,
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-desc--base{
+  transform:translateY(0)!important;
+  opacity:0;
+}
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-title--trust,
+html body.reuse-current .reuse-confidence-node.is-copy-trust-active .reuse-confidence-desc--trust{
+  transform:translateY(0)!important;
+  opacity:1;
+}
+
+/* The focus-driven pulse uses these classes while the blue circle is being filled.
+   Disable only the legacy copy-motion keyframes so the text itself remains stationary. */
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--base,
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-title--trust,
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--base,
+html body.reuse-current .reuse-confidence-node.is-flow-pulse-trust .reuse-confidence-desc--trust,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--base,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--trust,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--base,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--trust{
+  animation:none!important;
+  transform:translateY(0)!important;
+  transition:opacity .72s cubic-bezier(.4,0,.2,1)!important;
+}
+
+/* Blue fill state: keep the active copy fully visible and the inactive copy transparent. */
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--base,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--base{
+  transform:translateY(0)!important;
+  opacity:0!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-title--trust,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-held .reuse-confidence-desc--trust{
+  transform:translateY(0)!important;
+  opacity:1!important;
+}
+
+/* Reverse: when the circle returns to black, the two copies cross-dissolve in place. */
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--base,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--base{
+  opacity:1!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--trust,
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--trust{
+  opacity:0!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-confidence-title,
+  html body.reuse-current .reuse-confidence-desc,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--base,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-title--trust,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--base,
+  html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-confidence-desc--trust{
+    transition:none!important;
+  }
+}
