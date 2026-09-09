@@ -7,7 +7,7 @@ html body.reuse-current .reuse-image-order-flow .reuse-confidence-node > span{
   color:var(--hm-blue)!important;
 }
 
-/* 03.3: four independent 16:9 galleries. Each gallery owns one persistent caption;
+/* 03.3: four independent 4:3 galleries. Each gallery owns one persistent caption;
    only the media changes when the user moves between images. */
 html body.reuse-current .reuse-production-gallery-list{
   display:flex;
@@ -19,7 +19,7 @@ html body.reuse-current .reuse-production-gallery-list{
 html body.reuse-current .reuse-production-gallery{
   position:relative;
   width:100%;
-  aspect-ratio:16/9;
+  aspect-ratio:4/3;
   overflow:hidden;
   background:#080808;
 }
