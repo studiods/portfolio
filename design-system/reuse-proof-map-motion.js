@@ -67,10 +67,8 @@
         <div class="reuse-trust-equation__proof">
           <img class="reuse-trust-equation__logo" src="./assets/image/lotte_himart_ci.svg" alt="LOTTE HIMART">
           <div class="reuse-trust-equation__list">
-            <span>2년 무상 보상</span>
-            <span>직접 분해 검수 및 세척</span>
-            <span>30개 이상 품질 점검 리포트</span>
-            <span>결함 발견시 100% 책임 보상</span>
+            <span>2년 무상 보상 · 직접 분해 검수 및 세척</span>
+            <span>30개 이상 품질 점검 리포트 · 결함 발견시 100% 책임 보상</span>
           </div>
         </div>
         <div class="reuse-trust-equation__equals" aria-hidden="true">=</div>
