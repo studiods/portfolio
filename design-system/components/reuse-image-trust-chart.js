@@ -2,8 +2,7 @@
   const charts = [...document.querySelectorAll('.reuse-image-trust-chart')];
   if (!charts.length) return;
 
-  // Data only. Layout and visual treatment are owned by reuse-image-trust-chart.css,
-  // matching the HIMART 02.5 / HOME chart pattern.
+  // 03.1 FINAL — product-condition emphasis only.
   const data = [
     {label:'판매자 신뢰', value:67.7, color:'rgba(255,255,255,.18)'},
     {label:'거래 편리성', value:58.6, color:'rgba(255,255,255,.18)'},
@@ -22,19 +21,14 @@
     if (!bar) return;
 
     bar.innerHTML = data.map((item, index) => `
-      <div class="reuse-image-trust-chart__segment" data-index="${index}">
-        <div class="reuse-image-trust-chart__track" aria-hidden="true"
-             style="--bar-width:${(item.value / max * 100).toFixed(3)}%;--bar-color:${item.color}">
+      <div class="reuse-image-trust-chart__segment" data-index="${index}" style="--bar-color:${item.color}">
+        <div class="reuse-image-trust-chart__track" aria-hidden="true" style="--bar-width:${(item.value / max * 100).toFixed(3)}%;--bar-color:${item.color}">
           <div class="reuse-image-trust-chart__fill" style="--bar-color:${item.color}"></div>
         </div>
         <span>${item.label}</span>
         <strong>${item.value.toFixed(1)}%</strong>
       </div>
     `).join('');
-
-    chart.querySelectorAll('.reuse-image-trust-chart__source').forEach((node, i) => {
-      if (i > 0) node.remove();
-    });
 
     let source = chart.querySelector('.reuse-image-trust-chart__source');
     if (!source) {
