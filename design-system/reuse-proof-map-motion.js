@@ -1,7 +1,10 @@
 (() => {
   'use strict';
 
-  /* REUSE 02.1 / shared motion */
+  /* REUSE 02.1 / shared motion only.
+     03.1 chart rendering has been removed from this file completely.
+     The chart is owned only by design-system/components/reuse-chart.css +
+     design-system/components/reuse-image-trust-chart.js. */
   const inject02_1ArrowRule = () => {
     if (document.getElementById('reuse-02-1-arrow-rule')) return;
     const style = document.createElement('style');
@@ -17,67 +20,7 @@
     document.head.appendChild(style);
   };
 
-  /*
-    REUSE 03.1 — use the canonical HIMART 02.5 / HOME horizontal-bar component.
-    No local bar geometry is authored here. Only the data values and labels change.
-  */
-  const syncTrustChart = () => {
-    const source = document.querySelector('#journey .reuse-image-evidence, #journey .reuse-image-trust-chart');
-    if (!source) return;
-
-    source.outerHTML = `
-<div class="data-viz hm-ds-home-bars reuse-trust-home-bars" data-hm-chart>
-  <div class="reuse-trust-chart-title">중고거래에서 중요하게 보는 요소</div>
-  <div class="hm-ds-home-bar hm-ds-home-bar--blue" data-value="67.7">
-    <span class="hm-ds-home-bar__label">판매자 신뢰</span>
-    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:100%"></div></div>
-    <b class="hm-ds-home-bar__value">67.7%</b>
-  </div>
-  <div class="hm-ds-home-bar hm-ds-home-bar--blue-new" data-value="58.6">
-    <span class="hm-ds-home-bar__label">거래 편리성</span>
-    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:86.56%"></div></div>
-    <b class="hm-ds-home-bar__value">58.6%</b>
-  </div>
-  <div class="hm-ds-home-bar hm-ds-home-bar--green" data-value="49.8">
-    <span class="hm-ds-home-bar__label">상품 상태 확인</span>
-    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:73.56%"></div></div>
-    <b class="hm-ds-home-bar__value">49.8%</b>
-  </div>
-  <div class="hm-ds-home-bar hm-ds-home-bar--yellow" data-value="48.3">
-    <span class="hm-ds-home-bar__label">가격</span>
-    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:71.34%"></div></div>
-    <b class="hm-ds-home-bar__value">48.3%</b>
-  </div>
-  <div class="hm-ds-home-bar hm-ds-home-bar--white-34" data-value="29.0">
-    <span class="hm-ds-home-bar__label">안전결제</span>
-    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:42.84%"></div></div>
-    <b class="hm-ds-home-bar__value">29.0%</b>
-  </div>
-  <div class="hm-ds-home-bar hm-ds-home-bar--white-18" data-value="10.9">
-    <span class="hm-ds-home-bar__label">플랫폼 대응</span>
-    <div class="hm-ds-home-bar__track"><div class="hm-ds-home-bar__fill" style="width:16.10%"></div></div>
-    <b class="hm-ds-home-bar__value">10.9%</b>
-  </div>
-  <div class="hm-source hm-ds-source-note">SOURCE · 전자신문 × 오픈서베이, 중고거래 플랫폼 이용 행태 조사, 2025 / 전국 20–59세 1,002명</div>
-</div>`;
-  };
-
-  /* The HOME component has 18px row rhythm; preserve it and only change the requested title size. */
-  const injectTrustChartTitleRule = () => {
-    if (document.getElementById('reuse-trust-chart-title-rule')) return;
-    const style = document.createElement('style');
-    style.id = 'reuse-trust-chart-title-rule';
-    style.textContent = `
-      html body.reuse-current #journey .reuse-trust-home-bars{display:grid!important;gap:var(--hm-space-18)!important;width:100%!important;min-height:0!important;margin:0!important}
-      html body.reuse-current #journey .reuse-trust-home-bars .reuse-trust-chart-title{grid-column:1/-1!important;margin:0 0 10px!important;color:var(--hm-text-primary)!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.3!important;letter-spacing:var(--hm-track-body)!important}
-      html body.reuse-current #journey .reuse-trust-home-bars .hm-source{grid-column:1/-1!important}
-    `;
-    document.head.appendChild(style);
-  };
-
   inject02_1ArrowRule();
-  syncTrustChart();
-  injectTrustChartTitleRule();
 
   const map = document.querySelector('.reuse-proof-map');
   if (!map) return;
