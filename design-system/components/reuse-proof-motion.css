@@ -66,8 +66,9 @@ html body.reuse-current #journey .reuse-image-order-flow .reuse-confidence-node 
 /* REUSE 01.3 — inline Himart + differentiators = trust equation, contained inside the right editorial rail. */
 html body.reuse-current #brand .reuse-trust-equation__visual{
   display:grid;
-  grid-template-columns:max-content max-content minmax(240px,1fr) max-content max-content;
-  column-gap:20px;
+  grid-template-columns:max-content max-content max-content max-content max-content;
+  justify-content:space-between;
+  column-gap:0;
   align-items:center;
   width:100%;
   max-width:100%;
@@ -98,6 +99,9 @@ html body.reuse-current #brand .reuse-trust-equation__equals{
   letter-spacing:0;
   text-align:center;
 }
+html body.reuse-current #brand .reuse-trust-equation__equals{
+  color:rgba(255,255,255,.60);
+}
 html body.reuse-current #brand .reuse-trust-equation__list{
   display:grid;
   gap:2px;
@@ -122,8 +126,9 @@ html body.reuse-current #brand .reuse-trust-equation__result{
 }
 @media(max-width:1180px){
   html body.reuse-current #brand .reuse-trust-equation__visual{
-    grid-template-columns:max-content max-content minmax(210px,1fr) max-content max-content;
-    column-gap:14px;
+    grid-template-columns:max-content max-content max-content max-content max-content;
+    justify-content:space-between;
+    column-gap:0;
   }
   html body.reuse-current #brand .reuse-trust-equation__brand,
   html body.reuse-current #brand .reuse-trust-equation__plus,
@@ -134,6 +139,7 @@ html body.reuse-current #brand .reuse-trust-equation__result{
 @media(max-width:780px){
   html body.reuse-current #brand .reuse-trust-equation__visual{
     grid-template-columns:1fr;
+    justify-content:stretch;
     row-gap:22px;
     min-height:0;
     align-items:start;
