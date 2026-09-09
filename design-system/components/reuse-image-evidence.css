@@ -1,4 +1,4 @@
-/* HIMART REUSE 03.1 — exact LANDING → ACTION graph grammar. */
+/* HIMART REUSE 02.6 — exact LANDING → ACTION graph grammar. */
 
 html body.reuse-current #journey .reuse-image-evidence{
   display:block!important;
@@ -16,7 +16,6 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart{
   border-top:0!important;
 }
 
-/* Reference title: 기획전 시작 후 첫 다음 행동 */
 html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
   margin:0 0 34px!important;
   padding:0!important;
@@ -38,7 +37,7 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{
   letter-spacing:var(--hm-track-body)!important;
 }
 
-/* Five-part 100% horizontal bar: 52.2 / 27.6 / 9.3 / 6.6 / 4.3 */
+/* Actual behavior data: 52.2 / 27.6 / 9.3 / 6.6 / 4.3 */
 html body.reuse-current #journey .reuse-image-evidence .stackbar{
   position:relative!important;
   display:block!important;
@@ -58,14 +57,8 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar{
     #E2D400 95.7%,
     #E2D400 100%)!important;
 }
+html body.reuse-current #journey .reuse-image-evidence .stackbar i{display:none!important}
 
-/* Keep existing markup for compatibility; render the bar through the exact
-   five-segment reference treatment above. */
-html body.reuse-current #journey .reuse-image-evidence .stackbar i{
-  display:none!important;
-}
-
-/* Labels are placed inside the lower portion of the bar. */
 html body.reuse-current #journey .reuse-image-evidence .stacklabels{
   position:absolute!important;
   z-index:2!important;
@@ -95,58 +88,62 @@ html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
   text-align:left!important;
   white-space:pre-line!important;
 }
-
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
-  display:block!important;
-  font-size:0!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div b{
-  display:none!important;
-}
-
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{display:block!important;font-size:0!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div b{display:none!important}
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1){left:1.1%!important}
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1)::after{content:"종료\A52.2%"!important}
-
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2){left:53.3%!important}
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2)::after{content:"재탐색\A27.6%"!important}
-
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3){left:80.9%!important}
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3)::after{content:"상품\A9.3%"!important}
-
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4){left:90.2%!important}
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4)::after{content:"검색\A6.6%"!important}
-
-/* Fifth label: 기타 / 4.3% */
-html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
-  content:"기타\A4.3%"!important;
-  left:97.1%!important;
-  transform:translateX(-50%)!important;
+html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{content:"기타\A4.3%"!important;left:97.1%!important;transform:translateX(-50%)!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-research-signal{
+  margin-top:32px!important;
+  padding-top:18px!important;
+  border-top:1px solid rgba(255,255,255,.15)!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .landing-research-signal>span{
+  display:block!important;
+  margin:0 0 10px!important;
+  color:#00A8E8!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:11px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:.06em!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .landing-research-signal>p{
+  margin:0!important;
+  color:rgba(255,255,255,.72)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.45!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .landing-research-signal>small{
+  display:block!important;
+  margin-top:8px!important;
+  color:rgba(255,255,255,.45)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:13px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
 }
 
 @media(max-width:780px){
-  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-    margin-bottom:22px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{
-    font-size:16px!important;
-    line-height:1.35!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stackbar{
-    height:140px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels{
-    top:44px!important;
-    height:140px!important;
-  }
+  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin-bottom:22px!important}
+  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{font-size:16px!important;line-height:1.35!important}
+  html body.reuse-current #journey .reuse-image-evidence .stackbar{height:140px!important}
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels{top:44px!important;height:140px!important}
   html body.reuse-current #journey .reuse-image-evidence .stacklabels>div,
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
-    bottom:16px!important;
-    font-size:16px!important;
-  }
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{bottom:16px!important;font-size:16px!important}
+  html body.reuse-current #journey .reuse-image-evidence .landing-research-signal{margin-top:24px!important;padding-top:14px!important}
+  html body.reuse-current #journey .reuse-image-evidence .landing-research-signal>p{font-size:14px!important}
+  html body.reuse-current #journey .reuse-image-evidence .landing-research-signal>small{font-size:12px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
-  html body.reuse-current #journey .reuse-image-evidence .stackbar i{
-    display:none!important;
-  }
+  html body.reuse-current #journey .reuse-image-evidence .stackbar i{display:none!important}
 }
