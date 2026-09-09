@@ -84,7 +84,15 @@
     });
   };
 
+  /* 02.1: four independent downward arrow heads, one per circle pair. */
   spacer.replaceChildren();
+  spacer.setAttribute('aria-hidden', 'true');
+  for (let index = 0; index < anxietyNodes.length; index += 1) {
+    const arrow = document.createElement('span');
+    arrow.className = 'reuse-proof-map__arrow-item';
+    arrow.setAttribute('aria-hidden', 'true');
+    spacer.appendChild(arrow);
+  }
   ensureSweepRings();
 
   const clearState = () => {
