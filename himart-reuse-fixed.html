@@ -10,7 +10,7 @@
 <script>
 (async()=>{
   try{
-    const r=await fetch('./himart-reuse.html?force=20260909-graph-final',{cache:'no-store'});
+    const r=await fetch('./himart-reuse.html?force=20260909-graph-final-2',{cache:'no-store'});
     if(!r.ok) throw new Error('himart-reuse.html load failed');
     let html=await r.text();
     html=html.replace('</body>',`<style id="reuse-graph-final">
@@ -35,7 +35,7 @@ html body.reuse-current #journey .reuse-image-evidence .stacklabels b{display:no
 </style><script>
 (()=>{
  const sync=()=>{const s=document.querySelector('#journey .reuse-image-evidence');if(!s)return;const html='<div class="data-viz landing-stack reuse-image-evidence"><div class="landing-chart landing-chart--verbatim"><h4>기획전 시작 후 첫 다음 행동</h4><div class="stackbar"><i style="width:52.2%"></i><i style="width:27.6%"></i><i style="width:9.3%"></i><i style="width:6.6%"></i><i style="width:4.3%"></i></div><div class="stacklabels"><div><b>52.2%</b>바로 종료</div><div><b>27.6%</b>기획전 재탐색 후 종료</div><div><b>9.3%</b>상품 도달</div><div><b>6.6%</b>검색/카테고리 도달</div></div></div></div>';s.outerHTML=html};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',sync,{once:true});else sync();})();
-<'/script></body>`);
+<` + `/script></body>`);
     document.open();document.write(html);document.close();
   }catch(e){document.body.innerHTML='<div class="loader" style="display:grid;place-items:center;color:rgba(255,255,255,.45);font:12px Arial">페이지를 불러오지 못했습니다.</div>';console.error(e)}
 })();
