@@ -2,24 +2,22 @@
   const charts = [...document.querySelectorAll('.reuse-image-trust-chart')];
   if (!charts.length) return;
 
-  // 03.1 data only. Presentation is owned by design-system/components/reuse-chart.css.
   const data = [
-    {label:'판매자 신뢰', value:67.7, color:'rgba(0,166,237,.20)'},
-    {label:'거래 편리성', value:58.6, color:'rgba(0,166,237,.20)'},
-    {label:'상품 상태 확인', value:49.8, color:'#00A6ED'},
-    {label:'가격', value:48.3, color:'rgba(0,166,237,.20)'},
-    {label:'안전결제', value:29.0, color:'rgba(0,166,237,.20)'},
-    {label:'플랫폼 대응', value:10.9, color:'rgba(0,166,237,.20)'}
+    {label:'판매자 신뢰', value:67.7},
+    {label:'거래 편리성', value:58.6},
+    {label:'상품 상태 확인', value:49.8, primary:true},
+    {label:'가격', value:48.3},
+    {label:'안전결제', value:29.0},
+    {label:'플랫폼 대응', value:10.9}
   ];
-  const max = Math.max(...data.map(item => item.value));
 
   charts.forEach(chart => {
     const bar = chart.querySelector('.reuse-image-trust-chart__bar');
     if (!bar) return;
 
-    bar.innerHTML = data.map((item, index) => `
-      <div class="reuse-image-trust-chart__segment" data-index="${index}" style="--bar-color:${item.color}">
-        <div class="reuse-image-trust-chart__track" aria-hidden="true" style="--bar-width:${(item.value / max * 100).toFixed(3)}%;--bar-color:${item.color}">
+    bar.innerHTML = data.map(item => `
+      <div class="reuse-image-trust-chart__segment${item.primary ? ' is-primary' : ''}">
+        <div class="reuse-image-trust-chart__track" aria-hidden="true" style="--bar-width:${item.value}%">
           <div class="reuse-image-trust-chart__fill"></div>
         </div>
         <span>${item.label}</span>
