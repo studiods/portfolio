@@ -2,58 +2,33 @@
   'use strict';
 
   /*
-    REUSE 03.1 — exact 02.6 / LANDING → ACTION source sync.
-    The approved source is the actual himart_backup_02/himart.html 02.6 DOM,
-    not a previously recreated visualization. Keep the structure, data and
-    class names identical so the shared landing-action.css renders the same component.
+    REUSE 03.1 — copy the visible HIMART 02.6 / LANDING → ACTION source verbatim.
+    Do not translate, summarize, rename, recolor, or reinterpret the chart content.
   */
   const syncLandingActionSource = () => {
     const source = document.querySelector('.reuse-image-evidence');
     if (!source) return;
 
-    source.outerHTML = `
-<div class="data-viz landing-stack">
-  <div class="landing-chart">
-    <h4>기획전 시작 후 첫 다음 행동</h4>
-    <div class="stackbar">
-      <i style="width:52.2%;--c:var(--hm-red)"></i>
-      <i style="width:27.6%;--c:var(--hm-blue)"></i>
-      <i style="width:9.3%;--c:var(--hm-newblue)"></i>
-      <i style="width:6.6%;--c:var(--hm-green)"></i>
-      <i style="width:4.3%;--c:var(--hm-yellow)"></i>
-    </div>
-    <div class="stacklabels">
-      <div><b>52.2%</b>바로 종료</div>
-      <div><b>27.6%</b>기획전 재탐색 후 종료</div>
-      <div><b>9.3%</b>상품 도달</div>
-      <div><b>6.6%</b>검색/카테고리 도달</div>
-    </div>
-  </div>
-  <div class="landing-chart">
-    <h4>PDP 이후 행동 · 2025 H1 vs 2026 H1</h4>
-    <div class="pdp-columns">
-      <div class="pdp-col">
-        <i style="height:93%;--c:var(--hm-blue)"></i>
-        <i style="height:100%;--c:var(--hm-yellow)"></i>
-        <span>PDP 이용<br>10.09M → 10.87M</span>
-      </div>
-      <div class="pdp-col">
-        <i style="height:100%;--c:var(--hm-blue)"></i>
-        <i style="height:80%;--c:var(--hm-yellow)"></i>
-        <span>장바구니<br>227,462 → 181,913</span>
-      </div>
-      <div class="pdp-col">
-        <i style="height:100%;--c:var(--hm-blue)"></i>
-        <i style="height:83%;--c:var(--hm-yellow)"></i>
-        <span>구매<br>333,664 → 277,167</span>
-      </div>
-    </div>
-    <div class="chart-legend">
-      <span><i style="--c:var(--hm-blue)"></i>2025 H1</span>
-      <span><i style="--c:var(--hm-yellow)"></i>2026 H1</span>
-    </div>
-  </div>
-</div>`;
+    source.className = 'data-viz landing-stack';
+    source.setAttribute('aria-label', '기획전 시작 후 첫 다음 행동');
+    source.innerHTML = `
+      <div class="landing-chart landing-chart--verbatim">
+        <h4>기획전 시작 후 첫 다음 행동</h4>
+        <div class="stackbar">
+          <i style="width:52.2%"></i>
+          <i style="width:27.6%"></i>
+          <i style="width:9.3%"></i>
+          <i style="width:6.6%"></i>
+          <i style="width:4.3%"></i>
+        </div>
+        <div class="stacklabels">
+          <div><b>종료</b><strong>52.2%</strong></div>
+          <div><b>재탐색</b><strong>27.6%</strong></div>
+          <div><b>상품</b><strong>9.3%</strong></div>
+          <div><b>검색</b><strong>6.6%</strong></div>
+          <div><b>기타</b><strong>4.3%</strong></div>
+        </div>
+      </div>`;
   };
 
   syncLandingActionSource();
