@@ -21,9 +21,6 @@ html body.reuse-current .reuse-proof-map__node > h4{
   z-index:3;
 }
 
-/* Upper circle: exact 6-o'clock comet. It starts fully transparent and fades
-   to 100% while already moving around the circle. On the return trip it begins
-   fading at 3 o'clock and reaches 0% at 5 o'clock, staying invisible through 6. */
 html body.reuse-current .reuse-proof-sweep{
   position:absolute;
   z-index:4;
@@ -36,25 +33,10 @@ html body.reuse-current .reuse-proof-sweep{
   opacity:0;
   transform:rotate(0deg);
   transform-origin:50% 50%;
-  background:conic-gradient(
-    from 150deg,
-    rgba(255,255,255,0) 0deg,
-    rgba(255,255,255,.10) 7deg,
-    rgba(255,255,255,.34) 15deg,
-    rgba(255,255,255,.72) 23deg,
-    rgba(255,255,255,1) 30deg,
-    rgba(255,255,255,.72) 37deg,
-    rgba(255,255,255,.34) 45deg,
-    rgba(255,255,255,.10) 53deg,
-    rgba(255,255,255,0) 60deg,
-    rgba(255,255,255,0) 360deg
-  );
+  background:conic-gradient(from 150deg,rgba(255,255,255,0) 0deg,rgba(255,255,255,.10) 7deg,rgba(255,255,255,.34) 15deg,rgba(255,255,255,.72) 23deg,rgba(255,255,255,1) 30deg,rgba(255,255,255,.72) 37deg,rgba(255,255,255,.34) 45deg,rgba(255,255,255,.10) 53deg,rgba(255,255,255,0) 60deg,rgba(255,255,255,0) 360deg);
   -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
   mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
-  filter:
-    drop-shadow(0 0 3.15px rgba(255,255,255,1))
-    drop-shadow(0 0 8.4px rgba(255,255,255,.525))
-    drop-shadow(0 0 15.75px rgba(255,255,255,.252));
+  filter:drop-shadow(0 0 3.15px rgba(255,255,255,1)) drop-shadow(0 0 8.4px rgba(255,255,255,.525)) drop-shadow(0 0 15.75px rgba(255,255,255,.252));
 }
 
 @keyframes reuse-proof-lane-ring{
@@ -74,22 +56,43 @@ html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .r
   animation:reuse-proof-lane-ring var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* The former centre-line animation is removed. This element now serves only as
-   the fixed 64px breathing room between the upper and lower circle rows. */
+/* 02.1 connector area. The old centre SVG is intentionally replaced by four continuous vertical connectors. */
 html body.reuse-current .reuse-proof-map__arrow{
-  display:block!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  align-items:stretch;
+  justify-items:center;
   width:100%!important;
   height:64px!important;
   flex:0 0 64px!important;
   pointer-events:none!important;
 }
-
-html body.reuse-current .reuse-proof-map__arrow > *,
-html body.reuse-current .reuse-proof-connector{
+html body.reuse-current .reuse-proof-map__arrow > svg{
   display:none!important;
 }
+html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector{
+  display:block!important;
+  width:40px;
+  height:64px;
+  overflow:visible;
+}
+html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector line{
+  stroke:rgba(255,255,255,.30);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+}
+html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector polyline{
+  fill:none;
+  stroke:rgba(255,255,255,.30);
+  stroke-width:1;
+  vector-effect:non-scaling-stroke;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
+html body.reuse-current .reuse-proof-connector{
+  pointer-events:none!important;
+}
 
-/* Lower proof circle. */
 html body.reuse-current .reuse-proof-map__node--solution{
   background-color:#000;
   border-color:var(--hm-blue)!important;
@@ -99,7 +102,6 @@ html body.reuse-current .reuse-proof-map__node--solution::before{
   content:none!important;
 }
 
-/* 50% lighter tint of Himart blue: #00A6ED mixed halfway with white. */
 html body.reuse-current .reuse-proof-map__node--solution::after{
   content:"";
   position:absolute;
@@ -113,30 +115,12 @@ html body.reuse-current .reuse-proof-map__node--solution::after{
   opacity:0;
   transform:rotate(0deg);
   transform-origin:50% 50%;
-  background:conic-gradient(
-    from -30deg,
-    rgba(128,211,246,0) 0deg,
-    rgba(128,211,246,.10) 7deg,
-    rgba(128,211,246,.34) 15deg,
-    rgba(128,211,246,.72) 23deg,
-    rgba(128,211,246,1) 30deg,
-    rgba(128,211,246,.72) 37deg,
-    rgba(128,211,246,.34) 45deg,
-    rgba(128,211,246,.10) 53deg,
-    rgba(128,211,246,0) 60deg,
-    rgba(128,211,246,0) 360deg
-  );
+  background:conic-gradient(from -30deg,rgba(128,211,246,0) 0deg,rgba(128,211,246,.10) 7deg,rgba(128,211,246,.34) 15deg,rgba(128,211,246,.72) 23deg,rgba(128,211,246,1) 30deg,rgba(128,211,246,.72) 37deg,rgba(128,211,246,.34) 45deg,rgba(128,211,246,.10) 53deg,rgba(128,211,246,0) 60deg,rgba(128,211,246,0) 360deg);
   -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
   mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
-  filter:
-    drop-shadow(0 0 3.15px rgba(128,211,246,1))
-    drop-shadow(0 0 8.4px rgba(128,211,246,.525))
-    drop-shadow(0 0 15.75px rgba(128,211,246,.252));
+  filter:drop-shadow(0 0 3.15px rgba(128,211,246,1)) drop-shadow(0 0 8.4px rgba(128,211,246,.525)) drop-shadow(0 0 15.75px rgba(128,211,246,.252));
 }
 
-/* Starts at 12 o'clock when the upper comet is near 5 o'clock.
-   First quarter of travel is about 30% faster than constant speed, then each
-   following segment progressively slows. It still runs counter-clockwise. */
 @keyframes reuse-proof-lower-ring{
   0%,36.82%{transform:rotate(0deg);opacity:0}
   36.83%{transform:rotate(0deg);opacity:0}
@@ -164,72 +148,48 @@ html body.reuse-current .reuse-proof-map__node--solution h4{
   font-variation-settings:"wght" 300;
 }
 
-/* Fill begins near 3 o'clock. The circle keeps its existing fill timing,
-   while the already-visible and newly revealed copy turns black quickly.
-   Copy remains Pretendard Light (300) in every state. */
 @keyframes reuse-proof-lane-fill{
   0%,57.99%{background-color:#000}
-  58%{
-    background-color:#000;
-    animation-timing-function:cubic-bezier(.14,.72,.24,1);
-  }
+  58%{background-color:#000;animation-timing-function:cubic-bezier(.14,.72,.24,1)}
   97.4%,100%{background-color:var(--hm-blue)}
 }
 
 @keyframes reuse-proof-lane-copy{
-  0%,57.99%{
-    --reuse-proof-copy-color:#00a6ed;
-    font-variation-settings:"wght" 300;
-  }
-  58%{
-    --reuse-proof-copy-color:#00a6ed;
-    font-variation-settings:"wght" 300;
-    animation-timing-function:cubic-bezier(.14,.72,.24,1);
-  }
-  66%{
-    --reuse-proof-copy-color:#000;
-    font-variation-settings:"wght" 300;
-  }
-  100%{
-    --reuse-proof-copy-color:#000;
-    font-variation-settings:"wght" 300;
-  }
+  0%,57.99%{--reuse-proof-copy-color:#00a6ed;font-variation-settings:"wght" 300}
+  58%{--reuse-proof-copy-color:#00a6ed;font-variation-settings:"wght" 300;animation-timing-function:cubic-bezier(.14,.72,.24,1)}
+  66%{--reuse-proof-copy-color:#000;font-variation-settings:"wght" 300}
+  100%{--reuse-proof-copy-color:#000;font-variation-settings:"wght" 300}
 }
 
 html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running{
   animation:reuse-proof-lane-fill var(--reuse-proof-lane-duration) linear 1 both;
 }
-
 html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
   animation:reuse-proof-lane-copy var(--reuse-proof-lane-duration) linear 1 both;
 }
 
-/* After the completed state is held for six full seconds, the seventh second
-   begins the return. The reset is intentionally long and symmetric so the blue
-   fill drains to black, black copy returns to Himart blue, and the variable font
-   settles back to Pretendard Light (300) without a snap. */
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
   transition:background-color 2000ms cubic-bezier(.42,0,.58,1)!important;
 }
-
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after{
   opacity:0!important;
   transition:opacity 320ms ease!important;
 }
-
 html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{
   --reuse-proof-copy-color:#00a6ed;
   font-weight:300!important;
   font-variation-settings:"wght" 300;
-  transition:
-    --reuse-proof-copy-color 2000ms cubic-bezier(.42,0,.58,1),
-    font-variation-settings 2000ms cubic-bezier(.42,0,.58,1)!important;
+  transition:--reuse-proof-copy-color 2000ms cubic-bezier(.42,0,.58,1),font-variation-settings 2000ms cubic-bezier(.42,0,.58,1)!important;
 }
 
 @media(max-width:780px){
   html body.reuse-current .reuse-proof-map__arrow{
     height:64px!important;
     flex-basis:64px!important;
+  }
+  html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector{
+    width:40px;
+    height:64px;
   }
 }
 
@@ -244,4 +204,23 @@ html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__no
   html body.reuse-current .reuse-proof-map__node--solution h4{
     transition:none!important;
   }
+}
+
+/* Final connector authority: preserve a continuous shaft and arrowhead. */
+html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector{
+  display:block!important;
+  width:40px!important;
+  height:64px!important;
+}
+html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector line{
+  display:block!important;
+  stroke:rgba(255,255,255,.30)!important;
+  stroke-width:1!important;
+}
+html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector polyline{
+  display:block!important;
+  fill:none!important;
+  stroke:rgba(255,255,255,.30)!important;
+  stroke-width:1!important;
+  vector-effect:non-scaling-stroke!important;
 }
