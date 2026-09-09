@@ -1,10 +1,8 @@
-/* HIMART REUSE 03.1 — marketplace image-trust evidence.
-   Visual grammar intentionally mirrors HIMART 02.6 / LANDING → ACTION:
-   - one 100% horizontal segmented bar
-   - identical 54px bar height
-   - identical 4-column labels, type sizes, weight and spacing
-   - original HIMART color order with yellow removed: red / blue / new blue / green
-*/
+/* HIMART REUSE 03.1 — exact visualization copy of HIMART 02.6 / LANDING → ACTION.
+   IMPORTANT: do not create a separate REUSE graph grammar here.
+   Geometry, typography, spacing and bar treatment are intentionally copied from
+   the approved HIMART 02.6 implementation. Only the authored title and data values
+   in himart-reuse.html may differ. */
 
 html body.reuse-current #journey .reuse-image-evidence{
   display:block!important;
@@ -13,34 +11,42 @@ html body.reuse-current #journey .reuse-image-evidence{
   min-height:0!important;
 }
 
+/* Exact HIMART 02.6 .landing-stack */
+html body.reuse-current #journey .reuse-image-evidence.landing-stack{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:70px!important;
+  width:100%!important;
+}
+
+/* Exact HIMART 02.6 .landing-chart */
 html body.reuse-current #journey .reuse-image-evidence .landing-chart{
   width:100%!important;
   max-width:none!important;
+  padding-top:28px!important;
+  border-top:1px solid var(--hm-line)!important;
   margin-top:0!important;
-  padding-top:0!important;
-  border-top:0!important;
 }
 
-/* Exact graph-heading treatment from current HIMART 02.6 wide case. */
-html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-  margin:0 0 24px!important;
+/* Exact HIMART 02.6 heading treatment. */
+html body.reuse-current #journey .reuse-image-evidence .landing-chart h4{
+  margin:0 0 28px!important;
   padding:0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:16px!important;
-  font-weight:300!important;
-  line-height:1.4!important;
-  letter-spacing:var(--hm-track-body)!important;
+  font-weight:100!important;
+  font-size:26px!important;
+  line-height:1.2!important;
+  letter-spacing:normal!important;
 }
 
-/* Exact HIMART 02.6 stacked-bar geometry. Segment widths remain authored data. */
+/* Exact HIMART 02.6 segmented bar. */
 html body.reuse-current #journey .reuse-image-evidence .stackbar{
   display:flex!important;
   width:100%!important;
   height:54px!important;
   gap:0!important;
-  overflow:hidden!important;
-  background:transparent!important;
+  overflow:visible!important;
 }
 
 html body.reuse-current #journey .reuse-image-evidence .stackbar i{
@@ -48,12 +54,14 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar i{
   flex:0 0 auto!important;
   height:100%!important;
   min-width:0!important;
+  margin:0!important;
+  padding:0!important;
   background:var(--c)!important;
   transform:none!important;
   transition:none!important;
 }
 
-/* Exact HIMART 02.6 four-column label system. */
+/* Exact HIMART 02.6 four-column labels. */
 html body.reuse-current #journey .reuse-image-evidence .stacklabels{
   display:grid!important;
   grid-template-columns:repeat(4,1fr)!important;
@@ -63,13 +71,13 @@ html body.reuse-current #journey .reuse-image-evidence .stacklabels{
   align-items:start!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
+html body.reuse-current #journey .reuse-image-evidence .stacklabels div{
   min-width:0!important;
   padding:0!important;
   color:rgba(255,255,255,.70)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:14px!important;
   font-weight:300!important;
+  font-size:14px!important;
   line-height:1.5!important;
   text-align:left!important;
 }
@@ -79,23 +87,27 @@ html body.reuse-current #journey .reuse-image-evidence .stacklabels b{
   margin:0 0 4px!important;
   color:#fff!important;
   font-family:var(--hm-font-en)!important;
-  font-size:22px!important;
   font-weight:300!important;
+  font-size:22px!important;
   line-height:1!important;
-  letter-spacing:var(--hm-track-data-number)!important;
+  letter-spacing:normal!important;
 }
 
 @media(max-width:780px){
-  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-    margin-bottom:18px!important;
-    font-size:18px!important;
-    line-height:1.35!important;
+  /* Exact responsive grammar inherited from HIMART 02.6. */
+  html body.reuse-current #journey .reuse-image-evidence.landing-stack{
+    grid-template-columns:1fr!important;
+    gap:46px!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .landing-chart h4{
+    font-size:20px!important;
+    margin-bottom:20px!important;
   }
   html body.reuse-current #journey .reuse-image-evidence .stacklabels{
     grid-template-columns:1fr 1fr!important;
     gap:10px 14px!important;
   }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels div{
     font-size:12px!important;
   }
 }
