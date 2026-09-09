@@ -64,10 +64,7 @@
         </div>
       </div>
       <div class="reuse-trust-equation__visual hm-ds-subtitle-to-content" aria-label="하이마트의 중고가전 차별화 요소가 신뢰로 연결되는 구조">
-        <div class="reuse-trust-equation__brand">
-          <span class="reuse-trust-equation__brand-text">하이마트</span>
-          <img class="reuse-trust-equation__brand-logo" src="./assets/image/lotte_himart_ci.svg" alt="" aria-hidden="true">
-        </div>
+        <div class="reuse-trust-equation__brand">하이마트</div>
         <div class="reuse-trust-equation__plus" aria-hidden="true">+</div>
         <div class="reuse-trust-equation__list">
           <span>2년 무상 보상</span>
