@@ -24,6 +24,21 @@
 .landing-chart--verbatim .stacklabels b{display:block;margin:0 0 3px;color:#fff;font-family:var(--hm-font-ko);font-size:27px;font-weight:300;line-height:1.05}
 .landing-chart--verbatim .stacklabels strong{display:block;color:#fff;font-family:var(--hm-font-en);font-size:27px;font-weight:300;line-height:1.05;letter-spacing:0}
 
+
+/* Reusable evidence variant: labels live inside the stacked bar.
+   Korean label → value order; use --c on each segment and reserve minor values
+   for the external .stacklegend. The legacy --verbatim variant remains intact. */
+.landing-chart--inbar-evidence .stackbar{position:relative;height:128px;min-height:128px}
+.landing-chart--inbar-evidence .stackbar i{background:var(--c)}
+.landing-chart--inbar-evidence .stackbar>.stacklabels{position:absolute;z-index:2;inset:0;display:grid;grid-template-columns:53fr 39fr 5.6fr 2.4fr;gap:0;margin:0;padding:0;pointer-events:none}
+.landing-chart--inbar-evidence .stackbar>.stacklabels>div{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;padding:0 16px;color:#fff;font-family:var(--hm-font-ko);font-size:var(--hm-chart-inbar-label-size,22px);font-weight:300;font-variation-settings:"wght" 300;line-height:var(--hm-chart-inbar-label-leading,1.25);text-align:center;white-space:nowrap}
+.landing-chart--inbar-evidence .stackbar>.stacklabels>div span{display:block}
+.landing-chart--inbar-evidence .stackbar>.stacklabels>div b{display:block;margin:6px 0 0;color:#fff;font-family:var(--hm-font-ko);font-size:var(--hm-chart-inbar-value-size,32px);font-weight:300;font-variation-settings:"wght" 300;line-height:var(--hm-chart-inbar-value-leading,1)}
+.landing-chart--inbar-evidence .stacklegend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:var(--hm-chart-legend-gap,32px)}
+.landing-chart--inbar-evidence .stacklegend__item{padding-top:10px;border-top:var(--hm-chart-legend-line,2px) solid var(--c);color:rgba(255,255,255,.7);font-family:var(--hm-font-ko);font-size:14px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.4}
+.landing-chart--inbar-evidence .stacklegend__item b{color:#fff;font-size:16px;font-weight:300}
+
+
 /* The screenshot contains only the LANDING ACTION stack. Keep any legacy PDP block hidden. */
 .landing-chart--verbatim + .landing-chart{display:none}
 
