@@ -2,9 +2,7 @@
   'use strict';
 
   /* REUSE 02.1 / shared motion only.
-     03.1 chart rendering has been removed from this file completely.
-     The chart is owned only by design-system/components/reuse-chart.css +
-     design-system/components/reuse-image-trust-chart.js. */
+     03.1 chart rendering is intentionally absent from this file. */
   const inject02_1ArrowRule = () => {
     if (document.getElementById('reuse-02-1-arrow-rule')) return;
     const style = document.createElement('style');
