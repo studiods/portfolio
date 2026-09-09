@@ -7,7 +7,7 @@
 }
 
 html body.reuse-current .reuse-proof-map{
-  --reuse-proof-lane-duration:3.15s;
+  --reuse-proof-lane-duration:2.205s;
 }
 
 html body.reuse-current .reuse-proof-map__node{
