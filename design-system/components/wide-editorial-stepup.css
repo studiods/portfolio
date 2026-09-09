@@ -103,9 +103,18 @@
     container-name:stepup-wide-right-rail;
   }
 
-  /* The shared component inset starts the right-hand medium-title block. */
+  /* The first right-side unit shares the chapter origin with the left title. */
   html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail > :first-child{
     margin-top:0!important;
+  }
+
+  /* Canonical medium-title divider: LINE -> 40px -> number/title.
+     Kept here as a local guarantee as well as in editorial-layout-contract.css so a
+     cached/older page shell cannot make the divider disappear. */
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > :is(#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  .hm-wide-right-rail > .hm-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-space-component,40px)!important;
   }
 
   html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-wide-right-rail > .hm-reveal{
