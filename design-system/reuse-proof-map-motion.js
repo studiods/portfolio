@@ -9,10 +9,9 @@
     style.id = 'reuse-02-1-arrow-rule';
     style.textContent = `
       html body.reuse-current .reuse-proof-map__arrow{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:28px!important;width:100%!important;height:64px!important;min-height:64px!important;flex:0 0 64px!important;align-items:center!important;justify-items:center!important}
-      html body.reuse-current .reuse-proof-map__arrow-item{position:relative!important;display:block!important;width:40px!important;height:32px!important}
-      html body.reuse-current .reuse-proof-map__arrow-item::before,html body.reuse-current .reuse-proof-map__arrow-item::after{content:""!important;position:absolute!important;top:7px!important;width:22px!important;height:1px!important;background:rgba(255,255,255,.30)!important}
-      html body.reuse-current .reuse-proof-map__arrow-item::before{left:0!important;transform:rotate(38deg)!important;transform-origin:left center!important}
-      html body.reuse-current .reuse-proof-map__arrow-item::after{right:0!important;transform:rotate(-38deg)!important;transform-origin:right center!important}
+      html body.reuse-current .reuse-proof-map__arrow-item{position:relative!important;display:block!important;width:56px!important;height:24px!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='24' viewBox='0 0 56 24'%3E%3Cpath d='M3 2 L28 22 L53 2' fill='none' stroke='%23FFFFFF' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E") center/56px 24px no-repeat!important}
+      html body.reuse-current .reuse-proof-map__arrow-item::before,html body.reuse-current .reuse-proof-map__arrow-item::after{content:none!important;display:none!important}
+      @media(max-width:980px) and (min-width:781px){html body.reuse-current .reuse-proof-map__arrow{gap:20px!important}}
       @media(max-width:780px){html body.reuse-current .reuse-proof-map__arrow{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important;height:56px!important;min-height:56px!important;flex-basis:56px!important}}
     `;
     document.head.appendChild(style);
