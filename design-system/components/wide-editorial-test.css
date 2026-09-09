@@ -1,16 +1,16 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v11
+  HIMART Wide Editorial Layout — TEST ONLY v12
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
   Contract
   - < 1600px: no layout override; the canonical Himart design system remains unchanged.
-  - >=1600px: 01–04 major sections opt into the wide editorial split.
+  - >= 1600px: 01–04 major sections opt into the wide editorial split.
   - Left major title is CSS-sticky, matching the index.html WORKS principle (no JS position control).
   - Title-only collision spacing remains 0px.
   - Major chapter rhythm is 200px and is applied to the whole incoming chapter.
   - Inside each chapter, both rails begin at the exact same authored top line: no top margin is allowed on the left major-title head or the first right-rail content unit.
-  - A subsection may keep its canonical divider + 40px divider-to-medium-title inset; the divider itself owns the aligned top line.
+  - Every medium-title unit owns a 1px weak divider + 40px divider-to-title inset.
   - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
@@ -130,7 +130,7 @@
     FIRST RIGHT-RAIL CONTENT — ZERO TOP MARGIN CONTRACT.
     The 200px chapter gap lives on the section itself. Everything that begins on the
     same row as the major title is reset to margin-top:0. Component-owned divider
-    padding may be restored later so the line remains the aligned visual baseline.
+    padding is restored by the final medium-title contract below.
   */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
@@ -147,7 +147,7 @@
     padding-top:0!important;
   }
 
-  /* The title/header line inside each first unit also starts at y=0. */
+  /* The title/header content itself has no extra inset; the parent subsection owns it. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead,
   html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card:first-child > .data-card-head,
@@ -158,18 +158,60 @@
     padding-top:0!important;
   }
 
-  /* REUSE 03.x medium-title divider contract.
-     03.1 lost its rule because the earlier wide-alignment reset removed the subsection
-     top inset entirely. All direct 03.x subsections now use the shared DS grammar:
-     faint line at the block top + 40px component gap before the number/title. */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current #live-main > #journey.hm-section > .hm-wrap > .hm-subsection{
-    border-top:1px solid var(--hm-line-faint)!important;
-    padding-top:var(--hm-space-component)!important;
-  }
-
   /* 03 continues with the canonical subsection rhythm only AFTER its first aligned block. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap + .hm-wrap > .hm-subsection:first-child{
     margin-top:var(--hm-subsection-gap)!important;
+  }
+
+  /*
+    FINAL MEDIUM-TITLE DIVIDER CONTRACT.
+    This block deliberately comes after every historical zero-padding alignment reset.
+    REUSE 01.x / 03.x / 04.x and 02.x data cards therefore cannot lose the line.
+  */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#journey,#direction).hm-section > .hm-wrap > .hm-subsection.hm-ds-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-space-component,40px)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .data-list > .data-card{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-space-component,40px)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child{
+    margin-top:0!important;
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-space-component,40px)!important;
+  }
+
+  /* Adapter-grouped HIMART: runtime medium blocks use several class names. */
+  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :is(
+    .hm-subsection,
+    .narrative-problem,
+    .narrative-reality,
+    .narrative-signals,
+    .narrative-touchpoint-synthesis,
+    .brand-synthesis,
+    .journey-flow-block,
+    .journey-role-block,
+    .design-rule
+  ){
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-space-component,40px)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  #live-main > #data.hm-section .hm-wide-right-rail > .data-list > .data-card{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-space-component,40px)!important;
   }
 
   /*
