@@ -100,7 +100,7 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>di
   display:block!important;
   margin:6px 0 0!important;
   color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
+  font-family:var(--hm-font-en-thin)!important;
   font-size:var(--hm-chart-inbar-value-size,32px)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
