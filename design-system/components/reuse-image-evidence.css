@@ -1,11 +1,10 @@
-/* HIMART REUSE 03.1 — reusable LANDING → ACTION graph contract.\n   Labels are intentionally overlaid inside the stacked bar, matching the editorial data-graphic treatment.
-   Visual grammar intentionally matches himart.html 02.6:
-   28px rule-to-title, 26px thin title, 54px bar, 22px data numbers,
-   14px labels, and a 25px component offset from the subsection copy. */
+/* HIMART stacked-bar evidence chart v2.0
+   Contract: blue-family segments only. Major segments carry a Korean label above
+   the value inside the bar; minor segments are identified in the 32px-below
+   2px-line legend. This is the reusable rule for the Reuse 03.1 evidence chart. */
 
 html body.reuse-current #journey .reuse-image-evidence.landing-stack{
-  display:grid!important;
-  gap:70px!important;
+  display:block!important;
   width:100%!important;
   min-width:0!important;
   margin-top:25px!important;
@@ -26,6 +25,7 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
   font-family:var(--hm-font-ko)!important;
   font-size:26px!important;
   font-weight:100!important;
+  font-variation-settings:"wght" 300!important;
   line-height:1.3!important;
   letter-spacing:var(--hm-track-body)!important;
 }
@@ -38,7 +38,7 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar{
   position:relative!important;
   display:flex!important;
   width:100%!important;
-  height:54px!important;
+  height:128px!important;
   margin:0!important;
   padding:0!important;
   gap:0!important;
@@ -59,7 +59,7 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{
   z-index:2!important;
   inset:0!important;
   display:grid!important;
-  grid-template-columns:56% 44%!important;
+  grid-template-columns:53fr 39fr 5.6fr 2.4fr!important;
   gap:0!important;
   width:100%!important;
   height:100%!important;
@@ -70,50 +70,82 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{
 
 html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
   display:flex!important;
+  flex-direction:column!important;
   align-items:center!important;
   justify-content:center!important;
-  gap:10px!important;
   min-width:0!important;
   margin:0!important;
-  padding:0 12px!important;
+  padding:0 16px!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:14px!important;
+  font-size:var(--hm-chart-inbar-label-size)!important;
   font-weight:300!important;
-  line-height:1.2!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:var(--hm-chart-inbar-label-leading)!important;
   letter-spacing:var(--hm-track-body)!important;
   text-align:center!important;
   white-space:nowrap!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
-  display:block!important;
-  margin:0!important;
-  color:#fff!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  line-height:1!important;
-  letter-spacing:var(--hm-track-data-number)!important;
-}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(1){grid-column:1!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(2){grid-column:2!important}
 
 html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div span{
   display:block!important;
-  color:rgba(255,255,255,.82)!important;
+  color:#fff!important;
   font:inherit!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
-  content:none!important;
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
+  display:block!important;
+  margin:6px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-chart-inbar-value-size)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:var(--hm-chart-inbar-value-leading)!important;
+  letter-spacing:var(--hm-track-data-number)!important;
 }
 
+html body.reuse-current #journey .reuse-image-evidence .stacklegend{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px!important;
+  width:100%!important;
+  margin-top:var(--hm-chart-legend-gap)!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{
+  display:block!important;
+  min-width:0!important;
+  padding-top:10px!important;
+  border-top:var(--hm-chart-legend-line) solid var(--c)!important;
+  color:rgba(255,255,255,.7)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.4!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklegend__item b{
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels::after,
 html body.reuse-current #journey .reuse-image-evidence .landing-research-signal{
+  content:none!important;
   display:none!important;
 }
 
 @media(max-width:780px){
   html body.reuse-current #journey .reuse-image-evidence.landing-stack{
-    gap:46px!important;
     margin-top:20px!important;
   }
   html body.reuse-current #journey .reuse-image-evidence .landing-chart{
@@ -124,16 +156,16 @@ html body.reuse-current #journey .reuse-image-evidence .landing-research-signal{
     font-size:20px!important;
   }
   html body.reuse-current #journey .reuse-image-evidence .stackbar{
-    height:44px!important;
+    height:116px!important;
   }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels{
-    gap:10px!important;
-    margin-top:14px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
-    font-size:12px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stacklabels>div b{
+  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
+    padding:0 6px!important;
     font-size:18px!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
+    font-size:28px!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .stacklegend{
+    grid-template-columns:1fr!important;
   }
 }
