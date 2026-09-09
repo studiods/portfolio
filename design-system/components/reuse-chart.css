@@ -1,0 +1,143 @@
+/*
+  HIMART Reuse Chart System v1.0
+  Canonical 03.1 horizontal-bar chart.
+  Visual reference: current Reuse 03.1 graph.
+  No page-specific selectors, legacy overrides or external dependencies.
+  Data/content stays in the component JS; this file owns presentation only.
+*/
+
+.reuse-image-trust-chart{
+  --hm-reuse-chart-height:44px;
+  --hm-reuse-chart-gap:8px;
+  --hm-reuse-chart-track:rgba(255,255,255,.06);
+  --hm-reuse-chart-line:var(--hm-line-default);
+  width:100%;
+  min-width:0;
+  margin:0;
+  padding:28px 0 0;
+  border-top:1px solid var(--hm-reuse-chart-line);
+  box-sizing:border-box;
+}
+
+.reuse-image-trust-chart figcaption{
+  margin:0 0 28px;
+  color:var(--hm-text-primary,#fff);
+  font-family:var(--hm-font-ko);
+  font-size:var(--hm-type-body,16px);
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.25;
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+
+.reuse-image-trust-chart__bar{
+  display:grid;
+  gap:var(--hm-reuse-chart-gap);
+  width:100%;
+  margin:0;
+  padding:0;
+}
+
+.reuse-image-trust-chart__segment{
+  position:relative;
+  display:block;
+  width:100%;
+  height:var(--hm-reuse-chart-height);
+  min-height:var(--hm-reuse-chart-height);
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:var(--hm-reuse-chart-track);
+  box-sizing:border-box;
+}
+
+.reuse-image-trust-chart__track{
+  position:absolute;
+  inset:0 auto 0 0;
+  z-index:1;
+  width:var(--bar-width);
+  height:100%;
+  background:var(--bar-color,var(--hm-blue));
+}
+
+.reuse-image-trust-chart__fill{
+  display:block;
+  width:100%;
+  height:100%;
+  background:inherit;
+}
+
+.reuse-image-trust-chart__segment span,
+.reuse-image-trust-chart__segment strong{
+  position:absolute;
+  z-index:2;
+  display:block;
+  margin:0;
+  padding:0;
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+.reuse-image-trust-chart__segment span{
+  left:20px;
+  bottom:10px;
+  color:var(--hm-text-primary,#fff);
+  font-family:var(--hm-font-ko);
+  font-size:var(--hm-type-body,16px);
+  font-weight:300;
+  line-height:1;
+  letter-spacing:var(--hm-track-body);
+  text-align:left;
+}
+
+.reuse-image-trust-chart__segment strong{
+  right:20px;
+  bottom:9px;
+  color:var(--hm-text-primary,#fff);
+  font-family:var(--hm-font-en-thin,var(--hm-font-en));
+  font-size:20px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:var(--hm-track-data-number);
+  text-align:right;
+}
+
+.reuse-image-trust-chart__source{
+  display:block;
+  margin:28px 0 0;
+  padding:14px 0 0;
+  border-top:1px solid var(--hm-reuse-chart-line);
+  color:var(--hm-text-tertiary,rgba(255,255,255,.34));
+  font-family:var(--hm-font-ko);
+  font-size:var(--hm-type-source,10px);
+  font-weight:300;
+  line-height:1.5;
+  letter-spacing:var(--hm-track-base);
+  text-align:left;
+}
+
+@media(max-width:780px){
+  .reuse-image-trust-chart{
+    --hm-reuse-chart-height:44px;
+    --hm-reuse-chart-gap:6px;
+    padding-top:22px;
+  }
+
+  .reuse-image-trust-chart figcaption{
+    margin-bottom:20px;
+    font-size:var(--hm-type-body,16px);
+  }
+
+  .reuse-image-trust-chart__segment span{
+    left:12px;
+    bottom:9px;
+    font-size:12px;
+  }
+
+  .reuse-image-trust-chart__segment strong{
+    right:12px;
+    bottom:8px;
+    font-size:16px;
+  }
+}
