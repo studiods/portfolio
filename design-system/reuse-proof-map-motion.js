@@ -143,5 +143,5 @@
     else if (inFocus) start();
   };
   if (typeof reducedMotion.addEventListener === 'function') reducedMotion.addEventListener('change', handleMotionChange);
-  else if (typeof reducedMotion.addListener === 'function') reducedMotion.addListener('change', handleMotionChange);
+  else if (typeof reducedMotion.addListener === 'function') reducedMotion.addListener(handleMotionChange);
 })();
