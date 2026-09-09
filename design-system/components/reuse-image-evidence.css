@@ -3,22 +3,110 @@
    - one 100% horizontal segmented bar
    - identical 54px bar height
    - identical 4-column labels, type sizes, weight and spacing
-   - yellow removed; remaining palette uses blue-family colors
+   - original HIMART color order with yellow removed: red / blue / new blue / green
 */
-html body.reuse-current #journey .reuse-image-evidence{display:block!important;width:100%!important;min-width:0!important;min-height:0!important}
-html body.reuse-current #journey .reuse-image-evidence .landing-chart{width:100%!important;max-width:none!important;margin-top:0!important;padding-top:0!important;border-top:0!important}
-html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin:0 0 24px!important;padding:0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.4!important;letter-spacing:var(--hm-track-body)!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar{display:flex!important;width:100%!important;height:54px!important;gap:0!important;overflow:hidden!important;background:transparent!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar i{display:block!important;flex:0 0 auto!important;height:100%!important;min-width:0!important;background:var(--c)!important;transform:none!important;transition:none!important}
-/* Research-backed 100% distribution: 53 / 39 / 5.6 / 2.4. */
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(1){width:53%!important;--c:#1676C5!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(2){width:39%!important;--c:#1592CC!important}
+
+html body.reuse-current #journey .reuse-image-evidence{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .landing-chart{
+  width:100%!important;
+  max-width:none!important;
+  margin-top:0!important;
+  padding-top:0!important;
+  border-top:0!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
+  margin:0 0 24px!important;
+  padding:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stackbar{
+  display:flex!important;
+  width:100%!important;
+  height:54px!important;
+  gap:0!important;
+  overflow:hidden!important;
+  background:transparent!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stackbar i{
+  display:block!important;
+  flex:0 0 auto!important;
+  height:100%!important;
+  min-width:0!important;
+  background:var(--c)!important;
+  transform:none!important;
+  transition:none!important;
+}
+
+/* The four authored research bands total 100%: 53 / 39 / 5.6 / 2.4. */
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(1){width:53%!important;--c:var(--hm-blue)!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(2){width:39%!important;--c:var(--hm-blue-new)!important}
 html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(3){width:5.6%!important;--c:#16A8C1!important}
 html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(4){width:2.4%!important;--c:#18B7A4!important}
 html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(n+5){display:none!important}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:12px!important;width:100%!important;margin-top:18px!important;align-items:start!important}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{min-width:0!important;padding:0!important;color:rgba(255,255,255,.70)!important;font-family:var(--hm-font-ko)!important;font-size:14px!important;font-weight:300!important;line-height:1.5!important;text-align:left!important}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels b{display:block!important;margin:0 0 4px!important;color:#fff!important;font-family:var(--hm-font-en)!important;font-size:22px!important;font-weight:300!important;line-height:1!important;letter-spacing:var(--hm-track-data-number)!important}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels span{font-family:var(--hm-font-ko)!important}
-@media(max-width:780px){html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin-bottom:18px!important;font-size:18px!important;line-height:1.35!important}html body.reuse-current #journey .reuse-image-evidence .stacklabels{grid-template-columns:1fr 1fr!important;gap:10px 14px!important}html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{font-size:12px!important}}
-@media(prefers-reduced-motion:reduce){html body.reuse-current #journey .reuse-image-evidence .stackbar i{transform:none!important;transition:none!important}}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels{
+  display:grid!important;
+  grid-template-columns:repeat(4,1fr)!important;
+  gap:12px!important;
+  width:100%!important;
+  margin-top:18px!important;
+  align-items:start!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
+  min-width:0!important;
+  padding:0!important;
+  color:rgba(255,255,255,.70)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  text-align:left!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stacklabels b{
+  display:block!important;
+  margin:0 0 4px!important;
+  color:#fff!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+}
+
+@media(max-width:780px){
+  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
+    margin-bottom:18px!important;
+    font-size:18px!important;
+    line-height:1.35!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels{
+    grid-template-columns:1fr 1fr!important;
+    gap:10px 14px!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
+    font-size:12px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current #journey .reuse-image-evidence .stackbar i{
+    transform:none!important;
+    transition:none!important;
+  }
+}
