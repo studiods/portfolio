@@ -42,6 +42,44 @@
     if (title03_3) title03_3.innerHTML = '역할 제한없이 촬영 환경과 기준,<br>그리고 AI 영상 제작까지 직접 설계하고 제작했습니다.';
   };
 
+  const ensureBrandTrustSection = () => {
+    const brandWrap = document.querySelector('#brand > .hm-wrap, #brand > .hm-ds-wrap');
+    if (!brandWrap || brandWrap.querySelector('[data-reuse-trust-equation]')) return;
+
+    const anchor = Array.from(brandWrap.querySelectorAll(':scope > .hm-subsection')).find((section) => {
+      const subno = section.querySelector('.hm-subno');
+      return (subno?.textContent || '').trim() === '01.2';
+    });
+    if (!anchor) return;
+
+    const section = document.createElement('div');
+    section.className = 'hm-subsection hm-ds-subsection hm-reveal reuse-trust-equation';
+    section.setAttribute('data-reuse-trust-equation','');
+    section.innerHTML = `
+      <div class="hm-subhead">
+        <span class="hm-subno">01.3</span>
+        <div>
+          <h3 class="hm-subtitle hm-ds-subsection__title">하이마트만의 차별점을 ‘신뢰’로 전달해야 했습니다.</h3>
+          <p class="hm-subcopy hm-ds-subsection__description">검수·세척·보증·책임 기준을 한데 묶어, ‘하이마트에서 사면 믿을 수 있다’는 확신을 만들어야 했습니다.</p>
+        </div>
+      </div>
+      <div class="reuse-trust-equation__visual hm-ds-subtitle-to-content" aria-label="하이마트의 중고가전 차별화 요소가 신뢰로 연결되는 구조">
+        <div class="reuse-trust-equation__proof">
+          <img class="reuse-trust-equation__logo" src="./assets/image/lotte_himart_ci.svg" alt="LOTTE HIMART">
+          <div class="reuse-trust-equation__list">
+            <span>2년 무상 보상</span>
+            <span>직접 분해 검수 및 세척</span>
+            <span>30개 이상 품질 점검 리포트</span>
+            <span>결함 발견시 100% 책임 보상</span>
+          </div>
+        </div>
+        <div class="reuse-trust-equation__equals" aria-hidden="true">=</div>
+        <div class="reuse-trust-equation__result">신뢰</div>
+      </div>
+    `;
+    anchor.insertAdjacentElement('afterend', section);
+  };
+
   const initReferenceBars = () => {
     const chart = document.querySelector('#journey .reuse-reference-bars');
     if (!chart) return;
@@ -82,6 +120,7 @@
 
   inject02_1ArrowRule();
   syncJourneyCopy();
+  ensureBrandTrustSection();
   initReferenceBars();
 
   const map = document.querySelector('.reuse-proof-map');
