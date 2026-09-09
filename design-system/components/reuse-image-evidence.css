@@ -1,184 +1,35 @@
-/* HIMART stacked-bar evidence chart v2.1
-   Contract: blue-family segments only. Major segments carry a Korean label above
-   the value inside the bar; minor segments are identified in the 32px-below
-   2px-line legend. This is the reusable rule for the Reuse 03.1 evidence chart.
-
-   Defensive bridge for the current Reuse page:
-   editorial-layout-contract.css is the architectural final authority, but older wide
-   alignment resets can still arrive later in the cascade from a cached asset. The
-   selector below is intentionally more specific so 03.1 / 03.2 / 03.3 always retain
-   the canonical medium-title divider + 40px line-to-title gap on the current v4 asset.
+/* HIMART stacked-bar evidence chart v2.2
+   Reusable rules for Reuse 03.1 / 03.2 / 03.3.
+   03.1 horizontal-bar treatment is owned here; JS supplies data only.
 */
-
-html body.himart-page-body.hm-wide-editorial-test.reuse-current
-#live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-ds-subsection{
-  border-top:1px solid var(--hm-line-weak)!important;
-  padding-top:var(--hm-space-component,40px)!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence.landing-stack{
-  display:block!important;
-  width:100%!important;
-  min-width:0!important;
-  margin-top:25px!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .landing-chart{
-  width:100%!important;
-  max-width:none!important;
-  margin:0!important;
-  padding-top:28px!important;
-  border-top:1px solid var(--hm-line-default)!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-  margin:0 0 28px!important;
-  padding:0!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:26px!important;
-  font-weight:100!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:1.3!important;
-  letter-spacing:var(--hm-track-body)!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{
-  content:none!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stackbar{
-  position:relative!important;
-  display:flex!important;
-  width:100%!important;
-  height:128px!important;
-  margin:0!important;
-  padding:0!important;
-  gap:0!important;
-  overflow:hidden!important;
-  background:none!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stackbar i{
-  display:block!important;
-  height:100%!important;
-  flex:0 0 auto!important;
-  background:var(--c)!important;
-  opacity:1!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{
-  position:absolute!important;
-  z-index:2!important;
-  inset:0!important;
-  display:grid!important;
-  grid-template-columns:53fr 39fr 5.6fr 2.4fr!important;
-  gap:0!important;
-  width:100%!important;
-  height:100%!important;
-  margin:0!important;
-  padding:0!important;
-  pointer-events:none!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-width:0!important;
-  margin:0!important;
-  padding:0 16px!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:var(--hm-chart-inbar-label-size,22px)!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:var(--hm-chart-inbar-label-leading,1.25)!important;
-  letter-spacing:var(--hm-track-body)!important;
-  text-align:center!important;
-  white-space:nowrap!important;
-}
-
+html body.himart-page-body.hm-wide-editorial-test.reuse-current #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-ds-subsection{border-top:1px solid var(--hm-line-weak)!important;padding-top:var(--hm-space-component,40px)!important}
+html body.reuse-current #journey .reuse-image-evidence.landing-stack{display:block!important;width:100%!important;min-width:0!important;margin-top:25px!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart{width:100%!important;max-width:none!important;margin:0!important;padding-top:28px!important;border-top:1px solid var(--hm-line-default)!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin:0 0 28px!important;padding:0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:26px!important;font-weight:100!important;font-variation-settings:"wght" 300!important;line-height:1.3!important;letter-spacing:var(--hm-track-body)!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{content:none!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar{position:relative!important;display:flex!important;width:100%!important;height:128px!important;margin:0!important;padding:0!important;gap:0!important;overflow:hidden!important;background:none!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i{display:block!important;height:100%!important;flex:0 0 auto!important;background:var(--c)!important;opacity:1!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{position:absolute!important;z-index:2!important;inset:0!important;display:grid!important;grid-template-columns:53fr 39fr 5.6fr 2.4fr!important;gap:0!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important;pointer-events:none!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;min-width:0!important;margin:0!important;padding:0 16px!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:var(--hm-chart-inbar-label-size,22px)!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:var(--hm-chart-inbar-label-leading,1.25)!important;letter-spacing:var(--hm-track-body)!important;text-align:center!important;white-space:nowrap!important}
 html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(1){grid-column:1!important}
 html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(2){grid-column:2!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div span{display:block!important;color:#fff!important;font:inherit!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{display:block!important;margin:6px 0 0!important;color:#fff!important;font-family:var(--hm-font-en-thin)!important;font-size:var(--hm-chart-inbar-value-size,32px)!important;font-weight:300!important;line-height:1!important;letter-spacing:var(--hm-track-data-number)!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklegend{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important;width:100%!important;margin-top:var(--hm-chart-legend-gap,32px)!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{display:block!important;min-width:0!important;padding-top:10px!important;border-top:var(--hm-chart-legend-line,2px) solid var(--c)!important;color:rgba(255,255,255,.7)!important;font-family:var(--hm-font-ko)!important;font-size:14px!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.4!important;letter-spacing:var(--hm-track-body)!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklegend__item b{color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;font-variation-settings:"wght" 300!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels::after,html body.reuse-current #journey .reuse-image-evidence .landing-research-signal{content:none!important;display:none!important}
 
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div span{
-  display:block!important;
-  color:#fff!important;
-  font:inherit!important;
-}
+/* Reuse 03.1 — canonical HOME-style horizontal bars. */
+html body.reuse-current .reuse-image-trust-chart{width:100%!important;margin:0!important;padding:28px 0 0!important;border-top:1px solid var(--hm-line-default)!important;box-sizing:border-box!important}
+html body.reuse-current .reuse-image-trust-chart figcaption{margin:0 0 28px!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.25!important;letter-spacing:-.03em!important;word-break:keep-all!important}
+html body.reuse-current .reuse-image-trust-chart__bar{display:flex!important;flex-direction:column!important;gap:8px!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;margin:0!important;padding:0!important;box-sizing:border-box!important}
+html body.reuse-current .reuse-image-trust-chart__segment{position:relative!important;display:block!important;flex:0 0 44px!important;width:100%!important;height:44px!important;min-width:0!important;min-height:44px!important;max-height:44px!important;margin:0!important;padding:0!important;overflow:hidden!important;background:rgba(255,255,255,.06)!important;color:#fff!important;text-align:left!important;box-sizing:border-box!important}
+html body.reuse-current .reuse-image-trust-chart__track{position:absolute!important;z-index:1!important;left:0!important;top:0!important;width:var(--bar-width)!important;height:44px!important;min-height:44px!important;max-height:44px!important;overflow:hidden!important;background:var(--bar-color)!important}
+html body.reuse-current .reuse-image-trust-chart__fill{display:block!important;width:100%!important;height:44px!important;min-height:44px!important;background:var(--bar-color)!important;transform:none!important}
+html body.reuse-current .reuse-image-trust-chart__segment span,html body.reuse-current .reuse-image-trust-chart__segment strong{position:absolute!important;z-index:2!important;display:block!important;margin:0!important;padding:0!important;white-space:nowrap!important;pointer-events:none!important}
+html body.reuse-current .reuse-image-trust-chart__segment span{left:20px!important;bottom:10px!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1!important;text-align:left!important}
+html body.reuse-current .reuse-image-trust-chart__segment strong{right:20px!important;bottom:9px!important;color:#fff!important;font-family:var(--hm-font-en-thin,var(--hm-font-en))!important;font-size:20px!important;font-weight:300!important;line-height:1!important;text-align:right!important}
+html body.reuse-current .reuse-image-trust-chart__source{display:block!important;margin-top:28px!important;padding-top:14px!important;border-top:1px solid rgba(255,255,255,.2)!important;color:rgba(255,255,255,.34)!important;font-family:var(--hm-font-ko)!important;font-size:10px!important;font-weight:300!important;line-height:1.5!important;text-align:left!important}
 
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
-  display:block!important;
-  margin:6px 0 0!important;
-  color:#fff!important;
-  font-family:var(--hm-font-en-thin)!important;
-  font-size:var(--hm-chart-inbar-value-size,32px)!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:var(--hm-chart-inbar-value-leading,1)!important;
-  letter-spacing:var(--hm-track-data-number)!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stacklegend{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:16px!important;
-  width:100%!important;
-  margin-top:var(--hm-chart-legend-gap,32px)!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{
-  display:block!important;
-  min-width:0!important;
-  padding-top:10px!important;
-  border-top:var(--hm-chart-legend-line,2px) solid var(--c)!important;
-  color:rgba(255,255,255,.7)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:14px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:1.4!important;
-  letter-spacing:var(--hm-track-body)!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stacklegend__item b{
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:16px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stacklabels::after,
-html body.reuse-current #journey .reuse-image-evidence .landing-research-signal{
-  content:none!important;
-  display:none!important;
-}
-
-@media(max-width:780px){
-  html body.reuse-current #journey .reuse-image-evidence.landing-stack{
-    margin-top:20px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .landing-chart{
-    padding-top:22px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
-    margin-bottom:20px!important;
-    font-size:20px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stackbar{
-    height:116px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
-    padding:0 6px!important;
-    font-size:18px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
-    font-size:28px!important;
-  }
-  html body.reuse-current #journey .reuse-image-evidence .stacklegend{
-    grid-template-columns:1fr!important;
-  }
-}
+@media(max-width:780px){html body.reuse-current #journey .reuse-image-evidence.landing-stack{margin-top:20px!important}html body.reuse-current #journey .reuse-image-evidence .landing-chart{padding-top:22px!important}html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin-bottom:20px!important;font-size:20px!important}html body.reuse-current #journey .reuse-image-evidence .stackbar{height:116px!important}html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{padding:0 6px!important;font-size:18px!important}html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{font-size:28px!important}html body.reuse-current #journey .reuse-image-evidence .stacklegend{grid-template-columns:1fr!important}html body.reuse-current .reuse-image-trust-chart{padding-top:22px!important}html body.reuse-current .reuse-image-trust-chart figcaption{margin-bottom:20px!important;font-size:16px!important}html body.reuse-current .reuse-image-trust-chart__bar{gap:6px!important}html body.reuse-current .reuse-image-trust-chart__segment{flex-basis:44px!important;height:44px!important;min-height:44px!important;max-height:44px!important}html body.reuse-current .reuse-image-trust-chart__track,html body.reuse-current .reuse-image-trust-chart__fill{height:44px!important;min-height:44px!important}html body.reuse-current .reuse-image-trust-chart__segment span{left:12px!important;bottom:9px!important;font-size:12px!important}html body.reuse-current .reuse-image-trust-chart__segment strong{right:12px!important;bottom:8px!important;font-size:16px!important}}
