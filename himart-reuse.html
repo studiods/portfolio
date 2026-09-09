@@ -11,98 +11,12 @@
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260909-5">
 <link rel="stylesheet" href="./design-system/components/reuse-proof-motion.css?v=20260909-4">
 <link rel="stylesheet" href="./design-system/components/reuse-confidence.css?v=20260909-7">
-<link rel="stylesheet" href="./design-system/components/reuse-image-evidence.css?v=20260909-7">
-<link rel="stylesheet" href="./design-system/components/reuse-image-trust-chart.css?v=20260909-5">
+<link rel="stylesheet" href="./design-system/components/reuse-image-evidence.css?v=20260909-8">
 <link rel="stylesheet" href="./design-system/components/reuse-production-gallery.css?v=20260909-7">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260909-12-reuse">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-5">
 <link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260909-2">
 <link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260909-3-reuse">
-<style id="hm-reuse-chart-final">
-/* Final page-level authority: prevents legacy data-viz rules from removing the
-   Reuse 03.1 in-bar labels or reverting the 03.3 4:3 media ratio. */
-html body.reuse-current #journey .reuse-image-evidence .stackbar{
-  position:relative!important;
-  display:flex!important;
-  height:128px!important;
-  min-height:128px!important;
-  overflow:hidden!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>i{
-  display:block!important;
-  height:100%!important;
-  flex:0 0 auto!important;
-  background:var(--c)!important;
-  opacity:1!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{
-  position:absolute!important;
-  z-index:10!important;
-  inset:0!important;
-  display:grid!important;
-  grid-template-columns:53fr 39fr 5.6fr 2.4fr!important;
-  margin:0!important;
-  padding:0!important;
-  gap:0!important;
-  width:100%!important;
-  height:100%!important;
-  pointer-events:none!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-width:0!important;
-  padding:0 16px!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:1.25!important;
-  text-align:center!important;
-  white-space:nowrap!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(1){grid-column:1!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div:nth-child(2){grid-column:2!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div span{display:block!important;color:#fff!important;font:inherit!important}
-html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
-  display:block!important;
-  margin:6px 0 0!important;
-  color:#fff!important;
-  font-family:var(--hm-font-en-thin)!important;
-  font-size:32px!important;
-  font-weight:300!important;
-  line-height:1!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklegend{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:16px!important;
-  margin-top:32px!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{
-  display:block!important;
-  padding-top:10px!important;
-  border-top:2px solid var(--c)!important;
-  color:rgba(255,255,255,.7)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:14px!important;
-  font-weight:300!important;
-  line-height:1.4!important;
-}
-html body.reuse-current .reuse-production-gallery{aspect-ratio:16/9!important}
-@media(max-width:780px){
-  html body.reuse-current #journey .reuse-image-evidence .stackbar{height:116px!important;min-height:116px!important}
-  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{font-size:18px!important;padding:0 6px!important}
-  html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{font-size:28px!important}
-  html body.reuse-current #journey .reuse-image-evidence .stacklegend{grid-template-columns:1fr!important}
-}
-
-/* 03.1 standalone chart fallback: no dependency on legacy landing/stack CSS. */
-.reuse-image-trust-chart{width:100%;margin:0;padding:28px 0 0;border-top:1px solid rgba(255,255,255,.2);box-sizing:border-box}.reuse-image-trust-chart figcaption{margin:0 0 28px;color:#fff;font-family:var(--hm-font-ko);font-size:26px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.25}.reuse-image-trust-chart__bar{display:flex;width:100%;height:160px;overflow:hidden}.reuse-image-trust-chart__segment{display:flex!important;min-width:0!important;align-items:flex-start!important;justify-content:flex-end!important;flex-direction:column!important;padding:0 0 20px 22px!important;color:#fff!important;text-align:left!important}.reuse-image-trust-chart__segment--highest{flex:53 0 0;background:#0572cb}.reuse-image-trust-chart__segment--high{flex:39 0 0;background:#00a6ed}.reuse-image-trust-chart__segment--neutral{flex:5.6 0 0;background:#00b8de}.reuse-image-trust-chart__segment--low{flex:2.4 0 0;background:#008ddd}.reuse-image-trust-chart__segment span{color:#fff;font-family:var(--hm-font-ko);font-size:22px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.25;white-space:nowrap}.reuse-image-trust-chart__segment strong{display:block;margin-top:6px;color:#fff;font-family:var(--hm-font-en-thin,var(--hm-font-en));font-size:22px;font-weight:300;line-height:1}.reuse-image-trust-chart__legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:32px}.reuse-image-trust-chart__legend-item{padding-top:10px;border-top:2px solid;color:rgba(255,255,255,.7);font-family:var(--hm-font-ko);font-size:14px;font-weight:300;line-height:1.45}.reuse-image-trust-chart__legend-item strong{margin-left:5px;color:#fff;font-family:var(--hm-font-en-thin,var(--hm-font-en));font-weight:300}.reuse-image-trust-chart__legend-item--neutral{border-color:#00b8de}.reuse-image-trust-chart__legend-item--low{border-color:#008ddd}
-</style>
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-ready himart-narrative-ready himart-movie-page reuse-current hm-wide-editorial-test">
 <main id="live-main">
@@ -148,14 +62,8 @@ html body.reuse-current .reuse-production-gallery{aspect-ratio:16/9!important}
 
 <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.2</span><div><h3 class="hm-subtitle hm-ds-subsection__title">결국 고객은 중고라서 불안한 것이 아니라,<br>확인할 수 없어서 불안했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">금전적 위험을 제외해도 불안은 상품 상태·내구성·위생·사후 책임에 남았습니다.</p></div></div>
 <div class="reuse-uncertainty-graph hm-ds-subtitle-to-content" aria-label="중고 제품 구매에서 신뢰와 불안을 만드는 요소">
-  <article class="reuse-uncertainty-panel is-trust">
-    <span class="reuse-uncertainty-panel__label">확인 가능한 신뢰의 근거</span>
-    <p><span>실사진 · 상태 등급 · 검수 결과</span><span>클리닝 · 위생 기준 · 보증 조건</span><span>판매 주체 · 문제 발생 뒤 책임</span></p>
-  </article>
-  <article class="reuse-uncertainty-panel is-anxiety">
-    <span class="reuse-uncertainty-panel__label">확인할 수 없는 불안의 원인</span>
-    <p><span>설명과 실제의 차이</span><span>이전 사용 흔적 · 위생 불확실성</span><span>내구성 · 고장 가능성 · 책임 공백</span></p>
-  </article>
+  <article class="reuse-uncertainty-panel is-trust"><span class="reuse-uncertainty-panel__label">확인 가능한 신뢰의 근거</span><p><span>실사진 · 상태 등급 · 검수 결과</span><span>클리닝 · 위생 기준 · 보증 조건</span><span>판매 주체 · 문제 발생 뒤 책임</span></p></article>
+  <article class="reuse-uncertainty-panel is-anxiety"><span class="reuse-uncertainty-panel__label">확인할 수 없는 불안의 원인</span><p><span>설명과 실제의 차이</span><span>이전 사용 흔적 · 위생 불확실성</span><span>내구성 · 고장 가능성 · 책임 공백</span></p></article>
 </div>
 <div class="hm-source hm-ds-source-note">SOURCE - Baymard Product Page UX Research · 리퍼비시 구매 요인 및 사용 흔적 연구 문헌 검토 · 상태·판매자 평판·보증·위생 정보 중심의 정성 분석</div>
 </div>
@@ -164,145 +72,53 @@ html body.reuse-current .reuse-production-gallery{aspect-ratio:16/9!important}
 <section class="hm-section hm-ds-section" id="data" data-chapter="02"><div class="hm-wrap hm-ds-wrap">
 <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">확인을 못해서 확신할 수 없었습니다.<br>그래서 확인할 수 있게 만들었습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">상태·검수·상품화·보증·A/S를 구매 전에 확인할 수 있는 근거로 바꿨습니다.</p></div>
 <div class="data-list">
-
 <article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.1</span><div><h3>먼저 불안 요소마다<br>바로 확인할 수 있는 근거를 연결했습니다.</h3><p class="desc">상태·내구성·청결·사후 책임을 구매 전에 확인하게 했습니다.</p></div></div>
 <div class="reuse-proof-map hm-ds-subtitle-to-content" aria-label="중고가전의 불안 요소와 확인 가능한 해결 근거">
-  <section class="reuse-proof-band reuse-proof-band--anxiety" aria-label="불안 요소">
-    <span class="reuse-proof-band__label">불안 요소</span>
-    <div class="reuse-proof-band__nodes">
+  <section class="reuse-proof-band reuse-proof-band--anxiety" aria-label="불안 요소"><span class="reuse-proof-band__label">불안 요소</span><div class="reuse-proof-band__nodes">
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>상품 상태가<br>설명과 다를 수 있다.</h4></div>
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>오래 쓸 수 있을지, 문제가 생기면 누가 책임지는지 불분명하다</h4></div>
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>무엇을 수리·점검했는지 알 수 없다</h4></div>
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>이전 사용 흔적과 청결·위생이 걱정된다</h4></div>
-    </div>
-  </section>
-
-  <div class="reuse-proof-map__arrow" aria-hidden="true">
-    <svg viewBox="0 0 300 48" preserveAspectRatio="none"><polyline points="0,0 150,48 300,0"></polyline></svg>
-  </div>
-
-  <section class="reuse-proof-band reuse-proof-band--solution" aria-label="확인 가능한 근거">
-    <span class="reuse-proof-band__label">확인 가능한 근거</span>
-    <div class="reuse-proof-band__nodes">
+  </div></section>
+  <div class="reuse-proof-map__arrow" aria-hidden="true"><svg viewBox="0 0 300 48" preserveAspectRatio="none"><polyline points="0,0 150,48 300,0"></polyline></svg></div>
+  <section class="reuse-proof-band reuse-proof-band--solution" aria-label="확인 가능한 근거"><span class="reuse-proof-band__label">확인 가능한 근거</span><div class="reuse-proof-band__nodes">
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>실사진 · 상태 등급 ·<br>기능 검수</h4></div>
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>기능 점검 · 2년 무상 보증 사전 노출 · 하이마트 판매 · 배송 · 설치 · A/S 연결</h4></div>
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>상품화·검수 과정과<br>점검 기준 공개</h4></div>
       <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>클리닝 · 세척<br>· 소독 과정 공개</h4></div>
-    </div>
-  </section>
-</div>
-</article>
+  </div></section>
+</div></article>
 
 <article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.2</span><div><h3>보증과 클리닝을 구매 후 서비스가 아니라,<br>구매 전에 확신을 만드는 근거로 앞당겼습니다.</h3><p class="desc">구매 흐름 중간마다 상태·검수·청결·보증 정보를 넣어 이탈 전에 확신을 보강했습니다.</p></div></div>
 <div class="reuse-confidence-flow hm-ds-subtitle-to-content" aria-label="중고가전 구매 흐름 속 신뢰 요소">
-  <div class="reuse-confidence-row">
-    <article class="reuse-confidence-node"><span>01</span><h4>중고가전 발견</h4><p>상품과 가격을 보고 탐색을 시작합니다.</p></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node is-trust"><span>02</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>상품 정보 확인</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>상태 확인</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>사진과 설명을 보고 제품 상태를 가늠합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>실사진·상태 등급으로 실제 상태를 확인합니다.</p></div></div></div></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node is-trust"><span>03</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>판매자·거래 확인</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>검수 확인</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>판매 주체와 거래 조건을 확인합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>상품화·기능 점검 과정을 확인합니다.</p></div></div></div></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node"><span>04</span><h4>비교·판단</h4><p>가격과 조건을 비교해 후보를 좁힙니다.</p></article>
-  </div>
-  <div class="reuse-confidence-row">
-    <article class="reuse-confidence-node is-trust"><span>05</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>구매 조건 확인</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>보증 확인</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>반품·환불 등 구매 조건을 확인합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>2년 무상 보증으로 고장 이후까지 확인합니다.</p></div></div></div></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node"><span>06</span><h4>결제</h4><p>구매 조건을 확인하고 결제를 완료합니다.</p></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node"><span>07</span><h4>배송·설치</h4><p>일정과 설치 조건을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node is-trust"><span>08</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>사용·문의</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>A/S·관리</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>사용 중 문제가 생기면 판매자에게 문의합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>판매 이후에도 하이마트가 책임을 이어갑니다.</p></div></div></div></article>
-  </div>
-</div>
-</article>
-</div>
-</div></section>
+  <div class="reuse-confidence-row"><article class="reuse-confidence-node"><span>01</span><h4>중고가전 발견</h4><p>상품과 가격을 보고 탐색을 시작합니다.</p></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node is-trust"><span>02</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>상품 정보 확인</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>상태 확인</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>사진과 설명을 보고 제품 상태를 가늠합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>실사진·상태 등급으로 실제 상태를 확인합니다.</p></div></div></div></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node is-trust"><span>03</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>판매자·거래 확인</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>검수 확인</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>판매 주체와 거래 조건을 확인합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>상품화·기능 점검 과정을 확인합니다.</p></div></div></div></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node"><span>04</span><h4>비교·판단</h4><p>가격과 조건을 비교해 후보를 좁힙니다.</p></article></div>
+  <div class="reuse-confidence-row"><article class="reuse-confidence-node is-trust"><span>05</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>구매 조건 확인</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>보증 확인</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>반품·환불 등 구매 조건을 확인합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>2년 무상 보증으로 고장 이후까지 확인합니다.</p></div></div></div></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node"><span>06</span><h4>결제</h4><p>구매 조건을 확인하고 결제를 완료합니다.</p></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node"><span>07</span><h4>배송·설치</h4><p>일정과 설치 조건을 확인합니다.</p></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node is-trust"><span>08</span><div class="reuse-confidence-copy-group"><div class="reuse-confidence-title-mask"><div class="reuse-confidence-title reuse-confidence-title--base" data-reuse-copy-base><h4>사용·문의</h4></div><div class="reuse-confidence-title reuse-confidence-title--trust" data-reuse-copy-trust aria-hidden="true"><h4>A/S·관리</h4></div></div><div class="reuse-confidence-desc-mask"><div class="reuse-confidence-desc reuse-confidence-desc--base" data-reuse-copy-base><p>사용 중 문제가 생기면 판매자에게 문의합니다.</p></div><div class="reuse-confidence-desc reuse-confidence-desc--trust" data-reuse-copy-trust aria-hidden="true"><p>판매 이후에도 하이마트가 책임을 이어갑니다.</p></div></div></div></article></div>
+</div></article>
+</div></div></section>
 
 <section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap hm-ds-wrap">
 <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">상품을 직접 볼 수 없기에,<br>사진이 가장 중요한 신뢰 정보였습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">화면만 설계하지 않고 실제 상품을 어떻게 상품화하고 촬영하고 보여줄지까지 직접 관여했습니다.</p></div>
-
-<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">중고 제품을 판단하기 위해,<br>고객은 먼저 이미지를 확인했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">중고 거래에서는 실제 상태를 직접 확인할 수 없기 때문에 사진이 상태·사용 흔적·손상을 판단하는 첫 번째 시각적 근거가 됩니다.</p></div></div>
-<figure class="reuse-image-trust-chart hm-ds-subtitle-to-content" aria-label="사진 이미지가 가전 구매 판단에 미치는 영향">
-  <figcaption>사진 이미지는 가전 구매 판단에<br>중요한 정보였습니다.</figcaption>
-  <div class="reuse-image-trust-chart__bar">
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--blue"><span>상품 이미지 영향</span><strong>82%</strong></div>
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--blue-new"><span>이미지 품질 중요</span><strong>67%</strong></div>
-    <div class="reuse-image-trust-chart__segment reuse-image-trust-chart__segment--green"><span>고객 사진·영상</span><strong>62%</strong></div>
-  </div>
-  <template data-source="reuse-image-trust">온라인 구매자 대상 조사에서 상품 이미지·사진의 영향도 82%, 상품 이미지 품질을 매우 중요하게 평가한 응답 67%, 고객 사진·영상을 확인한 뒤 구매 가능성이 높아진 응답 62%를 참고 지표로 사용. 가전 전용 표본이 아닌 온라인 구매 전반의 조사 결과.</template>
-</figure>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">중고 제품을 판단할 때,<br>고객은 상품 상태 확인을 중요하게 확인했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">중고 거래에서는 실제 상태를 직접 확인할 수 없기 때문에 사진이 상태·사용 흔적·손상을 판단하는 첫 번째 시각적 근거가 됩니다.</p></div></div>
+<figure class="reuse-image-trust-chart hm-ds-subtitle-to-content" aria-label="중고거래에서 중요하게 보는 요소"><figcaption></figcaption><div class="reuse-image-trust-chart__bar"></div></figure>
 </div>
 </div>
 
 <div class="hm-wrap hm-ds-wrap">
 <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.2</span><div><h3 class="hm-subtitle hm-ds-subsection__title">중요한 이미지 정보를 어떻게 잘 전달할지<br>방법과 순서를 고민했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">상태·손상을 빠르게 판단하도록 촬영 기준과 노출 순서를 정리했습니다.</p></div></div>
-<div class="reuse-confidence-flow reuse-image-order-flow hm-ds-subtitle-to-content" aria-label="중고가전 이미지 정보 전달 순서">
-  <div class="reuse-confidence-row">
-    <article class="reuse-confidence-node"><span>01</span><h4>확인 정보 정의</h4><p>상태·사용 흔적·손상·기능처럼 구매 전에 확인할 정보를 먼저 정리했습니다.</p></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node"><span>02</span><h4>필수 이미지 기준</h4><p>전체 형태와 주요 면, 디테일과 손상 부위를 빠짐없이 확인하도록 촬영 항목을 정했습니다.</p></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node"><span>03</span><h4>노출 순서 설계</h4><p>전체 모습에서 상태·사용 흔적·세부 손상으로 자연스럽게 판단이 이어지게 했습니다.</p></article><div class="reuse-confidence-arrow">›</div>
-    <article class="reuse-confidence-node"><span>04</span><h4>검수 정보 연결</h4><p>사진만으로 모호한 부분은 상태 등급과 기능 검수 결과를 함께 보여주도록 연결했습니다.</p></article>
-  </div>
-</div>
+<div class="reuse-confidence-flow reuse-image-order-flow hm-ds-subtitle-to-content" aria-label="중고가전 이미지 정보 전달 순서"><div class="reuse-confidence-row"><article class="reuse-confidence-node"><span>01</span><h4>확인 정보 정의</h4><p>상태·사용 흔적·손상·기능처럼 구매 전에 확인할 정보를 먼저 정리했습니다.</p></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node"><span>02</span><h4>필수 이미지 기준</h4><p>전체 형태와 주요 면, 디테일과 손상 부위를 빠짐없이 확인하도록 촬영 항목을 정했습니다.</p></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node"><span>03</span><h4>노출 순서 설계</h4><p>전체 모습에서 상태·사용 흔적·세부 손상으로 자연스럽게 판단이 이어지게 했습니다.</p></article><div class="reuse-confidence-arrow">›</div><article class="reuse-confidence-node"><span>04</span><h4>검수 정보 연결</h4><p>사진만으로 모호한 부분은 상태 등급과 기능 검수 결과를 함께 보여주도록 연결했습니다.</p></article></div></div>
 </div>
 
 <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.3</span><div><h3 class="hm-subtitle hm-ds-subsection__title">촬영 환경과 기준, 그리고 AI 영상 제작까지<br>직접 설계하고 제작했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">제품별 촬영 환경부터 공정 촬영·편집, AI 영상 제작까지 직접 진행했습니다.</p></div></div>
 <div class="reuse-production-gallery-list hm-ds-subtitle-to-content">
-  <div class="reuse-production-gallery" tabindex="0" aria-label="촬영 스튜디오 환경 갤러리">
-    <div class="reuse-production-gallery__viewport">
-      <article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-    </div>
-    <div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">01</span><h4>촬영 스튜디오 환경을 함께 설계했습니다.</h4><p>길고 넓은 대형 가전까지 안정적으로 촬영할 수 있도록 제품 크기와 형태를 고려해 공간·배경·촬영 동선을 함께 조정했습니다.</p></div>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button>
-    <span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span>
-  </div>
-
-  <div class="reuse-production-gallery" tabindex="0" aria-label="제품별 카메라 조명 가이드 갤러리">
-    <div class="reuse-production-gallery__viewport">
-      <article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-    </div>
-    <div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">02</span><h4>제품별 카메라·조명과 이미지 가이드를 정리했습니다.</h4><p>제품의 길이·폭·색상에 따라 카메라 각도와 조명 세팅을 달리하고, 실제 크롭·저장 방식까지 구체적인 촬영 가이드로 정리했습니다.</p></div>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button>
-    <span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span>
-  </div>
-
-  <div class="reuse-production-gallery" tabindex="0" aria-label="상품화 과정 촬영 편집 갤러리">
-    <div class="reuse-production-gallery__viewport">
-      <article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-    </div>
-    <div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">03</span><h4>상품화 과정을 직접 촬영하고 편집했습니다.</h4><p>작업자와 콘티를 함께 구성해 세척·검수 과정을 디테일하게 촬영하고, 작업 환경과 시설까지 포함해 스토리에 맞춰 편집했습니다.</p></div>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button>
-    <span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span>
-  </div>
-
-  <div class="reuse-production-gallery" tabindex="0" aria-label="AI 영상 제작 갤러리">
-    <div class="reuse-production-gallery__viewport">
-      <article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-      <article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article>
-    </div>
-    <div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">04</span><h4>사실을 기반으로 AI 영상까지 제작했습니다.</h4><p>실제 설치·세척 과정과 현장 자료를 기준으로 AI 영상을 제작하고 편집해, 연출보다 실제 공정과 정보가 정확히 전달되도록 했습니다.</p></div>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button>
-    <button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button>
-    <span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span>
-  </div>
+  <div class="reuse-production-gallery" tabindex="0" aria-label="촬영 스튜디오 환경 갤러리"><div class="reuse-production-gallery__viewport"><article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article><article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article><article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article></div><div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">01</span><h4>촬영 스튜디오 환경을 함께 설계했습니다.</h4><p>길고 넓은 대형 가전까지 안정적으로 촬영할 수 있도록 제품 크기와 형태를 고려해 공간·배경·촬영 동선을 함께 조정했습니다.</p></div><button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button><button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button><span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span></div>
+  <div class="reuse-production-gallery" tabindex="0" aria-label="제품별 카메라 조명 가이드 갤러리"><div class="reuse-production-gallery__viewport"><article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article><article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article><article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article></div><div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">02</span><h4>제품별 카메라·조명과 이미지 가이드를 정리했습니다.</h4><p>제품의 길이·폭·색상에 따라 카메라 각도와 조명 세팅을 달리하고, 실제 크롭·저장 방식까지 구체적인 촬영 가이드로 정리했습니다.</p></div><button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button><button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button><span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span></div>
+  <div class="reuse-production-gallery" tabindex="0" aria-label="AI 상품 영상 제작 갤러리"><div class="reuse-production-gallery__viewport"><article class="reuse-production-gallery__slide is-active" aria-hidden="false"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article><article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article><article class="reuse-production-gallery__slide" aria-hidden="true"><div class="reuse-production-gallery__media" aria-hidden="true"></div></article></div><div class="reuse-production-gallery__copy"><span class="reuse-production-gallery__number">03</span><h4>AI를 활용한 상품 영상 제작 방식도 함께 설계했습니다.</h4><p>정적인 상품 이미지를 넘어 상태와 특징을 빠르게 이해할 수 있도록 AI 기반 영상 제작 방식까지 확장했습니다.</p></div><button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button><button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button><span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / 03</span></div>
 </div>
 </div>
 </div></section>
 
-<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap">
-<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">만들어진 신뢰를<br>구매 경험으로 연결했습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">탐색·상세·구매·케어에 필요한 신뢰 근거를 연결했습니다.</p></div>
-<div class="flow-area hm-ds-journey hm-reveal"><div class="flow-groups"><div class="flow-group blue"><div class="flow-label">고객 질문이 끊기지 않도록 탐색에서 구매 이후까지 연결</div><div class="flow-row row4"><article class="flow-node"><span class="hm-card-no">01 / LISTING</span><h4>중고 제품 발견</h4><p>인증 뱃지·상태 등급·가격으로 탐색의 이유를 만듭니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">02 / PDP</span><h4>상태와 이력 확인</h4><p>실물 이미지·상품화 과정·이전 소유자 코멘트를 보여줍니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">03 / CHECKOUT</span><h4>안전하게 구매</h4><p>보증·환불·설치·수거 조건을 결제 전에 확정합니다.</p></article><div class="flow-arrow">›</div><article class="flow-node"><span class="hm-card-no">04 / CARE</span><h4>구매 이후까지 책임</h4><p>2년 무상 A/S와 전문 배송·설치로 관계를 이어갑니다.</p></article></div></div></div></div>
-<div class="hm-subsection hm-ds-subsection hm-ds-subsection-gap hm-reveal"><div class="hm-subhead"><span class="hm-subno">04.1 / SCALE SYSTEM</span><div><h3 class="hm-subtitle hm-ds-subsection__title">신뢰 경험을<br>확장 가능한 시스템으로 만들었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">대형 가전부터 모바일까지 카테고리별 신뢰 기준을 통일했습니다.</p></div></div><div class="role-grid hm-ds-role-grid"><article class="role-card hm-ds-card"><span class="hm-role-name">APPLIANCE</span><h4>중앙 재상품화<br>기준</h4><p>분해 세척과 스팀 살균, 전문 설치가 필요한 대형 가전의 공정을 표준화했습니다.</p><strong class="hm-ds-role__keyword">냉장 · 세탁 · 건조 · 의류관리</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">MOBILE</span><h4>매장 거점형<br>촬영 기준</h4><p>전국 매장에서도 조도·구도·필수 이미지를 일관되게 만들도록 가이드를 배포했습니다.</p><strong class="hm-ds-role__keyword">라이트 텐트 · 플리커 · 번인</strong></article><article class="role-card hm-ds-card"><span class="hm-role-name">DATA DELETE</span><h4>안전한<br>데이터 처리</h4><p>모바일 개인정보 삭제 인증을 상세페이지의 신뢰 정보로 연결했습니다.</p><strong class="hm-ds-role__keyword">영구 삭제 · 인증서 연동</strong></article></div></div>
-<div class="prototype-intro hm-subsection hm-ds-subsection hm-ds-prototype-grid hm-ds-narrative hm-reveal"><h3>신뢰 전략을 문서에서 끝내지 않고,<br>검증 가능한 화면으로 전환했습니다.</h3><p>상품 상태·검수·상품화·보증 정보를 홈·목록·PDP·결제 흐름에 연결하고, 내부 리뷰를 통해 신뢰 정보의 순서와 표현을 반복해서 조정했습니다.</p></div>
-<div class="phone-gallery hm-ds-media-grid hm-ds-subtitle-to-content hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div>
-<div class="sentiment-conclusion hm-ds-subsection-gap hm-reveal"><h4>중고 제품을 판매하는 경험에서<br>믿고 선택하는 경험으로 바꾸었습니다.</h4><p>고객은 중고 제품을 원하지 않는 것이 아니라, 믿을 수 있는 이유가 부족했습니다. 상품·콘텐츠·정책·구매 경험 전체를 연결해 하이마트만의 신뢰 기반 중고 경험을 설계했습니다.</p></div>
-</div></section>
+<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">화면을 넘어,<br>신뢰를 만드는 운영 기준까지 확장했습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">촬영·검수·상품화 기준이 반복 가능하도록 운영 구조로 정리했습니다.</p></div><div class="prototype-intro hm-subsection hm-ds-subsection hm-ds-prototype-grid hm-ds-narrative hm-reveal"><h3>신뢰 전략을 문서에서 끝내지 않고,<br>검증 가능한 화면으로 전환했습니다.</h3><p>상품 상태·검수·상품화·보증 정보를 홈·목록·PDP·결제 흐름에 연결하고, 내부 리뷰를 통해 신뢰 정보의 순서와 표현을 반복해서 조정했습니다.</p></div><div class="phone-gallery hm-ds-media-grid hm-ds-subtitle-to-content hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div><div class="sentiment-conclusion hm-ds-subsection-gap hm-reveal"><h4>중고 제품을 판매하는 경험에서<br>믿고 선택하는 경험으로 바꾸었습니다.</h4><p>고객은 중고 제품을 원하지 않는 것이 아니라, 믿을 수 있는 이유가 부족했습니다. 상품·콘텐츠·정책·구매 경험 전체를 연결해 하이마트만의 신뢰 기반 중고 경험을 설계했습니다.</p></div></div></section>
 </main>
-
 <footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart.html">온라인 구매여정 다시 보기 →</a></div></div></footer>
 <script src="./design-system/reuse-proof-map-motion.js?v=20260909-1"></script>
 <script src="./design-system/reuse-confidence-motion.js?v=20260908-9"></script>
@@ -311,6 +127,6 @@ html body.reuse-current .reuse-production-gallery{aspect-ratio:16/9!important}
 <script src="./design-system/scramble-final.js?v=20260907-3"></script>
 <script src="./himart-live-boot.js?v=20260909-3-reuse"></script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
-<script src="./design-system/components/reuse-image-trust-chart.js?v=20260909-1"></script>
+<script src="./design-system/components/reuse-image-trust-chart.js?v=20260909-2"></script>
 </body>
 </html>
