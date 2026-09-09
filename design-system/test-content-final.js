@@ -39,6 +39,24 @@
     document.querySelectorAll('#data .signal-item h4, #data .behavior-card h4').forEach((el, i) => {
       if (behaviorTitles[i]) html(el, behaviorTitles[i]);
     });
+
+    /* 02 data provenance cleanup: remove the retired H1 funnel source block itself,
+       including the divider owned by that source element. */
+    document.querySelectorAll('#data .hm-source, #data .hm-ds-source-note, #data [data-hm-source-note]').forEach((el) => {
+      const value = (el.textContent || '').replace(/\s+/g, ' ').trim();
+      if (
+        value.includes('하이마트 온라인 이용 패턴 분석 v31') ||
+        value.includes('온라인 백데이터 퍼널_3')
+      ) el.remove();
+    });
+
+    /* 02.7 problem reframe: keep the journey path as the message, without the
+       tentative '필요가 보였습니다' framing. */
+    const reframeTitle = document.querySelector('#data .data-bridge-grid article:last-child h4');
+    if (reframeTitle) {
+      html(reframeTitle, '<strong class="journey-title-emphasis">유입 맥락 → 탐색 → 비교 → 구매 확신 → 설치·케어</strong>로 재정의');
+    }
+
     const journeyCopy = document.querySelector('#journey .journey-role-block .hm-subcopy, #journey .hm-subsection .hm-subcopy');
     text(journeyCopy, '홈부터 결제까지 화면을 개별 산출물이 아닌, 앞 단계 맥락을 다음 판단으로 넘기는 역할로 정의했습니다. 이 기준이 프로토타입의 정보 우선순위와 인터랙션을 결정했습니다.');
     const designRuleCopy = [
