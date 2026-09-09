@@ -1,4 +1,4 @@
-/* HIMART REUSE 03.1 — reusable LANDING → ACTION graph contract.
+/* HIMART REUSE 03.1 — reusable LANDING → ACTION graph contract.\n   Labels are intentionally overlaid inside the stacked bar, matching the editorial data-graphic treatment.
    Visual grammar intentionally matches himart.html 02.6:
    28px rule-to-title, 26px thin title, 54px bar, 22px data numbers,
    14px labels, and a 25px component offset from the subsection copy. */
@@ -35,6 +35,7 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{
 }
 
 html body.reuse-current #journey .reuse-image-evidence .stackbar{
+  position:relative!important;
   display:flex!important;
   width:100%!important;
   height:54px!important;
@@ -53,43 +54,53 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar i{
   opacity:1!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels{
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels{
+  position:absolute!important;
+  z-index:2!important;
+  inset:0!important;
   display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:12px!important;
-  position:static!important;
-  width:auto!important;
-  height:auto!important;
-  margin:18px 0 0!important;
-  padding:0!important;
-  pointer-events:auto!important;
-}
-
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
-  display:block!important;
-  position:static!important;
-  min-width:0!important;
+  grid-template-columns:56% 44%!important;
+  gap:0!important;
+  width:100%!important;
+  height:100%!important;
   margin:0!important;
   padding:0!important;
-  color:rgba(255,255,255,.7)!important;
+  pointer-events:none!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0 12px!important;
+  color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:14px!important;
   font-weight:300!important;
-  line-height:1.5!important;
+  line-height:1.2!important;
   letter-spacing:var(--hm-track-body)!important;
-  text-align:left!important;
-  white-space:normal!important;
+  text-align:center!important;
+  white-space:nowrap!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div b{
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div b{
   display:block!important;
-  margin:0 0 4px!important;
+  margin:0!important;
   color:#fff!important;
   font-family:var(--hm-font-en)!important;
   font-size:22px!important;
   font-weight:300!important;
-  line-height:1.1!important;
+  line-height:1!important;
   letter-spacing:var(--hm-track-data-number)!important;
+}
+
+html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>div span{
+  display:block!important;
+  color:rgba(255,255,255,.82)!important;
+  font:inherit!important;
 }
 
 html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
