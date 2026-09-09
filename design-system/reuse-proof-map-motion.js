@@ -35,10 +35,10 @@
 
   const cssTimeToMs = (value) => {
     const token = String(value || '').trim();
-    if (!token) return 3150;
-    if (token.endsWith('ms')) return Number.parseFloat(token) || 3150;
-    if (token.endsWith('s')) return (Number.parseFloat(token) || 3.15) * 1000;
-    return Number.parseFloat(token) || 3150;
+    if (!token) return 2205;
+    if (token.endsWith('ms')) return Number.parseFloat(token) || 2205;
+    if (token.endsWith('s')) return (Number.parseFloat(token) || 2.205) * 1000;
+    return Number.parseFloat(token) || 2205;
   };
 
   const getLaneDuration = () => {
