@@ -3,9 +3,8 @@
 
   /*
     REUSE 02.6 — authoritative LANDING → ACTION source.
-    The bar is the actual behavior data. Research is shown as a separate
-    evidence layer so research percentages are not falsely presented as
-    causes of the observed behavior.
+    The segmented bar remains actual behavior data. Research is connected
+    through the interpretation layer below it, not mixed into the percentages.
   */
   const syncLandingActionSource = () => {
     const source = document.querySelector('#journey .reuse-image-evidence');
@@ -30,8 +29,8 @@
     </div>
     <div class="landing-research-signal">
       <span>RESEARCH SIGNAL</span>
-      <p>실제 상태 불일치 56.6% · 제품 상태 중요 68.9% · 판매자 신용 37.6% · 안전결제 만족 79.4%</p>
-      <small>고객은 상품 상태와 판매 주체, 거래 안전성을 확인할 수 있을 때 구매 판단의 확신을 얻었습니다.</small>
+      <p>가격이 중고를 보게 만들었다면, 신뢰할 수 있는 근거가 선택을 완성하게 해야 했습니다.</p>
+      <small>리서치에서 확인된 핵심 판단 기준 · 상품 상태 · 판매자 신뢰 · 거래 안전성 · 전문 판매처</small>
     </div>
   </div>
 </div>`;
