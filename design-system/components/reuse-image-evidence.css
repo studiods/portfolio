@@ -1,7 +1,4 @@
-/* HIMART REUSE 03.1 — use the exact LANDING → ACTION graph grammar.
-   The requested visual is the same five-part horizontal stacked bar used by
-   HIMART 02.6: 52.2 / 27.6 / 9.3 / 6.6 / 4.3, with labels inside the bar.
-*/
+/* HIMART REUSE 03.1 — exact LANDING → ACTION graph grammar. */
 
 html body.reuse-current #journey .reuse-image-evidence{
   display:block!important;
@@ -19,10 +16,20 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart{
   border-top:0!important;
 }
 
-/* Exact graph heading treatment. */
+/* Reference title: 기획전 시작 후 첫 다음 행동 */
 html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
   margin:0 0 34px!important;
   padding:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:0!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{
+  content:"기획전 시작 후 첫 다음 행동"!important;
+  display:block!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:16px!important;
@@ -31,7 +38,7 @@ html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
   letter-spacing:var(--hm-track-body)!important;
 }
 
-/* The requested graph is a single five-part 100% bar. */
+/* Five-part 100% horizontal bar: 52.2 / 27.6 / 9.3 / 6.6 / 4.3 */
 html body.reuse-current #journey .reuse-image-evidence .stackbar{
   position:relative!important;
   display:block!important;
@@ -52,18 +59,18 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar{
     #E2D400 100%)!important;
 }
 
-/* Authored i elements are retained for DOM compatibility but the bar itself
-   is rendered as the exact five-segment LANDING → ACTION treatment above. */
+/* Keep existing markup for compatibility; render the bar through the exact
+   five-segment reference treatment above. */
 html body.reuse-current #journey .reuse-image-evidence .stackbar i{
   display:none!important;
 }
 
-/* Labels sit inside the lower area of the bar, matching the reference image. */
+/* Labels are placed inside the lower portion of the bar. */
 html body.reuse-current #journey .reuse-image-evidence .stacklabels{
   position:absolute!important;
   z-index:2!important;
   left:0!important;
-  top:calc(22px + 34px)!important;
+  top:56px!important;
   width:100%!important;
   height:182px!important;
   margin:0!important;
@@ -89,60 +96,38 @@ html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
   white-space:pre-line!important;
 }
 
-/* Hide the old four labels and author the five requested labels through CSS,
-   allowing the existing HTML to remain backward-compatible. */
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{
   display:block!important;
   font-size:0!important;
 }
-
 html body.reuse-current #journey .reuse-image-evidence .stacklabels>div b{
   display:none!important;
 }
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1){
-  left:1.1%!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1)::after{
-  content:"종료\A52.2%"!important;
-}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1){left:1.1%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(1)::after{content:"종료\A52.2%"!important}
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2){
-  left:53.3%!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2)::after{
-  content:"재탐색\A27.6%"!important;
-}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2){left:53.3%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(2)::after{content:"재탐색\A27.6%"!important}
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3){
-  left:80.9%!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3)::after{
-  content:"상품\A9.3%"!important;
-}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3){left:80.9%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(3)::after{content:"상품\A9.3%"!important}
 
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4){
-  left:90.2%!important;
-}
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4)::after{
-  content:"검색\A6.6%"!important;
-}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4){left:90.2%!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div:nth-child(4)::after{content:"검색\A6.6%"!important}
 
-/* Fifth label is added without changing the existing markup. */
+/* Fifth label: 기타 / 4.3% */
 html body.reuse-current #journey .reuse-image-evidence .stacklabels::after{
   content:"기타\A4.3%"!important;
   left:97.1%!important;
   transform:translateX(-50%)!important;
 }
 
-/* The reference graph has no external four-column legend underneath. */
-html body.reuse-current #journey .reuse-image-evidence .stacklabels>div::before{
-  content:none!important;
-}
-
 @media(max-width:780px){
   html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{
     margin-bottom:22px!important;
+  }
+  html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4::after{
     font-size:16px!important;
     line-height:1.35!important;
   }
