@@ -1,10 +1,17 @@
-/* HIMART editorial layout contract v1.0
+/* HIMART editorial layout contract v1.1
    Final authority for wide left-title / right-content pages.
    The legacy wide files still contain historical resets, but this file is loaded last
-   and owns the baseline line-to-content rhythm for both Himart and Reuse. */
+   and owns the baseline line-to-content rhythm for both Himart and Reuse.
+
+   Medium-title contract:
+   - divider: 1px / --hm-line-weak
+   - divider -> number/title: 40px / --hm-space-component
+   - only the first content unit paired with a major title may have margin-top:0
+   - later subsections keep the canonical subsection gap
+*/
 
 :root{
-  --hm-editorial-line-to-title:40px;
+  --hm-editorial-line-to-title:var(--hm-space-component,40px);
 }
 
 @media (min-width:1600px){
@@ -49,23 +56,29 @@
     margin-top:0!important;
   }
 
-  /* Direct DOM path: Reuse is not adapter-grouped, so the same contract is
-     applied to its first content unit without depending on legacy exceptions. */
+  /*
+    Direct DOM path: Reuse is not adapter-grouped.
+    Previous v1.0 used `.hm-subsection:first-child`, which was structurally wrong for
+    03.1 because .hm-section-head is the first child of the first wrapper. It also
+    accidentally matched 03.2 because that subsection is the first child of the second
+    wrapper, resetting its canonical 100px subsection gap.
+
+    Use the actual authored relationship instead: section-head + first content.
+  */
   html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > :is(#brand,#data,#journey,#direction) > .hm-wrap
-  > :is(.hm-subsection,.data-list,.flow-area,.prototype-intro):first-child{
+  #live-main > #brand > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey > .hm-wrap > .hm-section-head + .hm-subsection{
     margin-top:0!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > :is(#brand,#journey,#direction) > .hm-wrap
-  > .hm-subsection:first-child{
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
+  #live-main > #data > .hm-wrap > .hm-section-head + .data-list{
+    margin-top:0!important;
   }
 
   html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #data > .hm-wrap > .data-list:first-child
+  #live-main > #data > .hm-wrap > .hm-section-head + .data-list
   > .data-card:first-child{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
@@ -73,11 +86,20 @@
   }
 
   html body.himart-page-body.hm-wide-editorial-test.reuse-current
-  #live-main > #direction > .hm-wrap
-  > :is(.flow-area,.prototype-intro):first-child{
+  #live-main > #direction > .hm-wrap > .hm-section-head + .flow-area{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
     margin-top:0!important;
+  }
+
+  /* Every Reuse medium-title subsection owns its divider explicitly.
+     This is deliberately broader than the chapter-start rule so 03.1 / 03.2 / 03.3
+     cannot lose their lines when layout-alignment resets change. Spacing between later
+     subsections remains owned by --hm-subsection-gap. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#journey,#direction) > .hm-wrap > .hm-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
   /* Prevent the global structural rule from reintroducing a second gap on
