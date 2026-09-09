@@ -1,34 +1,22 @@
 /*
-  HIMART Reuse Chart System v1.0
+  HIMART Reuse Chart System v1.1
   Canonical 03.1 horizontal-bar chart.
-  Visual reference: current Reuse 03.1 graph.
-  No page-specific selectors, legacy overrides or external dependencies.
-  Data/content stays in the component JS; this file owns presentation only.
+  Self-contained design-system component: no page selectors, no legacy overrides.
 */
 
 .reuse-image-trust-chart{
   --hm-reuse-chart-height:44px;
   --hm-reuse-chart-gap:8px;
   --hm-reuse-chart-track:rgba(255,255,255,.06);
-  --hm-reuse-chart-line:var(--hm-line-default);
+  --hm-reuse-chart-muted:rgba(0,166,237,.20);
+  --hm-reuse-chart-primary:var(--hm-blue,#00A6ED);
+  --hm-reuse-chart-line:var(--hm-line-default,rgba(255,255,255,.20));
   width:100%;
   min-width:0;
   margin:0;
   padding:28px 0 0;
   border-top:1px solid var(--hm-reuse-chart-line);
   box-sizing:border-box;
-}
-
-.reuse-image-trust-chart figcaption{
-  margin:0 0 28px;
-  color:var(--hm-text-primary,#fff);
-  font-family:var(--hm-font-ko);
-  font-size:var(--hm-type-body,16px);
-  font-weight:300;
-  font-variation-settings:"wght" 300;
-  line-height:1.25;
-  letter-spacing:var(--hm-track-body);
-  word-break:keep-all;
 }
 
 .reuse-image-trust-chart__bar{
@@ -40,6 +28,7 @@
 }
 
 .reuse-image-trust-chart__segment{
+  --bar-color:var(--hm-reuse-chart-muted);
   position:relative;
   display:block;
   width:100%;
@@ -52,13 +41,17 @@
   box-sizing:border-box;
 }
 
+.reuse-image-trust-chart__segment.is-primary{
+  --bar-color:var(--hm-reuse-chart-primary);
+}
+
 .reuse-image-trust-chart__track{
   position:absolute;
   inset:0 auto 0 0;
   z-index:1;
-  width:var(--bar-width);
+  width:var(--bar-width,0%);
   height:100%;
-  background:var(--bar-color,var(--hm-blue));
+  background:var(--bar-color);
 }
 
 .reuse-image-trust-chart__fill{
@@ -119,22 +112,14 @@
 
 @media(max-width:780px){
   .reuse-image-trust-chart{
-    --hm-reuse-chart-height:44px;
     --hm-reuse-chart-gap:6px;
     padding-top:22px;
   }
-
-  .reuse-image-trust-chart figcaption{
-    margin-bottom:20px;
-    font-size:var(--hm-type-body,16px);
-  }
-
   .reuse-image-trust-chart__segment span{
     left:12px;
     bottom:9px;
     font-size:12px;
   }
-
   .reuse-image-trust-chart__segment strong{
     right:12px;
     bottom:8px;
