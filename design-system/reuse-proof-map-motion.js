@@ -1,6 +1,18 @@
 (() => {
   'use strict';
 
+  /*
+   * REUSE 03.1 must use the HIMART 02.6 / LANDING → ACTION graph as the source of truth.
+   * The graph markup, labels, values and data are intentionally copied verbatim.
+   * Do not create a REUSE-specific graph grammar here.
+   */
+  const evidence = document.querySelector('.reuse-image-evidence');
+  if (evidence) {
+    evidence.className = 'data-viz landing-stack';
+    evidence.setAttribute('aria-label', '기획전 시작 후 첫 다음 행동');
+    evidence.innerHTML = `<div class="landing-chart"><h4>기획전 시작 후 첫 다음 행동</h4><div class="stackbar"><i style="width:52.2%;--c:var(--hm-red)"></i><i style="width:27.6%;--c:var(--hm-blue)"></i><i style="width:9.3%;--c:var(--hm-newblue)"></i><i style="width:6.6%;--c:var(--hm-green)"></i><i style="width:4.3%;--c:var(--hm-yellow)"></i></div><div class="stacklabels"><div><b>52.2%</b>바로 종료</div><div><b>27.6%</b>기획전 재탐색 후 종료</div><div><b>9.3%</b>상품 도달</div><div><b>6.6%</b>검색/카테고리 도달</div></div></div><div class="landing-chart"><h4>PDP 이후 행동 · 2025 H1 vs 2026 H1</h4><div class="pdp-columns"><div class="pdp-col"><i style="height:93%;--c:var(--hm-blue)"></i><i style="height:100%;--c:var(--hm-yellow)"></i><span>PDP 이용<br>10.09M → 10.87M</span></div><div class="pdp-col"><i style="height:100%;--c:var(--hm-blue)"></i><i style="height:80%;--c:var(--hm-yellow)"></i><span>장바구니<br>227,462 → 181,913</span></div><div class="pdp-col"><i style="height:100%;--c:var(--hm-blue)"></i><i style="height:83%;--c:var(--hm-yellow)"></i><span>구매<br>333,664 → 277,167</span></div></div><div class="chart-legend"><span><i style="--c:var(--hm-blue)"></i>2025 H1</span><span><i style="--c:var(--hm-yellow)"></i>2026 H1</span></div></div>`;
+  }
+
   const map = document.querySelector('.reuse-proof-map');
   if (!map) return;
 
@@ -56,8 +68,6 @@
     });
   };
 
-  /* The centre connector no longer carries motion or graphics. Keep the authored
-     element only as the fixed spacing block between the two circle rows. */
   spacer.replaceChildren();
   ensureSweepRings();
 
@@ -89,12 +99,6 @@
 
   const resetCycle = () => {
     if (!active || !inFocus || document.hidden || reducedMotion.matches) return;
-
-    /* Keep the completed state untouched for six full seconds. As the seventh
-       second begins, install the reset transitions while every lower node is
-       still blue with black copy. Resolve that state first, then remove the
-       active animation so background, copy color and variable weight all ease
-       back to their base values instead of snapping. */
     map.classList.add(RESET_CLASS);
     void map.offsetWidth;
 
