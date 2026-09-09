@@ -1,0 +1,133 @@
+/*
+  HIMART REUSE 03.1 — Reference Horizontal Bars v1.0
+  New component rebuilt from the approved HIMART reference image.
+  Geometry mirrors the existing HIMART HOME horizontal-bar grammar:
+  110px label / flexible 10px track / 62px value / 18px row rhythm.
+  No legacy Reuse chart selectors are used.
+*/
+
+.reuse-reference-bars{
+  --reuse-ref-track:rgba(255,255,255,.07);
+  --reuse-ref-label:rgba(255,255,255,.44);
+  --reuse-ref-value:rgba(255,255,255,.84);
+  --reuse-ref-source:rgba(255,255,255,.28);
+  --reuse-ref-muted:rgba(0,166,237,.10);
+  --reuse-ref-primary:#00A6ED;
+  width:100%;
+  min-width:0;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+.reuse-reference-bars__rows{
+  display:grid;
+  width:100%;
+  gap:18px;
+  margin:0;
+  padding:0;
+}
+
+.reuse-reference-bars__row{
+  --reuse-ref-width:0%;
+  display:grid;
+  grid-template-columns:110px minmax(0,1fr) 62px;
+  gap:16px;
+  align-items:center;
+  width:100%;
+  min-width:0;
+  min-height:28px;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* Current Reuse data, normalized to a 70% reference ceiling just as the source graph
+   uses a 50% ceiling. This preserves the reference graph's comparative visual scale. */
+.reuse-reference-bars__row:nth-child(1){--reuse-ref-width:96.714%}
+.reuse-reference-bars__row:nth-child(2){--reuse-ref-width:83.714%}
+.reuse-reference-bars__row:nth-child(3){--reuse-ref-width:71.143%}
+.reuse-reference-bars__row:nth-child(4){--reuse-ref-width:69%}
+.reuse-reference-bars__row:nth-child(5){--reuse-ref-width:41.429%}
+.reuse-reference-bars__row:nth-child(6){--reuse-ref-width:15.571%}
+
+.reuse-reference-bars__label{
+  grid-column:1;
+  grid-row:1;
+  margin:0;
+  padding:0;
+  color:var(--reuse-ref-label);
+  font-family:var(--hm-font-ko);
+  font-size:var(--hm-type-body,16px);
+  font-weight:300;
+  line-height:1.3;
+  letter-spacing:var(--hm-track-body);
+  white-space:nowrap;
+  text-align:left;
+}
+
+.reuse-reference-bars__track{
+  grid-column:2;
+  grid-row:1;
+  position:relative;
+  width:100%;
+  height:10px;
+  min-width:0;
+  overflow:hidden;
+  background:var(--reuse-ref-track);
+}
+
+.reuse-reference-bars__fill{
+  display:block;
+  width:var(--reuse-ref-width);
+  height:100%;
+  background:var(--reuse-ref-muted);
+}
+
+.reuse-reference-bars__row.is-primary .reuse-reference-bars__fill{
+  background:var(--reuse-ref-primary);
+}
+
+.reuse-reference-bars__value{
+  grid-column:3;
+  grid-row:1;
+  margin:0;
+  padding:0;
+  color:var(--reuse-ref-value);
+  font-family:var(--hm-font-en-thin,var(--hm-font-en));
+  font-size:var(--hm-type-body,16px);
+  font-weight:300;
+  line-height:1.3;
+  letter-spacing:var(--hm-track-data-number);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  text-align:right;
+}
+
+.reuse-reference-bars__source{
+  width:100%;
+  margin:48px 0 0;
+  padding:18px 0 0;
+  border-top:1px solid var(--reuse-ref-track);
+  color:var(--reuse-ref-source);
+  font-family:var(--hm-font-ko);
+  font-size:var(--hm-type-source,10px);
+  font-weight:300;
+  line-height:1.5;
+  letter-spacing:var(--hm-track-base);
+  text-align:left;
+  box-sizing:border-box;
+}
+
+@media(max-width:780px){
+  .reuse-reference-bars__rows{gap:14px}
+  .reuse-reference-bars__row{
+    grid-template-columns:88px minmax(0,1fr) 52px;
+    gap:10px;
+    min-height:24px;
+  }
+  .reuse-reference-bars__label,
+  .reuse-reference-bars__value{font-size:13px}
+  .reuse-reference-bars__track{height:8px}
+  .reuse-reference-bars__source{margin-top:36px;padding-top:14px}
+}
