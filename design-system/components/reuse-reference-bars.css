@@ -1,5 +1,5 @@
 /*
-  HIMART REUSE 03.1 — Reference Horizontal Bars v1.1
+  HIMART REUSE 03.1 — Reference Horizontal Bars v1.2
   Geometry mirrors the existing HIMART HOME horizontal-bar grammar:
   110px label / flexible 10px track / 62px value / 18px row rhythm.
   Bars fill sequentially when the chart enters the viewport focus area.
@@ -10,7 +10,7 @@
   --reuse-ref-label:rgba(255,255,255,.44);
   --reuse-ref-value:rgba(255,255,255,.84);
   --reuse-ref-source:rgba(255,255,255,.28);
-  --reuse-ref-muted:rgba(255,255,255,.15);
+  --reuse-ref-muted:rgba(0,166,237,.15);
   --reuse-ref-primary:#00A6ED;
   width:100%;
   min-width:0;
