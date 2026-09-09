@@ -1,226 +1,29 @@
 /* HIMART REUSE 02.1 — anxiety-to-proof transfer motion. */
+@property --reuse-proof-copy-color{syntax:"<color>";inherits:false;initial-value:#00a6ed}
+html body.reuse-current .reuse-proof-map{--reuse-proof-lane-duration:2.205s}
+html body.reuse-current .reuse-proof-map__node{position:relative;isolation:isolate;overflow:visible}
+html body.reuse-current .reuse-proof-map__node>h4{position:relative;z-index:3}
+html body.reuse-current .reuse-proof-sweep{position:absolute;z-index:4;inset:-1px;display:block;width:calc(100% + 2px);height:calc(100% + 2px);border-radius:50%;pointer-events:none;opacity:0;transform:rotate(0deg);transform-origin:50% 50%;background:conic-gradient(from 150deg,rgba(255,255,255,0) 0deg,rgba(255,255,255,.10) 7deg,rgba(255,255,255,.34) 15deg,rgba(255,255,255,.72) 23deg,rgba(255,255,255,1) 30deg,rgba(255,255,255,.72) 37deg,rgba(255,255,255,.34) 45deg,rgba(255,255,255,.10) 53deg,rgba(255,255,255,0) 60deg,rgba(255,255,255,0) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));filter:drop-shadow(0 0 3.15px rgba(255,255,255,1)) drop-shadow(0 0 8.4px rgba(255,255,255,.525)) drop-shadow(0 0 15.75px rgba(255,255,255,.252))}
+@keyframes reuse-proof-lane-ring{0%{transform:rotate(0deg);opacity:0}9.92%{transform:rotate(72deg);opacity:.625}15.87%{opacity:1}19.84%{transform:rotate(158.4deg);opacity:1}29.76%{transform:rotate(255.6deg);opacity:1}31.13%{transform:rotate(270deg);opacity:1}33.98%{transform:rotate(300deg);opacity:.5}36.83%{transform:rotate(330deg);opacity:0}39.68%{transform:rotate(360deg);opacity:0}100%{transform:rotate(360deg);opacity:0}}
+html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep{animation:reuse-proof-lane-ring var(--reuse-proof-lane-duration) linear 1 both}
 
-@property --reuse-proof-copy-color{
-  syntax:"<color>";
-  inherits:false;
-  initial-value:#00a6ed;
-}
+/* 02.1 — four continuous vertical connectors. The existing SVG remains in the DOM but is hidden; these connectors are rendered as one continuous shaft + arrowhead system. */
+html body.reuse-current .reuse-proof-map__arrow{position:relative;display:block!important;width:100%!important;height:64px!important;flex:0 0 64px!important;margin:0!important;padding:0!important;pointer-events:none!important;background-image:linear-gradient(rgba(255,255,255,.30),rgba(255,255,255,.30)),linear-gradient(rgba(255,255,255,.30),rgba(255,255,255,.30)),linear-gradient(rgba(255,255,255,.30),rgba(255,255,255,.30)),linear-gradient(rgba(255,255,255,.30),rgba(255,255,255,.30));background-repeat:no-repeat;background-size:1px 100%,1px 100%,1px 100%,1px 100%;background-position:12.5% 0,37.5% 0,62.5% 0,87.5% 0}
+html body.reuse-current .reuse-proof-map__arrow>svg{display:none!important}
+html body.reuse-current .reuse-proof-map__arrow::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath d='M2 3 L20 30 L38 3' fill='none' stroke='white' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath d='M2 3 L20 30 L38 3' fill='none' stroke='white' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath d='M2 3 L20 30 L38 3' fill='none' stroke='white' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E"),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='32' viewBox='0 0 40 32'%3E%3Cpath d='M2 3 L20 30 L38 3' fill='none' stroke='white' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:40px 32px,40px 32px,40px 32px,40px 32px;background-position:12.5% bottom,37.5% bottom,62.5% bottom,87.5% bottom}
 
-html body.reuse-current .reuse-proof-map{
-  --reuse-proof-lane-duration:2.205s;
-}
-
-html body.reuse-current .reuse-proof-map__node{
-  position:relative;
-  isolation:isolate;
-  overflow:visible;
-}
-
-html body.reuse-current .reuse-proof-map__node > h4{
-  position:relative;
-  z-index:3;
-}
-
-html body.reuse-current .reuse-proof-sweep{
-  position:absolute;
-  z-index:4;
-  inset:-1px;
-  display:block;
-  width:calc(100% + 2px);
-  height:calc(100% + 2px);
-  border-radius:50%;
-  pointer-events:none;
-  opacity:0;
-  transform:rotate(0deg);
-  transform-origin:50% 50%;
-  background:conic-gradient(from 150deg,rgba(255,255,255,0) 0deg,rgba(255,255,255,.10) 7deg,rgba(255,255,255,.34) 15deg,rgba(255,255,255,.72) 23deg,rgba(255,255,255,1) 30deg,rgba(255,255,255,.72) 37deg,rgba(255,255,255,.34) 45deg,rgba(255,255,255,.10) 53deg,rgba(255,255,255,0) 60deg,rgba(255,255,255,0) 360deg);
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
-  filter:drop-shadow(0 0 3.15px rgba(255,255,255,1)) drop-shadow(0 0 8.4px rgba(255,255,255,.525)) drop-shadow(0 0 15.75px rgba(255,255,255,.252));
-}
-
-@keyframes reuse-proof-lane-ring{
-  0%{transform:rotate(0deg);opacity:0}
-  9.92%{transform:rotate(72deg);opacity:.625}
-  15.87%{opacity:1}
-  19.84%{transform:rotate(158.4deg);opacity:1}
-  29.76%{transform:rotate(255.6deg);opacity:1}
-  31.13%{transform:rotate(270deg);opacity:1}
-  33.98%{transform:rotate(300deg);opacity:.5}
-  36.83%{transform:rotate(330deg);opacity:0}
-  39.68%{transform:rotate(360deg);opacity:0}
-  100%{transform:rotate(360deg);opacity:0}
-}
-
-html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep{
-  animation:reuse-proof-lane-ring var(--reuse-proof-lane-duration) linear 1 both;
-}
-
-/* 02.1 connector area. The old centre SVG is intentionally replaced by four continuous vertical connectors. */
-html body.reuse-current .reuse-proof-map__arrow{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  align-items:stretch;
-  justify-items:center;
-  width:100%!important;
-  height:64px!important;
-  flex:0 0 64px!important;
-  pointer-events:none!important;
-}
-html body.reuse-current .reuse-proof-map__arrow > svg{
-  display:none!important;
-}
-html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector{
-  display:block!important;
-  width:40px;
-  height:64px;
-  overflow:visible;
-}
-html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector line{
-  stroke:rgba(255,255,255,.30);
-  stroke-width:1;
-  vector-effect:non-scaling-stroke;
-}
-html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector polyline{
-  fill:none;
-  stroke:rgba(255,255,255,.30);
-  stroke-width:1;
-  vector-effect:non-scaling-stroke;
-  stroke-linecap:square;
-  stroke-linejoin:miter;
-}
-html body.reuse-current .reuse-proof-connector{
-  pointer-events:none!important;
-}
-
-html body.reuse-current .reuse-proof-map__node--solution{
-  background-color:#000;
-  border-color:var(--hm-blue)!important;
-}
-
-html body.reuse-current .reuse-proof-map__node--solution::before{
-  content:none!important;
-}
-
-html body.reuse-current .reuse-proof-map__node--solution::after{
-  content:"";
-  position:absolute;
-  z-index:4;
-  inset:-1px;
-  display:block;
-  width:calc(100% + 2px);
-  height:calc(100% + 2px);
-  border-radius:50%;
-  pointer-events:none;
-  opacity:0;
-  transform:rotate(0deg);
-  transform-origin:50% 50%;
-  background:conic-gradient(from -30deg,rgba(128,211,246,0) 0deg,rgba(128,211,246,.10) 7deg,rgba(128,211,246,.34) 15deg,rgba(128,211,246,.72) 23deg,rgba(128,211,246,1) 30deg,rgba(128,211,246,.72) 37deg,rgba(128,211,246,.34) 45deg,rgba(128,211,246,.10) 53deg,rgba(128,211,246,0) 60deg,rgba(128,211,246,0) 360deg);
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
-  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));
-  filter:drop-shadow(0 0 3.15px rgba(128,211,246,1)) drop-shadow(0 0 8.4px rgba(128,211,246,.525)) drop-shadow(0 0 15.75px rgba(128,211,246,.252));
-}
-
-@keyframes reuse-proof-lower-ring{
-  0%,36.82%{transform:rotate(0deg);opacity:0}
-  36.83%{transform:rotate(0deg);opacity:0}
-  39.2%{opacity:.45}
-  42.2%{opacity:1}
-  44.77%{transform:rotate(-117deg);opacity:1}
-  52.71%{transform:rotate(-216deg);opacity:1}
-  58%{transform:rotate(-270deg);opacity:1}
-  60.64%{transform:rotate(-297deg);opacity:1}
-  68.58%{transform:rotate(-360deg);opacity:1}
-  68.63%,100%{transform:rotate(-360deg);opacity:0}
-}
-
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after{
-  animation:reuse-proof-lower-ring var(--reuse-proof-lane-duration) linear 1 both;
-}
-
-html body.reuse-current .reuse-proof-map__node--solution h4{
-  position:relative;
-  z-index:3;
-  --reuse-proof-copy-color:#00a6ed;
-  color:var(--reuse-proof-copy-color)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300;
-}
-
-@keyframes reuse-proof-lane-fill{
-  0%,57.99%{background-color:#000}
-  58%{background-color:#000;animation-timing-function:cubic-bezier(.14,.72,.24,1)}
-  97.4%,100%{background-color:var(--hm-blue)}
-}
-
-@keyframes reuse-proof-lane-copy{
-  0%,57.99%{--reuse-proof-copy-color:#00a6ed;font-variation-settings:"wght" 300}
-  58%{--reuse-proof-copy-color:#00a6ed;font-variation-settings:"wght" 300;animation-timing-function:cubic-bezier(.14,.72,.24,1)}
-  66%{--reuse-proof-copy-color:#000;font-variation-settings:"wght" 300}
-  100%{--reuse-proof-copy-color:#000;font-variation-settings:"wght" 300}
-}
-
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running{
-  animation:reuse-proof-lane-fill var(--reuse-proof-lane-duration) linear 1 both;
-}
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
-  animation:reuse-proof-lane-copy var(--reuse-proof-lane-duration) linear 1 both;
-}
-
-html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{
-  transition:background-color 2000ms cubic-bezier(.42,0,.58,1)!important;
-}
-html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after{
-  opacity:0!important;
-  transition:opacity 320ms ease!important;
-}
-html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{
-  --reuse-proof-copy-color:#00a6ed;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300;
-  transition:--reuse-proof-copy-color 2000ms cubic-bezier(.42,0,.58,1),font-variation-settings 2000ms cubic-bezier(.42,0,.58,1)!important;
-}
-
-@media(max-width:780px){
-  html body.reuse-current .reuse-proof-map__arrow{
-    height:64px!important;
-    flex-basis:64px!important;
-  }
-  html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector{
-    width:40px;
-    height:64px;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-  html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep,
-  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running,
-  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after,
-  html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{
-    animation:none!important;
-  }
-  html body.reuse-current .reuse-proof-map__node--solution,
-  html body.reuse-current .reuse-proof-map__node--solution h4{
-    transition:none!important;
-  }
-}
-
-/* Final connector authority: preserve a continuous shaft and arrowhead. */
-html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector{
-  display:block!important;
-  width:40px!important;
-  height:64px!important;
-}
-html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector line{
-  display:block!important;
-  stroke:rgba(255,255,255,.30)!important;
-  stroke-width:1!important;
-}
-html body.reuse-current .reuse-proof-map__arrow > .reuse-proof-connector polyline{
-  display:block!important;
-  fill:none!important;
-  stroke:rgba(255,255,255,.30)!important;
-  stroke-width:1!important;
-  vector-effect:non-scaling-stroke!important;
-}
+html body.reuse-current .reuse-proof-map__node--solution{background-color:#000;border-color:var(--hm-blue)!important}
+html body.reuse-current .reuse-proof-map__node--solution::before{content:none!important}
+html body.reuse-current .reuse-proof-map__node--solution::after{content:"";position:absolute;z-index:4;inset:-1px;display:block;width:calc(100% + 2px);height:calc(100% + 2px);border-radius:50%;pointer-events:none;opacity:0;transform:rotate(0deg);transform-origin:50% 50%;background:conic-gradient(from -30deg,rgba(128,211,246,0) 0deg,rgba(128,211,246,.10) 7deg,rgba(128,211,246,.34) 15deg,rgba(128,211,246,.72) 23deg,rgba(128,211,246,1) 30deg,rgba(128,211,246,.72) 37deg,rgba(128,211,246,.34) 45deg,rgba(128,211,246,.10) 53deg,rgba(128,211,246,0) 60deg,rgba(128,211,246,0) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));filter:drop-shadow(0 0 3.15px rgba(128,211,246,1)) drop-shadow(0 0 8.4px rgba(128,211,246,.525)) drop-shadow(0 0 15.75px rgba(128,211,246,.252))}
+@keyframes reuse-proof-lower-ring{0%,36.82%{transform:rotate(0deg);opacity:0}36.83%{transform:rotate(0deg);opacity:0}39.2%{opacity:.45}42.2%{opacity:1}44.77%{transform:rotate(-117deg);opacity:1}52.71%{transform:rotate(-216deg);opacity:1}58%{transform:rotate(-270deg);opacity:1}60.64%{transform:rotate(-297deg);opacity:1}68.58%{transform:rotate(-360deg);opacity:1}68.63%,100%{transform:rotate(-360deg);opacity:0}}
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after{animation:reuse-proof-lower-ring var(--reuse-proof-lane-duration) linear 1 both}
+html body.reuse-current .reuse-proof-map__node--solution h4{position:relative;z-index:3;--reuse-proof-copy-color:#00a6ed;color:var(--reuse-proof-copy-color)!important;font-family:var(--hm-font-ko)!important;font-weight:300!important;font-variation-settings:"wght" 300}
+@keyframes reuse-proof-lane-fill{0%,57.99%{background-color:#000}58%{background-color:#000;animation-timing-function:cubic-bezier(.14,.72,.24,1)}97.4%,100%{background-color:var(--hm-blue)}}
+@keyframes reuse-proof-lane-copy{0%,57.99%{--reuse-proof-copy-color:#00a6ed;font-variation-settings:"wght" 300}58%{--reuse-proof-copy-color:#00a6ed;font-variation-settings:"wght" 300;animation-timing-function:cubic-bezier(.14,.72,.24,1)}66%{--reuse-proof-copy-color:#000;font-variation-settings:"wght" 300}100%{--reuse-proof-copy-color:#000;font-variation-settings:"wght" 300}}
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running{animation:reuse-proof-lane-fill var(--reuse-proof-lane-duration) linear 1 both}
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{animation:reuse-proof-lane-copy var(--reuse-proof-lane-duration) linear 1 both}
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution{transition:background-color 2000ms cubic-bezier(.42,0,.58,1)!important}
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after{opacity:0!important;transition:opacity 320ms ease!important}
+html body.reuse-current .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution h4{--reuse-proof-copy-color:#00a6ed;font-weight:300!important;font-variation-settings:"wght" 300;transition:--reuse-proof-copy-color 2000ms cubic-bezier(.42,0,.58,1),font-variation-settings 2000ms cubic-bezier(.42,0,.58,1)!important}
+@media(max-width:780px){html body.reuse-current .reuse-proof-map__arrow{height:64px!important;flex-basis:64px!important} }
+@media(prefers-reduced-motion:reduce){html body.reuse-current .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep,html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running,html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after,html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running h4{animation:none!important}html body.reuse-current .reuse-proof-map__node--solution,html body.reuse-current .reuse-proof-map__node--solution h4{transition:none!important}}
