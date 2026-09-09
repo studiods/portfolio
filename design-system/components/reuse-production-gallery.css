@@ -1,7 +1,6 @@
 /* HIMART REUSE 03 — production storytelling galleries.
-   03.3 uses four independent 16:9 galleries with persistent captions.
-   Gallery media auto-advances after 2.5s: the current image exits right-to-left while
-   the next image grows from 95% scale under a 20% black veil to full size / 0% veil. */
+   03.3 uses three independent 16:9 galleries with persistent captions.
+   Galleries 01–02 roll media; Gallery 03 is an explicit-play AI video playlist. */
 
 /* 03.2 image-order flow keeps the 02.2 circle grammar, but its sequence numbers are blue. */
 html body.reuse-current .reuse-image-order-flow .reuse-confidence-node > span{
@@ -9,8 +8,7 @@ html body.reuse-current .reuse-image-order-flow .reuse-confidence-node > span{
   color:var(--hm-blue)!important;
 }
 
-/* 03.3: four independent 16:9 galleries. Each gallery owns one persistent caption;
-   only the media changes when the gallery advances. */
+/* 03.3: three independent 16:9 galleries. Each gallery owns one persistent caption. */
 html body.reuse-current .reuse-production-gallery-list{
   display:flex;
   flex-direction:column;
@@ -53,7 +51,7 @@ html body.reuse-current .reuse-production-gallery__slide{
   will-change:transform,opacity;
 }
 
-/* 20% black veil belongs to the image layer only, never to the persistent caption. */
+/* 20% black veil belongs to the rolling image layer only. */
 html body.reuse-current .reuse-production-gallery__slide::after{
   content:"";
   position:absolute;
@@ -178,7 +176,7 @@ html body.reuse-current .reuse-production-gallery__copy p{
   word-break:keep-all;
 }
 
-/* Head-only line arrows. The 48px hit area is invisible; only the 1px chevron is drawn. */
+/* Head-only line arrows for rolling Galleries 01–02. */
 html body.reuse-current .reuse-production-gallery__nav{
   position:absolute;
   z-index:5;
@@ -231,6 +229,124 @@ html body.reuse-current .reuse-production-gallery__status{
   letter-spacing:var(--hm-track-note);
 }
 
+/* Gallery 03 — explicit-play AI video playlist. */
+html body.reuse-current .reuse-production-gallery--video-player .reuse-video-player__slide{
+  z-index:2;
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:none;
+}
+html body.reuse-current .reuse-production-gallery--video-player .reuse-video-player__slide::after{display:none}
+html body.reuse-current .reuse-production-gallery--video-player .reuse-video-player__media video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* 30% black veil belongs only to the video plane; caption stays above it. */
+html body.reuse-current .reuse-production-gallery--video-player .reuse-video-player__veil{
+  position:absolute;
+  z-index:4;
+  inset:0;
+  background:rgba(0,0,0,.30);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .12s ease;
+}
+html body.reuse-current .reuse-production-gallery--video-player.is-video-idle .reuse-video-player__veil,
+html body.reuse-current .reuse-production-gallery--video-player.is-video-paused .reuse-video-player__veil,
+html body.reuse-current .reuse-production-gallery--video-player.is-video-playing:hover .reuse-video-player__veil{
+  opacity:1;
+}
+
+html body.reuse-current .reuse-production-gallery--video-player .reuse-production-gallery__copy{
+  z-index:5;
+}
+html body.reuse-current .reuse-production-gallery--video-player .reuse-production-gallery__status{
+  z-index:7;
+}
+html body.reuse-current .reuse-production-gallery--video-player > .reuse-production-gallery__nav[hidden]{
+  display:none!important;
+}
+
+html body.reuse-current .reuse-video-player__controls{
+  position:absolute;
+  z-index:6;
+  inset:0;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .12s ease;
+}
+html body.reuse-current .reuse-production-gallery--video-player.is-video-idle .reuse-video-player__controls,
+html body.reuse-current .reuse-production-gallery--video-player.is-video-paused .reuse-video-player__controls,
+html body.reuse-current .reuse-production-gallery--video-player.is-video-playing:hover .reuse-video-player__controls{
+  opacity:1;
+}
+
+html body.reuse-current .reuse-video-player__controls button{
+  position:absolute;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  cursor:pointer;
+  pointer-events:auto;
+  -webkit-tap-highlight-color:transparent;
+}
+html body.reuse-current .reuse-video-player__controls button:focus-visible{
+  outline:1px solid rgba(255,255,255,.7);
+  outline-offset:4px;
+}
+
+html body.reuse-current .reuse-video-player__toggle{
+  top:50%;
+  left:50%;
+  width:72px;
+  height:72px;
+  transform:translate(-50%,-50%);
+}
+html body.reuse-current .reuse-video-player__toggle svg{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:48px;
+  height:48px;
+  transform:translate(-50%,-50%);
+  fill:none;
+  stroke:#fff;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+html body.reuse-current .reuse-video-player__icon--pause{display:none}
+html body.reuse-current .reuse-production-gallery--video-player.is-video-playing .reuse-video-player__icon--play{display:none}
+html body.reuse-current .reuse-production-gallery--video-player.is-video-playing .reuse-video-player__icon--pause{display:block}
+
+html body.reuse-current .reuse-video-player__skip{
+  top:50%;
+  width:72px;
+  height:96px;
+  transform:translateY(-50%);
+}
+html body.reuse-current .reuse-video-player__skip--prev{left:28px}
+html body.reuse-current .reuse-video-player__skip--next{right:28px}
+html body.reuse-current .reuse-video-player__skip svg{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:44px;
+  height:44px;
+  transform:translate(-50%,-50%);
+  fill:none;
+  stroke:#fff;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
 @media(max-width:780px){
   html body.reuse-current .reuse-production-gallery-list{gap:0}
   html body.reuse-current .reuse-production-gallery__copy{
@@ -269,11 +385,31 @@ html body.reuse-current .reuse-production-gallery__status{
     bottom:18px;
     font-size:10px;
   }
+  html body.reuse-current .reuse-video-player__toggle{
+    width:58px;
+    height:58px;
+  }
+  html body.reuse-current .reuse-video-player__toggle svg{
+    width:38px;
+    height:38px;
+  }
+  html body.reuse-current .reuse-video-player__skip{
+    width:52px;
+    height:72px;
+  }
+  html body.reuse-current .reuse-video-player__skip--prev{left:6px}
+  html body.reuse-current .reuse-video-player__skip--next{right:6px}
+  html body.reuse-current .reuse-video-player__skip svg{
+    width:34px;
+    height:34px;
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current .reuse-production-gallery__slide,
-  html body.reuse-current .reuse-production-gallery__slide::after{
+  html body.reuse-current .reuse-production-gallery__slide::after,
+  html body.reuse-current .reuse-video-player__veil,
+  html body.reuse-current .reuse-video-player__controls{
     transition:none!important;
   }
 }
