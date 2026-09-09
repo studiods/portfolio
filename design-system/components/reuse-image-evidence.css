@@ -1,7 +1,20 @@
-/* HIMART stacked-bar evidence chart v2.0
+/* HIMART stacked-bar evidence chart v2.1
    Contract: blue-family segments only. Major segments carry a Korean label above
    the value inside the bar; minor segments are identified in the 32px-below
-   2px-line legend. This is the reusable rule for the Reuse 03.1 evidence chart. */
+   2px-line legend. This is the reusable rule for the Reuse 03.1 evidence chart.
+
+   Defensive bridge for the current Reuse page:
+   editorial-layout-contract.css is the architectural final authority, but older wide
+   alignment resets can still arrive later in the cascade from a cached asset. The
+   selector below is intentionally more specific so 03.1 / 03.2 / 03.3 always retain
+   the canonical medium-title divider + 40px line-to-title gap on the current v4 asset.
+*/
+
+html body.himart-page-body.hm-wide-editorial-test.reuse-current
+#live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-ds-subsection{
+  border-top:1px solid var(--hm-line-weak)!important;
+  padding-top:var(--hm-space-component,40px)!important;
+}
 
 html body.reuse-current #journey .reuse-image-evidence.landing-stack{
   display:block!important;
