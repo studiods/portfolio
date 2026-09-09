@@ -59,3 +59,8 @@ html body.himart-page-body #live-main #direction .design-rule{
 html body.himart-page-body #live-main #direction .design-rule > article{
   padding-top:0!important;
 }
+/* Some source variants render FAMILIARITY-style rules as independent principle cards,
+   where the divider belongs to each article rather than the parent design-rule. */
+html body.himart-page-body #live-main #direction .principle-grid > .principle-item{
+  padding-top:var(--hm-rule-to-content-gap)!important;
+}
