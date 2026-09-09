@@ -1,9 +1,8 @@
 /*
-  HIMART REUSE 03.1 — Reference Horizontal Bars v1.0
-  New component rebuilt from the approved HIMART reference image.
+  HIMART REUSE 03.1 — Reference Horizontal Bars v1.1
   Geometry mirrors the existing HIMART HOME horizontal-bar grammar:
   110px label / flexible 10px track / 62px value / 18px row rhythm.
-  No legacy Reuse chart selectors are used.
+  Bars fill sequentially when the chart enters the viewport focus area.
 */
 
 .reuse-reference-bars{
@@ -11,7 +10,7 @@
   --reuse-ref-label:rgba(255,255,255,.44);
   --reuse-ref-value:rgba(255,255,255,.84);
   --reuse-ref-source:rgba(255,255,255,.28);
-  --reuse-ref-muted:rgba(0,166,237,.10);
+  --reuse-ref-muted:rgba(255,255,255,.15);
   --reuse-ref-primary:#00A6ED;
   width:100%;
   min-width:0;
@@ -82,11 +81,26 @@
   width:var(--reuse-ref-width);
   height:100%;
   background:var(--reuse-ref-muted);
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .72s cubic-bezier(.22,1,.36,1);
+  transition-delay:0s;
+  will-change:transform;
 }
 
 .reuse-reference-bars__row.is-primary .reuse-reference-bars__fill{
   background:var(--reuse-ref-primary);
 }
+
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__fill{
+  transform:scaleX(1);
+}
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__row:nth-child(1) .reuse-reference-bars__fill{transition-delay:.00s}
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__row:nth-child(2) .reuse-reference-bars__fill{transition-delay:.12s}
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__row:nth-child(3) .reuse-reference-bars__fill{transition-delay:.24s}
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__row:nth-child(4) .reuse-reference-bars__fill{transition-delay:.36s}
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__row:nth-child(5) .reuse-reference-bars__fill{transition-delay:.48s}
+.reuse-reference-bars.is-bars-focused .reuse-reference-bars__row:nth-child(6) .reuse-reference-bars__fill{transition-delay:.60s}
 
 .reuse-reference-bars__value{
   grid-column:3;
@@ -130,4 +144,11 @@
   .reuse-reference-bars__value{font-size:13px}
   .reuse-reference-bars__track{height:8px}
   .reuse-reference-bars__source{margin-top:36px;padding-top:14px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .reuse-reference-bars__fill{
+    transform:scaleX(1)!important;
+    transition:none!important;
+  }
 }
