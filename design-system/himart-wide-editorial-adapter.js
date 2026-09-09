@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v6
+  HIMART Wide Editorial adapter — TEST ONLY v7
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
@@ -10,6 +10,11 @@
 
   v6 removes the retired 2025–early-2026 review / SNS / community / internal VOC
   provenance copy from the Himart brand chapter. Other evidence source notes remain intact.
+
+  v7 makes each chapter start a single visual event: the left sticky major title and the
+  first right-rail content block are revealed from one IntersectionObserver checkpoint.
+  Geometry is owned by CSS and remains transform-free at chapter start, so their authored
+  top line cannot drift during the scroll-in transition.
 */
 (() => {
   'use strict';
@@ -48,6 +53,52 @@
     });
   };
 
+  const mountChapterStartPairSync = sections => {
+    if (window.__hmWideChapterPairSyncMounted) return;
+    window.__hmWideChapterPairSyncMounted = true;
+
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const pairs = sections.map(section => {
+      const wrap = section.querySelector(':scope > .hm-wrap');
+      const head = wrap?.querySelector(':scope > .hm-section-head');
+      const rail = wrap?.querySelector(':scope > .hm-wide-right-rail');
+      const first = rail?.firstElementChild || null;
+      if (!head || !first) return null;
+      section.dataset.hmWidePairSynced = '1';
+      return {section, head, first};
+    }).filter(Boolean);
+
+    const revealPair = pair => {
+      if (!pair || pair.section.classList.contains('is-wide-chapter-pair-visible')) return;
+      requestAnimationFrame(() => {
+        pair.head.classList.add('is-visible', 'is-wide-rise-in');
+        pair.first.classList.add('is-visible', 'is-wide-rise-in');
+        pair.section.classList.add('is-wide-chapter-pair-visible');
+      });
+    };
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      pairs.forEach(revealPair);
+      return;
+    }
+
+    const pairByAnchor = new WeakMap();
+    const observer = new IntersectionObserver((entries, io) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const pair = pairByAnchor.get(entry.target);
+        if (!pair) return;
+        revealPair(pair);
+        io.unobserve(entry.target);
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+
+    pairs.forEach(pair => {
+      pairByAnchor.set(pair.first, pair);
+      observer.observe(pair.first);
+    });
+  };
+
   const mount = () => {
     if (!isTargetPage()) return;
     if (window.__hmWideHimartAdapterMounted) {
@@ -82,6 +133,10 @@
 
     /* Defensive second pass in case a late source migration landed during grouping. */
     removeRetiredVoiceSourceCopy();
+
+    /* One observer checkpoint owns both sides of every chapter start. This is mounted
+       before the generic animation rescan so the visible pair shares the same frame. */
+    mountChapterStartPairSync(sections);
 
     window.__hmWideHimartAdapterMounted = true;
     window.__hmAnimationScan?.();
