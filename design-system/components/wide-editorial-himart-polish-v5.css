@@ -1,4 +1,4 @@
-/* HIMART Wide Editorial polish — TEST ONLY v5.2
+/* HIMART Wide Editorial polish — TEST ONLY v5.3
    Keeps the REUSE wide contract intact while correcting Himart-specific rhythm.
    Canonical medium-title divider spacing consumes --hm-space-component from tokens.css.
 */
@@ -23,6 +23,22 @@
     padding-top:var(--hm-space-component)!important;
   }
 
+  /* Chapter-start baseline lock.
+     The first right-rail block owns the divider itself, so it must never carry any
+     margin or vertical reveal translation above that divider. The line therefore sits
+     on the exact same grid start as the left major-title rail. The 40px divider →
+     medium-title inset remains intact below the line. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
+    margin-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal{
+    transform:none!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal.is-visible,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal.is-in{
+    animation:hm-wide-first-rail-fade .4s ease both!important;
+  }
+
   /* STANDARD UX / HIMART DIFFERENCE use article-level top rules. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child > article,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule > article{
@@ -36,6 +52,11 @@
     overflow-wrap:normal!important;
     text-wrap:pretty!important;
   }
+}
+
+@keyframes hm-wide-first-rail-fade{
+  from{opacity:.88}
+  to{opacity:1}
 }
 
 /* Current Himart wide-test footer only: remove the upper divider and tighten label → case link. */
