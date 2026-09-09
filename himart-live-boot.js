@@ -1,5 +1,14 @@
 (() => {
   'use strict';
+
+  /* REUSE: remove an accidental literal "\\n" text node that can be promoted
+     from the document head into the top-left of the rendered body by the HTML parser. */
+  if(document.body.classList.contains('reuse-current')){
+    [...document.body.childNodes].forEach(node=>{
+      if(node.nodeType===Node.TEXT_NODE && node.nodeValue.trim()==='\\n') node.remove();
+    });
+  }
+
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const reveal=[...document.querySelectorAll('.hm-reveal')];
   if(reduced) reveal.forEach(n=>n.classList.add('is-in'));
