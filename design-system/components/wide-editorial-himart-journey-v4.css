@@ -1,4 +1,4 @@
-/* HIMART Wide Editorial — fluid journey geometry v5
+/* HIMART Wide Editorial — fluid journey geometry v5.1
    One responsive circle contract for 03.1 JOURNEY FLOW, 03.1 JOURNEY SIGNALS
    and 03.2 JOURNEY REDESIGN. Mobile <=860px keeps the existing vertical path. */
 
@@ -30,17 +30,17 @@
     min-width:0!important;
   }
 
-  /* Expanded SIGNALS / REDESIGN: the same no-overflow contract. */
-  html body.himart-wide-test-page #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row.row4{
-    display:flex!important;
-    flex-wrap:nowrap!important;
-    align-items:center!important;
-    justify-content:stretch!important;
-    gap:var(--hm-journey-gap)!important;
-    width:100%!important;
-    min-width:0!important;
-  }
-  html body.himart-wide-test-page #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-row.row3{
+  /* Expanded SIGNALS / REDESIGN: the same no-overflow contract. The current main
+     JOURNEY FLOW also carries journey-redesign-subsection for legacy compatibility,
+     so :not(.journey-flow-block) keeps that main row on the grid above. */
+  html body.himart-wide-test-page #journey :is(
+    .journey-signal-subsection,
+    .journey-redesign-subsection:not(.journey-flow-block)
+  ) .flow-row.row4,
+  html body.himart-wide-test-page #journey :is(
+    .journey-signal-subsection,
+    .journey-redesign-subsection:not(.journey-flow-block)
+  ) .flow-row.row3{
     display:flex!important;
     flex-wrap:nowrap!important;
     align-items:center!important;
@@ -166,7 +166,10 @@
   }
 
   /* Legacy semantic line widths were authored in fixed pixels. */
-  html body.himart-wide-test-page #journey :is(.journey-signal-subsection,.journey-redesign-subsection) .flow-group{
+  html body.himart-wide-test-page #journey :is(
+    .journey-signal-subsection,
+    .journey-redesign-subsection:not(.journey-flow-block)
+  ) .flow-group{
     --line-left:0px!important;
     --line-width:100%!important;
     min-width:0!important;
