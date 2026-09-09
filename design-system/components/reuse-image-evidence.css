@@ -78,10 +78,10 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>di
   padding:0 16px!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:var(--hm-chart-inbar-label-size)!important;
+  font-size:var(--hm-chart-inbar-label-size,22px)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
-  line-height:var(--hm-chart-inbar-label-leading)!important;
+  line-height:var(--hm-chart-inbar-label-leading,1.25)!important;
   letter-spacing:var(--hm-track-body)!important;
   text-align:center!important;
   white-space:nowrap!important;
@@ -101,10 +101,10 @@ html body.reuse-current #journey .reuse-image-evidence .stackbar>.stacklabels>di
   margin:6px 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:var(--hm-chart-inbar-value-size)!important;
+  font-size:var(--hm-chart-inbar-value-size,32px)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
-  line-height:var(--hm-chart-inbar-value-leading)!important;
+  line-height:var(--hm-chart-inbar-value-leading,1)!important;
   letter-spacing:var(--hm-track-data-number)!important;
 }
 
@@ -113,14 +113,14 @@ html body.reuse-current #journey .reuse-image-evidence .stacklegend{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:16px!important;
   width:100%!important;
-  margin-top:var(--hm-chart-legend-gap)!important;
+  margin-top:var(--hm-chart-legend-gap,32px)!important;
 }
 
 html body.reuse-current #journey .reuse-image-evidence .stacklegend__item{
   display:block!important;
   min-width:0!important;
   padding-top:10px!important;
-  border-top:var(--hm-chart-legend-line) solid var(--c)!important;
+  border-top:var(--hm-chart-legend-line,2px) solid var(--c)!important;
   color:rgba(255,255,255,.7)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:14px!important;
