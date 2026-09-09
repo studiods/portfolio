@@ -12,7 +12,7 @@ html body.reuse-current .reuse-image-order-flow .reuse-confidence-node > span{
 html body.reuse-current .reuse-production-gallery-list{
   display:flex;
   flex-direction:column;
-  gap:32px;
+  gap:0;
   width:100%;
 }
 
@@ -77,9 +77,9 @@ html body.reuse-current .reuse-production-gallery::after{
 html body.reuse-current .reuse-production-gallery__copy{
   position:absolute;
   z-index:3;
-  left:32px;
-  bottom:32px;
-  width:min(760px,calc(100% - 64px));
+  left:40px;
+  bottom:40px;
+  width:min(760px,calc(100% - 80px));
   text-align:left;
   pointer-events:none;
 }
@@ -175,12 +175,12 @@ html body.reuse-current .reuse-production-gallery__status{
 
 @media(max-width:780px){
   html body.reuse-current .reuse-production-gallery-list{
-    gap:32px;
+    gap:0;
   }
   html body.reuse-current .reuse-production-gallery__copy{
-    left:18px;
-    bottom:18px;
-    width:calc(100% - 36px);
+    left:40px;
+    bottom:40px;
+    width:calc(100% - 80px);
   }
   html body.reuse-current .reuse-production-gallery__number{
     margin-bottom:7px;
