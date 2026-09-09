@@ -1,0 +1,60 @@
+/* HIMART Design System — semantic circle typography + divider rhythm.
+   This layer is intentionally page-agnostic. Page-specific highlighted states may opt out
+   only with a more specific state selector (Reuse 02.2 blue-filled confidence circles). */
+:root{
+  --hm-type-circle-number:28px;
+  --hm-circle-title-weight:100;
+  --hm-circle-highlight-title-weight:400;
+  --hm-rule-to-content-gap:var(--hm-space-component,40px);
+}
+
+/* 01.2 / MEANING — percentage is a compact circle metric, not a display statistic. */
+html body.himart-page-body #live-main #brand .ring-card .pct{
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-circle-number)!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+}
+
+/* Ordinary circle/card titles stay Pretendard Thin. This prevents legacy component
+   rules (400/500) from leaking into the current design-system hierarchy. */
+html body.himart-page-body #live-main :is(
+  #brand .ring-card h4,
+  #brand .conclusion-card h5,
+  #brand .direction-card h4,
+  #journey .flow-node h4,
+  #direction .principle-item h4,
+  #direction .design-rule h4
+){
+  font-family:var(--hm-font-ko)!important;
+  font-weight:var(--hm-circle-title-weight)!important;
+  font-variation-settings:"wght" 100!important;
+}
+
+/* Reuse 02.2 default/reset state is also Thin. Only its blue-filled active state is Regular. */
+html body.reuse-current .reuse-confidence-node h4{
+  font-family:var(--hm-font-ko)!important;
+  font-weight:var(--hm-circle-title-weight)!important;
+  font-variation-settings:"wght" 100!important;
+}
+html body.reuse-current .reuse-confidence-node:is(.is-flow-pulse-trust,.is-flow-trust-held) :is(.reuse-confidence-title--trust,.reuse-confidence-title--base) h4{
+  font-weight:var(--hm-circle-highlight-title-weight)!important;
+  font-variation-settings:"wght" 400!important;
+}
+html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting :is(.reuse-confidence-title--trust,.reuse-confidence-title--base) h4{
+  font-weight:var(--hm-circle-title-weight)!important;
+  font-variation-settings:"wght" 100!important;
+}
+
+/* Divider → first label/title spacing is a component-internal rule. Wide editorial
+   chapter alignment may remove external top spacing, but must not collapse this 40px inset. */
+html body.himart-page-body #live-main #journey .journey-flow-block{
+  padding-top:var(--hm-rule-to-content-gap)!important;
+}
+html body.himart-page-body #live-main #direction .design-rule{
+  padding-top:var(--hm-rule-to-content-gap)!important;
+}
+html body.himart-page-body #live-main #direction .design-rule > article{
+  padding-top:0!important;
+}
