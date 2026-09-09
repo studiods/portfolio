@@ -72,6 +72,14 @@
     margin-top:0!important;
   }
 
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #direction > .hm-wrap
+  > :is(.flow-area,.prototype-intro):first-child{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+    margin-top:0!important;
+  }
+
   /* Prevent the global structural rule from reintroducing a second gap on
      elements whose line is already owned by this contract. */
   html body.himart-page-body.hm-wide-editorial-test
