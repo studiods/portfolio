@@ -36,6 +36,10 @@
     const section03_2 = findSection('03.2');
     const title03_2 = section03_2?.querySelector('.hm-subtitle');
     if (title03_2) title03_2.innerHTML = '이 중요한 이미지 정보를 어떻게 잘 전달할지<br>방법과 순서를 고민했습니다.';
+
+    const section03_3 = findSection('03.3');
+    const title03_3 = section03_3?.querySelector('.hm-subtitle');
+    if (title03_3) title03_3.innerHTML = '역할 제한없이 촬영 환경과 기준,<br>그리고 AI 영상 제작까지 직접 설계하고 제작했습니다.';
   };
 
   const initReferenceBars = () => {
