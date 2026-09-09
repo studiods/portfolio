@@ -5,18 +5,18 @@
   // Data only. Layout and visual treatment are owned by reuse-image-trust-chart.css,
   // matching the HIMART 02.5 / HOME chart pattern.
   const data = [
-    {label:'판매자 신뢰', value:67.7, color:'#00A6ED'},
-    {label:'거래 편리성', value:58.6, color:'#00B8DE'},
-    {label:'상품 상태 확인', value:49.8, color:'#00EDBD'},
-    {label:'가격', value:48.3, color:'#00A6ED'},
-    {label:'안전결제', value:29.0, color:'#00B8DE'},
-    {label:'플랫폼 대응', value:10.9, color:'#00EDBD'}
+    {label:'판매자 신뢰', value:67.7, color:'rgba(255,255,255,.18)'},
+    {label:'거래 편리성', value:58.6, color:'rgba(255,255,255,.18)'},
+    {label:'상품 상태 확인', value:49.8, color:'#00A6ED'},
+    {label:'가격', value:48.3, color:'rgba(255,255,255,.18)'},
+    {label:'안전결제', value:29.0, color:'rgba(255,255,255,.18)'},
+    {label:'플랫폼 대응', value:10.9, color:'rgba(255,255,255,.18)'}
   ];
   const max = Math.max(...data.map(item => item.value));
 
   charts.forEach(chart => {
     const caption = chart.querySelector('figcaption');
-    if (caption) caption.textContent = '중고거래에서 중요하게 보는 요소';
+    if (caption) caption.innerHTML = '중고 제품을 판단할 때,<br>고객은 상품 상태 확인을 중요하게 확인했습니다.';
 
     const bar = chart.querySelector('.reuse-image-trust-chart__bar');
     if (!bar) return;
