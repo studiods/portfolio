@@ -118,7 +118,7 @@ html body.reuse-current .reuse-production-gallery__media > :is(img,video,picture
   object-fit:cover;
 }
 
-/* Static lower-quarter gradient: 50% black at the bottom fading to 0% at the top. */
+/* Static lower-third gradient: 60% black at the bottom fading to 0% at the top. */
 html body.reuse-current .reuse-production-gallery::after{
   content:"";
   position:absolute;
@@ -126,9 +126,9 @@ html body.reuse-current .reuse-production-gallery::after{
   right:0;
   bottom:0;
   left:0;
-  height:25%;
+  height:33.3333%;
   pointer-events:none;
-  background:linear-gradient(to top,rgba(0,0,0,.50) 0%,rgba(0,0,0,0) 100%);
+  background:linear-gradient(to top,rgba(0,0,0,.60) 0%,rgba(0,0,0,0) 100%);
 }
 
 /* Persistent caption layer. Number/title/copy never swap with the gallery image. */
@@ -158,8 +158,8 @@ html body.reuse-current .reuse-production-gallery__copy h4{
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:22px!important;
-  font-weight:100!important;
-  font-variation-settings:"wght" 100!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
   line-height:1.32!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all;
@@ -244,8 +244,8 @@ html body.reuse-current .reuse-production-gallery__status{
   }
   html body.reuse-current .reuse-production-gallery__copy h4{
     font-size:22px!important;
-    font-weight:100!important;
-    font-variation-settings:"wght" 100!important;
+    font-weight:400!important;
+    font-variation-settings:"wght" 400!important;
   }
   html body.reuse-current .reuse-production-gallery__copy p{
     margin-top:6px!important;
