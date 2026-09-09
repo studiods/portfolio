@@ -1,38 +1,6 @@
 (() => {
   'use strict';
 
-  /*
-    REUSE 03.1 — copy the visible HIMART 02.6 / LANDING → ACTION source verbatim.
-    Do not translate, summarize, rename, recolor, or reinterpret the chart content.
-  */
-  const syncLandingActionSource = () => {
-    const source = document.querySelector('.reuse-image-evidence');
-    if (!source) return;
-
-    source.className = 'data-viz landing-stack';
-    source.setAttribute('aria-label', '기획전 시작 후 첫 다음 행동');
-    source.innerHTML = `
-      <div class="landing-chart landing-chart--verbatim">
-        <h4>기획전 시작 후 첫 다음 행동</h4>
-        <div class="stackbar">
-          <i style="width:52.2%"></i>
-          <i style="width:27.6%"></i>
-          <i style="width:9.3%"></i>
-          <i style="width:6.6%"></i>
-          <i style="width:4.3%"></i>
-        </div>
-        <div class="stacklabels">
-          <div><b>종료</b><strong>52.2%</strong></div>
-          <div><b>재탐색</b><strong>27.6%</strong></div>
-          <div><b>상품</b><strong>9.3%</strong></div>
-          <div><b>검색</b><strong>6.6%</strong></div>
-          <div><b>기타</b><strong>4.3%</strong></div>
-        </div>
-      </div>`;
-  };
-
-  syncLandingActionSource();
-
   const map = document.querySelector('.reuse-proof-map');
   if (!map) return;
 
@@ -134,14 +102,17 @@
   const observer = new IntersectionObserver((entries) => {
     const entry = entries[0];
     inFocus = Boolean(entry && entry.isIntersecting);
-    if (inFocus) start(); else stop();
-  }, { root:null, rootMargin:'-18% 0px -18% 0px', threshold:0.18 });
+    if (inFocus) start();
+    else stop();
+  }, {root:null, rootMargin:'-18% 0px -18% 0px', threshold:0.18});
   observer.observe(map);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop(); else if (inFocus) start();
+    if (document.hidden) stop();
+    else if (inFocus) start();
   });
   const handleMotionChange = () => {
-    if (reducedMotion.matches) stop(); else if (inFocus) start();
+    if (reducedMotion.matches) stop();
+    else if (inFocus) start();
   };
   if (typeof reducedMotion.addEventListener === 'function') reducedMotion.addEventListener('change', handleMotionChange);
   else if (typeof reducedMotion.addListener === 'function') reducedMotion.addListener(handleMotionChange);
