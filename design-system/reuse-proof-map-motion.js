@@ -1,8 +1,7 @@
 (() => {
   'use strict';
 
-  /* REUSE 02.1 / shared motion only.
-     03.1 chart rendering is intentionally absent from this file. */
+  /* REUSE 02.1 / shared motion + REUSE 03 editorial copy / bar focus motion. */
   const inject02_1ArrowRule = () => {
     if (document.getElementById('reuse-02-1-arrow-rule')) return;
     const style = document.createElement('style');
@@ -17,7 +16,69 @@
     document.head.appendChild(style);
   };
 
+  const syncJourneyCopy = () => {
+    const journey = document.querySelector('#journey');
+    if (!journey) return;
+
+    const chapterTitle = journey.querySelector('.hm-section-head .hm-section-title');
+    if (chapterTitle) chapterTitle.innerHTML = '무엇보다 이미지와 영상으로<br>신뢰를 구축하기 위해 노력했습니다.';
+
+    const sections = Array.from(journey.querySelectorAll('.hm-subsection'));
+    const findSection = (number) => sections.find((section) => {
+      const subno = section.querySelector('.hm-subno');
+      return (subno?.textContent || '').trim() === number;
+    });
+
+    const section03_1 = findSection('03.1');
+    const title03_1 = section03_1?.querySelector('.hm-subtitle');
+    if (title03_1) title03_1.innerHTML = '신뢰, 편의성 제외하고는<br>이미지가 가장 중요한 요소였습니다.';
+
+    const section03_2 = findSection('03.2');
+    const title03_2 = section03_2?.querySelector('.hm-subtitle');
+    if (title03_2) title03_2.innerHTML = '이 중요한 이미지 정보를 어떻게 잘 전달할지<br>방법과 순서를 고민했습니다.';
+  };
+
+  const initReferenceBars = () => {
+    const chart = document.querySelector('#journey .reuse-reference-bars');
+    if (!chart) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let inFocus = false;
+
+    const show = () => {
+      chart.classList.remove('is-bars-focused');
+      void chart.offsetWidth;
+      chart.classList.add('is-bars-focused');
+    };
+    const hide = () => chart.classList.remove('is-bars-focused');
+
+    if (reduced.matches || !('IntersectionObserver' in window)) {
+      chart.classList.add('is-bars-focused');
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      const nextFocus = Boolean(entry?.isIntersecting);
+      if (nextFocus && !inFocus) show();
+      if (!nextFocus && inFocus) hide();
+      inFocus = nextFocus;
+    }, { root:null, rootMargin:'-16% 0px -16% 0px', threshold:0.22 });
+
+    observer.observe(chart);
+
+    const handleMotionChange = () => {
+      if (reduced.matches) chart.classList.add('is-bars-focused');
+      else if (inFocus) show();
+      else hide();
+    };
+    if (typeof reduced.addEventListener === 'function') reduced.addEventListener('change', handleMotionChange);
+    else if (typeof reduced.addListener === 'function') reduced.addListener(handleMotionChange);
+  };
+
   inject02_1ArrowRule();
+  syncJourneyCopy();
+  initReferenceBars();
 
   const map = document.querySelector('.reuse-proof-map');
   if (!map) return;
