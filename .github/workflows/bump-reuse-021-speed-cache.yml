@@ -1,0 +1,52 @@
+name: Apply Reuse 02.1 speed cache update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bump-reuse-021-speed-cache.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bump Reuse 02.1 asset versions
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('himart-reuse.html')
+          s = p.read_text()
+          old_css = './design-system/components/reuse-proof-motion.css?v=20260909-3'
+          new_css = './design-system/components/reuse-proof-motion.css?v=20260909-4'
+          old_js = './design-system/reuse-proof-map-motion.js?v=20260908-1'
+          new_js = './design-system/reuse-proof-map-motion.js?v=20260909-1'
+          if old_css not in s:
+              raise SystemExit('reuse proof CSS cache token not found')
+          if old_js not in s:
+              raise SystemExit('reuse proof JS cache token not found')
+          s = s.replace(old_css, new_css, 1).replace(old_js, new_js, 1)
+          p.write_text(s)
+          PY
+      - name: Verify timing and cache
+        shell: bash
+        run: |
+          grep -q -- '--reuse-proof-lane-duration:2.205s' design-system/components/reuse-proof-motion.css
+          grep -q 'return 2205' design-system/reuse-proof-map-motion.js
+          grep -q 'reuse-proof-motion.css?v=20260909-4' himart-reuse.html
+          grep -q 'reuse-proof-map-motion.js?v=20260909-1' himart-reuse.html
+      - name: Commit changes
+        shell: bash
+        run: |
+          rm -f .github/workflows/bump-reuse-021-speed-cache.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Speed up Reuse 02.1 individual motion by 30 percent'
+          git push origin main
