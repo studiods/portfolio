@@ -1,0 +1,186 @@
+/* HIMART REUSE 03 — production storytelling gallery.
+   Media slots intentionally remain source-agnostic so real images/videos can be inserted later. */
+
+/* 03.2 image-order flow keeps the 02.2 circle grammar, but its sequence numbers are blue. */
+html body.reuse-current .reuse-image-order-flow .reuse-confidence-node > span{
+  --reuse-confidence-number-color:var(--hm-blue);
+  color:var(--hm-blue)!important;
+}
+
+html body.reuse-current .reuse-production-gallery{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:#080808;
+}
+
+html body.reuse-current .reuse-production-gallery__viewport,
+html body.reuse-current .reuse-production-gallery__slide,
+html body.reuse-current .reuse-production-gallery__media{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+html body.reuse-current .reuse-production-gallery__slide{
+  z-index:0;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .45s ease,visibility .45s step-end;
+}
+
+html body.reuse-current .reuse-production-gallery__slide.is-active{
+  z-index:1;
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transition:opacity .45s ease,visibility 0s step-start;
+}
+
+html body.reuse-current .reuse-production-gallery__media{
+  background:#0a0a0a;
+}
+
+html body.reuse-current .reuse-production-gallery__media > :is(img,video,picture){
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Lower quarter: 50% black at the bottom fading to 0% at the top. */
+html body.reuse-current .reuse-production-gallery__slide::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  right:0;
+  bottom:0;
+  left:0;
+  height:25%;
+  pointer-events:none;
+  background:linear-gradient(to top,rgba(0,0,0,.50) 0%,rgba(0,0,0,0) 100%);
+}
+
+html body.reuse-current .reuse-production-gallery__copy{
+  position:absolute;
+  z-index:3;
+  left:32px;
+  bottom:32px;
+  width:min(760px,calc(100% - 64px));
+  text-align:left;
+}
+
+html body.reuse-current .reuse-production-gallery__copy h4{
+  margin:0;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all;
+}
+
+html body.reuse-current .reuse-production-gallery__copy p{
+  margin:10px 0 0!important;
+  max-width:62ch!important;
+  color:rgba(255,255,255,.70)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body)!important;
+  font-weight:300!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all;
+}
+
+/* Head-only line arrows. The 48px hit area is invisible; only the 1px chevron is drawn. */
+html body.reuse-current .reuse-production-gallery__nav{
+  position:absolute;
+  z-index:5;
+  top:50%;
+  width:48px;
+  height:80px;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+
+html body.reuse-current .reuse-production-gallery__nav--prev{left:6px}
+html body.reuse-current .reuse-production-gallery__nav--next{right:6px}
+
+html body.reuse-current .reuse-production-gallery__nav::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:18px;
+  height:18px;
+  border-top:1px solid rgba(255,255,255,.78);
+  border-right:1px solid rgba(255,255,255,.78);
+}
+
+html body.reuse-current .reuse-production-gallery__nav--prev::before{
+  transform:translate(-35%,-50%) rotate(-135deg);
+}
+
+html body.reuse-current .reuse-production-gallery__nav--next::before{
+  transform:translate(-65%,-50%) rotate(45deg);
+}
+
+html body.reuse-current .reuse-production-gallery__nav:hover::before,
+html body.reuse-current .reuse-production-gallery__nav:focus-visible::before{
+  border-color:#fff;
+}
+
+html body.reuse-current .reuse-production-gallery__status{
+  position:absolute;
+  z-index:5;
+  right:32px;
+  bottom:32px;
+  color:rgba(255,255,255,.62);
+  font:300 11px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+
+@media(max-width:780px){
+  html body.reuse-current .reuse-production-gallery__copy{
+    left:18px;
+    bottom:18px;
+    width:calc(100% - 36px);
+  }
+  html body.reuse-current .reuse-production-gallery__copy h4{
+    font-size:clamp(16px,4.8vw,22px)!important;
+  }
+  html body.reuse-current .reuse-production-gallery__copy p{
+    margin-top:6px!important;
+    font-size:clamp(11px,3.2vw,14px)!important;
+    line-height:1.42!important;
+  }
+  html body.reuse-current .reuse-production-gallery__nav{
+    width:38px;
+    height:64px;
+  }
+  html body.reuse-current .reuse-production-gallery__nav--prev{left:0}
+  html body.reuse-current .reuse-production-gallery__nav--next{right:0}
+  html body.reuse-current .reuse-production-gallery__nav::before{
+    width:14px;
+    height:14px;
+  }
+  html body.reuse-current .reuse-production-gallery__status{
+    right:18px;
+    bottom:18px;
+    font-size:10px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-production-gallery__slide{transition:none!important}
+}
