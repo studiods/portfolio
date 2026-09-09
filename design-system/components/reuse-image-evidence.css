@@ -1,134 +1,24 @@
-/*
-  REUSE 03.1 — research-backed image importance visualization.
-  The four values are independent research signals, not parts of a 100% composition.
-  They are therefore rendered as proportional comparison bars rather than a stacked total.
-  Yellow is intentionally removed; the palette stays within the existing blue/teal family.
+/* HIMART REUSE 03.1 — marketplace image-trust evidence.
+   Visual grammar intentionally mirrors HIMART 02.6 / LANDING → ACTION:
+   - one 100% horizontal segmented bar
+   - identical 54px bar height
+   - identical 4-column labels, type sizes, weight and spacing
+   - yellow removed; remaining palette uses blue-family colors
 */
-html body.himart-page-body #live-main .reuse-image-evidence,
-html body.himart-page-body #live-main .reuse-image-research-chart{
-  width:100%!important;
-  margin-top:var(--hm-subtitle-to-content)!important;
-}
-
-html body.himart-page-body #live-main .landing-chart--verbatim{
-  width:100%!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim > h4{
-  position:relative!important;
-  height:auto!important;
-  margin:0!important;
-  font-size:0!important;
-  line-height:1!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim > h4::after{
-  content:"중고 제품의 상태를 확인하는 과정에서,\\A이미지는 핵심 판단 수단이었습니다.";
-  white-space:pre-wrap!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:100!important;
-  line-height:1.35!important;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
-}
-
-/* Independent research signals — proportional length, not a 100% stack. */
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar{
-  display:flex!important;
-  flex-direction:column!important;
-  gap:22px!important;
-  width:100%!important;
-  height:auto!important;
-  margin-top:48px!important;
-  background:transparent!important;
-  overflow:visible!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i{
-  display:block!important;
-  width:0!important;
-  height:42px!important;
-  flex:0 0 42px!important;
-  border:0!important;
-  opacity:1!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i:nth-child(1){width:68.9%!important;background:#1676C5!important}
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i:nth-child(2){width:56%!important;background:#1592CC!important}
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i:nth-child(3){width:42%!important;background:#16A8C1!important}
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i:nth-child(4){width:37.6%!important;background:#18B7A4!important}
-html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i:nth-child(5){display:none!important}
-
-/* Labels are aligned with the four bars. */
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels{
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  grid-template-rows:repeat(4,42px)!important;
-  gap:22px!important;
-  width:100%!important;
-  height:auto!important;
-  margin-top:0!important;
-  transform:translateY(-190px)!important;
-  pointer-events:none!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  width:100%!important;
-  height:42px!important;
-  padding:0 20px!important;
-  box-sizing:border-box!important;
-  color:#fff!important;
-  background:transparent!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(5){display:none!important}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels b{
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:0!important;
-  font-weight:300!important;
-  line-height:1.2!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels b::after{
-  font-size:16px!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(1) b::after{content:"제품 상태를 중요하게 고려"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(2) b::after{content:"PDP 도착 후 이미지부터 탐색"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(3) b::after{content:"이미지로 제품 크기를 파악"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(4) b::after{content:"판매자 신용도를 고려"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels strong{
-  color:#fff!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:0!important;
-  font-weight:400!important;
-  font-variant-numeric:tabular-nums!important;
-  line-height:1.2!important;
-}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels strong::after{font-size:16px!important}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(1) strong::after{content:"68.9%"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(2) strong::after{content:"56%"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(3) strong::after{content:"42%"}
-html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div:nth-child(4) strong::after{content:"37.6%"}
-
-/* Source is intentionally compact; it also distinguishes the two research bases. */
-html body.himart-page-body #live-main .landing-chart--verbatim::after{
-  content:"SOURCE - 엠브레인 트렌드모니터 ‘중고거래 경험 및 플랫폼 인식 조사’ 2020 · n=1,000 (제품 상태 68.9% / 판매자 신용도 37.6%) · Baymard Institute Product Page UX Research (PDP 도착 후 이미지 탐색 56% / 이미지로 제품 크기 파악 42%)";
-  display:block!important;
-  margin-top:-142px!important;
-  max-width:100%!important;
-  color:var(--hm-description-color)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:10px!important;
-  font-weight:300!important;
-  line-height:1.5!important;
-  letter-spacing:var(--hm-track-base)!important;
-  word-break:keep-all!important;
-}
-
-@media (max-width:760px){
-  html body.himart-page-body #live-main .landing-chart--verbatim > h4::after{font-size:20px!important}
-  html body.himart-page-body #live-main .landing-chart--verbatim .stackbar{gap:18px!important;margin-top:36px!important}
-  html body.himart-page-body #live-main .landing-chart--verbatim .stackbar i{height:34px!important;flex-basis:34px!important}
-  html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels{grid-template-rows:repeat(4,34px)!important;gap:18px!important;transform:translateY(-138px)!important}
-  html body.himart-page-body #live-main .landing-chart--verbatim .stacklabels > div{height:34px!important;padding:0 14px!important}
-  html body.himart-page-body #live-main .landing-chart--verbatim::after{margin-top:-104px!important}
-}
+html body.reuse-current #journey .reuse-image-evidence{display:block!important;width:100%!important;min-width:0!important;min-height:0!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart{width:100%!important;max-width:none!important;margin-top:0!important;padding-top:0!important;border-top:0!important}
+html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin:0 0 24px!important;padding:0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.4!important;letter-spacing:var(--hm-track-body)!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar{display:flex!important;width:100%!important;height:54px!important;gap:0!important;overflow:hidden!important;background:transparent!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i{display:block!important;flex:0 0 auto!important;height:100%!important;min-width:0!important;background:var(--c)!important;transform:none!important;transition:none!important}
+/* Research-backed 100% distribution: 53 / 39 / 5.6 / 2.4. */
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(1){width:53%!important;--c:#1676C5!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(2){width:39%!important;--c:#1592CC!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(3){width:5.6%!important;--c:#16A8C1!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(4){width:2.4%!important;--c:#18B7A4!important}
+html body.reuse-current #journey .reuse-image-evidence .stackbar i:nth-child(n+5){display:none!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:12px!important;width:100%!important;margin-top:18px!important;align-items:start!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{min-width:0!important;padding:0!important;color:rgba(255,255,255,.70)!important;font-family:var(--hm-font-ko)!important;font-size:14px!important;font-weight:300!important;line-height:1.5!important;text-align:left!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels b{display:block!important;margin:0 0 4px!important;color:#fff!important;font-family:var(--hm-font-en)!important;font-size:22px!important;font-weight:300!important;line-height:1!important;letter-spacing:var(--hm-track-data-number)!important}
+html body.reuse-current #journey .reuse-image-evidence .stacklabels span{font-family:var(--hm-font-ko)!important}
+@media(max-width:780px){html body.reuse-current #journey .reuse-image-evidence .landing-chart>h4{margin-bottom:18px!important;font-size:18px!important;line-height:1.35!important}html body.reuse-current #journey .reuse-image-evidence .stacklabels{grid-template-columns:1fr 1fr!important;gap:10px 14px!important}html body.reuse-current #journey .reuse-image-evidence .stacklabels>div{font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){html body.reuse-current #journey .reuse-image-evidence .stackbar i{transform:none!important;transition:none!important}}
