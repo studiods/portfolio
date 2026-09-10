@@ -1,0 +1,38 @@
+/* Case-study horizontal overflow guard v1.0
+   Scope: HIMART, REUSE and NBT Stepup only via explicit page imports.
+
+   Root causes fixed here:
+   1) Wide-editorial section background pseudo-elements used width:100vw while centered
+      with a 50% offset. 100vw includes the vertical scrollbar width, so the painted
+      plane could be wider than the layout viewport and create horizontal scrolling.
+   2) The runtime global navigation uses width:100% plus horizontal padding. Reuse does
+      not inherit the legacy universal border-box reset, so the nav could exceed 100%.
+
+   overflow-x:clip is kept as a final guard for transformed reveal content; unlike
+   overflow:hidden it does not create an extra scrolling container for sticky rails. */
+
+html{
+  max-width:100%;
+  overflow-x:clip;
+}
+
+html body.himart-page-body.hm-wide-editorial-test{
+  max-width:100%;
+  overflow-x:clip!important;
+}
+
+html body.himart-page-body.hm-wide-editorial-test > .top{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+
+@media(min-width:1600px){
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section::before{
+    inset:0!important;
+    width:auto!important;
+    max-width:100%!important;
+    transform:none!important;
+  }
+}
