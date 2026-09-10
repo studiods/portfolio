@@ -176,7 +176,7 @@ body.works-page-body .works-card-media-link{
 body.works-page-body .works-card-media{
   position:relative;
   width:100%;
-  aspect-ratio:16/9;
+  aspect-ratio:16/11;
   overflow:hidden;
   border:0;
   background:var(--hm-bg-page);
