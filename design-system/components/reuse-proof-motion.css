@@ -18,7 +18,7 @@ html body.reuse-current .reuse-proof-map__node--solution{background-color:#000;b
 html body.reuse-current .reuse-proof-map__node--solution::before{content:none!important}
 html body.reuse-current .reuse-proof-map__node--solution::after{content:"";position:absolute;z-index:4;inset:-1px;display:block;width:calc(100% + 2px);height:calc(100% + 2px);border-radius:50%;pointer-events:none;opacity:0;transform:rotate(0deg);transform-origin:50% 50%;background:conic-gradient(from -30deg,rgba(128,211,246,0) 0deg,rgba(128,211,246,.10) 7deg,rgba(128,211,246,.34) 15deg,rgba(128,211,246,.72) 23deg,rgba(128,211,246,1) 30deg,rgba(128,211,246,.72) 37deg,rgba(128,211,246,.34) 45deg,rgba(128,211,246,.10) 53deg,rgba(128,211,246,0) 60deg,rgba(128,211,246,0) 360deg);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.55px));filter:drop-shadow(0 0 3.15px rgba(128,211,246,1)) drop-shadow(0 0 8.4px rgba(128,211,246,.525)) drop-shadow(0 0 15.75px rgba(128,211,246,.252))}
 @keyframes reuse-proof-lower-ring{0%,36.82%{transform:rotate(0deg);opacity:0}36.83%{transform:rotate(0deg);opacity:0}39.2%{opacity:.45}42.2%{opacity:1}44.77%{transform:rotate(-117deg);opacity:1}52.71%{transform:rotate(-216deg);opacity:1}58%{transform:rotate(-270deg);opacity:1}60.64%{transform:rotate(-297deg);opacity:1}68.58%{transform:rotate(-360deg);opacity:1}68.63%,100%{transform:rotate(-360deg);opacity:0}}
-html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running::after{animation:reuse-proof-lower-ring var(--reuse-proof-lane-duration) linear 1 both}
+html body.reuse-current .reuse-proof-map__node--solution.is-proof-lane-running .reuse-proof-map__node--solution::after{animation:reuse-proof-lower-ring var(--reuse-proof-lane-duration) linear 1 both}
 html body.reuse-current .reuse-proof-map__node--solution h4{position:relative;z-index:3;--reuse-proof-copy-color:#00a6ed;color:var(--reuse-proof-copy-color)!important;font-family:var(--hm-font-ko)!important;font-weight:var(--hm-circle-title-weight,100)!important;font-variation-settings:"wght" 100}
 @keyframes reuse-proof-lane-fill{0%,57.99%{background-color:#000}58%{background-color:#000;animation-timing-function:cubic-bezier(.14,.72,.24,1)}97.4%,100%{background-color:var(--hm-blue)}}
 @keyframes reuse-proof-lane-copy{0%,57.99%{--reuse-proof-copy-color:#00a6ed;font-weight:var(--hm-circle-title-weight,100);font-variation-settings:"wght" 100}58%{--reuse-proof-copy-color:#00a6ed;font-weight:var(--hm-circle-title-weight,100);font-variation-settings:"wght" 100;animation-timing-function:cubic-bezier(.14,.72,.24,1)}66%{--reuse-proof-copy-color:#000;font-weight:var(--hm-circle-highlight-title-weight,400);font-variation-settings:"wght" 400}100%{--reuse-proof-copy-color:#000;font-weight:var(--hm-circle-highlight-title-weight,400);font-variation-settings:"wght" 400}}
@@ -167,12 +167,12 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   html body.reuse-current #brand .reuse-trust-equation__brand-logo{width:56px;margin-top:16px}
 }
 
-/* REUSE 01.3 — tighten the already-reduced equation gaps by another 10%.
-   Internal gaps are now 81% of the original space-between width while the whole
-   equation remains centered by distributing the released space to both outer edges. */
+/* REUSE 01.3 — reduce current spacing between equation items by a further 10%.
+   Internal gaps are 72.9% of the original space-between width; released space is
+   distributed equally to both outer edges so the full equation remains centered. */
 @media(min-width:781px){
   html body.reuse-current #brand .reuse-trust-equation__visual{
-    grid-template-columns:minmax(0,.469136fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,.469136fr);
+    grid-template-columns:minmax(0,.743484fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,1fr) max-content minmax(0,.743484fr);
     justify-content:stretch;
   }
   html body.reuse-current #brand .reuse-trust-equation__brand{grid-column:2}
@@ -182,6 +182,6 @@ html body.reuse-current #brand .reuse-trust-equation__result{
   html body.reuse-current #brand .reuse-trust-equation__result{grid-column:10}
 }
 @media(max-width:780px){
-  html body.reuse-current #brand .reuse-trust-equation__visual{row-gap:17.82px}
+  html body.reuse-current #brand .reuse-trust-equation__visual{row-gap:16.04px}
   html body.reuse-current #brand .reuse-trust-equation__visual > *{grid-column:1!important}
 }
