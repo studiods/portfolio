@@ -17,129 +17,6 @@
   <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-4">
 </head>
 <body class="home-test home-dark">
-<style id="index-scroll-guide-styles">
-  /* Idle scroll cue: fixed to the viewport, independent of page sections. */
-  .index-scroll-guide{
-    position:fixed;
-    z-index:2147483000;
-    right:40px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    pointer-events:none;
-    color:#fff;
-  }
-  .index-scroll-guide-line{
-    position:relative;
-    width:1px;
-    height:25vh;
-    min-height:0;
-    max-height:none;
-    overflow:hidden;
-    background:rgba(255,255,255,.05);
-  }
-  .index-scroll-guide-line::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:#fff;
-    transform:scaleY(0);
-    transform-origin:top center;
-    opacity:0;
-  }
-  .index-scroll-guide.is-sweeping .index-scroll-guide-line::after{
-    animation:index-scroll-guide-sweep 1s cubic-bezier(.22,.61,.36,1) forwards;
-  }
-  .index-scroll-guide-label{
-    margin-top:12px;
-    font-family:"Averta PE",Arial,sans-serif;
-    font-weight:300;
-    font-size:10px;
-    line-height:1;
-    opacity:0;
-    transition:opacity .38s ease;
-    letter-spacing:.04em;
-    color:rgba(255,255,255,.4);
-  }
-  .index-scroll-guide-label.is-label-visible{
-    opacity:1;
-  }
-  .index-scroll-guide.is-user-scrolling{
-    opacity:0;
-    visibility:hidden;
-  }
-  @keyframes index-scroll-guide-sweep{
-    0%{transform:scaleY(0);opacity:0}
-    8%{opacity:1}
-    100%{transform:scaleY(1);opacity:0}
-  }
-  @media (max-width:850px){
-    .index-scroll-guide{right:20px}
-    .index-scroll-guide-line{height:25vh;min-height:0}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .index-scroll-guide{display:none}
-  }
-</style>
-<div class="index-scroll-guide" aria-hidden="true">
-  <div class="index-scroll-guide-line"></div>
-  <div class="index-scroll-guide-label">SCROLL</div>
-</div>
-<script>
-(() => {
-  const guide = document.querySelector('.index-scroll-guide');
-  const line = guide?.querySelector('.index-scroll-guide-line');
-  const label = guide?.querySelector('.index-scroll-guide-label');
-  if (!guide || !line || !label || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  let idleTimer = 0;
-  let repeatTimer = 0;
-  let labelShowTimer = 0;
-  let labelHideTimer = 0;
-  const sweep = () => {
-    window.clearTimeout(labelShowTimer);
-    window.clearTimeout(labelHideTimer);
-    guide.classList.remove('is-sweeping');
-    void guide.offsetWidth;
-    guide.classList.add('is-sweeping');
-    // The highlight reaches the bottom after 1s; reveal SCROLL then hold it
-    // for 1s before fading it out, independent of pseudo-element events.
-    labelShowTimer = window.setTimeout(() => {
-      label.classList.add('is-label-visible');
-      labelHideTimer = window.setTimeout(() => label.classList.remove('is-label-visible'), 1000);
-    }, 1000);
-  };
-  const hideForScroll = () => {
-    guide.classList.add('is-user-scrolling');
-    stop();
-  };
-  const stop = () => {
-    window.clearTimeout(idleTimer);
-    window.clearInterval(repeatTimer);
-    window.clearTimeout(labelShowTimer);
-    window.clearTimeout(labelHideTimer);
-    repeatTimer = 0;
-    guide.classList.remove('is-sweeping');
-    label.classList.remove('is-label-visible');
-  };
-  const arm = () => {
-    stop();
-    idleTimer = window.setTimeout(() => {
-      sweep();
-      repeatTimer = window.setInterval(sweep, 2000);
-    }, 3000);
-  };
-  ['pointerdown','pointermove','wheel','touchstart','keydown'].forEach((eventName) => {
-    window.addEventListener(eventName, arm, {passive:true});
-  });
-  ['scroll','wheel','touchstart'].forEach((eventName) => {
-    window.addEventListener(eventName, hideForScroll, {passive:true});
-  });
-  arm();
-})();
-</script>
-
 <nav class="top">
   <div class="top-center">
     <a href="./index.html" aria-current="page">Home</a>
@@ -283,9 +160,9 @@
 </main>
 <script src="./scramble-enhancements.js?v=9" defer></script>
 <script src="./home-interactions.js?v=50" defer></script>
-<script src="./home-idle-v2.js?v=15" defer></script>
 <script src="./home-test-patch.js?v=10" defer></script>
 <script src="./home-hero-scramble-fix.js?v=3" defer></script>
+<script src="./home-entry-scramble.js?v=2" defer></script>
 <script src="./design-system/navigation.js?v=20260907-4"></script>
 </body>
 </html>
