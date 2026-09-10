@@ -8,11 +8,13 @@
   if (!body || !hero || !quote || !source) return;
 
   /*
-    Disable the legacy Home idle loop that is armed inside home-interactions.js.
-    That listener intentionally treats this synthetic event as a user action,
-    which cancels its timer before the 3s idle delay can fire.
+    Home entry now has one automatic motion only: this one-time scramble reveal.
+    Stop both legacy idle systems before their 3s delay can fire.
   */
-  window.dispatchEvent(new Event('pointerdown'));
+  window.dispatchEvent(new Event('pointerdown')); // disables home-interactions.js idle timer
+  window.dispatchEvent(new Event('scroll'));      // stops the old SCROLL idle cue timer
+  document.querySelector('.index-scroll-guide')?.remove();
+  document.getElementById('index-scroll-guide-styles')?.remove();
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const CYCLES = 3;
@@ -40,23 +42,29 @@
 
   const quoteChars = [...quote.querySelectorAll('.fill-char')];
   const sourceChars = [...source.querySelectorAll('.home-entry-source-char')];
-  const chars = [...quoteChars, ...sourceChars];
-  if (!chars.length) {
-    body.classList.remove('home-entry-pending');
-    return;
-  }
-
-  const states = chars.map((char) => ({
+  const states = [...quoteChars, ...sourceChars].map((char) => ({
     char,
     finalChar: char.dataset.finalChar ?? char.textContent,
     width: 0,
     lastGlyph: null
   }));
+  if (!states.length) return;
 
+  const visibleStates = states.filter(({ finalChar }) => finalChar.trim().length > 0);
   let raf = 0;
+  let startedAt = 0;
   let cancelled = false;
   let completed = false;
-  let startedAt = 0;
+
+  const settledStyle = document.createElement('style');
+  settledStyle.id = 'home-entry-settled-style';
+  settledStyle.textContent = `
+    body.home-dark.home-entry-settled #heroSequence .hero-state-quote .hero-quote .fill-char,
+    body.home-dark.home-entry-settled #heroSequence .hero-state-quote .quote-source-only{
+      color:#000!important;
+    }
+  `;
+  document.head.appendChild(settledStyle);
 
   const setColor = (char, value) => {
     char.style.setProperty('color', value, 'important');
@@ -91,27 +99,22 @@
     if (completed) return;
     completed = true;
     clearTemporaryStyles();
-    body.classList.remove('home-entry-pending');
     body.classList.add('home-entry-settled');
   };
 
   const cancel = () => {
-    if (cancelled || completed) {
-      body.classList.remove('home-entry-settled');
-      return;
-    }
+    if (cancelled) return;
     cancelled = true;
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
     clearTemporaryStyles();
-    body.classList.remove('home-entry-pending', 'home-entry-settled');
+    body.classList.remove('home-entry-settled');
   };
-
-  const visibleStates = states.filter(({ finalChar }) => finalChar.trim().length > 0);
 
   const render = (now) => {
     if (cancelled) return;
     const elapsed = now - startedAt;
+    const scrambleDuration = CYCLES * CYCLE_MS;
     let allDone = true;
 
     visibleStates.forEach((state, index) => {
@@ -121,7 +124,6 @@
         return;
       }
 
-      const scrambleDuration = CYCLES * CYCLE_MS;
       if (local < scrambleDuration) {
         allDone = false;
         const cycle = Math.min(CYCLES - 1, Math.floor(local / CYCLE_MS));
@@ -130,7 +132,7 @@
           state.lastGlyph = glyph;
           state.char.textContent = glyph;
         }
-        /* Hero state is inverted by the dark-theme layer, so black paints as pure white. */
+        /* The dark Home layer inverts Hero text, so #000 renders as pure #fff. */
         setColor(state.char, '#000');
         return;
       }
@@ -146,31 +148,20 @@
     raf = requestAnimationFrame(render);
   };
 
-  const releaseToScrollTimeline = () => {
-    if (window.scrollY <= 1 && !completed) {
-      cancel();
-      return;
-    }
-    body.classList.remove('home-entry-settled');
-  };
-
-  ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach((eventName) => {
-    window.addEventListener(eventName, releaseToScrollTimeline, { passive: true });
-  });
+  /* Existing scroll-driven Hero storytelling begins only when the user actually scrolls. */
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 1) releaseToScrollTimeline();
+    if (window.scrollY <= 1) return;
+    if (!completed) cancel();
+    body.classList.remove('home-entry-settled');
   }, { passive: true });
 
   const start = () => {
     if (cancelled) return;
     prepare();
-    body.classList.remove('home-entry-pending');
-
     if (reduced) {
       settle();
       return;
     }
-
     startedAt = performance.now();
     raf = requestAnimationFrame(render);
   };
