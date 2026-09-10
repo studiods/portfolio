@@ -1,4 +1,4 @@
-/* HIMART Commerce adaptive content contract v1.1
+/* HIMART Commerce adaptive content contract v1.2
    ------------------------------------------------
    Himart-only responsive containment and journey geometry.
 
@@ -71,6 +71,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 #journey{
   --hm-hj-gap:clamp(6px,.72vw,10px);
   --hm-hj-arrow:clamp(14px,1.35vw,20px);
+  --hm-hj-cluster-pad-x:clamp(10px,.9vw,16px);
 }
 
 /* The actual content rail is the only sizing reference. 100cqw below therefore means
@@ -80,11 +81,12 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   container-type:inline-size!important;
   container-name:hm-himart-journey!important;
 
-  /* Four equal circles + three arrows + six inter-item gaps. The 292px cap preserves
-     the approved production maximum; below that, every circle shrinks by the same amount. */
+  /* Four equal circles + three arrows + six sequence gaps + one capsule's side padding.
+     292px remains the approved production maximum. When the rail gets narrower, every
+     circle shrinks by exactly the same amount. */
   --hm-hj-node-size:min(
     292px,
-    calc((100cqw - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap)) / 4)
+    calc((100cqw - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-cluster-pad-x) - var(--hm-hj-cluster-pad-x)) / 4)
   );
 }
 
@@ -105,8 +107,8 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 }
 
 @media (min-width:861px){
-  /* A row never distributes remaining width by flex-grow. This is critical: a node
-     outside a runtime cluster must remain exactly the same diameter as nodes inside it. */
+  /* A row never distributes remaining width by flex-grow. A direct node and a node
+     inside a grouping capsule therefore always receive the same diameter. */
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) :is(.flow-row,.journey-flow-row){
     display:flex!important;
@@ -157,27 +159,28 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     height:clamp(10px,1.05vw,16px)!important;
   }
 
-  /* Runtime clusters are sized by how many circles they actually contain.
-     The cluster itself receives no flex-grow, so 2/3-node groups can never make their
-     internal circles smaller while an ungrouped circle becomes larger. */
+  /* Runtime clusters are sized from the count of circles they contain. Horizontal
+     capsule padding is included in the width calculation so it cannot steal width from
+     grouped circles. This is the defect that made 04/07/08 look larger in the screenshots. */
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster{
-    --hm-hj-cluster-size:calc(var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-pad-x) + var(--hm-hj-cluster-pad-x) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap));
     flex:0 0 var(--hm-hj-cluster-size)!important;
     width:var(--hm-hj-cluster-size)!important;
     min-width:var(--hm-hj-cluster-size)!important;
     max-width:var(--hm-hj-cluster-size)!important;
+    padding:30px var(--hm-hj-cluster-pad-x) 22px!important;
     box-sizing:border-box!important;
   }
 
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster:has(.flow-node ~ .flow-node ~ .flow-node){
-    --hm-hj-cluster-size:calc(var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-pad-x) + var(--hm-hj-cluster-pad-x) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
   }
 
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster:has(.flow-node ~ .flow-node ~ .flow-node ~ .flow-node){
-    --hm-hj-cluster-size:calc(var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-pad-x) + var(--hm-hj-cluster-pad-x) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
   }
 
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
@@ -220,7 +223,6 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     overflow-wrap:break-word!important;
   }
 
-  /* Any legacy absolute grouping overlay can only occupy the row it belongs to. */
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey .journey-flow-block .journey-row-group{
     max-width:100%!important;
@@ -228,11 +230,29 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   }
 }
 
-/* <=860px keeps the approved vertical grammar. Remove legacy fixed minimums so the
-   viewport can never be widened by a circle even at narrow device widths. */
+/* <=860px keeps the approved vertical grammar. Group wrappers occupy the same available
+   width as direct nodes and lose horizontal padding, so grouped circles cannot become
+   smaller than ungrouped circles on mobile either. */
 @media (max-width:860px){
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    padding-left:0!important;
+    padding-right:0!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster-inner{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
+    flex-basis:auto!important;
     width:min(100%,292px)!important;
     min-width:0!important;
     max-width:100%!important;
