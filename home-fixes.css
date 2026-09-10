@@ -62,13 +62,16 @@
 }
 
 /*
-  HERO sequence timing is controlled by home-interactions.js. Every fill is
-  10% slower than the previous timing, while the completed SUBTRACTIVE DESIGN
-  state receives about one viewport of native sticky hold distance. Heights
-  remain unchanged because source/caption fills are carved from existing hold
-  windows rather than extending the overall scroll timeline.
+  HERO sequence timing is controlled by home-interactions.js. The one-time page
+  entry now owns the English quote reveal, so the scroll timeline starts at the
+  previous quoteHoldEnd point (24.5%). The negative top offset removes exactly
+  that already-played scroll runway while preserving every later phase's native
+  distance and speed: English -> Korean morph begins on the first user scroll.
 */
-.hero-sequence{height:559.17vh!important}
+.hero-sequence{
+  height:559.17vh!important;
+  margin-top:-112.497vh!important;
+}
 .hero-state{
   overflow:visible!important;
   transition:none!important;
@@ -307,7 +310,10 @@
   .top{height:50px}
   .top-center{top:17px;gap:clamp(20px,7vw,30px)}
 
-  .hero-sequence{height:538.10vh!important}
+  .hero-sequence{
+    height:538.10vh!important;
+    margin-top:-107.335vh!important;
+  }
   .hero-sticky{padding:70px 10px 24px}
   .hero-state{inset:70px 10px 36px}
   .hero-quote{font-size:clamp(25px,7.08vw,28px);line-height:.97}
@@ -373,7 +379,10 @@
 
 @media(max-width:480px){
   .top a{font-size:12px}
-  .hero-sequence{height:526.75vh!important}
+  .hero-sequence{
+    height:526.75vh!important;
+    margin-top:-104.554vh!important;
+  }
   .intro-block{min-height:220vh!important;margin-bottom:0!important}
   .philosophy-tail-space{height:clamp(84px,12vh,132px)}
   .principles-head{min-height:80vh!important}
