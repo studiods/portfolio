@@ -1,6 +1,6 @@
-/* HIMART REUSE 03.2 — static stacked image-presentation study.
-   Visual treatment deliberately mirrors 03.3 production gallery captions and gradient.
-   Media slots are intentionally empty until final project photography is supplied. */
+/* HIMART REUSE 03.2 — stacked 4:3 image-information galleries.
+   Visual treatment and rolling motion deliberately mirror 03.3 production galleries.
+   Media slides remain placeholders until final project photography is supplied. */
 
 html body.reuse-current .reuse-image-display-grid{
   display:grid;
@@ -16,14 +16,89 @@ html body.reuse-current .reuse-image-display-card{
   overflow:hidden;
   background:#080808;
   isolation:isolate;
+  touch-action:pan-y;
 }
 
+html body.reuse-current .reuse-image-display-card__viewport,
+html body.reuse-current .reuse-image-display-card__slide,
 html body.reuse-current .reuse-image-display-card__media{
   position:absolute;
-  z-index:0;
   inset:0;
   width:100%;
   height:100%;
+}
+
+html body.reuse-current .reuse-image-display-card__viewport{
+  z-index:0;
+  overflow:hidden;
+  background:#080808;
+}
+
+/* Same resting stack as 03.3: next image waits 5% smaller and 5% to the right. */
+html body.reuse-current .reuse-image-display-card__slide{
+  z-index:0;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translate3d(5%,0,0) scale(.95);
+  transform-origin:50% 50%;
+  will-change:transform,opacity;
+}
+
+/* Same 20% black veil used on the waiting image in 03.3. */
+html body.reuse-current .reuse-image-display-card__slide::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  background:#000;
+  opacity:.20;
+  pointer-events:none;
+  transition:opacity .72s cubic-bezier(.22,.76,.22,1);
+}
+
+html body.reuse-current .reuse-image-display-card__slide.is-active{
+  z-index:2;
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate3d(0,0,0) scale(1);
+}
+html body.reuse-current .reuse-image-display-card__slide.is-active::after{opacity:0}
+
+html body.reuse-current .reuse-image-display-card__slide.is-next{
+  z-index:1;
+  opacity:1;
+  visibility:visible;
+  pointer-events:none;
+  transform:translate3d(5%,0,0) scale(.95);
+  transition:transform .72s cubic-bezier(.22,.76,.22,1),opacity .72s ease;
+}
+html body.reuse-current .reuse-image-display-card__slide.is-next.is-entering{
+  transform:translate3d(0,0,0) scale(1);
+}
+html body.reuse-current .reuse-image-display-card__slide.is-next.is-entering::after{opacity:0}
+
+/* Current image exits right-to-left, matching 03.3. */
+html body.reuse-current .reuse-image-display-card__slide.is-active.is-exiting{
+  z-index:3;
+  transform:translate3d(-100%,0,0) scale(1);
+  transition:transform .72s cubic-bezier(.22,.76,.22,1),opacity .72s ease;
+}
+
+/* Previous / rightward flick mirrors the direction. */
+html body.reuse-current .reuse-image-display-card.is-reverse .reuse-image-display-card__slide.is-next{
+  transform:translate3d(-5%,0,0) scale(.95);
+}
+html body.reuse-current .reuse-image-display-card.is-reverse .reuse-image-display-card__slide.is-next.is-entering{
+  transform:translate3d(0,0,0) scale(1);
+}
+html body.reuse-current .reuse-image-display-card.is-reverse .reuse-image-display-card__slide.is-active.is-exiting{
+  transform:translate3d(100%,0,0) scale(1);
+}
+
+html body.reuse-current .reuse-image-display-card__media{
+  z-index:1;
   background:#0a0a0a;
 }
 
@@ -34,11 +109,11 @@ html body.reuse-current .reuse-image-display-card__media > :is(img,picture,video
   object-fit:cover;
 }
 
-/* Exact 03.3 gallery background treatment: lower 40%, black 60% -> 0%. */
+/* Exact 03.3 background treatment: lower 40%, black 60% -> 0%. */
 html body.reuse-current .reuse-image-display-card::after{
   content:"";
   position:absolute;
-  z-index:2;
+  z-index:4;
   right:0;
   bottom:0;
   left:0;
@@ -50,7 +125,7 @@ html body.reuse-current .reuse-image-display-card::after{
 /* Exact 03.3 caption geometry / typography. */
 html body.reuse-current .reuse-image-display-card__copy{
   position:absolute;
-  z-index:3;
+  z-index:5;
   left:40px;
   bottom:40px;
   width:calc(100% - 80px);
@@ -94,6 +169,56 @@ html body.reuse-current .reuse-image-display-card__copy p{
   word-break:keep-all;
 }
 
+/* Same head-only navigation arrows as 03.3. */
+html body.reuse-current .reuse-image-display-card__nav{
+  position:absolute;
+  z-index:7;
+  top:50%;
+  width:48px;
+  height:80px;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  transform:translateY(-50%);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+html body.reuse-current .reuse-image-display-card__nav--prev{left:6px}
+html body.reuse-current .reuse-image-display-card__nav--next{right:6px}
+html body.reuse-current .reuse-image-display-card__nav::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:18px;
+  height:18px;
+  border-top:1px solid rgba(255,255,255,.78);
+  border-right:1px solid rgba(255,255,255,.78);
+}
+html body.reuse-current .reuse-image-display-card__nav--prev::before{
+  transform:translate(-35%,-50%) rotate(-135deg);
+}
+html body.reuse-current .reuse-image-display-card__nav--next::before{
+  transform:translate(-65%,-50%) rotate(45deg);
+}
+html body.reuse-current .reuse-image-display-card__nav:hover::before,
+html body.reuse-current .reuse-image-display-card__nav:focus-visible::before{
+  border-color:#fff;
+}
+
+html body.reuse-current .reuse-image-display-card__status{
+  position:absolute;
+  z-index:7;
+  right:32px;
+  bottom:32px;
+  color:rgba(255,255,255,.62);
+  font:300 11px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+  pointer-events:none;
+}
+
 @media(max-width:780px){
   html body.reuse-current .reuse-image-display-card__copy{
     left:40px;
@@ -115,5 +240,27 @@ html body.reuse-current .reuse-image-display-card__copy p{
     font-weight:100!important;
     font-variation-settings:"wght" 100!important;
     line-height:1.42!important;
+  }
+  html body.reuse-current .reuse-image-display-card__nav{
+    width:38px;
+    height:64px;
+  }
+  html body.reuse-current .reuse-image-display-card__nav--prev{left:0}
+  html body.reuse-current .reuse-image-display-card__nav--next{right:0}
+  html body.reuse-current .reuse-image-display-card__nav::before{
+    width:14px;
+    height:14px;
+  }
+  html body.reuse-current .reuse-image-display-card__status{
+    right:18px;
+    bottom:18px;
+    font-size:10px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-image-display-card__slide,
+  html body.reuse-current .reuse-image-display-card__slide::after{
+    transition:none!important;
   }
 }
