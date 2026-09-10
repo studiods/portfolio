@@ -24,8 +24,8 @@
   ];
 
   const AI_VIDEO_MEDIA = [
-    './assets/movies/reuse_04.mp4',
     './assets/movies/reuse_03.mp4',
+    './assets/movies/reuse_04.mp4',
     './assets/movies/reuse_01.mp4'
   ];
 
@@ -321,7 +321,7 @@
         <svg viewBox="0 0 44 44" aria-hidden="true"><polyline points="23,12 13,22 23,32"></polyline><polyline points="34,12 24,22 34,32"></polyline></svg>
       </button>
       <button class="reuse-video-player__toggle" type="button" aria-label="재생">
-        <svg class="reuse-video-player__icon reuse-video-player__icon--play" viewBox="0 0 48 48" aria-hidden="true"><polyline points="17,11 36,24 17,37 17,11"></polyline></svg>
+        <svg class="reuse-video-player__icon reuse-video-player__icon--play" viewBox="0 0 48 48" aria-hidden="true"><polyline points="18,12 32,24 18,36"></polyline></svg>
         <svg class="reuse-video-player__icon reuse-video-player__icon--pause" viewBox="0 0 48 48" aria-hidden="true"><line x1="18" y1="12" x2="18" y2="36"></line><line x1="30" y1="12" x2="30" y2="36"></line></svg>
       </button>
       <button class="reuse-video-player__skip reuse-video-player__skip--next" type="button" aria-label="다음 영상">
