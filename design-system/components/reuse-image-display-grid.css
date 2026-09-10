@@ -219,6 +219,11 @@ html body.reuse-current .reuse-image-display-card__status{
   pointer-events:none;
 }
 
+/* Gallery 03: shift every 360 frame upward by 10% within the 4:3 crop. */
+html body.reuse-current .reuse-image-display-card.is-360-viewer .reuse-360-viewer__frame{
+  object-position:50% 60%!important;
+}
+
 @media(max-width:780px){
   html body.reuse-current .reuse-image-display-card__copy{
     left:40px;
