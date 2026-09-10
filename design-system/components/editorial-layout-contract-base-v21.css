@@ -1,0 +1,231 @@
+@import url("./horizontal-overflow-guard.css?v=20260910-1");
+
+/* HIMART editorial layout contract v2.1
+   FINAL authority for every >=1600px left-title / right-content case-study layout.
+
+   Medium-title contract
+   - divider: 1px / --hm-line-weak
+   - divider -> medium number/title: 40px / --hm-space-component
+   - the first right-side unit shares its divider Y-origin with the left major-title rail
+   - later medium-title units keep their authored/canonical subsection spacing
+
+   This file must be loaded AFTER every page/wide-layout stylesheet. Older wide files
+   contain historical `padding-top:0!important` alignment resets; the selectors below
+   intentionally match/beat those selectors so the divider contract cannot disappear.
+*/
+
+:root{
+  --hm-editorial-line-to-title:var(--hm-space-component,40px);
+}
+
+@media (min-width:1600px){
+  /* ------------------------------------------------------------
+     Shared rail baseline
+     ------------------------------------------------------------ */
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-section-head{
+    margin:0!important;
+    padding:0!important;
+    align-self:start!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail{
+    margin:0!important;
+    padding:0!important;
+    align-self:start!important;
+  }
+
+  /* The first authored unit never adds an extra chapter-start margin. */
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > :first-child{
+    margin-top:0!important;
+  }
+
+  /* ------------------------------------------------------------
+     Canonical medium-title units — adapter-grouped pages
+     HIMART runtime + STEPUP
+     ------------------------------------------------------------ */
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > :is(
+    .hm-subsection,
+    .narrative-problem,
+    .narrative-reality,
+    .narrative-signals,
+    .narrative-touchpoint-synthesis,
+    .brand-synthesis,
+    .journey-flow-block,
+    .journey-role-block,
+    .design-rule
+  ){
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > .data-list > .data-card{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test
+  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  > .hm-wrap > .hm-wide-right-rail > .data-list:first-child > .data-card:first-child{
+    margin-top:0!important;
+  }
+
+  /* Runtime HIMART medium blocks that are not always authored as hm-subsection. */
+  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section
+  .hm-wide-right-rail > :is(
+    .narrative-problem,
+    .narrative-reality,
+    .narrative-signals,
+    .narrative-touchpoint-synthesis,
+    .brand-synthesis,
+    .journey-flow-block,
+    .journey-role-block,
+    .design-rule,
+    .hm-subsection
+  ){
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  /* ------------------------------------------------------------
+     REUSE — direct DOM path (no right-rail adapter)
+     Every actual medium title receives the same line + 40px rule.
+     ------------------------------------------------------------ */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#journey,#direction).hm-section
+  > .hm-wrap > .hm-subsection.hm-ds-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .data-list > .data-card{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  /* Exact chapter-start relationships. The line itself is the right-rail baseline. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
+    margin-top:0!important;
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child{
+    margin-top:0!important;
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+
+  /* Direction starts with a flow visual rather than a medium title: align it but do
+     not invent a divider. The following 04.x hm-subsections still receive the rule. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /*
+     REUSE CHAPTER-START PAIR CONTRACT
+     ---------------------------------
+     Reuse does not use the Himart right-rail adapter. Its left major title and first
+     right-side block were therefore still animated by two independent reveal paths:
+     the shared wide layer translated both by 56px, but with different timing/easing
+     and separate IntersectionObserver checkpoints. The authored line could visibly
+     drift even though its static grid origin was correct.
+
+     At chapter start, geometry is now transform-free. A Reuse-only runtime adds
+     .is-wide-chapter-pair-visible to the section from one observer checkpoint, so the
+     left title and the first right-side block become one visual event. Natural scrolling
+     provides the vertical motion; only opacity changes. Sticky behavior remains intact.
+  */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section
+  > .hm-wrap > .hm-section-head.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
+    transform:none!important;
+    animation:none!important;
+    will-change:opacity!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible)
+  > .hm-wrap > .hm-section-head.hm-reveal{
+    opacity:.3!important;
+    transform:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #brand.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #direction.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
+    opacity:.88!important;
+    transform:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible
+  > .hm-wrap > .hm-section-head.hm-reveal{
+    opacity:var(--hm-wide-title-exit-opacity,1)!important;
+    transform:none!important;
+    animation:none!important;
+    transition:opacity .4s ease!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #brand.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #data.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #journey.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main > #direction.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    animation:none!important;
+    transition:opacity .4s ease!important;
+  }
+
+  /* STEPUP uses a right-rail adapter and every numbered medium block is hm-subsection. */
+  html body.himart-page-body.hm-wide-editorial-test.nbt-stepup-page
+  #live-main > :is(#reframe,#strategy,#habit,#iteration,#outcome).hm-section
+  .hm-wide-right-rail > .hm-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title)!important;
+  }
+}
