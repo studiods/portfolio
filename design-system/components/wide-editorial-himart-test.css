@@ -1,21 +1,14 @@
 /*
-  HIMART Wide Editorial — HIMART adapter TEST ONLY v4
-  Applies the current wide-editorial structure to the runtime-generated Himart DOM.
+  HIMART Wide Editorial — HIMART adapter TEST ONLY v5
+  Applies the current wide-editorial structure to runtime/generated Himart-family DOM.
 
-  Ownership
-  - >=1600px left sticky major-title rail + right scrolling rail geometry
-  - chapter-start alignment / reveal coordination
-  - raw-DOM fallbacks while runtime content is being assembled
-
-  Important: responsive journey geometry no longer lives here.
-  All 03 JOURNEY FLOW / SIGNALS / REDESIGN sizing and typography are owned by
-  components/himart-fluid-content.css, loaded last by himart.html. This keeps the
-  structural adapter and content-responsive rules from competing in the cascade.
+  v5 contract change:
+  - outer shells may reset chapter-start margin/padding;
+  - canonical titled units (.hm-subsection / .data-card) NEVER lose their own
+    divider-to-title padding. The final value is owned by editorial-layout-contract.css.
 */
 
 @media (min-width:1600px){
-  /* One row, two rails. The right rail owns the row height, so the left sticky title
-     remains sticky for the complete chapter regardless of how many runtime blocks exist. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
     grid-column:2!important;
     grid-row:1!important;
@@ -36,12 +29,11 @@
     container-name:hm-wide-right-rail;
   }
 
-  /* The section itself owns the 200px chapter gap. No first-child margin may add to it. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
     margin-top:0!important;
   }
 
-  /* 01 / 02 current runtime: first content is a narrative-block. */
+  /* Runtime narrative blocks are layout shells, not canonical line+title components. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data).hm-section .hm-wide-right-rail > .narrative-block:first-child{
     margin-top:0!important;
     padding-top:0!important;
@@ -51,15 +43,11 @@
     padding-top:0!important;
   }
 
-  /* 03 current runtime: the principle grid begins on the left-title baseline.
-     Do NOT zero the principle-item padding here. Its divider -> label spacing is a
-     design-system rhythm and is owned by himart-fluid-content.css. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .principle-grid:first-child{
     margin-top:0!important;
     padding-top:0!important;
   }
 
-  /* 04 current runtime: first content is design-rule. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child{
     margin-top:0!important;
     padding-top:0!important;
@@ -69,12 +57,26 @@
     padding-top:0!important;
   }
 
-  /* Raw-DOM fallbacks: keep the same alignment if narrative runtime is delayed. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child > .hm-subhead,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child > .data-card-head,
+  /* Raw-DOM fallbacks.
+     IMPORTANT: no padding reset is allowed on .hm-subsection or .data-card themselves. */
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child{
+    margin-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child > .hm-subhead{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child{
+    margin-top:0!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child > .data-card-head{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .flow-area:first-child,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .flow-area:first-child > .flow-groups,
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .prototype-intro:first-child{
@@ -82,7 +84,8 @@
     padding-top:0!important;
   }
 
-  /* Magnetic reveal at the same authored unit level used by the other wide pages. */
+  /* Magnetic reveal remains for ordinary right-rail units. The shared final contract
+     removes positional reveal from the chapter-start pair only. */
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal{
     opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
