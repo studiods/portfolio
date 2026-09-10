@@ -175,6 +175,14 @@
   };
   mountReuseWidePairSync();
 
+  /* REUSE 03.2 / Gallery 03: one 8-frame focus demonstration + direct drag hint. */
+  if(document.body.classList.contains('reuse-current') && !document.querySelector('script[data-reuse-360-focus-demo]')){
+    const focusDemoScript=document.createElement('script');
+    focusDemoScript.src='./design-system/reuse-360-focus-demo.js?v=20260910-1';
+    focusDemoScript.dataset.reuse360FocusDemo='1';
+    document.body.appendChild(focusDemoScript);
+  }
+
   /* Right-side navigation is owned only by design-system/navigation.js + components/progress.css. */
   const flowScript=document.createElement('script');
   flowScript.src='./himart-flow-line-sync-v1.js?v=ca60638';
