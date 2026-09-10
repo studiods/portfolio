@@ -18,8 +18,9 @@
 
   const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   const CYCLES = 3;
-  const CYCLE_MS = 48;
-  const STAGGER_MS = 14;
+  /* 20% slower than the previous 48ms / 14ms timing while preserving the same rhythm. */
+  const CYCLE_MS = 57.6;
+  const STAGGER_MS = 16.8;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const splitPlainText = (element) => {
