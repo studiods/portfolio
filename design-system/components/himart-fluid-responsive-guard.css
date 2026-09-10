@@ -1,0 +1,159 @@
+/* HIMART Commerce responsive guard v1.0
+   ------------------------------------------------------------
+   Final narrow-screen authority for the Himart journey system.
+
+   Why this exists
+   - The production bundle contains several historical tablet/mobile journey rules.
+   - The wide desktop adapter adds runtime grouping wrappers (.wide-flow-cluster).
+   - At narrow widths those two systems can combine into a horizontal min-content row,
+     making all journey circles collapse to unreadable sizes.
+
+   Contract
+   - Applies only to himart.html (.himart-commerce-page.hm-wide-himart-test).
+   - REUSE is explicitly excluded.
+   - Desktop/wide geometry remains owned by himart-fluid-content.css.
+   - At <=1024px the flow becomes one readable vertical sequence.
+   - Runtime tablet wrappers become layout-transparent, so grouping can never compress nodes.
+   - Every circle keeps the same maximum diameter and the same typography rules.
+*/
+
+@media (max-width:1024px){
+  /* The flow is a reading sequence, not a miniature desktop diagram. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  :is(.flow-row,.journey-flow-row){
+    display:flex!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:14px!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Runtime group shells are desktop-only geometry. On narrow screens they become
+     transparent wrappers so their padding/width can never squeeze the circles. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .wide-flow-cluster,
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .wide-flow-cluster-inner{
+    display:contents!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+  }
+
+  /* Keep the grouping meaning as a small caption, but remove the capsule geometry. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .wide-flow-cluster-label{
+    position:static!important;
+    display:block!important;
+    order:initial!important;
+    width:min(100%,292px)!important;
+    max-width:292px!important;
+    margin:16px 0 2px!important;
+    padding:0!important;
+    transform:none!important;
+    background:transparent!important;
+    text-align:center!important;
+    white-space:normal!important;
+    line-height:1.45!important;
+  }
+
+  /* Old absolute grouping capsules are also desktop-only. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey .journey-flow-block .journey-row-group{
+    display:none!important;
+  }
+
+  /* One readable diameter for every node. `min(100%,292px)` guarantees that the node
+     can shrink on very small phones but never becomes a tiny flex remainder. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .flow-node{
+    flex:0 0 auto!important;
+    flex-basis:auto!important;
+    width:min(100%,292px)!important;
+    min-width:0!important;
+    max-width:292px!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:1/1!important;
+    padding:clamp(18px,5vw,24px)!important;
+    border-radius:50%!important;
+    box-sizing:border-box!important;
+    align-self:center!important;
+  }
+
+  /* Restore the approved mobile type floor. Container-based desktop type can otherwise
+     resolve against a collapsed intermediate wrapper before this final layout settles. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .flow-node .hm-card-no{
+    margin:0 0 12px!important;
+    font-size:10px!important;
+    line-height:1.2!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .flow-node h4{
+    margin:0!important;
+    max-width:100%!important;
+    font-size:clamp(18px,5.2vw,22px)!important;
+    line-height:1.22!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .flow-node p{
+    margin:12px 0 0!important;
+    max-width:84%!important;
+    font-size:clamp(12px,3.3vw,14px)!important;
+    line-height:1.5!important;
+  }
+
+  /* Arrows become vertical connectors between readable circles. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .flow-arrow{
+    position:relative!important;
+    flex:0 0 34px!important;
+    width:34px!important;
+    min-width:34px!important;
+    max-width:34px!important;
+    height:34px!important;
+    min-height:34px!important;
+    transform:none!important;
+    align-self:center!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
+  .flow-arrow::before{
+    left:50%!important;
+    top:50%!important;
+    width:12px!important;
+    height:12px!important;
+    transform:translate(-50%,-62%) rotate(135deg)!important;
+  }
+
+  /* Two authored rows remain separate sequences but use a consistent vertical rhythm. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey .journey-flow-block .journey-flow-row + .journey-flow-row,
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey .journey-flow-block .flow-group + .flow-group{
+    margin-top:44px!important;
+  }
+}
