@@ -325,11 +325,20 @@ html body.reuse-current .reuse-video-player__icon--pause{display:none}
 html body.reuse-current .reuse-production-gallery--video-player.is-video-playing .reuse-video-player__icon--play{display:none}
 html body.reuse-current .reuse-production-gallery--video-player.is-video-playing .reuse-video-player__icon--pause{display:block}
 
+/* Initial state shows only the single center > play chevron. Side controls appear on hover/focus. */
 html body.reuse-current .reuse-video-player__skip{
   top:50%;
   width:72px;
   height:96px;
   transform:translateY(-50%);
+  opacity:0;
+  pointer-events:none!important;
+  transition:opacity .12s ease;
+}
+html body.reuse-current .reuse-production-gallery--video-player:hover .reuse-video-player__skip,
+html body.reuse-current .reuse-production-gallery--video-player:focus-within .reuse-video-player__skip{
+  opacity:1;
+  pointer-events:auto!important;
 }
 html body.reuse-current .reuse-video-player__skip--prev{left:28px}
 html body.reuse-current .reuse-video-player__skip--next{right:28px}
@@ -409,7 +418,8 @@ html body.reuse-current .reuse-video-player__skip svg{
   html body.reuse-current .reuse-production-gallery__slide,
   html body.reuse-current .reuse-production-gallery__slide::after,
   html body.reuse-current .reuse-video-player__veil,
-  html body.reuse-current .reuse-video-player__controls{
+  html body.reuse-current .reuse-video-player__controls,
+  html body.reuse-current .reuse-video-player__skip{
     transition:none!important;
   }
 }
