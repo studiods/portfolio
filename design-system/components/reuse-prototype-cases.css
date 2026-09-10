@@ -1,0 +1,233 @@
+/* HIMART REUSE 04 — prototype rows.
+   Geometry is copied from the current Himart 04 production prototype pattern:
+   four full-width rows, three Galaxy-style line mockups + one copy panel. */
+
+/* Reuse 04 was the only chapter whose pair-sync anchor did not match its actual DOM.
+   Do not show the left major title at 30% while it first enters the viewport.
+   Once .is-visible is attached, the shared sticky exit-opacity variable owns later fading. */
+@media (min-width:1600px){
+  html body.reuse-current.hm-wide-editorial-test #direction .hm-section-head.hm-reveal:not(.is-visible){
+    opacity:1!important;
+    transform:none!important;
+  }
+}
+
+html body.reuse-current #direction .prototype-case-list{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:112px!important;
+  width:100%!important;
+  margin-top:86px!important;
+  min-width:0!important;
+}
+
+html body.reuse-current #direction .prototype-case{
+  display:grid!important;
+  grid-template-columns:minmax(0,3fr) minmax(280px,1fr)!important;
+  gap:48px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+}
+
+html body.reuse-current #direction .prototype-case-visual{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+  align-items:start!important;
+  justify-items:stretch!important;
+  width:100%!important;
+  height:auto!important;
+  min-width:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+}
+
+html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:9/19.5!important;
+  margin:0!important;
+  padding:7px!important;
+  border:1px solid rgba(255,255,255,.42)!important;
+  border-radius:34px!important;
+  background:#0D0D0D!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
+  box-sizing:border-box!important;
+}
+
+html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:3!important;
+  left:50%!important;
+  top:12px!important;
+  width:8px!important;
+  height:8px!important;
+  border:1px solid rgba(255,255,255,.48)!important;
+  border-radius:50%!important;
+  background:#000!important;
+  transform:translateX(-50%)!important;
+}
+
+html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup::after{
+  content:""!important;
+  position:absolute!important;
+  right:-3px!important;
+  top:112px!important;
+  width:2px!important;
+  height:72px!important;
+  border-radius:2px!important;
+  background:rgba(255,255,255,.56)!important;
+  box-shadow:0 88px 0 rgba(255,255,255,.40)!important;
+}
+
+html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-screen{
+  width:100%!important;
+  height:100%!important;
+  overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-radius:28px!important;
+  background:#0D0D0D!important;
+}
+
+html body.reuse-current #direction .prototype-case-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  align-self:stretch!important;
+  height:auto!important;
+  min-height:0!important;
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+
+html body.reuse-current #direction .prototype-case-copy .hm-card-no{
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+
+html body.reuse-current #direction .prototype-case-copy h3{
+  margin:18px 0 0!important;
+  max-width:100%!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:23px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.16!important;
+  letter-spacing:-.035em!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+
+html body.reuse-current #direction .prototype-case-copy p{
+  margin:18px 0 0!important;
+  max-width:100%!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.54!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+html body.reuse-current #direction .prototype-case-copy strong{
+  display:block!important;
+  margin:24px 0 0!important;
+  padding:16px 0 0!important;
+  border-top:0!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.45!important;
+  letter-spacing:0!important;
+}
+
+html body.reuse-current #direction .prototype-case-copy strong b{
+  display:block!important;
+  margin:0 0 8px!important;
+  color:rgba(255,255,255,.70)!important;
+  font-family:inherit!important;
+  font-size:10px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+}
+
+@media(max-width:1000px){
+  html body.reuse-current #direction .prototype-case{
+    grid-template-columns:1fr!important;
+    gap:32px!important;
+  }
+  html body.reuse-current #direction .prototype-case-copy{
+    justify-content:flex-start!important;
+  }
+}
+
+@media(max-width:780px){
+  html body.reuse-current #direction .prototype-case-list{
+    gap:76px!important;
+    margin-top:54px!important;
+  }
+  html body.reuse-current #direction .prototype-case{
+    grid-template-columns:1fr!important;
+    gap:28px!important;
+  }
+  html body.reuse-current #direction .prototype-case-visual{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px!important;
+    overflow:hidden!important;
+  }
+  html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup{
+    width:100%!important;
+    max-width:none!important;
+    height:auto!important;
+    padding:4px!important;
+    border-radius:18px!important;
+  }
+  html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-screen{
+    border-radius:15px!important;
+  }
+  html body.reuse-current #direction .prototype-case-copy{
+    height:auto!important;
+    min-height:0!important;
+    padding:0!important;
+  }
+  html body.reuse-current #direction .prototype-case-copy h3{
+    margin-top:14px!important;
+    font-size:22px!important;
+    line-height:1.28!important;
+  }
+  html body.reuse-current #direction .prototype-case-copy p{
+    margin-top:13px!important;
+    font-size:14px!important;
+    line-height:1.58!important;
+  }
+  html body.reuse-current #direction .prototype-case-copy strong{
+    margin-top:22px!important;
+    padding-top:16px!important;
+    font-size:11px!important;
+    line-height:1.5!important;
+  }
+}
