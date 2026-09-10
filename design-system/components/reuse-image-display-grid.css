@@ -1,0 +1,122 @@
+/* HIMART REUSE 03.2 — static 2x2 image-presentation study.
+   Visual treatment deliberately mirrors 03.3 production gallery captions and gradient.
+   Media slots are intentionally empty until final project photography is supplied. */
+
+html body.reuse-current .reuse-image-display-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0;
+  width:100%;
+}
+
+html body.reuse-current .reuse-image-display-card{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:#080808;
+  isolation:isolate;
+}
+
+html body.reuse-current .reuse-image-display-card__media{
+  position:absolute;
+  z-index:0;
+  inset:0;
+  width:100%;
+  height:100%;
+  background:#0a0a0a;
+}
+
+html body.reuse-current .reuse-image-display-card__media > :is(img,picture,video){
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Exact 03.3 gallery background treatment: lower 40%, black 60% -> 0%. */
+html body.reuse-current .reuse-image-display-card::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  right:0;
+  bottom:0;
+  left:0;
+  height:40%;
+  pointer-events:none;
+  background:linear-gradient(to top,rgba(0,0,0,.60) 0%,rgba(0,0,0,0) 100%);
+}
+
+/* Exact 03.3 caption geometry / typography. */
+html body.reuse-current .reuse-image-display-card__copy{
+  position:absolute;
+  z-index:3;
+  left:40px;
+  bottom:40px;
+  width:calc(100% - 80px);
+  text-align:left;
+  pointer-events:none;
+}
+
+html body.reuse-current .reuse-image-display-card__number{
+  display:block;
+  margin:0 0 10px;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+
+html body.reuse-current .reuse-image-display-card__copy h4{
+  margin:0;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
+  line-height:1.32!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all;
+}
+
+html body.reuse-current .reuse-image-display-card__copy p{
+  margin:10px 0 0!important;
+  max-width:62ch!important;
+  color:rgba(255,255,255,.90)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all;
+}
+
+@media(max-width:780px){
+  html body.reuse-current .reuse-image-display-grid{
+    grid-template-columns:1fr;
+  }
+  html body.reuse-current .reuse-image-display-card__copy{
+    left:40px;
+    bottom:40px;
+    width:calc(100% - 80px);
+  }
+  html body.reuse-current .reuse-image-display-card__number{
+    margin-bottom:7px;
+    font-size:10px!important;
+  }
+  html body.reuse-current .reuse-image-display-card__copy h4{
+    font-size:22px!important;
+    font-weight:400!important;
+    font-variation-settings:"wght" 400!important;
+  }
+  html body.reuse-current .reuse-image-display-card__copy p{
+    margin-top:6px!important;
+    font-size:16px!important;
+    font-weight:100!important;
+    font-variation-settings:"wght" 100!important;
+    line-height:1.42!important;
+  }
+}
