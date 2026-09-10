@@ -88,8 +88,8 @@
       } else if (index === lastIndex && lastTitle && lastMedia) {
         /*
           Final-project release:
-          1) keep the title fixed at the 25vh anchor while the final media rises;
-          2) when media top meets the actual title-text top, treat that as one shared line;
+          1) before the final project arrives, keep its copy at its natural offscreen position;
+          2) once its media top reaches the fixed title-text top, both share that line;
           3) after that point, drive the title from the media top so both move upward
              at exactly the same scroll rate and the authored footer can enter normally.
         */
@@ -101,8 +101,6 @@
 
         if (mediaTop <= fixedTitleTop) {
           y = mediaTop - titleOffset + copyHeight * .5;
-        } else {
-          y = anchor;
         }
 
         opacity = 1;
