@@ -1,13 +1,15 @@
-/* REUSE 02.1 — vertical proof scan.
-   The motion deliberately avoids glow/morph effects: only the existing circle lines
-   brighten locally as a scan travels from top to bottom. The lower blue circle fills
-   from top to bottom at the exact same pace as its brighter blue outline scan. */
+/* REUSE 02.1 — flashlight-style vertical proof scan.
+   One soft band travels from the very top of each anxiety circle to the bottom.
+   Because the band is horizontal, both left/right sides of the circular outline brighten
+   at the same vertical position. The light starts slowly and accelerates downward.
+   The connector chevron stays untouched. The lower blue ring continues the motion and
+   the blue surface fills from top to bottom with a feathered, blur-like leading edge. */
 
-html body.reuse-current #data .reuse-proof-map__node{overflow:visible}
+html body.reuse-current #data .reuse-proof-map__node{position:relative;isolation:isolate;overflow:visible}
+html body.reuse-current #data .reuse-proof-map__node>h4{position:relative;z-index:3}
 
-/* Upper anxiety circle: a narrow local highlight travels vertically down the existing ring.
-   Behind the scan the ring immediately returns to its normal dark line; ahead of the scan
-   a longer low-alpha gradient gives a subtle pre-lighting cue. */
+/* Upper circle — narrow bright core + longer, subtle pre-light below it.
+   The area already passed returns immediately to the original dim border. */
 html body.reuse-current #data .reuse-proof-map__node--anxiety .reuse-proof-sweep{
   position:absolute!important;
   z-index:4!important;
@@ -24,63 +26,43 @@ html body.reuse-current #data .reuse-proof-map__node--anxiety .reuse-proof-sweep
     linear-gradient(
       to bottom,
       rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0) 28%,
-      rgba(255,255,255,.06) 38%,
-      rgba(255,255,255,.14) 43%,
-      rgba(255,255,255,.32) 47%,
-      rgba(255,255,255,.92) 50%,
-      rgba(255,255,255,.34) 53%,
-      rgba(255,255,255,.10) 58%,
-      rgba(255,255,255,0) 67%,
+      rgba(255,255,255,0) 42%,
+      rgba(255,255,255,.06) 46%,
+      rgba(255,255,255,.18) 48%,
+      rgba(255,255,255,.48) 49.2%,
+      rgba(255,255,255,.96) 50%,
+      rgba(255,255,255,.50) 51.3%,
+      rgba(255,255,255,.24) 54%,
+      rgba(255,255,255,.11) 58%,
+      rgba(255,255,255,.045) 63%,
+      rgba(255,255,255,0) 70%,
       rgba(255,255,255,0) 100%
-    ) 50% -85% / 100% 56% no-repeat!important;
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.45px))!important;
-  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.45px))!important;
+    ) 50% -78% / 100% 54% no-repeat!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.42px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.42px))!important;
 }
-@keyframes reuse-proof-vertical-upper-scan{
-  0%{opacity:0;background-position:50% -85%}
-  3%{opacity:1}
-  39%{opacity:1;background-position:50% 185%}
-  43%,100%{opacity:0;background-position:50% 185%}
+@keyframes reuse-proof-flashlight-upper{
+  0%{opacity:0;background-position:50% -78%;animation-timing-function:cubic-bezier(.42,0,1,1)}
+  2.5%{opacity:1}
+  44%{opacity:1;background-position:50% 178%}
+  47%,100%{opacity:0;background-position:50% 178%}
 }
 html body.reuse-current #data .reuse-proof-map__node--anxiety.is-proof-lane-running .reuse-proof-sweep{
-  animation:reuse-proof-vertical-upper-scan var(--reuse-proof-lane-duration) linear 1 both!important;
+  animation:reuse-proof-flashlight-upper var(--reuse-proof-lane-duration) 1 both!important;
 }
 
-/* Connector arrow: preserve the existing dim chevron and pass one brighter line through it
-   between the upper and lower circle scans. */
+/* Arrow is deliberately skipped. It remains only as the existing dim directional cue. */
 html body.reuse-current #data .reuse-proof-map__arrow > .reuse-proof-map__arrow-item{
   position:relative!important;
-  isolation:isolate;
 }
 html body.reuse-current #data .reuse-proof-map__arrow > .reuse-proof-map__arrow-item::after{
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  display:block!important;
-  visibility:visible!important;
-  width:56px!important;
-  height:24px!important;
-  pointer-events:none!important;
-  opacity:0;
-  clip-path:inset(0 0 100% 0);
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='24' viewBox='0 0 56 24'%3E%3Cpath d='M3 2 L28 22 L53 2' fill='none' stroke='%23FFFFFF' stroke-opacity='.88' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E") center/56px 24px no-repeat!important;
-}
-@keyframes reuse-proof-vertical-arrow-scan{
-  0%,36%{opacity:0;clip-path:inset(0 0 100% 0)}
-  39%{opacity:1;clip-path:inset(0 0 100% 0)}
-  47%{opacity:1;clip-path:inset(0 0 0 0)}
-  51%,100%{opacity:0;clip-path:inset(100% 0 0 0)}
-}
-html body.reuse-current #data .reuse-proof-map:has(.reuse-proof-map__node--solution:nth-child(1).is-proof-lane-running) .reuse-proof-map__arrow-item:nth-child(1)::after,
-html body.reuse-current #data .reuse-proof-map:has(.reuse-proof-map__node--solution:nth-child(2).is-proof-lane-running) .reuse-proof-map__arrow-item:nth-child(2)::after,
-html body.reuse-current #data .reuse-proof-map:has(.reuse-proof-map__node--solution:nth-child(3).is-proof-lane-running) .reuse-proof-map__arrow-item:nth-child(3)::after,
-html body.reuse-current #data .reuse-proof-map:has(.reuse-proof-map__node--solution:nth-child(4).is-proof-lane-running) .reuse-proof-map__arrow-item:nth-child(4)::after{
-  animation:reuse-proof-vertical-arrow-scan var(--reuse-proof-lane-duration) linear 1 both!important;
+  content:none!important;
+  display:none!important;
+  visibility:hidden!important;
+  animation:none!important;
 }
 
-/* Lower proof circle: keep the base circle black with the normal Himart-blue border.
-   A blue fill rises only as far as the descending scan has passed. */
+/* Lower proof circle — base remains black with the normal Himart-blue border. */
 html body.reuse-current #data .reuse-proof-map__node--solution{
   position:relative!important;
   isolation:isolate!important;
@@ -89,17 +71,31 @@ html body.reuse-current #data .reuse-proof-map__node--solution{
   border-color:var(--hm-blue)!important;
   animation:none!important;
 }
+
+/* Soft blue fill.
+   The layer is slightly taller than the circle and starts completely above it.
+   Its feathered lower edge acts like diffused light, so the fill never reads as a hard
+   horizontal clip. At the end the feather has moved beyond the circle, leaving it solid. */
 html body.reuse-current #data .reuse-proof-map__node--solution::before{
   content:""!important;
   position:absolute!important;
   z-index:1!important;
-  inset:-1px!important;
+  left:-1px!important;
+  top:-120%!important;
+  width:calc(100% + 2px)!important;
+  height:120%!important;
   display:block!important;
-  border-radius:50%!important;
+  border-radius:50% 50% 0 0!important;
   pointer-events:none!important;
   background:var(--hm-blue)!important;
-  clip-path:inset(0 0 100% 0);
+  transform:translateY(0);
+  transform-origin:50% 0;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 86%,rgba(0,0,0,.92) 90%,rgba(0,0,0,.70) 94%,rgba(0,0,0,.38) 97%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 86%,rgba(0,0,0,.92) 90%,rgba(0,0,0,.70) 94%,rgba(0,0,0,.38) 97%,transparent 100%);
 }
+
+/* Brighter blue outline scan. Same horizontal band logic as the upper ring, so both
+   sides of the blue circle brighten together and the light keeps travelling downward. */
 html body.reuse-current #data .reuse-proof-map__node--solution::after{
   content:""!important;
   position:absolute!important;
@@ -116,63 +112,79 @@ html body.reuse-current #data .reuse-proof-map__node--solution::after{
   background:
     linear-gradient(
       to bottom,
-      rgba(158,224,252,0) 0%,
-      rgba(158,224,252,0) 28%,
-      rgba(158,224,252,.10) 38%,
-      rgba(158,224,252,.24) 44%,
-      rgba(158,224,252,.55) 48%,
-      rgba(205,241,255,1) 50%,
-      rgba(158,224,252,.50) 53%,
-      rgba(158,224,252,.15) 59%,
-      rgba(158,224,252,0) 68%,
-      rgba(158,224,252,0) 100%
-    ) 50% -85% / 100% 56% no-repeat!important;
-  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.4px))!important;
-  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.4px))!important;
-}
-@keyframes reuse-proof-vertical-lower-fill{
-  0%,47%{clip-path:inset(0 0 100% 0)}
-  50%{clip-path:inset(0 0 100% 0)}
-  93%,100%{clip-path:inset(0 0 0 0)}
-}
-@keyframes reuse-proof-vertical-lower-scan{
-  0%,47%{opacity:0;background-position:50% -85%}
-  50%{opacity:1;background-position:50% -85%}
-  93%{opacity:1;background-position:50% 185%}
-  97%,100%{opacity:0;background-position:50% 185%}
-}
-html body.reuse-current #data .reuse-proof-map__node--solution.is-proof-lane-running::before{
-  animation:reuse-proof-vertical-lower-fill var(--reuse-proof-lane-duration) linear 1 both!important;
-}
-html body.reuse-current #data .reuse-proof-map__node--solution.is-proof-lane-running::after{
-  animation:reuse-proof-vertical-lower-scan var(--reuse-proof-lane-duration) linear 1 both!important;
+      rgba(181,232,255,0) 0%,
+      rgba(181,232,255,0) 42%,
+      rgba(181,232,255,.08) 46%,
+      rgba(181,232,255,.22) 48%,
+      rgba(205,241,255,.58) 49.2%,
+      rgba(232,249,255,1) 50%,
+      rgba(205,241,255,.58) 51.3%,
+      rgba(181,232,255,.28) 54%,
+      rgba(181,232,255,.13) 58%,
+      rgba(181,232,255,.055) 63%,
+      rgba(181,232,255,0) 70%,
+      rgba(181,232,255,0) 100%
+    ) 50% -78% / 100% 54% no-repeat!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.38px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 2px),#000 calc(100% - 1.38px))!important;
 }
 
-/* Copy turns dark only after the blue fill has crossed the text center. */
-@keyframes reuse-proof-vertical-copy{
-  0%,66%{--reuse-proof-copy-color:#00a6ed;font-weight:var(--hm-circle-title-weight,100);font-variation-settings:"wght" 100}
-  74%{--reuse-proof-copy-color:#000;font-weight:var(--hm-circle-highlight-title-weight,400);font-variation-settings:"wght" 400}
+/* The light intentionally disappears through the arrow gap (44–51%) and resumes at the
+   top of the lower blue circle. The second half is already moving faster, preventing a
+   new slow-start when it reaches the solution. */
+@keyframes reuse-proof-flashlight-lower-fill{
+  0%,50%{transform:translateY(0)}
+  51%{transform:translateY(0);animation-timing-function:linear}
+  95%,100%{transform:translateY(93.333%)}
+}
+@keyframes reuse-proof-flashlight-lower-ring{
+  0%,50%{opacity:0;background-position:50% -78%}
+  51%{opacity:1;background-position:50% -78%;animation-timing-function:linear}
+  95%{opacity:1;background-position:50% 178%}
+  98%,100%{opacity:0;background-position:50% 178%}
+}
+html body.reuse-current #data .reuse-proof-map__node--solution.is-proof-lane-running::before{
+  animation:reuse-proof-flashlight-lower-fill var(--reuse-proof-lane-duration) 1 both!important;
+}
+html body.reuse-current #data .reuse-proof-map__node--solution.is-proof-lane-running::after{
+  animation:reuse-proof-flashlight-lower-ring var(--reuse-proof-lane-duration) 1 both!important;
+}
+
+/* Copy changes only after the diffused blue fill has moved through the text area. */
+@keyframes reuse-proof-flashlight-copy{
+  0%,68%{--reuse-proof-copy-color:#00a6ed;font-weight:var(--hm-circle-title-weight,100);font-variation-settings:"wght" 100}
+  78%{--reuse-proof-copy-color:#000;font-weight:var(--hm-circle-highlight-title-weight,400);font-variation-settings:"wght" 400}
   100%{--reuse-proof-copy-color:#000;font-weight:var(--hm-circle-highlight-title-weight,400);font-variation-settings:"wght" 400}
 }
 html body.reuse-current #data .reuse-proof-map__node--solution.is-proof-lane-running h4{
-  animation:reuse-proof-vertical-copy var(--reuse-proof-lane-duration) linear 1 both!important;
+  animation:reuse-proof-flashlight-copy var(--reuse-proof-lane-duration) linear 1 both!important;
 }
 
-/* Existing cycle reset remains gentle instead of snapping the filled circles back to black. */
+/* Keep the existing long reset, but reverse the fill softly instead of snapping. */
 html body.reuse-current #data .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::before{
-  clip-path:inset(0 0 100% 0)!important;
-  transition:clip-path 2000ms cubic-bezier(.42,0,.58,1)!important;
+  transform:translateY(0)!important;
+  transition:transform 2000ms cubic-bezier(.42,0,.58,1)!important;
+  animation:none!important;
 }
-html body.reuse-current #data .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after,
-html body.reuse-current #data .reuse-proof-map.is-proof-resetting .reuse-proof-map__arrow-item::after{
+html body.reuse-current #data .reuse-proof-map.is-proof-resetting .reuse-proof-map__node--solution::after{
   opacity:0!important;
   animation:none!important;
 }
 
 @media(prefers-reduced-motion:reduce){
   html body.reuse-current #data .reuse-proof-map__node--anxiety .reuse-proof-sweep,
-  html body.reuse-current #data .reuse-proof-map__arrow-item::after,
   html body.reuse-current #data .reuse-proof-map__node--solution::after{display:none!important}
-  html body.reuse-current #data .reuse-proof-map__node--solution::before{clip-path:inset(0)!important;animation:none!important;transition:none!important}
-  html body.reuse-current #data .reuse-proof-map__node--solution h4{--reuse-proof-copy-color:#000!important;animation:none!important}
+  html body.reuse-current #data .reuse-proof-map__node--solution::before{
+    top:0!important;
+    height:100%!important;
+    transform:none!important;
+    -webkit-mask-image:none!important;
+    mask-image:none!important;
+    animation:none!important;
+    transition:none!important;
+  }
+  html body.reuse-current #data .reuse-proof-map__node--solution h4{
+    --reuse-proof-copy-color:#000!important;
+    animation:none!important;
+  }
 }
