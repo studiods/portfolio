@@ -13,10 +13,10 @@
     REUSE 04 / PROTOTYPE
     --------------------
     Reuse keeps its authored copy, but the old 12-card phone grid is converted into
-    the exact visual grammar used by Himart 04: four full-width rows, three Galaxy-style
-    line mockups on the left and one copy panel on the right. The text is derived from
-    the current Reuse phone-card labels/captions, so this structural migration does not
-    replace the authored Reuse content with Himart copy.
+    six full-width rows, two taller Galaxy-style line mockups on the left and one copy
+    panel on the right. The text is derived from the current Reuse phone-card labels/
+    captions, so this structural migration does not replace the authored Reuse content
+    with Himart copy.
   */
   const mountReuseDirectionPrototype=()=>{
     if(!document.body.classList.contains('reuse-current'))return;
@@ -24,7 +24,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260910-1';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260910-2';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -46,8 +46,8 @@
     const list=document.createElement('div');
     list.className='prototype-case-list reuse-prototype-case-list hm-reveal';
 
-    for(let start=0;start<cards.length;start+=3){
-      const group=cards.slice(start,start+3);
+    for(let start=0;start<cards.length;start+=2){
+      const group=cards.slice(start,start+2);
       if(!group.length)continue;
 
       const numbers=group.map(card=>(card.querySelector('.phone-meta span')?.textContent||'').trim()).filter(Boolean);
@@ -62,7 +62,7 @@
       group.forEach((_,screenIndex)=>{
         const device=document.createElement('div');
         device.className='galaxy-ultra-mockup';
-        device.setAttribute('aria-label',`Reuse prototype row ${Math.floor(start/3)+1}, screen ${screenIndex+1}`);
+        device.setAttribute('aria-label',`Reuse prototype row ${Math.floor(start/2)+1}, screen ${screenIndex+1}`);
         const screen=document.createElement('div');
         screen.className='galaxy-ultra-screen';
         device.appendChild(screen);
