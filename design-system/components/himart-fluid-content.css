@@ -1,0 +1,264 @@
+/* HIMART Commerce adaptive content contract v1.0
+   ------------------------------------------------
+   Final Himart-only design-system extension for responsive content containment.
+
+   Ownership
+   - Applies only to himart.html runtime (.himart-commerce-page.hm-wide-himart-test).
+   - REUSE is intentionally excluded and keeps its page-specific component CSS.
+   - Keeps every Himart visualization inside its authored content rail.
+   - Journey circles and their internal type scale from the real available width.
+   - At >=1600px the 03 principle divider shares the left-title baseline while
+     preserving the canonical divider -> label/title gap.
+
+   This file is loaded after the shared editorial layout contract so it is the final
+   authority for Himart-specific fluid geometry, not a second global design system. */
+
+/* ---------- 1. HIMART CONTENT CONTAINMENT ---------- */
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#live-main :is(
+  .hm-wide-right-rail,
+  .narrative-block,
+  .principle-grid,
+  .design-rule,
+  .data-list,
+  .data-card,
+  .data-viz,
+  .flow-area,
+  .flow-groups,
+  .flow-group,
+  .flow-row,
+  .journey-stage-flow,
+  .journey-flow-block,
+  .journey-signal-subsection,
+  .journey-redesign-subsection,
+  .journey-role-block,
+  .journey-more,
+  .journey-more-inner,
+  .wide-flow-cluster,
+  .wide-flow-cluster-inner,
+  .journey-role-grid,
+  .prototype-case-list,
+  .prototype-case,
+  .prototype-case-visual
+){
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+}
+
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#live-main :is(.hm-wide-right-rail,.data-viz,.flow-area,.flow-groups,.journey-stage-flow,.journey-more-inner){
+  width:100%!important;
+}
+
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#live-main :is(img,video,svg,canvas){
+  max-width:100%;
+}
+
+/* Long authored labels must never create min-content overflow. */
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#journey :is(.flow-label,.wide-flow-cluster-label,.group-label){
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  word-break:keep-all!important;
+  box-sizing:border-box!important;
+}
+
+/* ---------- 2. JOURNEY: ONE FLUID GEOMETRY CONTRACT ---------- */
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#journey{
+  --hm-hj-gap:clamp(6px,.72vw,10px);
+  --hm-hj-arrow:clamp(14px,1.35vw,20px);
+}
+
+/* The actual right content rail is the sizing reference at wide editorial widths. */
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#journey .hm-wide-right-rail{
+  container-type:inline-size!important;
+  container-name:hm-himart-journey!important;
+}
+
+/* Remove every legacy fixed journey line width (552 / 852 / 1152px etc.). */
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-group{
+  --line-left:0px!important;
+  --line-width:100%!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+#journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-group::before{
+  left:0!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+
+@media (min-width:861px){
+  /* FLOW / SIGNALS / REDESIGN all consume exactly the width they are given.
+     Flex is used instead of fixed circle pixels because the runtime can group
+     2–3 nodes inside .wide-flow-cluster. Every group is allowed to shrink. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) :is(.flow-row,.journey-flow-row){
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:var(--hm-hj-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) :is(.flow-row,.journey-flow-row) > .flow-node{
+    flex:1 1 0!important;
+  }
+
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster{
+    flex:2 1 0!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster--alert{
+    flex-grow:3!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster--focus{
+    flex-grow:2!important;
+  }
+
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster-inner{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    gap:var(--hm-hj-gap)!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster-inner > .flow-node{
+    flex:1 1 0!important;
+  }
+
+  /* Circle size is always derived from the lane width. No minimum pixel width survives. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    aspect-ratio:1/1!important;
+    flex-basis:0!important;
+    padding:clamp(12px,7cqi,22px)!important;
+    border-radius:50%!important;
+    box-sizing:border-box!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+    container-type:inline-size!important;
+  }
+
+  /* Internal type follows each circle, not the viewport. This prevents a forced
+     26–28px title from making the circle grow back outside the content rail. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node .hm-card-no{
+    margin:0 0 clamp(7px,4.8cqi,14px)!important;
+    font-size:clamp(9px,5cqi,12px)!important;
+    line-height:1.2!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node h4{
+    margin:0!important;
+    max-width:100%!important;
+    font-size:clamp(15px,10.2cqi,26px)!important;
+    line-height:1.18!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node p{
+    margin:clamp(7px,5cqi,14px) 0 0!important;
+    max-width:86%!important;
+    font-size:clamp(10px,5.7cqi,14px)!important;
+    line-height:1.4!important;
+    word-break:keep-all!important;
+    overflow-wrap:break-word!important;
+  }
+
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow{
+    flex:0 0 var(--hm-hj-arrow)!important;
+    width:var(--hm-hj-arrow)!important;
+    min-width:var(--hm-hj-arrow)!important;
+    max-width:var(--hm-hj-arrow)!important;
+    height:clamp(30px,3vw,44px)!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow::before{
+    width:clamp(10px,1.05vw,16px)!important;
+    height:clamp(10px,1.05vw,16px)!important;
+  }
+
+  /* Legacy capsule overlays may exist before/around the runtime regrouping. They can
+     describe only the space already owned by the row, never extend it. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey .journey-flow-block .journey-row-group{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey .journey-flow-block .row-top .journey-row-group{
+    left:0!important;
+    width:50%!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey .journey-flow-block .row-bottom .journey-row-group{
+    left:25%!important;
+    width:50%!important;
+  }
+}
+
+/* <=860px keeps the existing vertical journey grammar, but fixed minimum widths are
+   still forbidden so no legacy circle can widen the viewport. */
+@media (max-width:860px){
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+}
+
+/* ---------- 3. 03 PRINCIPLE DIVIDER / TITLE RHYTHM ---------- */
+@media (min-width:1600px){
+  /* The right-side line, not the FAMILIARITY label, is the chapter-start baseline.
+     Therefore the line aligns with the left 03 title while the label stays the canonical
+     40px below it. This explicitly replaces the old padding-top:0 alignment shortcut. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-editorial-test.hm-wide-himart-test:not(.reuse-current)
+  #live-main > #journey.hm-section > .hm-wrap > .hm-wide-right-rail > .principle-grid:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html body.himart-page-body.himart-commerce-page.hm-wide-editorial-test.hm-wide-himart-test:not(.reuse-current)
+  #live-main > #journey.hm-section > .hm-wrap > .hm-wide-right-rail > .principle-grid:first-child > .principle-item{
+    margin-top:0!important;
+    border-top:1px solid var(--hm-line-weak)!important;
+    padding-top:var(--hm-editorial-line-to-title,var(--hm-space-component,40px))!important;
+  }
+}
