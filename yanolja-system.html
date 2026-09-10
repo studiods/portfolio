@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>YANOLJA B2B — Design System Development</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260909-6">
+<link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260909-12-yanolja">
+<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260910-4">
+<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260910-1">
+<link rel="stylesheet" href="./design-system/navigation.css?v=20260907-5">
+<link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260909-3">
+<link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260910-3-overflow">
+</head>
+<body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-narrative-ready himart-movie-page yanolja-system-page hm-wide-editorial-test hm-wide-himart-test">
+<main id="live-main">
+<header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
+  <img class="hm-movie-video hm-ds-hero__video yanolja-hero__image" src="./assets/image/yanolja.webp" alt="호텔 운영 현장에서 사용하는 B2B 서비스 환경을 재구성한 이미지">
+  <div class="hm-movie-overlay hm-ds-hero__overlay" aria-hidden="true"></div>
+  <div class="hm-wrap hm-ds-wrap hm-ds-hero__inner">
+    <div class="hm-movie-copy hm-ds-hero__copy">
+      <h1 class="hm-title hm-ds-hero__title js-scramble">현장의 업무 환경부터 분석해,<br>야놀자 B2B 디자인 시스템을 설계했습니다.</h1>
+      <p class="hm-lead hm-ds-hero__description">사업 방향과 브랜드, 실제 사용 조건을 하나의 공통 UX 규칙으로 연결했습니다.</p>
+    </div>
+    <div class="hm-hero-bottom hm-ds-hero__bottom">
+      <div class="hm-meta hm-ds-hero__meta">
+        <div><span>ROLE</span><b>UX DESIGN · DESIGN SYSTEM · UI DIRECTION</b></div>
+        <div><span>FOCUS</span><b>B2B PRODUCT · FIELD USABILITY · CONSISTENCY</b></div>
+        <div><span>SCOPE</span><b>PRINCIPLES · COLOR · TYPE · COMPONENTS</b></div>
+        <div><span>PERIOD</span><b>YANOLJA · 2020—2021</b></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="hm-progress hm-ds-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
+
+<section class="hm-section hm-ds-section" id="brand" data-chapter="01"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal">
+    <div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">화면을 그리기 전에,<br>누가 어디서 어떻게 쓰는지부터 정의했습니다.</h2></div>
+    <p class="hm-section-desc hm-ds-section__description">B2B 제품은 실제 근무 조건이 사용성을 좌우하기 때문에 사용자와 환경을 먼저 기준으로 삼았습니다.</p>
+  </div>
+  <div class="hm-wide-right-rail">
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">01.1 / BEFORE SYSTEM</span><div><h3 class="hm-subtitle hm-ds-subsection__title">디자인 시스템을 만들기 전,<br>항상 네 가지 질문부터 시작했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">기능과 컴포넌트를 바로 정의하지 않고 서비스의 성격, 전달 가치, 실제 사용 환경, 일관된 경험의 조건을 먼저 확인했습니다.</p></div></div>
+      <div class="yanolja-question-grid hm-ds-subtitle-to-content" aria-label="디자인 시스템 구축 전 핵심 질문">
+        <article class="yanolja-question-card"><h4>우리 서비스가 가진<br>성격은 무엇인가?</h4></article>
+        <article class="yanolja-question-card"><h4>우리는 어떤 가치를<br>사용자에게 전달하는가?</h4></article>
+        <article class="yanolja-question-card"><h4>사용자는 어떤 환경과 조건에서<br>서비스를 사용하는가?</h4></article>
+        <article class="yanolja-question-card"><h4>통일되고 일관된<br>사용자·브랜드 경험을 제공할 수 있는가?</h4></article>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.48</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">01.2 / REAL CONTEXT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">사업과 브랜드뿐 아니라,<br>실사용자의 근무 환경까지 디자인 조건으로 봤습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">연령과 업무 패턴, 모니터 크기와 해상도, 조도, 자세처럼 실제 현장에서 정보 인지에 영향을 주는 조건을 함께 검토했습니다.</p></div></div>
+      <div class="yanolja-context-grid hm-ds-subtitle-to-content">
+        <article><span>01 / USER</span><h4>연령과 역할</h4><p>실제 근무자의 연령과 업무 역할을 고려해 정보 밀도와 표현 방식을 판단했습니다.</p></article>
+        <article><span>02 / DISPLAY</span><h4>모니터 환경</h4><p>화면 크기와 해상도를 기준으로 주요 정보의 우선순위와 시인성을 검토했습니다.</p></article>
+        <article><span>03 / LIGHT</span><h4>조도와 대비</h4><p>밝은 환경과 어두운 환경 모두에서 빠르게 상태를 확인할 수 있도록 대비를 고려했습니다.</p></article>
+        <article><span>04 / POSTURE</span><h4>업무 자세</h4><p>장시간 화면을 바라보는 현장 업무 특성을 고려해 눈의 피로와 인지 부담을 줄이고자 했습니다.</p></article>
+        <article><span>05 / BEHAVIOR</span><h4>행동 패턴</h4><p>빠른 상황 파악과 반복 입력이 많은 업무 흐름에 맞춰 조작과 피드백을 단순화했습니다.</p></article>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.48</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">01.3 / REFRAME</span><div><h3 class="hm-subtitle hm-ds-subsection__title">그래서 디자인 시스템을<br>화면 규칙이 아닌 업무 환경에 대한 답으로 정의했습니다.</h3></div></div>
+      <div class="yanolja-equation hm-ds-subtitle-to-content"><span>BUSINESS · BRAND</span><i>+</i><b>사용자와 실제 근무 환경</b><i>→</i><b>공통 UX 원칙과 컴포넌트</b></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="hm-section hm-ds-section" id="data" data-chapter="02"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal">
+    <div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">제작 방향을 명확히 하고,<br>세 가지 목표로 시스템을 압축했습니다.</h2></div>
+    <p class="hm-section-desc hm-ds-section__description">직관성, 글로벌 확장성, 제품 간 일관성을 디자인 시스템의 공통 판단 기준으로 잡았습니다.</p>
+  </div>
+  <div class="hm-wide-right-rail">
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">02.1 / THREE GOALS</span><div><h3 class="hm-subtitle hm-ds-subsection__title">빠르게 이해하고, 어디서나 쓰고,<br>제품이 달라도 같은 경험을 주는 것을 목표로 했습니다.</h3></div></div>
+      <div class="yanolja-goal-grid hm-ds-subtitle-to-content">
+        <article class="yanolja-goal-card"><span>01 / CLARITY</span><h4>직관적이고 명확한 형태와 색상</h4><p>근무자가 빠르게 상황을 파악하고 대응하도록 시인성과 정보 인지성을 높였습니다.</p></article>
+        <article class="yanolja-goal-card"><span>02 / GLOBAL</span><h4>글로벌 표준을 위한 범용 설계</h4><p>국가·언어·문화·환경 차이를 고려해 해외에서도 확장 가능한 규칙을 만들었습니다.</p></article>
+        <article class="yanolja-goal-card"><span>03 / CONSISTENCY</span><h4>일관된 사용성과 브랜드 경험</h4><p>각 제품이 하나의 경험처럼 이어지도록 공통 요소와 제품 간 연결성을 고려했습니다.</p></article>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.49</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">02.2 / TRANSLATE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">목표는 추상적인 슬로건이 아니라,<br>실제 화면에서 판단할 수 있는 규칙으로 바꿨습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">빠른 인지, 다양한 환경 대응, 제품 간 동일한 UX라는 기준이 컬러·형태·타이포·컴포넌트 설계에 직접 연결되도록 했습니다.</p></div></div>
+      <div class="yanolja-rule-grid hm-ds-subtitle-to-content">
+        <article><span>CLARITY → VISIBILITY</span><h4>상태와 행동의 우선순위를 색과 대비로 명확히 했습니다.</h4><p>짧은 시간 안에 상태를 판단해야 하는 B2B 업무 흐름을 기준으로 삼았습니다.</p></article>
+        <article><span>GLOBAL → ACCESSIBILITY</span><h4>색각과 환경 변화에서도 구분 가능한 방향을 우선했습니다.</h4><p>Primary Color와 명도·채도 체계를 다양한 조건에서 사용할 수 있도록 설계했습니다.</p></article>
+        <article><span>CONSISTENCY → COMPONENT</span><h4>반복되는 기능을 같은 규칙과 상태로 통일했습니다.</h4><p>버튼·입력·선택·날짜 등 공통 패턴이 제품마다 달라지지 않도록 정리했습니다.</p></article>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal">
+    <div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">색·형태·타이포까지,<br>모든 규칙에 사용 이유를 붙였습니다.</h2></div>
+    <p class="hm-section-desc hm-ds-section__description">보기 좋은 규칙보다 현장에서 명확하게 읽히고 실수 없이 조작되는 기준을 우선했습니다.</p>
+  </div>
+  <div class="hm-wide-right-rail">
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">03.1 / COLOR SYSTEM</span><div><h3 class="hm-subtitle hm-ds-subsection__title">Space Blue를 중심으로,<br>역할이 분명한 컬러 스케일을 만들었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">Primary와 Secondary 컬러를 명도 단계로 확장해 상태와 정보 위계에 반복해서 사용할 수 있도록 구성했습니다.</p></div></div>
+      <div class="yanolja-palette hm-ds-subtitle-to-content" aria-label="HST Group design system color palette">
+        <div class="yanolja-color-family"><h4>Space Blue<small>PRIMARY</small></h4><div class="yanolja-swatch-stack"><span class="yanolja-swatch" style="background:#F2F5FB">#F2F5FB</span><span class="yanolja-swatch" style="background:#D9E1F2">#D9E1F2</span><span class="yanolja-swatch" style="background:#BFCEE9">#BFCEE9</span><span class="yanolja-swatch" style="background:#A6BAE0">#A6BAE0</span><span class="yanolja-swatch" style="background:#6689CA">#6689CA</span><span class="yanolja-swatch is-dark" style="background:#003AA7">#003AA7</span><span class="yanolja-swatch is-dark" style="background:#002E86">#002E86</span><span class="yanolja-swatch is-dark" style="background:#002364">#002364</span><span class="yanolja-swatch is-dark" style="background:#001132">#001132</span></div></div>
+        <div class="yanolja-color-family"><h4>Ocean Blue<small>SECONDARY</small></h4><div class="yanolja-swatch-stack"><span class="yanolja-swatch" style="background:#F2F9FD">#F2F9FD</span><span class="yanolja-swatch" style="background:#D9EDF9">#D9EDF9</span><span class="yanolja-swatch" style="background:#BFE2F4">#BFE2F4</span><span class="yanolja-swatch" style="background:#A6D6F0">#A6D6F0</span><span class="yanolja-swatch" style="background:#66B9E5">#66B9E5</span><span class="yanolja-swatch is-dark" style="background:#008AD4">#008AD4</span><span class="yanolja-swatch is-dark" style="background:#006EAA">#006EAA</span><span class="yanolja-swatch is-dark" style="background:#00537F">#00537F</span><span class="yanolja-swatch is-dark" style="background:#002940">#002940</span></div></div>
+        <div class="yanolja-color-family"><h4>Sunsets Red<small>SECONDARY</small></h4><div class="yanolja-swatch-stack"><span class="yanolja-swatch" style="background:#FBF2F2">#FBF2F2</span><span class="yanolja-swatch" style="background:#F4D9D9">#F4D9D9</span><span class="yanolja-swatch" style="background:#EDBFBF">#EDBFBF</span><span class="yanolja-swatch" style="background:#E5A6A6">#E5A6A6</span><span class="yanolja-swatch" style="background:#D36666">#D36666</span><span class="yanolja-swatch is-dark" style="background:#B50000">#B50000</span><span class="yanolja-swatch is-dark" style="background:#910000">#910000</span><span class="yanolja-swatch is-dark" style="background:#6D0000">#6D0000</span><span class="yanolja-swatch is-dark" style="background:#360000">#360000</span></div></div>
+        <div class="yanolja-color-family"><h4>Wild Orange<small>SECONDARY</small></h4><div class="yanolja-swatch-stack"><span class="yanolja-swatch" style="background:#FEF8F2">#FEF8F2</span><span class="yanolja-swatch" style="background:#FBEAD9">#FBEAD9</span><span class="yanolja-swatch" style="background:#F8DDBF">#F8DDBF</span><span class="yanolja-swatch" style="background:#F6CFA6">#F6CFA6</span><span class="yanolja-swatch" style="background:#EFAC66">#EFAC66</span><span class="yanolja-swatch is-dark" style="background:#E47500">#E47500</span><span class="yanolja-swatch is-dark" style="background:#B65E00">#B65E00</span><span class="yanolja-swatch is-dark" style="background:#894600">#894600</span><span class="yanolja-swatch is-dark" style="background:#442300">#442300</span></div></div>
+        <div class="yanolja-color-family"><h4>Mountain Green<small>SECONDARY</small></h4><div class="yanolja-swatch-stack"><span class="yanolja-swatch" style="background:#F5FAF2">#F5FAF2</span><span class="yanolja-swatch" style="background:#E1EFD9">#E1EFD9</span><span class="yanolja-swatch" style="background:#CDE4BF">#CDE4BF</span><span class="yanolja-swatch" style="background:#B9D9A6">#B9D9A6</span><span class="yanolja-swatch" style="background:#88BD66">#88BD66</span><span class="yanolja-swatch is-dark" style="background:#389100">#389100</span><span class="yanolja-swatch is-dark" style="background:#2D7400">#2D7400</span><span class="yanolja-swatch is-dark" style="background:#225700">#225700</span><span class="yanolja-swatch is-dark" style="background:#112C00">#112C00</span></div></div>
+        <div class="yanolja-color-family"><h4>Gray Scale<small>NEUTRAL</small></h4><div class="yanolja-swatch-stack"><span class="yanolja-swatch" style="background:#F5F5F5">#F5F5F5</span><span class="yanolja-swatch" style="background:#EDEDED">#EDEDED</span><span class="yanolja-swatch" style="background:#DEDEDE">#DEDEDE</span><span class="yanolja-swatch" style="background:#CCCCCC">#CCCCCC</span><span class="yanolja-swatch" style="background:#B3B3B3">#B3B3B3</span><span class="yanolja-swatch" style="background:#999999">#999999</span><span class="yanolja-swatch is-dark" style="background:#737373">#737373</span><span class="yanolja-swatch is-dark" style="background:#4D4D4D">#4D4D4D</span><span class="yanolja-swatch is-dark" style="background:#262626">#262626</span><span class="yanolja-swatch is-dark" style="background:#000000">#000000</span></div></div>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.50-52</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">03.2 / ACCESSIBILITY</span><div><h3 class="hm-subtitle hm-ds-subsection__title">Primary Blue는 브랜드 취향이 아니라,<br>다양한 색각 환경까지 고려한 선택이었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">당시 글로벌 색각 가이드에 대응하기 위해 색각 차이가 있는 환경에서도 상태 구분이 비교적 명확한 파란색을 핵심 색으로 사용했습니다.</p></div></div>
+      <div class="yanolja-accessibility hm-ds-subtitle-to-content">
+        <div class="yanolja-accessibility__statement"><strong>SPACE BLUE</strong><h4>색은 장식이 아니라<br>업무 상태를 구분하는 정보였습니다.</h4><p>글로벌 B2B 제품에서 색 하나가 상태와 행동의 의미를 바꾸지 않도록 Primary 체계부터 접근성을 고려했습니다.</p></div>
+        <div class="yanolja-vision-grid" aria-label="색각 조건에 따른 컬러 인지 예시">
+          <article class="yanolja-vision-card"><span>NORMAL VISION</span><div class="yanolja-dot-matrix"><i class="yanolja-dot" style="background:#6689CA"></i><i class="yanolja-dot" style="background:#66B9E5"></i><i class="yanolja-dot" style="background:#389100"></i><i class="yanolja-dot" style="background:#F3C800"></i><i class="yanolja-dot" style="background:#E23D19"></i><i class="yanolja-dot" style="background:#008AD4"></i></div></article>
+          <article class="yanolja-vision-card"><span>DEUTAN</span><div class="yanolja-dot-matrix"><i class="yanolja-dot" style="background:#9B8C6C"></i><i class="yanolja-dot" style="background:#8BC2D8"></i><i class="yanolja-dot" style="background:#B9A15B"></i><i class="yanolja-dot" style="background:#E3C400"></i><i class="yanolja-dot" style="background:#A88B38"></i><i class="yanolja-dot" style="background:#008AD4"></i></div></article>
+          <article class="yanolja-vision-card"><span>PROTAN</span><div class="yanolja-dot-matrix"><i class="yanolja-dot" style="background:#928D78"></i><i class="yanolja-dot" style="background:#8BC2D8"></i><i class="yanolja-dot" style="background:#C2A55A"></i><i class="yanolja-dot" style="background:#E3C400"></i><i class="yanolja-dot" style="background:#A58A35"></i><i class="yanolja-dot" style="background:#008AD4"></i></div></article>
+        </div>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.53</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">03.3 / SHAPE & CONTRAST</span><div><h3 class="hm-subtitle hm-ds-subsection__title">버튼의 모서리와 대비도,<br>빠른 인지와 오작동 방지를 기준으로 정했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">과도한 장식보다 최소한의 Radius, 명확한 Primary/Secondary 대비, 환경에 따른 채도 조정으로 행동의 우선순위를 드러냈습니다.</p></div></div>
+      <div class="yanolja-usability-grid hm-ds-subtitle-to-content">
+        <article class="yanolja-demo-panel"><span>RADIUS / ACTION HIERARCHY</span><h4>시선이 버튼 중앙과 주요 행동에 집중되도록 형태와 간격을 단순화했습니다.</h4><div class="yanolja-button-demo"><button class="yanolja-ui-button" type="button">확인</button><button class="yanolja-ui-button is-secondary" type="button">취소</button></div></article>
+        <article class="yanolja-demo-panel"><span>SATURATION / ENVIRONMENT</span><h4>밝은 배경과 어두운 테마에서도 같은 행동이 명확하게 보이도록 채도를 조정했습니다.</h4><div class="yanolja-theme-demo"><div class="yanolja-theme-sample"><button type="button">확인</button></div><div class="yanolja-theme-sample is-dark"><button type="button">확인</button></div></div></article>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.54-55</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">03.4 / TYPOGRAPHY</span><div><h3 class="hm-subtitle hm-ds-subsection__title">실제 Windows 업무 환경에서,<br>작은 크기까지 또렷하게 읽히는 글꼴을 선택했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">당시 나눔고딕을 Main Font로 선택한 이유도 겹받침과 작은 본문에서의 인지성, Windows ClearType 환경을 함께 고려했기 때문입니다.</p></div></div>
+      <div class="yanolja-type-spec hm-ds-subtitle-to-content">
+        <div class="yanolja-type-demo"><strong>앓의 낮이</strong><p>복잡한 한글 자소가 작은 크기에서도 뭉개지지 않는지 실제 업무 환경을 기준으로 확인했습니다.</p></div>
+        <div class="yanolja-type-sizes"><article><span>10PX / SUPPORT</span><b style="font-size:10px">예약 상태와 부가 정보를 빠르게 확인합니다.</b></article><article><span>12PX / BODY</span><b style="font-size:12px">예약 상태와 부가 정보를 빠르게 확인합니다.</b></article><article><span>14PX / BODY</span><b style="font-size:14px">예약 상태와 부가 정보를 빠르게 확인합니다.</b></article><article><span>24PX / DISPLAY TEST</span><b style="font-size:24px">현장 업무에서 읽기 쉬운 한글</b></article></div>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.56</div>
+    </div>
+  </div>
+</div></section>
+
+<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap">
+  <div class="hm-section-head hm-ds-section__head hm-reveal">
+    <div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">규칙을 실제 B2B 화면에서<br>반복 사용할 수 있는 컴포넌트로 만들었습니다.</h2></div>
+    <p class="hm-section-desc hm-ds-section__description">버튼부터 입력, 선택, 날짜까지 핵심 업무 패턴을 크기와 상태별로 체계화했습니다.</p>
+  </div>
+  <div class="hm-wide-right-rail">
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">04.1 / CORE COMPONENTS</span><div><h3 class="hm-subtitle hm-ds-subsection__title">자주 쓰는 입력과 선택부터,<br>상태 변화까지 하나의 규칙으로 묶었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">Normal/Small 사이즈와 Normal·Hover·Pressed·Disabled 같은 상태를 공통 체계로 설계했습니다.</p></div></div>
+      <div class="yanolja-component-board hm-ds-subtitle-to-content">
+        <article class="yanolja-component-card"><span>BUTTON / BUTTON GROUP</span><h4>행동의 중요도와 상태가 즉시 구분되는 버튼</h4><div class="yanolja-ui-row"><button class="yanolja-mini-button">Primary</button><button class="yanolja-mini-button is-outline">Secondary</button><button class="yanolja-mini-button is-muted">Disabled</button></div><div class="yanolja-ui-row"><button class="yanolja-mini-button">확인</button><button class="yanolja-mini-button is-outline">취소</button></div></article>
+        <article class="yanolja-component-card"><span>TEXT FIELD / TEXT AREA</span><h4>입력 상태와 오류·확인을 일관되게 전달하는 필드</h4><div class="yanolja-field-stack"><div class="yanolja-field">Normal text field</div><div class="yanolja-field is-error">Error message</div><div class="yanolja-field is-confirm">Confirm message</div><div class="yanolja-field yanolja-textarea">Text area</div></div></article>
+        <article class="yanolja-component-card"><span>CHECK BOX / RADIO</span><h4>선택 여부와 Disabled 상태를 짧은 시선 이동으로 확인</h4><div class="yanolja-choice-grid"><span class="yanolja-choice"><i></i>Check box</span><span class="yanolja-choice is-selected"><i></i>Selected</span><span class="yanolja-choice is-radio"><i></i>Radio</span><span class="yanolja-choice is-radio is-selected"><i></i>Selected</span></div></article>
+        <article class="yanolja-component-card"><span>DATE PICKER</span><h4>예약·운영 업무에 필요한 날짜 선택 패턴을 공통화</h4><div class="yanolja-calendar"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="is-selected">11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span></div></article>
+      </div>
+      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.57-59</div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">04.2 / SYSTEM COVERAGE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">컴포넌트를 모으는 데서 끝내지 않고,<br>제품들이 같은 방식으로 반응하도록 상태까지 정의했습니다.</h3></div></div>
+      <div class="yanolja-system-map hm-ds-subtitle-to-content">
+        <article><span>01</span><h4>BUTTON</h4></article><article><span>02</span><h4>TEXT FIELD</h4></article><article><span>03</span><h4>TEXT AREA</h4></article><article><span>04</span><h4>DATE PICKER</h4></article><article><span>05</span><h4>CHECK · RADIO</h4></article>
+      </div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno">04.3 / RESULT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">결국 만든 것은 스타일 모음이 아니라,<br>B2B 제품군이 함께 사용할 하나의 판단 기준이었습니다.</h3></div></div>
+      <div class="yanolja-final-statement hm-ds-subtitle-to-content"><span>HST GROUP DESIGN SYSTEM</span><p>사업과 브랜드, 현장 사용자 환경을 먼저 이해하고<br><strong>컬러 · 형태 · 타이포 · 컴포넌트까지 하나의 시스템</strong>으로 연결했습니다.</p></div>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>YANOLJA 2020—2021</span><a href="#top">Back to top ↑</a></div></div></footer>
+<script src="./design-system/animation.js?v=20260906-14"></script>
+<script src="./design-system/scramble-final.js?v=20260907-3"></script>
+<script src="./design-system/navigation.js?v=20260908-1"></script>
+</body>
+</html>
