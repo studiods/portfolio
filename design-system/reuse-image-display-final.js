@@ -20,24 +20,107 @@
     }
   ];
 
-  const MEDIA_SETS = [
-    [
-      './assets/image/himart/reuse/03.2_01_01.png',
-      './assets/image/himart/reuse/03.2_01_02.png',
-      './assets/image/himart/reuse/03.2_01_03.png',
-      './assets/image/himart/reuse/03.2_01_04.png',
-      './assets/image/himart/reuse/03.2_01_05.png'
-    ],
-    [
-      './assets/image/himart/reuse/03.2_02_01.png',
-      './assets/image/himart/reuse/03.2_02_02.png',
-      './assets/image/himart/reuse/03.2_02_03.png',
-      './assets/image/himart/reuse/03.2_02_04.png',
-      './assets/image/himart/reuse/03.2_02_05.png'
-    ]
+  const ROLLING_MEDIA = [
+    Array.from({ length: 5 }, (_, i) => `./assets/image/himart/reuse/03.2_01_${String(i + 1).padStart(2, '0')}.png`),
+    Array.from({ length: 5 }, (_, i) => `./assets/image/himart/reuse/03.2_02_${String(i + 1).padStart(2, '0')}.png`)
   ];
 
-  const applyFinalState = () => {
+  const SPIN_MEDIA = Array.from({ length: 8 }, (_, i) =>
+    `./assets/image/himart/reuse/03.2_03_${String(i + 1).padStart(2, '0')}.png`
+  );
+
+  const install360Styles = () => {
+    if (document.getElementById('reuse-360-viewer-style')) return;
+    const style = document.createElement('style');
+    style.id = 'reuse-360-viewer-style';
+    style.textContent = `
+      html body.reuse-current .reuse-image-display-card.is-360-viewer{
+        cursor:grab;
+        touch-action:pan-y;
+        user-select:none;
+        -webkit-user-select:none;
+      }
+      html body.reuse-current .reuse-image-display-card.is-360-viewer.is-dragging{cursor:grabbing}
+      html body.reuse-current .reuse-360-viewer{
+        position:absolute;
+        inset:0;
+        z-index:1;
+        overflow:hidden;
+        background:#0a0a0a;
+      }
+      html body.reuse-current .reuse-360-viewer__frame{
+        position:absolute;
+        inset:0;
+        display:block;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:50% 50%;
+        opacity:0;
+        visibility:hidden;
+        pointer-events:none;
+        -webkit-user-drag:none;
+      }
+      html body.reuse-current .reuse-360-viewer__frame.is-active{
+        opacity:1;
+        visibility:visible;
+      }
+      html body.reuse-current .reuse-360-viewer__badge{
+        position:absolute;
+        z-index:7;
+        top:28px;
+        right:28px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        min-width:54px;
+        height:28px;
+        padding:0 10px;
+        border:1px solid rgba(255,255,255,.28);
+        border-radius:999px;
+        background:rgba(0,0,0,.16);
+        color:rgba(255,255,255,.82);
+        font:300 11px/1 var(--hm-font-en);
+        letter-spacing:.04em;
+        pointer-events:none;
+        backdrop-filter:blur(6px);
+      }
+      html body.reuse-current .reuse-360-viewer__hint{
+        position:absolute;
+        z-index:7;
+        top:50%;
+        left:50%;
+        display:flex;
+        align-items:center;
+        gap:12px;
+        transform:translate(-50%,-50%);
+        color:rgba(255,255,255,.78);
+        font:300 11px/1 var(--hm-font-en);
+        letter-spacing:.08em;
+        white-space:nowrap;
+        pointer-events:none;
+        transition:opacity .28s ease;
+      }
+      html body.reuse-current .reuse-360-viewer__hint::before,
+      html body.reuse-current .reuse-360-viewer__hint::after{
+        content:'';
+        display:block;
+        width:28px;
+        height:1px;
+        background:rgba(255,255,255,.56);
+      }
+      html body.reuse-current .reuse-image-display-card.is-360-viewer.has-rotated .reuse-360-viewer__hint{opacity:0}
+      html body.reuse-current .reuse-image-display-card.is-360-viewer .reuse-image-display-card__copy,
+      html body.reuse-current .reuse-image-display-card.is-360-viewer::after{pointer-events:none}
+      @media(max-width:780px){
+        html body.reuse-current .reuse-360-viewer__badge{top:18px;right:18px}
+        html body.reuse-current .reuse-360-viewer__hint{font-size:10px}
+      }
+    `;
+    document.head.appendChild(style);
+  };
+
+  const applyContent = () => {
     const grid = document.querySelector('#journey .reuse-image-display-grid');
     if (!grid) return null;
 
@@ -47,11 +130,9 @@
     Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card')).forEach((card, index) => {
       const item = CONTENT[index];
       if (!item) return;
-
       const number = card.querySelector('.reuse-image-display-card__number');
       const title = card.querySelector('.reuse-image-display-card__copy h4');
       const copy = card.querySelector('.reuse-image-display-card__copy p');
-
       if (number) number.textContent = String(index + 1).padStart(2, '0');
       if (title) title.textContent = item.title;
       if (copy) copy.textContent = item.copy;
@@ -61,13 +142,13 @@
     return grid;
   };
 
-  const buildAssetGallery = (sourceCard, sources, cardIndex) => {
+  const buildRollingGallery = (sourceCard, sources, cardIndex) => {
     if (!sourceCard || !sources?.length || sourceCard.dataset.finalAssetsMounted === 'true') return sourceCard;
 
-    /* Clone once so the earlier placeholder gallery listeners cannot compete with this final asset gallery. */
+    /* Replace the upstream placeholder node so only this gallery controller remains active. */
     const card = sourceCard.cloneNode(true);
     card.dataset.finalAssetsMounted = 'true';
-    card.classList.remove('is-reverse');
+    card.classList.remove('is-reverse', 'is-360-viewer', 'is-dragging', 'has-rotated');
     card.tabIndex = 0;
 
     let viewport = card.querySelector('.reuse-image-display-card__viewport');
@@ -82,7 +163,6 @@
       const slide = document.createElement('article');
       slide.className = `reuse-image-display-card__slide${index === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
-      slide.dataset.reuseImageSlot = String(index + 1).padStart(2, '0');
 
       const media = document.createElement('div');
       media.className = 'reuse-image-display-card__media';
@@ -140,11 +220,9 @@
       if (timer) window.clearTimeout(timer);
       timer = 0;
     };
-
     const updateStatus = () => {
       status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
     };
-
     const settle = () => {
       slides.forEach((slide, slideIndex) => {
         const active = slideIndex === index;
@@ -155,98 +233,66 @@
       card.classList.remove('is-reverse');
       updateStatus();
     };
-
     const schedule = () => {
       clearTimer();
       if (!inView || document.hidden || busy || slides.length < 2) return;
       timer = window.setTimeout(() => move(1), HOLD_MS);
     };
-
     const transitionTo = (targetIndex, direction = 1) => {
       if (busy || targetIndex === index || slides.length < 2) return;
       clearTimer();
       busy = true;
-
       const current = slides[index];
       const incoming = slides[targetIndex];
       card.classList.toggle('is-reverse', direction < 0);
-
       slides.forEach((slide, slideIndex) => {
         if (slideIndex !== index && slideIndex !== targetIndex) {
           slide.classList.remove('is-active', 'is-next', 'is-entering', 'is-exiting');
           slide.setAttribute('aria-hidden', 'true');
         }
       });
-
       current.classList.add('is-active');
       current.classList.remove('is-next', 'is-entering');
       incoming.classList.remove('is-active', 'is-exiting', 'is-entering');
       incoming.classList.add('is-next');
       incoming.setAttribute('aria-hidden', 'true');
-
       const complete = () => {
         index = targetIndex;
         busy = false;
         settle();
         schedule();
       };
-
-      if (reducedMotion) {
-        complete();
-        return;
-      }
-
+      if (reducedMotion) return complete();
       void incoming.offsetWidth;
       current.classList.add('is-exiting');
       incoming.classList.add('is-entering');
       window.setTimeout(complete, TRANSITION_MS + 30);
     };
-
     function move(delta) {
       if (busy || slides.length < 2) return;
-      const targetIndex = (index + delta + slides.length) % slides.length;
-      transitionTo(targetIndex, delta < 0 ? -1 : 1);
+      transitionTo((index + delta + slides.length) % slides.length, delta < 0 ? -1 : 1);
     }
 
-    prev.addEventListener('click', (event) => {
-      event.stopPropagation();
-      move(-1);
-    });
-    next.addEventListener('click', (event) => {
-      event.stopPropagation();
-      move(1);
-    });
-
+    prev.addEventListener('click', (event) => { event.stopPropagation(); move(-1); });
+    next.addEventListener('click', (event) => { event.stopPropagation(); move(1); });
     card.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        move(-1);
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        move(1);
-      }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
     });
-
     card.addEventListener('pointerdown', (event) => {
       if (event.target.closest('button')) return;
       pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
       clearTimer();
     });
-
     card.addEventListener('pointerup', (event) => {
       if (!pointerStart || pointerStart.id !== event.pointerId) return;
       const dx = event.clientX - pointerStart.x;
       const dy = event.clientY - pointerStart.y;
       pointerStart = null;
-
       if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) move(dx < 0 ? 1 : -1);
       else schedule();
     });
-
-    card.addEventListener('pointercancel', () => {
-      pointerStart = null;
-      schedule();
-    });
+    card.addEventListener('pointercancel', () => { pointerStart = null; schedule(); });
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
@@ -273,17 +319,122 @@
     return card;
   };
 
-  const mountFinalGalleries = () => {
-    const grid = applyFinalState();
-    if (!grid) return;
+  const build360Viewer = (sourceCard) => {
+    if (!sourceCard || sourceCard.dataset.spinMounted === 'true') return sourceCard;
 
-    const cards = Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card'));
-    MEDIA_SETS.forEach((sources, index) => buildAssetGallery(cards[index], sources, index));
+    /* Gallery 03 gets a clean node: no autoplay timer, no rolling slides, no prev/next controls. */
+    const card = sourceCard.cloneNode(true);
+    card.dataset.spinMounted = 'true';
+    card.removeAttribute('data-final-assets-mounted');
+    card.classList.remove('is-reverse');
+    card.classList.add('is-360-viewer');
+    card.tabIndex = 0;
+    card.setAttribute('aria-label', '360도 상품 이미지. 마우스 또는 손가락으로 좌우로 드래그해 회전');
+
+    card.querySelectorAll('.reuse-image-display-card__viewport, .reuse-image-display-card__nav, .reuse-image-display-card__status').forEach((node) => node.remove());
+    const legacyMedia = card.querySelector(':scope > .reuse-image-display-card__media');
+    legacyMedia?.remove();
+
+    const viewer = document.createElement('div');
+    viewer.className = 'reuse-360-viewer';
+    viewer.setAttribute('aria-hidden', 'true');
+
+    const frames = SPIN_MEDIA.map((src, index) => {
+      const image = document.createElement('img');
+      image.className = `reuse-360-viewer__frame${index === 0 ? ' is-active' : ''}`;
+      image.src = src;
+      image.alt = '';
+      image.draggable = false;
+      image.decoding = 'async';
+      image.loading = 'eager';
+      viewer.appendChild(image);
+      return image;
+    });
+
+    const badge = document.createElement('span');
+    badge.className = 'reuse-360-viewer__badge';
+    badge.textContent = '360°';
+
+    const hint = document.createElement('span');
+    hint.className = 'reuse-360-viewer__hint';
+    hint.textContent = 'DRAG TO ROTATE';
+
+    const copy = card.querySelector('.reuse-image-display-card__copy');
+    card.insertBefore(viewer, copy || card.firstChild);
+    card.append(badge, hint);
+    sourceCard.replaceWith(card);
+
+    let frameIndex = 0;
+    let dragging = false;
+    let pointerId = null;
+    let startX = 0;
+    let startFrame = 0;
+    let pixelsPerFrame = 28;
+
+    const mod = (value) => ((value % frames.length) + frames.length) % frames.length;
+    const showFrame = (nextIndex) => {
+      const normalized = mod(nextIndex);
+      if (normalized === frameIndex) return;
+      frames[frameIndex]?.classList.remove('is-active');
+      frameIndex = normalized;
+      frames[frameIndex]?.classList.add('is-active');
+      card.classList.add('has-rotated');
+    };
+
+    const startDrag = (event) => {
+      if (event.button != null && event.button !== 0) return;
+      dragging = true;
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startFrame = frameIndex;
+      pixelsPerFrame = Math.max(18, Math.min(42, card.clientWidth / 28));
+      card.classList.add('is-dragging');
+      try { card.setPointerCapture(pointerId); } catch (_) {}
+    };
+
+    const drag = (event) => {
+      if (!dragging || event.pointerId !== pointerId) return;
+      const deltaX = event.clientX - startX;
+      showFrame(startFrame - Math.round(deltaX / pixelsPerFrame));
+    };
+
+    const stopDrag = (event) => {
+      if (!dragging || (event.pointerId != null && event.pointerId !== pointerId)) return;
+      dragging = false;
+      card.classList.remove('is-dragging');
+      try { card.releasePointerCapture(pointerId); } catch (_) {}
+      pointerId = null;
+    };
+
+    card.addEventListener('pointerdown', startDrag);
+    card.addEventListener('pointermove', drag);
+    card.addEventListener('pointerup', stopDrag);
+    card.addEventListener('pointercancel', stopDrag);
+    card.addEventListener('lostpointercapture', stopDrag);
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); showFrame(frameIndex - 1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); showFrame(frameIndex + 1); }
+    });
+
+    return card;
   };
 
-  mountFinalGalleries();
-  requestAnimationFrame(mountFinalGalleries);
-  window.setTimeout(mountFinalGalleries, 250);
-  window.setTimeout(mountFinalGalleries, 1000);
-  document.addEventListener('DOMContentLoaded', mountFinalGalleries, { once: true });
+  const mount = () => {
+    install360Styles();
+    const grid = applyContent();
+    if (!grid) return;
+
+    let cards = Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card'));
+    ROLLING_MEDIA.forEach((sources, index) => {
+      buildRollingGallery(cards[index], sources, index);
+      cards = Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card'));
+    });
+    build360Viewer(cards[2]);
+  };
+
+  mount();
+  requestAnimationFrame(mount);
+  window.setTimeout(mount, 250);
+  window.setTimeout(mount, 1000);
+  document.addEventListener('DOMContentLoaded', mount, { once: true });
 })();
