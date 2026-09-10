@@ -1,235 +1,189 @@
 (() => {
   'use strict';
 
+  const body = document.body;
   const hero = document.querySelector('#heroSequence');
   const quote = hero?.querySelector('.hero-quote');
-  if (!hero || !quote) return;
+  const source = hero?.querySelector('.quote-source-only');
+  if (!body || !hero || !quote || !source) return;
 
   /*
-    Disable the legacy idle loop inside home-interactions.js before registering
-    this module's own input listeners. The synthetic event has no browser default
-    action; it only reaches already-registered JS listeners.
+    This file intentionally no longer owns any idle animation.
+
+    1) home-interactions.js still contains an old 3s idle timer. Its existing
+       pointerdown listener disables that timer permanently, so fire one synthetic
+       event immediately after the deferred scripts have initialized.
+    2) index.html's old SCROLL cue also owns a 3s idle timer. Its existing scroll
+       listener stops that timer, so fire one synthetic scroll event and remove the
+       detached cue/style before any delayed animation can begin.
   */
   window.dispatchEvent(new Event('pointerdown'));
+  window.dispatchEvent(new Event('scroll'));
+  document.querySelector('.index-scroll-guide')?.remove();
+  document.getElementById('index-scroll-guide-styles')?.remove();
 
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion) return;
+  const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const CYCLES = 3;
+  const CYCLE_MS = 48;
+  const STAGGER_MS = 14;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const BASE_ALPHA = 0.05;
-  const WORD_ALPHA = 0.82;
-  const LINE_ALPHA = 0.82;
-  const UNIT_MS = 1000;
-  const NEXT_UNIT_AT = 0.60;
-  const STAGGER_MS = UNIT_MS * NEXT_UNIT_AT;
-  const TAIL_MS = UNIT_MS - STAGGER_MS;
-  const GAP_MS = 3000;
-  const PATTERNS = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
-
-  const logicalLines = [...quote.children].filter(
-    el => el.matches('span') && !el.classList.contains('fill-char')
-  );
-  const lineGroups = logicalLines
-    .map(line => [...line.querySelectorAll('.fill-char')]
-      .filter(char => char.textContent.trim().length > 0))
-    .filter(group => group.length > 0);
-
-  const wordGroups = [];
-  logicalLines.forEach(line => {
-    const chars = [...line.querySelectorAll('.fill-char')];
-    let current = [];
-    const flush = () => {
-      if (!current.length) return;
-      wordGroups.push(current);
-      current = [];
-    };
-
-    chars.forEach(char => {
-      if (char.textContent.trim().length > 0) current.push(char);
-      else flush();
+  const splitPlainText = (element) => {
+    if (!element || element.dataset.homeEntrySplit === '1') return;
+    element.dataset.homeEntrySplit = '1';
+    const text = element.textContent;
+    element.textContent = '';
+    const fragment = document.createDocumentFragment();
+    [...text].forEach((character) => {
+      const span = document.createElement('span');
+      span.className = 'home-entry-source-char';
+      span.textContent = character;
+      span.dataset.finalChar = character;
+      fragment.appendChild(span);
     });
-    flush();
-  });
-
-  if (!lineGroups.length || !wordGroups.length) {
-    console.warn('Home idle: logical quote groups were not found.');
-    return;
-  }
-
-  const shuffle = items => {
-    const copy = items.slice();
-    for (let i = copy.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
-    }
-    return copy;
+    element.appendChild(fragment);
   };
 
-  let disabled = false;
-  let runToken = 0;
-  let patternIndex = 0;
-  const timers = new Set();
-  const activeAnimations = new Set();
+  splitPlainText(source);
 
-  const atTop = () => window.scrollY <= 8;
-  const canRun = token =>
-    !disabled && token === runToken && atTop() && !document.hidden;
+  const quoteChars = [...quote.querySelectorAll('.fill-char')];
+  const sourceChars = [...source.querySelectorAll('.home-entry-source-char')];
+  const states = [...quoteChars, ...sourceChars].map((char) => ({
+    char,
+    finalChar: char.dataset.finalChar ?? char.textContent,
+    width: 0,
+    lastGlyph: null
+  }));
+  if (!states.length) return;
 
-  const clearTimers = () => {
-    timers.forEach(id => clearTimeout(id));
-    timers.clear();
+  const visibleStates = states.filter(({ finalChar }) => finalChar.trim().length > 0);
+  let raf = 0;
+  let startedAt = 0;
+  let cancelled = false;
+  let completed = false;
+
+  const setColor = (char, value) => {
+    char.style.setProperty('color', value, 'important');
   };
 
-  const cancelAnimations = () => {
-    activeAnimations.forEach(animation => {
-      try { animation.cancel(); } catch (_) {}
+  const prepare = () => {
+    states.forEach((state) => {
+      const { char, finalChar } = state;
+      char.textContent = finalChar;
+      if (!finalChar.trim()) return;
+      state.width = Math.max(0, char.getBoundingClientRect().width);
+      char.style.setProperty('display', 'inline-block', 'important');
+      char.style.setProperty('width', `${state.width.toFixed(3)}px`, 'important');
+      char.style.setProperty('min-width', `${state.width.toFixed(3)}px`, 'important');
+      char.style.setProperty('max-width', `${state.width.toFixed(3)}px`, 'important');
+      setColor(char, 'transparent');
     });
-    activeAnimations.clear();
   };
 
-  const stop = permanent => {
-    runToken += 1;
-    clearTimers();
-    cancelAnimations();
-    if (permanent) disabled = true;
-    hero.dataset.idleState = permanent ? 'disabled' : 'paused';
-    delete hero.dataset.idleMode;
+  const clearTemporaryStyles = () => {
+    states.forEach(({ char, finalChar }) => {
+      char.textContent = finalChar;
+      char.style.removeProperty('display');
+      char.style.removeProperty('width');
+      char.style.removeProperty('min-width');
+      char.style.removeProperty('max-width');
+      char.style.removeProperty('color');
+    });
   };
 
-  const wait = (ms, token) => new Promise(resolve => {
-    if (!canRun(token)) {
-      resolve(false);
-      return;
-    }
-
-    const id = window.setTimeout(() => {
-      timers.delete(id);
-      resolve(canRun(token));
-    }, ms);
-    timers.add(id);
-  });
-
-  const rgba = alpha => `rgba(17,17,17,${alpha.toFixed(3)})`;
-
-  const pulseUnit = (group, peakAlpha, token) => {
-    if (!canRun(token)) return false;
-
-    const base = rgba(BASE_ALPHA);
+  const settle = () => {
+    if (completed) return;
+    completed = true;
+    clearTemporaryStyles();
+    body.classList.add('home-entry-settled');
 
     /*
-      The previous 700ms attack reached full black in about 238ms, so although
-      units overlapped in time, each word visually snapped on. Use a full 1s
-      envelope with several intermediate alpha stops instead. The next unit still
-      starts at 60% (600ms), while the outgoing unit is still rising toward its
-      peak. This makes the transition read as a continuous wave rather than a set
-      of separate flashes. The peak is capped at 82% to keep the progression
-      visible instead of jumping from the 5% resting state to hard black.
-  */
-    if (group[0]?.animate) {
-      const keyframes = [
-        { color: base, offset: 0 },
-        { color: rgba(0.14), offset: 0.18 },
-        { color: rgba(0.34), offset: 0.36 },
-        { color: rgba(0.60), offset: 0.54 },
-        { color: rgba(peakAlpha), offset: 0.72 },
-        { color: rgba(peakAlpha), offset: 0.78 },
-        { color: rgba(0.45), offset: 0.90 },
-        { color: base, offset: 1 }
-      ];
-
-      group.forEach(char => {
-        const animation = char.animate(keyframes, {
-          duration: UNIT_MS,
-          easing: 'linear',
-          fill: 'none'
-        });
-        activeAnimations.add(animation);
-        animation.finished
-          .catch(() => {})
-          .finally(() => activeAnimations.delete(animation));
-      });
-      return true;
-    }
-
-    /* Very old-browser fallback: keep the same overall 1s timing. */
-    group.forEach(char => { char.style.color = rgba(peakAlpha); });
-    const id = window.setTimeout(() => {
-      timers.delete(id);
-      group.forEach(char => { char.style.color = base; });
-    }, UNIT_MS);
-    timers.add(id);
-    return true;
-  };
-
-  const currentPattern = () => {
-    const mode = PATTERNS[patternIndex];
-    if (mode === 'lines') {
-      return { mode, groups: lineGroups, peak: LINE_ALPHA };
-    }
-    if (mode === 'randomWords') {
-      return { mode, groups: shuffle(wordGroups), peak: WORD_ALPHA };
-    }
-    return { mode, groups: wordGroups, peak: WORD_ALPHA };
-  };
-
-  const runPattern = async (pattern, token) => {
-    const { groups, peak } = pattern;
-
-    for (let index = 0; index < groups.length; index += 1) {
-      if (!pulseUnit(groups[index], peak, token)) return false;
-
-      if (index < groups.length - 1) {
-        if (!(await wait(STAGGER_MS, token))) return false;
+      The dark Home theme inverts the Hero state. Painting #000 here therefore
+      resolves to visually pure #fff without changing the existing theme stack.
+      This class is released as soon as the user starts interacting with the
+      scroll narrative, so all existing scroll-driven transitions remain intact.
+    */
+    const style = document.createElement('style');
+    style.id = 'home-entry-settled-style';
+    style.textContent = `
+      body.home-dark.home-entry-settled #heroSequence .hero-state-quote .hero-quote .fill-char,
+      body.home-dark.home-entry-settled #heroSequence .hero-state-quote .quote-source-only{
+        color:#000!important;
       }
-    }
-
-    /* Let the final unit finish its remaining 40% before the 3s pattern gap. */
-    return wait(TAIL_MS, token);
+    `;
+    document.head.appendChild(style);
   };
 
-  const run = async token => {
-    while (canRun(token)) {
-      hero.dataset.idleState = 'waiting';
-      if (!(await wait(GAP_MS, token))) return;
-
-      const pattern = currentPattern();
-      hero.dataset.idleState = 'running';
-      hero.dataset.idleMode = pattern.mode;
-
-      if (!(await runPattern(pattern, token))) return;
-
-      patternIndex = (patternIndex + 1) % PATTERNS.length;
-      delete hero.dataset.idleMode;
-    }
+  const cancel = () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    cancelled = true;
+    clearTemporaryStyles();
+    body.classList.remove('home-entry-settled');
   };
 
-  const start = () => {
-    if (disabled || document.hidden || !atTop()) return;
-    const token = ++runToken;
-    run(token).catch(error => {
-      console.error('Home idle animation failed.', error);
-      stop(true);
+  const render = (now) => {
+    if (cancelled) return;
+    const elapsed = now - startedAt;
+    const scrambleDuration = CYCLES * CYCLE_MS;
+    let allDone = true;
+
+    visibleStates.forEach((state, index) => {
+      const local = elapsed - index * STAGGER_MS;
+      if (local < 0) {
+        allDone = false;
+        return;
+      }
+
+      if (local < scrambleDuration) {
+        allDone = false;
+        const cycle = Math.min(CYCLES - 1, Math.floor(local / CYCLE_MS));
+        const glyph = POOL[(index * 17 + cycle * 13) % POOL.length];
+        if (state.lastGlyph !== glyph) {
+          state.lastGlyph = glyph;
+          state.char.textContent = glyph;
+        }
+        setColor(state.char, '#000');
+        return;
+      }
+
+      state.char.textContent = state.finalChar;
+      setColor(state.char, '#000');
     });
+
+    if (allDone) {
+      settle();
+      return;
+    }
+    raf = requestAnimationFrame(render);
   };
 
-  const stopFromUser = event => {
-    if (event && event.isTrusted === false) return;
-    stop(true);
+  const releaseToScrollTimeline = () => {
+    if (!completed) {
+      cancel();
+      return;
+    }
+    body.classList.remove('home-entry-settled');
   };
 
-  window.addEventListener('wheel', stopFromUser, { passive: true });
-  window.addEventListener('touchstart', stopFromUser, { passive: true });
-  window.addEventListener('pointerdown', stopFromUser, { passive: true });
-  window.addEventListener('keydown', stopFromUser);
+  ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach((eventName) => {
+    window.addEventListener(eventName, releaseToScrollTimeline, { passive: true });
+  });
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 8) stop(true);
+    if (window.scrollY > 1) releaseToScrollTimeline();
   }, { passive: true });
 
-  document.addEventListener('visibilitychange', () => {
-    if (disabled) return;
-    if (document.hidden) stop(false);
-    else start();
-  });
+  const start = () => {
+    if (cancelled) return;
+    prepare();
+    if (reduced) {
+      settle();
+      return;
+    }
+    startedAt = performance.now();
+    raf = requestAnimationFrame(render);
+  };
 
-  hero.dataset.idleState = 'armed';
-  start();
+  const ready = document.fonts?.ready || Promise.resolve();
+  ready.then(() => requestAnimationFrame(start)).catch(() => requestAnimationFrame(start));
 })();
