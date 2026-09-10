@@ -1,7 +1,7 @@
 /* WORKS project-copy quarter-height anchor override.
    Keeps the existing Works motion grammar, fixes project-title centers at 25vh,
-   and makes the desktop document end exactly when the final media top aligns with
-   the final left project-title top line. */
+   and releases the final fixed title only after its title top aligns with the final
+   media top. From that point both rise together so the footer remains reachable. */
 (() => {
   'use strict';
 
@@ -12,8 +12,9 @@
   const footer = document.querySelector('.works-footer');
   const cards = [...document.querySelectorAll('.works-grid .works-card')];
   const copies = cards.map(card => card.querySelector('.works-card-copy'));
-  const lastCard = cards[cards.length - 1];
-  const lastCopy = copies[copies.length - 1];
+  const lastIndex = cards.length - 1;
+  const lastCard = cards[lastIndex];
+  const lastCopy = copies[lastIndex];
   const lastTitle = lastCopy?.querySelector('.works-card-title');
   const lastMedia = lastCard?.querySelector('.works-card-media-link');
   if (!grid || !cards.length) return;
@@ -37,55 +38,20 @@
     return .5 * (1 - tail);
   };
 
-  /*
-    Desktop end-stop contract:
-    - the footer is removed from desktop flow because it would create scroll distance
-      beyond the requested final project state;
-    - the grid receives only the exact trailing space required for the final media top
-      to meet the final left title's first text line at maximum scroll;
-    - mobile keeps the authored footer and normal document flow.
-  */
-  const syncDesktopEndStop = (viewportHeight, anchor) => {
-    const isDesktop = window.innerWidth > 780;
-
-    if (!isDesktop) {
-      grid.style.removeProperty('padding-bottom');
-      if (footer) footer.style.removeProperty('display');
-      return;
-    }
-
-    if (footer) footer.style.display = 'none';
-    if (!lastCopy || !lastTitle || !lastMedia) {
-      grid.style.removeProperty('padding-bottom');
-      return;
-    }
-
-    const copyHeight = lastCopy.offsetHeight;
-    const copyRect = lastCopy.getBoundingClientRect();
-    const titleRect = lastTitle.getBoundingClientRect();
-    const titleOffset = titleRect.top - copyRect.top;
-    const targetTitleTop = anchor - copyHeight * .5 + titleOffset;
-    const mediaHeight = lastMedia.getBoundingClientRect().height;
-
-    /* At max scroll: final media top = viewportHeight - mediaHeight - trailingSpace. */
-    const trailingSpace = Math.max(0, viewportHeight - mediaHeight - targetTitleTop);
-    grid.style.paddingBottom = `${trailingSpace.toFixed(1)}px`;
+  const restoreNaturalDocumentEnd = () => {
+    grid.style.removeProperty('padding-bottom');
+    if (footer) footer.style.removeProperty('display');
   };
 
   const updateQuarterAnchor = () => {
     const isDesktop = window.innerWidth > 780;
-    if (!isDesktop) {
-      syncDesktopEndStop(window.innerHeight, 0);
-      return;
-    }
+    restoreNaturalDocumentEnd();
+
+    if (!isDesktop) return;
 
     const viewportHeight = window.innerHeight;
     const anchor = viewportHeight * .25;
     const handoffGap = clamp(viewportHeight * .08, 72, 120);
-
-    /* Establish the natural document end before any handoff/final-state calculations. */
-    syncDesktopEndStop(viewportHeight, anchor);
-    const gridBottom = grid.getBoundingClientRect().bottom;
 
     copies.forEach((copy, index) => {
       if (!copy) return;
@@ -95,7 +61,7 @@
       const naturalCenter = cardRect.top + copyHeight * .5;
 
       /* Natural scroll until the copy center reaches 25vh; then lock on that line. */
-      const y = Math.max(anchor, naturalCenter);
+      let y = Math.max(anchor, naturalCenter);
       let opacity = 1;
       let shift = 0;
 
@@ -119,12 +85,28 @@
           opacity = outgoingOpacity(progress);
           shift = -120 * motion;
         }
-      } else if (gridBottom < anchor) {
-        /* Safety fallback only. The desktop end-stop normally prevents this state. */
-        const progress = clamp((anchor - gridBottom) / Math.max(1, anchor), 0, 1);
-        const motion = smoothstep(progress);
-        opacity = 1 - motion;
-        shift = -120 * motion;
+      } else if (index === lastIndex && lastTitle && lastMedia) {
+        /*
+          Final-project release:
+          1) keep the title fixed at the 25vh anchor while the final media rises;
+          2) when media top meets the actual title-text top, treat that as one shared line;
+          3) after that point, drive the title from the media top so both move upward
+             at exactly the same scroll rate and the authored footer can enter normally.
+        */
+        const copyRect = copy.getBoundingClientRect();
+        const titleRect = lastTitle.getBoundingClientRect();
+        const titleOffset = titleRect.top - copyRect.top;
+        const fixedTitleTop = anchor - copyHeight * .5 + titleOffset;
+        const mediaTop = lastMedia.getBoundingClientRect().top;
+
+        if (mediaTop <= fixedTitleTop) {
+          y = mediaTop - titleOffset + copyHeight * .5;
+        } else {
+          y = anchor;
+        }
+
+        opacity = 1;
+        shift = 0;
       }
 
       copy.style.setProperty('--works-copy-top', `${y.toFixed(1)}px`);
