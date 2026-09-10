@@ -117,10 +117,9 @@
 <div class="hm-wrap hm-ds-wrap">
 <div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.2</span><div><h3 class="hm-subtitle hm-ds-subsection__title">이미지가 중요한 판단 근거였기에,<br>무엇을 어떻게 보여줄지 기준부터 만들었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">상품본부와 카테고리별 필수 촬영 부위와 확인 포인트를 정리해, 상태 정보를 빠르게 확인할 수 있게 했습니다.</p></div></div>
 <div class="reuse-image-display-grid hm-ds-subtitle-to-content" aria-label="중고가전 실제 사진 정보 설계 예시">
-  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">01</span><h4>상품본부와 카테고리별 확인 기준을 함께 정리했습니다.</h4><p>제품마다 고객이 확인해야 할 정보가 달라 상품본부와 협의해 카테고리별 핵심 확인 포인트를 취합했습니다.</p></div></article>
-  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">02</span><h4>제품마다 반드시 보여줘야 할 부위를 촬영 기준으로 만들었습니다.</h4><p>전면·측면·내부·조작부 등 카테고리별 필수 촬영 부위와 중점 확인 사항을 정리해 빠짐없이 보여주도록 했습니다.</p></div></article>
-  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">03</span><h4>흠집과 사용 흔적은 가까이 확인할 수 있게 했습니다.</h4><p>스크래치·찍힘·변색처럼 구매 판단에 영향을 주는 흔적은 위치와 정도가 드러나도록 상세 이미지로 확인하게 했습니다.</p></div></article>
-  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">04</span><h4>전체 형태와 보이지 않는 면까지 여러 각도로 확인하게 했습니다.</h4><p>한 장으로 판단하기 어려운 제품은 여러 방향과 360도 촬영을 활용해 전체 상태를 빠르게 살펴볼 수 있게 했습니다.</p></div></article>
+  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">01</span><h4>제품마다 반드시 보여줘야 할 부위를 촬영 기준으로 만들었습니다.</h4><p>제품마다 확인해야 할 부위가 달라 상품본부와 협의해 카테고리별 필수 촬영 부위와 중점 확인 사항을 정리했습니다.</p></div></article>
+  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">02</span><h4>흠집과 사용 흔적은 가까이 확인할 수 있게 했습니다.</h4><p>스크래치·찍힘·변색처럼 구매 판단에 영향을 주는 흔적은 위치와 정도가 드러나도록 상세 이미지로 확인하게 했습니다.</p></div></article>
+  <article class="reuse-image-display-card"><div class="reuse-image-display-card__media" aria-hidden="true"></div><div class="reuse-image-display-card__copy"><span class="reuse-image-display-card__number">03</span><h4>전체 형태와 보이지 않는 면까지 여러 각도로 확인하게 했습니다.</h4><p>한 장으로 판단하기 어려운 제품은 여러 방향과 360도 촬영을 활용해 전체 상태를 빠르게 살펴볼 수 있게 했습니다.</p></div></article>
 </div>
 </div>
 
@@ -139,6 +138,36 @@
 <script src="./design-system/reuse-proof-map-motion.js?v=20260909-3"></script>
 <script src="./design-system/reuse-confidence-motion.js?v=20260908-9"></script>
 <script src="./design-system/reuse-production-gallery.js?v=20260910-8"></script>
+<script>
+(() => {
+  const cards = Array.from(document.querySelectorAll('#journey .reuse-image-display-card'));
+  const content = [
+    {
+      title: '제품마다 반드시 보여줘야 할 부위를 촬영 기준으로 만들었습니다.',
+      copy: '제품마다 확인해야 할 부위가 달라 상품본부와 협의해 카테고리별 필수 촬영 부위와 중점 확인 사항을 정리했습니다.'
+    },
+    {
+      title: '흠집과 사용 흔적은 가까이 확인할 수 있게 했습니다.',
+      copy: '스크래치·찍힘·변색처럼 구매 판단에 영향을 주는 흔적은 위치와 정도가 드러나도록 상세 이미지로 확인하게 했습니다.'
+    },
+    {
+      title: '전체 형태와 보이지 않는 면까지 여러 각도로 확인하게 했습니다.',
+      copy: '한 장으로 판단하기 어려운 제품은 여러 방향과 360도 촬영을 활용해 전체 상태를 빠르게 살펴볼 수 있게 했습니다.'
+    }
+  ];
+  cards.forEach((card, index) => {
+    const item = content[index];
+    if (!item) return;
+    const number = card.querySelector('.reuse-image-display-card__number');
+    const title = card.querySelector('.reuse-image-display-card__copy h4');
+    const copy = card.querySelector('.reuse-image-display-card__copy p');
+    if (number) number.textContent = String(index + 1).padStart(2, '0');
+    if (title) title.textContent = item.title;
+    if (copy) copy.textContent = item.copy;
+    card.setAttribute('aria-label', item.title);
+  });
+})();
+</script>
 <script src="./design-system/reuse-hero-video-sequence.js?v=20260910-3"></script>
 <script src="./design-system/animation.js?v=20260906-14"></script>
 <script src="./design-system/scramble-final.js?v=20260907-3"></script>
