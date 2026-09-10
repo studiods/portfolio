@@ -1,4 +1,4 @@
-/* HIMART Commerce adaptive content contract v1.2
+/* HIMART Commerce adaptive content contract v1.3
    ------------------------------------------------
    Himart-only responsive containment and journey geometry.
 
@@ -7,6 +7,8 @@
    - REUSE is explicitly excluded and continues to use its page-specific component CSS.
    - All Himart journey circles use ONE shared diameter derived from the actual content rail.
    - Runtime grouping capsules may wrap 2/3/4 nodes, but grouping can never change node size.
+   - Grouping capsules use ONE shared inset on top/right/bottom/left so the tablet line
+     always wraps its circles at an equal distance at every adaptive width.
    - Circle typography scales from the circle itself.
    - At >=1600px the 03 principle divider aligns to the left chapter-title baseline while
      preserving the canonical divider -> label/title spacing.
@@ -66,12 +68,12 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   box-sizing:border-box!important;
 }
 
-/* ---------- 2. JOURNEY: ONE DIAMETER FOR EVERY CIRCLE ---------- */
+/* ---------- 2. JOURNEY: ONE DIAMETER + ONE CAPSULE INSET ---------- */
 html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
 #journey{
   --hm-hj-gap:clamp(6px,.72vw,10px);
   --hm-hj-arrow:clamp(14px,1.35vw,20px);
-  --hm-hj-cluster-pad-x:clamp(10px,.9vw,16px);
+  --hm-hj-cluster-inset:clamp(12px,.95vw,18px);
 }
 
 /* The actual content rail is the only sizing reference. 100cqw below therefore means
@@ -81,12 +83,11 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   container-type:inline-size!important;
   container-name:hm-himart-journey!important;
 
-  /* Four equal circles + three arrows + six sequence gaps + one capsule's side padding.
-     292px remains the approved production maximum. When the rail gets narrower, every
-     circle shrinks by exactly the same amount. */
+  /* Four equal circles + three arrows + six sequence gaps + the capsule's two equal
+     side insets. 292px remains the approved maximum. Every circle shrinks together. */
   --hm-hj-node-size:min(
     292px,
-    calc((100cqw - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-cluster-pad-x) - var(--hm-hj-cluster-pad-x)) / 4)
+    calc((100cqw - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-arrow) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-gap) - var(--hm-hj-cluster-inset) - var(--hm-hj-cluster-inset)) / 4)
   );
 }
 
@@ -159,28 +160,36 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     height:clamp(10px,1.05vw,16px)!important;
   }
 
-  /* Runtime clusters are sized from the count of circles they contain. Horizontal
-     capsule padding is included in the width calculation so it cannot steal width from
-     grouped circles. This is the defect that made 04/07/08 look larger in the screenshots. */
+  /* Tablet/capsule contract. The SAME inset is applied on all four sides. The capsule
+     size includes that inset, so the border never steals space from grouped circles and
+     never becomes visually closer on one side than another. */
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster{
-    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-pad-x) + var(--hm-hj-cluster-pad-x) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-inset) + var(--hm-hj-cluster-inset) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    position:relative!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
     flex:0 0 var(--hm-hj-cluster-size)!important;
     width:var(--hm-hj-cluster-size)!important;
     min-width:var(--hm-hj-cluster-size)!important;
     max-width:var(--hm-hj-cluster-size)!important;
-    padding:30px var(--hm-hj-cluster-pad-x) 22px!important;
+    height:calc(var(--hm-hj-node-size) + var(--hm-hj-cluster-inset) + var(--hm-hj-cluster-inset))!important;
+    min-height:calc(var(--hm-hj-node-size) + var(--hm-hj-cluster-inset) + var(--hm-hj-cluster-inset))!important;
+    max-height:calc(var(--hm-hj-node-size) + var(--hm-hj-cluster-inset) + var(--hm-hj-cluster-inset))!important;
+    padding:var(--hm-hj-cluster-inset)!important;
+    border-radius:999px!important;
     box-sizing:border-box!important;
   }
 
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster:has(.flow-node ~ .flow-node ~ .flow-node){
-    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-pad-x) + var(--hm-hj-cluster-pad-x) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-inset) + var(--hm-hj-cluster-inset) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
   }
 
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster:has(.flow-node ~ .flow-node ~ .flow-node ~ .flow-node){
-    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-pad-x) + var(--hm-hj-cluster-pad-x) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
+    --hm-hj-cluster-size:calc(var(--hm-hj-cluster-inset) + var(--hm-hj-cluster-inset) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-node-size) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-arrow) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap) + var(--hm-hj-gap));
   }
 
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
@@ -191,9 +200,25 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     justify-content:flex-start!important;
     gap:var(--hm-hj-gap)!important;
     width:100%!important;
+    height:var(--hm-hj-node-size)!important;
     min-width:0!important;
     max-width:100%!important;
     box-sizing:border-box!important;
+  }
+
+  /* The label only masks the top border. It never participates in capsule spacing. */
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster-label{
+    position:absolute!important;
+    top:0!important;
+    left:50%!important;
+    transform:translate(-50%,-50%)!important;
+    margin:0!important;
+    padding:0 clamp(8px,.75vw,12px)!important;
+    background:#000!important;
+    line-height:1.35!important;
+    text-align:center!important;
+    z-index:2!important;
   }
 
   /* Typography follows each circle's own inline size. All circles therefore shrink
@@ -230,17 +255,15 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   }
 }
 
-/* <=860px keeps the approved vertical grammar. Group wrappers occupy the same available
-   width as direct nodes and lose horizontal padding, so grouped circles cannot become
-   smaller than ungrouped circles on mobile either. */
+/* <=860px keeps the approved vertical grammar. If a capsule remains visible, the same
+   inset token is still used on every side; fixed legacy side padding is forbidden. */
 @media (max-width:860px){
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster{
     width:100%!important;
     min-width:0!important;
     max-width:100%!important;
-    padding-left:0!important;
-    padding-right:0!important;
+    padding:var(--hm-hj-cluster-inset)!important;
     box-sizing:border-box!important;
   }
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
