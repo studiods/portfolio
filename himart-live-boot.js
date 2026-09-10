@@ -9,6 +9,98 @@
     });
   }
 
+  /*
+    REUSE 04 / PROTOTYPE
+    --------------------
+    Reuse keeps its authored copy, but the old 12-card phone grid is converted into
+    the exact visual grammar used by Himart 04: four full-width rows, three Galaxy-style
+    line mockups on the left and one copy panel on the right. The text is derived from
+    the current Reuse phone-card labels/captions, so this structural migration does not
+    replace the authored Reuse content with Himart copy.
+  */
+  const mountReuseDirectionPrototype=()=>{
+    if(!document.body.classList.contains('reuse-current'))return;
+
+    if(!document.querySelector('link[data-reuse-prototype-cases]')){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260910-1';
+      link.dataset.reusePrototypeCases='1';
+      document.head.appendChild(link);
+    }
+
+    const direction=document.querySelector('#live-main > #direction');
+    const wrap=direction?.querySelector(':scope > .hm-wrap');
+    const head=wrap?.querySelector(':scope > .hm-section-head');
+    const gallery=wrap?.querySelector(':scope > .phone-gallery');
+    if(!direction||!wrap||!head)return;
+
+    /* Prevent the 04 major title from entering at the generic 30% pre-reveal opacity. */
+    head.classList.add('is-visible');
+
+    if(!gallery || wrap.querySelector(':scope > .prototype-case-list'))return;
+
+    const cards=[...gallery.querySelectorAll(':scope > .phone-card')];
+    if(!cards.length)return;
+
+    const list=document.createElement('div');
+    list.className='prototype-case-list reuse-prototype-case-list hm-reveal';
+
+    for(let start=0;start<cards.length;start+=3){
+      const group=cards.slice(start,start+3);
+      if(!group.length)continue;
+
+      const numbers=group.map(card=>(card.querySelector('.phone-meta span')?.textContent||'').trim()).filter(Boolean);
+      const titles=group.map(card=>(card.querySelector('.phone-meta b')?.textContent||'').trim()).filter(Boolean);
+      const captions=group.map(card=>(card.querySelector('.phone-meta p')?.textContent||'').trim()).filter(Boolean);
+
+      const article=document.createElement('article');
+      article.className='prototype-case';
+
+      const visual=document.createElement('div');
+      visual.className='prototype-case-visual';
+      group.forEach((_,screenIndex)=>{
+        const device=document.createElement('div');
+        device.className='galaxy-ultra-mockup';
+        device.setAttribute('aria-label',`Reuse prototype row ${Math.floor(start/3)+1}, screen ${screenIndex+1}`);
+        const screen=document.createElement('div');
+        screen.className='galaxy-ultra-screen';
+        device.appendChild(screen);
+        visual.appendChild(device);
+      });
+
+      const copy=document.createElement('div');
+      copy.className='prototype-case-copy';
+
+      const number=document.createElement('span');
+      number.className='hm-card-no';
+      number.textContent=numbers.length>1 ? `${numbers[0]}–${numbers[numbers.length-1]}` : (numbers[0]||'');
+
+      const title=document.createElement('h3');
+      title.textContent=captions.join(' · ');
+
+      const description=document.createElement('p');
+      description.textContent=titles.join(' · ');
+
+      const summary=document.createElement('strong');
+      const summaryLabel=document.createElement('b');
+      summaryLabel.textContent='SCREENS';
+      summary.appendChild(summaryLabel);
+      summary.append(document.createTextNode(group.map((card,index)=>{
+        const n=numbers[index]||'';
+        const t=titles[index]||'';
+        return `${n}${n&&t?'  ':''}${t}`.trim();
+      }).filter(Boolean).join(' · ')));
+
+      copy.append(number,title,description,summary);
+      article.append(visual,copy);
+      list.appendChild(article);
+    }
+
+    gallery.replaceWith(list);
+  };
+  mountReuseDirectionPrototype();
+
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const reveal=[...document.querySelectorAll('.hm-reveal')];
   if(reduced) reveal.forEach(n=>n.classList.add('is-in'));
@@ -42,7 +134,9 @@
         const list=wrap.querySelector(':scope > .hm-section-head + .data-list');
         first=list?.querySelector(':scope > .data-card:first-child')||null;
       }else if(section.id==='direction'){
-        first=wrap.querySelector(':scope > .hm-section-head + .flow-area');
+        first=wrap.querySelector(':scope > .hm-section-head + .prototype-intro') ||
+          wrap.querySelector(':scope > .hm-section-head + .prototype-case-list') ||
+          wrap.querySelector(':scope > .hm-section-head + .flow-area');
       }
       if(!first)return null;
       section.dataset.hmReuseWidePair='1';
