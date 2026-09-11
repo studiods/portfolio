@@ -1,0 +1,183 @@
+/* AIMMO DESIGN SYSTEM v4 — team-history, repeated-work flow and collaboration-system layouts. */
+
+/* 01.1 Team history — six equal evidence items. */
+html body.aimmo-system-page .aimmo-quote-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:0 42px!important;
+}
+html body.aimmo-system-page .aimmo-quote-grid article{
+  min-height:190px!important;
+  justify-content:flex-start!important;
+  padding:24px 0 28px!important;
+  border-top:1px solid var(--hm-line-default)!important;
+}
+html body.aimmo-system-page .aimmo-quote-grid article:first-child{
+  border-top-color:var(--hm-line-default)!important;
+}
+html body.aimmo-system-page .aimmo-quote-grid strong,
+html body.aimmo-system-page .aimmo-quote-grid article:first-child strong{
+  color:#fff!important;
+}
+html body.aimmo-system-page .aimmo-quote-grid span{
+  margin-top:0!important;
+  padding-top:18px!important;
+  color:var(--hm-text-tertiary)!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary{
+  margin-top:64px;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow{
+  position:relative;
+  width:100%;
+  height:18px;
+  margin-bottom:32px;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::before{
+  content:"";
+  position:absolute;
+  top:8px;
+  left:0;
+  right:10px;
+  height:1px;
+  background:var(--hm-line-default);
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
+  content:"";
+  position:absolute;
+  top:4px;
+  right:1px;
+  width:9px;
+  height:9px;
+  border-top:1px solid var(--hm-line-default);
+  border-right:1px solid var(--hm-line-default);
+  transform:rotate(45deg);
+}
+html body.aimmo-system-page .aimmo-team-history-summary h4{
+  margin:0!important;
+  max-width:30ch!important;
+  color:#fff!important;
+  font:100 var(--hm-type-subsection)/1.26 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100;
+  letter-spacing:var(--hm-track-subsection)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary p{
+  margin:18px 0 0!important;
+  max-width:45ch!important;
+  color:var(--hm-description-color)!important;
+  font:300 var(--hm-type-body)/1.58 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* 01.2 — static copy of REUSE 02.2 confidence-flow geometry. No motion/runtime state. */
+html body.aimmo-system-page .aimmo-static-reuse-flow{
+  display:grid;
+  gap:var(--hm-space-40);
+  width:100%;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr);
+  align-items:center;
+  gap:0;
+  width:100%;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node{
+  display:flex;
+  aspect-ratio:1/1;
+  width:90%;
+  min-width:0;
+  margin-inline:auto;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(20px,2.2vw,30px);
+  border:1px solid var(--hm-line-default);
+  border-radius:50%;
+  background:#000;
+  text-align:center;
+  box-sizing:border-box;
+  container-type:inline-size;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node>span{
+  color:var(--hm-text-tertiary)!important;
+  font:300 11px/1 var(--hm-font-en);
+  font-variation-settings:"wght" 300;
+  letter-spacing:var(--hm-track-note);
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node h4{
+  margin:clamp(12px,6cqi,18px) 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:clamp(18px,10cqi,26px)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300;
+  line-height:1.22!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node p{
+  max-width:17ch!important;
+  margin:clamp(9px,5cqi,14px) 0 0!important;
+  color:var(--hm-description-color)!important;
+  font:300 clamp(11px,6cqi,14px)/1.45 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow{
+  color:rgba(255,255,255,.48)!important;
+  font:100 34.65px/1 var(--hm-font-en)!important;
+  text-align:center!important;
+}
+
+/* 01.3 — six reusable collaboration-system steps, derived from the requested reference card. */
+html body.aimmo-system-page .aimmo-collaboration-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:56px 28px;
+  width:100%;
+}
+html body.aimmo-system-page .aimmo-collaboration-grid article{
+  min-width:0;
+  min-height:230px;
+  padding:24px 0 28px;
+  border-top:1px solid var(--hm-line-default);
+}
+html body.aimmo-system-page .aimmo-collaboration-grid article>span{
+  display:block;
+  color:var(--hm-blue);
+  font:400 var(--hm-type-note)/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.aimmo-system-page .aimmo-collaboration-grid h4{
+  margin:34px 0 0!important;
+  max-width:20ch!important;
+  color:#fff!important;
+  font:100 28px/1.28 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page .aimmo-collaboration-grid p{
+  margin:18px 0 0!important;
+  max-width:28ch!important;
+  color:var(--hm-description-color)!important;
+  font:300 var(--hm-type-body)/1.55 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+@media(max-width:1180px){
+  html body.aimmo-system-page .aimmo-collaboration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:780px){
+  html body.aimmo-system-page .aimmo-quote-grid,
+  html body.aimmo-system-page .aimmo-collaboration-grid{grid-template-columns:1fr!important}
+  html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-row{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow{transform:rotate(90deg)}
+  html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node{width:min(320px,88vw)}
+}
