@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v8
+  HIMART Wide Editorial adapter — TEST ONLY v8.1
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
@@ -16,12 +16,16 @@
   Geometry is owned by CSS and remains transform-free at chapter start, so their authored
   top line cannot drift during the scroll-in transition.
 
-  v8 removes the obsolete asynchronous v10 journey rollback before it can override the
-  current fluid journey geometry. The old rollback was dynamically appended by the bundled
-  production runtime, so cold-load network timing could make its fixed 168px circle rules
-  win after the current layout had already been built. Refreshing changed the timing and
-  made the newer rules appear correct. A short-lived observer now blocks that stale asset
-  and normalizes any legacy cluster that may already have landed before first paint.
+  v8.1 fixes the cold-load-only 03.1 JOURNEY FLOW race. Two historical runtime layers owned
+  the same journey DOM with different grouping rules: the current narrative flowfix uses
+  01–02 and 06–07, while the asynchronously loaded production v9/v10/v12 refinements can
+  rebuild 03.1 as 01–03 and 05–06. On a cold load the production bundle can finish later and
+  win; after refresh the cached order changes and the narrative flowfix wins instead.
+
+  This adapter is now the final Himart-wide owner of 03.1. It blocks the obsolete external
+  v10 rollback asset, then deterministically restores the current 01–02 / 06–07 grouping
+  before the boot lock is released. A short-lived MutationObserver covers any late runtime
+  insertion during the cold-load window without leaving permanent page overhead.
 */
 (() => {
   'use strict';
@@ -36,30 +40,85 @@
     document.getElementById('hm-wide-boot-lock')?.remove();
   };
 
-  const normalizeJourneyClusters = () => {
-    const journey = document.querySelector('#live-main > #journey');
-    if (!journey) return;
+  const clusterNodeNumbers = cluster =>
+    [...(cluster?.querySelectorAll('.wide-flow-cluster-inner > .flow-node') || [])]
+      .map(node => (node.querySelector('.hm-card-no')?.textContent || '').trim().slice(0, 2));
 
-    journey.querySelectorAll('.wide-flow-cluster.v10-journey-tablet').forEach(cluster => {
-      cluster.classList.remove('v10-journey-tablet');
-      cluster.classList.add('v12-journey-tablet');
+  const normalizeCluster = (cluster, label) => {
+    if (!cluster) return;
+    cluster.classList.remove('v10-journey-tablet', 'v12-tablet-red');
+    cluster.classList.add('v12-journey-tablet', 'v12-tablet-blue', 'wide-flow-cluster--focus');
+    cluster.style.setProperty('--v12-tablet-color', 'var(--hm-blue)');
+    const labelEl = cluster.querySelector('.wide-flow-cluster-label');
+    if (labelEl && labelEl.textContent !== label) labelEl.textContent = label;
+  };
 
-      if (cluster.closest('.journey-signal-subsection')) {
-        cluster.classList.add('v12-tablet-red');
-        cluster.classList.remove('v12-tablet-blue');
-        cluster.style.setProperty('--v12-tablet-color', 'var(--hm-red)');
-      } else if (cluster.closest('.journey-redesign-subsection, .journey-flow-block')) {
-        cluster.classList.add('v12-tablet-blue');
-        cluster.classList.remove('v12-tablet-red');
-        cluster.style.setProperty('--v12-tablet-color', 'var(--hm-blue)');
-      }
+  const unwrapDirectClusters = row => {
+    [...row.querySelectorAll(':scope > .wide-flow-cluster')].forEach(cluster => {
+      const inner = cluster.querySelector('.wide-flow-cluster-inner');
+      if (inner) [...inner.children].forEach(child => row.insertBefore(child, cluster));
+      cluster.remove();
     });
+  };
+
+  const buildCanonicalCluster = (row, nodeCount, label, startIndex = 0) => {
+    if (!row) return null;
+    const children = [...row.children];
+    const moveCount = nodeCount * 2 - 1;
+    const moving = children.slice(startIndex, startIndex + moveCount);
+    if (!moving.length) return null;
+
+    const anchor = moving[0];
+    const cluster = document.createElement('div');
+    cluster.className = 'wide-flow-cluster v12-journey-tablet v12-tablet-blue wide-flow-cluster--focus';
+    cluster.style.setProperty('--v12-tablet-color', 'var(--hm-blue)');
+    cluster.innerHTML = `<div class="wide-flow-cluster-label">${label}</div><div class="wide-flow-cluster-inner"></div>`;
+    const inner = cluster.querySelector('.wide-flow-cluster-inner');
+    row.insertBefore(cluster, anchor);
+    moving.forEach(node => inner.appendChild(node));
+    return cluster;
+  };
+
+  const enforceCanonicalJourneyFlow = () => {
+    const block = document.querySelector('#live-main > #journey .journey-flow-block');
+    if (!block) return;
+
+    const groups = [...block.querySelectorAll('.flow-group')];
+    if (groups.length < 2) return;
+
+    const topRow = groups[0].querySelector('.flow-row');
+    const bottomRow = groups[1].querySelector('.flow-row');
+    if (!topRow || !bottomRow) return;
+
+    const topLabel = '유입 맥락을 유지해 탐색 시작으로 연결';
+    const bottomLabel = '결제 조건을 명확히 해 이탈을 줄이고 설치 확신까지 연결';
+    const topCluster = topRow.querySelector(':scope > .wide-flow-cluster');
+    const bottomCluster = bottomRow.querySelector(':scope > .wide-flow-cluster');
+    const topNumbers = clusterNodeNumbers(topCluster);
+    const bottomNumbers = clusterNodeNumbers(bottomCluster);
+
+    const isCanonical =
+      topNumbers.join(',') === '01,02' &&
+      bottomNumbers.join(',') === '06,07';
+
+    if (!isCanonical) {
+      unwrapDirectClusters(topRow);
+      unwrapDirectClusters(bottomRow);
+      buildCanonicalCluster(topRow, 2, topLabel, 0);
+      buildCanonicalCluster(bottomRow, 2, bottomLabel, 2);
+    } else {
+      normalizeCluster(topCluster, topLabel);
+      normalizeCluster(bottomCluster, bottomLabel);
+    }
+
+    block.dataset.v2ProductionExact = '1';
+    block.dataset.hmWideJourneyCanonical = '1';
   };
 
   const removeLegacyJourneyRollbackAssets = () => {
     document.querySelectorAll('link[href*="himart-wide-refine-v10.css"]').forEach(node => node.remove());
     document.querySelectorAll('script[src*="himart-wide-refine-v10.js"]').forEach(node => node.remove());
-    normalizeJourneyClusters();
+    enforceCanonicalJourneyFlow();
   };
 
   const installLegacyJourneyRollbackGuard = () => {
@@ -80,8 +139,7 @@
       observer.disconnect();
     };
 
-    /* The obsolete rollback is injected during the asynchronous narrative boot.
-       Ten seconds safely covers the cold-load window without leaving a permanent observer. */
+    /* Covers production-base, v9/v10/v12 timers, and the narrative flowfix retry window. */
     window.setTimeout(stop, 10000);
   };
 
@@ -161,7 +219,7 @@
 
     if (window.__hmWideHimartAdapterMounted) {
       removeRetiredVoiceSourceCopy();
-      normalizeJourneyClusters();
+      enforceCanonicalJourneyFlow();
       window.dispatchEvent(new Event('resize'));
       releaseBootLock();
       return;
@@ -191,10 +249,10 @@
         .forEach(node => rail.appendChild(node));
     });
 
-    /* Defensive second pass in case a late source migration landed during grouping. */
+    /* Final 03.1 ownership happens after every current narrative layer has produced its DOM. */
     removeRetiredVoiceSourceCopy();
     removeLegacyJourneyRollbackAssets();
-    normalizeJourneyClusters();
+    enforceCanonicalJourneyFlow();
 
     /* One observer checkpoint owns both sides of every chapter start. This is mounted
        before the generic animation rescan so the visible pair shares the same frame. */
@@ -204,10 +262,10 @@
     window.__hmAnimationScan?.();
     window.dispatchEvent(new Event('resize'));
 
-    /* Allow one paint-preparation frame after the final DOM grouping, then reveal. */
+    /* Recheck the journey in the final paint-preparation frame, then reveal the page. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
       removeLegacyJourneyRollbackAssets();
-      normalizeJourneyClusters();
+      enforceCanonicalJourneyFlow();
       window.dispatchEvent(new Event('resize'));
       releaseBootLock();
     }));
