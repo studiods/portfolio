@@ -161,6 +161,16 @@ html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.
   letter-spacing:var(--hm-track-note)!important;
 }
 
+/* Structural subsection/card index contract.
+   New portfolio pages should show only the numeric hierarchy (01.1, 02.3, ...).
+   English descriptors such as “/ TEAM VOICE” are not part of the structural title.
+   Use .hm-ds-index-label on .hm-subno / .hm-card-no when authoring new or migrated cases. */
+html body.himart-page-body #live-main .hm-ds-index-label{
+  font-family:var(--hm-font-en)!important;
+  font-variant-numeric:tabular-nums!important;
+  white-space:nowrap!important;
+}
+
 /* Source notes are a distinct 10px role; ordinary labels remain 12px. */
 html body.himart-page-body #live-main :is(.hm-source,.hm-ds-source-note,.reuse-proof-source,[data-hm-source-note]){
   font-family:var(--hm-font-ko)!important;
