@@ -1,4 +1,4 @@
-/* HIMART Design System v2.5 — foundation tokens
+/* HIMART Design System v2.6 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
    Semantic text contrast and shared Hero meta typography are owned here only;
    component/page layers consume these tokens and do not redefine them. */
@@ -84,6 +84,7 @@
   --hm-space-component:40px;
   --hm-space-subtitle-content:40px;
   --hm-space-subtitle-smalltitle:80px;
+  --hm-space-smalltitle-content:40px;
   --hm-space-subsection:100px;
   --hm-space-title-subsection:160px;
   --hm-space-section:200px;
@@ -107,9 +108,14 @@
   --hm-hero-copy-max-width:1280px;
   --hm-hero-description-width:var(--hm-hero-copy-max-width);
   --hm-hero-description-width-mobile:100%;
-  /* Standard subtitle-to-content rhythm; special media graphs override locally. */
+
+  /* Semantic title rhythm.
+     Middle title -> direct content remains 80px.
+     Middle title -> small/group title remains 80px.
+     Small/group title -> its content is a separate 40px rule. */
   --hm-subtitle-to-content:80px;
   --hm-subtitle-to-smalltitle:80px;
+  --hm-smalltitle-to-content:var(--hm-space-smalltitle-content);
   --hm-title-to-subsection-gap:160px;
   --hm-section-head-to-subsection:160px;
   --hm-subsection-gap:100px;
