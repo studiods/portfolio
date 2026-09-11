@@ -1,8 +1,10 @@
 /* WORKS English portfolio title typography
    These titles use authored <br> line breaks. Prevent the narrow Works copy rail
-   from inserting additional automatic wraps inside each authored line. */
-body.works-page-body .works-card-title--averta-thin,
-body.works-page-body .works-card-title--aimmo{
+   from inserting additional automatic wraps inside each authored line.
+   Keep selector specificity above the shared tracking layer so English titles own
+   their own tracking even when tracking.css is re-imported by navigation.css. */
+html body.works-page-body .works-card-title.works-card-title--averta-thin,
+html body.works-page-body .works-card-title.works-card-title--aimmo{
   font-family:"Averta PE",Arial,sans-serif!important;
   font-weight:300!important;
   font-variation-settings:normal!important;
@@ -17,8 +19,8 @@ body.works-page-body .works-card-title--aimmo{
 }
 
 /* Do not let the generic Works title-link width contract create another wrap point. */
-body.works-page-body .works-card-title-link:has(.works-card-title--averta-thin),
-body.works-page-body .works-card-title-link:has(.works-card-title--aimmo){
+html body.works-page-body .works-card-title-link:has(.works-card-title--averta-thin),
+html body.works-page-body .works-card-title-link:has(.works-card-title--aimmo){
   max-width:none!important;
   overflow:visible!important;
 }
