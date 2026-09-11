@@ -1,0 +1,214 @@
+/* AIMMO DESIGN SYSTEM v6 — summary, repeated-work capsule geometry and observation gallery. */
+
+/* 01.1 — synthesis line: centered downward arrowhead + compact blue conclusion. */
+html body.aimmo-system-page .aimmo-team-history-summary{
+  margin-top:64px!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow{
+  position:relative!important;
+  width:100%!important;
+  height:24px!important;
+  margin:0 0 28px!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::before{
+  content:""!important;
+  position:absolute!important;
+  top:4px!important;
+  right:0!important;
+  left:0!important;
+  height:1px!important;
+  background:rgba(255,255,255,.30)!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  left:50%!important;
+  width:10px!important;
+  height:10px!important;
+  border:0!important;
+  border-right:1px solid rgba(255,255,255,.30)!important;
+  border-bottom:1px solid rgba(255,255,255,.30)!important;
+  transform:translateX(-50%) rotate(45deg)!important;
+  background:#000!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary h4{
+  margin:0!important;
+  max-width:none!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
+  line-height:1.6!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary p{
+  margin:14px 0 0!important;
+}
+
+/* 01.2 — same visual grammar as HIMART JOURNEY SIGNALS.
+   The row width determines one immutable circle diameter. Capsule padding is real
+   content-box padding, so tangent-to-tablet distance is identical on all four sides. */
+html body.aimmo-system-page .aimmo-static-reuse-flow{
+  --aimmo-flow-arrow:30.8px;
+  --aimmo-flow-capsule-inset:18px;
+  display:grid!important;
+  gap:80px!important;
+  width:100%!important;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-row{
+  --aimmo-flow-node:min(250px,calc((100cqw - var(--aimmo-flow-arrow) - var(--aimmo-flow-arrow) - var(--aimmo-flow-arrow) - var(--aimmo-flow-capsule-inset) - var(--aimmo-flow-capsule-inset) - 2px) / 4));
+  position:relative!important;
+  display:flex!important;
+  flex-flow:row nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+  width:100%!important;
+  min-width:0!important;
+  container-type:inline-size!important;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node{
+  flex:0 0 var(--aimmo-flow-node)!important;
+  width:var(--aimmo-flow-node)!important;
+  min-width:var(--aimmo-flow-node)!important;
+  max-width:var(--aimmo-flow-node)!important;
+  height:var(--aimmo-flow-node)!important;
+  min-height:var(--aimmo-flow-node)!important;
+  max-height:var(--aimmo-flow-node)!important;
+  aspect-ratio:1/1!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 var(--aimmo-flow-arrow)!important;
+  width:var(--aimmo-flow-arrow)!important;
+  min-width:var(--aimmo-flow-arrow)!important;
+  max-width:var(--aimmo-flow-arrow)!important;
+  height:40px!important;
+  margin:0!important;
+  padding:0!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  text-align:center!important;
+}
+html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow::before{
+  content:""!important;
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
+  width:12px!important;
+  height:12px!important;
+  border-top:1px solid rgba(255,255,255,.48)!important;
+  border-right:1px solid rgba(255,255,255,.48)!important;
+  transform:translate(-65%,-50%) rotate(45deg)!important;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule,
+html body.aimmo-system-page .aimmo-repeat-capsule--top,
+html body.aimmo-system-page .aimmo-repeat-capsule--bottom{
+  position:relative!important;
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-flow:row nowrap!important;
+  align-items:center!important;
+  width:max-content!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:var(--aimmo-flow-capsule-inset)!important;
+  border:1px solid var(--hm-red)!important;
+  border-radius:999px!important;
+  box-sizing:content-box!important;
+  isolation:isolate!important;
+  background:#000!important;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule::before{
+  content:none!important;
+  display:none!important;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule__label{
+  position:absolute!important;
+  z-index:3!important;
+  top:0!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  margin:0!important;
+  padding:0 12px!important;
+  background:#000!important;
+  color:var(--hm-red)!important;
+  font:400 var(--hm-type-note)/1.35 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-note)!important;
+  white-space:nowrap!important;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-node{
+  border-color:var(--hm-red)!important;
+  background:rgba(250,72,27,.20)!important;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-node h4{
+  color:var(--hm-red)!important;
+}
+
+/* 02.1 — three edge-to-edge 16:9 observation sequences. */
+html body.aimmo-system-page .aimmo-evidence-gallery{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-inline:0!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card{
+  position:relative!important;
+  width:100%!important;
+  max-width:none!important;
+  aspect-ratio:16/9!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  opacity:1;
+  transition:opacity .24s linear;
+}
+html body.aimmo-system-page .aimmo-evidence-card img.is-sequence-changing{
+  opacity:0;
+}
+
+@media(max-width:780px){
+  html body.aimmo-system-page .aimmo-static-reuse-flow{gap:80px!important}
+  html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-row{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:16px!important;
+    container-type:normal!important;
+  }
+  html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node{
+    flex:0 0 auto!important;
+    width:min(320px,88vw)!important;
+    min-width:0!important;
+    max-width:min(320px,88vw)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+  }
+  html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow{
+    transform:rotate(90deg)!important;
+  }
+  html body.aimmo-system-page .aimmo-repeat-capsule,
+  html body.aimmo-system-page .aimmo-repeat-capsule--top,
+  html body.aimmo-system-page .aimmo-repeat-capsule--bottom{
+    flex-direction:column!important;
+    width:auto!important;
+    max-width:100%!important;
+    padding:14px!important;
+    margin:24px 0!important;
+  }
+}
