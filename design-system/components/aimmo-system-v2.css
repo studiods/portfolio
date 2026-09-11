@@ -41,6 +41,16 @@ html body.aimmo-system-page .aimmo-research-note{display:grid;grid-template-colu
 html body.aimmo-system-page .aimmo-research-note p{margin:0!important;max-width:70ch!important}
 html body.aimmo-system-page .aimmo-research-note a{color:rgba(255,255,255,.72);text-decoration:underline;text-underline-offset:3px}
 
+/* 02.3 implementation evidence — image-first cards ready for final product captures. */
+html body.aimmo-system-page .aimmo-improvement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px 28px;width:100%}
+html body.aimmo-system-page .aimmo-improvement-card{min-width:0;padding-top:20px;border-top:1px solid var(--hm-line-default)}
+html body.aimmo-system-page .aimmo-improvement-card:first-child{border-top-color:var(--hm-blue)}
+html body.aimmo-system-page .aimmo-improvement-media{display:grid;aspect-ratio:16/9;place-items:center;margin:0;overflow:hidden;background:#060606;border:1px solid var(--hm-line-faint)}
+html body.aimmo-system-page .aimmo-implementation-placeholder{display:grid;width:100%;height:100%;place-items:center;background:linear-gradient(135deg,#090909,#111);color:rgba(255,255,255,.26);font:400 11px/1 var(--hm-font-en);letter-spacing:.12em}
+html body.aimmo-system-page .aimmo-improvement-card>span{display:block;margin-top:22px;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.aimmo-system-page .aimmo-improvement-card h4{margin:18px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.28 var(--hm-font-ko)!important;font-variation-settings:'wght' 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+html body.aimmo-system-page .aimmo-improvement-card p{margin:14px 0 0!important;max-width:38ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+
 html body.aimmo-system-page .aimmo-family-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%}
 html body.aimmo-system-page .aimmo-family-grid article{min-height:250px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
 html body.aimmo-system-page .aimmo-family-grid article:nth-child(2){border-top-color:var(--hm-blue)}
@@ -55,13 +65,110 @@ html body.aimmo-system-page .aimmo-benchmark article{padding:24px 0 28px;border-
 html body.aimmo-system-page .aimmo-benchmark strong{display:block;color:#fff;font:300 30px/1.1 var(--hm-font-en);letter-spacing:-.025em}
 html body.aimmo-system-page .aimmo-benchmark p{margin:14px 0 0!important;max-width:48ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important}
 
+/* HIMART journey-flow structure reused for 03.1 ownership. */
+html body.aimmo-system-page .aimmo-ownership-loop{position:relative;margin-top:var(--hm-subtitle-to-content);padding:44px 34px;border:1px solid var(--hm-blue);border-radius:999px;background:#000}
+html body.aimmo-system-page .aimmo-ownership-loop::before,
+html body.aimmo-system-page .aimmo-ownership-loop::after{content:"";position:absolute;left:50%;z-index:2;width:120px;height:18px;transform:translateX(-50%);background:#000}
+html body.aimmo-system-page .aimmo-ownership-loop::before{top:-9px}
+html body.aimmo-system-page .aimmo-ownership-loop::after{bottom:-9px}
+html body.aimmo-system-page .aimmo-loop-arrow{position:absolute;left:50%;z-index:3;transform:translateX(-50%);color:var(--hm-blue);font:100 26px/1 var(--hm-font-en);background:#000;padding:0 10px}
+html body.aimmo-system-page .aimmo-loop-arrow--top{top:-16px}
+html body.aimmo-system-page .aimmo-loop-arrow--bottom{bottom:-16px}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-area{margin:0!important;padding:0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-groups{margin:0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-group{margin:0!important;padding:0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-label{margin:0 0 34px!important;color:#fff!important;text-align:center!important;font:100 var(--hm-type-group)/1.25 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-group)!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-row{display:grid!important;grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr)!important;gap:0!important;align-items:center!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node{min-width:0!important;padding:20px 12px!important;border-top:1px solid var(--hm-line-default)!important;background:#000!important;text-align:left!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node:first-child{border-top-color:var(--hm-blue)!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node .hm-card-no{color:var(--hm-blue)!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node h4{margin:22px 0 0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node p{margin:12px 0 0!important;font-size:var(--hm-type-note)!important;max-width:18ch!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-arrow{color:rgba(0,166,237,.7)!important;text-align:center!important;font:100 24px/1 var(--hm-font-en)!important}
+
+/* Core-first priorities. */
+.aimmo-priority{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%}
+.aimmo-priority article{min-height:250px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+.aimmo-priority article.is-accent{border-top-color:var(--hm-blue)}
+.aimmo-priority span,.aimmo-principle-grid span,.aimmo-owner-grid span,.aimmo-dev-grid span,.aimmo-team-grid span{display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.aimmo-priority b,.aimmo-owner-grid b{display:block;margin-top:30px;color:#fff;font:300 var(--hm-type-group)/1.15 var(--hm-font-en);letter-spacing:var(--hm-track-group)}
+.aimmo-priority p,.aimmo-owner-grid p{margin:18px 0 0!important;max-width:20ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+
+/* Six design principles, using the same two-column evidence density as HIMART cards. */
+.aimmo-principle-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;width:100%}
+.aimmo-principle-grid article{min-height:180px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+.aimmo-principle-grid article:nth-child(1),.aimmo-principle-grid article:nth-child(4){border-top-color:var(--hm-blue)}
+.aimmo-principle-grid h4{margin:32px 0 0!important;max-width:29ch!important;color:#fff!important;font:100 var(--hm-type-group)/1.32 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+
+/* Three-stage build loop. */
+.aimmo-process{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr) 54px minmax(0,1fr);gap:0;align-items:center;width:100%}
+.aimmo-process-step{display:flex;aspect-ratio:1;min-width:0;flex-direction:column;align-items:center;justify-content:center;padding:32px;border:1px solid var(--hm-line-default);border-radius:50%;text-align:center}
+.aimmo-process-step.is-accent{border-color:var(--hm-blue)}
+.aimmo-process-step span{color:var(--hm-blue);font:300 11px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.aimmo-process-step h4{margin:17px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.25 var(--hm-font-en)!important;letter-spacing:var(--hm-track-group)!important}
+.aimmo-process-step p{margin:12px 0 0!important;max-width:18ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-note)/1.48 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.aimmo-process>i{color:rgba(255,255,255,.30);font:100 30px/1 var(--hm-font-en);font-style:normal;text-align:center}
+
+/* Parallel ownership: legacy grid kept for backwards compatibility. */
+.aimmo-owner-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:20px;width:100%}
+.aimmo-owner-grid article{min-width:0;min-height:220px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+.aimmo-owner-grid article:first-child{border-top-color:var(--hm-blue)}
+.aimmo-owner-grid p{font-size:var(--hm-type-note)!important}
+.aimmo-lead-message{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:48px;align-items:start;margin-top:var(--hm-subtitle-to-content);padding:40px 0;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-faint)}
+.aimmo-lead-message strong{color:var(--hm-blue);font:300 var(--hm-type-hero)/.92 var(--hm-font-en);letter-spacing:var(--hm-track-data-number)}
+.aimmo-lead-message p{margin:0!important;max-width:none!important;color:#fff!important;font:100 var(--hm-type-subsection)/1.22 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-subsection)!important;word-break:keep-all!important}
+
+/* Development bridge. */
+.aimmo-dev-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;width:100%}
+.aimmo-dev-grid article{min-height:260px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+.aimmo-dev-grid article:first-child{border-top-color:var(--hm-blue)}
+.aimmo-dev-grid h4,.aimmo-team-grid h4{margin:32px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.32 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+.aimmo-dev-grid p{margin:18px 0 0!important;max-width:28ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+
+/* Impact — exactly the large-number cadence used throughout HIMART. */
+.aimmo-impact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%}
+.aimmo-impact-grid article{min-width:0;min-height:330px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+.aimmo-impact-grid article:first-child,.aimmo-impact-grid article.is-positive{border-top-color:var(--hm-blue)}
+.aimmo-impact-grid strong{display:block;color:var(--hm-blue);font:300 var(--hm-type-hero)/.92 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums}
+.aimmo-impact-grid h4{margin:34px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.28 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+.aimmo-impact-grid p{margin:18px 0 0!important;max-width:25ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+
+.aimmo-team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;width:100%}
+.aimmo-team-grid article{min-height:220px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+.aimmo-team-grid article:nth-child(2){border-top-color:var(--hm-blue)}
+
+.aimmo-final-statement{padding:40px 0;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-faint)}
+.aimmo-final-statement>span{display:block;margin-bottom:24px;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.aimmo-final-statement p{margin:0!important;max-width:1000px!important;color:#fff!important;font:100 var(--hm-type-subsection)/1.2 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-subsection)!important;word-break:keep-all!important}
+.aimmo-final-statement strong{font-weight:400;font-variation-settings:"wght" 400}
+
+/* The manually authored right rail should use the exact HIMART wide chapter alignment. */
+@media(min-width:1600px){
+  html body.aimmo-system-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
+    grid-column:2!important;grid-row:1!important
+  }
+  html body.aimmo-system-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{
+    grid-column:4!important;grid-row:1!important;align-self:start!important;min-width:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important
+  }
+  html body.aimmo-system-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{margin-top:0!important}
+}
+
 @media(max-width:1180px){
-  html body.aimmo-system-page :is(.aimmo-efficiency-cycle,.aimmo-context-grid,.aimmo-family-grid){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aimmo-circle-flow,.aimmo-impact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .aimmo-owner-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .aimmo-priority{grid-template-columns:repeat(2,minmax(0,1fr))}
+  html body.aimmo-system-page .aimmo-ownership-loop{border-radius:42px;padding:38px 28px}
+  html body.aimmo-system-page .aimmo-ownership-loop .flow-row{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:16px!important}
+  html body.aimmo-system-page .aimmo-ownership-loop .flow-arrow{display:none!important}
 }
 @media(max-width:780px){
-  html body.aimmo-system-page :is(.aimmo-efficiency-cycle,.aimmo-context-grid,.aimmo-family-grid,.aimmo-benchmark){grid-template-columns:1fr}
-  html body.aimmo-system-page :is(.aimmo-efficiency-cycle article,.aimmo-context-grid article,.aimmo-family-grid article){min-height:0}
+  .aimmo-quote-grid,.aimmo-principle-grid,.aimmo-priority,.aimmo-circle-flow,.aimmo-impact-grid,.aimmo-owner-grid,.aimmo-dev-grid,.aimmo-team-grid,.aimmo-improvement-grid{grid-template-columns:1fr}
+  .aimmo-quote-grid article,.aimmo-priority article,.aimmo-impact-grid article,.aimmo-owner-grid article,.aimmo-dev-grid article,.aimmo-team-grid article{min-height:0}
+  .aimmo-circle-node{aspect-ratio:auto;min-height:260px}
   html body.aimmo-system-page .aimmo-evidence-card figcaption{right:24px;bottom:22px;left:24px}
   html body.aimmo-system-page .aimmo-evidence-card figcaption strong{font-size:15px}
   html body.aimmo-system-page .aimmo-research-note,.aimmo-reduction-stat{grid-template-columns:1fr;gap:20px}
+  html body.aimmo-system-page .aimmo-ownership-loop{border-radius:28px;padding:34px 20px}
+  html body.aimmo-system-page .aimmo-ownership-loop .flow-row{grid-template-columns:1fr!important;gap:18px!important}
+  html body.aimmo-system-page .aimmo-ownership-loop .flow-node{min-height:0!important}
 }
