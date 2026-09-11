@@ -1,110 +1,33 @@
-/* HIMART Editorial Wide Alignment Contract v1.0
-   Final geometry authority for every >=1600px case-study page using the shared
-   left-title / right-content editorial rails.
-
-   Rules fixed here:
-   - chapter left title and the first right-rail divider share one exact Y origin;
-   - chapter-start reveal never translates either side vertically;
-   - canonical medium-title units always keep LINE -> 40px -> number/title spacing;
-   - outer alignment resets may remove margins, but never the component-owned
-     divider-to-title padding. This prevents future pages from reintroducing the
-     recurring first-card zero-padding bug. */
-
-:root{
-  --hm-editorial-line-to-title:var(--hm-space-component,40px);
-}
-
-@media (min-width:1600px){
-  /* One authored chapter origin. Positional reveal is forbidden at this boundary. */
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-section-head{
-    margin:0!important;
-    padding:0!important;
-    align-self:start!important;
-    transform:none!important;
-    animation:none!important;
+/* HIMART Editorial Wide Alignment Contract v2.0
+   One geometric authority for every >=1600px editorial case-study page.
+   The first chapter divider is owned by the right rail itself, never by the first content block. */
+:root{--hm-editorial-line-to-title:var(--hm-space-component,40px)}
+@media(min-width:1600px){
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-section-head{
+    grid-row:1!important;align-self:start!important;margin:0!important;padding:0!important;transform:none!important;animation:none!important
   }
-
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail{
-    grid-row:1!important;
-    align-self:start!important;
-    min-width:0!important;
-    width:100%!important;
-    max-width:100%!important;
-    margin:0!important;
-    padding:0!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail{
+    position:relative!important;grid-row:1!important;align-self:start!important;min-width:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important
   }
-
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > :first-child{
-    margin-top:0!important;
-    transform:none!important;
-    animation:none!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail::before{
+    content:""!important;position:absolute!important;z-index:2!important;top:0!important;right:0!important;left:0!important;height:1px!important;background:var(--hm-line-weak)!important;pointer-events:none!important
   }
-
-  /* First subsection: divider itself is the right-rail chapter origin. */
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .hm-subsection:first-child{
-    margin-top:0!important;
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
-    transform:none!important;
-    animation:none!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.hm-subsection:first-child,
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>:is(.narrative-problem,.narrative-reality,.narrative-signals,.narrative-touchpoint-synthesis,.brand-synthesis,.journey-flow-block,.journey-role-block,.design-rule,.flow-area):first-child{
+    margin-top:0!important;border-top:0!important;padding-top:var(--hm-editorial-line-to-title)!important;transform:none!important;animation:none!important
   }
-
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .hm-subsection:first-child.hm-reveal.is-visible,
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .hm-subsection:first-child.hm-reveal.is-in{
-    opacity:1!important;
-    transform:none!important;
-    animation:none!important;
-    transition:opacity .4s ease!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.data-list:first-child{
+    margin-top:0!important;padding-top:0!important;border-top:0!important;transform:none!important;animation:none!important
   }
-
-  /* Data-list is only an outer grouping shell. It may be reset to zero; the card may not. */
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .data-list:first-child{
-    margin-top:0!important;
-    padding-top:0!important;
-    transform:none!important;
-    animation:none!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.data-list:first-child>.data-card:first-child{
+    margin-top:0!important;border-top:0!important;padding-top:var(--hm-editorial-line-to-title)!important;transform:none!important;animation:none!important;opacity:1!important
   }
-
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .data-list:first-child > .data-card:first-child{
-    margin-top:0!important;
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
-    transform:none!important;
-    animation:none!important;
-    opacity:1!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.data-list:first-child>.data-card:first-child>.data-card-head{margin-top:0!important;padding-top:0!important}
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.hm-subsection:not(:first-child),
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.data-list>.data-card:not(:first-child){
+    border-top:1px solid var(--hm-line-weak)!important;padding-top:var(--hm-editorial-line-to-title)!important
   }
-
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .data-list:first-child > .data-card:first-child > .data-card-head{
-    margin-top:0!important;
-    padding-top:0!important;
-  }
-
-  /* Canonical medium units always own their divider-to-title inset, including later units. */
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test
-  #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
-  > .hm-wrap > .hm-wide-right-rail > .data-list > .data-card{
-    border-top:1px solid var(--hm-line-weak)!important;
-    padding-top:var(--hm-editorial-line-to-title)!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail>.hm-subsection:first-child.hm-reveal:is(.is-visible,.is-in){
+    opacity:1!important;transform:none!important;animation:none!important;transition:opacity .4s ease!important
   }
 }

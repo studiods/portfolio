@@ -1,0 +1,67 @@
+/* AIMMO DESIGN SYSTEM v2 — lead narrative + evidence layouts */
+html body.aimmo-system-page .aimmo-efficiency-cycle{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%;
+}
+html body.aimmo-system-page .aimmo-efficiency-cycle article{
+  position:relative;min-height:250px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default);
+}
+html body.aimmo-system-page .aimmo-efficiency-cycle article.is-accent{border-top-color:var(--hm-blue)}
+html body.aimmo-system-page .aimmo-efficiency-cycle span,
+html body.aimmo-system-page .aimmo-context-grid span,
+html body.aimmo-system-page .aimmo-family-grid span,
+html body.aimmo-system-page .aimmo-research-note span{
+  display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)
+}
+html body.aimmo-system-page .aimmo-efficiency-cycle h4,
+html body.aimmo-system-page .aimmo-context-grid h4,
+html body.aimmo-system-page .aimmo-family-grid h4{
+  margin:32px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.32 var(--hm-font-ko)!important;font-variation-settings:'wght' 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+}
+html body.aimmo-system-page .aimmo-efficiency-cycle p,
+html body.aimmo-system-page .aimmo-context-grid p,
+html body.aimmo-system-page .aimmo-family-grid p,
+html body.aimmo-system-page .aimmo-research-note p{
+  margin:16px 0 0!important;max-width:30ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+}
+
+/* Reuse-gallery inspired evidence plane: large media, no ornamental card chrome. */
+html body.aimmo-system-page .aimmo-evidence-gallery{display:grid;grid-template-columns:1fr;gap:0;width:100%}
+html body.aimmo-system-page .aimmo-evidence-card{position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;background:#070707}
+html body.aimmo-system-page .aimmo-evidence-card img{display:block;width:100%;height:100%;object-fit:cover}
+html body.aimmo-system-page .aimmo-evidence-card::after{content:"";position:absolute;inset:auto 0 0;height:40%;background:linear-gradient(to top,rgba(0,0,0,.72),transparent);pointer-events:none}
+html body.aimmo-system-page .aimmo-evidence-card figcaption{position:absolute;z-index:2;right:40px;bottom:36px;left:40px}
+html body.aimmo-system-page .aimmo-evidence-card figcaption span{display:block;margin-bottom:10px;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.aimmo-system-page .aimmo-evidence-card figcaption strong{display:block;max-width:42ch;color:#fff;font:300 18px/1.35 var(--hm-font-ko);letter-spacing:var(--hm-track-group);word-break:keep-all}
+
+html body.aimmo-system-page .aimmo-context-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%}
+html body.aimmo-system-page .aimmo-context-grid article{min-height:270px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+html body.aimmo-system-page .aimmo-context-grid article.is-accent{border-top-color:var(--hm-blue)}
+
+html body.aimmo-system-page .aimmo-research-note{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;align-items:start;padding:28px 0;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-faint)}
+html body.aimmo-system-page .aimmo-research-note p{margin:0!important;max-width:70ch!important}
+html body.aimmo-system-page .aimmo-research-note a{color:rgba(255,255,255,.72);text-decoration:underline;text-underline-offset:3px}
+
+html body.aimmo-system-page .aimmo-family-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%}
+html body.aimmo-system-page .aimmo-family-grid article{min-height:250px;padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+html body.aimmo-system-page .aimmo-family-grid article:nth-child(2){border-top-color:var(--hm-blue)}
+
+html body.aimmo-system-page .aimmo-reduction-stat{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:48px;align-items:start;padding:40px 0;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-faint)}
+html body.aimmo-system-page .aimmo-reduction-stat strong{color:var(--hm-blue);font:300 clamp(72px,7vw,112px)/.88 var(--hm-font-en);letter-spacing:var(--hm-track-data-number)}
+html body.aimmo-system-page .aimmo-reduction-stat div>span{display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.aimmo-system-page .aimmo-reduction-stat p{margin:18px 0 0!important;max-width:44ch!important;color:#fff!important;font:100 var(--hm-type-subsection)/1.24 var(--hm-font-ko)!important;font-variation-settings:'wght' 100;word-break:keep-all!important}
+
+html body.aimmo-system-page .aimmo-benchmark{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;width:100%}
+html body.aimmo-system-page .aimmo-benchmark article{padding:24px 0 28px;border-top:1px solid var(--hm-line-default)}
+html body.aimmo-system-page .aimmo-benchmark strong{display:block;color:#fff;font:300 30px/1.1 var(--hm-font-en);letter-spacing:-.025em}
+html body.aimmo-system-page .aimmo-benchmark p{margin:14px 0 0!important;max-width:48ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important}
+
+@media(max-width:1180px){
+  html body.aimmo-system-page :is(.aimmo-efficiency-cycle,.aimmo-context-grid,.aimmo-family-grid){grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:780px){
+  html body.aimmo-system-page :is(.aimmo-efficiency-cycle,.aimmo-context-grid,.aimmo-family-grid,.aimmo-benchmark){grid-template-columns:1fr}
+  html body.aimmo-system-page :is(.aimmo-efficiency-cycle article,.aimmo-context-grid article,.aimmo-family-grid article){min-height:0}
+  html body.aimmo-system-page .aimmo-evidence-card figcaption{right:24px;bottom:22px;left:24px}
+  html body.aimmo-system-page .aimmo-evidence-card figcaption strong{font-size:15px}
+  html body.aimmo-system-page .aimmo-research-note,.aimmo-reduction-stat{grid-template-columns:1fr;gap:20px}
+}

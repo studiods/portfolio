@@ -1,0 +1,30 @@
+/* AIMMO GRAPHIC MOTIF — portfolio UI accent normalization.
+   Original brand/media assets keep their authored color. Generated portfolio UI uses the shared HIMART blue system only. */
+html body.aimmo-graphic-page{
+  --aimmo-violet:var(--hm-blue)!important;
+  --aimmo-violet-soft:rgba(0,166,237,.78)!important;
+  --aimmo-line:rgba(0,166,237,.72)!important;
+}
+html body.aimmo-graphic-page :is(.hm-subno,.hm-card-no),
+html body.aimmo-graphic-page :is(.aimmo-graphic-signal-grid span,.aimmo-internal-grid span,.aimmo-impact-grid>article>span),
+html body.aimmo-graphic-page :is(.aimmo-brand-video__caption span,.aimmo-story-card__copy span),
+html body.aimmo-graphic-page .aimmo-business-flow article span,
+html body.aimmo-graphic-page .aimmo-graphic-reframe span,
+html body.aimmo-graphic-page .aimmo-module-flow__stage>span,
+html body.aimmo-graphic-page .aimmo-impact-grid strong,
+html body.aimmo-graphic-page .aimmo-final-statement>span{color:var(--hm-blue)!important}
+
+html body.aimmo-graphic-page :is(.aimmo-graphic-signal-grid article.is-accent,.aimmo-character-grid article.is-accent,.aimmo-module-flow__stage.is-accent,.aimmo-impact-grid article.is-metric,.aimmo-internal-grid article.is-accent){border-top-color:var(--hm-blue)!important}
+html body.aimmo-graphic-page .aimmo-business-flow article.is-accent{border-color:var(--hm-blue)!important}
+
+html body.aimmo-graphic-page :is(.atom--dot,.atom--bar,.atom--join::before,.atom--join::after,.mini-motif i){background:var(--hm-blue)!important}
+html body.aimmo-graphic-page .atom--pill{background:linear-gradient(90deg,var(--hm-blue),var(--hm-blue-deep))!important}
+html body.aimmo-graphic-page .aimmo-motif-mark i{background:linear-gradient(145deg,var(--hm-blue-new) 0%,var(--hm-blue-deep) 72%)!important}
+html body.aimmo-graphic-page .aimmo-wall-motif{background:linear-gradient(135deg,#03131b 0%,#050505 48%,#041b26 100%)!important}
+html body.aimmo-graphic-page .aimmo-wall-motif i{background:linear-gradient(135deg,var(--hm-blue-new),var(--hm-blue-deep))!important}
+html body.aimmo-graphic-page .aimmo-kit-visual i{background:linear-gradient(145deg,var(--hm-blue-new),var(--hm-blue-deep))!important}
+
+html body.aimmo-graphic-page .aimmo-visual-slot::before{border-color:rgba(0,166,237,.26)!important}
+html body.aimmo-graphic-page .aimmo-visual-slot--expo{background:radial-gradient(circle at 28% 42%,rgba(0,166,237,.18),transparent 32%),#070707!important}
+html body.aimmo-graphic-page .aimmo-visual-slot--digital{background:linear-gradient(130deg,#060606 55%,rgba(0,166,237,.13)),#070707!important}
+html body.aimmo-graphic-page .aimmo-visual-slot--print{background:radial-gradient(circle at 70% 60%,rgba(0,166,237,.15),transparent 30%),#070707!important}

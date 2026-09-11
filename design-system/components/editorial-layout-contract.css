@@ -1,6 +1,3 @@
-/* HIMART editorial layout contract v3.0 — stable public entrypoint.
-   The v2.1 behavior is preserved as the base; final alignment and medium-title
-   spacing corrections are layered after it so every new case-study page gets the
-   same chapter-start geometry without page-specific patches. */
+/* HIMART editorial layout contract v3.1 — stable public entrypoint. */
 @import url("./editorial-layout-contract-base-v21.css?v=20260910-1");
-@import url("./editorial-layout-alignment.css?v=20260910-1");
+@import url("./editorial-layout-alignment.css?v=20260911-2");

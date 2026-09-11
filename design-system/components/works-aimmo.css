@@ -1,0 +1,10 @@
+/* WORKS AIMMO typography semantic */
+body.works-page-body .works-card-title--aimmo{
+  font-family:var(--hm-font-en-thin,"Averta PE",Arial,sans-serif)!important;
+  font-weight:300!important;
+  font-variation-settings:normal!important;
+  line-height:1.02!important;
+  letter-spacing:-.04em!important;
+  word-break:normal!important;
+  text-wrap:balance;
+}

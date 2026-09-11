@@ -1,205 +1,73 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AIMMO 2022 — Design System</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIMMO 2022-2024 — Design System Development</title>
 <link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./design-system/himart-system.css?v=20260909-6">
+<link rel="stylesheet" href="./design-system/himart-system.css?v=20260911-2">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260909-12-aimmo">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260910-4">
 <link rel="stylesheet" href="./design-system/components/aimmo-system.css?v=20260910-3-himart-structure">
+<link rel="stylesheet" href="./design-system/components/aimmo-system-v2.css?v=20260911-1">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-5">
 <link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260909-3">
-<link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260910-3-overflow">
+<link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260911-2">
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-narrative-ready himart-movie-page aimmo-system-page hm-wide-editorial-test hm-wide-himart-test">
 <main id="live-main">
 <header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
-  <video class="hm-movie-video hm-ds-hero__video" autoplay muted playsinline preload="auto" aria-hidden="true"
-    data-aimmo-video-sequence="./assets/movies/aimmo_system_01.mp4|./assets/movies/aimmo_system_02.mp4|./assets/movies/aimmo_system_03.mp4|./assets/movies/aimmo_system_04.mp4">
-    <source src="./assets/movies/aimmo_system_01.mp4" type="video/mp4">
-  </video>
-  <div class="hm-movie-overlay hm-ds-hero__overlay" aria-hidden="true"></div>
-  <div class="hm-wrap hm-ds-wrap hm-ds-hero__inner">
-    <div class="hm-movie-copy hm-ds-hero__copy">
-      <h1 class="hm-title hm-ds-hero__title js-scramble">각자 만들던 제품의 경험을<br>하나의 시스템으로 연결했습니다.</h1>
-      <p class="hm-lead hm-ds-hero__description">완성된 가이드보다, 팀이 바로 쓰고 함께 키울 수 있는 기준부터 만들었습니다.</p>
-    </div>
-    <div class="hm-hero-bottom hm-ds-hero__bottom">
-      <div class="hm-meta hm-ds-hero__meta">
-        <div><span>ROLE</span><b>DESIGN TEAM &amp; UX LEAD</b></div>
-        <div><span>FOCUS</span><b>DESIGN SYSTEM · TEAM BUILDING</b></div>
-        <div><span>SCOPE</span><b>UX RULES · COMPONENTS · TOKENS</b></div>
-        <div><span>PERIOD</span><b>AIMMO · 2022</b></div>
-      </div>
-    </div>
-  </div>
+<video class="hm-movie-video hm-ds-hero__video" autoplay muted playsinline preload="auto" aria-hidden="true" data-aimmo-video-sequence="./assets/movies/aimmo_system_01.mp4|./assets/movies/aimmo_system_02.mp4|./assets/movies/aimmo_system_03.mp4|./assets/movies/aimmo_system_04.mp4"><source src="./assets/movies/aimmo_system_01.mp4" type="video/mp4"></video>
+<div class="hm-movie-overlay hm-ds-hero__overlay" aria-hidden="true"></div>
+<div class="hm-wrap hm-ds-wrap hm-ds-hero__inner"><div class="hm-movie-copy hm-ds-hero__copy"><h1 class="hm-title hm-ds-hero__title js-scramble">반복해서 다시 만들던 업무를,<br>빠르게 판단하고 재사용하는 시스템으로 바꿨습니다.</h1><p class="hm-lead hm-ds-hero__description">디자인 시스템부터 만들지 않았습니다. 실제 사용자와 업무 환경, 팀의 비효율을 먼저 파악한 뒤 가장 필요한 기준부터 순차적으로 구축했습니다.</p></div><div class="hm-hero-bottom hm-ds-hero__bottom"><div class="hm-meta hm-ds-hero__meta"><div><span>ROLE</span><b>DESIGN TEAM &amp; UX LEAD</b></div><div><span>FOCUS</span><b>PRODUCTIVITY · CONSISTENCY · USABILITY</b></div><div><span>SCOPE</span><b>RESEARCH · SYSTEM · COMPONENTS · TOKENS</b></div><div><span>PERIOD</span><b>AIMMO · 2022-2024</b></div></div></div></div>
 </header>
-
 <nav class="hm-progress hm-ds-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
 
 <section class="hm-section hm-ds-section" id="brand" data-chapter="01"><div class="hm-wrap hm-ds-wrap">
-  <div class="hm-section-head hm-ds-section__head hm-reveal">
-    <div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">입사 직후,<br>팀이 왜 같은 제품을 다르게 만들고 있는지부터 확인했습니다.</h2></div>
-    <p class="hm-section-desc hm-ds-section__description">팀빌딩을 위한 1:1 면담과 설문에서 가장 먼저 반복된 문제는 디자인 시스템의 부재였습니다.</p>
-  </div>
-  <div class="hm-wide-right-rail">
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">01.1 / TEAM VOICE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">디자인 시스템뿐 아니라,<br>함께 지키는 디자인 규칙 자체가 없었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">비슷한 기능도 제품마다 UI와 UX가 달라 하나의 프로세스로 이어지는 제품군이라고 보기 어려운 상태였습니다.</p></div></div>
-      <div class="aimmo-quote-grid hm-ds-subtitle-to-content">
-        <article><strong>“비슷한 기능인데 서비스마다 UX가 달라 불편하다는 이야기가 많아요.”</strong><span>PRODUCT CONSISTENCY</span></article>
-        <article><strong>“디자인 시스템을 만든 경험이 없어 어떻게 시작해야 하는지 모르겠어요.”</strong><span>STARTING POINT</span></article>
-        <article><strong>“시간이 없어 공통 디자인 에셋도 못 만들었어요.”</strong><span>RESOURCE</span></article>
-        <article><strong>“한 번에 전체 적용을 못하면 계속 화면이 달라져서 이상할 것 같아요.”</strong><span>ADOPTION</span></article>
-      </div>
-      <figure class="aimmo-media aimmo-media--wide"><img src="./assets/image/aimmo-system/aimmo-source-010.jpg" alt="AIMMO 팀원 면담에서 수집한 디자인 시스템 관련 요구사항" loading="lazy" decoding="async"></figure>
-      <div class="hm-source hm-ds-source-note">SOURCE - 기존 포트폴리오 AIMMO DESIGN SYSTEM / 입사 후 1:1 미팅 요구사항</div>
-    </div>
+<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">디자인 시스템이 없다는 문제보다,<br>같은 일을 계속 다시 만들고 있다는 문제가 더 컸습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">디자인·개발 모두 반복 생산이 일상이었고, 기준을 만들 경험과 시간, 전사적 공감대도 부족했습니다.</p></div>
+<div class="hm-wide-right-rail">
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.1 / TEAM VOICE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">입사 직후 1:1 면담과 리소스 점검부터 시작했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">가장 자주 반복된 이야기는 ‘시간이 없어 못 만들었다’, ‘어떻게 시작해야 할지 모르겠다’, ‘비슷한 기능인데 제품마다 다르다’였습니다.</p></div></div><div class="aimmo-quote-grid hm-ds-subtitle-to-content"><article><strong>“시간이 없어 공통 디자인 에셋도 못 만들었어요.”</strong><span>RESOURCE</span></article><article><strong>“디자인 시스템을 만든 경험이 없어 어떻게 시작해야 하는지 모르겠어요.”</strong><span>STARTING POINT</span></article><article><strong>“비슷한 기능인데 서비스마다 UX가 달라 불편하다는 이야기가 많아요.”</strong><span>CONSISTENCY</span></article><article><strong>“한 번에 전체 적용을 못하면 계속 화면이 달라질 것 같아요.”</strong><span>ADOPTION</span></article></div><figure class="aimmo-media aimmo-media--wide"><img src="./assets/image/aimmo-system/aimmo-source-010.jpg" alt="AIMMO 팀 면담과 워크숍을 통해 디자인 시스템 문제를 파악하는 장면" loading="lazy" decoding="async"></figure><div class="hm-source hm-ds-source-note">SOURCE · 기존 포트폴리오 AIMMO DESIGN SYSTEM / 입사 후 1:1 미팅 요구사항</div></div>
 
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">01.2 / WHY IT STOPPED</span><div><h3 class="hm-subtitle hm-ds-subsection__title">문제는 의지가 아니라,<br>시작할 수 있는 조건과 방법이 없다는 데 있었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">라이브 서비스, 협업 부서의 공감대, 구축 경험 부족, 제품별로 달라진 UX가 동시에 얽혀 있었습니다.</p></div></div>
-      <div class="aimmo-circle-flow hm-ds-subtitle-to-content" aria-label="디자인 시스템 구축을 막고 있던 네 가지 문제">
-        <article class="aimmo-circle-node"><span>01</span><h4>공감대 부족</h4><p>협업 부서까지 필요성이 충분히 공유되지 않았습니다.</p></article>
-        <article class="aimmo-circle-node"><span>02</span><h4>라이브 서비스</h4><p>전체 UI를 한 번에 교체할 수 없는 상황이었습니다.</p></article>
-        <article class="aimmo-circle-node"><span>03</span><h4>경험 부족</h4><p>팀 안에 구축 경험이 없어 시작점 설정이 어려웠습니다.</p></article>
-        <article class="aimmo-circle-node is-accent"><span>04</span><h4>제품 경험 단절</h4><p>같은 제품군에서도 기능과 화면의 기준이 달랐습니다.</p></article>
-      </div>
-    </div>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.2 / WASTE CYCLE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">기준이 없으니 디자이너도, 개발자도<br>같은 결정을 반복하고 있었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">UI를 다시 만들고, 개발에서 다시 구현하고, 협업 과정에서 다시 설명하고, 다음 제품에서 다시 반복하는 비효율적인 사이클이 지속됐습니다.</p></div></div><div class="aimmo-efficiency-cycle hm-ds-subtitle-to-content"><article><span>01 / DESIGN</span><h4>화면마다 다시 설계</h4><p>기존 에셋을 찾기보다 매번 새 컴포넌트를 만들었습니다.</p></article><article><span>02 / DEVELOPMENT</span><h4>개발도 다시 구현</h4><p>비슷한 기능이라도 제품별 UI가 달라 재사용하기 어려웠습니다.</p></article><article><span>03 / COMMUNICATION</span><h4>설명과 확인 반복</h4><p>공통 기준이 없어 화면마다 의도와 상태를 다시 맞춰야 했습니다.</p></article><article class="is-accent"><span>04 / REPEAT</span><h4>다음 제품에서 다시 시작</h4><p>업무 효율과 제품 일관성이 함께 떨어지는 구조였습니다.</p></article></div></div>
 
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">01.3 / REFRAME</span><div><h3 class="hm-subtitle hm-ds-subsection__title">그래서 디자인 시스템을 만드는 일이 아니라,<br>팀이 같은 기준으로 제품을 만드는 일로 다시 정의했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">전체 교체를 목표로 잡지 않고 현재 업무에 바로 필요한 기준과 반복 사용되는 컴포넌트를 먼저 만들기로 했습니다.</p></div></div>
-      <div class="aimmo-statement hm-ds-subtitle-to-content"><span>FROM</span><p>각 제품마다 다시 판단하고 다시 만드는 방식</p><i>→</i><span>TO</span><p>같은 기준을 공유하고 반복해서 재사용하는 방식</p></div>
-    </div>
-  </div>
-</div></section>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">01.3 / REFRAME</span><div><h3 class="hm-subtitle hm-ds-subsection__title">그래서 목표를 ‘디자인 시스템 제작’이 아니라,<br>전체 업무의 판단 비용을 줄이는 것으로 바꿨습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">완성된 라이브러리보다 실제 제품에서 곧바로 효율을 만들 수 있는 기준을 먼저 정의했습니다.</p></div></div><div class="aimmo-statement hm-ds-subtitle-to-content"><span>FROM</span><p>각자가 다시 판단하고 다시 만드는 방식</p><i>→</i><span>TO</span><p>사용자·디자인·개발이 같은 기준을 재사용하는 방식</p></div></div>
+</div></div></section>
 
 <section class="hm-section hm-ds-section" id="data" data-chapter="02"><div class="hm-wrap hm-ds-wrap">
-  <div class="hm-section-head hm-ds-section__head hm-reveal">
-    <div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">완성된 시스템보다,<br>지금 제품에 바로 필요한 기준부터 만들었습니다.</h2></div>
-    <p class="hm-section-desc hm-ds-section__description">리소스를 전수 조사하고 가장 많이 쓰는 컴포넌트부터 우선순위를 정해 시작했습니다.</p>
-  </div>
-  <div class="hm-wide-right-rail">
-    <div class="data-list">
-      <article class="data-card hm-ds-card hm-reveal">
-        <div class="data-card-head"><span class="hm-card-no">02.1 / CORE FIRST</span><div><h3>한 번에 전부 만들지 않고,<br>필수·반복 컴포넌트부터 정의했습니다.</h3><p class="desc">현재 리소스를 모두 수집한 뒤 사용 빈도와 필요도를 기준으로 우선순위를 정했습니다.</p></div></div>
-        <div class="aimmo-priority hm-ds-subtitle-to-content">
-          <article><span>01</span><b>RESOURCE AUDIT</b><p>서비스별 기존 UI와 에셋을 수집하고 중복·차이를 확인했습니다.</p></article>
-          <article><span>02</span><b>FREQUENCY</b><p>지금 가장 자주 쓰는 컴포넌트를 먼저 선별했습니다.</p></article>
-          <article class="is-accent"><span>03</span><b>CORE FIRST</b><p>바로 적용 가능한 필수 컴포넌트부터 제작했습니다.</p></article>
-          <article><span>04</span><b>EXPAND</b><p>검증된 기준을 이후 에셋과 서비스로 점진 확장했습니다.</p></article>
-        </div>
-        <figure class="aimmo-media aimmo-media--wide"><img src="./assets/image/aimmo-system/aimmo-source-014.jpg" alt="AIMMO 디자인 시스템 구축 단계와 프로세스" loading="lazy" decoding="async"></figure>
-      </article>
+<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">02</span><h2 class="hm-section-title hm-ds-section__title js-scramble">컴포넌트를 만들기 전에,<br>실제로 이 제품을 쓰는 사람의 일을 관찰했습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">정확성과 속도가 곧 생산성으로 이어지는 작업이기 때문에 화면보다 업무 환경과 행동을 먼저 이해해야 했습니다.</p></div>
+<div class="hm-wide-right-rail">
+<div class="data-list">
+<article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.1 / REAL CONTEXT</span><div><h3>같은 사무실의 사용자에게 묻고,<br>옆에서 실제 업무를 따라가며 확인했습니다.</h3><p class="desc">주로 어떤 환경에서 쓰는지, 조도는 어떤지, 한 번 작업을 시작하면 얼마나 오래 사용하는지 인터뷰하고 Shadow Tracking으로 작업 흐름을 관찰했습니다.</p></div></div><div class="aimmo-evidence-gallery hm-ds-subtitle-to-content"><figure class="aimmo-evidence-card"><img src="./assets/image/aimmo-system/aimmo-source-014.jpg" alt="AIMMO 디자인 시스템 리소스 점검과 우선순위 정리 장면" loading="lazy" decoding="async"><figcaption><span>INTERVIEW · RESOURCE AUDIT</span><strong>설문이나 사례 수집만이 아니라 실제 팀의 리소스와 사용 맥락을 함께 봤습니다.</strong></figcaption></figure><figure class="aimmo-evidence-card"><img src="./assets/image/aimmo-system/aimmo-source-016.jpg" alt="AIMMO 실제 제품과 컴포넌트 사용 환경을 검토하는 장면" loading="lazy" decoding="async"><figcaption><span>SHADOW TRACKING · PRODUCT REVIEW</span><strong>작업 순서, 반복 행동, 화면을 오래 보는 구간과 즉시 판단해야 하는 구간을 분리했습니다.</strong></figcaption></figure></div></article>
 
-      <article class="data-card hm-ds-card hm-reveal">
-        <div class="data-card-head"><span class="hm-card-no">02.2 / PRINCIPLES</span><div><h3>만들기 전에,<br>무엇을 지킬지부터 합의했습니다.</h3><p class="desc">사례를 그대로 복제하지 않고 에이모의 제품과 사용자 환경에 필요한 여섯 가지 원칙을 정했습니다.</p></div></div>
-        <div class="aimmo-principle-grid hm-ds-subtitle-to-content">
-          <article><span>01 / CLARITY</span><h4>명확성을 가장 중요한 기준으로 정의했습니다.</h4></article>
-          <article><span>02 / REAL CONTEXT</span><h4>실사용자의 근무 환경과 사용 패턴을 사전 검증했습니다.</h4></article>
-          <article><span>03 / STANDARDIZE</span><h4>서비스별 사이즈와 색상 등 공통 규격을 통일했습니다.</h4></article>
-          <article><span>04 / SAME UX</span><h4>동일한 기능의 UX는 같은 컴포넌트를 사용했습니다.</h4></article>
-          <article><span>05 / CONSENSUS</span><h4>신규 UI 컴포넌트는 팀의 합의를 거쳐 추가했습니다.</h4></article>
-          <article><span>06 / TOKEN</span><h4>토큰화를 통해 개발팀의 적용 효율까지 고려했습니다.</h4></article>
-        </div>
-      </article>
+<article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.2 / PRODUCTIVITY CONTEXT</span><div><h3>이 제품에서 사용성은 편리함보다,<br>정확한 판단을 얼마나 빠르게 할 수 있는가에 가까웠습니다.</h3><p class="desc">작업 건수에 따라 수익이 달라지는 Crowd Worker 업무 특성상 탐색·판단·실행에 드는 시간을 줄이는 것이 중요했습니다.</p></div></div><div class="aimmo-context-grid hm-ds-subtitle-to-content"><article><span>01 / ENVIRONMENT</span><h4>사무실과 재택 환경</h4><p>회사뿐 아니라 집에서 계약 형태로 장시간 작업하는 환경도 함께 고려했습니다.</p></article><article><span>02 / DURATION</span><h4>오래 지속되는 작업</h4><p>화면을 오래 바라보는 구간에서 불필요한 밝기와 장식을 줄였습니다.</p></article><article><span>03 / DECISION</span><h4>빠른 상태 판단</h4><p>행동·상태 컬러와 정보 위계를 명확히 해 다음 판단을 빠르게 이어가도록 했습니다.</p></article><article class="is-accent"><span>04 / OUTPUT</span><h4>시간당 처리 생산성</h4><p>컴포넌트 수와 선택지를 줄여 탐색과 실행의 인지 부담을 낮췄습니다.</p></article></div></article>
 
-      <article class="data-card hm-ds-card hm-reveal">
-        <div class="data-card-head"><span class="hm-card-no">02.3 / BUILD LOOP</span><div><h3>정의하고 끝내지 않고,<br>검증하고 적용하며 계속 보완했습니다.</h3><p class="desc">컴포넌트 정의 → 에셋 제작 → 시스템 고도화를 큰 흐름으로 두고, 내부 검증과 개발 협의를 반복했습니다.</p></div></div>
-        <div class="aimmo-process hm-ds-subtitle-to-content">
-          <article class="aimmo-process-step"><span>01</span><h4>COMPONENT</h4><p>초기 정의 · 리소스 취합 · 내부 검증</p></article><i>→</i>
-          <article class="aimmo-process-step is-accent"><span>02</span><h4>ASSET</h4><p>기본 에셋 · 잔여 에셋 · 서비스 적용</p></article><i>→</i>
-          <article class="aimmo-process-step"><span>03</span><h4>EVOLVE</h4><p>개발 논의 · 피드백 반영 · 지속 고도화</p></article>
-        </div>
-        <div class="hm-source hm-ds-source-note">SOURCE - 포트폴리오 10–18p / 디자인 시스템 구축 원칙 및 3단계 프로세스</div>
-      </article>
-    </div>
-  </div>
-</div></section>
+<article class="data-card hm-ds-card hm-reveal"><div class="data-card-head"><span class="hm-card-no">02.3 / EVIDENCE → DIRECTION</span><div><h3>환경을 확인한 뒤,<br>다크 테마와 강한 상태 대비를 선택했습니다.</h3><p class="desc">‘다크 모드가 무조건 눈에 좋다’고 단정하지 않았습니다. 실제 저조도·장시간 사용 맥락과 화면 대비 연구를 보조 근거로 함께 사용했습니다.</p></div></div><div class="aimmo-research-note hm-ds-subtitle-to-content"><span>DARK MODE</span><p>2024년 International Journal of Human–Computer Interaction의 실험에서는 일반 사무실 조도와 3 lx의 어두운 환경 모두에서 dark mode 조건의 시각 피로가 더 낮게 관찰됐습니다. 이를 실제 사용자 환경 관찰과 결합해 전체 luminance를 낮추는 방향의 근거로 사용했습니다.</p></div><div class="aimmo-research-note"><span>COLOR CODING</span><p>시각 탐색 연구에서는 색상과 레이아웃이 반응시간과 정확도에 영향을 줄 수 있음을 보여줍니다. 그래서 상태·행동 컬러는 장식이 아니라 판단 속도를 돕는 정보 계층으로 사용하고, 일반 텍스트 대비는 WCAG의 접근성 기준을 함께 참고했습니다.</p></div><div class="hm-source hm-ds-source-note">RESEARCH CONTEXT · Xie et al., 2024, Effects of Screen Color Mode and Color Temperature on Visual Fatigue · Frontiers in Psychology, 2022, Color Coding and Visual Search</div></article>
+</div></div></div></section>
 
 <section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap hm-ds-wrap">
-  <div class="hm-section-head hm-ds-section__head hm-reveal">
-    <div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">제가 대신 만드는 것이 아니라,<br>팀이 함께 만들 수 있는 제작 방식을 설계했습니다.</h2></div>
-    <p class="hm-section-desc hm-ds-section__description">파트를 나누고 오너를 세우고, 구축 경험을 팀의 노하우로 바꾸는 데 집중했습니다.</p>
-  </div>
-  <div class="hm-wide-right-rail">
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">03.1 / PARALLEL OWNERSHIP</span><div><h3 class="hm-subtitle hm-ds-subsection__title">색상·폰트·그리드·그래픽·아이콘을 나눠 맡기자,<br>속도와 오너십이 함께 생겼습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">각 디자이너가 하나의 파트를 책임지고 병렬로 진행해 전체 제작 속도를 높였습니다.</p></div></div>
-      <div class="aimmo-owner-grid hm-ds-subtitle-to-content">
-        <article><span>01</span><b>COLOR</b><p>색상 체계와 상태 표현</p></article>
-        <article><span>02</span><b>TYPE</b><p>폰트 위계와 텍스트 규칙</p></article>
-        <article><span>03</span><b>GRID</b><p>레이아웃과 화면 구조</p></article>
-        <article><span>04</span><b>GRAPHIC</b><p>그래픽 스타일과 표현 원칙</p></article>
-        <article><span>05</span><b>ICON</b><p>아이콘 규격과 사용 기준</p></article>
-      </div>
-      <div class="aimmo-lead-message"><strong>PARALLEL<br>OWNERSHIP</strong><p>담당 영역이 명확해지자 스스로 기준을 더 깊게 고민했고,<br>파트별 디테일도 빠르게 높아졌습니다.</p></div>
-    </div>
+<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">관찰한 조건을 기준으로,<br>작게 시작해 실제 제품에 바로 적용했습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">팀의 현업을 멈추지 않으면서 가장 자주 쓰는 컴포넌트부터 줄이고, 같은 제품군이 하나의 패밀리로 느껴지게 만들었습니다.</p></div>
+<div class="hm-wide-right-rail">
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.1 / PARALLEL OWNERSHIP</span><div><h3 class="hm-subtitle hm-ds-subsection__title">폰트·그래픽·컬러·컴포넌트로 파트를 나누고,<br>각자의 오너십을 만들었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">제가 전부 만드는 대신 팀원별로 담당 영역을 정하고, 코어 컴포넌트와 컬러·그래픽은 직접 참여해 방향과 품질 기준을 함께 잡았습니다.</p></div></div><div class="aimmo-owner-grid hm-ds-subtitle-to-content"><article><span>01</span><b>TYPE</b><p>폰트 위계와 텍스트 규칙</p></article><article><span>02</span><b>COLOR</b><p>상태와 행동 컬러 체계</p></article><article><span>03</span><b>GRAPHIC</b><p>그래픽 스타일과 표현 기준</p></article><article><span>04</span><b>COMPONENT</b><p>코어 컴포넌트와 상태 정의</p></article><article><span>05</span><b>TOKEN</b><p>개발과 공유할 공통 값</p></article></div></div>
 
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">03.2 / GUIDED BUILD</span><div><h3 class="hm-subtitle hm-ds-subsection__title">팀에는 처음이었지만,<br>저에게는 세 번 이상 경험해 본 구축 과정이었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">이전 디자인 시스템 구축 경험을 바탕으로 제작 순서, 검증 방식, 컴포넌트 정의 노하우를 가이드해 시행착오를 줄였습니다.</p></div></div>
-      <div class="aimmo-circle-flow hm-ds-subtitle-to-content">
-        <article class="aimmo-circle-node"><span>01</span><h4>PROCESS</h4><p>무엇부터 정의할지 제작 순서를 설계했습니다.</p></article>
-        <article class="aimmo-circle-node"><span>02</span><h4>REVIEW</h4><p>2~3차 내부 검증으로 중복과 재논의를 줄였습니다.</p></article>
-        <article class="aimmo-circle-node"><span>03</span><h4>KNOW-HOW</h4><p>컴포넌트화와 운영 노하우를 팀에 전달했습니다.</p></article>
-        <article class="aimmo-circle-node is-accent"><span>04</span><h4>OWNERSHIP</h4><p>결정권을 나눠 팀이 스스로 시스템을 키우게 했습니다.</p></article>
-      </div>
-      <figure class="aimmo-media aimmo-media--system"><img src="./assets/image/aimmo-system/aimmo-source-016.jpg" alt="AIMMO 디자인 시스템의 실제 UI 컴포넌트와 스타일 정의 화면" loading="lazy" decoding="async"></figure>
-    </div>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.2 / REDUCE & PRIORITIZE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">컴포넌트를 늘리는 대신,<br>종류부터 30% 이상 줄였습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">가장 자주 사용하는 패턴을 중심으로 겹치는 버튼·상태·선택 방식을 통합하고, SaaS에 한 번에 적용할 수 없다는 현실을 고려해 Core First 방식으로 순차 전환했습니다.</p></div></div><div class="aimmo-reduction-stat hm-ds-subtitle-to-content"><strong>30%+</strong><div><span>COMPONENT TYPES REDUCED</span><p>선택지를 줄여 디자이너와 개발자가 더 빠르게 같은 답을 찾도록 했습니다.</p></div></div><div class="aimmo-priority hm-ds-subtitle-to-content"><article><span>01</span><b>AUDIT</b><p>기존 리소스 전수 수집</p></article><article><span>02</span><b>FREQUENCY</b><p>반복 사용 빈도 파악</p></article><article class="is-accent"><span>03</span><b>CORE FIRST</b><p>가장 많이 쓰는 것부터 적용</p></article><article><span>04</span><b>EXPAND</b><p>라이브 제품에 순차 확장</p></article></div></div>
 
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">03.3 / DEVELOPMENT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">디자인 파일에서 끝내지 않고,<br>개발팀이 실제로 쓰는 시스템으로 연결했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">개발팀과 지속적으로 미팅하고 부족한 부분을 빠르게 보완하며 라이브러리화와 토큰화를 병렬로 진행했습니다.</p></div></div>
-      <div class="aimmo-dev-grid hm-ds-subtitle-to-content">
-        <article><span>01 / INTERVIEW</span><h4>개발 과정의 막히는 지점을 계속 확인했습니다.</h4><p>디자인 정의와 실제 구현 사이의 차이를 빠르게 수집했습니다.</p></article>
-        <article><span>02 / LIBRARY</span><h4>재사용 가능한 구조로 라이브러리화를 진행했습니다.</h4><p>같은 기능을 다시 만드는 비용을 줄이는 방향으로 정리했습니다.</p></article>
-        <article><span>03 / TOKEN</span><h4>토큰화를 병렬로 진행해 적용 속도를 높였습니다.</h4><p>디자인과 개발이 같은 값을 바라볼 수 있도록 연결했습니다.</p></article>
-      </div>
-    </div>
-  </div>
-</div></section>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.3 / FAMILY SYSTEM</span><div><h3 class="hm-subtitle hm-ds-subsection__title">여러 제품을 묶어 판매해도 같은 가족으로 보이고,<br>각 제품은 다시 구분되도록 설계했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">공통 구조·컴포넌트·컬러 체계는 공유하고, 제품별 목적에 따라 일부 강조색과 컴포넌트 특성을 다르게 조합했습니다.</p></div></div><div class="aimmo-family-grid hm-ds-subtitle-to-content"><article><span>01 / COMMON</span><h4>같은 구조</h4><p>동일 기능은 같은 UX와 컴포넌트를 사용했습니다.</p></article><article><span>02 / FAMILY</span><h4>같은 컬러 시스템</h4><p>공통 토큰과 상태 체계로 하나의 제품군 인상을 만들었습니다.</p></article><article><span>03 / PRODUCT</span><h4>제품별 차별화</h4><p>일부 강조색과 핵심 컴포넌트 특성을 다르게 조합했습니다.</p></article><article><span>04 / PACKAGE</span><h4>2~3개 제품 패키지</h4><p>함께 사용할 때도 학습 비용이 다시 생기지 않도록 연결했습니다.</p></article></div><figure class="aimmo-media aimmo-media--system"><img src="./assets/image/aimmo-system/aimmo-source-016.jpg" alt="AIMMO 디자인 시스템의 실제 UI 컴포넌트와 스타일 정의" loading="lazy" decoding="async"></figure></div>
+
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.4 / DEVELOPMENT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">디자인 파일에서 끝내지 않고,<br>개발팀과 라이브러리·토큰을 병렬로 연결했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">지속적인 미팅과 인터뷰로 막히는 지점을 확인하고 부족한 정의를 빠르게 보완했습니다.</p></div></div><div class="aimmo-dev-grid hm-ds-subtitle-to-content"><article><span>01 / INTERVIEW</span><h4>실제 개발 과정의 부족한 지점을 확인했습니다.</h4><p>디자인 정의와 구현 사이의 차이를 빠르게 수집했습니다.</p></article><article><span>02 / LIBRARY</span><h4>재사용 가능한 구조로 라이브러리화했습니다.</h4><p>같은 기능을 다시 만드는 비용을 줄였습니다.</p></article><article><span>03 / TOKEN</span><h4>공통 값을 토큰으로 연결했습니다.</h4><p>디자인과 개발이 같은 기준을 바라보게 했습니다.</p></article></div></div>
+</div></div></section>
 
 <section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap">
-  <div class="hm-section-head hm-ds-section__head hm-reveal">
-    <div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">디자인 시스템은 화면을 통일하는 데서 끝나지 않고,<br>팀의 일하는 방식을 바꿨습니다.</h2></div>
-    <p class="hm-section-desc hm-ds-section__description">제작·개발·소통 비용이 줄었고, 함께 만든 팀원들에게는 결과물에 대한 오너십이 남았습니다.</p>
-  </div>
-  <div class="hm-wide-right-rail">
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">04.1 / PRODUCTIVITY</span><div><h3 class="hm-subtitle hm-ds-subsection__title">일부 리소스만 적용된 단계에서도,<br>업무 방식의 변화는 숫자로 나타났습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">디자이너·개발자·PO 인터뷰와 Asana에서 확인한 제작 전후 생산성 변화입니다.</p></div></div>
-      <div class="aimmo-impact-grid hm-ds-subtitle-to-content">
-        <article><strong>-72%</strong><h4>GUI 디자인 제작 시간</h4><p>컴포넌트 확인과 반복 제작에 필요한 시간이 크게 줄었습니다.</p></article>
-        <article><strong>-63%</strong><h4>협업 부서와의 소통 시간</h4><p>같은 화면 기준을 보며 설명하고 확인하는 비용이 감소했습니다.</p></article>
-        <article><strong>-38%</strong><h4>Front-end 개발 소요시간</h4><p>당시 전체 리소스의 약 1/3 적용 단계에서도 개발 효율이 높아졌습니다.</p></article>
-        <article class="is-positive"><strong>+45%</strong><h4>UX 설계·기획 고려시간</h4><p>단순 UI 확인보다 사용자 경험과 문제 해결에 더 많은 시간을 쓸 수 있었습니다.</p></article>
-      </div>
-      <figure class="aimmo-media aimmo-media--wide"><img src="./assets/image/aimmo-system/aimmo-source-018.jpg" alt="AIMMO 디자인 시스템 도입 후 생산성 변화 그래프" loading="lazy" decoding="async"></figure>
-      <div class="hm-source hm-ds-source-note">SOURCE - 포트폴리오 18p / 디자이너·개발자·PO 인터뷰 및 Asana 생산성 변화 수치</div>
-    </div>
+<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">시스템을 만들자,<br>디자인과 개발 모두 다시 만드는 시간이 줄었습니다.</h2></div><p class="hm-section-desc hm-ds-section__description">결과는 화면의 통일이 아니라 생산성과 판단 시간의 변화로 확인했습니다.</p></div>
+<div class="hm-wide-right-rail">
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">04.1 / PRODUCTIVITY</span><div><h3 class="hm-subtitle hm-ds-subsection__title">일부 리소스만 적용된 단계에서도,<br>업무 효율은 크게 달라졌습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">디자이너·개발자·PO 인터뷰와 Asana를 통해 제작 전후의 생산성 변화를 확인했습니다.</p></div></div><div class="aimmo-impact-grid hm-ds-subtitle-to-content"><article><strong>-72%</strong><h4>GUI 디자인 제작 소요시간</h4><p>컴포넌트 확인과 반복 제작 비용이 크게 줄었습니다.</p></article><article><strong>-63%</strong><h4>협업 부서와의 소통 시간</h4><p>공통 화면 기준으로 설명과 재확인 비용이 감소했습니다.</p></article><article><strong>-38%</strong><h4>Front-end 개발 소요시간</h4><p>전체 리소스 약 1/3 적용 단계에서도 개발 효율이 개선됐습니다.</p></article><article class="is-positive"><strong>+45%</strong><h4>UX 설계·기획 고려시간</h4><p>반복 UI보다 사용자 경험과 문제 해결에 더 많은 시간을 쓸 수 있었습니다.</p></article></div><figure class="aimmo-media aimmo-media--wide"><img src="./assets/image/aimmo-system/aimmo-source-018.jpg" alt="AIMMO 디자인 시스템 도입 후 생산성 변화 그래프" loading="lazy" decoding="async"></figure><div class="hm-source hm-ds-source-note">SOURCE · 기존 포트폴리오 / 디자이너·개발자·PO 인터뷰 및 Asana 생산성 변화 수치</div></div>
 
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">04.2 / TEAM IMPACT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">시간은 많이 들었지만,<br>팀이 함께 만든 만큼 결과는 팀의 자산으로 남았습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">업무와 병행해 쉽지 않았고 소통에도 많은 시간이 필요했지만, 실제 생산성 향상을 경험하면서 참여한 팀원들도 결과에 큰 보람과 자부심을 느꼈습니다.</p></div></div>
-      <div class="aimmo-team-grid hm-ds-subtitle-to-content">
-        <article><span>01 / SPEED</span><h4>반복 제작보다 문제 해결에 시간을 쓰게 됐습니다.</h4></article>
-        <article><span>02 / OWNERSHIP</span><h4>파트별 담당자가 생기며 디테일과 책임감이 함께 높아졌습니다.</h4></article>
-        <article><span>03 / SHARED LANGUAGE</span><h4>디자인·개발·PO가 같은 화면과 기준으로 대화하게 됐습니다.</h4></article>
-      </div>
-    </div>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">04.2 / EXTERNAL CONTEXT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">내부 성과는 업계 연구에서 확인되는<br>재사용 효과와도 같은 방향이었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">외부 연구는 에이모 수치의 대체값이 아니라, 재사용 가능한 UI 구조가 왜 생산성을 높이는지 설명하는 보조 근거로 사용했습니다.</p></div></div><div class="aimmo-benchmark hm-ds-subtitle-to-content"><article><strong>40%+ REUSE</strong><p>2016년 International Journal of Human-Computer Studies 사례에서는 UI specification 요소의 40% 이상을 재사용했고 specification size가 55% 감소했습니다.</p></article><article><strong>FASTER DELIVERY</strong><p>2025년 design-system 연구는 재사용 컴포넌트와 디자인 토큰이 중복 구현을 줄이고 frontend delivery와 협업을 개선하는 방향의 결과를 보고했습니다.</p></article></div><div class="hm-source hm-ds-source-note">RESEARCH CONTEXT · Reusing UI elements with Model-Based UI Development, 2016 · Measuring the Impact of Design Systems on Frontend Delivery Speed, Defect Rates and Team Alignment, 2025</div></div>
 
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno">04.3 / WHAT REMAINED</span><div><h3 class="hm-subtitle hm-ds-subsection__title">결국 남은 것은 컴포넌트 묶음이 아니라,<br>팀이 함께 판단하고 제품을 만드는 공통 언어였습니다.</h3></div></div>
-      <div class="aimmo-final-statement hm-ds-subtitle-to-content"><span>DESIGN SYSTEM → TEAM SYSTEM</span><p>제가 가진 구축 경험을 기준으로 시작했지만,<br><strong>마지막에는 팀이 스스로 만들고 개선할 수 있는 시스템</strong>으로 남겼습니다.</p></div>
-    </div>
-  </div>
-</div></section>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">04.3 / LEAD IMPACT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">결국 만든 것은 컴포넌트 묶음이 아니라,<br>팀이 더 빠르게 판단하고 실행할 수 있는 업무 시스템이었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">팀이 처음 해보는 시스템이었지만 문제를 먼저 정의하고, 실제 사용환경을 확인하고, 실행 가능한 범위부터 밀어붙여 생산성과 품질을 동시에 개선했습니다.</p></div></div><div class="aimmo-final-statement hm-ds-subtitle-to-content"><span>DESIGN SYSTEM → PRODUCTIVITY SYSTEM</span><p>UX Design Lead의 역할은 화면을 통일하는 것이 아니라,<br><strong>팀이 더 적은 반복으로 더 좋은 판단을 하게 만드는 구조를 만드는 것</strong>이라고 보았습니다.</p></div></div>
+</div></div></section>
 </main>
-
-<footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>AIMMO 2022</span><a href="#top">Back to top ↑</a></div></div></footer>
-
-<script src="./design-system/animation.js?v=20260906-14"></script>
-<script src="./design-system/scramble-final.js?v=20260907-3"></script>
-<script src="./design-system/navigation.js?v=20260908-1"></script>
-<script src="./design-system/aimmo-hero-video-sequence.js?v=20260910-1"></script>
-</body>
-</html>
+<footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>AIMMO 2022-2024</span><a href="#top">Back to top ↑</a></div></div></footer>
+<script src="./design-system/animation.js?v=20260906-14"></script><script src="./design-system/scramble-final.js?v=20260907-3"></script><script src="./design-system/navigation.js?v=20260908-1"></script><script src="./design-system/aimmo-hero-video-sequence.js?v=20260910-1"></script>
+</body></html>
