@@ -20,6 +20,32 @@
     return 'works';
   };
 
+  const mountYanoljaHeroVideo = () => {
+    if (!document.body.classList.contains('yanolja-system-page')) return;
+    const current = document.querySelector('#top > .hm-ds-hero__video');
+    if (!current || current.tagName === 'VIDEO') return;
+
+    const video = document.createElement('video');
+    video.className = current.className;
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('aria-hidden', 'true');
+
+    const source = document.createElement('source');
+    source.src = './assets/movies/yanolja_system_01.mp4';
+    source.type = 'video/mp4';
+    video.appendChild(source);
+    current.replaceWith(video);
+
+    const attempt = video.play?.();
+    if (attempt && attempt.catch) attempt.catch(() => {});
+  };
+
   const mountNavigation = active => {
     document.querySelectorAll('body > .top').forEach(node => node.remove());
     document.body.classList.toggle('portfolio-progress-page', active === 'works');
@@ -199,6 +225,7 @@
 
   const mount = () => {
     const active = currentPage();
+    mountYanoljaHeroVideo();
     mountNavigation(active);
     if (active === 'works') mountProgress();
     mountReuseCondensedCopy();
