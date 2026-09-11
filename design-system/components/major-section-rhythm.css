@@ -1,7 +1,7 @@
 /*
-  Portfolio major-section rhythm — FINAL AUTHORITY v1.1
+  Portfolio major-section rhythm — FINAL AUTHORITY v1.2
   ---------------------------------------------------
-  Root-cause containment for 01–04 chapter spacing.
+  Root-cause containment for major chapter spacing and major-title typography.
 
   Why this file exists
   - tokens.css defines the canonical major-title rhythm (20px title→description,
@@ -13,14 +13,20 @@
     direct siblings. Pages that later wrap chapter content in `.hm-wide-right-rail`
     no longer match those direct-sibling selectors, so the same design system could
     render either 160px or 0px depending on DOM/runtime order.
+  - chapter.css also contains a historical <=1024px layout breakpoint that switches
+    `.hm-section-title` to the mobile type token. Once that file was cache-busted during
+    the spacing repair, desktop/tablet-width windows could therefore render the major
+    title at the mobile 28–34px scale even though the canonical desktop major size is 52px.
 
   Contract
-  1) Major title → description is always 20px (token-owned).
-  2) In stacked layouts, chapter head → first content is one semantic gap owned here:
+  1) Major title = 52px token on every non-mobile viewport; mobile sizing starts only
+     at the actual mobile breakpoint (<=780px).
+  2) Major title → description is always 20px (token-owned).
+  3) In stacked layouts, chapter head → first content is one semantic gap owned here:
      160px desktop/tablet, 100px mobile.
-  3) In >=1600px editorial split, left chapter title and right evidence start on the
+  4) In >=1600px editorial split, left chapter title and right evidence start on the
      same authored top line; therefore no vertical chapter-head→content gap is applied.
-  4) Historical direct-sibling margins are neutralized so the gap can never double.
+  5) Historical direct-sibling margins are neutralized so the gap can never double.
 */
 :root{
   --hm-title-to-subsection-gap:var(--hm-space-title-subsection,160px);
@@ -29,6 +35,23 @@
   --hm-major-title-description-gap:var(--hm-title-description-gap,20px);
   --hm-major-title-content-gap:var(--hm-section-head-to-subsection,160px);
   --hm-major-title-content-gap-mobile:100px;
+}
+
+/* Major-title typography is final-owned here so layout breakpoints cannot silently
+   downgrade desktop/tablet chapter titles to the mobile scale. */
+@media (min-width:781px){
+  html body.himart-page-body #live-main > .hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head .hm-section-title{
+    font-size:var(--hm-type-section,52px)!important;
+    line-height:1.12!important;
+  }
+}
+@media (max-width:780px){
+  html body.himart-page-body #live-main > .hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head .hm-section-title{
+    font-size:var(--hm-type-section-mobile,clamp(28px,7.4vw,34px))!important;
+    line-height:1.16!important;
+  }
 }
 
 /* Internal chapter copy rhythm is independent from page-specific layout wrappers. */
