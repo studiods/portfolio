@@ -1,0 +1,59 @@
+/* HIMART Design System — Capsule grouping + head-only flow arrows v1.0
+   Shared geometry for grouped journey / process nodes. */
+.hm-flow-capsule{
+  --hm-flow-capsule-color:var(--hm-blue);
+  --hm-flow-capsule-inset:18px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  width:max-content;
+  min-width:0;
+  padding:var(--hm-flow-capsule-inset);
+  border:1px solid var(--hm-flow-capsule-color);
+  border-radius:999px;
+  box-sizing:content-box;
+  isolation:isolate;
+}
+.hm-flow-capsule--danger{--hm-flow-capsule-color:var(--hm-red)}
+.hm-flow-capsule__label{
+  position:absolute;
+  z-index:2;
+  top:0;
+  left:50%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  padding:0 12px;
+  background:#000;
+  color:var(--hm-flow-capsule-color);
+  font:400 var(--hm-type-note)/1.35 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-note);
+  white-space:nowrap;
+}
+.hm-flow-arrowhead{
+  position:relative;
+  display:block;
+  flex:0 0 30.8px;
+  width:30.8px;
+  min-width:30.8px;
+  height:40px;
+  margin:0;
+  padding:0;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+}
+.hm-flow-arrowhead::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:12px;
+  height:12px;
+  border-top:1px solid rgba(255,255,255,.48);
+  border-right:1px solid rgba(255,255,255,.48);
+  transform:translate(-65%,-50%) rotate(45deg);
+  transform-origin:center;
+}
+@media(max-width:780px){
+  .hm-flow-arrowhead{transform:rotate(90deg)}
+}
