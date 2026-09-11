@@ -1,5 +1,5 @@
 /*
-  Portfolio major-section rhythm — FINAL AUTHORITY v1.0
+  Portfolio major-section rhythm — FINAL AUTHORITY v1.1
   ---------------------------------------------------
   Root-cause containment for 01–04 chapter spacing.
 
@@ -32,7 +32,7 @@
 }
 
 /* Internal chapter copy rhythm is independent from page-specific layout wrappers. */
-html body.himart-page-body #live-main > section.hm-section[data-chapter]
+html body.himart-page-body #live-main > .hm-section[data-chapter]
 > .hm-wrap > .hm-section-head > .hm-section-desc{
   display:block!important;
   margin:var(--hm-major-title-description-gap) 0 0!important;
@@ -41,12 +41,12 @@ html body.himart-page-body #live-main > section.hm-section[data-chapter]
 
 /* Stacked case-study layout: the chapter head owns the gap exactly once. */
 @media (min-width:781px) and (max-width:1599px){
-  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  html body.himart-page-body #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head{
     margin:0 0 var(--hm-major-title-content-gap)!important;
   }
 
-  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  html body.himart-page-body #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area,.hm-wide-right-rail){
     margin-top:0!important;
   }
@@ -54,12 +54,12 @@ html body.himart-page-body #live-main > section.hm-section[data-chapter]
 
 /* Mobile keeps the established 100px chapter-head→content rhythm. */
 @media (max-width:780px){
-  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  html body.himart-page-body #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head{
     margin:0 0 var(--hm-major-title-content-gap-mobile)!important;
   }
 
-  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  html body.himart-page-body #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area,.hm-wide-right-rail){
     margin-top:0!important;
   }
@@ -68,7 +68,7 @@ html body.himart-page-body #live-main > section.hm-section[data-chapter]
 /* Wide editorial is parallel, not stacked: preserve exact left/right top alignment.
    The 20px title→description gap above still remains active inside the left rail. */
 @media (min-width:1600px){
-  html body.himart-page-body.hm-wide-editorial-test #live-main > section.hm-section[data-chapter]
+  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head{
     margin:0!important;
   }
