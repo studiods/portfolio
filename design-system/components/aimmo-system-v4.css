@@ -1,4 +1,4 @@
-/* AIMMO DESIGN SYSTEM v4 — team-history, repeated-work flow and collaboration-system layouts. */
+/* AIMMO DESIGN SYSTEM v5 — team-history, repeated-work flow, collaboration and field-observation galleries. */
 
 /* 01.1 Team history — six equal evidence items. */
 html body.aimmo-system-page .aimmo-quote-grid{
@@ -77,6 +77,7 @@ html body.aimmo-system-page .aimmo-static-reuse-flow{
   width:100%;
 }
 html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-row{
+  position:relative;
   display:grid;
   grid-template-columns:minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr) 30.8px minmax(0,1fr);
   align-items:center;
@@ -131,7 +132,46 @@ html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow{
   text-align:center!important;
 }
 
-/* 01.3 — six reusable collaboration-system steps, derived from the requested reference card. */
+/* HIMART 03.1 JOURNEY SIGNALS grammar: red tablet outline groups the repeated work. */
+html body.aimmo-system-page .aimmo-repeat-capsule{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 30.8px minmax(0,1fr);
+  align-items:center;
+  min-width:0;
+  isolation:isolate;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule--top{grid-column:3 / span 3}
+html body.aimmo-system-page .aimmo-repeat-capsule--bottom{grid-column:1 / span 3}
+html body.aimmo-system-page .aimmo-repeat-capsule::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-16px -12px;
+  border:1px solid var(--hm-red);
+  border-radius:999px;
+  background:#000;
+  pointer-events:none;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule__label{
+  position:absolute;
+  z-index:2;
+  top:-16px;
+  left:50%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  padding:0 12px;
+  background:#000;
+  color:var(--hm-red);
+  font:400 var(--hm-type-note)/1.35 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-note);
+  white-space:nowrap;
+}
+html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-node h4{
+  color:var(--hm-red)!important;
+}
+
+/* 01.3 — six reusable collaboration-system steps. */
 html body.aimmo-system-page .aimmo-collaboration-grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -168,16 +208,113 @@ html body.aimmo-system-page .aimmo-collaboration-grid p{
   word-break:keep-all!important;
 }
 
+/* 02.1 — three full-rail 16:9 observation images. */
+html body.aimmo-system-page .aimmo-evidence-gallery{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:28px!important;
+  width:100%!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card{
+  width:100%!important;
+  aspect-ratio:16/9!important;
+}
+
+/* 02.2 — image-led 2x2 square gallery. */
+html body.aimmo-system-page .aimmo-context-gallery{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:28px;
+  width:100%;
+}
+html body.aimmo-system-page .aimmo-context-gallery__item{
+  position:relative;
+  aspect-ratio:1/1;
+  margin:0;
+  overflow:hidden;
+  background:#080808;
+}
+html body.aimmo-system-page .aimmo-context-gallery__item img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+html body.aimmo-system-page .aimmo-context-gallery__item::after{
+  content:"";
+  position:absolute;
+  inset:auto 0 0;
+  height:48%;
+  background:linear-gradient(to top,rgba(0,0,0,.82),transparent);
+  pointer-events:none;
+}
+html body.aimmo-system-page .aimmo-context-gallery__copy{
+  position:absolute;
+  z-index:2;
+  right:28px;
+  bottom:26px;
+  left:28px;
+}
+html body.aimmo-system-page .aimmo-context-gallery__copy span{
+  display:block;
+  color:var(--hm-blue);
+  font:400 var(--hm-type-note)/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.aimmo-system-page .aimmo-context-gallery__copy h4{
+  margin:14px 0 0!important;
+  color:#fff!important;
+  font:100 var(--hm-type-group)/1.28 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page .aimmo-context-gallery__copy p{
+  margin:10px 0 0!important;
+  max-width:34ch!important;
+  color:var(--hm-description-color)!important;
+  font:300 14px/1.48 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* 02.3 — four full-width 16:9 implementation galleries; copy styling stays unchanged. */
+html body.aimmo-system-page .aimmo-improvement-grid{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:80px!important;
+  width:100%!important;
+}
+html body.aimmo-system-page .aimmo-improvement-card{
+  width:100%!important;
+  min-width:0!important;
+}
+html body.aimmo-system-page .aimmo-improvement-media{
+  width:100%!important;
+  aspect-ratio:16/9!important;
+}
+
 @media(max-width:1180px){
   html body.aimmo-system-page .aimmo-collaboration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:780px){
   html body.aimmo-system-page .aimmo-quote-grid,
-  html body.aimmo-system-page .aimmo-collaboration-grid{grid-template-columns:1fr!important}
+  html body.aimmo-system-page .aimmo-collaboration-grid,
+  html body.aimmo-system-page .aimmo-context-gallery{grid-template-columns:1fr!important}
   html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-row{
     grid-template-columns:1fr!important;
     gap:16px!important;
   }
   html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-arrow{transform:rotate(90deg)}
   html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node{width:min(320px,88vw)}
+  html body.aimmo-system-page .aimmo-repeat-capsule,
+  html body.aimmo-system-page .aimmo-repeat-capsule--top,
+  html body.aimmo-system-page .aimmo-repeat-capsule--bottom{
+    grid-column:auto!important;
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+    margin:24px 0!important;
+  }
+  html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-arrow{transform:rotate(90deg)}
+  html body.aimmo-system-page .aimmo-repeat-capsule::before{inset:-14px}
 }
