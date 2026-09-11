@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v7
+  HIMART Wide Editorial adapter — TEST ONLY v8
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
@@ -15,6 +15,13 @@
   first right-rail content block are revealed from one IntersectionObserver checkpoint.
   Geometry is owned by CSS and remains transform-free at chapter start, so their authored
   top line cannot drift during the scroll-in transition.
+
+  v8 removes the obsolete asynchronous v10 journey rollback before it can override the
+  current fluid journey geometry. The old rollback was dynamically appended by the bundled
+  production runtime, so cold-load network timing could make its fixed 168px circle rules
+  win after the current layout had already been built. Refreshing changed the timing and
+  made the newer rules appear correct. A short-lived observer now blocks that stale asset
+  and normalizes any legacy cluster that may already have landed before first paint.
 */
 (() => {
   'use strict';
@@ -27,6 +34,55 @@
     if (!document.body) return;
     document.body.classList.remove('hm-wide-booting');
     document.getElementById('hm-wide-boot-lock')?.remove();
+  };
+
+  const normalizeJourneyClusters = () => {
+    const journey = document.querySelector('#live-main > #journey');
+    if (!journey) return;
+
+    journey.querySelectorAll('.wide-flow-cluster.v10-journey-tablet').forEach(cluster => {
+      cluster.classList.remove('v10-journey-tablet');
+      cluster.classList.add('v12-journey-tablet');
+
+      if (cluster.closest('.journey-signal-subsection')) {
+        cluster.classList.add('v12-tablet-red');
+        cluster.classList.remove('v12-tablet-blue');
+        cluster.style.setProperty('--v12-tablet-color', 'var(--hm-red)');
+      } else if (cluster.closest('.journey-redesign-subsection, .journey-flow-block')) {
+        cluster.classList.add('v12-tablet-blue');
+        cluster.classList.remove('v12-tablet-red');
+        cluster.style.setProperty('--v12-tablet-color', 'var(--hm-blue)');
+      }
+    });
+  };
+
+  const removeLegacyJourneyRollbackAssets = () => {
+    document.querySelectorAll('link[href*="himart-wide-refine-v10.css"]').forEach(node => node.remove());
+    document.querySelectorAll('script[src*="himart-wide-refine-v10.js"]').forEach(node => node.remove());
+    normalizeJourneyClusters();
+  };
+
+  const installLegacyJourneyRollbackGuard = () => {
+    if (!isTargetPage() || window.__hmLegacyJourneyRollbackGuardMounted) return;
+    window.__hmLegacyJourneyRollbackGuardMounted = true;
+
+    removeLegacyJourneyRollbackAssets();
+
+    if (!('MutationObserver' in window) || !document.documentElement) return;
+
+    const observer = new MutationObserver(() => {
+      removeLegacyJourneyRollbackAssets();
+    });
+    observer.observe(document.documentElement, {childList:true, subtree:true});
+
+    const stop = () => {
+      removeLegacyJourneyRollbackAssets();
+      observer.disconnect();
+    };
+
+    /* The obsolete rollback is injected during the asynchronous narrative boot.
+       Ten seconds safely covers the cold-load window without leaving a permanent observer. */
+    window.setTimeout(stop, 10000);
   };
 
   const removeRetiredVoiceSourceCopy = () => {
@@ -101,8 +157,12 @@
 
   const mount = () => {
     if (!isTargetPage()) return;
+    removeLegacyJourneyRollbackAssets();
+
     if (window.__hmWideHimartAdapterMounted) {
       removeRetiredVoiceSourceCopy();
+      normalizeJourneyClusters();
+      window.dispatchEvent(new Event('resize'));
       releaseBootLock();
       return;
     }
@@ -133,6 +193,8 @@
 
     /* Defensive second pass in case a late source migration landed during grouping. */
     removeRetiredVoiceSourceCopy();
+    removeLegacyJourneyRollbackAssets();
+    normalizeJourneyClusters();
 
     /* One observer checkpoint owns both sides of every chapter start. This is mounted
        before the generic animation rescan so the visible pair shares the same frame. */
@@ -143,13 +205,20 @@
     window.dispatchEvent(new Event('resize'));
 
     /* Allow one paint-preparation frame after the final DOM grouping, then reveal. */
-    requestAnimationFrame(() => requestAnimationFrame(releaseBootLock));
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      removeLegacyJourneyRollbackAssets();
+      normalizeJourneyClusters();
+      window.dispatchEvent(new Event('resize'));
+      releaseBootLock();
+    }));
   };
 
   const ready = () => document.body?.classList.contains('himart-narrative-ready');
 
   const start = () => {
     if (!isTargetPage()) return;
+
+    installLegacyJourneyRollbackGuard();
 
     /* Never leave the page permanently hidden if a future runtime changes its ready contract. */
     window.setTimeout(releaseBootLock, 5000);
