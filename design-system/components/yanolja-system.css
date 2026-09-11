@@ -1,17 +1,16 @@
 @import url("./yanolja-system-base.css?v=20260911-1");
 
-/* YANOLJA color authority — site point color is HIMART blue only.
-   Multicolor semantic examples may use the shared system green/yellow tokens, never red. */
+/* YANOLJA portfolio color authority.
+   Rule:
+   1) Portfolio/editorial emphasis uses the site canonical blue only.
+   2) Actual Yanolja design-system / product UI examples keep their original colors
+      defined in yanolja-system-base.css and inline palette/accessibility samples.
+   Do not override colors inside UI demo surfaces from this layer. */
 html body.yanolja-system-page{
-  --yanolja-point:var(--hm-blue);
-  --yanolja-point-deep:var(--hm-blue-deep);
-  --yanolja-point-mid:var(--hm-blue-mid);
-  --yanolja-point-new:var(--hm-blue-new);
-  --yanolja-positive:var(--hm-green);
-  --yanolja-warning:var(--hm-yellow);
+  --yanolja-portfolio-point:var(--hm-blue);
 }
 
-/* All decorative / editorial emphasis uses the canonical blue token. */
+/* Portfolio composition: borders and editorial emphasis only. */
 html body.yanolja-system-page :is(
   .yanolja-question-card:nth-child(3),
   .yanolja-answer-card:nth-child(1),
@@ -34,71 +33,41 @@ html body.yanolja-system-page :is(
   .yanolja-lead-step:nth-child(1),
   .yanolja-lead-step:nth-child(5),
   .yanolja-final-statement
-){border-color:var(--yanolja-point)!important;border-top-color:var(--yanolja-point)!important}
+){
+  border-color:var(--yanolja-portfolio-point)!important;
+  border-top-color:var(--yanolja-portfolio-point)!important;
+}
 
 html body.yanolja-system-page :is(
   .yanolja-answer-card>span,
   .yanolja-answer-card strong,
   .yanolja-field-scene__intro>span,
   .yanolja-field-metric>span,
-  .yanolja-context-grid span,
-  .yanolja-rule-grid span,
+  .yanolja-context-grid>article>span,
+  .yanolja-rule-grid>article>span,
   .yanolja-component-card>span,
   .yanolja-direction-card>span,
-  .yanolja-equation span,
-  .yanolja-goal-card span,
-  .yanolja-accessibility__statement strong,
+  .yanolja-equation>span,
+  .yanolja-goal-card>span,
+  .yanolja-accessibility__statement>strong,
   .yanolja-demo-panel>span,
   .yanolja-contrast-meter strong,
-  .yanolja-type-sizes span,
-  .yanolja-glance-grid span,
+  .yanolja-type-sizes>article>span,
+  .yanolja-glance-grid>article>span,
   .yanolja-coverage-card>span,
   .yanolja-lead-step>span,
   .yanolja-final-statement>span,
-  .yanolja-final-statement strong
-){color:var(--yanolja-point)!important}
-
-/* Buttons, selected states and interactive examples stay blue. */
-html body.yanolja-system-page :is(
-  .yanolja-ui-button,
-  .yanolja-radius-shape,
-  .yanolja-theme-sample button,
-  .yanolja-mini-button,
-  .yanolja-choice.is-selected i,
-  .yanolja-calendar span.is-selected,
-  .yanolja-coverage-tab span.is-active,
-  .yanolja-coverage-calendar span.is-active
-){background:var(--yanolja-point)!important;border-color:var(--yanolja-point)!important;color:#fff!important}
-
-html body.yanolja-system-page :is(
-  .yanolja-ui-button.is-secondary,
-  .yanolja-mini-button.is-outline,
-  .yanolja-field,
-  .yanolja-choice i,
-  .yanolja-coverage-field,
-  .yanolja-coverage-select,
-  .yanolja-coverage-tab
-){border-color:var(--yanolja-point)!important}
-html body.yanolja-system-page :is(.yanolja-ui-button.is-secondary,.yanolja-mini-button.is-outline){color:var(--yanolja-point)!important}
-html body.yanolja-system-page .yanolja-coverage-select::after{color:var(--yanolja-point)!important}
-html body.yanolja-system-page .yanolja-theme-sample.is-dark button{background:var(--yanolja-point-deep)!important}
-
-/* When multiple semantic colors are necessary, only shared system colors are used. */
-html body.yanolja-system-page :is(.yanolja-ui-button.is-destructive,.yanolja-mini-button.is-danger,.yanolja-field.is-error){
-  background:var(--yanolja-warning)!important;
-  border-color:var(--yanolja-warning)!important;
-  color:#000!important;
-}
-html body.yanolja-system-page .yanolja-field.is-confirm{
-  background:#fff!important;
-  border-color:var(--yanolja-positive)!important;
-  color:var(--yanolja-positive)!important;
+  .yanolja-final-statement>p>strong
+){
+  color:var(--yanolja-portfolio-point)!important;
 }
 
-/* Accessibility comparison: blue remains the anchor; green/yellow are the only auxiliary hues. */
-html body.yanolja-system-page .yanolja-vision-card .yanolja-dot:nth-child(1){background:var(--hm-blue)!important}
-html body.yanolja-system-page .yanolja-vision-card .yanolja-dot:nth-child(2){background:var(--hm-blue-new)!important}
-html body.yanolja-system-page .yanolja-vision-card .yanolja-dot:nth-child(3){background:var(--hm-green)!important}
-html body.yanolja-system-page .yanolja-vision-card .yanolja-dot:nth-child(4){background:var(--hm-yellow)!important}
-html body.yanolja-system-page .yanolja-vision-card .yanolja-dot:nth-child(5){background:var(--hm-blue-deep)!important}
-html body.yanolja-system-page .yanolja-vision-card .yanolja-dot:nth-child(6){background:var(--hm-blue-mid)!important}
+/* IMPORTANT: Product/design-system examples intentionally inherit original Yanolja colors
+   from yanolja-system-base.css. This includes:
+   - 03.1 palette swatches
+   - 03.2 Normal / Deutan / Protan color samples
+   - 03.3 buttons, radius samples, Light/Dark UI samples
+   - 04.1 component states (primary, secondary, error, confirm, selected)
+   - 04.2 3x3 component demos
+   Red/green/etc. are therefore allowed only inside these factual Yanolja examples,
+   not as portfolio-page decorative point colors. */
