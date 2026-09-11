@@ -1,0 +1,106 @@
+/* AIMMO DESIGN SYSTEM v3 — implementation evidence + ownership sync loop */
+
+/* 02.3: four implementation decisions, image-ready. */
+html body.aimmo-system-page .aimmo-improvement-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:64px 28px!important;
+  width:100%!important;
+}
+html body.aimmo-system-page .aimmo-improvement-card{
+  min-width:0!important;
+  padding-top:20px!important;
+  border-top:1px solid var(--hm-line-default)!important;
+}
+html body.aimmo-system-page .aimmo-improvement-card:first-child{border-top-color:var(--hm-blue)!important}
+html body.aimmo-system-page .aimmo-improvement-media{
+  display:grid!important;
+  aspect-ratio:16/9!important;
+  place-items:center!important;
+  margin:0!important;
+  overflow:hidden!important;
+  background:#060606!important;
+  border:1px solid var(--hm-line-faint)!important;
+}
+html body.aimmo-system-page .aimmo-improvement-media img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important}
+html body.aimmo-system-page .aimmo-implementation-placeholder{
+  display:grid!important;width:100%!important;height:100%!important;place-items:center!important;
+  background:linear-gradient(135deg,#080808,#111)!important;
+  color:rgba(255,255,255,.26)!important;font:400 11px/1 var(--hm-font-en)!important;letter-spacing:.12em!important
+}
+html body.aimmo-system-page .aimmo-improvement-card>span{
+  display:block!important;margin-top:22px!important;color:var(--hm-blue)!important;
+  font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important
+}
+html body.aimmo-system-page .aimmo-improvement-card h4{
+  margin:18px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.28 var(--hm-font-ko)!important;
+  font-variation-settings:'wght' 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+}
+html body.aimmo-system-page .aimmo-improvement-card p{
+  margin:14px 0 0!important;max-width:40ch!important;color:var(--hm-description-color)!important;
+  font:300 var(--hm-type-body)/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+}
+
+/* 03.1: HIMART journey-flow structure, converted into a continuous ownership loop. */
+html body.aimmo-system-page .aimmo-ownership-loop{
+  position:relative!important;
+  margin-top:var(--hm-subtitle-to-content)!important;
+  padding:54px 38px!important;
+  border:1px solid var(--hm-blue)!important;
+  border-radius:999px!important;
+  background:#000!important;
+}
+html body.aimmo-system-page .aimmo-ownership-loop::before,
+html body.aimmo-system-page .aimmo-ownership-loop::after{
+  content:""!important;position:absolute!important;left:50%!important;z-index:2!important;
+  width:150px!important;height:22px!important;transform:translateX(-50%)!important;background:#000!important
+}
+html body.aimmo-system-page .aimmo-ownership-loop::before{top:-11px!important}
+html body.aimmo-system-page .aimmo-ownership-loop::after{bottom:-11px!important}
+html body.aimmo-system-page .aimmo-loop-arrow{
+  position:absolute!important;left:50%!important;z-index:4!important;width:28px!important;height:14px!important;
+  transform:translateX(-50%)!important;background:#000!important
+}
+html body.aimmo-system-page .aimmo-loop-arrow::before,
+html body.aimmo-system-page .aimmo-loop-arrow::after{
+  content:""!important;position:absolute!important;left:50%!important;width:16px!important;height:1px!important;
+  background:var(--hm-blue)!important;transform-origin:center!important
+}
+/* Top break shows only the upper half of an arrow head. */
+html body.aimmo-system-page .aimmo-loop-arrow--top{top:-7px!important}
+html body.aimmo-system-page .aimmo-loop-arrow--top::before{top:6px!important;transform:translateX(-95%) rotate(-28deg)!important}
+html body.aimmo-system-page .aimmo-loop-arrow--top::after{top:6px!important;transform:translateX(-5%) rotate(28deg)!important}
+/* Bottom break shows only the lower half of an arrow head. */
+html body.aimmo-system-page .aimmo-loop-arrow--bottom{bottom:-7px!important}
+html body.aimmo-system-page .aimmo-loop-arrow--bottom::before{bottom:6px!important;transform:translateX(-95%) rotate(28deg)!important}
+html body.aimmo-system-page .aimmo-loop-arrow--bottom::after{bottom:6px!important;transform:translateX(-5%) rotate(-28deg)!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-area{margin:0!important;padding:0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-groups,
+html body.aimmo-system-page .aimmo-ownership-loop .flow-group{margin:0!important;padding:0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-label{
+  margin:0 0 38px!important;color:#fff!important;text-align:center!important;
+  font:100 var(--hm-type-group)/1.25 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-group)!important
+}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-row.row5{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr) 22px minmax(0,1fr)!important;
+  gap:0!important;align-items:center!important
+}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node{
+  min-width:0!important;padding:20px 12px!important;border-top:1px solid var(--hm-line-default)!important;background:#000!important
+}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node:first-child{border-top-color:var(--hm-blue)!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node .hm-card-no{color:var(--hm-blue)!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node h4{margin:22px 0 0!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-node p{margin:12px 0 0!important;font-size:var(--hm-type-note)!important;max-width:18ch!important}
+html body.aimmo-system-page .aimmo-ownership-loop .flow-arrow{color:rgba(0,166,237,.72)!important;text-align:center!important;font:100 24px/1 var(--hm-font-en)!important}
+
+@media(max-width:1180px){
+  html body.aimmo-system-page .aimmo-ownership-loop{border-radius:48px!important}
+  html body.aimmo-system-page .aimmo-ownership-loop .flow-row.row5{grid-template-columns:1fr!important;gap:0!important}
+  html body.aimmo-system-page .aimmo-ownership-loop .flow-arrow{transform:rotate(90deg)!important;padding:8px 0!important}
+}
+@media(max-width:780px){
+  html body.aimmo-system-page .aimmo-improvement-grid{grid-template-columns:1fr!important;gap:48px!important}
+  html body.aimmo-system-page .aimmo-ownership-loop{padding:42px 20px!important;border-radius:36px!important}
+}
