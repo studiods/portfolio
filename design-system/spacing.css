@@ -1,4 +1,4 @@
-/* HIMART Design System v1.2 — spacing and layout foundation */
+/* HIMART Design System v1.3 — spacing and layout foundation */
 :root{
   --hm-inset-desktop:40px;
   --hm-inset-mobile:18px;
@@ -28,13 +28,21 @@
 .hm-ds-title-to-subsection{margin-top:var(--hm-space-160)}
 .hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}
 .hm-ds-subtitle-to-smalltitle{margin-top:var(--hm-subtitle-to-smalltitle)}
+.hm-ds-smalltitle-to-content{margin-top:var(--hm-smalltitle-to-content,var(--hm-space-40))}
 .hm-ds-rule{border-top:1px solid var(--hm-line-faint)}
 
-/* Semantic title rhythm: middle title (32px) → small title/group title (22px) = 80px.
-   Small title → its actual content remains 40px via --hm-subtitle-to-content. */
+/* Semantic title rhythm:
+   middle title (32px) -> small/group title (22px) = 80px.
+   small/group title -> its content = 40px, independently controlled by --hm-smalltitle-to-content. */
 html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head) + :is(
   .hm-group-title,.hm-ds-group-title,.voice-group-title,.sentiment-title,.hm-ds-subtitle-to-smalltitle
 ){margin-top:var(--hm-subtitle-to-smalltitle)!important}
+
+/* Compatibility mapping for existing small/group-title DOMs.
+   Reuse research groups use voice-group-title followed by the evidence grid. */
+html body.himart-page-body #live-main .voice-group-title + .reuse-proof-grid{
+  margin-top:var(--hm-smalltitle-to-content,var(--hm-space-40))!important;
+}
 
 /* Major section boundary utility: 200px top / 100px bottom / final 200px bottom. */
 .hm-ds-section-pad{padding:var(--hm-section-padding-top) 0 var(--hm-section-padding-bottom)}
@@ -46,7 +54,8 @@ html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head) + :is(
   .hm-ds-subsection-gap{margin-top:var(--hm-space-80)}
   .hm-ds-title-to-subsection{margin-top:var(--hm-space-100)}
   .hm-ds-subtitle-to-content{margin-top:var(--hm-space-40)}
-.hm-ds-subtitle-to-smalltitle{margin-top:var(--hm-subtitle-to-smalltitle)}
+  .hm-ds-subtitle-to-smalltitle{margin-top:var(--hm-subtitle-to-smalltitle)}
+  .hm-ds-smalltitle-to-content{margin-top:var(--hm-smalltitle-to-content,var(--hm-space-40))}
   .hm-ds-section-pad{padding:var(--hm-section-padding-top-mobile) 0 var(--hm-section-padding-bottom-mobile)}
   .hm-ds-section-pad:last-of-type{padding-bottom:var(--hm-section-padding-bottom-last-mobile)}
 }
