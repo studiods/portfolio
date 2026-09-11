@@ -2,4 +2,4 @@
 @import url("./editorial-layout-contract-base-v21.css?v=20260910-1");
 @import url("./editorial-layout-alignment.css?v=20260911-2");
 /* Major-title spacing is imported last so page/editorial layout cannot silently zero it. */
-@import url("./major-section-rhythm.css?v=20260912-1");
+@import url("./major-section-rhythm.css?v=20260912-2");
