@@ -1,0 +1,42 @@
+/* Portfolio gallery rhythm — FINAL AUTHORITY v1.0
+   ------------------------------------------------
+   Every case-study gallery uses one shared 32px gap between adjacent gallery items.
+   This contract intentionally targets gallery containers only; ordinary evidence grids,
+   cards and charts keep their own component spacing. */
+:root{
+  --hm-gallery-gap:32px;
+}
+
+html body.himart-page-body #live-main :is(
+  .hm-ds-media-grid,
+  .hm-ds-media-mosaic,
+  .reuse-production-gallery-list,
+  .reuse-image-display-grid,
+  .aimmo-evidence-gallery,
+  .aimmo-context-gallery,
+  .aimmo-improvement-grid,
+  .aimmo-story-gallery,
+  .aimmo-visual-slots,
+  .trenbe-field-gallery
+){
+  gap:var(--hm-gallery-gap,32px)!important;
+}
+
+/* Mobile keeps the same gallery-to-gallery rhythm. Column count and aspect ratios
+   remain component-owned; only the distance between gallery items is standardized. */
+@media(max-width:780px){
+  html body.himart-page-body #live-main :is(
+    .hm-ds-media-grid,
+    .hm-ds-media-mosaic,
+    .reuse-production-gallery-list,
+    .reuse-image-display-grid,
+    .aimmo-evidence-gallery,
+    .aimmo-context-gallery,
+    .aimmo-improvement-grid,
+    .aimmo-story-gallery,
+    .aimmo-visual-slots,
+    .trenbe-field-gallery
+  ){
+    gap:var(--hm-gallery-gap,32px)!important;
+  }
+}
