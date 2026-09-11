@@ -1,0 +1,212 @@
+/* AIMMO DESIGN SYSTEM v6 — 01 synthesis arrow + REUSE-style 02 galleries. */
+
+/* 01.1 — broad open downward arrowhead, centered at one-third of the content rail. */
+html body.aimmo-system-page .aimmo-team-history-summary__arrow{
+  position:relative!important;
+  width:33.333333%!important;
+  height:40px!important;
+  margin:0 auto 32px!important;
+  overflow:visible!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::before,
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  width:50%!important;
+  height:40px!important;
+  border:0!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%!important;
+  transform:none!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::before{
+  left:0!important;
+  right:auto!important;
+  background-image:linear-gradient(to bottom right,transparent calc(50% - .5px),rgba(255,255,255,.30) 50%,transparent calc(50% + .5px))!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
+  right:0!important;
+  left:auto!important;
+  background-image:linear-gradient(to bottom left,transparent calc(50% - .5px),rgba(255,255,255,.30) 50%,transparent calc(50% + .5px))!important;
+}
+html body.aimmo-system-page .aimmo-team-history-summary h4{
+  font-size:22px!important;
+}
+
+/* 01.2 — keep the red outline/title emphasis, but remove all red interior fills. */
+html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-node{
+  background:#000!important;
+}
+
+/* 02.1 — same rolling gallery grammar as HIMART REUSE 03.3. */
+html body.aimmo-system-page .aimmo-evidence-gallery{
+  gap:0!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__viewport,
+html body.aimmo-system-page .aimmo-evidence-card__slide,
+html body.aimmo-system-page .aimmo-evidence-card__media{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__viewport{
+  z-index:0!important;
+  overflow:hidden!important;
+  background:#080808!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__slide{
+  z-index:0!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translate3d(5%,0,0) scale(.95)!important;
+  transform-origin:50% 50%!important;
+  will-change:transform,opacity!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__slide::after{
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  background:#000;
+  opacity:.20;
+  pointer-events:none;
+  transition:opacity .72s cubic-bezier(.22,.76,.22,1);
+}
+html body.aimmo-system-page .aimmo-evidence-card__slide.is-active{
+  z-index:2!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transform:translate3d(0,0,0) scale(1)!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__slide.is-active::after{opacity:0}
+html body.aimmo-system-page .aimmo-evidence-card__slide.is-next{
+  z-index:1!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  transform:translate3d(5%,0,0) scale(.95)!important;
+  transition:transform .72s cubic-bezier(.22,.76,.22,1),opacity .72s ease!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__slide.is-next.is-entering{
+  transform:translate3d(0,0,0) scale(1)!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__slide.is-next.is-entering::after{opacity:0}
+html body.aimmo-system-page .aimmo-evidence-card__slide.is-active.is-exiting{
+  z-index:3!important;
+  transform:translate3d(-100%,0,0) scale(1)!important;
+  transition:transform .72s cubic-bezier(.22,.76,.22,1),opacity .72s ease!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card.is-reverse .aimmo-evidence-card__slide.is-next{
+  transform:translate3d(-5%,0,0) scale(.95)!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card.is-reverse .aimmo-evidence-card__slide.is-next.is-entering{
+  transform:translate3d(0,0,0) scale(1)!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card.is-reverse .aimmo-evidence-card__slide.is-active.is-exiting{
+  transform:translate3d(100%,0,0) scale(1)!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__media{
+  z-index:1!important;
+  background:#0a0a0a!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__media img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card figcaption{
+  z-index:4!important;
+}
+html body.aimmo-system-page .aimmo-evidence-card__nav{
+  position:absolute;
+  z-index:6;
+  top:50%;
+  width:48px;
+  height:80px;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  transform:translateY(-50%);
+  cursor:pointer;
+}
+html body.aimmo-system-page .aimmo-evidence-card__nav--prev{left:6px}
+html body.aimmo-system-page .aimmo-evidence-card__nav--next{right:6px}
+html body.aimmo-system-page .aimmo-evidence-card__nav::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:18px;
+  height:18px;
+  border-top:1px solid rgba(255,255,255,.78);
+  border-right:1px solid rgba(255,255,255,.78);
+}
+html body.aimmo-system-page .aimmo-evidence-card__nav--prev::before{
+  transform:translate(-35%,-50%) rotate(-135deg);
+}
+html body.aimmo-system-page .aimmo-evidence-card__nav--next::before{
+  transform:translate(-65%,-50%) rotate(45deg);
+}
+html body.aimmo-system-page .aimmo-evidence-card__nav:hover::before,
+html body.aimmo-system-page .aimmo-evidence-card__nav:focus-visible::before{
+  border-color:#fff;
+}
+html body.aimmo-system-page .aimmo-evidence-card__status{
+  position:absolute;
+  z-index:6;
+  right:32px;
+  bottom:32px;
+  color:rgba(255,255,255,.62);
+  font:300 11px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+
+/* 02.2 — four images touch edge-to-edge. */
+html body.aimmo-system-page .aimmo-context-gallery{
+  gap:0!important;
+}
+
+@media(max-width:780px){
+  html body.aimmo-system-page .aimmo-team-history-summary__arrow{
+    width:50%!important;
+    height:32px!important;
+  }
+  html body.aimmo-system-page .aimmo-team-history-summary__arrow::before,
+  html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
+    height:32px!important;
+  }
+  html body.aimmo-system-page .aimmo-evidence-card__nav{
+    width:38px;
+    height:64px;
+  }
+  html body.aimmo-system-page .aimmo-evidence-card__nav--prev{left:0}
+  html body.aimmo-system-page .aimmo-evidence-card__nav--next{right:0}
+  html body.aimmo-system-page .aimmo-evidence-card__nav::before{
+    width:14px;
+    height:14px;
+  }
+  html body.aimmo-system-page .aimmo-evidence-card__status{
+    right:18px;
+    bottom:18px;
+    font-size:10px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.aimmo-system-page .aimmo-evidence-card__slide,
+  html body.aimmo-system-page .aimmo-evidence-card__slide::after{
+    transition:none!important;
+  }
+}
