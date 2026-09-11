@@ -1,0 +1,75 @@
+/*
+  Portfolio major-section rhythm — FINAL AUTHORITY v1.0
+  ---------------------------------------------------
+  Root-cause containment for 01–04 chapter spacing.
+
+  Why this file exists
+  - tokens.css defines the canonical major-title rhythm (20px title→description,
+    160px chapter-head→content), but historical chapter.css redefined the same
+    spacing and ended with `var(--hm-section-head-after)` even though that variable
+    was never defined. An invalid custom-property substitution computes the margin
+    back to its initial value (0), rather than falling back to an earlier declaration.
+  - himart-system.css also moved the 160px gap from the chapter head to selected
+    direct siblings. Pages that later wrap chapter content in `.hm-wide-right-rail`
+    no longer match those direct-sibling selectors, so the same design system could
+    render either 160px or 0px depending on DOM/runtime order.
+
+  Contract
+  1) Major title → description is always 20px (token-owned).
+  2) In stacked layouts, chapter head → first content is one semantic gap owned here:
+     160px desktop/tablet, 100px mobile.
+  3) In >=1600px editorial split, left chapter title and right evidence start on the
+     same authored top line; therefore no vertical chapter-head→content gap is applied.
+  4) Historical direct-sibling margins are neutralized so the gap can never double.
+*/
+:root{
+  --hm-title-to-subsection-gap:var(--hm-space-title-subsection,160px);
+  --hm-section-head-to-subsection:var(--hm-space-title-subsection,160px);
+  --hm-section-head-after:var(--hm-section-head-to-subsection,160px);
+  --hm-major-title-description-gap:var(--hm-title-description-gap,20px);
+  --hm-major-title-content-gap:var(--hm-section-head-to-subsection,160px);
+  --hm-major-title-content-gap-mobile:100px;
+}
+
+/* Internal chapter copy rhythm is independent from page-specific layout wrappers. */
+html body.himart-page-body #live-main > section.hm-section[data-chapter]
+> .hm-wrap > .hm-section-head > .hm-section-desc{
+  display:block!important;
+  margin:var(--hm-major-title-description-gap) 0 0!important;
+  padding:0!important;
+}
+
+/* Stacked case-study layout: the chapter head owns the gap exactly once. */
+@media (min-width:781px) and (max-width:1599px){
+  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head{
+    margin:0 0 var(--hm-major-title-content-gap)!important;
+  }
+
+  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area,.hm-wide-right-rail){
+    margin-top:0!important;
+  }
+}
+
+/* Mobile keeps the established 100px chapter-head→content rhythm. */
+@media (max-width:780px){
+  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head{
+    margin:0 0 var(--hm-major-title-content-gap-mobile)!important;
+  }
+
+  html body.himart-page-body #live-main > section.hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head + :is(.hm-subsection,.data-list,.flow-area,.hm-wide-right-rail){
+    margin-top:0!important;
+  }
+}
+
+/* Wide editorial is parallel, not stacked: preserve exact left/right top alignment.
+   The 20px title→description gap above still remains active inside the left rail. */
+@media (min-width:1600px){
+  html body.himart-page-body.hm-wide-editorial-test #live-main > section.hm-section[data-chapter]
+  > .hm-wrap > .hm-section-head{
+    margin:0!important;
+  }
+}
