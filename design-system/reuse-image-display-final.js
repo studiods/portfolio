@@ -25,97 +25,39 @@
     Array.from({ length: 5 }, (_, i) => `./assets/image/himart/reuse/03.2_02_${String(i + 1).padStart(2, '0')}.png`)
   ];
 
-  const SPIN_MEDIA = Array.from({ length: 8 }, (_, i) =>
-    `./assets/image/himart/reuse/03.2_03_${String(i + 1).padStart(2, '0')}.png`
-  );
+  const LIVE_360 = [
+    {
+      url: 'https://www.e-himart.co.kr/app/goods/goodsDetail?goodsNo=0069891388&gtmPos=%ED%95%98%EC%9D%B4%EB%A7%88%ED%8A%B8%20%EC%9D%B8%EC%A6%9D%EC%A4%91%EA%B3%A0&jsClck=Y#sirv-viewer-1346340621468',
+      label: '하이마트 인증중고 360도 상품 01'
+    },
+    {
+      url: 'https://www.e-himart.co.kr/app/goods/goodsDetail?goodsNo=0070377977&gtmPos=%ED%95%98%EC%9D%B4%EB%A7%88%ED%8A%B8%20%EC%9D%B8%EC%A6%9D%EC%A4%91%EA%B3%A0&jsClck=Y#sirv-viewer-384296630126',
+      label: '하이마트 인증중고 360도 상품 02'
+    },
+    {
+      url: 'https://www.e-himart.co.kr/app/goods/goodsDetail?goodsNo=0070540451&gtmPos=%ED%95%98%EC%9D%B4%EB%A7%88%ED%8A%B8%20%EC%9D%B8%EC%A6%9D%EC%A4%91%EA%B3%A0&jsClck=Y#sirv-viewer-1339090322750',
+      label: '하이마트 인증중고 360도 상품 03'
+    }
+  ];
 
-  const install360Styles = () => {
-    if (document.getElementById('reuse-360-viewer-style')) return;
+  const installStyles = () => {
+    if (document.getElementById('reuse-live360-style')) return;
     const style = document.createElement('style');
-    style.id = 'reuse-360-viewer-style';
+    style.id = 'reuse-live360-style';
     style.textContent = `
-      html body.reuse-current .reuse-image-display-card.is-360-viewer{
-        cursor:grab;
-        touch-action:pan-y;
-        user-select:none;
-        -webkit-user-select:none;
-      }
-      html body.reuse-current .reuse-image-display-card.is-360-viewer.is-dragging{cursor:grabbing}
-      html body.reuse-current .reuse-360-viewer{
-        position:absolute;
-        inset:0;
-        z-index:1;
-        overflow:hidden;
-        background:#0a0a0a;
-      }
-      html body.reuse-current .reuse-360-viewer__frame{
-        position:absolute;
-        inset:0;
-        display:block;
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        object-position:50% 50%;
-        opacity:0;
-        visibility:hidden;
-        pointer-events:none;
-        -webkit-user-drag:none;
-      }
-      html body.reuse-current .reuse-360-viewer__frame.is-active{
-        opacity:1;
-        visibility:visible;
-      }
-      html body.reuse-current .reuse-360-viewer__badge{
-        position:absolute;
-        z-index:7;
-        top:28px;
-        right:28px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        min-width:54px;
-        height:28px;
-        padding:0 10px;
-        border:1px solid rgba(255,255,255,.28);
-        border-radius:999px;
-        background:rgba(0,0,0,.16);
-        color:rgba(255,255,255,.82);
-        font:300 11px/1 var(--hm-font-en);
-        letter-spacing:.04em;
-        pointer-events:none;
-        backdrop-filter:blur(6px);
-      }
-      html body.reuse-current .reuse-360-viewer__hint{
-        position:absolute;
-        z-index:7;
-        top:50%;
-        left:50%;
-        display:flex;
-        align-items:center;
-        gap:12px;
-        transform:translate(-50%,-50%);
-        color:rgba(255,255,255,.78);
-        font:300 11px/1 var(--hm-font-en);
-        letter-spacing:.08em;
-        white-space:nowrap;
-        pointer-events:none;
-        transition:opacity .28s ease;
-      }
-      html body.reuse-current .reuse-360-viewer__hint::before,
-      html body.reuse-current .reuse-360-viewer__hint::after{
-        content:'';
-        display:block;
-        width:28px;
-        height:1px;
-        background:rgba(255,255,255,.56);
-      }
-      html body.reuse-current .reuse-image-display-card.is-360-viewer.has-rotated .reuse-360-viewer__hint{opacity:0}
-      html body.reuse-current .reuse-image-display-card.is-360-viewer .reuse-image-display-card__copy,
-      html body.reuse-current .reuse-image-display-card.is-360-viewer::after{pointer-events:none}
-      @media(max-width:780px){
-        html body.reuse-current .reuse-360-viewer__badge{top:18px;right:18px}
-        html body.reuse-current .reuse-360-viewer__hint{font-size:10px}
-      }
+      html body.reuse-current .reuse-image-display-card.is-live360-viewer{aspect-ratio:4/3;overflow:hidden;background:#0a0a0a}
+      html body.reuse-current .reuse-live360__viewport{position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:hidden;background:#0a0a0a}
+      html body.reuse-current .reuse-live360__slide{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .36s ease}
+      html body.reuse-current .reuse-live360__slide.is-active{opacity:1;visibility:visible;pointer-events:auto}
+      html body.reuse-current .reuse-live360__crop{position:absolute;inset:0;overflow:hidden;background:#0a0a0a}
+      html body.reuse-current .reuse-live360__frame{position:absolute;top:50%;left:50%;display:block;width:100%;height:100%;border:0;background:#0a0a0a;transform:translate(-50%,-50%)}
+      html body.reuse-current .reuse-live360__open{position:absolute;z-index:11;top:24px;right:28px;display:flex;align-items:center;height:30px;padding:0 11px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(0,0,0,.34);color:rgba(255,255,255,.82)!important;font:300 10px/1 var(--hm-font-en);letter-spacing:.05em;text-decoration:none!important;backdrop-filter:blur(8px)}
+      html body.reuse-current .reuse-image-display-card.is-live360-viewer .reuse-image-display-card__nav{z-index:10}
+      html body.reuse-current .reuse-image-display-card.is-live360-viewer .reuse-image-display-card__status{z-index:10}
+      html body.reuse-current .reuse-image-display-card.is-live360-viewer .reuse-image-display-card__copy{z-index:8}
+      html body.reuse-current .reuse-image-display-card.is-live360-viewer::after{z-index:7}
+      @media(max-width:780px){html body.reuse-current .reuse-live360__open{top:16px;right:18px}}
+      @media(prefers-reduced-motion:reduce){html body.reuse-current .reuse-live360__slide{transition:none}}
     `;
     document.head.appendChild(style);
   };
@@ -123,10 +65,8 @@
   const applyContent = () => {
     const grid = document.querySelector('#journey .reuse-image-display-grid');
     if (!grid) return null;
-
     const cards = Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card'));
     cards.slice(CONTENT.length).forEach((card) => card.remove());
-
     Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card')).forEach((card, index) => {
       const item = CONTENT[index];
       if (!item) return;
@@ -138,17 +78,14 @@
       if (copy) copy.textContent = item.copy;
       card.setAttribute('aria-label', item.title);
     });
-
     return grid;
   };
 
   const buildRollingGallery = (sourceCard, sources, cardIndex) => {
     if (!sourceCard || !sources?.length || sourceCard.dataset.finalAssetsMounted === 'true') return sourceCard;
-
-    /* Replace the upstream placeholder node so only this gallery controller remains active. */
     const card = sourceCard.cloneNode(true);
     card.dataset.finalAssetsMounted = 'true';
-    card.classList.remove('is-reverse', 'is-360-viewer', 'is-dragging', 'has-rotated');
+    card.classList.remove('is-reverse', 'is-360-viewer', 'is-live360-viewer', 'is-dragging', 'has-rotated');
     card.tabIndex = 0;
 
     let viewport = card.querySelector('.reuse-image-display-card__viewport');
@@ -163,10 +100,8 @@
       const slide = document.createElement('article');
       slide.className = `reuse-image-display-card__slide${index === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
-
       const media = document.createElement('div');
       media.className = 'reuse-image-display-card__media';
-
       const image = document.createElement('img');
       image.src = src;
       image.alt = '';
@@ -175,7 +110,6 @@
       image.draggable = false;
       image.style.objectFit = 'cover';
       image.style.objectPosition = '50% 50%';
-
       media.appendChild(image);
       slide.appendChild(media);
       fragment.appendChild(slide);
@@ -185,7 +119,6 @@
     let prev = card.querySelector('.reuse-image-display-card__nav--prev');
     let next = card.querySelector('.reuse-image-display-card__nav--next');
     let status = card.querySelector('.reuse-image-display-card__status');
-
     if (!prev) {
       prev = document.createElement('button');
       prev.className = 'reuse-image-display-card__nav reuse-image-display-card__nav--prev';
@@ -208,7 +141,6 @@
     }
 
     sourceCard.replaceWith(card);
-
     const slides = Array.from(viewport.querySelectorAll('.reuse-image-display-card__slide'));
     let index = 0;
     let timer = 0;
@@ -216,13 +148,8 @@
     let inView = false;
     let pointerStart = null;
 
-    const clearTimer = () => {
-      if (timer) window.clearTimeout(timer);
-      timer = 0;
-    };
-    const updateStatus = () => {
-      status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
-    };
+    const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = 0; };
+    const updateStatus = () => { status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`; };
     const settle = () => {
       slides.forEach((slide, slideIndex) => {
         const active = slideIndex === index;
@@ -277,11 +204,11 @@
     next.addEventListener('click', (event) => { event.stopPropagation(); move(1); });
     card.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
-      if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
+      else if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
     });
     card.addEventListener('pointerdown', (event) => {
       if (event.target.closest('button')) return;
-      pointerStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
+      pointerStart = { x:event.clientX, y:event.clientY, id:event.pointerId };
       clearTimer();
     });
     card.addEventListener('pointerup', (event) => {
@@ -302,139 +229,118 @@
           if (inView) schedule();
           else clearTimer();
         });
-      }, { threshold: 0.20, rootMargin: '0px 0px -5% 0px' });
+      }, { threshold:.20, rootMargin:'0px 0px -5% 0px' });
       observer.observe(card);
     } else {
       inView = true;
       schedule();
     }
-
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) clearTimer();
       else if (inView) schedule();
     });
-
     card.dataset.galleryIndex = String(cardIndex + 1);
     settle();
     return card;
   };
 
-  const build360Viewer = (sourceCard) => {
-    if (!sourceCard || sourceCard.dataset.spinMounted === 'true') return sourceCard;
-
-    /* Gallery 03 gets a clean node: no autoplay timer, no rolling slides, no prev/next controls. */
+  const buildLive360Viewer = (sourceCard) => {
+    if (!sourceCard || sourceCard.dataset.live360Mounted === 'true') return sourceCard;
     const card = sourceCard.cloneNode(true);
+    card.dataset.live360Mounted = 'true';
     card.dataset.spinMounted = 'true';
     card.removeAttribute('data-final-assets-mounted');
-    card.classList.remove('is-reverse');
-    card.classList.add('is-360-viewer');
+    card.classList.remove('is-360-viewer', 'is-dragging', 'has-rotated', 'is-reverse');
+    card.classList.add('is-live360-viewer');
     card.tabIndex = 0;
-    card.setAttribute('aria-label', '360도 상품 이미지. 마우스 또는 손가락으로 좌우로 드래그해 회전');
+    card.setAttribute('aria-label', '하이마트 인증중고 360도 상품 3개. 좌우 버튼으로 상품을 전환하고 화면 안에서 직접 회전할 수 있습니다.');
 
-    card.querySelectorAll('.reuse-image-display-card__viewport, .reuse-image-display-card__nav, .reuse-image-display-card__status').forEach((node) => node.remove());
-    const legacyMedia = card.querySelector(':scope > .reuse-image-display-card__media');
-    legacyMedia?.remove();
+    card.querySelectorAll('.reuse-image-display-card__viewport, .reuse-360-viewer, .reuse-360-viewer__badge, .reuse-360-viewer__hint, .reuse-image-display-card__nav, .reuse-image-display-card__status').forEach((node) => node.remove());
+    card.querySelector(':scope > .reuse-image-display-card__media')?.remove();
 
-    const viewer = document.createElement('div');
-    viewer.className = 'reuse-360-viewer';
-    viewer.setAttribute('aria-hidden', 'true');
-
-    const frames = SPIN_MEDIA.map((src, index) => {
-      const image = document.createElement('img');
-      image.className = `reuse-360-viewer__frame${index === 0 ? ' is-active' : ''}`;
-      image.src = src;
-      image.alt = '';
-      image.draggable = false;
-      image.decoding = 'async';
-      image.loading = 'eager';
-      viewer.appendChild(image);
-      return image;
+    const viewport = document.createElement('div');
+    viewport.className = 'reuse-live360__viewport';
+    LIVE_360.forEach((item, index) => {
+      const slide = document.createElement('article');
+      slide.className = `reuse-live360__slide${index === 0 ? ' is-active' : ''}`;
+      slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
+      const crop = document.createElement('div');
+      crop.className = 'reuse-live360__crop';
+      const frame = document.createElement('iframe');
+      frame.className = 'reuse-live360__frame';
+      frame.src = item.url;
+      frame.title = item.label;
+      frame.loading = index === 0 ? 'eager' : 'lazy';
+      frame.setAttribute('allow', 'fullscreen');
+      frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      crop.appendChild(frame);
+      slide.appendChild(crop);
+      viewport.appendChild(slide);
     });
 
-    const badge = document.createElement('span');
-    badge.className = 'reuse-360-viewer__badge';
-    badge.textContent = '360°';
-
-    const hint = document.createElement('span');
-    hint.className = 'reuse-360-viewer__hint';
-    hint.textContent = 'DRAG TO ROTATE';
+    const prev = document.createElement('button');
+    prev.className = 'reuse-image-display-card__nav reuse-image-display-card__nav--prev';
+    prev.type = 'button';
+    prev.setAttribute('aria-label', '이전 360도 상품');
+    const next = document.createElement('button');
+    next.className = 'reuse-image-display-card__nav reuse-image-display-card__nav--next';
+    next.type = 'button';
+    next.setAttribute('aria-label', '다음 360도 상품');
+    const status = document.createElement('span');
+    status.className = 'reuse-image-display-card__status';
+    status.setAttribute('aria-live', 'polite');
+    const open = document.createElement('a');
+    open.className = 'reuse-live360__open';
+    open.target = '_blank';
+    open.rel = 'noopener noreferrer';
+    open.textContent = 'ORIGINAL ↗';
 
     const copy = card.querySelector('.reuse-image-display-card__copy');
-    card.insertBefore(viewer, copy || card.firstChild);
-    card.append(badge, hint);
+    card.insertBefore(viewport, copy || card.firstChild);
+    card.append(prev, next, status, open);
     sourceCard.replaceWith(card);
 
-    let frameIndex = 0;
-    let dragging = false;
-    let pointerId = null;
-    let startX = 0;
-    let startFrame = 0;
-    let pixelsPerFrame = 28;
-
-    const mod = (value) => ((value % frames.length) + frames.length) % frames.length;
-    const showFrame = (nextIndex) => {
-      const normalized = mod(nextIndex);
-      if (normalized === frameIndex) return;
-      frames[frameIndex]?.classList.remove('is-active');
-      frameIndex = normalized;
-      frames[frameIndex]?.classList.add('is-active');
-      card.classList.add('has-rotated');
+    const slides = Array.from(viewport.querySelectorAll('.reuse-live360__slide'));
+    let index = 0;
+    const render = () => {
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === index;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+      open.href = LIVE_360[index].url;
+      open.setAttribute('aria-label', `${LIVE_360[index].label} 원본 페이지에서 보기`);
     };
-
-    const startDrag = (event) => {
-      if (event.button != null && event.button !== 0) return;
-      dragging = true;
-      pointerId = event.pointerId;
-      startX = event.clientX;
-      startFrame = frameIndex;
-      pixelsPerFrame = Math.max(18, Math.min(42, card.clientWidth / 28));
-      card.classList.add('is-dragging');
-      try { card.setPointerCapture(pointerId); } catch (_) {}
+    const move = (delta) => {
+      index = (index + delta + slides.length) % slides.length;
+      render();
     };
-
-    const drag = (event) => {
-      if (!dragging || event.pointerId !== pointerId) return;
-      const deltaX = event.clientX - startX;
-      showFrame(startFrame - Math.round(deltaX / pixelsPerFrame));
-    };
-
-    const stopDrag = (event) => {
-      if (!dragging || (event.pointerId != null && event.pointerId !== pointerId)) return;
-      dragging = false;
-      card.classList.remove('is-dragging');
-      try { card.releasePointerCapture(pointerId); } catch (_) {}
-      pointerId = null;
-    };
-
-    card.addEventListener('pointerdown', startDrag);
-    card.addEventListener('pointermove', drag);
-    card.addEventListener('pointerup', stopDrag);
-    card.addEventListener('pointercancel', stopDrag);
-    card.addEventListener('lostpointercapture', stopDrag);
+    prev.addEventListener('click', (event) => { event.stopPropagation(); move(-1); });
+    next.addEventListener('click', (event) => { event.stopPropagation(); move(1); });
     card.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') { event.preventDefault(); showFrame(frameIndex - 1); }
-      if (event.key === 'ArrowRight') { event.preventDefault(); showFrame(frameIndex + 1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1); }
+      else if (event.key === 'ArrowRight') { event.preventDefault(); move(1); }
     });
-
+    render();
     return card;
   };
 
   const mount = () => {
-    install360Styles();
+    installStyles();
     const grid = applyContent();
     if (!grid) return;
-
     let cards = Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card'));
     ROLLING_MEDIA.forEach((sources, index) => {
       buildRollingGallery(cards[index], sources, index);
       cards = Array.from(grid.querySelectorAll(':scope > .reuse-image-display-card'));
     });
-    build360Viewer(cards[2]);
+    buildLive360Viewer(cards[2]);
   };
 
   mount();
   requestAnimationFrame(mount);
   window.setTimeout(mount, 250);
   window.setTimeout(mount, 1000);
-  document.addEventListener('DOMContentLoaded', mount, { once: true });
+  document.addEventListener('DOMContentLoaded', mount, { once:true });
 })();
