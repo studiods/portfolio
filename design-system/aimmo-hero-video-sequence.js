@@ -1,7 +1,45 @@
-/* AIMMO hero video sequence — two-layer preloaded crossfade.
-   Plays aimmo_system_01 → 02 → 03 → 04 → repeat without changing HIMART hero behavior. */
+/* AIMMO hero video sequence + 03.1 Himart journey structure sync. */
 (() => {
   'use strict';
+
+  const mountAimmoJourney = () => {
+    const root = document.querySelector('.aimmo-system-page #journey .aimmo-ownership-journey');
+    if (!root || root.dataset.himartJourneyMounted === '1') return;
+
+    root.dataset.himartJourneyMounted = '1';
+    root.innerHTML = `
+      <div class="journey-stage-flow flow-groups">
+        <div class="flow-group">
+          <div class="flow-row">
+            <div class="wide-flow-cluster v12-journey-tablet v12-tablet-blue wide-flow-cluster--focus">
+              <div class="wide-flow-cluster-label">기준을 나누고 각 영역의 오너십으로 실행</div>
+              <div class="wide-flow-cluster-inner">
+                <article class="flow-node"><span class="hm-card-no">01</span><h4>TYPE</h4><p>폰트 위계와 텍스트 규칙</p></article>
+                <div class="flow-arrow" aria-hidden="true">›</div>
+                <article class="flow-node"><span class="hm-card-no">02</span><h4>COLOR</h4><p>상태와 행동 컬러 체계</p></article>
+              </div>
+            </div>
+            <div class="flow-arrow" aria-hidden="true">›</div>
+            <article class="flow-node"><span class="hm-card-no">03</span><h4>GRAPHIC</h4><p>그래픽 스타일과 표현 기준</p></article>
+          </div>
+        </div>
+        <div class="flow-group">
+          <div class="flow-row">
+            <div class="wide-flow-cluster v12-journey-tablet v12-tablet-blue wide-flow-cluster--focus">
+              <div class="wide-flow-cluster-label">지속적인 리뷰와 공유로 싱크를 맞춤</div>
+              <div class="wide-flow-cluster-inner">
+                <article class="flow-node"><span class="hm-card-no">04</span><h4>COMPONENT</h4><p>코어 컴포넌트와 상태 정의</p></article>
+                <div class="flow-arrow" aria-hidden="true">›</div>
+                <article class="flow-node"><span class="hm-card-no">05</span><h4>TOKEN</h4><p>개발과 공유할 공통 값</p></article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  };
+
+  mountAimmoJourney();
+
   const primary = document.querySelector('.aimmo-system-page [data-aimmo-video-sequence]');
   if (!primary) return;
 
