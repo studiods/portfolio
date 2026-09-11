@@ -1,8 +1,12 @@
 /* WORKS English portfolio title typography
-   These titles use authored <br> line breaks. Prevent the narrow Works copy rail
-   from inserting additional automatic wraps inside each authored line.
-   Keep selector specificity above the shared tracking layer so English titles own
-   their own tracking even when tracking.css is re-imported by navigation.css. */
+   ----------------------------------------------------
+   The shared Works component owns title width and wrapping for BOTH Korean and English.
+   This file changes only the English typeface/weight/tracking.
+
+   Important: never set white-space:nowrap, text-wrap:nowrap, width:max-content or
+   max-width:none here. Those page-specific locks previously bypassed the canonical
+   .works-card-title-link width and made long English titles run into the media column.
+*/
 html body.works-page-body .works-card-title.works-card-title--averta-thin,
 html body.works-page-body .works-card-title.works-card-title--aimmo{
   font-family:"Averta PE",Arial,sans-serif!important;
@@ -10,17 +14,20 @@ html body.works-page-body .works-card-title.works-card-title--aimmo{
   font-variation-settings:normal!important;
   line-height:1.02!important;
   letter-spacing:0.0002em!important;
-  word-break:normal!important;
+
+  /* Explicitly inherit the canonical Works wrapping contract. */
+  width:auto!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
   overflow-wrap:normal!important;
-  text-wrap:nowrap!important;
-  white-space:nowrap!important;
-  width:max-content!important;
-  max-width:none!important;
+  text-wrap:balance!important;
 }
 
-/* Do not let the generic Works title-link width contract create another wrap point. */
+/* English title links use the exact same rail as Korean titles. */
 html body.works-page-body .works-card-title-link:has(.works-card-title--averta-thin),
 html body.works-page-body .works-card-title-link:has(.works-card-title--aimmo){
-  max-width:none!important;
+  width:fit-content!important;
+  max-width:var(--works-title-content-width)!important;
   overflow:visible!important;
 }
