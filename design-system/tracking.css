@@ -51,7 +51,8 @@ html body .career-company{letter-spacing:-.033em!important}
 /* ---------- WORKS ---------- */
 html body.works-page-body .works-page-title{letter-spacing:-.0385em!important}
 html body.works-page-body.works-title-compact .works-page-title{letter-spacing:-.022em!important}
-html body.works-page-body .works-card-title{letter-spacing:-.0605em!important}
+/* English portfolio titles own their tracking in components/works-aimmo.css. */
+html body.works-page-body .works-card-title:not(.works-card-title--averta-thin):not(.works-card-title--aimmo){letter-spacing:-.0605em!important}
 html body.works-page-body .works-card-company{letter-spacing:.036em!important}
 html body.works-page-body .works-project-menu a{letter-spacing:-.022em!important}
 html body.works-page-body :is(.works-footer h3,.works-footer p,.works-footer a){letter-spacing:-.011em!important}
