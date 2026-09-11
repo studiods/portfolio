@@ -65,7 +65,7 @@ html body.reuse-current.himart-wide-test-page #live-main :is(
   --hm-subsection-gap:100px;
   --hm-title-description-max:40ch;
   --hm-inner-number-max:12px;
-  --hm-title-to-subsection-gap:100px;
+  --hm-title-to-subsection-gap:var(--hm-space-title-subsection,160px);
 }
 body.himart-page-body .hm-subsection + .hm-subsection{margin-top:var(--hm-subsection-gap)!important}
 body.himart-page-body :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc){
@@ -290,8 +290,9 @@ body.himart-page-body .hm-meta > div + div{
 }
 
 
-/* Final section-head rhythm: remove trailing void and restore 32px rule gap. */
+/* Canonical section-head rhythm. The shared spacing token is always defined in tokens.css;
+   keep an explicit fallback so legacy bundles can never compute this margin back to 0. */
 html body.himart-page-body #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
-  margin-bottom:var(--hm-section-head-after)!important;
+  margin-bottom:var(--hm-section-head-to-subsection,var(--hm-space-title-subsection,160px))!important;
   padding-top:var(--hm-rule-to-section-number)!important;
 }
