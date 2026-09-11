@@ -1,5 +1,8 @@
 @import url("./tokens.css");
 @import url("./spacing.css");
+/* Cache-stable fallback: every historical index.css already imports layout.css without a version.
+   Keep the major-section rhythm reachable even when a page still carries an older design-system query. */
+@import url("./components/major-section-rhythm.css?v=20260912-2");
 html,body{margin:0;background:var(--hm-bg-page);color:var(--hm-text-primary)}
 .hm-ds-page{font-family:var(--hm-font-ko);font-weight:300}
 .hm-ds-wrap{width:min(calc(100% - (var(--hm-inset-desktop) * 2)),var(--hm-content-wide));margin-inline:auto}
