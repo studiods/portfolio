@@ -1,0 +1,19 @@
+/* Structural index contract — portfolio-wide.
+   Structural labels render numeric hierarchy only (01.1, 02.3, ...).
+   English descriptors belong in content, not in the structural index.
+   Authoring pattern:
+   <span class="hm-subno hm-ds-index-label" data-index="01.1">01.1</span>
+   If legacy text remains inside the element, data-index is the rendered authority. */
+html body.himart-page-body #live-main .hm-ds-index-label[data-index]{
+  font-size:0!important;
+  white-space:nowrap!important;
+}
+html body.himart-page-body #live-main .hm-ds-index-label[data-index]::before{
+  content:attr(data-index);
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+  font-variant-numeric:tabular-nums!important;
+}
