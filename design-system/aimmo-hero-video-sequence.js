@@ -40,197 +40,237 @@
 
   mountAimmoJourney();
 
-  const video = document.querySelector('.aimmo-system-page [data-aimmo-video-sequence]');
-  if (!video) return;
+  const hero = document.querySelector('body.aimmo-system-page #top[data-hm-hero]');
+  const authoredVideo = hero?.querySelector('[data-aimmo-video-sequence]');
+  if (!hero || !authoredVideo) return;
 
-  const sequence = (video.dataset.aimmoVideoSequence || '')
+  const sequence = (authoredVideo.dataset.aimmoVideoSequence || '')
     .split('|')
-    .map((value) => value.trim())
+    .map(value => value.trim())
     .filter(Boolean);
   if (sequence.length < 2) return;
 
-  /*
-    Single-player authority.
-    The previous controller started the next clip when only .34s remained and also
-    swapped two video elements. Both behaviours could visually cut the active clip.
-    A sequence now advances only after the browser fires the native `ended` event.
-  */
-  video.removeAttribute('autoplay');
-  video.removeAttribute('loop');
-  video.autoplay = false;
-  video.loop = false;
-  video.muted = true;
-  video.defaultMuted = true;
-  video.playsInline = true;
-  video.preload = 'auto';
-  video.dataset.hmSequenceManaged = '1';
-  video.setAttribute('muted', '');
-  video.setAttribute('playsinline', '');
+  const absoluteSrc = src => new URL(src, document.baseURI).href;
 
-  /* Remove a standby player if an older cached controller mounted one first. */
-  const hero = video.closest('[data-hm-hero]') || video.parentElement;
-  hero?.querySelectorAll('.is-aimmo-sequence-back').forEach((node) => {
-    if (node !== video) node.remove();
-  });
-
-  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const FADE_MS = reduced ? 0 : 120;
-  const END_HOLD_MS = reduced ? 0 : 120;
-  video.style.transition = FADE_MS ? `opacity ${FADE_MS}ms linear` : 'none';
-  video.style.opacity = '1';
-  video.style.willChange = 'opacity';
-
-  let index = 0;
-  let changingClip = false;
-  let heroVisible = true;
-  let loadToken = 0;
-  let endTimer = 0;
-  let resumeTimer = 0;
-  let pendingAdvance = false;
-
-  const clearEndTimer = () => {
-    if (endTimer) window.clearTimeout(endTimer);
-    endTimer = 0;
+  /* Two players are used only to keep the completed frame visible until the next
+     clip has decoded its first frame. There is no fade, dimming or artificial hold. */
+  const makePlayer = role => {
+    const player = authoredVideo.cloneNode(false);
+    player.removeAttribute('autoplay');
+    player.removeAttribute('loop');
+    player.removeAttribute('data-hm-video');
+    player.removeAttribute('data-hm-video-sequence');
+    player.removeAttribute('data-aimmo-video-sequence');
+    player.autoplay = false;
+    player.loop = false;
+    player.muted = true;
+    player.defaultMuted = true;
+    player.playsInline = true;
+    player.preload = 'auto';
+    player.dataset.hmSequenceManaged = '1';
+    player.dataset.hmSequenceRole = role;
+    player.setAttribute('muted', '');
+    player.setAttribute('playsinline', '');
+    player.setAttribute('aria-hidden', 'true');
+    player.classList.remove('is-sequence-switching', 'is-aimmo-sequence-front', 'is-aimmo-sequence-back');
+    player.style.transition = 'none';
+    player.style.opacity = '1';
+    player.style.willChange = 'auto';
+    player.style.pointerEvents = 'none';
+    return player;
   };
 
-  const clearResumeTimer = () => {
+  hero.querySelectorAll('.is-aimmo-sequence-back').forEach(node => node.remove());
+
+  const front = makePlayer('front');
+  const standby = makePlayer('standby');
+  authoredVideo.replaceWith(front);
+  hero.insertBefore(standby, front);
+  front.style.visibility = 'visible';
+  standby.style.visibility = 'hidden';
+
+  let active = front;
+  let buffer = standby;
+  let index = 0;
+  let heroVisible = true;
+  let switching = false;
+  let activeStarted = false;
+  let resumeTimer = 0;
+
+  const clearResume = () => {
     if (resumeTimer) window.clearTimeout(resumeTimer);
     resumeTimer = 0;
   };
 
-  const canPlay = () => heroVisible && !document.hidden && !changingClip;
-
-  const playCurrent = async () => {
-    if (!canPlay() || video.ended) return false;
-    const attempt = video.play?.();
-    if (attempt?.catch) {
-      try { await attempt; } catch (_) { return false; }
-    }
-    return !video.paused;
+  const sourceMatches = (player, sequenceIndex) => {
+    const current = player.currentSrc || player.src || '';
+    return current === absoluteSrc(sequence[sequenceIndex]);
   };
 
-  const waitForPlayableFrame = (token) => new Promise((resolve) => {
+  const configureSource = (player, sequenceIndex) => {
+    const expected = absoluteSrc(sequence[sequenceIndex]);
+    if ((player.currentSrc || player.src || '') === expected) return;
+    player.pause();
+    player.src = sequence[sequenceIndex];
+    player.preload = 'auto';
+    player.load();
+  };
+
+  const waitForPlayableData = player => new Promise(resolve => {
+    if (player.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      resolve();
+      return;
+    }
     let settled = false;
     const finish = () => {
       if (settled) return;
       settled = true;
-      cleanup();
-      resolve(token === loadToken);
+      player.removeEventListener('loadeddata', finish);
+      player.removeEventListener('canplay', finish);
+      resolve();
     };
-    const cleanup = () => {
-      video.removeEventListener('loadeddata', finish);
-      video.removeEventListener('canplay', finish);
-    };
-
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      resolve(token === loadToken);
-      return;
-    }
-    video.addEventListener('loadeddata', finish, { once:true });
-    video.addEventListener('canplay', finish, { once:true });
-    window.setTimeout(finish, 2500);
+    player.addEventListener('loadeddata', finish, {once:true});
+    player.addEventListener('canplay', finish, {once:true});
+    window.setTimeout(finish, 3000);
   });
 
-  const setClip = async (targetIndex, { initial = false } = {}) => {
-    const token = ++loadToken;
-    changingClip = true;
-    pendingAdvance = false;
-    clearEndTimer();
-    clearResumeTimer();
-
-    if (!initial && FADE_MS) {
-      video.style.opacity = '0';
-      await new Promise((resolve) => window.setTimeout(resolve, FADE_MS));
-      if (token !== loadToken) return;
+  const waitForFirstFrame = player => new Promise(resolve => {
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      resolve();
+    };
+    if ('requestVideoFrameCallback' in player) {
+      player.requestVideoFrameCallback(finish);
+      window.setTimeout(finish, 500);
+    } else {
+      player.addEventListener('playing', () => requestAnimationFrame(finish), {once:true});
+      window.setTimeout(finish, 500);
     }
+  });
 
-    index = (targetIndex + sequence.length) % sequence.length;
-    video.pause();
-    video.src = sequence[index];
-    video.preload = 'auto';
-    video.load();
-
-    const valid = await waitForPlayableFrame(token);
-    if (!valid) return;
-
-    try { video.currentTime = 0; } catch (_) {}
-    changingClip = false;
-
-    if (canPlay()) {
-      const attempt = video.play?.();
-      if (attempt?.catch) await attempt.catch(() => {});
-    }
-    if (token !== loadToken) return;
-    video.style.opacity = '1';
+  const playActive = async () => {
+    if (!heroVisible || document.hidden || switching || active.ended) return;
+    const attempt = active.play?.();
+    if (attempt?.catch) await attempt.catch(() => {});
   };
 
-  const scheduleAdvance = () => {
-    clearEndTimer();
-    if (!pendingAdvance || changingClip || !heroVisible || document.hidden) return;
-    endTimer = window.setTimeout(() => {
-      endTimer = 0;
-      if (!pendingAdvance || changingClip || !heroVisible || document.hidden) return;
-      if (!video.ended) {
-        pendingAdvance = false;
-        playCurrent();
-        return;
-      }
-      setClip(index + 1);
-    }, END_HOLD_MS);
+  const preloadNext = () => {
+    const nextIndex = (index + 1) % sequence.length;
+    buffer.style.visibility = 'hidden';
+    buffer.pause();
+    configureSource(buffer, nextIndex);
+    try { buffer.currentTime = 0; } catch (_) {}
+  };
+
+  const advance = async () => {
+    if (switching || !heroVisible || document.hidden) return;
+    if (!activeStarted || !active.ended || !sourceMatches(active, index)) return;
+
+    switching = true;
+    clearResume();
+    const nextIndex = (index + 1) % sequence.length;
+    configureSource(buffer, nextIndex);
+    await waitForPlayableData(buffer);
+
+    if (!active.ended || !sourceMatches(active, index)) {
+      switching = false;
+      return;
+    }
+
+    try { buffer.currentTime = 0; } catch (_) {}
+    const attempt = buffer.play?.();
+    if (attempt?.catch) await attempt.catch(() => {});
+    await waitForFirstFrame(buffer);
+
+    if (!heroVisible || document.hidden) {
+      buffer.pause();
+      switching = false;
+      return;
+    }
+
+    buffer.style.visibility = 'visible';
+    active.style.visibility = 'hidden';
+    active.pause();
+
+    const previous = active;
+    active = buffer;
+    buffer = previous;
+    index = nextIndex;
+    activeStarted = !active.paused;
+    switching = false;
+
+    if (active.paused && heroVisible && !document.hidden) playActive();
+    preloadNext();
   };
 
   const scheduleResume = () => {
-    clearResumeTimer();
-    if (!canPlay() || video.ended || pendingAdvance) return;
+    clearResume();
+    if (!heroVisible || document.hidden || switching || active.ended) return;
     resumeTimer = window.setTimeout(() => {
       resumeTimer = 0;
-      if (canPlay() && video.paused && !video.ended && !pendingAdvance) playCurrent();
+      if (heroVisible && !document.hidden && !switching && active.paused && !active.ended) playActive();
     }, 140);
   };
 
-  video.addEventListener('ended', () => {
-    clearResumeTimer();
-    if (changingClip) return;
-    pendingAdvance = true;
-    scheduleAdvance();
-  });
+  const bindPlayer = player => {
+    player.addEventListener('playing', () => {
+      if (player === active && sourceMatches(player, index)) activeStarted = true;
+    });
+    player.addEventListener('ended', () => {
+      if (player !== active || switching) return;
+      if (!activeStarted || !sourceMatches(player, index)) return;
+      advance();
+    });
+    player.addEventListener('waiting', () => {
+      if (player === active) scheduleResume();
+    });
+    player.addEventListener('stalled', () => {
+      if (player === active) scheduleResume();
+    });
+    player.addEventListener('pause', () => {
+      if (player === active && !switching && !player.ended) scheduleResume();
+    });
+    player.addEventListener('canplay', () => {
+      if (player === active && heroVisible && !document.hidden && !switching && player.paused && !player.ended) playActive();
+    });
+  };
 
-  /* Buffering/stalling never advances the playlist. */
-  video.addEventListener('waiting', scheduleResume);
-  video.addEventListener('stalled', scheduleResume);
-  video.addEventListener('canplay', () => {
-    if (pendingAdvance && video.ended) scheduleAdvance();
-    else if (canPlay() && video.paused && !video.ended) playCurrent();
+  bindPlayer(front);
+  bindPlayer(standby);
+  configureSource(active, 0);
+  configureSource(buffer, 1);
+  waitForPlayableData(active).then(() => {
+    try { active.currentTime = 0; } catch (_) {}
+    if (heroVisible && !document.hidden) playActive();
   });
-  video.addEventListener('pause', () => {
-    if (canPlay() && !video.ended && !pendingAdvance) scheduleResume();
-  });
+  preloadNext();
 
-  if ('IntersectionObserver' in window && hero) {
-    const observer = new IntersectionObserver((entries) => {
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
       heroVisible = Boolean(entries[0]?.isIntersecting);
       if (!heroVisible) {
-        clearEndTimer();
-        clearResumeTimer();
-        video.pause();
+        clearResume();
+        active.pause();
+        buffer.pause();
         return;
       }
-      if (pendingAdvance && video.ended) scheduleAdvance();
-      else if (!changingClip && !video.ended) playCurrent();
-    }, { threshold:.1 });
+      if (active.ended) advance();
+      else if (!switching) playActive();
+    }, {threshold:.1});
     observer.observe(hero);
   }
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-      clearEndTimer();
-      clearResumeTimer();
-      video.pause();
+      clearResume();
+      active.pause();
+      buffer.pause();
       return;
     }
-    if (pendingAdvance && video.ended) scheduleAdvance();
-    else if (heroVisible && !changingClip && !video.ended) playCurrent();
+    if (!heroVisible) return;
+    if (active.ended) advance();
+    else if (!switching) playActive();
   });
-
-  setClip(0, { initial:true });
 })();
