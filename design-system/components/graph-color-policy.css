@@ -1,0 +1,88 @@
+/*
+  Portfolio Graph Color Policy v1.0
+  ---------------------------------
+  Graph-only palette. Editorial/semantic red and yellow remain available elsewhere,
+  but charts must not use red/yellow unless a page explicitly opts out.
+
+  Canonical graph colors:
+  - Deep Blue  : #007DE3
+  - Deep Green : #00ED72
+
+  When more series are required, derive local lighter/darker variants from these two
+  with color-mix(). Do not promote those derived shades to global tokens.
+  Default emphasis: the highest / primary value uses Deep Blue; remaining series
+  alternate Deep Green and local blue/green luminance variants.
+*/
+
+/* HIMART / shared ring ratios: current authored rows are descending, so the first
+   ring is the highest value and owns Deep Blue. */
+html body.himart-page-body :is(.hm-ds-ring-row,.ring-row) :is(.hm-ds-ring-card,.ring-card){
+  --ring:var(--hm-chart-deep-green)!important;
+}
+html body.himart-page-body :is(.hm-ds-ring-row,.ring-row) :is(.hm-ds-ring-card,.ring-card):first-child{
+  --ring:var(--hm-chart-deep-blue)!important;
+}
+
+/* Split / sentiment graphs. */
+html body.himart-page-body :is(.hm-ds-split-ratio__block,.sentiment-block){
+  border-top-color:var(--hm-chart-deep-blue)!important;
+}
+html body.himart-page-body :is(.hm-ds-split-ratio__block.is-negative,.sentiment-block.negative){
+  border-top-color:var(--hm-chart-deep-green)!important;
+}
+
+/* Segmented graphs: only graph palette + locally derived luminance variants. */
+html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(1){background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(2){background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(3){background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(4){background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
+html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(5){background:color-mix(in srgb,var(--hm-chart-deep-blue) 58%,#fff)!important}
+
+/* Shared horizontal bars. Primary/highest values should carry .is-primary where
+   authored; otherwise current descending datasets use the first row as the maximum. */
+html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(1) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(2) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(3) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:color-mix(in srgb,var(--hm-chart-deep-blue) 74%,#000)!important}
+html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(4) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
+html body.himart-page-body :is(.hm-ds-home-bar,.wide-home-bar,.hbar).is-primary :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:var(--hm-chart-deep-blue)!important}
+
+/* Reuse 03.1 reference bars: row 1 is 67.7%, the current maximum. */
+html body.himart-page-body .reuse-reference-bars__row .reuse-reference-bars__fill{background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body .reuse-reference-bars__row:nth-child(1) .reuse-reference-bars__fill{background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body .reuse-reference-bars__row:nth-child(3) .reuse-reference-bars__fill{background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+html body.himart-page-body .reuse-reference-bars__row:nth-child(4) .reuse-reference-bars__fill{background:color-mix(in srgb,var(--hm-chart-deep-green) 74%,#000)!important}
+html body.himart-page-body .reuse-reference-bars__row:nth-child(5) .reuse-reference-bars__fill{background:color-mix(in srgb,var(--hm-chart-deep-blue) 58%,#fff)!important}
+html body.himart-page-body .reuse-reference-bars__row:nth-child(6) .reuse-reference-bars__fill{background:color-mix(in srgb,var(--hm-chart-deep-green) 56%,#fff)!important}
+
+/* Entry-channel / donut graphs. Largest authored segment is first. */
+html body.himart-page-body .pie{
+  background:conic-gradient(
+    var(--hm-chart-deep-blue) 0 52%,
+    var(--hm-chart-deep-green) 52% 83%,
+    color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000) 83% 93%,
+    color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000) 93% 99%,
+    color-mix(in srgb,var(--hm-chart-deep-blue) 55%,#fff) 99% 100%
+  )!important;
+}
+
+/* Traffic/line graphs: red/yellow are retired from graph semantics. */
+html body.himart-page-body :is(.hm-ds-traffic,.wide-unified-traffic) .session{stroke:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body :is(.hm-ds-traffic,.wide-unified-traffic) .purchase{stroke:var(--hm-chart-deep-green)!important}
+html body.himart-page-body :is(.hm-ds-traffic,.wide-unified-traffic) .cvr{stroke:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+html body.himart-page-body :is(.hm-ds-traffic,.wide-unified-traffic) .p-dot{fill:var(--hm-chart-deep-green)!important}
+html body.himart-page-body :is(.hm-ds-traffic,.wide-unified-traffic) .c-dot{fill:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+
+/* Legacy HIMART landing/action stacked bars. */
+html body.himart-page-body .stackbar i:nth-child(1){background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body .stackbar i:nth-child(2){background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body .stackbar i:nth-child(3){background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+html body.himart-page-body .stackbar i:nth-child(4){background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
+html body.himart-page-body .stackbar i:nth-child(5){background:color-mix(in srgb,var(--hm-chart-deep-blue) 56%,#fff)!important}
+
+/* Legacy PDP paired bars: second bar is the current maximum in each pair. */
+html body.himart-page-body .pdp-col i:first-of-type::after{background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body .pdp-col i:nth-of-type(2)::after{background:var(--hm-chart-deep-blue)!important}
+
+/* TRENBE age graph: core/highest age band(s) use blue, supporting bands use green. */
+html body.trenbe-ut-page .trenbe-age-bar i{background:var(--hm-chart-deep-green)!important}
+html body.trenbe-ut-page .trenbe-age-bar.is-core i{background:var(--hm-chart-deep-blue)!important}
