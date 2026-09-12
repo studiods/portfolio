@@ -5,19 +5,11 @@
   --hm-motion-stagger:100ms;
   --hm-motion-counter:1200ms;
   --hm-motion-scroll:opacity .12s linear,transform .12s linear;
-  --hm-motion-video-swap:opacity .12s linear;
 }
 .hm-ds-reveal{opacity:0;transform:translate3d(0,40px,0);transition:var(--hm-motion-rise)}
 .hm-ds-reveal.is-visible{opacity:1;transform:none}
 .hm-ds-stagger>*{transition-delay:calc(var(--hm-index,0) * var(--hm-motion-stagger))}
-/* Shared low-load sequence transition: one video fades to black while its source is replaced. */
-[data-hm-video-sequence],
-[data-works-video-sequence]{transition:var(--hm-motion-video-swap)}
-[data-hm-video-sequence].is-sequence-switching,
-[data-works-video-sequence].is-sequence-switching{opacity:0}
 @media (prefers-reduced-motion:reduce){
   .hm-ds-reveal{opacity:1;transform:none;transition:none}
   .hm-ds-stagger>*{transition-delay:0ms}
-  [data-hm-video-sequence],
-  [data-works-video-sequence]{transition:none}
 }
