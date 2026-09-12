@@ -1,1 +1,92 @@
-@font-face{font-family:Averta;src:url("../../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300}@font-face{font-family:Averta;src:url("../../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400}:root{--wa-blue:#00A6ED;--wa-white:#fff;--wa-muted:rgba(255,255,255,.6);--wa-line:rgba(255,255,255,.16);--wa-pad:clamp(24px,5vw,80px)}body.work-archive-page{margin:0;background:#000;color:#fff;font-family:Pretendard,Arial,sans-serif;font-weight:300}body.work-archive-page *{box-sizing:border-box}.work-archive-page .top{z-index:20;background:transparent}.archive-layout{display:grid;grid-template-columns:clamp(250px,28vw,400px) minmax(0,1fr);gap:clamp(32px,5vw,88px);width:min(100%,1680px);margin:auto;padding:138px var(--wa-pad) 180px}.archive-menu{position:sticky;top:94px;align-self:start;max-height:calc(100vh - 122px);overflow:auto;padding-right:24px;scrollbar-width:thin}.archive-menu-title{color:#fff;text-decoration:none;font:300 24px/1 Averta,Pretendard,sans-serif;letter-spacing:-.04em}.archive-menu-period{margin:8px 0 34px;color:var(--wa-muted);font:300 12px/1.2 Averta,sans-serif;letter-spacing:.06em}.archive-menu-group{display:grid;gap:8px;margin-top:25px}.archive-menu-group:first-child{margin-top:0}.archive-menu-group strong{color:#fff;font:400 10pt/1.2 Averta,Pretendard,sans-serif;letter-spacing:.11em;opacity:1}.archive-menu-group a{color:var(--wa-muted);text-decoration:none;font-size:11px;line-height:1.25;letter-spacing:-.02em;transition:color .2s}.archive-menu-group a:hover{color:var(--wa-blue)}.archive-content{min-width:0}.archive-hero{min-height:calc(100vh - 138px);display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--wa-line)}.archive-hero>p{margin:0;color:var(--wa-blue);font:400 12px/1.2 Averta,sans-serif;letter-spacing:.08em}.archive-hero h1{margin:26px 0 24px;font:300 clamp(64px,9vw,148px)/.84 Averta,Pretendard,sans-serif;letter-spacing:-.075em}.archive-hero>span{font:300 18px/1 Averta,sans-serif;letter-spacing:.04em}.archive-hero>div{margin-top:70px;color:var(--wa-muted);font-size:15px;line-height:1.6;letter-spacing:-.03em}.archive-intro{padding:120px 0;border-bottom:1px solid var(--wa-line)}.archive-intro p{max-width:640px;margin:0;font-size:clamp(27px,3vw,44px);line-height:1.34;letter-spacing:-.065em}.archive-project{display:grid;grid-template-columns:minmax(190px,28%) minmax(0,1fr);gap:48px;padding:80px 0;border-bottom:1px solid var(--wa-line);opacity:.2;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}.archive-project.is-visible{opacity:1;transform:none}.archive-project header{position:sticky;top:110px;align-self:start}.archive-project header p{margin:0 0 14px;color:var(--wa-blue);font:400 10px/1.2 Averta,Pretendard,sans-serif;letter-spacing:.08em}.archive-project h2{margin:0;font-size:clamp(18px,1.85vw,28px);font-weight:300;line-height:1.15;letter-spacing:-.055em;word-break:keep-all}.archive-project-body>p{max-width:560px;margin:0 0 30px;color:var(--wa-muted);font-size:16px;line-height:1.72;letter-spacing:-.035em;word-break:keep-all}.archive-project figure{position:relative;aspect-ratio:4/3;overflow:hidden;margin:0;background:#111}.archive-project img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 68%;border:1px solid var(--wa-line);background:#111}.archive-project figcaption{margin-top:9px;color:rgba(255,255,255,.42);font:400 10px/1.3 Averta,sans-serif;letter-spacing:.08em}.archive-footer{display:flex;justify-content:space-between;gap:24px;padding:28px var(--wa-pad);border-top:1px solid var(--wa-line);color:rgba(255,255,255,.55);font:400 11px/1.4 Averta,sans-serif;letter-spacing:.06em}.archive-footer a{color:#fff;text-decoration:none}@media(max-width:900px){.archive-layout{grid-template-columns:1fr;padding-top:104px}.archive-menu{position:relative;top:auto;max-height:none;padding:0 0 28px;border-bottom:1px solid var(--wa-line)}.archive-menu nav{display:flex;gap:24px;overflow:auto;padding-bottom:6px}.archive-menu-group{flex:0 0 max-content;margin-top:0}.archive-hero{min-height:70vh}.archive-project{grid-template-columns:1fr;gap:28px;padding:64px 0}.archive-project header{position:static}.archive-footer{display:grid}.archive-project{opacity:1;transform:none}}
+/* WORK ARCHIVE — HIMART design-system composition.
+   Core hero/type/rhythm/navigation remain owned by himart-system.css.
+   This file only maps archive-specific switcher + manual gallery into the same left/right editorial rails. */
+html body.work-archive-page{margin:0!important;background:#000!important;color:#fff!important;overflow-x:clip!important}
+html body.work-archive-page *{box-sizing:border-box}
+html body.work-archive-page #live-main{background:#000!important}
+
+/* Hero stays on the canonical HIMART component. No archive-specific visual treatment. */
+html body.work-archive-page .wa-hero{background:#000!important}
+html body.work-archive-page #live-main .wa-hero .hm-title{font-family:var(--hm-font-en)!important;font-weight:300!important}
+html body.work-archive-page #live-main .wa-hero .hm-lead{font-family:var(--hm-font-en)!important;font-weight:300!important;letter-spacing:var(--hm-track-note)!important}
+
+/* WORKS-style compact switcher, fixed at the upper-left. */
+html body.work-archive-page .wa-switcher{position:fixed;z-index:2147483647;top:22px;left:var(--hm-inset-desktop,40px);width:400px;max-width:calc(100vw - 80px)}
+html body.work-archive-page .wa-switcher__toggle{position:relative;display:inline-flex;align-items:center;gap:18px;height:28px;margin:0;padding:0 24px 0 0;border:0;background:transparent;color:#fff;font-family:var(--hm-font-en);font-size:24px;font-weight:200;line-height:1;letter-spacing:-.02em;cursor:pointer}
+html body.work-archive-page .wa-switcher__toggle::after{content:"";position:absolute;right:3px;top:50%;width:7px;height:7px;border-right:1px solid rgba(255,255,255,.62);border-bottom:1px solid rgba(255,255,255,.62);transform:translateY(-70%) rotate(45deg);transition:transform .18s ease}
+html body.work-archive-page .wa-switcher__toggle[aria-expanded="true"]::after{transform:translateY(-25%) rotate(225deg)}
+html body.work-archive-page .wa-switcher__menu{position:absolute;top:52px;left:0;width:400px;max-width:calc(100vw - 80px);max-height:min(72vh,760px);overflow:auto;padding:0 18px 18px 0;background:#000;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-4px);transition:opacity .16s ease,transform .16s ease,visibility .16s ease;scrollbar-width:none}
+html body.work-archive-page .wa-switcher__menu::-webkit-scrollbar{display:none}
+html body.work-archive-page .wa-switcher__menu.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+html body.work-archive-page .wa-menu-group{padding:18px 0 20px;border-top:1px solid rgba(255,255,255,.16)}
+html body.work-archive-page .wa-menu-group:first-child{border-top:0}
+html body.work-archive-page .wa-menu-group strong{display:block;margin:0 0 8px;color:#fff;font-family:var(--hm-font-en);font-size:10pt;font-weight:400;line-height:1.15;letter-spacing:.04em;opacity:1}
+html body.work-archive-page .wa-menu-group>div{display:grid}
+html body.work-archive-page .wa-menu-group a{display:flex;align-items:center;min-height:32px;color:rgba(255,255,255,.56);font-family:var(--hm-font-ko);font-size:12px;font-weight:300;line-height:1.3;letter-spacing:var(--hm-track-body);text-decoration:none;transition:color .16s ease}
+html body.work-archive-page .wa-menu-group a:hover,html body.work-archive-page .wa-menu-group a:focus-visible,html body.work-archive-page .wa-menu-group a.is-active{color:#fff}
+html body.work-archive-page .wa-menu-group a.is-active{color:var(--hm-blue)}
+
+/* Company/project sections: same HIMART chapter rhythm, with left text and right evidence rail. */
+html body.work-archive-page #live-main>.wa-company{position:relative!important;margin:0!important;padding:var(--hm-section-padding-top,200px) 0 var(--hm-section-padding-bottom-last,200px)!important;background:#000!important}
+html body.work-archive-page #live-main>.wa-company+.wa-company{padding-top:var(--hm-section-padding-top,200px)!important}
+html body.work-archive-page .wa-company__layout{display:grid!important;grid-template-columns:minmax(300px,40%) minmax(0,60%)!important;gap:clamp(56px,5vw,100px)!important;align-items:start!important;width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;margin-inline:auto!important}
+html body.work-archive-page .wa-company__copy{position:sticky;top:108px;align-self:start;margin:0!important;padding:0!important;border:0!important}
+html body.work-archive-page .wa-company__copy .hm-section-no{display:block!important;margin:0 0 16px!important;color:var(--hm-blue)!important}
+html body.work-archive-page .wa-company__eyebrow{margin:0 0 28px;color:#fff;font-family:var(--hm-font-en);font-size:10px;font-weight:400;line-height:1.2;letter-spacing:.08em;text-transform:uppercase}
+html body.work-archive-page .wa-company__copy .hm-section-title{margin:0!important;color:#fff!important;font-family:var(--hm-font-en)!important;font-size:42px!important;font-weight:300!important;line-height:1.08!important;letter-spacing:-.04em!important;word-break:keep-all!important}
+html body.work-archive-page .wa-company__copy .hm-section-desc{margin:32px 0 0!important;max-width:40ch!important;white-space:pre-line!important;color:rgba(255,255,255,.60)!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;line-height:1.62!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+html body.work-archive-page .wa-project__note{margin:18px 0 0;color:rgba(255,255,255,.46);font-family:var(--hm-font-en);font-size:10px;font-weight:300;line-height:1.4;letter-spacing:.04em}
+html body.work-archive-page .wa-project__note[hidden]{display:none!important}
+html body.work-archive-page .wa-project__source{display:block;margin-top:28px;color:rgba(255,255,255,.42);font-family:var(--hm-font-en);font-size:10px;font-weight:300;line-height:1.3;letter-spacing:.05em}
+html body.work-archive-page .wa-company__rail{min-width:0;width:100%;margin:0;padding:0}
+
+/* Manual-only gallery. Motion copies the existing HIMART REUSE gallery grammar. */
+html body.work-archive-page .wa-gallery{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#080808;isolation:isolate;outline:none}
+html body.work-archive-page .wa-gallery__viewport,html body.work-archive-page .wa-gallery__slide{position:absolute;inset:0;width:100%;height:100%}
+html body.work-archive-page .wa-gallery__viewport{z-index:0;overflow:hidden;background:#080808}
+html body.work-archive-page .wa-gallery__slide{z-index:0;margin:0;opacity:0;visibility:hidden;pointer-events:none;transform:translate3d(5%,0,0) scale(.95);transform-origin:50% 50%;will-change:transform,opacity}
+html body.work-archive-page .wa-gallery__slide::after{content:"";position:absolute;z-index:2;inset:0;background:#000;opacity:.20;pointer-events:none;transition:opacity .72s cubic-bezier(.22,.76,.22,1)}
+html body.work-archive-page .wa-gallery__slide img{position:absolute;z-index:1;inset:0;display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#fff;border:0}
+html body.work-archive-page .wa-gallery__slide.is-active{z-index:2;opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0) scale(1)}
+html body.work-archive-page .wa-gallery__slide.is-active::after{opacity:0}
+html body.work-archive-page .wa-gallery__slide.is-next{z-index:1;opacity:1;visibility:visible;pointer-events:none;transform:translate3d(5%,0,0) scale(.95);transition:transform .72s cubic-bezier(.22,.76,.22,1),opacity .72s ease}
+html body.work-archive-page .wa-gallery__slide.is-next.is-entering{transform:translate3d(0,0,0) scale(1)}
+html body.work-archive-page .wa-gallery__slide.is-next.is-entering::after{opacity:0}
+html body.work-archive-page .wa-gallery__slide.is-active.is-exiting{z-index:3;transform:translate3d(-100%,0,0) scale(1);transition:transform .72s cubic-bezier(.22,.76,.22,1),opacity .72s ease}
+html body.work-archive-page .wa-gallery.is-reverse .wa-gallery__slide.is-next{transform:translate3d(-5%,0,0) scale(.95)}
+html body.work-archive-page .wa-gallery.is-reverse .wa-gallery__slide.is-next.is-entering{transform:translate3d(0,0,0) scale(1)}
+html body.work-archive-page .wa-gallery.is-reverse .wa-gallery__slide.is-active.is-exiting{transform:translate3d(100%,0,0) scale(1)}
+html body.work-archive-page .wa-gallery__nav{position:absolute;z-index:5;top:50%;width:48px;height:80px;margin:0;padding:0;border:0;background:transparent;transform:translateY(-50%);cursor:pointer}
+html body.work-archive-page .wa-gallery__nav--prev{left:6px}html body.work-archive-page .wa-gallery__nav--next{right:6px}
+html body.work-archive-page .wa-gallery__nav::before{content:"";position:absolute;top:50%;left:50%;width:18px;height:18px;border-top:1px solid rgba(255,255,255,.78);border-right:1px solid rgba(255,255,255,.78)}
+html body.work-archive-page .wa-gallery__nav--prev::before{transform:translate(-35%,-50%) rotate(-135deg)}
+html body.work-archive-page .wa-gallery__nav--next::before{transform:translate(-65%,-50%) rotate(45deg)}
+html body.work-archive-page .wa-gallery__nav:hover::before,html body.work-archive-page .wa-gallery__nav:focus-visible::before{border-color:#fff}
+html body.work-archive-page .wa-gallery__status{position:absolute;z-index:5;right:28px;bottom:24px;color:rgba(255,255,255,.68);font-family:var(--hm-font-en);font-size:10px;font-weight:300;line-height:1;letter-spacing:.05em;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+
+@media(min-width:1600px){
+ html body.work-archive-page .wa-company__layout{width:min(calc(100% - 128px),1600px)!important;grid-template-columns:minmax(400px,440px) minmax(80px,100px) minmax(0,1060px)!important;gap:0!important}
+ html body.work-archive-page .wa-company__copy{grid-column:1!important}
+ html body.work-archive-page .wa-company__rail{grid-column:3!important}
+}
+@media(max-width:1180px){
+ html body.work-archive-page .wa-company__layout{grid-template-columns:minmax(280px,36%) minmax(0,64%)!important;gap:48px!important}
+ html body.work-archive-page .wa-company__copy .hm-section-title{font-size:36px!important}
+}
+@media(max-width:780px){
+ html body.work-archive-page .wa-switcher{top:18px;left:var(--hm-inset-mobile,18px);width:calc(100vw - 36px);max-width:none}
+ html body.work-archive-page .wa-switcher__toggle{font-size:20px}
+ html body.work-archive-page .wa-switcher__menu{width:calc(100vw - 36px);max-width:none}
+ html body.work-archive-page #live-main>.wa-company{padding:var(--hm-section-padding-top-mobile,120px) 0 var(--hm-section-padding-bottom-last-mobile,120px)!important}
+ html body.work-archive-page .wa-company__layout{display:block!important;width:calc(100% - 36px)!important}
+ html body.work-archive-page .wa-company__copy{position:static;margin-bottom:56px!important}
+ html body.work-archive-page .wa-company__copy .hm-section-title{font-size:var(--hm-type-section-mobile,42px)!important;line-height:1.13!important}
+ html body.work-archive-page .wa-company__copy .hm-section-desc{margin-top:24px!important;font-size:var(--hm-type-body-mobile,16px)!important}
+ html body.work-archive-page .wa-gallery__nav{width:38px;height:64px}
+ html body.work-archive-page .wa-gallery__nav--prev{left:0}html body.work-archive-page .wa-gallery__nav--next{right:0}
+ html body.work-archive-page .wa-gallery__nav::before{width:14px;height:14px}
+ html body.work-archive-page .wa-gallery__status{right:16px;bottom:14px}
+}
+@media(prefers-reduced-motion:reduce){
+ html body.work-archive-page .wa-switcher__menu,html body.work-archive-page .wa-gallery__slide,html body.work-archive-page .wa-gallery__slide::after{transition:none!important}
+}
