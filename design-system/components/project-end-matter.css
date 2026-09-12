@@ -55,7 +55,7 @@ html body.himart-page-body .hm-project-footer__rail{
   grid-template-columns:1fr 1fr;
   align-items:center;
   min-height:116px;
-  border-top:1px solid rgba(255,255,255,.20);
+  border-bottom:1px solid rgba(255,255,255,.20);
 }
 html body.himart-page-body .hm-project-footer__link{
   position:relative;
