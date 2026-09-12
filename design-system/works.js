@@ -28,18 +28,32 @@
     - the media center may sit anywhere inside the viewport 35%–65% band and remain focused;
     - leaving that ±15vh focus band pauses immediately at the current frame;
     - reverse scroll resumes from the paused frame when the media re-enters the band;
-    - only the closest eligible video plays, keeping decoder work bounded to one active video;
-    - nearby media may upgrade preload from metadata to auto, but offscreen media is never force-played;
-    - sequential clips use one video element and advance only after native `ended`;
-    - the completed final frame is held briefly before the next source is loaded.
+    - only the closest eligible project plays;
+    - sequential clips use two stacked players only for seamless handoff;
+    - the active clip must fire its own native `ended` event before a switch can occur;
+    - the next clip is decoded behind the final frame, then visibility swaps immediately;
+    - there is no fade, dimming, black transition or artificial end delay.
   */
   const focusState = new WeakMap();
-  const SEQUENCE_END_HOLD_MS = reduced ? 0 : 120;
+  const absoluteSrc = src => new URL(src, document.baseURI).href;
 
-  const clearSequenceEndTimer = state => {
-    if (state?.endTimer) window.clearTimeout(state.endTimer);
-    if (state) state.endTimer = 0;
-  };
+  const waitForPlayableData = video => new Promise(resolve => {
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      resolve();
+      return;
+    }
+    let settled = false;
+    const done = () => {
+      if (settled) return;
+      settled = true;
+      video.removeEventListener('loadeddata', done);
+      video.removeEventListener('canplay', done);
+      resolve();
+    };
+    video.addEventListener('loadeddata', done, {once:true});
+    video.addEventListener('canplay', done, {once:true});
+    window.setTimeout(done, 2500);
+  });
 
   const waitForFrame = video => new Promise(resolve => {
     let settled = false;
@@ -50,68 +64,82 @@
     };
     if ('requestVideoFrameCallback' in video) {
       video.requestVideoFrameCallback(done);
-      window.setTimeout(done, 260);
+      window.setTimeout(done, 500);
     } else {
       video.addEventListener('playing', () => requestAnimationFrame(done), {once:true});
-      window.setTimeout(done, 260);
+      window.setTimeout(done, 500);
     }
   });
 
-  const revealCurrentSequenceFrame = async state => {
-    if (!state.focused || state.switching !== true) return;
-    const attempt = state.video.play?.();
-    if (attempt && attempt.catch) await attempt.catch(() => {});
-    if (!state.focused) return;
-    await waitForFrame(state.video);
-    if (!state.focused) return;
-    state.video.classList.remove('is-sequence-switching');
-    state.switching = false;
+  const sourceMatches = (state, player, sequenceIndex) => {
+    if (!state.sequence.length) return true;
+    return (player.currentSrc || player.src || '') === absoluteSrc(state.sequence[sequenceIndex]);
   };
 
-  const switchSequence = state => {
-    if (!state.sequence.length || state.switching) return;
-    clearSequenceEndTimer(state);
-    state.pendingAdvance = false;
+  const configureSequenceSource = (state, player, sequenceIndex) => {
+    const expected = absoluteSrc(state.sequence[sequenceIndex]);
+    if ((player.currentSrc || player.src || '') === expected) return;
+    player.pause();
+    player.src = state.sequence[sequenceIndex];
+    player.preload = state.focused ? 'auto' : 'metadata';
+    player.load();
+  };
+
+  const preloadNextSequence = state => {
+    if (!state.buffer || state.sequence.length < 2) return;
+    const nextIndex = (state.index + 1) % state.sequence.length;
+    state.buffer.style.visibility = 'hidden';
+    state.buffer.pause();
+    configureSequenceSource(state, state.buffer, nextIndex);
+    try { state.buffer.currentTime = 0; } catch (_) {}
+  };
+
+  const playState = state => {
+    const player = state.active || state.video;
+    if (!state.focused || document.hidden || state.switching || player.ended) return;
+    player.preload = 'auto';
+    const attempt = player.play?.();
+    if (attempt?.catch) attempt.catch(() => {});
+  };
+
+  const advanceSequence = async state => {
+    if (!state || state.sequence.length < 2 || state.switching || !state.focused || document.hidden) return;
+    const outgoing = state.active;
+    if (!state.activeStarted || !outgoing.ended || !sourceMatches(state, outgoing, state.index)) return;
+
     state.switching = true;
-    state.video.classList.add('is-sequence-switching');
-    state.index = (state.index + 1) % state.sequence.length;
-    state.video.pause();
-    state.video.src = state.sequence[state.index];
-    state.video.preload = state.focused ? 'auto' : 'metadata';
-    state.video.load();
+    const nextIndex = (state.index + 1) % state.sequence.length;
+    configureSequenceSource(state, state.buffer, nextIndex);
+    await waitForPlayableData(state.buffer);
 
-    const onReady = () => {
-      state.video.removeEventListener('loadeddata', onReady);
-      state.video.removeEventListener('canplay', onReady);
-      if (state.focused) revealCurrentSequenceFrame(state);
-    };
-
-    if (state.video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) onReady();
-    else {
-      state.video.addEventListener('loadeddata', onReady, {once:true});
-      state.video.addEventListener('canplay', onReady, {once:true});
+    if (!outgoing.ended || !sourceMatches(state, outgoing, state.index)) {
+      state.switching = false;
+      return;
     }
-  };
 
-  const scheduleSequenceAdvance = state => {
-    if (!state || state.sequence.length < 2 || state.switching) return;
-    if (state.video.ended) state.pendingAdvance = true;
-    if (!state.pendingAdvance || !state.focused || document.hidden) return;
+    try { state.buffer.currentTime = 0; } catch (_) {}
+    const attempt = state.buffer.play?.();
+    if (attempt?.catch) await attempt.catch(() => {});
+    await waitForFrame(state.buffer);
 
-    clearSequenceEndTimer(state);
-    state.endTimer = window.setTimeout(() => {
-      state.endTimer = 0;
-      if (!state.pendingAdvance || !state.focused || document.hidden || state.switching) return;
+    if (!state.focused || document.hidden) {
+      state.buffer.pause();
+      state.switching = false;
+      return;
+    }
 
-      /* Native ended is the only authority for advancing. A buffering pause, stalled
-         event or near-end currentTime must never move the playlist forward. */
-      if (!state.video.ended) {
-        state.pendingAdvance = false;
-        if (state.video.paused) state.video.play?.().catch?.(() => {});
-        return;
-      }
-      switchSequence(state);
-    }, SEQUENCE_END_HOLD_MS);
+    state.buffer.style.visibility = 'visible';
+    outgoing.style.visibility = 'hidden';
+    outgoing.pause();
+
+    state.active = state.buffer;
+    state.buffer = outgoing;
+    state.index = nextIndex;
+    state.activeStarted = !state.active.paused;
+    state.switching = false;
+
+    if (state.active.paused) playState(state);
+    preloadNextSequence(state);
   };
 
   mediaVideos.forEach(({video}) => {
@@ -119,9 +147,14 @@
     video.autoplay = false;
     video.pause();
     video.muted = true;
+    video.defaultMuted = true;
     video.setAttribute('muted', '');
     video.playsInline = true;
+    video.setAttribute('playsinline', '');
     video.preload = 'metadata';
+    video.style.transition = 'none';
+    video.style.opacity = '1';
+    video.classList.remove('is-sequence-switching');
 
     const sequence = (video.dataset.worksVideoSequence || '')
       .split('|')
@@ -134,28 +167,65 @@
       index:0,
       focused:false,
       switching:false,
-      pendingAdvance:false,
-      endTimer:0
+      active:video,
+      buffer:null,
+      activeStarted:false
     };
     focusState.set(video, state);
 
     if (sequence.length > 1) {
       video.loop = false;
       video.removeAttribute('loop');
-      video.addEventListener('ended', () => {
-        state.pendingAdvance = true;
-        scheduleSequenceAdvance(state);
-      });
+      video.src = sequence[0];
+      video.load();
+      video.style.visibility = 'visible';
+
+      const standby = video.cloneNode(false);
+      standby.removeAttribute('data-works-video-sequence');
+      standby.removeAttribute('autoplay');
+      standby.removeAttribute('loop');
+      standby.autoplay = false;
+      standby.loop = false;
+      standby.muted = true;
+      standby.defaultMuted = true;
+      standby.playsInline = true;
+      standby.preload = 'metadata';
+      standby.setAttribute('muted', '');
+      standby.setAttribute('playsinline', '');
+      standby.setAttribute('aria-hidden', 'true');
+      standby.style.visibility = 'hidden';
+      standby.style.transition = 'none';
+      standby.style.opacity = '1';
+      standby.classList.remove('is-sequence-switching');
+      video.parentNode.insertBefore(standby, video);
+      state.buffer = standby;
+
+      const bindSequencePlayer = player => {
+        player.addEventListener('playing', () => {
+          if (player === state.active && sourceMatches(state, player, state.index)) state.activeStarted = true;
+        });
+        player.addEventListener('ended', () => {
+          if (player !== state.active || state.switching) return;
+          if (!state.activeStarted || !sourceMatches(state, player, state.index)) return;
+          advanceSequence(state);
+        });
+      };
+      bindSequencePlayer(video);
+      bindSequencePlayer(standby);
+      preloadNextSequence(state);
     }
   });
 
-  /* Warm only media near the viewport. This avoids eager auto-preload for every project video. */
+  /* Warm only media near the viewport. This avoids eager playback while allowing the
+     standby sequence frame to be ready before the active clip reaches its natural end. */
   if ('IntersectionObserver' in window && mediaVideos.length) {
     const warmObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const video = entry.target;
-        if (video.preload !== 'auto') video.preload = 'auto';
+        const state = focusState.get(video);
+        video.preload = 'auto';
+        if (state?.buffer) state.buffer.preload = 'auto';
       });
     }, {rootMargin:'75% 0px 75% 0px', threshold:0.01});
     mediaVideos.forEach(({video}) => warmObserver.observe(video));
@@ -168,9 +238,9 @@
         const state = focusState.get(video);
         if (state) {
           state.focused = false;
-          clearSequenceEndTimer(state);
-        }
-        video.pause();
+          state.active?.pause();
+          state.buffer?.pause();
+        } else video.pause();
         video.closest('.works-card-media-link')?.classList.remove('is-video-focused');
       });
       return;
@@ -202,26 +272,20 @@
 
       if (!shouldFocus) {
         state.focused = false;
-        clearSequenceEndTimer(state);
-        video.pause();
+        state.active?.pause();
+        state.buffer?.pause();
         return;
       }
 
       state.focused = true;
-      video.preload = 'auto';
-      if (state.switching) {
-        revealCurrentSequenceFrame(state);
+      state.active.preload = 'auto';
+      if (state.buffer) state.buffer.preload = 'auto';
+
+      if (state.sequence.length > 1 && state.active.ended) {
+        advanceSequence(state);
         return;
       }
-      if (state.sequence.length > 1 && (state.pendingAdvance || video.ended)) {
-        state.pendingAdvance = true;
-        scheduleSequenceAdvance(state);
-        return;
-      }
-      if (video.paused) {
-        const attempt = video.play();
-        if (attempt && attempt.catch) attempt.catch(() => {});
-      }
+      playState(state);
     });
   };
 
@@ -486,9 +550,9 @@
         const state = focusState.get(video);
         if (state) {
           state.focused = false;
-          clearSequenceEndTimer(state);
-        }
-        video.pause();
+          state.active?.pause();
+          state.buffer?.pause();
+        } else video.pause();
         video.closest('.works-card-media-link')?.classList.remove('is-video-focused');
       });
     } else requestUpdate();
