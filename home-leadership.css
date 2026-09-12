@@ -1,0 +1,265 @@
+/* Home — Design Leadership closing section
+   Bridges Design Principles to selected evidence without introducing a new visual language.
+   Typography intentionally follows the Korean hierarchy already used by Design Principles. */
+
+.home-test .leadership-section{
+  position:relative;
+  width:100%;
+  padding:clamp(150px,17vh,230px) 0 clamp(150px,17vh,230px);
+  background:#000;
+  color:#fff;
+}
+
+.home-test .leadership-layout,
+.home-test .leadership-items,
+.home-test .leadership-closing{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,2.2fr);
+  column-gap:var(--gap);
+  width:100%;
+}
+
+.home-test .leadership-label{
+  grid-column:1;
+  align-self:start;
+  margin:0;
+}
+
+.home-test .leadership-intro{
+  grid-column:2;
+  min-width:0;
+}
+
+.home-test .leadership-statement{
+  margin:0;
+  max-width:1180px;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:clamp(40px,5.4vw,86px);
+  font-weight:100;
+  line-height:1.06;
+  letter-spacing:-.035em;
+  text-transform:none;
+  word-break:keep-all;
+}
+
+.home-test .leadership-statement>span{
+  display:block;
+}
+
+.home-test .leadership-summary{
+  max-width:760px;
+  margin:clamp(36px,4.2vh,56px) 0 0;
+  color:rgba(255,255,255,.60);
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:16px;
+  font-weight:300;
+  line-height:1.7;
+  letter-spacing:-.018em;
+  text-transform:none;
+  word-break:keep-all;
+}
+
+.home-test .leadership-items{
+  margin-top:clamp(130px,15vh,210px);
+}
+
+.home-test .leadership-items-inner{
+  grid-column:2;
+  min-width:0;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+
+.home-test .leadership-item{
+  display:grid;
+  grid-template-columns:72px minmax(0,1fr);
+  column-gap:clamp(20px,2.2vw,36px);
+  padding:clamp(34px,4.2vh,56px) 0 clamp(38px,4.8vh,64px);
+  border-bottom:1px solid rgba(255,255,255,.18);
+}
+
+.home-test .leadership-index,
+.home-test .leadership-role,
+.home-test .leadership-evidence{
+  font-family:'Averta PE',Arial,sans-serif;
+  font-weight:300;
+  letter-spacing:normal;
+}
+
+.home-test .leadership-index{
+  padding-top:6px;
+  color:rgba(255,255,255,.42);
+  font-size:11px;
+  line-height:1.2;
+}
+
+.home-test .leadership-role{
+  display:block;
+  margin:0 0 18px;
+  color:rgba(255,255,255,.56);
+  font-size:11px;
+  line-height:1.2;
+}
+
+.home-test .leadership-item h3{
+  margin:0;
+  max-width:980px;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:clamp(28px,2.8vw,46px);
+  font-weight:100;
+  line-height:1.16;
+  letter-spacing:-.032em;
+  text-transform:none;
+  word-break:keep-all;
+}
+
+.home-test .leadership-item-copy{
+  max-width:760px;
+  margin:22px 0 0;
+  color:rgba(255,255,255,.60);
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:15px;
+  font-weight:300;
+  line-height:1.7;
+  letter-spacing:-.018em;
+  text-transform:none;
+  word-break:keep-all;
+}
+
+.home-test .leadership-evidence{
+  display:block;
+  margin-top:26px;
+  color:rgba(255,255,255,.38);
+  font-size:10px;
+  line-height:1.4;
+}
+
+.home-test .leadership-closing{
+  margin-top:clamp(110px,12vh,170px);
+}
+
+.home-test .leadership-closing p{
+  grid-column:2;
+  max-width:980px;
+  margin:0;
+  color:rgba(255,255,255,.82);
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:clamp(26px,2.45vw,40px);
+  font-weight:100;
+  line-height:1.24;
+  letter-spacing:-.03em;
+  text-transform:none;
+  word-break:keep-all;
+}
+
+/* Scramble preserves the authored glyph width; only the overlay character changes. */
+.home-test .leadership-scramble-char{
+  display:inline!important;
+  position:relative;
+  vertical-align:baseline;
+  line-height:inherit;
+  margin:0;
+  padding:0;
+}
+.home-test .leadership-scramble-char.is-pending{
+  color:transparent!important;
+}
+.home-test .leadership-scramble-char.is-scrambling{
+  color:transparent!important;
+}
+.home-test .leadership-scramble-char.is-scrambling::after{
+  content:attr(data-leadership-random);
+  position:absolute;
+  inset:0 auto auto 0;
+  color:rgba(255,255,255,var(--leadership-random-alpha,1));
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  white-space:pre;
+  pointer-events:none;
+}
+.home-test .leadership-scramble-char.is-resolved{
+  color:inherit!important;
+}
+
+.home-test .leadership-reveal-copy{
+  opacity:0;
+  transform:translate3d(0,18px,0);
+  transition:opacity .55s cubic-bezier(.22,1,.36,1),transform .72s cubic-bezier(.22,1,.36,1);
+}
+.home-test .leadership-reveal-copy.is-visible{
+  opacity:1;
+  transform:none;
+}
+
+@media(max-width:850px){
+  .home-test .leadership-section{
+    padding:clamp(110px,22vw,150px) 0 clamp(110px,22vw,150px);
+  }
+  .home-test .leadership-layout,
+  .home-test .leadership-items,
+  .home-test .leadership-closing{
+    grid-template-columns:1fr;
+  }
+  .home-test .leadership-label,
+  .home-test .leadership-intro,
+  .home-test .leadership-items-inner,
+  .home-test .leadership-closing p{
+    grid-column:1;
+  }
+  .home-test .leadership-label{
+    margin-bottom:30px;
+  }
+  .home-test .leadership-statement{
+    font-size:clamp(32px,9.3vw,48px);
+    line-height:1.1;
+  }
+  .home-test .leadership-summary{
+    margin-top:30px;
+    font-size:15px;
+    line-height:1.65;
+  }
+  .home-test .leadership-items{
+    margin-top:clamp(90px,22vw,130px);
+  }
+  .home-test .leadership-item{
+    grid-template-columns:38px minmax(0,1fr);
+    column-gap:14px;
+    padding:34px 0 40px;
+  }
+  .home-test .leadership-index{
+    padding-top:5px;
+  }
+  .home-test .leadership-role{
+    margin-bottom:14px;
+  }
+  .home-test .leadership-item h3{
+    font-size:clamp(24px,6.8vw,31px);
+    line-height:1.2;
+  }
+  .home-test .leadership-item-copy{
+    margin-top:18px;
+    font-size:14px;
+    line-height:1.65;
+  }
+  .home-test .leadership-evidence{
+    margin-top:22px;
+  }
+  .home-test .leadership-closing{
+    margin-top:90px;
+  }
+  .home-test .leadership-closing p{
+    font-size:clamp(23px,6.3vw,29px);
+    line-height:1.28;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .home-test .leadership-scramble-char,
+  .home-test .leadership-scramble-char.is-pending,
+  .home-test .leadership-scramble-char.is-scrambling,
+  .home-test .leadership-scramble-char.is-resolved{
+    color:inherit!important;
+  }
+  .home-test .leadership-scramble-char.is-scrambling::after{display:none!important}
+  .home-test .leadership-reveal-copy{opacity:1!important;transform:none!important;transition:none!important}
+}
