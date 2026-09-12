@@ -1,20 +1,27 @@
-/* WORK ARCHIVE — HIMART REUSE gallery composition v2.0
-   ----------------------------------------------------
-   Foundation, typography, spacing and the gallery motion grammar are intentionally
-   inherited from himart-system.css + reuse-production-gallery.css.
-   This file only adapts that exact gallery component to archived portfolio pages:
-   - source images keep their own aspect ratio and fill the editorial rail width;
-   - project title sits top-left over the source image;
-   - original portfolio description sits bottom-left at 16px;
-   - title tone switches between pure black / pure white from the active image.
+/* WORK ARCHIVE — HIMART / REUSE composition v3.0
+   -------------------------------------------------
+   Page shell follows the canonical Himart scroll-cover structure.
+   Gallery motion/controls inherit from reuse-production-gallery.css.
+   Archive-specific contract:
+   - hero is sticky; the black content plane rises over it;
+   - first archive title starts 200px below the content-plane boundary;
+   - project title is authored outside the image, followed by a 36px gap;
+   - galleries use each source image's intrinsic aspect ratio;
+   - gallery width follows the same desktop inset as the upper hero rail;
+   - project-to-next-title gap is 64px;
+   - description remains inside the image at lower-left, 16px.
 */
 html{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important}
 html body.work-archive-page{margin:0!important;min-height:100%!important;overflow-x:clip!important;overflow-y:auto!important;background:var(--hm-bg-page,#000)!important;color:var(--hm-text-primary,#fff)!important;touch-action:pan-y!important}
 html body.work-archive-page *{box-sizing:border-box}
-html body.work-archive-page #live-main{display:block!important;position:relative!important;min-height:100vh!important;overflow:visible!important;background:var(--hm-bg-page,#000)!important}
+html body.work-archive-page #live-main{display:block!important;position:relative!important;min-height:100vh!important;overflow:visible!important;background:#000!important}
 
-/* Hero: same geometry as himart-reuse, English display uses canonical Averta Thin. */
-html body.work-archive-page .wa-hero{position:relative!important;background:#000!important}
+/* Hero — same sticky/scroll-cover component as himart.html. */
+html body.work-archive-page #live-main>.wa-hero{position:sticky!important;top:0!important;z-index:1!important;background:#000!important}
+html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner{
+  width:calc(100% - (var(--hm-inset-desktop,40px) * 2))!important;
+  max-width:none!important;
+}
 html body.work-archive-page #live-main .wa-hero .hm-title{
   color:#fff!important;
   font-family:var(--hm-font-en-thin,var(--hm-font-en))!important;
@@ -31,7 +38,25 @@ html body.work-archive-page #live-main .wa-hero .hm-lead{
   letter-spacing:var(--hm-track-note)!important;
 }
 
-/* WORKS compact project switcher. Company labels remain 10pt / 100% as requested. */
+/* Direct sibling content plane is intentionally a .hm-section so hero.css applies the
+   same scroll-cover stacking contract used by the Himart case pages. */
+html body.work-archive-page #live-main>.wa-archive-content{
+  position:relative!important;
+  z-index:2!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:200px 0 200px!important;
+  background:#000!important;
+  overflow:visible!important;
+}
+html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{
+  width:calc(100% - (var(--hm-inset-desktop,40px) * 2))!important;
+  max-width:none!important;
+  margin-inline:auto!important;
+}
+
+/* WORKS-style compact project switcher. */
 html body.work-archive-page .wa-switcher{
   position:fixed;
   z-index:2147483647;
@@ -41,54 +66,18 @@ html body.work-archive-page .wa-switcher{
   max-width:calc(100vw - (var(--hm-inset-desktop,40px) * 2));
 }
 html body.work-archive-page .wa-switcher__toggle{
-  position:relative;
-  display:inline-flex;
-  align-items:center;
-  height:24px;
-  margin:0;
-  padding:0 24px 0 0;
-  border:0;
-  background:transparent;
-  color:#fff;
-  font-family:var(--hm-font-en-extralight,var(--hm-font-en));
-  font-size:24px;
-  font-weight:200;
-  line-height:1;
-  letter-spacing:-.02em;
-  cursor:pointer;
+  position:relative;display:inline-flex;align-items:center;height:24px;margin:0;padding:0 24px 0 0;border:0;background:transparent;color:#fff;
+  font-family:var(--hm-font-en-extralight,var(--hm-font-en));font-size:24px;font-weight:200;line-height:1;letter-spacing:-.02em;cursor:pointer;
 }
 html body.work-archive-page .wa-switcher__toggle::after{
-  content:"";
-  position:absolute;
-  right:3px;
-  top:50%;
-  width:7px;
-  height:7px;
-  border-right:1px solid rgba(255,255,255,.60);
-  border-bottom:1px solid rgba(255,255,255,.60);
-  transform:translateY(-70%) rotate(45deg);
-  transition:transform .18s ease;
+  content:"";position:absolute;right:3px;top:50%;width:7px;height:7px;border-right:1px solid rgba(255,255,255,.60);border-bottom:1px solid rgba(255,255,255,.60);
+  transform:translateY(-70%) rotate(45deg);transition:transform .18s ease;
 }
 html body.work-archive-page .wa-switcher__toggle[aria-expanded="true"]::after{transform:translateY(-25%) rotate(225deg)}
 html body.work-archive-page .wa-switcher__menu{
-  position:absolute;
-  top:42px;
-  left:0;
-  width:400px;
-  max-width:calc(100vw - (var(--hm-inset-desktop,40px) * 2));
-  max-height:min(60vh,560px);
-  overflow-x:hidden;
-  overflow-y:auto;
-  margin:0;
-  padding:0 14px 14px 0;
-  background:#000;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transform:translateY(-4px);
-  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(255,255,255,.34) rgba(255,255,255,.06);
+  position:absolute;top:42px;left:0;width:400px;max-width:calc(100vw - (var(--hm-inset-desktop,40px) * 2));max-height:min(60vh,560px);
+  overflow-x:hidden;overflow-y:auto;margin:0;padding:0 14px 14px 0;background:#000;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-4px);
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.34) rgba(255,255,255,.06);
 }
 html body.work-archive-page .wa-switcher__menu::-webkit-scrollbar{display:block;width:6px}
 html body.work-archive-page .wa-switcher__menu::-webkit-scrollbar-track{background:rgba(255,255,255,.06)}
@@ -96,177 +85,61 @@ html body.work-archive-page .wa-switcher__menu::-webkit-scrollbar-thumb{backgrou
 html body.work-archive-page .wa-switcher__menu.is-open{opacity:1;visibility:visible;pointer-events:auto;transform:none}
 html body.work-archive-page .wa-menu-group{padding:18px 0 12px;border-top:1px solid var(--hm-line-weak,rgba(255,255,255,.14))}
 html body.work-archive-page .wa-menu-group:first-child{border-top:0;padding-top:0}
-html body.work-archive-page .wa-menu-group strong{
-  display:block;
-  margin:0 0 8px;
-  color:#fff;
-  font-family:var(--hm-font-en);
-  font-size:10pt;
-  font-weight:400;
-  line-height:1.15;
-  letter-spacing:.04em;
-  opacity:1;
-}
+html body.work-archive-page .wa-menu-group strong{display:block;margin:0 0 8px;color:#fff;font-family:var(--hm-font-en);font-size:10pt;font-weight:400;line-height:1.15;letter-spacing:.04em;opacity:1}
 html body.work-archive-page .wa-menu-group>div{display:grid}
-html body.work-archive-page .wa-menu-group a{
-  display:flex;
-  align-items:center;
-  width:100%;
-  min-height:40px;
-  margin:0;
-  padding:0;
-  color:var(--hm-text-secondary,rgba(255,255,255,.6));
-  font-family:var(--hm-font-ko);
-  font-size:14px;
-  font-weight:300;
-  line-height:1.25;
-  letter-spacing:var(--hm-track-body);
-  text-decoration:none;
-  transition:color .16s ease;
-}
+html body.work-archive-page .wa-menu-group a{display:flex;align-items:center;width:100%;min-height:40px;margin:0;padding:0;color:var(--hm-text-secondary,rgba(255,255,255,.6));font-family:var(--hm-font-ko);font-size:14px;font-weight:300;line-height:1.25;letter-spacing:var(--hm-track-body);text-decoration:none;transition:color .16s ease}
 html body.work-archive-page .wa-menu-group a+a{border-top:1px solid rgba(255,255,255,.10)}
 html body.work-archive-page .wa-menu-group a:hover,
 html body.work-archive-page .wa-menu-group a:focus-visible{color:#fff}
 html body.work-archive-page .wa-menu-group a.is-active{color:var(--hm-blue)}
 
-/* Company/project rhythm comes directly from the HIMART section system. */
-html body.work-archive-page #live-main>.wa-company{
-  position:relative!important;
-  margin:0!important;
-  padding:var(--hm-section-padding-top,200px) 0 var(--hm-section-padding-bottom,100px)!important;
-  overflow:visible!important;
-  background:var(--hm-bg-page,#000)!important;
-}
-html body.work-archive-page #live-main>.wa-company:first-child{padding-top:var(--hm-section-padding-top,200px)!important}
-html body.work-archive-page #live-main>.wa-company:last-child{padding-bottom:var(--hm-section-padding-bottom-last,200px)!important}
-html body.work-archive-page .wa-company>.hm-wrap{
-  width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;
-  max-width:none!important;
-  margin-inline:auto!important;
-}
-html body.work-archive-page .wa-project-list{display:grid;gap:var(--hm-space-title-subsection,160px)}
-html body.work-archive-page .wa-project{position:relative;scroll-margin-top:96px}
+/* Project rhythm: gallery -> next project title = 64px. */
+html body.work-archive-page .wa-project-list{display:block;width:100%}
+html body.work-archive-page .wa-project{position:relative;width:100%;margin:0;scroll-margin-top:96px}
+html body.work-archive-page .wa-project+.wa-project{margin-top:64px}
 
-/* The archive is image-led: each project is the same full-width gallery component used in himart-reuse. */
+/* Title is no longer embedded in the source image. */
+html body.work-archive-page .wa-project__head{width:100%;margin:0 0 36px;padding:0;color:#fff}
+html body.work-archive-page .wa-project__index{display:block;margin:0 0 14px;padding:0;color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-size:var(--hm-type-note,12px)!important;font-weight:400!important;line-height:1!important;letter-spacing:var(--hm-track-note)!important;text-transform:uppercase}
+html body.work-archive-page .wa-project__title{margin:0!important;padding:0!important;color:#fff!important;font-family:var(--hm-font-en-thin,var(--hm-font-en))!important;font-size:var(--hm-type-subsection,32px)!important;font-weight:300!important;line-height:1.12!important;letter-spacing:-.035em!important;text-wrap:balance;word-break:keep-all!important}
+html body.work-archive-page .wa-project__period{display:block;margin:14px 0 0;color:var(--hm-text-secondary,rgba(255,255,255,.6))!important;font-family:var(--hm-font-en)!important;font-size:var(--hm-type-note,12px)!important;font-weight:300!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important}
+
+/* Exact REUSE gallery component; only the canvas sizing changes to the active source image ratio. */
 html body.work-archive-page .wa-project .reuse-production-gallery{
-  --wa-title-color:#000;
   width:100%!important;
-  aspect-ratio:96/41!important;
-  min-height:0!important;
-  background:#fff!important;
+  max-width:none!important;
+  min-height:1px!important;
+  aspect-ratio:96/41!important; /* load-time placeholder only; JS replaces with intrinsic ratio */
+  overflow:hidden!important;
+  background:#080808!important;
+  isolation:isolate!important;
   transition:height .72s cubic-bezier(.22,.76,.22,1)!important;
 }
 html body.work-archive-page .wa-project .reuse-production-gallery.is-ratio-ready{aspect-ratio:auto!important}
-html body.work-archive-page .wa-project .reuse-production-gallery__media{background:#fff!important}
-html body.work-archive-page .wa-project .reuse-production-gallery__media>img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  object-fit:contain!important;
-  object-position:center!important;
-  background:#fff!important;
-}
+html body.work-archive-page .wa-project .reuse-production-gallery__media{background:#080808!important}
+html body.work-archive-page .wa-project .reuse-production-gallery__media>img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;background:#080808!important}
 
-/* Top-left title rule. Number/company stays blue; English title is canonical Averta Thin. */
-html body.work-archive-page .wa-gallery-title{
-  position:absolute;
-  z-index:6;
-  top:40px;
-  left:40px;
-  width:min(720px,calc(100% - 80px));
-  margin:0;
-  padding:0;
-  pointer-events:none;
-}
-html body.work-archive-page .wa-gallery-title__index{
-  display:block;
-  margin:0 0 14px;
-  padding:0;
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:var(--hm-type-note,12px)!important;
-  font-weight:400!important;
-  line-height:1!important;
-  letter-spacing:var(--hm-track-note)!important;
-  text-transform:uppercase;
-}
-html body.work-archive-page .wa-gallery-title h3{
-  margin:0!important;
-  padding:0!important;
-  color:var(--wa-title-color,#000)!important;
-  font-family:var(--hm-font-en-thin,var(--hm-font-en))!important;
-  font-size:var(--hm-type-subsection,32px)!important;
-  font-weight:300!important;
-  line-height:1.12!important;
-  letter-spacing:-.035em!important;
-  text-wrap:balance;
-  word-break:keep-all!important;
-  transition:color .14s ease;
-}
-html body.work-archive-page .wa-gallery-title__period{
-  display:block;
-  margin:14px 0 0;
-  color:var(--wa-title-color,#000)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:var(--hm-type-note,12px)!important;
-  font-weight:300!important;
-  line-height:1.2!important;
-  letter-spacing:var(--hm-track-note)!important;
-  transition:color .14s ease;
-}
-
-/* Keep the exact REUSE lower-left caption layer, but archive copy is text-only at 16px. */
-html body.work-archive-page .wa-project .reuse-production-gallery__copy{
-  left:40px!important;
-  bottom:40px!important;
-  width:min(820px,calc(100% - 120px))!important;
-}
-html body.work-archive-page .wa-project .reuse-production-gallery__copy p{
-  margin:0!important;
-  max-width:72ch!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:16px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:1.52!important;
-  letter-spacing:var(--hm-track-body)!important;
-  white-space:pre-line;
-  word-break:keep-all!important;
-}
-html body.work-archive-page .wa-project .wa-gallery-note{
-  display:block;
-  margin:10px 0 0;
-  color:rgba(255,255,255,.72);
-  font-family:var(--hm-font-en)!important;
-  font-size:12px;
-  font-weight:300;
-  font-style:normal;
-  line-height:1.35;
-  letter-spacing:var(--hm-track-note);
-}
-
-/* Same REUSE controls/status. Status stays independent from the persistent caption. */
+/* Description stays inside the active image, lower-left, at canonical body 16px.
+   JS swaps only the text chunk when the user manually changes pages. */
+html body.work-archive-page .wa-project .reuse-production-gallery__copy{left:40px!important;bottom:40px!important;width:min(820px,calc(100% - 120px))!important}
+html body.work-archive-page .wa-project .reuse-production-gallery__copy p{margin:0!important;max-width:72ch!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.52!important;letter-spacing:var(--hm-track-body)!important;white-space:pre-line;word-break:keep-all!important;text-shadow:0 1px 12px rgba(0,0,0,.42)}
+html body.work-archive-page .wa-project .wa-gallery-note{display:block;margin:10px 0 0;color:rgba(255,255,255,.78);font-family:var(--hm-font-en)!important;font-size:12px;font-weight:300;font-style:normal;line-height:1.35;letter-spacing:var(--hm-track-note);text-shadow:0 1px 10px rgba(0,0,0,.5)}
 html body.work-archive-page .wa-project .reuse-production-gallery__status{right:32px!important;bottom:32px!important}
-html body.work-archive-page .wa-project .reuse-production-gallery[data-single-slide="true"] .reuse-production-gallery__nav{display:none!important}
+html body.work-archive-page .wa-project .reuse-production-gallery[data-single-slide="true"] .reuse-production-gallery__nav,
 html body.work-archive-page .wa-project .reuse-production-gallery[data-single-slide="true"] .reuse-production-gallery__status{display:none!important}
 
-@media(min-width:1600px){
-  html body.work-archive-page .wa-company>.hm-wrap{width:min(calc(100% - 128px),1600px)!important}
-}
-
 @media(max-width:780px){
+  html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner,
+  html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{width:calc(100% - (var(--hm-inset-mobile,18px) * 2))!important}
+  html body.work-archive-page #live-main>.wa-archive-content{padding:120px 0 120px!important}
   html body.work-archive-page .wa-switcher{top:17px;left:var(--hm-inset-mobile,18px);width:calc(100vw - 36px);max-width:none}
   html body.work-archive-page .wa-switcher__toggle{font-size:20px}
   html body.work-archive-page .wa-switcher__menu{width:calc(100vw - 36px);max-width:none;max-height:64vh}
-  html body.work-archive-page #live-main>.wa-company{padding:var(--hm-section-padding-top-mobile,120px) 0 var(--hm-section-padding-bottom-mobile,80px)!important}
-  html body.work-archive-page #live-main>.wa-company:last-child{padding-bottom:var(--hm-section-padding-bottom-last-mobile,120px)!important}
-  html body.work-archive-page .wa-company>.hm-wrap{width:calc(100% - 36px)!important}
-  html body.work-archive-page .wa-project-list{gap:112px}
-  html body.work-archive-page .wa-gallery-title{top:22px;left:22px;width:calc(100% - 44px)}
-  html body.work-archive-page .wa-gallery-title__index{margin-bottom:9px;font-size:10px!important}
-  html body.work-archive-page .wa-gallery-title h3{font-size:clamp(22px,6.6vw,28px)!important;line-height:1.1!important}
-  html body.work-archive-page .wa-gallery-title__period{margin-top:9px;font-size:10px!important}
+  html body.work-archive-page .wa-project+.wa-project{margin-top:64px}
+  html body.work-archive-page .wa-project__head{margin-bottom:36px}
+  html body.work-archive-page .wa-project__index{margin-bottom:9px;font-size:10px!important}
+  html body.work-archive-page .wa-project__title{font-size:clamp(22px,6.6vw,28px)!important;line-height:1.1!important}
+  html body.work-archive-page .wa-project__period{margin-top:9px;font-size:10px!important}
   html body.work-archive-page .wa-project .reuse-production-gallery__copy{left:22px!important;bottom:22px!important;width:calc(100% - 70px)!important}
   html body.work-archive-page .wa-project .reuse-production-gallery__copy p{font-size:16px!important;line-height:1.42!important}
   html body.work-archive-page .wa-project .reuse-production-gallery__status{right:18px!important;bottom:18px!important}
@@ -274,7 +147,5 @@ html body.work-archive-page .wa-project .reuse-production-gallery[data-single-sl
 
 @media(prefers-reduced-motion:reduce){
   html body.work-archive-page .wa-switcher__menu,
-  html body.work-archive-page .wa-project .reuse-production-gallery,
-  html body.work-archive-page .wa-gallery-title h3,
-  html body.work-archive-page .wa-gallery-title__period{transition:none!important}
+  html body.work-archive-page .wa-project .reuse-production-gallery{transition:none!important}
 }
