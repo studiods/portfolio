@@ -1,13 +1,13 @@
-/* WORK ARCHIVE — HIMART / REUSE composition v3.0
+/* WORK ARCHIVE — HIMART / REUSE composition v3.1
    -------------------------------------------------
    Page shell follows the canonical Himart scroll-cover structure.
    Gallery motion/controls inherit from reuse-production-gallery.css.
    Archive-specific contract:
-   - hero is sticky; the black content plane rises over it;
+   - Hero uses the same sticky + overlay fade contract as himart.html;
    - first archive title starts 200px below the content-plane boundary;
    - project title is authored outside the image, followed by a 36px gap;
    - galleries use each source image's intrinsic aspect ratio;
-   - gallery width follows the same desktop inset as the upper hero rail;
+   - archive content width is locked to the same canonical rail as the Himart Hero bottom metadata;
    - project-to-next-title gap is 64px;
    - description remains inside the image at lower-left, 16px.
 */
@@ -16,11 +16,13 @@ html body.work-archive-page{margin:0!important;min-height:100%!important;overflo
 html body.work-archive-page *{box-sizing:border-box}
 html body.work-archive-page #live-main{display:block!important;position:relative!important;min-height:100vh!important;overflow:visible!important;background:#000!important}
 
-/* Hero — same sticky/scroll-cover component as himart.html. */
+/* Hero — same sticky/scroll-cover component and fade variables as himart.html. */
 html body.work-archive-page #live-main>.wa-hero{position:sticky!important;top:0!important;z-index:1!important;background:#000!important}
-html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner{
-  width:calc(100% - (var(--hm-inset-desktop,40px) * 2))!important;
-  max-width:none!important;
+html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner,
+html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{
+  width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;
+  max-width:var(--hm-container-wide,1360px)!important;
+  margin-inline:auto!important;
 }
 html body.work-archive-page #live-main .wa-hero .hm-title{
   color:#fff!important;
@@ -49,11 +51,6 @@ html body.work-archive-page #live-main>.wa-archive-content{
   padding:200px 0 200px!important;
   background:#000!important;
   overflow:visible!important;
-}
-html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{
-  width:calc(100% - (var(--hm-inset-desktop,40px) * 2))!important;
-  max-width:none!important;
-  margin-inline:auto!important;
 }
 
 /* WORKS-style compact project switcher. */
@@ -130,7 +127,7 @@ html body.work-archive-page .wa-project .reuse-production-gallery[data-single-sl
 
 @media(max-width:780px){
   html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner,
-  html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{width:calc(100% - (var(--hm-inset-mobile,18px) * 2))!important}
+  html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{width:calc(100% - (var(--hm-inset-mobile,18px) * 2))!important;max-width:none!important}
   html body.work-archive-page #live-main>.wa-archive-content{padding:120px 0 120px!important}
   html body.work-archive-page .wa-switcher{top:17px;left:var(--hm-inset-mobile,18px);width:calc(100vw - 36px);max-width:none}
   html body.work-archive-page .wa-switcher__toggle{font-size:20px}
