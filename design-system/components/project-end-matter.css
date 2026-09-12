@@ -1,17 +1,26 @@
 /* Shared project end matter — reflection + previous/next project navigation.
-   Applies to every HIMART-system case-study page. */
+   Applies to every HIMART-system case-study page.
+
+   Reflection contract
+   - the divider belongs to the editorial canvas, never the full viewport;
+   - on wide editorial layouts the divider spans the combined left-title + gap + right-content rails;
+   - PROJECT REFLECTION and its copy live in the right content rail and are right-aligned.
+*/
 
 html body.himart-page-body .hm-project-reflection{
   position:relative;
   width:100%;
   margin:0;
-  padding:80px 0 140px;
-  border-top:1px solid var(--hm-line-weak);
+  padding:0 0 140px;
+  border-top:0;
   background:#000;
 }
 html body.himart-page-body .hm-project-reflection__inner{
+  box-sizing:border-box;
   width:min(calc(100% - 80px),var(--hm-container-wide,1360px));
   margin:0 auto;
+  padding-top:80px;
+  border-top:1px solid var(--hm-line-weak);
 }
 html body.himart-page-body .hm-project-reflection__title{
   margin:0!important;
@@ -21,9 +30,10 @@ html body.himart-page-body .hm-project-reflection__title{
   font-weight:300!important;
   line-height:1.2!important;
   letter-spacing:var(--hm-track-note)!important;
+  text-align:right!important;
 }
 html body.himart-page-body .hm-project-reflection__copy{
-  margin:32px 0 0!important;
+  margin:32px 0 0 auto!important;
   max-width:42ch!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
@@ -33,6 +43,7 @@ html body.himart-page-body .hm-project-reflection__copy{
   line-height:1.363!important;
   letter-spacing:var(--hm-track-subsection)!important;
   word-break:keep-all!important;
+  text-align:right!important;
 }
 html body.himart-page-body .hm-project-reflection__copy strong{
   color:#fff!important;
@@ -41,16 +52,34 @@ html body.himart-page-body .hm-project-reflection__copy strong{
 }
 
 /* The preceding final chapter keeps its canonical 200px bottom padding. The reflection
-   begins immediately after that space with a full-viewport divider, then 80px to the label. */
+   begins immediately after that space. Its divider is now owned by the centered editorial
+   canvas, followed by the canonical 80px divider-to-reflection spacing. */
 html body.himart-page-body #live-main > .hm-section:last-of-type{
   padding-bottom:var(--hm-section-padding-bottom-last,200px)!important;
 }
 
-/* On the wide editorial layout the reflection starts on the same left edge as the
-   sticky major-title rail, not on the narrower right content rail. */
+/* Wide editorial geometry mirrors the case-study rails exactly: left title, inter-column
+   gap, then right content. Reflection copy is explicitly assigned to the right rail while
+   the divider remains on the combined 1600px editorial canvas. */
 @media(min-width:1600px){
   html body.himart-page-body .hm-project-reflection__inner{
     width:min(calc(100% - 128px),1600px);
+    display:grid;
+    grid-template-columns:
+      minmax(var(--hm-wide-left-min,400px),var(--hm-wide-left-max,440px))
+      minmax(var(--hm-wide-column-gap-min,80px),var(--hm-wide-column-gap-max,100px))
+      minmax(0,var(--hm-wide-right-max,1060px));
+    column-gap:0;
+    align-items:start;
+  }
+  html body.himart-page-body .hm-project-reflection__title,
+  html body.himart-page-body .hm-project-reflection__copy{
+    grid-column:3;
+    justify-self:end;
+    width:100%;
+  }
+  html body.himart-page-body .hm-project-reflection__copy{
+    width:auto;
   }
 }
 
@@ -153,11 +182,14 @@ html body.himart-page-body .hm-project-footer__bottom-space{
 
 @media(max-width:780px){
   html body.himart-page-body .hm-project-reflection{
-    padding:80px 0 100px;
+    padding-bottom:100px;
   }
   html body.himart-page-body .hm-project-reflection__inner,
   html body.himart-page-body .hm-project-footer__inner{
     width:calc(100% - 36px);
+  }
+  html body.himart-page-body .hm-project-reflection__inner{
+    padding-top:80px;
   }
   html body.himart-page-body .hm-project-reflection__title{
     font-size:12px!important;
