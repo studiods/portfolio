@@ -1,34 +1,62 @@
 (() => {
   'use strict';
 
-  const root = document.querySelector('body.aimmo-system-page #data .aimmo-evidence-gallery');
-  if (!root) return;
-
-  const cards = [...root.querySelectorAll('.aimmo-evidence-card')];
-  if (cards.length < 3) return;
-
-  const sequences = [
-    [
-      './assets/image/aimmo-system/aimmo_system_01_01.png',
-      './assets/image/aimmo-system/aimmo_system_01_02.png',
-      './assets/image/aimmo-system/aimmo_system_01_03.png',
-      './assets/image/aimmo-system/aimmo_system_01_04.png'
-    ],
-    [
-      './assets/image/aimmo-system/aimmo_system_02_01.png',
-      './assets/image/aimmo-system/aimmo_system_02_02.png',
-      './assets/image/aimmo-system/aimmo_system_02_03.png'
-    ],
-    [
-      './assets/image/aimmo-system/aimmo_system_03_01.png',
-      './assets/image/aimmo-system/aimmo_system_03_02.png',
-      './assets/image/aimmo-system/aimmo_system_03_03.png'
-    ]
-  ];
-
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const HOLD_MS = 2500;
   const TRANSITION_MS = 720;
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+  const galleryConfigs = [
+    {
+      root: '#data .aimmo-evidence-gallery',
+      stagger: [0, 850, 1700],
+      sequences: [
+        [
+          './assets/image/aimmo-system/aimmo_system_01_01.png',
+          './assets/image/aimmo-system/aimmo_system_01_02.png',
+          './assets/image/aimmo-system/aimmo_system_01_03.png',
+          './assets/image/aimmo-system/aimmo_system_01_04.png'
+        ],
+        [
+          './assets/image/aimmo-system/aimmo_system_02_01.png',
+          './assets/image/aimmo-system/aimmo_system_02_02.png',
+          './assets/image/aimmo-system/aimmo_system_02_03.png'
+        ],
+        [
+          './assets/image/aimmo-system/aimmo_system_03_01.png',
+          './assets/image/aimmo-system/aimmo_system_03_02.png',
+          './assets/image/aimmo-system/aimmo_system_03_03.png'
+        ]
+      ]
+    },
+    {
+      root: '#data .aimmo-improvement-gallery',
+      stagger: [250, 950, 1650, 2350],
+      sequences: [
+        [
+          './assets/image/aimmo-system/aimmo_system_01_01.png',
+          './assets/image/aimmo-system/aimmo_system_01_02.png',
+          './assets/image/aimmo-system/aimmo_system_01_03.png',
+          './assets/image/aimmo-system/aimmo_system_01_04.png'
+        ],
+        [
+          './assets/image/aimmo-system/aimmo_system_02_01.png',
+          './assets/image/aimmo-system/aimmo_system_02_02.png',
+          './assets/image/aimmo-system/aimmo_system_02_03.png'
+        ],
+        [
+          './assets/image/aimmo-system/aimmo_system_03_01.png',
+          './assets/image/aimmo-system/aimmo_system_03_02.png',
+          './assets/image/aimmo-system/aimmo_system_03_03.png'
+        ],
+        [
+          './assets/image/aimmo-system/aimmo-source-010.jpg',
+          './assets/image/aimmo-system/aimmo-source-014.jpg',
+          './assets/image/aimmo-system/aimmo-source-016.jpg',
+          './assets/image/aimmo-system/aimmo-source-018.jpg'
+        ]
+      ]
+    }
+  ];
 
   const preload = src => new Promise(resolve => {
     const image = new Image();
@@ -37,7 +65,7 @@
     image.src = src;
   });
 
-  const setupCard = async (card, requested) => {
+  const setupCard = async (card, requested, initialDelay = 0) => {
     const loaded = (await Promise.all(requested.map(preload))).filter(Boolean);
     if (!loaded.length) return;
 
@@ -69,6 +97,7 @@
     authoredImage?.remove();
     card.insertBefore(viewport, caption || card.firstChild);
     card.tabIndex = 0;
+    card.style.touchAction = 'pan-y';
 
     const prev = document.createElement('button');
     prev.className = 'aimmo-evidence-card__nav aimmo-evidence-card__nav--prev';
@@ -91,6 +120,8 @@
     let timer = 0;
     let busy = false;
     let inView = false;
+    let hasStarted = false;
+    let pointerStart = null;
 
     const clearTimer = () => {
       if (timer) window.clearTimeout(timer);
@@ -112,10 +143,10 @@
       updateStatus();
     };
 
-    const schedule = () => {
+    const schedule = (delay = HOLD_MS) => {
       clearTimer();
       if (!inView || document.hidden || busy || slides.length < 2) return;
-      timer = window.setTimeout(() => move(1, true), HOLD_MS);
+      timer = window.setTimeout(() => move(1), delay);
     };
 
     const transitionTo = (targetIndex, direction = 1) => {
@@ -183,15 +214,36 @@
       }
     });
 
+    card.addEventListener('pointerdown', event => {
+      pointerStart = { x:event.clientX, y:event.clientY };
+    });
+    card.addEventListener('pointerup', event => {
+      if (!pointerStart) return;
+      const dx = event.clientX - pointerStart.x;
+      const dy = event.clientY - pointerStart.y;
+      pointerStart = null;
+      if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+        move(dx < 0 ? 1 : -1);
+      }
+    });
+    card.addEventListener('pointercancel', () => { pointerStart = null; });
+
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(entries => {
         inView = Boolean(entries[0]?.isIntersecting);
-        if (inView) schedule(); else clearTimer();
+        if (inView) {
+          const delay = hasStarted ? HOLD_MS : HOLD_MS + initialDelay;
+          hasStarted = true;
+          schedule(delay);
+        } else {
+          clearTimer();
+        }
       }, { threshold: .20, rootMargin: '0px 0px -5% 0px' });
       observer.observe(card);
     } else {
       inView = true;
-      schedule();
+      hasStarted = true;
+      schedule(HOLD_MS + initialDelay);
     }
 
     document.addEventListener('visibilitychange', () => {
@@ -202,5 +254,14 @@
     settle();
   };
 
-  cards.slice(0, 3).forEach((card, index) => setupCard(card, sequences[index]));
+  galleryConfigs.forEach(config => {
+    const root = document.querySelector(`body.aimmo-system-page ${config.root}`);
+    if (!root) return;
+    const cards = [...root.querySelectorAll('.aimmo-evidence-card')];
+    cards.forEach((card, index) => {
+      const sequence = config.sequences[index];
+      if (!sequence) return;
+      setupCard(card, sequence, config.stagger[index] || 0);
+    });
+  });
 })();
