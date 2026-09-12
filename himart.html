@@ -21,7 +21,8 @@ body{margin:0;min-height:100%;background:#000!important;color:#fff;font-family:A
       - keep the initial canvas black;
       - allow the browser cache to serve the validated source document;
       - preload the current hero movie before non-critical editorial CSS;
-      - never hide the whole document while below-the-fold narrative code initializes.
+      - never hide the whole document while below-the-fold narrative code initializes;
+      - keep the legacy commerce visualization bundle off the critical rendering path.
     */
     const response=await fetch('./himart_backup_02/himart.html?wide-source=20260912-1',{cache:'default'});
     if(!response.ok)throw new Error('himart.html load failed');
@@ -35,6 +36,7 @@ body{margin:0;min-height:100%;background:#000!important;color:#fff;font-family:A
       .replace('<title>하이마트 온라인 구매여정 — Movie Test</title>','<title>하이마트 온라인 구매여정 — Wide Editorial Test</title>')
       .replace('./assets/himart_01.mp4','./assets/movies/himart_02.mp4')
       .replace('고객 인식과 실제 이용 흐름을 확인해,<br>구매 여정을 다시 정의했습니다.','고객 인식과 실제 이용 흐름을 확인해, 구매 여정을 다시 정의했습니다.')
+      .replace('<link rel="stylesheet" href="./design-system/components/himart-commerce.css?v=20260907-4">','<link rel="stylesheet" href="./design-system/components/himart-commerce.css?v=20260907-4" media="print" onload="this.media=\'all\'">')
       .replace('./design-system/himart-system.css?v=20260907-27','./design-system/himart-system.css?v=20260912-5')
       .replace('./design-system/test-content-final.js?v=20260907-1','./design-system/test-content-final.js?v=20260909-3')
       .replace('</head>',
