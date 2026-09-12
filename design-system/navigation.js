@@ -206,15 +206,12 @@
   const mountSourceNotes = () => {
     if (!document.body.classList.contains('himart-page-body')) return;
 
-    /* Migrate every legacy SOURCE · / 출처 · note to the single literal prefix. */
     document.querySelectorAll(sourceSelector).forEach(normalizeSourceNote);
 
-    /* Future authoring contract: put the exact provenance on the evidence node. */
     document.querySelectorAll('#live-main [data-source]').forEach(anchor => {
       insertSourceNote(anchor, anchor.getAttribute('data-source'));
     });
 
-    /* Current-page migration for quantitative visuals that predate the contract. */
     const file = (location.pathname.split('/').pop() || '').toLowerCase();
     (pageSourceRegistry[file] || []).forEach(([selector, source]) => {
       document.querySelectorAll(selector).forEach(anchor => insertSourceNote(anchor, source));
@@ -256,7 +253,6 @@
     const heads = sections.map(section => section.querySelector('.hm-section-head')).filter(Boolean);
     if (!heads.length) return;
 
-    /* Ensure the canonical reveal observer sees any newly authored test targets. */
     window.__hmAnimationScan?.();
 
     let raf = 0;
@@ -300,4 +296,102 @@
   } else {
     mountWideEditorialExit();
   }
+})();
+
+/* Shared project reflection + previous/next project navigation. */
+(() => {
+  'use strict';
+
+  const projects = [
+    {
+      file:'himart.html', href:'./himart.html', name:'하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다.', en:false,
+      reflection:'복잡한 커머스 개편을 리드하면서 다시 확인한 것은, 화면을 많이 바꾸는 것보다 <strong>어떤 문제를 먼저 풀고 어떤 근거로 우선순위를 정할지</strong>가 더 중요하다는 점이었습니다. 리드의 역할은 여러 기능을 직접 소유하는 것이 아니라 팀이 같은 판단 기준으로 움직이게 만드는 데 있다고 봤습니다.'
+    },
+    {
+      file:'himart-reuse.html', href:'./himart-reuse.html', name:'중고 가전의 신뢰 기준 만들기', en:false,
+      reflection:'신뢰는 UI 한 화면에서 만들어지지 않았습니다. <strong>상품 상태·촬영·검수·보증처럼 고객이 확인할 수 있는 근거를 운영 기준까지 연결해야</strong> 실제 경험이 바뀐다는 점을 확인했습니다.'
+    },
+    {
+      file:'himart-ways.html', href:'./himart-ways.html', name:'일이 남는 협업 방식 만들기', en:false,
+      reflection:'협업 문제는 새 도구만으로 해결되지 않았습니다. <strong>문제·결정·책임과 그 근거가 남는 구조</strong>를 만들 때 팀이 같은 논의를 반복하지 않고 다음 단계로 갈 수 있었습니다.'
+    },
+    {
+      file:'himart-team.html', href:'./himart-team.html', name:'새 팀의 공통 언어 만들기', en:false,
+      reflection:'새 팀을 리드할 때 가장 먼저 필요한 것은 완성된 프로세스보다 <strong>서로 다른 경험을 하나의 언어로 연결하는 기준</strong>이었습니다. 기준을 함께 만들고 반복해서 쓰게 하는 과정이 결국 팀의 속도와 자율성을 높였습니다.'
+    },
+    {
+      file:'himart-automation.html', href:'./himart-automation.html', name:'반복 디자인 업무 자동화하기', en:false,
+      reflection:'자동화의 목표는 더 많은 산출물을 만드는 것이 아니었습니다. <strong>반복 작업을 줄이고 디자이너가 판단과 문제 해결에 더 많은 시간을 쓰게 하는 것</strong>이 리드 관점에서 가장 중요한 생산성 개선이었습니다.'
+    },
+    {
+      file:'aimmo-system.html', href:'./aimmo-system.html', name:'AIMMO DESIGN SYSTEM DEVELOPMENT', en:true,
+      reflection:'디자인 시스템은 컴포넌트 묶음보다 <strong>팀이 더 적은 반복으로 더 좋은 판단을 하게 만드는 업무 시스템</strong>에 가까웠습니다. 리드로서 기준을 직접 정하는 것보다 재사용 가능한 판단 구조와 운영 방식을 남기는 것이 더 오래 가는 성과라고 느꼈습니다.'
+    },
+    {
+      file:'aimmo-graphic.html', href:'./aimmo-graphic.html', name:'AIMMO GRAPHIC MOTIF DEVELOPMENT', en:true,
+      reflection:'브랜드 리뉴얼보다 중요한 것은 기존 자산이 실제 접점에서 계속 작동하게 만드는 것이었습니다. <strong>형태의 원리를 정리하고 변주 가능한 규칙으로 바꾸면</strong> 제품·웹·전시가 하나의 언어로 연결될 수 있었습니다.'
+    },
+    {
+      file:'trenbe-ut.html', href:'./trenbe-ut.html', name:'TRENBE USABILITY TEST', en:true,
+      reflection:'UT의 가치는 문제를 많이 발견하는 데 있지 않았습니다. <strong>관찰과 정성 데이터가 팀의 우선순위와 정책 결정을 바꾸는 근거가 될 때</strong> 리서치가 실제 제품 변화로 이어진다는 점을 다시 확인했습니다.'
+    },
+    {
+      file:'yanolja-system.html', href:'./yanolja-system.html', name:'YANOLJA B2B DESIGN SYSTEM DEVELOPMENT', en:true,
+      reflection:'B2B 시스템은 보기 좋은 일관성보다 실제 업무 환경에서 빠르게 판단하고 실수 없이 실행하게 하는 것이 우선이었습니다. <strong>현장의 제약을 시스템 규칙으로 번역하는 일</strong>이 디자인 리드가 해야 할 중요한 연결 역할이었습니다.'
+    },
+    {
+      file:'nbt_stepup.html', href:'./nbt_stepup.html', name:'만보기보다 습관을 만드는 경험', en:false,
+      reflection:'습관을 만드는 경험은 기능을 추가하는 것보다 행동이 반복될 이유를 설계하는 일이었습니다. <strong>서비스 목표와 사용자 동기를 같은 루프로 연결할 때</strong> 단기 참여가 아니라 지속 가능한 사용 경험을 만들 수 있었습니다.'
+    }
+  ];
+
+  const legacyPrevious = {href:'./index.html#project-vinyl',name:'초기 디지털 프로젝트 모음',en:false};
+  const legacyNext = {href:'./index.html#project-coupang',name:'늘어나는 상품을 더 쉽게 찾게 만들기',en:false};
+
+  const mountProjectEndMatter = () => {
+    if (!document.body.classList.contains('himart-page-body')) return;
+    const file = (location.pathname.split('/').pop() || '').toLowerCase();
+    const index = projects.findIndex(project => project.file === file);
+    if (index < 0) return;
+    const project = projects[index];
+    const main = document.querySelector('#live-main');
+    if (!main) return;
+
+    document.querySelectorAll('.hm-project-reflection,.hm-project-footer,footer.hm-footer').forEach(node => node.remove());
+
+    const previous = index > 0 ? projects[index - 1] : legacyPrevious;
+    const next = index < projects.length - 1 ? projects[index + 1] : legacyNext;
+
+    const reflection = document.createElement('section');
+    reflection.className = 'hm-project-reflection';
+    reflection.setAttribute('aria-label', 'Project reflection');
+    reflection.innerHTML = `
+      <div class="hm-project-reflection__inner">
+        <h2 class="hm-project-reflection__title">PROJECT REFLECTION</h2>
+        <p class="hm-project-reflection__copy">${project.reflection}</p>
+      </div>`;
+
+    const footer = document.createElement('footer');
+    footer.className = 'hm-project-footer';
+    footer.innerHTML = `
+      <div class="hm-project-footer__inner">
+        <div class="hm-project-footer__rail">
+          <a class="hm-project-footer__link hm-project-footer__link--prev" href="${previous.href}">
+            <i class="hm-project-footer__arrow" aria-hidden="true"></i>
+            <span class="hm-project-footer__meta"><span class="hm-project-footer__label">PREVIOUS</span><strong class="hm-project-footer__name${previous.en ? ' is-en' : ''}">${previous.name}</strong></span>
+          </a>
+          <a class="hm-project-footer__link hm-project-footer__link--next" href="${next.href}">
+            <i class="hm-project-footer__arrow" aria-hidden="true"></i>
+            <span class="hm-project-footer__meta"><span class="hm-project-footer__label">NEXT</span><strong class="hm-project-footer__name${next.en ? ' is-en' : ''}">${next.name}</strong></span>
+          </a>
+        </div>
+      </div>
+      <div class="hm-project-footer__bottom-space" aria-hidden="true"></div>`;
+
+    main.insertAdjacentElement('afterend', reflection);
+    reflection.insertAdjacentElement('afterend', footer);
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountProjectEndMatter, {once:true});
+  else mountProjectEndMatter();
 })();
