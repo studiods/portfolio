@@ -1,17 +1,20 @@
 /*
-  DETAIL HERO META — wide editorial width contract.
+  DETAIL HERO ALIGNMENT — wide editorial width contract.
 
   At the >=1600px editorial breakpoint, detail-page content is composed from:
   left title rail (max 440px) + inter-rail gap (max 100px) + right content rail (max 1060px).
-  The Hero title/copy remains on its canonical inner rail, while the bottom metadata footer
-  expands independently to the same combined editorial span.
+
+  The Hero title/copy and the bottom metadata footer must share the same left edge and
+  the same total editorial span. This keeps the Hero composition aligned with the body
+  split layout instead of leaving the title on the narrower legacy 1360px inner rail.
 
   On narrower wide screens, the 64px minimum outer inset wins, matching the actual split
   editorial canvas instead of forcing a fixed 1600px width.
 
-  Canonical detail pages use .hm-ds-hero__bottom. StepUp still uses the legacy
-  .hm-hero-bottom class, so both are intentionally covered here. Page-local width overrides
-  should not be added; this component is the single owner of the wide Hero meta rail width.
+  Canonical detail pages use .hm-ds-hero__copy / .hm-ds-hero__bottom. StepUp still uses
+  the legacy .hm-movie-copy / .hm-hero-bottom pair, so both are intentionally covered here.
+  Page-local width or horizontal-position overrides should not be added; this component is
+  the single owner of wide Hero copy + metadata horizontal alignment.
 */
 
 html body.himart-page-body.hm-wide-editorial-test{
@@ -20,6 +23,31 @@ html body.himart-page-body.hm-wide-editorial-test{
 }
 
 @media(min-width:1600px){
+  /*
+    Hero copy remains vertically centered by the canonical Hero component, but its
+    horizontal rail expands to the same editorial span used by the split body layout.
+    Because the canonical inner wrapper itself stays centered, left:50% + translateX(-50%)
+    produces the exact same centered editorial rail as the metadata footer below.
+  */
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__copy,.hm-movie-copy){
+    left:50%!important;
+    right:auto!important;
+    width:min(
+      calc(100vw - (2 * var(--hm-wide-edge-min,var(--hm-detail-editorial-edge-min)))),
+      var(--hm-detail-editorial-span)
+    )!important;
+    max-width:none!important;
+    transform:translate(-50%,-50%)!important;
+    text-align:left!important;
+    box-sizing:border-box!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__title,.hm-title){
+    margin-left:0!important;
+    margin-right:auto!important;
+    text-align:left!important;
+  }
+
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__bottom,.hm-hero-bottom){
     left:50%!important;
     right:auto!important;
