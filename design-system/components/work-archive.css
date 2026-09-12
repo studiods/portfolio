@@ -1,24 +1,35 @@
-/* WORK ARCHIVE — HIMART / REUSE composition v3.1
+/* WORK ARCHIVE — HIMART / REUSE composition v3.2
    -------------------------------------------------
    Page shell follows the canonical Himart scroll-cover structure.
    Gallery motion/controls inherit from reuse-production-gallery.css.
    Archive-specific contract:
-   - Hero uses the same sticky + overlay fade contract as himart.html;
+   - Hero delegates sticky geometry, full-viewport height and fade variables to hero.css exactly as himart.html does;
+   - a temporary 16:9 project image is rendered behind the Hero so scroll darkening / content cover can be visually verified;
    - first archive title starts 200px below the content-plane boundary;
    - project title is authored outside the image, followed by a 36px gap;
    - galleries use each source image's intrinsic aspect ratio;
    - archive content width is locked to the same canonical rail as the Himart Hero bottom metadata;
-   - project-to-next-title gap is 64px;
+   - project-to-next-title gap is 120px;
    - description remains inside the image at lower-left, 16px.
 */
 html{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important}
 html body.work-archive-page{margin:0!important;min-height:100%!important;overflow-x:clip!important;overflow-y:auto!important;background:var(--hm-bg-page,#000)!important;color:var(--hm-text-primary,#fff)!important;touch-action:pan-y!important}
 html body.work-archive-page *{box-sizing:border-box}
-html body.work-archive-page #live-main{display:block!important;position:relative!important;min-height:100vh!important;overflow:visible!important;background:#000!important}
+html body.work-archive-page #live-main{display:block!important;position:relative!important;isolation:isolate!important;min-height:100vh!important;overflow:visible!important;background:#000!important}
 
-/* Hero — same sticky/scroll-cover component and fade variables as himart.html. */
-html body.work-archive-page #live-main>.wa-hero{position:sticky!important;top:0!important;z-index:1!important;background:#000!important}
-html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner,
+/* Hero geometry / sticky / overlay opacity are intentionally NOT re-authored here.
+   hero.css is the canonical owner, exactly like himart.html. */
+html body.work-archive-page #live-main>.wa-hero .wa-hero__image{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  background:#000!important;
+}
 html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{
   width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;
   max-width:var(--hm-container-wide,1360px)!important;
@@ -40,17 +51,28 @@ html body.work-archive-page #live-main .wa-hero .hm-lead{
   letter-spacing:var(--hm-track-note)!important;
 }
 
-/* Direct sibling content plane is intentionally a .hm-section so hero.css applies the
-   same scroll-cover stacking contract used by the Himart case pages. */
+/* Canonical scroll-cover stack:
+   Hero remains sticky at z1 via hero.css. The direct sibling content plane is z2 and
+   therefore physically rises from below the viewport and covers the Hero as the page scrolls. */
 html body.work-archive-page #live-main>.wa-archive-content{
   position:relative!important;
   z-index:2!important;
+  isolation:isolate!important;
   width:100%!important;
   max-width:none!important;
+  min-height:100vh!important;
   margin:0!important;
   padding:200px 0 200px!important;
   background:#000!important;
   overflow:visible!important;
+}
+html body.work-archive-page #live-main>.wa-archive-content::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  background:#000;
+  pointer-events:none;
 }
 
 /* WORKS-style compact project switcher. */
@@ -90,10 +112,10 @@ html body.work-archive-page .wa-menu-group a:hover,
 html body.work-archive-page .wa-menu-group a:focus-visible{color:#fff}
 html body.work-archive-page .wa-menu-group a.is-active{color:var(--hm-blue)}
 
-/* Project rhythm: gallery -> next project title = 64px. */
+/* Project rhythm: gallery -> next project title = 120px. */
 html body.work-archive-page .wa-project-list{display:block;width:100%}
 html body.work-archive-page .wa-project{position:relative;width:100%;margin:0;scroll-margin-top:96px}
-html body.work-archive-page .wa-project+.wa-project{margin-top:64px}
+html body.work-archive-page .wa-project+.wa-project{margin-top:120px}
 
 /* Title is no longer embedded in the source image. */
 html body.work-archive-page .wa-project__head{width:100%;margin:0 0 36px;padding:0;color:#fff}
@@ -126,13 +148,12 @@ html body.work-archive-page .wa-project .reuse-production-gallery[data-single-sl
 html body.work-archive-page .wa-project .reuse-production-gallery[data-single-slide="true"] .reuse-production-gallery__status{display:none!important}
 
 @media(max-width:780px){
-  html body.work-archive-page #live-main>.wa-hero .hm-ds-hero__inner,
   html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{width:calc(100% - (var(--hm-inset-mobile,18px) * 2))!important;max-width:none!important}
   html body.work-archive-page #live-main>.wa-archive-content{padding:120px 0 120px!important}
   html body.work-archive-page .wa-switcher{top:17px;left:var(--hm-inset-mobile,18px);width:calc(100vw - 36px);max-width:none}
   html body.work-archive-page .wa-switcher__toggle{font-size:20px}
   html body.work-archive-page .wa-switcher__menu{width:calc(100vw - 36px);max-width:none;max-height:64vh}
-  html body.work-archive-page .wa-project+.wa-project{margin-top:64px}
+  html body.work-archive-page .wa-project+.wa-project{margin-top:120px}
   html body.work-archive-page .wa-project__head{margin-bottom:36px}
   html body.work-archive-page .wa-project__index{margin-bottom:9px;font-size:10px!important}
   html body.work-archive-page .wa-project__title{font-size:clamp(22px,6.6vw,28px)!important;line-height:1.1!important}
