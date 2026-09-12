@@ -1,0 +1,66 @@
+/* HIMART REUSE · Chapter 04 alignment bridge
+   Uses the canonical HIMART subsection typography/divider rhythm while preserving the existing markup. */
+html body.reuse-current #direction .prototype-intro.hm-subsection{
+  position:relative;
+  display:block!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  border-top:1px solid var(--hm-line-faint)!important;
+  padding-top:var(--hm-space-component,40px)!important;
+}
+
+/* 04.1 follows the same visual contract as .hm-subno without requiring custom page markup. */
+html body.reuse-current #direction .prototype-intro.hm-subsection::before{
+  content:"04.1";
+  display:block;
+  margin:0 0 20px;
+  color:var(--hm-blue);
+  font:400 12px/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+
+html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
+  margin:0!important;
+  max-width:none!important;
+  color:var(--hm-text-primary)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-subtitle,32px)!important;
+  font-weight:100!important;
+  line-height:var(--hm-leading-subtitle,1.25)!important;
+  letter-spacing:var(--hm-track-subtitle)!important;
+  word-break:keep-all!important;
+  text-wrap:balance;
+}
+
+html body.reuse-current #direction .prototype-intro.hm-subsection>p{
+  margin:20px 0 0!important;
+  max-width:var(--hm-description-max-chars,40ch)!important;
+  color:var(--hm-text-body)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body,16px)!important;
+  font-weight:300!important;
+  line-height:1.6!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* Wide editorial: chapter title on the left and 04.1 on the right start on the same authored row. */
+@media(min-width:1600px){
+  html body.reuse-current.hm-wide-editorial-test
+  #live-main>#direction.hm-section>.hm-wrap>.prototype-intro.hm-subsection{
+    grid-column:4!important;
+    grid-row:1!important;
+    align-self:start!important;
+    margin-top:0!important;
+    padding-top:var(--hm-space-component,40px)!important;
+  }
+}
+
+@media(max-width:780px){
+  html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
+    font-size:var(--hm-type-subtitle-mobile,28px)!important;
+  }
+}
