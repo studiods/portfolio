@@ -9,14 +9,14 @@
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
 
-<!-- Same foundation used by himart-reuse.html. -->
+<!-- Same foundation and gallery grammar used by himart-reuse.html. -->
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260911-1">
 <link rel="stylesheet" href="./design-system/components/reuse-production-gallery.css?v=20260910-9">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260909-12-reuse">
 <link rel="stylesheet" href="./design-system/navigation.css?v=20260912-7">
 <link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260909-3">
 <link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260910-3-overflow">
-<link rel="stylesheet" href="./design-system/components/work-archive.css?v=20260913-2">
+<link rel="stylesheet" href="./design-system/components/work-archive.css?v=20260913-3">
 </head>
 <body class="himart-page-body himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-ready himart-narrative-ready reuse-current hm-wide-editorial-test work-archive-page">
 <nav class="top" aria-label="Global navigation"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./index.html#contact">Contact</a></div></nav>
@@ -27,7 +27,7 @@
 </div>
 
 <main id="live-main">
-<header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover wa-hero" id="top" data-hm-hero>
+<header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover wa-hero" id="top" data-hm-hero data-hm-fade-distance="420">
   <div class="hm-wrap hm-ds-wrap hm-ds-hero__inner">
     <div class="hm-movie-copy hm-ds-hero__copy">
       <h1 class="hm-title hm-ds-hero__title">WORK ARCHIVE</h1>
@@ -44,12 +44,12 @@
   </div>
 </header>
 
-<div data-wa-stream></div>
+<section class="hm-section hm-ds-section wa-archive-content" data-wa-stream aria-label="Work archive projects"></section>
 </main>
 
 <footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>WORK ARCHIVE · 2005 - 2024</span><a href="#top">Back to top ↑</a></div></div></footer>
 <script src="./design-system/work-archive-data.js?v=20260912-8"></script>
-<script src="./design-system/work-archive.js?v=20260913-2"></script>
+<script src="./design-system/work-archive.js?v=20260913-3"></script>
 <script src="./design-system/animation.js?v=20260906-14"></script>
 <script src="./design-system/navigation.js?v=20260912-7"></script>
 </body>
