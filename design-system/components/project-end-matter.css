@@ -14,23 +14,22 @@ html body.himart-page-body .hm-project-reflection__inner{
 }
 html body.himart-page-body .hm-project-reflection__title{
   margin:0!important;
-  color:rgba(255,255,255,.5)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:32px!important;
-  font-weight:100!important;
-  font-variation-settings:"wght" 100!important;
-  line-height:1.18!important;
-  letter-spacing:var(--hm-track-subsection)!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
 }
 html body.himart-page-body .hm-project-reflection__copy{
-  margin:28px 0 0!important;
+  margin:32px 0 0!important;
   max-width:42ch!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:32px!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
-  line-height:1.42!important;
+  line-height:1.136!important;
   letter-spacing:var(--hm-track-subsection)!important;
   word-break:keep-all!important;
 }
@@ -38,6 +37,14 @@ html body.himart-page-body .hm-project-reflection__copy strong{
   color:#fff!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
+}
+
+/* On the wide editorial layout the reflection starts on the same left edge as the
+   sticky major-title rail, not on the narrower right content rail. */
+@media(min-width:1600px){
+  html body.himart-page-body .hm-project-reflection__inner{
+    width:min(calc(100% - 128px),1600px);
+  }
 }
 
 html body.himart-page-body .hm-project-footer{
@@ -118,7 +125,7 @@ html body.himart-page-body .hm-project-footer__label{
 }
 html body.himart-page-body .hm-project-footer__name{
   display:block;
-  margin:12px 0 0;
+  margin:4px 0 0;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:12px!important;
@@ -145,16 +152,19 @@ html body.himart-page-body .hm-project-footer__bottom-space{
   html body.himart-page-body .hm-project-footer__inner{
     width:calc(100% - 36px);
   }
-  html body.himart-page-body .hm-project-reflection__title,
-  html body.himart-page-body .hm-project-reflection__copy{
-    font-size:var(--hm-type-subsection-mobile,29px)!important;
+  html body.himart-page-body .hm-project-reflection__title{
+    font-size:12px!important;
   }
-  html body.himart-page-body .hm-project-reflection__copy{margin-top:20px!important}
+  html body.himart-page-body .hm-project-reflection__copy{
+    margin-top:32px!important;
+    font-size:var(--hm-type-subsection-mobile,29px)!important;
+    line-height:1.14!important;
+  }
   html body.himart-page-body .hm-project-footer__rail{
     min-height:110px;
     gap:20px;
   }
   html body.himart-page-body .hm-project-footer__link--prev{padding-left:22px}
   html body.himart-page-body .hm-project-footer__link--next{padding-right:22px}
-  html body.himart-page-body .hm-project-footer__name{max-width:28vw}
+  html body.himart-page-body .hm-project-footer__name{max-width:28vw;margin-top:4px}
 }
