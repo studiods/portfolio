@@ -1,4 +1,4 @@
-/* HIMART Design System v6.3 — static style entrypoint
+/* HIMART Design System v6.4 — static style entrypoint
    Animation remains separate: load design-system/animation.js explicitly. */
 @import url("./tokens.css?v=20260912-6");
 @import url("./typography.css?v=20260907-8");
@@ -30,3 +30,4 @@
 @import url("./components/gallery-rhythm.css?v=20260912-2");
 @import url("./components/project-end-matter.css?v=20260912-4");
 @import url("./components/graph-color-policy.css?v=20260912-2");
+@import url("./components/graph-color-legend-bridge.css?v=20260912-1");
