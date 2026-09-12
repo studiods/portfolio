@@ -1,0 +1,252 @@
+/* AIMMO Design System — final page-specific authority v1.0
+   Loaded after the shared editorial contract. Shared HIMART design-system rules stay untouched;
+   only AIMMO-specific synthesis, repeated-work flow and 02.2 Cloudworker insight modules live here. */
+
+/* 01.1 — synthesis label. The retired arrow is not part of the final DOM. */
+html body.aimmo-system-page #brand .aimmo-team-history-summary{
+  margin-top:64px!important;
+}
+html body.aimmo-system-page #brand .aimmo-team-history-summary__eyebrow{
+  display:block;
+  margin:0 0 18px;
+  color:var(--hm-blue);
+  font-family:var(--hm-font-en);
+  font-size:12px;
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:var(--hm-track-note);
+}
+html body.aimmo-system-page #brand .aimmo-team-history-summary h4{
+  margin:0!important;
+  max-width:none!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page #brand .aimmo-team-history-summary h4 + p{
+  margin:12px 0 0!important;
+}
+
+/* 01.2 — top/bottom repeated-work rows use a 40px vertical rhythm. */
+html body.aimmo-system-page #brand .aimmo-static-reuse-flow{
+  gap:40px!important;
+}
+
+/* 02.2 — Cloudworker observation becomes four full-rail insight modules. */
+html body.aimmo-system-page #data .aimmo-context-insights{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:72px;
+  width:100%;
+}
+html body.aimmo-system-page #data .aimmo-context-insight{
+  min-width:0;
+  padding-top:24px;
+  border-top:1px solid var(--hm-line-default);
+}
+html body.aimmo-system-page #data .aimmo-context-insight__label{
+  display:block;
+  margin:0;
+  color:var(--hm-blue);
+  font:400 12px/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.aimmo-system-page #data .aimmo-context-insight h4{
+  margin:18px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-system-page #data .aimmo-context-insight__copy{
+  margin:10px 0 0!important;
+  max-width:58ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* Shared graph frame for DURATION / DECISION / OUTPUT. */
+html body.aimmo-system-page #data .aimmo-survey-chart{
+  --aimmo-chart-dark-blue:#0669A8;
+  position:relative;
+  width:100%;
+  margin-top:32px;
+  padding:26px 0 0;
+}
+html body.aimmo-system-page #data .aimmo-survey-chart__plot{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:24px;
+  align-items:end;
+  width:100%;
+  min-height:330px;
+  padding:0 0 34px;
+  border-bottom:1px solid rgba(255,255,255,.16);
+  background-image:repeating-linear-gradient(to top,rgba(255,255,255,.08) 0,rgba(255,255,255,.08) 1px,transparent 1px,transparent 25%);
+  background-size:100% calc(100% - 34px);
+  background-position:0 0;
+  background-repeat:no-repeat;
+}
+html body.aimmo-system-page #data .aimmo-survey-bar{
+  position:relative;
+  display:grid;
+  grid-template-rows:minmax(0,1fr) auto;
+  align-items:end;
+  min-width:0;
+  height:296px;
+}
+html body.aimmo-system-page #data .aimmo-survey-bar__column{
+  display:flex;
+  width:100%;
+  height:250px;
+  align-items:flex-end;
+}
+html body.aimmo-system-page #data .aimmo-survey-bar__fill{
+  display:block;
+  width:100%;
+  height:calc(var(--value,50) * 1%);
+  min-height:8px;
+  border-radius:12px 12px 0 0;
+  background:var(--bar-color,var(--hm-blue));
+  opacity:var(--bar-opacity,1);
+  transform-origin:center bottom;
+}
+html body.aimmo-system-page #data .aimmo-survey-bar__label{
+  display:block;
+  min-height:18px;
+  margin-top:12px;
+  color:rgba(255,255,255,.78);
+  font-family:var(--hm-font-ko);
+  font-size:12px;
+  font-weight:300;
+  line-height:1.35;
+  letter-spacing:var(--hm-track-body);
+  text-align:center;
+  word-break:keep-all;
+}
+html body.aimmo-system-page #data .aimmo-survey-chart__source{
+  display:block;
+  margin-top:18px;
+  color:var(--hm-text-tertiary);
+  font-family:var(--hm-font-ko);
+  font-size:10px;
+  font-weight:300;
+  line-height:1.4;
+  letter-spacing:var(--hm-track-base);
+}
+
+/* DURATION — first two periods recede, evening/night remain full emphasis. */
+html body.aimmo-system-page #data .aimmo-survey-chart--duration .aimmo-survey-bar:nth-child(-n+2){
+  --bar-opacity:.30;
+}
+html body.aimmo-system-page #data .aimmo-survey-chart--duration .aimmo-survey-bar:nth-child(1){--bar-color:var(--hm-green)}
+html body.aimmo-system-page #data .aimmo-survey-chart--duration .aimmo-survey-bar:nth-child(2){--bar-color:var(--aimmo-chart-dark-blue)}
+html body.aimmo-system-page #data .aimmo-survey-chart--duration .aimmo-survey-bar:nth-child(3){--bar-color:var(--hm-blue)}
+html body.aimmo-system-page #data .aimmo-survey-chart--duration .aimmo-survey-bar:nth-child(4){--bar-color:var(--hm-blue-new)}
+
+/* ENVIRONMENT — full-width field image, not another gallery. */
+html body.aimmo-system-page #data .aimmo-context-environment__media{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/7;
+  margin-top:32px;
+  overflow:hidden;
+  background:#080808;
+}
+html body.aimmo-system-page #data .aimmo-context-environment__media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+html body.aimmo-system-page #data .aimmo-context-environment__media::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.42),transparent 45%);
+  pointer-events:none;
+}
+
+/* DECISION — same visual grammar as DURATION, with the strongest state/next-action signals. */
+html body.aimmo-system-page #data .aimmo-survey-chart--decision .aimmo-survey-bar:nth-child(1){--bar-color:var(--hm-blue);--bar-opacity:1}
+html body.aimmo-system-page #data .aimmo-survey-chart--decision .aimmo-survey-bar:nth-child(2){--bar-color:var(--hm-blue-new);--bar-opacity:1}
+html body.aimmo-system-page #data .aimmo-survey-chart--decision .aimmo-survey-bar:nth-child(3){--bar-color:var(--hm-green);--bar-opacity:.55}
+html body.aimmo-system-page #data .aimmo-survey-chart--decision .aimmo-survey-bar:nth-child(4){--bar-color:var(--aimmo-chart-dark-blue);--bar-opacity:.55}
+
+/* OUTPUT — three survey views rotate every 5 seconds. */
+html body.aimmo-system-page #data .aimmo-output-rotator{
+  position:relative;
+  width:100%;
+  margin-top:32px;
+}
+html body.aimmo-system-page #data .aimmo-output-graph{
+  display:none;
+  margin:0;
+}
+html body.aimmo-system-page #data .aimmo-output-graph.is-active{
+  display:block;
+  animation:aimmoOutputFade .34s ease both;
+}
+html body.aimmo-system-page #data .aimmo-output-graph__title{
+  display:block;
+  margin:0 0 4px;
+  color:#fff;
+  font-family:var(--hm-font-ko);
+  font-size:14px;
+  font-weight:300;
+  line-height:1.35;
+  letter-spacing:var(--hm-track-body);
+}
+html body.aimmo-system-page #data .aimmo-output-graph__note{
+  display:block;
+  margin:0;
+  color:var(--hm-text-tertiary);
+  font-family:var(--hm-font-ko);
+  font-size:11px;
+  font-weight:300;
+  line-height:1.35;
+}
+html body.aimmo-system-page #data .aimmo-output-rotator__status{
+  display:flex;
+  gap:6px;
+  margin-top:16px;
+}
+html body.aimmo-system-page #data .aimmo-output-rotator__status i{
+  display:block;
+  width:22px;
+  height:1px;
+  background:rgba(255,255,255,.22);
+}
+html body.aimmo-system-page #data .aimmo-output-rotator__status i.is-active{
+  background:var(--hm-blue);
+}
+@keyframes aimmoOutputFade{from{opacity:0}to{opacity:1}}
+
+@media(max-width:780px){
+  html body.aimmo-system-page #data .aimmo-context-insights{gap:56px}
+  html body.aimmo-system-page #data .aimmo-survey-chart__plot{gap:10px;min-height:260px;padding-bottom:30px}
+  html body.aimmo-system-page #data .aimmo-survey-bar{height:226px}
+  html body.aimmo-system-page #data .aimmo-survey-bar__column{height:188px}
+  html body.aimmo-system-page #data .aimmo-survey-bar__label{font-size:10px}
+  html body.aimmo-system-page #data .aimmo-context-environment__media{aspect-ratio:4/3}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.aimmo-system-page #data .aimmo-output-graph.is-active{animation:none}
+}
