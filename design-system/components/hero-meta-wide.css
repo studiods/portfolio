@@ -1,0 +1,34 @@
+/*
+  DETAIL HERO META — wide editorial width contract.
+
+  At the >=1600px editorial breakpoint, detail-page content is composed from:
+  left title rail (max 440px) + inter-rail gap (max 100px) + right content rail (max 1060px).
+  The Hero title/copy remains on its canonical inner rail, while the bottom metadata footer
+  expands independently to the same combined editorial span.
+
+  On narrower wide screens, the 64px minimum outer inset wins, matching the actual split
+  editorial canvas instead of forcing a fixed 1600px width.
+
+  Canonical detail pages use .hm-ds-hero__bottom. StepUp still uses the legacy
+  .hm-hero-bottom class, so both are intentionally covered here. Page-local width overrides
+  should not be added; this component is the single owner of the wide Hero meta rail width.
+*/
+
+html body.himart-page-body.hm-wide-editorial-test{
+  --hm-detail-editorial-span:1600px;
+  --hm-detail-editorial-edge-min:64px;
+}
+
+@media(min-width:1600px){
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__bottom,.hm-hero-bottom){
+    left:50%!important;
+    right:auto!important;
+    width:min(
+      calc(100vw - (2 * var(--hm-wide-edge-min,var(--hm-detail-editorial-edge-min)))),
+      var(--hm-detail-editorial-span)
+    )!important;
+    max-width:none!important;
+    transform:translateX(-50%)!important;
+    box-sizing:border-box!important;
+  }
+}
