@@ -5,6 +5,7 @@
   const titleTargets = Array.from(document.querySelectorAll(
     '.about-hero-title, ' +
     '.thinking-section .about-statement, ' +
+    '.leadership-section .about-statement, ' +
     '.interview-section .about-statement'
   ));
   const titleRevealLines = new Set(
@@ -13,6 +14,7 @@
 
   const sectionLabels = Array.from(document.querySelectorAll(
     '.thinking-section > .about-section-label, ' +
+    '.leadership-section > .about-section-label, ' +
     '.interview-section > .about-section-label, ' +
     '.career-section > .about-section-label'
   ));
