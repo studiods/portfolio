@@ -154,28 +154,12 @@
       chartObserver.observe(el);
     };
 
-    const waitForFrame = video => new Promise(resolve => {
-      let settled = false;
-      const done = () => {
-        if (settled) return;
-        settled = true;
-        resolve();
-      };
-      if ('requestVideoFrameCallback' in video) {
-        video.requestVideoFrameCallback(done);
-        window.setTimeout(done, 260);
-      } else {
-        video.addEventListener('playing', () => requestAnimationFrame(done), {once:true});
-        window.setTimeout(done, 260);
-      }
-    });
-
     /*
-      Efficient sequence strategy:
-      - one video element only; no hidden clone or second decoder;
-      - when a clip ends, fade the single element to black, replace src, then reveal after
-        the next clip has produced its first frame;
-      - visibility control pauses the same element offscreen and resumes it in place.
+      Generic sequence fallback:
+      - native `ended` is the only playlist-advance signal;
+      - no opacity animation, fade-to-black class or artificial end hold is used;
+      - page-specific hero/WORKS controllers may replace this with a preloaded two-player
+        handoff when zero-gap visual continuity is required.
     */
     const registerVideoSequence = (video) => {
       if (videoSequences.has(video)) return;
@@ -193,30 +177,34 @@
       video.pause();
       video.preload = 'metadata';
       video.muted = true;
+      video.defaultMuted = true;
       video.setAttribute('muted', '');
       video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.style.transition = 'none';
+      video.style.opacity = '1';
+      video.classList.remove('is-sequence-switching');
 
       let index = 0;
-      let switching = false;
+      let changing = false;
       let visible = false;
+      let startedCurrent = false;
 
-      const revealCurrent = async () => {
-        if (!visible || !switching) return;
+      const absoluteSrc = src => new URL(src, document.baseURI).href;
+      const currentMatches = () => (video.currentSrc || video.src || '') === absoluteSrc(sequence[index]);
+
+      const playCurrent = () => {
+        if (!visible || document.hidden || changing || video.ended) return;
         video.preload = 'auto';
         const attempt = video.play?.();
-        if (attempt && attempt.catch) await attempt.catch(() => {});
-        if (!visible) return;
-        await waitForFrame(video);
-        if (!visible) return;
-        video.classList.remove('is-sequence-switching');
-        switching = false;
+        if (attempt?.catch) attempt.catch(() => {});
       };
 
       const switchToNext = () => {
-        if (switching) return;
-        switching = true;
-        video.classList.add('is-sequence-switching');
+        if (changing || !startedCurrent || !video.ended || !currentMatches()) return;
+        changing = true;
         index = (index + 1) % sequence.length;
+        startedCurrent = false;
         video.pause();
         video.src = sequence[index];
         video.preload = visible ? 'auto' : 'metadata';
@@ -225,7 +213,8 @@
         const onReady = () => {
           video.removeEventListener('loadeddata', onReady);
           video.removeEventListener('canplay', onReady);
-          if (visible) revealCurrent();
+          changing = false;
+          if (visible && !document.hidden) playCurrent();
         };
 
         if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) onReady();
@@ -235,6 +224,9 @@
         }
       };
 
+      video.addEventListener('playing', () => {
+        if (!changing && currentMatches()) startedCurrent = true;
+      });
       video.addEventListener('ended', switchToNext);
 
       video.__hmSequenceController = {
@@ -244,13 +236,11 @@
             video.pause();
             return;
           }
-          video.preload = 'auto';
-          if (switching) {
-            revealCurrent();
+          if (video.ended) {
+            switchToNext();
             return;
           }
-          const attempt = video.play?.();
-          if (attempt && attempt.catch) attempt.catch(() => {});
+          playCurrent();
         }
       };
     };
