@@ -7,9 +7,10 @@
    - PROJECT REFLECTION and its copy live in the right content rail and are right-aligned.
 
    Footer contract
-   - the 20% white divider sits ABOVE the previous/next project rail;
-   - the rail content is vertically centered below that line;
-   - 60px bottom space remains after the rail.
+   - 20% white rules sit above and below the navigation rail;
+   - on wide editorial layouts the rail spans the same combined left-title + gap + right-content width;
+   - rail height is exactly 60px and text is vertically centered;
+   - arrows match the two-line text block height and use 30% white opacity.
 */
 
 html body.himart-page-body .hm-project-reflection{position:relative;width:100%;margin:0;padding:0 0 140px;border-top:0;background:#000}
@@ -39,17 +40,19 @@ html body.himart-page-body .hm-project-footer__rail{
   display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center;
-  min-height:116px;
+  height:60px;
+  min-height:60px;
+  box-sizing:border-box;
   border-top:1px solid rgba(255,255,255,.20);
-  border-bottom:0;
+  border-bottom:1px solid rgba(255,255,255,.20);
 }
-html body.himart-page-body .hm-project-footer__link{position:relative;display:flex;min-width:0;align-items:center;gap:16px;color:#fff!important;text-decoration:none!important}
-html body.himart-page-body .hm-project-footer__link--prev{justify-self:start;padding-left:28px;text-align:left}
-html body.himart-page-body .hm-project-footer__link--next{justify-self:end;flex-direction:row-reverse;padding-right:28px;text-align:right}
-html body.himart-page-body .hm-project-footer__arrow{position:absolute;top:50%;width:14px;height:14px;transform:translateY(-50%)}
+html body.himart-page-body .hm-project-footer__link{position:relative;display:flex;min-width:0;height:100%;align-items:center;gap:16px;color:#fff!important;text-decoration:none!important}
+html body.himart-page-body .hm-project-footer__link--prev{justify-self:start;padding-left:40px;text-align:left}
+html body.himart-page-body .hm-project-footer__link--next{justify-self:end;flex-direction:row-reverse;padding-right:40px;text-align:right}
+html body.himart-page-body .hm-project-footer__arrow{position:absolute;top:50%;width:30px;height:32px;transform:translateY(-50%);opacity:.30}
 html body.himart-page-body .hm-project-footer__link--prev .hm-project-footer__arrow{left:0}
 html body.himart-page-body .hm-project-footer__link--next .hm-project-footer__arrow{right:0}
-html body.himart-page-body .hm-project-footer__arrow::before{content:"";position:absolute;top:50%;left:50%;width:8px;height:8px;border-top:1px solid rgba(255,255,255,.78);border-right:1px solid rgba(255,255,255,.78)}
+html body.himart-page-body .hm-project-footer__arrow::before{content:"";position:absolute;top:50%;left:50%;width:18px;height:18px;border-top:1px solid #fff;border-right:1px solid #fff}
 html body.himart-page-body .hm-project-footer__link--prev .hm-project-footer__arrow::before{transform:translate(-35%,-50%) rotate(-135deg)}
 html body.himart-page-body .hm-project-footer__link--next .hm-project-footer__arrow::before{transform:translate(-65%,-50%) rotate(45deg)}
 html body.himart-page-body .hm-project-footer__meta{display:block;min-width:0}
@@ -58,6 +61,10 @@ html body.himart-page-body .hm-project-footer__name{display:block;margin:4px 0 0
 html body.himart-page-body .hm-project-footer__name.is-en{font-family:var(--hm-font-en)!important;font-weight:300!important;letter-spacing:var(--hm-track-note)!important}
 html body.himart-page-body .hm-project-footer__bottom-space{height:60px}
 
+@media(min-width:1600px){
+  html body.himart-page-body .hm-project-footer__inner{width:min(calc(100% - 128px),1600px)}
+}
+
 @media(max-width:780px){
   html body.himart-page-body .hm-project-reflection{padding-bottom:100px}
   html body.himart-page-body .hm-project-reflection__inner,
@@ -65,8 +72,10 @@ html body.himart-page-body .hm-project-footer__bottom-space{height:60px}
   html body.himart-page-body .hm-project-reflection__inner{padding-top:80px}
   html body.himart-page-body .hm-project-reflection__title{font-size:12px!important}
   html body.himart-page-body .hm-project-reflection__copy{margin-top:32px!important;font-size:var(--hm-type-subsection-mobile,29px)!important;line-height:1.368!important}
-  html body.himart-page-body .hm-project-footer__rail{min-height:110px;gap:20px}
-  html body.himart-page-body .hm-project-footer__link--prev{padding-left:22px}
-  html body.himart-page-body .hm-project-footer__link--next{padding-right:22px}
+  html body.himart-page-body .hm-project-footer__rail{height:60px;min-height:60px;gap:20px}
+  html body.himart-page-body .hm-project-footer__link--prev{padding-left:32px}
+  html body.himart-page-body .hm-project-footer__link--next{padding-right:32px}
+  html body.himart-page-body .hm-project-footer__arrow{width:24px;height:28px}
+  html body.himart-page-body .hm-project-footer__arrow::before{width:14px;height:14px}
   html body.himart-page-body .hm-project-footer__name{max-width:28vw;margin-top:4px}
 }
