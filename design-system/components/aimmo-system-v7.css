@@ -1,4 +1,4 @@
-/* AIMMO DESIGN SYSTEM v7.1 — page-specific refinements only.
+/* AIMMO DESIGN SYSTEM v7.2 — page-specific refinements only.
    Shared title rhythm, gallery rhythm, project reflection and project navigation stay design-system owned.
    03.1 ownership capsule is intentionally local to this page and is NOT a shared component. */
 
@@ -35,64 +35,22 @@ html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
   left:auto!important;
   background-image:linear-gradient(to bottom left,transparent calc(50% - .5px),rgba(255,255,255,.30) 50%,transparent calc(50% + .5px))!important;
 }
-html body.aimmo-system-page .aimmo-team-history-summary h4{
-  line-height:1.28!important;
-}
-html body.aimmo-system-page .aimmo-team-history-summary h4 + p{
-  margin:12px 0 0!important;
-}
+html body.aimmo-system-page .aimmo-team-history-summary h4{line-height:1.28!important}
+html body.aimmo-system-page .aimmo-team-history-summary h4 + p{margin:12px 0 0!important}
 
-/* 01.2 — circles 02/03/05/06 use the same neutral outline as every other circle.
-   The red repetition capsule itself remains as contextual emphasis. */
-html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-node{
-  border-color:var(--hm-line-default)!important;
-}
+/* 01.2 — circles 02/03/05/06 use the same neutral outline as every other circle. */
+html body.aimmo-system-page .aimmo-repeat-capsule .reuse-confidence-node{border-color:var(--hm-line-default)!important}
 
 /* 02.3 — same rolling-gallery plane and caption language as 02.1. */
-html body.aimmo-system-page .aimmo-improvement-gallery{
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:var(--hm-gallery-gap,20px)!important;
-  width:100%!important;
-}
-html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card{
-  aspect-ratio:16/9!important;
-}
-html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption{
-  position:absolute!important;
-  z-index:4!important;
-  right:40px!important;
-  bottom:36px!important;
-  left:40px!important;
-  max-width:760px!important;
-}
-html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption span{
-  display:block!important;
-  margin-bottom:10px!important;
-  color:var(--hm-blue)!important;
-  font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
-  display:block!important;
-  color:#fff!important;
-  font:400 22px/1.32 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 400!important;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
-}
-html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
-  margin:10px 0 0!important;
-  max-width:62ch!important;
-  color:rgba(255,255,255,.88)!important;
-  font:100 16px/1.52 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 100!important;
-  letter-spacing:var(--hm-track-body)!important;
-  word-break:keep-all!important;
-}
+html body.aimmo-system-page .aimmo-improvement-gallery{display:grid!important;grid-template-columns:1fr!important;gap:var(--hm-gallery-gap,20px)!important;width:100%!important}
+html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card{aspect-ratio:16/9!important}
+html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption{position:absolute!important;z-index:4!important;right:40px!important;bottom:36px!important;left:40px!important;max-width:760px!important}
+html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption span{display:block!important;margin-bottom:10px!important;color:var(--hm-blue)!important;font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important}
+html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{display:block!important;color:#fff!important;font:400 22px/1.32 var(--hm-font-ko)!important;font-variation-settings:"wght" 400!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{margin:10px 0 0!important;max-width:62ch!important;color:rgba(255,255,255,.88)!important;font:100 16px/1.52 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
-/* 03.1 — local five-owner alignment capsule. Larger circles are derived from the
-   available rail width, and the outer blue tablet grows with the circle geometry. */
+/* 03.1 — local five-owner alignment capsule. Circle geometry is responsive; title typography
+   follows the same container-relative scale but caps at the requested 22px. */
 html body.aimmo-system-page .aimmo-ownership-sync{
   --aimmo-owner-gap:clamp(8px,1vw,12px);
   --aimmo-owner-size:clamp(152px,calc((100cqw - 36px - (var(--aimmo-owner-gap) * 4)) / 5),214px);
@@ -107,274 +65,74 @@ html body.aimmo-system-page .aimmo-ownership-sync{
   background:#000;
   container-type:inline-size;
 }
-html body.aimmo-system-page .aimmo-ownership-sync__label{
-  position:absolute;
-  z-index:3;
-  top:0;
-  left:50%;
-  transform:translate(-50%,-50%);
-  margin:0;
-  padding:0 16px;
-  background:#000;
-  color:var(--hm-blue);
-  font-family:var(--hm-font-ko);
-  font-size:12px;
-  font-weight:300;
-  line-height:1.25;
-  letter-spacing:var(--hm-track-body);
-  white-space:nowrap;
-}
-html body.aimmo-system-page .aimmo-ownership-sync__node{
-  display:flex;
-  width:min(100%,var(--aimmo-owner-size));
-  aspect-ratio:1/1;
-  min-width:0;
-  margin:auto;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:clamp(14px,2cqi,24px);
-  border:1px solid var(--hm-line-default);
-  border-radius:50%;
-  background:#000;
-  text-align:center;
-  container-type:inline-size;
-}
-html body.aimmo-system-page .aimmo-ownership-sync__node>span{
-  color:var(--hm-blue)!important;
-  font:300 clamp(9px,5cqi,12px)/1 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
+html body.aimmo-system-page .aimmo-ownership-sync__label{position:absolute;z-index:3;top:0;left:50%;transform:translate(-50%,-50%);margin:0;padding:0 16px;background:#000;color:var(--hm-blue);font-family:var(--hm-font-ko);font-size:12px;font-weight:300;line-height:1.25;letter-spacing:var(--hm-track-body);white-space:nowrap}
+html body.aimmo-system-page .aimmo-ownership-sync__node{display:flex;width:min(100%,var(--aimmo-owner-size));aspect-ratio:1/1;min-width:0;margin:auto;flex-direction:column;align-items:center;justify-content:center;padding:clamp(14px,2cqi,24px);border:1px solid var(--hm-line-default);border-radius:50%;background:#000;text-align:center;container-type:inline-size}
+html body.aimmo-system-page .aimmo-ownership-sync__node>span{color:var(--hm-blue)!important;font:300 clamp(9px,5cqi,12px)/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important}
 html body.aimmo-system-page .aimmo-ownership-sync__node h4{
   margin:clamp(10px,5cqi,16px) 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:clamp(18px,11cqi,24.2px)!important;
+  font-size:clamp(16px,10.3cqi,22px)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
   line-height:1.16!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
-html body.aimmo-system-page .aimmo-ownership-sync__node p{
-  margin:clamp(8px,4cqi,12px) 0 0!important;
-  max-width:16ch!important;
-  color:var(--hm-description-color)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:clamp(10px,6cqi,12px)!important;
-  font-weight:300!important;
-  line-height:1.42!important;
-  letter-spacing:var(--hm-track-body)!important;
-  word-break:keep-all!important;
-}
+html body.aimmo-system-page .aimmo-ownership-sync__node p{margin:clamp(8px,4cqi,12px) 0 0!important;max-width:16ch!important;color:var(--hm-description-color)!important;font-family:var(--hm-font-ko)!important;font-size:clamp(10px,6cqi,12px)!important;font-weight:300!important;line-height:1.42!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
 /* 03.3 — four single-image square galleries, no rolling controls. */
-html body.aimmo-system-page .aimmo-family-gallery{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px!important;
-  width:100%;
-}
-html body.aimmo-system-page .aimmo-family-gallery__item{
-  position:relative;
-  aspect-ratio:1/1;
-  min-width:0;
-  margin:0;
-  overflow:hidden;
-  background:#080808;
-  isolation:isolate;
-}
-html body.aimmo-system-page .aimmo-family-gallery__item img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-html body.aimmo-system-page .aimmo-family-gallery__item::after{
-  content:"";
-  position:absolute;
-  z-index:1;
-  right:0;
-  bottom:0;
-  left:0;
-  height:46%;
-  background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0));
-  pointer-events:none;
-}
-html body.aimmo-system-page .aimmo-family-gallery__copy{
-  position:absolute;
-  z-index:2;
-  right:28px;
-  bottom:26px;
-  left:28px;
-}
-html body.aimmo-system-page .aimmo-family-gallery__copy span{
-  display:block;
-  color:var(--hm-blue);
-  font:400 var(--hm-type-note)/1.2 var(--hm-font-en);
-  letter-spacing:var(--hm-track-note);
-}
-html body.aimmo-system-page .aimmo-family-gallery__copy h4{
-  min-height:28px;
-  margin:12px 0 0!important;
-  color:#fff!important;
-  font:300 var(--hm-type-group)/1.28 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 300!important;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
-}
-html body.aimmo-system-page .aimmo-family-gallery__copy p{
-  min-height:36px;
-  margin:8px 0 0!important;
-  max-width:36ch!important;
-  color:rgba(255,255,255,.72)!important;
-  font:300 12px/1.48 var(--hm-font-ko)!important;
-  letter-spacing:var(--hm-track-body)!important;
-  word-break:keep-all!important;
-}
+html body.aimmo-system-page .aimmo-family-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;width:100%}
+html body.aimmo-system-page .aimmo-family-gallery__item{position:relative;aspect-ratio:1/1;min-width:0;margin:0;overflow:hidden;background:#080808;isolation:isolate}
+html body.aimmo-system-page .aimmo-family-gallery__item img{display:block;width:100%;height:100%;object-fit:cover}
+html body.aimmo-system-page .aimmo-family-gallery__item::after{content:"";position:absolute;z-index:1;right:0;bottom:0;left:0;height:46%;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0));pointer-events:none}
+html body.aimmo-system-page .aimmo-family-gallery__copy{position:absolute;z-index:2;right:28px;bottom:26px;left:28px}
+html body.aimmo-system-page .aimmo-family-gallery__copy span{display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.aimmo-system-page .aimmo-family-gallery__copy h4{min-height:28px;margin:12px 0 0!important;color:#fff!important;font:300 var(--hm-type-group)/1.28 var(--hm-font-ko)!important;font-variation-settings:"wght" 300!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+html body.aimmo-system-page .aimmo-family-gallery__copy p{min-height:36px;margin:8px 0 0!important;max-width:36ch!important;color:rgba(255,255,255,.72)!important;font:300 12px/1.48 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
-/* 03.4 — the three operating-system cards are the main structure; the former 30%+
-   reduction diagram is compressed into the fourth card. */
-html body.aimmo-system-page .aimmo-repackage-grid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:28px;
-  width:100%;
-}
-html body.aimmo-system-page .aimmo-repackage-card{
-  min-width:0;
-  padding:24px 0 28px;
-  border-top:1px solid var(--hm-line-default);
-}
-html body.aimmo-system-page .aimmo-repackage-card.is-accent{
-  border-top-color:var(--hm-blue);
-}
-html body.aimmo-system-page .aimmo-repackage-card>span{
-  display:block;
-  color:var(--hm-blue);
-  font:400 12px/1.2 var(--hm-font-en);
-  letter-spacing:var(--hm-track-note);
-}
-html body.aimmo-system-page .aimmo-repackage-card h4{
-  margin:32px 0 0!important;
-  min-height:58px;
-  color:#fff!important;
-  font:100 22px/1.32 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 100!important;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
-}
-html body.aimmo-system-page .aimmo-repackage-card p{
-  margin:16px 0 0!important;
-  max-width:25ch!important;
-  color:var(--hm-description-color)!important;
-  font:300 12px/1.55 var(--hm-font-ko)!important;
-  letter-spacing:var(--hm-track-body)!important;
-  word-break:keep-all!important;
-}
+/* 03.4 — all four cards use one top-rule and one title typographic hierarchy. */
+html body.aimmo-system-page .aimmo-repackage-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;width:100%}
+html body.aimmo-system-page .aimmo-repackage-card{min-width:0;padding:24px 0 28px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.aimmo-system-page .aimmo-repackage-card.is-accent{border-top-color:var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.aimmo-system-page .aimmo-repackage-card>span{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.aimmo-system-page .aimmo-repackage-card h4{margin:32px 0 0!important;min-height:58px;color:#fff!important;font:100 22px/1.32 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+html body.aimmo-system-page .aimmo-repackage-card p{margin:16px 0 0!important;max-width:25ch!important;color:var(--hm-description-color)!important;font:300 12px/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 html body.aimmo-system-page .aimmo-repackage-card.is-accent h4 strong{
-  color:var(--hm-blue);
-  font:300 32px/1 var(--hm-font-en);
-  letter-spacing:var(--hm-track-data-number);
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.32!important;
+  letter-spacing:var(--hm-track-group)!important;
 }
 
-/* 04.1 — local four-color productivity bar chart. Colors stay AIMMO-only. */
-html body.aimmo-system-page .aimmo-impact-chart{
-  --aimmo-impact-blue-dark:#0669A8;
-  width:100%;
-  padding:32px 0 0;
-  border-top:1px solid var(--hm-line-default);
-}
-html body.aimmo-system-page .aimmo-impact-chart__rows{
-  display:grid;
-  gap:24px;
-}
-html body.aimmo-system-page .aimmo-impact-chart__row{
-  display:grid;
-  grid-template-columns:minmax(190px,.78fr) minmax(0,2.2fr) 96px;
-  gap:20px;
-  align-items:center;
-}
-html body.aimmo-system-page .aimmo-impact-chart__label strong{
-  display:block;
-  margin:0;
-  color:#fff;
-  font:300 16px/1.3 var(--hm-font-ko);
-  letter-spacing:var(--hm-track-body);
-  word-break:keep-all;
-}
-html body.aimmo-system-page .aimmo-impact-chart__label span{
-  display:block;
-  margin-top:6px;
-  color:var(--hm-text-tertiary);
-  font:300 11px/1.3 var(--hm-font-en);
-  letter-spacing:var(--hm-track-note);
-}
-html body.aimmo-system-page .aimmo-impact-chart__track{
-  position:relative;
-  height:56px;
-  overflow:hidden;
-  background:rgba(255,255,255,.07);
-}
-html body.aimmo-system-page .aimmo-impact-chart__bar{
-  display:block;
-  width:var(--value);
-  height:100%;
-  transform-origin:left center;
-  background:var(--color);
-}
-html body.aimmo-system-page .aimmo-impact-chart__value{
-  color:#fff;
-  font:300 42px/1 var(--hm-font-en);
-  letter-spacing:var(--hm-track-data-number);
-  text-align:right;
-  font-variant-numeric:tabular-nums;
-}
+/* 04.1 compatibility; final authority continues in aimmo-system-final.css. */
+html body.aimmo-system-page .aimmo-impact-chart{width:100%;padding:32px 0 0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.aimmo-system-page .aimmo-impact-chart__rows{display:grid;gap:24px}
+html body.aimmo-system-page .aimmo-impact-chart__row{display:grid;grid-template-columns:minmax(190px,.78fr) minmax(0,2.2fr) 96px;gap:20px;align-items:center}
+html body.aimmo-system-page .aimmo-impact-chart__label strong{display:block;margin:0;color:#fff;font:300 16px/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+html body.aimmo-system-page .aimmo-impact-chart__label span{display:block;margin-top:6px;color:var(--hm-text-tertiary);font:300 11px/1.3 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.aimmo-system-page .aimmo-impact-chart__track{position:relative;height:56px;overflow:hidden;background:rgba(255,255,255,.07)}
+html body.aimmo-system-page .aimmo-impact-chart__bar{display:block;width:var(--value);height:100%;transform-origin:left center;background:var(--color)}
+html body.aimmo-system-page .aimmo-impact-chart__value{color:#fff;font:300 42px/1 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);text-align:right;font-variant-numeric:tabular-nums}
 
 @media(max-width:1180px){
-  html body.aimmo-system-page .aimmo-ownership-sync{
-    padding:24px 14px;
-  }
-  html body.aimmo-system-page .aimmo-repackage-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
+  html body.aimmo-system-page .aimmo-ownership-sync{padding:24px 14px}
+  html body.aimmo-system-page .aimmo-repackage-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:780px){
-  html body.aimmo-system-page .aimmo-team-history-summary__arrow{
-    width:40%!important;
-    height:32px!important;
-  }
+  html body.aimmo-system-page .aimmo-team-history-summary__arrow{width:40%!important;height:32px!important}
   html body.aimmo-system-page .aimmo-team-history-summary__arrow::before,
-  html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{
-    height:32px!important;
-  }
-  html body.aimmo-system-page .aimmo-ownership-sync{
-    grid-template-columns:1fr;
-    gap:14px;
-    padding:34px 18px 22px;
-    border-radius:44px;
-  }
-  html body.aimmo-system-page .aimmo-ownership-sync__label{
-    max-width:76vw;
-    white-space:normal;
-    text-align:center;
-  }
-  html body.aimmo-system-page .aimmo-ownership-sync__node{
-    width:min(280px,76vw);
-  }
+  html body.aimmo-system-page .aimmo-team-history-summary__arrow::after{height:32px!important}
+  html body.aimmo-system-page .aimmo-ownership-sync{grid-template-columns:1fr;gap:14px;padding:34px 18px 22px;border-radius:44px}
+  html body.aimmo-system-page .aimmo-ownership-sync__label{max-width:76vw;white-space:normal;text-align:center}
+  html body.aimmo-system-page .aimmo-ownership-sync__node{width:min(280px,76vw)}
   html body.aimmo-system-page .aimmo-family-gallery,
-  html body.aimmo-system-page .aimmo-repackage-grid{
-    grid-template-columns:1fr;
-  }
-  html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption{
-    right:24px!important;
-    bottom:24px!important;
-    left:24px!important;
-  }
-  html body.aimmo-system-page .aimmo-impact-chart__row{
-    grid-template-columns:1fr 78px;
-    gap:10px 14px;
-  }
+  html body.aimmo-system-page .aimmo-repackage-grid{grid-template-columns:1fr}
+  html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption{right:24px!important;bottom:24px!important;left:24px!important}
+  html body.aimmo-system-page .aimmo-impact-chart__row{grid-template-columns:1fr 78px;gap:10px 14px}
   html body.aimmo-system-page .aimmo-impact-chart__track{grid-column:1/-1;grid-row:2;height:44px}
   html body.aimmo-system-page .aimmo-impact-chart__value{grid-column:2;grid-row:1;font-size:32px}
 }
