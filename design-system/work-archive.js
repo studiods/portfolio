@@ -9,16 +9,12 @@
   const menuShell=document.querySelector('[data-wa-menu-shell]');
   if(!stream||!menu)return;
 
-  const HOLD_MS=2500;
   const TRANSITION_MS=720;
   const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pad=n=>String(n).padStart(2,'0');
   const pad3=n=>String(n).padStart(3,'0');
 
-  /* Source extraction was created in contiguous portfolio blocks. These prefixes match
-     the files currently stored in assets/image/work-archive without creating derivatives. */
   const sourcePrefix=page=>{
     if(page<=33)return'aimmo';
     if(page<=45)return'trenbe';
@@ -28,8 +24,51 @@
   };
   const sourcePath=page=>`./assets/image/work-archive/archive-${sourcePrefix(page)}-p${pad3(page)}.webp`;
 
-  /* Preserve the original WORKS switcher requirement: published cases stay navigable,
-     while only unpublished projects are rendered in this archive page. */
+  /* Long portfolio descriptions are distributed across manual gallery pages instead of
+     stacking the entire paragraph over every image. Short copy remains on the first page. */
+  const splitLongUnit=(unit,target)=>{
+    const words=unit.split(/\s+/).filter(Boolean);
+    if(unit.length<=target||words.length<2)return[unit];
+    const result=[];
+    let current='';
+    words.forEach(word=>{
+      const next=current?`${current} ${word}`:word;
+      if(current&&next.length>target){result.push(current);current=word;}
+      else current=next;
+    });
+    if(current)result.push(current);
+    return result;
+  };
+
+  const captionChunks=(text,slideCount)=>{
+    const count=Math.max(1,slideCount||1);
+    const clean=String(text||'').replace(/\r/g,'').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+    if(!clean)return Array(count).fill('');
+
+    const desired=Math.min(count,Math.max(1,Math.ceil(clean.length/190)));
+    if(desired===1)return[clean,...Array(Math.max(0,count-1)).fill('')];
+
+    const target=Math.max(120,Math.ceil(clean.length/desired));
+    let units=clean.split(/\n+|(?<=[.!?。])\s+/).map(v=>v.trim()).filter(Boolean);
+    units=units.flatMap(unit=>splitLongUnit(unit,target));
+
+    const chunks=[];
+    let current='';
+    units.forEach(unit=>{
+      const next=current?`${current} ${unit}`:unit;
+      if(current&&next.length>target&&chunks.length<desired-1){chunks.push(current);current=unit;}
+      else current=next;
+    });
+    if(current)chunks.push(current);
+
+    while(chunks.length>desired){
+      const tail=chunks.pop();
+      chunks[chunks.length-1]=`${chunks[chunks.length-1]} ${tail}`.trim();
+    }
+    return Array.from({length:count},(_,i)=>chunks[i]||'');
+  };
+
+  /* Published case pages remain in the switcher; only unpublished projects render here. */
   menu.innerHTML=menuData.map(group=>`<div class="wa-menu-group"><strong>${esc(group.company)}</strong><div>${group.items.map(item=>{
     if(item.href){
       const href=item.href==='./himart-automation.html'?'./himart-ax.html':item.href;
@@ -39,83 +78,50 @@
   }).join('')}</div></div>`).join('');
 
   let globalIndex=0;
-  stream.innerHTML=data.map((group,companyIndex)=>{
-    const projects=group.projects.map((project,projectIndex)=>{
+  let firstRenderedImage=true;
+  const projects=[];
+
+  data.forEach((group,companyIndex)=>{
+    group.projects.forEach((project,projectIndex)=>{
       globalIndex+=1;
       const displayIndex=pad(globalIndex);
       const pages=Array.isArray(project.pages)?project.pages:[];
-      const slides=pages.map((page,pageIndex)=>`<article class="reuse-production-gallery__slide${pageIndex===0?' is-active':''}" aria-hidden="${pageIndex===0?'false':'true'}"><div class="reuse-production-gallery__media"><img src="${sourcePath(page)}" alt="${esc(project.title)} 원본 포트폴리오 P.${page}" loading="${pageIndex===0?'eager':'lazy'}" decoding="async" draggable="false" data-wa-source-page="${page}"></div></article>`).join('');
+      const chunks=captionChunks(project.desc,pages.length||1);
+      const lastCaptionIndex=Math.max(0,chunks.reduce((last,chunk,i)=>chunk?i:last,0));
+      const slides=pages.map((page,pageIndex)=>{
+        const loading=firstRenderedImage?'eager':'lazy';
+        firstRenderedImage=false;
+        return `<article class="reuse-production-gallery__slide${pageIndex===0?' is-active':''}" aria-hidden="${pageIndex===0?'false':'true'}"><div class="reuse-production-gallery__media"><img src="${sourcePath(page)}" alt="${esc(project.title)} 원본 포트폴리오 P.${page}" loading="${loading}" decoding="async" draggable="false" data-wa-source-page="${page}"></div></article>`;
+      }).join('');
       const single=pages.length<=1;
 
-      return `<article class="wa-project hm-reveal" id="${esc(project.id)}" data-wa-project data-company="${companyIndex}" data-project="${projectIndex}">
-        <div class="reuse-production-gallery" tabindex="0" aria-label="${esc(project.title)} 원본 포트폴리오 갤러리" data-wa-gallery data-single-slide="${single?'true':'false'}">
+      projects.push(`<article class="wa-project" id="${esc(project.id)}" data-wa-project data-company="${companyIndex}" data-project="${projectIndex}" data-wa-captions="${esc(JSON.stringify(chunks))}" data-wa-note-index="${lastCaptionIndex}">
+        <header class="wa-project__head hm-reveal">
+          <span class="wa-project__index">${displayIndex} · ${esc(group.company)}</span>
+          <h3 class="wa-project__title">${esc(project.title)}</h3>
+          <span class="wa-project__period">${esc(group.period)}</span>
+        </header>
+        <div class="reuse-production-gallery hm-reveal" tabindex="0" aria-label="${esc(project.title)} 원본 포트폴리오 갤러리" data-wa-gallery data-single-slide="${single?'true':'false'}">
           <div class="reuse-production-gallery__viewport">${slides}</div>
-          <div class="wa-gallery-title" data-wa-gallery-title>
-            <span class="wa-gallery-title__index">${displayIndex} · ${esc(group.company)}</span>
-            <h3>${esc(project.title)}</h3>
-            <span class="wa-gallery-title__period">${esc(group.period)}</span>
-          </div>
-          <div class="reuse-production-gallery__copy">
-            <p>${esc(project.desc)}</p>
-            ${project.note?`<em class="wa-gallery-note">${esc(project.note)}</em>`:''}
+          <div class="reuse-production-gallery__copy" data-wa-gallery-copy>
+            <p data-wa-caption></p>
+            ${project.note?`<em class="wa-gallery-note" data-wa-note>${esc(project.note)}</em>`:''}
           </div>
           <button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button>
           <button class="reuse-production-gallery__nav reuse-production-gallery__nav--next" type="button" data-reuse-gallery-next aria-label="다음 이미지"></button>
           <span class="reuse-production-gallery__status" data-reuse-gallery-status aria-live="polite">01 / ${pad(pages.length)}</span>
         </div>
-      </article>`;
-    }).join('');
+      </article>`);
+    });
+  });
 
-    return `<section class="hm-section hm-ds-section wa-company" id="wa-company-${companyIndex+1}" data-wa-company="${companyIndex}"><div class="hm-wrap hm-ds-wrap"><div class="wa-project-list">${projects}</div></div></section>`;
-  }).join('');
-
-  const toneCanvas=document.createElement('canvas');
-  toneCanvas.width=64;
-  toneCanvas.height=32;
-  const toneCtx=toneCanvas.getContext('2d',{willReadFrequently:true});
-
-  const cacheTone=img=>{
-    if(!img||img.dataset.waTone||!toneCtx)return;
-    if(!img.complete||!img.naturalWidth){
-      img.addEventListener('load',()=>cacheTone(img),{once:true});
-      return;
-    }
-    try{
-      toneCtx.clearRect(0,0,64,32);
-      const sw=Math.max(1,Math.floor(img.naturalWidth*.62));
-      const sh=Math.max(1,Math.floor(img.naturalHeight*.34));
-      toneCtx.drawImage(img,0,0,sw,sh,0,0,64,32);
-      const pixels=toneCtx.getImageData(0,0,64,32).data;
-      let total=0,count=0,dark=0;
-      for(let i=0;i<pixels.length;i+=4){
-        if(pixels[i+3]<24)continue;
-        const lum=(.2126*pixels[i]+.7152*pixels[i+1]+.0722*pixels[i+2])/255;
-        total+=lum;
-        count+=1;
-        if(lum<.42)dark+=1;
-      }
-      const avg=count?total/count:1;
-      const darkRatio=count?dark/count:0;
-      img.dataset.waTone=(avg<.46||darkRatio>.56)?'light':'dark';
-    }catch(_){
-      img.dataset.waTone='dark';
-    }
-  };
-
-  const applyTone=(gallery,img)=>{
-    if(!gallery||!img)return;
-    cacheTone(img);
-    const commit=()=>gallery.style.setProperty('--wa-title-color',img.dataset.waTone==='light'?'#fff':'#000');
-    if(img.dataset.waTone)commit();
-    else img.addEventListener('load',()=>{cacheTone(img);commit();},{once:true});
-  };
+  stream.innerHTML=`<div class="hm-wrap hm-ds-wrap"><div class="wa-project-list">${projects.join('')}</div></div>`;
 
   const setGalleryHeight=(gallery,img)=>{
     if(!gallery||!img)return;
     const commit=()=>{
       if(!img.naturalWidth||!gallery.clientWidth)return;
-      const height=gallery.clientWidth*(img.naturalHeight/img.naturalWidth);
-      gallery.style.height=`${height}px`;
+      gallery.style.height=`${gallery.clientWidth*(img.naturalHeight/img.naturalWidth)}px`;
       gallery.classList.add('is-ratio-ready');
     };
     if(img.complete&&img.naturalWidth)commit();
@@ -123,47 +129,34 @@
   };
 
   const galleries=[...document.querySelectorAll('[data-wa-gallery]')];
-  const controllers=new Map();
+  const controllers=[];
 
   galleries.forEach(gallery=>{
     const projectEl=gallery.closest('[data-wa-project]');
-    const companyIndex=Number(projectEl?.dataset.company||0);
-    const projectIndex=Number(projectEl?.dataset.project||0);
-    const project=data[companyIndex]?.projects?.[projectIndex];
-    if(!project)return;
-
+    if(!projectEl)return;
     const slides=[...gallery.querySelectorAll('.reuse-production-gallery__slide')];
+    if(!slides.length)return;
+
+    let captions=[];
+    try{captions=JSON.parse(projectEl.dataset.waCaptions||'[]');}catch(_){captions=[];}
+    const noteIndex=Number(projectEl.dataset.waNoteIndex||0);
+    const caption=gallery.querySelector('[data-wa-caption]');
+    const note=gallery.querySelector('[data-wa-note]');
     const prev=gallery.querySelector('[data-reuse-gallery-prev]');
     const next=gallery.querySelector('[data-reuse-gallery-next]');
     const status=gallery.querySelector('[data-reuse-gallery-status]');
-    if(!slides.length)return;
-
-    slides.forEach(slide=>cacheTone(slide.querySelector('img')));
 
     let index=Math.max(0,slides.findIndex(slide=>slide.classList.contains('is-active')));
-    let timer=0;
     let busy=false;
-    let inView=false;
     let pointerStart=null;
 
-    const clearTimer=()=>{
-      if(timer)window.clearTimeout(timer);
-      timer=0;
-    };
-
-    const updateStatus=()=>{
+    const activeImage=()=>slides[index]?.querySelector('img')||null;
+    const updateCopy=()=>{
+      const text=captions[index]||'';
+      if(caption){caption.textContent=text;caption.hidden=!text;}
+      if(note)note.hidden=index!==noteIndex;
       if(status)status.textContent=`${pad(index+1)} / ${pad(slides.length)}`;
     };
-
-    const activeImage=()=>slides[index]?.querySelector('img')||null;
-
-    const syncVisual=()=>{
-      const img=activeImage();
-      if(!img)return;
-      setGalleryHeight(gallery,img);
-      applyTone(gallery,img);
-    };
-
     const settle=()=>{
       slides.forEach((slide,i)=>{
         const active=i===index;
@@ -172,21 +165,13 @@
         slide.setAttribute('aria-hidden',active?'false':'true');
       });
       gallery.classList.remove('is-reverse');
-      updateStatus();
-      syncVisual();
-    };
-
-    const schedule=()=>{
-      clearTimer();
-      if(!inView||document.hidden||busy||slides.length<2)return;
-      timer=window.setTimeout(()=>move(1),HOLD_MS);
+      setGalleryHeight(gallery,activeImage());
+      updateCopy();
     };
 
     const transitionTo=(targetIndex,direction=1)=>{
       if(busy||slides.length<2||targetIndex===index)return;
-      clearTimer();
       busy=true;
-
       const current=slides[index];
       const incoming=slides[targetIndex];
       const incomingImage=incoming.querySelector('img');
@@ -210,13 +195,8 @@
         index=targetIndex;
         busy=false;
         settle();
-        schedule();
       };
-
-      if(reducedMotion){
-        complete();
-        return;
-      }
+      if(reducedMotion){complete();return;}
 
       void incoming.offsetWidth;
       current.classList.add('is-exiting');
@@ -224,35 +204,21 @@
       window.setTimeout(complete,TRANSITION_MS+30);
     };
 
-    function move(delta){
+    const move=delta=>{
       if(busy||slides.length<2)return;
-      const targetIndex=(index+delta+slides.length)%slides.length;
-      transitionTo(targetIndex,delta<0?-1:1);
-    }
+      const target=(index+delta+slides.length)%slides.length;
+      transitionTo(target,delta<0?-1:1);
+    };
 
-    prev?.addEventListener('click',event=>{
-      event.stopPropagation();
-      move(-1);
-    });
-    next?.addEventListener('click',event=>{
-      event.stopPropagation();
-      move(1);
-    });
-
+    prev?.addEventListener('click',event=>{event.stopPropagation();move(-1);});
+    next?.addEventListener('click',event=>{event.stopPropagation();move(1);});
     gallery.addEventListener('keydown',event=>{
-      if(event.key==='ArrowLeft'){
-        event.preventDefault();
-        move(-1);
-      }else if(event.key==='ArrowRight'){
-        event.preventDefault();
-        move(1);
-      }
+      if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
+      else if(event.key==='ArrowRight'){event.preventDefault();move(1);}
     });
-
     gallery.addEventListener('pointerdown',event=>{
       if(event.target.closest('button'))return;
       pointerStart={x:event.clientX,y:event.clientY,id:event.pointerId};
-      clearTimer();
     });
     gallery.addEventListener('pointerup',event=>{
       if(!pointerStart||pointerStart.id!==event.pointerId)return;
@@ -260,48 +226,19 @@
       const dy=event.clientY-pointerStart.y;
       pointerStart=null;
       if(Math.abs(dx)>=45&&Math.abs(dx)>Math.abs(dy)*1.15)move(dx<0?1:-1);
-      else schedule();
     });
-    gallery.addEventListener('pointercancel',()=>{
-      pointerStart=null;
-      schedule();
-    });
+    gallery.addEventListener('pointercancel',()=>{pointerStart=null;});
 
-    const controller={
-      setInView(value){
-        inView=value;
-        if(inView)schedule();
-        else clearTimer();
-      },
-      pause(){clearTimer();},
-      resume(){if(inView)schedule();},
-      sync:syncVisual
-    };
-    controllers.set(gallery,controller);
     settle();
+    controllers.push(()=>setGalleryHeight(gallery,activeImage()));
   });
 
-  if('IntersectionObserver' in window){
-    const galleryObserver=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>controllers.get(entry.target)?.setInView(entry.isIntersecting));
-    },{threshold:.20,rootMargin:'0px 0px -5% 0px'});
-    controllers.forEach((_,gallery)=>galleryObserver.observe(gallery));
-  }else{
-    controllers.forEach(controller=>controller.setInView(true));
-  }
-
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden)controllers.forEach(controller=>controller.pause());
-    else controllers.forEach(controller=>controller.resume());
-  });
-
+  /* No interval, timeout schedule or IntersectionObserver advances gallery pages.
+     Every page change is user initiated by arrows, keyboard or horizontal flick. */
   let resizeFrame=0;
   window.addEventListener('resize',()=>{
     if(resizeFrame)cancelAnimationFrame(resizeFrame);
-    resizeFrame=requestAnimationFrame(()=>{
-      controllers.forEach(controller=>controller.sync());
-      resizeFrame=0;
-    });
+    resizeFrame=requestAnimationFrame(()=>{controllers.forEach(sync=>sync());resizeFrame=0;});
   },{passive:true});
 
   const setMenuOpen=open=>{
@@ -312,12 +249,8 @@
     menu.setAttribute('aria-hidden',open?'false':'true');
   };
   trigger?.addEventListener('click',()=>setMenuOpen(trigger.getAttribute('aria-expanded')!=='true'));
-  document.addEventListener('pointerdown',event=>{
-    if(menuShell&&!menuShell.contains(event.target))setMenuOpen(false);
-  });
-  document.addEventListener('keydown',event=>{
-    if(event.key==='Escape')setMenuOpen(false);
-  });
+  document.addEventListener('pointerdown',event=>{if(menuShell&&!menuShell.contains(event.target))setMenuOpen(false);});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape')setMenuOpen(false);});
 
   const projectEls=[...document.querySelectorAll('[data-wa-project]')];
   const menuLinks=[...document.querySelectorAll('[data-wa-menu-project]')];
@@ -333,7 +266,7 @@
   const setActiveProject=id=>menuLinks.forEach(link=>link.classList.toggle('is-active',link.dataset.waMenuProject===id));
   if('IntersectionObserver' in window&&projectEls.length){
     const ratios=new Map();
-    const projectObserver=new IntersectionObserver(entries=>{
+    const observer=new IntersectionObserver(entries=>{
       entries.forEach(entry=>ratios.set(entry.target,entry.intersectionRatio));
       let best=null,bestRatio=0;
       projectEls.forEach(project=>{
@@ -342,7 +275,7 @@
       });
       if(best)setActiveProject(best.id);
     },{threshold:[0,.12,.25,.5,.75],rootMargin:'-18% 0px -52% 0px'});
-    projectEls.forEach(project=>projectObserver.observe(project));
+    projectEls.forEach(project=>observer.observe(project));
   }
 
   const initial=location.hash.slice(1);
