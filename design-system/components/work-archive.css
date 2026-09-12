@@ -1,12 +1,13 @@
 /* WORK ARCHIVE — HIMART design-system composition.
    Core hero/type/rhythm/navigation remain owned by himart-system.css.
    This file only maps archive-specific switcher + manual gallery into the same left/right editorial rails. */
-html body.work-archive-page{margin:0!important;background:#000!important;color:#fff!important;overflow-x:clip!important}
+html{overflow-y:auto!important;overflow-x:hidden!important;height:auto!important;min-height:100%!important}
+html body.work-archive-page{margin:0!important;background:#000!important;color:#fff!important;overflow-x:clip!important;overflow-y:auto!important;height:auto!important;min-height:100%!important;position:static!important;touch-action:pan-y!important}
 html body.work-archive-page *{box-sizing:border-box}
-html body.work-archive-page #live-main{background:#000!important}
+html body.work-archive-page #live-main{display:block!important;position:relative!important;overflow:visible!important;height:auto!important;min-height:100vh!important;background:#000!important}
 
 /* Hero stays on the canonical HIMART component. No archive-specific visual treatment. */
-html body.work-archive-page .wa-hero{background:#000!important}
+html body.work-archive-page .wa-hero{position:relative!important;background:#000!important}
 html body.work-archive-page #live-main .wa-hero .hm-title{font-family:var(--hm-font-en)!important;font-weight:300!important}
 html body.work-archive-page #live-main .wa-hero .hm-lead{font-family:var(--hm-font-en)!important;font-weight:300!important;letter-spacing:var(--hm-track-note)!important}
 
@@ -27,7 +28,7 @@ html body.work-archive-page .wa-menu-group a:hover,html body.work-archive-page .
 html body.work-archive-page .wa-menu-group a.is-active{color:var(--hm-blue)}
 
 /* Company/project sections: same HIMART chapter rhythm, with left text and right evidence rail. */
-html body.work-archive-page #live-main>.wa-company{position:relative!important;margin:0!important;padding:var(--hm-section-padding-top,200px) 0 var(--hm-section-padding-bottom-last,200px)!important;background:#000!important}
+html body.work-archive-page #live-main>.wa-company{position:relative!important;margin:0!important;padding:var(--hm-section-padding-top,200px) 0 var(--hm-section-padding-bottom-last,200px)!important;background:#000!important;overflow:visible!important}
 html body.work-archive-page #live-main>.wa-company+.wa-company{padding-top:var(--hm-section-padding-top,200px)!important}
 html body.work-archive-page .wa-company__layout{display:grid!important;grid-template-columns:minmax(300px,40%) minmax(0,60%)!important;gap:clamp(56px,5vw,100px)!important;align-items:start!important;width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;margin-inline:auto!important}
 html body.work-archive-page .wa-company__copy{position:sticky;top:108px;align-self:start;margin:0!important;padding:0!important;border:0!important}
@@ -63,6 +64,10 @@ html body.work-archive-page .wa-gallery__nav--prev::before{transform:translate(-
 html body.work-archive-page .wa-gallery__nav--next::before{transform:translate(-65%,-50%) rotate(45deg)}
 html body.work-archive-page .wa-gallery__nav:hover::before,html body.work-archive-page .wa-gallery__nav:focus-visible::before{border-color:#fff}
 html body.work-archive-page .wa-gallery__status{position:absolute;z-index:5;right:28px;bottom:24px;color:rgba(255,255,255,.68);font-family:var(--hm-font-en);font-size:10px;font-weight:300;line-height:1;letter-spacing:.05em;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+html body.work-archive-page .wa-gallery-caption{margin:24px 0 0;padding:0;text-align:left}
+html body.work-archive-page .wa-gallery-caption h4{margin:0;color:#fff;font-family:var(--hm-font-en);font-size:16px;font-weight:300;line-height:1.3;letter-spacing:-.02em}
+html body.work-archive-page .wa-gallery-caption p{margin:10px 0 0;max-width:62ch;color:rgba(255,255,255,.60);font-family:var(--hm-font-ko);font-size:14px;font-weight:300;line-height:1.58;letter-spacing:var(--hm-track-body);white-space:pre-line;word-break:keep-all}
+html body.work-archive-page .wa-gallery-caption span{display:block;margin-top:12px;color:rgba(255,255,255,.40);font-family:var(--hm-font-en);font-size:10px;font-weight:300;line-height:1.3;letter-spacing:.05em}
 
 @media(min-width:1600px){
  html body.work-archive-page .wa-company__layout{width:min(calc(100% - 128px),1600px)!important;grid-template-columns:minmax(400px,440px) minmax(80px,100px) minmax(0,1060px)!important;gap:0!important}
