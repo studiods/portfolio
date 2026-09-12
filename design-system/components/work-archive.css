@@ -1,4 +1,4 @@
-/* WORK ARCHIVE — HIMART / REUSE composition v4.0
+/* WORK ARCHIVE — HIMART / REUSE composition v4.1
    -------------------------------------------------
    Canonical Himart Hero/scroll-cover shell + REUSE gallery interaction.
    Archive-specific rules only:
@@ -7,8 +7,9 @@
    - body copy repeats exactly when the source PDF repeats it;
    - lower readability gradient is removed;
    - manual navigation hit areas are 10% x 100% of the gallery;
-   - CORE VALUE receives its own cleaned source assets + 40% black matte;
-   - project gap = 80px.
+   - CORE VALUE receives a clean visual mask + one 40% black matte;
+   - project gap = 80px;
+   - footer follows the canonical Himart Design System contract exactly.
 */
 html{height:auto!important;min-height:100%!important;overflow-x:clip!important;overflow-y:visible!important}
 html body.work-archive-page{margin:0!important;min-height:100%!important;overflow-x:clip!important;overflow-y:visible!important;background:var(--hm-bg-page,#000)!important;color:var(--hm-text-primary,#fff)!important;touch-action:pan-y!important}
@@ -107,9 +108,7 @@ html body.work-archive-page .wa-project__period{opacity:.50}
 html body.work-archive-page .wa-project__title{
   margin:0!important;padding:0!important;color:#fff!important;font-family:var(--hm-font-en-thin,var(--hm-font-en))!important;font-size:var(--hm-type-subsection,32px)!important;font-weight:300!important;line-height:1.12!important;letter-spacing:-.035em!important;text-wrap:balance;word-break:keep-all!important;mix-blend-mode:difference;
 }
-html body.work-archive-page .wa-gallery-overlay__body{
-  justify-self:stretch;color:#fff;mix-blend-mode:difference;
-}
+html body.work-archive-page .wa-gallery-overlay__body{justify-self:stretch;color:#fff;mix-blend-mode:difference}
 html body.work-archive-page .wa-gallery-overlay__body p{
   margin:0!important;max-width:none!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:14px!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.55!important;letter-spacing:var(--hm-track-body)!important;white-space:pre-line;word-break:keep-all!important;text-shadow:none!important;
 }
@@ -130,15 +129,12 @@ html body.work-archive-page .wa-project .reuse-production-gallery__nav::before{
 }
 html body.work-archive-page .wa-project .reuse-production-gallery__nav:hover::before,
 html body.work-archive-page .wa-project .reuse-production-gallery__nav:focus-visible::before{border-color:currentColor!important}
-html body.work-archive-page .wa-project .reuse-production-gallery__status{
-  z-index:8!important;right:24px!important;bottom:24px!important;color:#fff!important;mix-blend-mode:difference;
-}
+html body.work-archive-page .wa-project .reuse-production-gallery__status{z-index:8!important;right:24px!important;bottom:24px!important;color:#fff!important;mix-blend-mode:difference}
 html body.work-archive-page .wa-project .reuse-production-gallery[data-single-slide="true"] .reuse-production-gallery__nav,
 html body.work-archive-page .wa-project .reuse-production-gallery[data-single-slide="true"] .reuse-production-gallery__status{display:none!important}
 
-/* CORE VALUE special cleanup: source files have their former header band removed.
-   Keep an additional browser-side white safety mask for stale caches, then add exactly
-   one 40% black matte. Text is moved to the lower-left above that matte. */
+/* CORE VALUE special cleanup: hide the stale top-right source text/header region,
+   remove the generic lower matte, then use one 40% black matte and lower-left copy. */
 html body.work-archive-page .wa-project--core-value .reuse-production-gallery__media::after{
   content:"";position:absolute;z-index:2;top:0;right:0;left:0;height:21%;background:#fff;pointer-events:none;
 }
@@ -150,26 +146,27 @@ html body.work-archive-page .wa-project--core-value .wa-gallery-overlay{
 }
 html body.work-archive-page .wa-project--core-value .wa-gallery-overlay__body{max-width:760px}
 
-/* Footer: same Himart/Re-use footer grammar, locked to the Archive rail. */
+/* Footer — exact shared Himart Design System values. Only the rail width is Archive-specific. */
 html body.work-archive-page>.hm-footer{
-  position:relative!important;z-index:2!important;width:100%!important;margin:0!important;padding:72px 0 80px!important;border-top:1px solid var(--hm-line-weak)!important;background:#000!important;color:#fff!important;
+  position:relative!important;z-index:2!important;margin:0!important;padding:80px 0 40px!important;border:0!important;background:#000!important;
 }
 html body.work-archive-page>.hm-footer>.hm-wrap{
-  width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;max-width:var(--hm-container-wide,1360px)!important;margin-inline:auto!important;display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:40px!important;padding:0!important;
+  width:min(calc(100% - 80px),var(--hm-container-wide,1360px))!important;max-width:var(--hm-container-wide,1360px)!important;margin-inline:auto!important;display:flex!important;justify-content:space-between!important;gap:var(--hm-space-40,40px)!important;padding-top:16px!important;border-top:1px solid var(--hm-line-default)!important;
 }
 html body.work-archive-page>.hm-footer a,
 html body.work-archive-page>.hm-footer span{
-  color:var(--hm-text-secondary,rgba(255,255,255,.6))!important;font-family:var(--hm-font-en)!important;font-size:12px!important;font-weight:300!important;line-height:1.4!important;letter-spacing:var(--hm-track-note)!important;text-decoration:none!important;
+  font-family:var(--hm-font-en)!important;font-size:12px!important;font-weight:400!important;line-height:1.5!important;letter-spacing:var(--hm-track-base)!important;text-decoration:none!important;
 }
-html body.work-archive-page>.hm-footer>div>div{display:grid!important;justify-items:end!important;gap:8px!important}
-html body.work-archive-page>.hm-footer a:hover{color:#fff!important}
+html body.work-archive-page>.hm-footer a{color:var(--hm-text-primary,#fff)!important}
+html body.work-archive-page>.hm-footer span{color:var(--hm-text-tertiary,rgba(255,255,255,.38))!important}
+html body.work-archive-page>.hm-footer>.hm-wrap>div{display:flex!important;gap:var(--hm-space-20,20px)!important}
 
 @media(max-width:780px){
   html body.work-archive-page #live-main>.wa-archive-content{padding:120px 0 120px!important}
   html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{width:calc(100% - (var(--hm-inset-mobile,18px) * 2))!important;max-width:none!important}
 
   /* On small screens the switcher becomes part of the content flow: 12px label first,
-     then the image title block below it. */
+     then the project gallery/title block below it. */
   html body.work-archive-page .wa-switcher{
     position:relative!important;z-index:20!important;top:auto!important;left:auto!important;width:100%!important;max-width:none!important;margin:0 0 20px!important;
   }
@@ -184,9 +181,7 @@ html body.work-archive-page>.hm-footer a:hover{color:#fff!important}
   html body.work-archive-page .wa-menu-group a{min-height:32px;font-size:13px}
 
   html body.work-archive-page .wa-project+.wa-project{margin-top:80px}
-  html body.work-archive-page .wa-gallery-overlay{
-    top:20px;right:20px;left:20px;grid-template-columns:1fr;row-gap:14px;
-  }
+  html body.work-archive-page .wa-gallery-overlay{top:20px;right:20px;left:20px;grid-template-columns:1fr;row-gap:14px}
   html body.work-archive-page .wa-project__meta{margin-bottom:8px;gap:8px}
   html body.work-archive-page .wa-project__index,
   html body.work-archive-page .wa-project__period{font-size:10px!important}
@@ -198,10 +193,9 @@ html body.work-archive-page>.hm-footer a:hover{color:#fff!important}
   html body.work-archive-page .wa-project .reuse-production-gallery__status{right:14px!important;bottom:14px!important;font-size:10px!important}
   html body.work-archive-page .wa-project--core-value .wa-gallery-overlay{right:20px;bottom:20px;left:20px;width:auto;row-gap:10px}
 
-  html body.work-archive-page>.hm-footer{padding:56px 0 64px!important}
-  html body.work-archive-page>.hm-footer>.hm-wrap{width:calc(100% - 36px)!important;max-width:none!important;align-items:flex-start!important;gap:24px!important}
-  html body.work-archive-page>.hm-footer a,
-  html body.work-archive-page>.hm-footer span{font-size:11px!important}
+  html body.work-archive-page>.hm-footer{padding:60px 0 32px!important}
+  html body.work-archive-page>.hm-footer>.hm-wrap{width:calc(100% - 36px)!important;max-width:none!important;display:block!important}
+  html body.work-archive-page>.hm-footer>.hm-wrap>div{margin-top:20px!important;display:flex!important;flex-wrap:wrap!important;gap:var(--hm-space-20,20px)!important}
 }
 
 @media(prefers-reduced-motion:reduce){
