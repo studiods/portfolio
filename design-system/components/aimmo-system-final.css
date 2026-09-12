@@ -1,4 +1,4 @@
-/* AIMMO Design System — final page-specific authority v1.3
+/* AIMMO Design System — final page-specific authority v1.4
    Shared portfolio rules remain design-system owned. This file only owns AIMMO-specific
    synthesis, 01.2 repeated-work spacing, 02.2 Cloudworker research modules, 04.1 impact,
    and the interview-summary treatment in 04.2. */
@@ -50,7 +50,7 @@ html body.aimmo-system-page #data :is(.aimmo-reference-bars--decision,.aimmo-ref
 /* 02 · ENVIRONMENT — supplied HIMART segmented-bar composition. */
 html body.aimmo-system-page #data .aimmo-environment-ratio{display:block;width:100%;margin:40px 0 0}
 html body.aimmo-system-page #data .aimmo-environment-ratio__pie{display:none!important}
-html body.aimmo-system-page #data .aimmo-environment-ratio__legend{display:flex;width:100%;height:200px;gap:0;align-items:stretch;overflow:hidden}
+html body.aimmo-system-page #data .aimmo-environment-ratio__legend{display:flex;width:100%;height:160px;gap:0;align-items:stretch;overflow:hidden}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row{position:relative;display:flex!important;min-width:0;height:100%;flex-direction:column;align-items:flex-start!important;justify-content:flex-end!important;gap:0!important;padding:0 28px 26px!important;border:0!important;box-sizing:border-box;color:#fff!important;background:var(--segment-color);font-family:var(--hm-font-ko)!important}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row:first-child{flex:0 0 78.7%;--segment-color:var(--hm-chart-01,#00A6ED)}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row:nth-child(2){flex:0 0 21.3%;--segment-color:var(--hm-chart-02,#007DE3)}
@@ -69,6 +69,10 @@ html body.aimmo-system-page #data .aimmo-output-graph__title{
   display:block;margin:0 0 8px;color:#fff;font-family:var(--hm-font-ko);font-size:22px;font-weight:100;
   font-variation-settings:"wght" 100;line-height:1.25;letter-spacing:var(--hm-track-group);word-break:keep-all
 }
+html body.aimmo-system-page #data .aimmo-output-graph:nth-of-type(1) .aimmo-output-graph__title::before{content:"I. "}
+html body.aimmo-system-page #data .aimmo-output-graph:nth-of-type(2) .aimmo-output-graph__title::before{content:"II. "}
+html body.aimmo-system-page #data .aimmo-output-graph:nth-of-type(3) .aimmo-output-graph__title::before{content:"III. "}
+html body.aimmo-system-page #data .aimmo-output-graph__title::before{font:inherit;color:inherit;letter-spacing:inherit}
 html body.aimmo-system-page #data .aimmo-output-graph__note{display:block;margin:0;color:var(--hm-description-color);font:300 16px/1.45 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
 html body.aimmo-system-page #data .aimmo-output-graph .aimmo-reference-bars{width:100%;margin-top:30px}
 html body.aimmo-system-page #data .aimmo-output-rotator__nav{position:absolute;z-index:8;top:2px;width:40px;height:34px;margin:0;padding:0;border:0;outline:0;background:transparent;transform:none!important;cursor:pointer}
@@ -116,7 +120,7 @@ html body.aimmo-system-page #direction .aimmo-quote-grid article strong{
   html body.aimmo-system-page #data .aimmo-reference-bars__value{font-size:13px}
   html body.aimmo-system-page #data .aimmo-reference-bars__track{height:8px}
   html body.aimmo-system-page #data .aimmo-environment-ratio{margin-top:40px}
-  html body.aimmo-system-page #data .aimmo-environment-ratio__legend{height:200px}
+  html body.aimmo-system-page #data .aimmo-environment-ratio__legend{height:160px}
   html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row{padding:0 14px 18px!important}
   html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row span{font-size:15px}
   html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row b{font-size:22px}
