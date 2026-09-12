@@ -5,7 +5,7 @@
    carries an older design-system query. */
 @import url("./components/major-section-rhythm.css?v=20260912-4");
 @import url("./components/gallery-rhythm.css?v=20260912-2");
-@import url("./components/project-end-matter.css?v=20260912-1");
+@import url("./components/project-end-matter.css?v=20260912-2");
 html,body{margin:0;background:var(--hm-bg-page);color:var(--hm-text-primary)}
 .hm-ds-page{font-family:var(--hm-font-ko);font-weight:300}
 .hm-ds-wrap{width:min(calc(100% - (var(--hm-inset-desktop) * 2)),var(--hm-content-wide));margin-inline:auto}
