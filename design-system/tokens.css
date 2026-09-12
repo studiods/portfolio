@@ -101,7 +101,11 @@
   --hm-section-padding-bottom-last-mobile:120px;
 
   --hm-rule-to-section-number:32px;
-  --hm-title-description-gap:12px;
+  /* Generic/hero title-to-description rhythm remains 20px. Major chapter and middle
+     subsection titles own dedicated 12px tokens so lower content-title rhythms stay untouched. */
+  --hm-title-description-gap:20px;
+  --hm-major-title-description-gap:12px;
+  --hm-middle-title-description-gap:12px;
   --hm-title-description-max:40ch;
   --hm-gallery-gap:20px;
   /* Hero title and description share one copy rail. Descriptions wrap naturally only
