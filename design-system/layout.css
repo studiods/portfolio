@@ -1,9 +1,9 @@
-@import url("./tokens.css?v=20260912-4");
+@import url("./tokens.css?v=20260912-5");
 @import url("./spacing.css");
 /* Cache-stable fallbacks: every historical index.css already imports layout.css without a version.
    Keep the final title, gallery and project end-matter contracts reachable even when a page still
    carries an older design-system query. */
-@import url("./components/major-section-rhythm.css?v=20260912-4");
+@import url("./components/major-section-rhythm.css?v=20260912-5");
 @import url("./components/gallery-rhythm.css?v=20260912-2");
 @import url("./components/project-end-matter.css?v=20260912-2");
 html,body{margin:0;background:var(--hm-bg-page);color:var(--hm-text-primary)}
