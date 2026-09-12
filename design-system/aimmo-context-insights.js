@@ -1,5 +1,25 @@
 (() => {
   'use strict';
+
+  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const referenceBars = [...document.querySelectorAll('.aimmo-system-page #data .aimmo-reference-bars')];
+
+  /* Reuse 03.1-style viewport reveal for DURATION / DECISION / OUTPUT. */
+  if (reduced) {
+    referenceBars.forEach(chart => chart.classList.add('is-bars-focused'));
+  } else if ('IntersectionObserver' in window) {
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.offsetParent !== null) {
+          entry.target.classList.add('is-bars-focused');
+        }
+      });
+    }, { threshold:.20, rootMargin:'0px 0px -5% 0px' });
+    referenceBars.forEach(chart => barObserver.observe(chart));
+  } else {
+    referenceBars.forEach(chart => chart.classList.add('is-bars-focused'));
+  }
+
   const rotator = document.querySelector('.aimmo-system-page #data .aimmo-output-rotator');
   if (!rotator) return;
 
@@ -9,7 +29,6 @@
   const next = rotator.querySelector('.aimmo-output-rotator__nav--next');
   if (slides.length < 2) return;
 
-  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   let index = 0;
   let timer = 0;
   let inView = false;
@@ -20,6 +39,11 @@
       const active = i === index;
       slide.classList.toggle('is-active', active);
       slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      if (active) {
+        requestAnimationFrame(() => {
+          slide.querySelector('.aimmo-reference-bars')?.classList.add('is-bars-focused');
+        });
+      }
     });
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
   };
