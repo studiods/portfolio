@@ -30,10 +30,16 @@
     - reverse scroll resumes from the paused frame when the media re-enters the band;
     - only the closest eligible video plays, keeping decoder work bounded to one active video;
     - nearby media may upgrade preload from metadata to auto, but offscreen media is never force-played;
-    - sequential clips use one video element. During source replacement the video fades to black,
-      avoiding a second decoder / hidden buffer while keeping the transition intentional.
+    - sequential clips use one video element and advance only after native `ended`;
+    - the completed final frame is held briefly before the next source is loaded.
   */
   const focusState = new WeakMap();
+  const SEQUENCE_END_HOLD_MS = reduced ? 0 : 120;
+
+  const clearSequenceEndTimer = state => {
+    if (state?.endTimer) window.clearTimeout(state.endTimer);
+    if (state) state.endTimer = 0;
+  };
 
   const waitForFrame = video => new Promise(resolve => {
     let settled = false;
@@ -64,6 +70,8 @@
 
   const switchSequence = state => {
     if (!state.sequence.length || state.switching) return;
+    clearSequenceEndTimer(state);
+    state.pendingAdvance = false;
     state.switching = true;
     state.video.classList.add('is-sequence-switching');
     state.index = (state.index + 1) % state.sequence.length;
@@ -85,6 +93,27 @@
     }
   };
 
+  const scheduleSequenceAdvance = state => {
+    if (!state || state.sequence.length < 2 || state.switching) return;
+    if (state.video.ended) state.pendingAdvance = true;
+    if (!state.pendingAdvance || !state.focused || document.hidden) return;
+
+    clearSequenceEndTimer(state);
+    state.endTimer = window.setTimeout(() => {
+      state.endTimer = 0;
+      if (!state.pendingAdvance || !state.focused || document.hidden || state.switching) return;
+
+      /* Native ended is the only authority for advancing. A buffering pause, stalled
+         event or near-end currentTime must never move the playlist forward. */
+      if (!state.video.ended) {
+        state.pendingAdvance = false;
+        if (state.video.paused) state.video.play?.().catch?.(() => {});
+        return;
+      }
+      switchSequence(state);
+    }, SEQUENCE_END_HOLD_MS);
+  };
+
   mediaVideos.forEach(({video}) => {
     video.removeAttribute('autoplay');
     video.autoplay = false;
@@ -104,14 +133,19 @@
       sequence,
       index:0,
       focused:false,
-      switching:false
+      switching:false,
+      pendingAdvance:false,
+      endTimer:0
     };
     focusState.set(video, state);
 
     if (sequence.length > 1) {
       video.loop = false;
       video.removeAttribute('loop');
-      video.addEventListener('ended', () => switchSequence(state));
+      video.addEventListener('ended', () => {
+        state.pendingAdvance = true;
+        scheduleSequenceAdvance(state);
+      });
     }
   });
 
@@ -132,7 +166,10 @@
     if (reduced) {
       mediaVideos.forEach(({video}) => {
         const state = focusState.get(video);
-        if (state) state.focused = false;
+        if (state) {
+          state.focused = false;
+          clearSequenceEndTimer(state);
+        }
         video.pause();
         video.closest('.works-card-media-link')?.classList.remove('is-video-focused');
       });
@@ -165,6 +202,7 @@
 
       if (!shouldFocus) {
         state.focused = false;
+        clearSequenceEndTimer(state);
         video.pause();
         return;
       }
@@ -173,6 +211,11 @@
       video.preload = 'auto';
       if (state.switching) {
         revealCurrentSequenceFrame(state);
+        return;
+      }
+      if (state.sequence.length > 1 && (state.pendingAdvance || video.ended)) {
+        state.pendingAdvance = true;
+        scheduleSequenceAdvance(state);
         return;
       }
       if (video.paused) {
@@ -441,7 +484,10 @@
     if (document.hidden) {
       mediaVideos.forEach(({video}) => {
         const state = focusState.get(video);
-        if (state) state.focused = false;
+        if (state) {
+          state.focused = false;
+          clearSequenceEndTimer(state);
+        }
         video.pause();
         video.closest('.works-card-media-link')?.classList.remove('is-video-focused');
       });
