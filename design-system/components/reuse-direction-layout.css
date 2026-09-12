@@ -1,10 +1,12 @@
 /* HIMART REUSE · Chapter 04 alignment bridge
-   Uses the canonical HIMART subsection typography/divider rhythm while preserving the existing markup. */
+   Reuses the canonical HIMART subsection number/title/description geometry while preserving legacy markup. */
 html body.reuse-current #direction .prototype-intro.hm-subsection{
   position:relative;
-  display:block!important;
-  grid-template-columns:none!important;
-  gap:0!important;
+  display:grid!important;
+  grid-template-columns:180px minmax(0,1fr)!important;
+  grid-template-rows:auto auto!important;
+  column-gap:40px!important;
+  row-gap:0!important;
   width:100%!important;
   margin-left:0!important;
   margin-right:0!important;
@@ -12,17 +14,22 @@ html body.reuse-current #direction .prototype-intro.hm-subsection{
   padding-top:var(--hm-space-component,40px)!important;
 }
 
-/* 04.1 follows the same visual contract as .hm-subno without requiring custom page markup. */
+/* 04.1 mirrors the canonical .hm-subno position and typography. */
 html body.reuse-current #direction .prototype-intro.hm-subsection::before{
   content:"04.1";
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  align-self:start;
   display:block;
-  margin:0 0 20px;
+  margin:0!important;
   color:var(--hm-blue);
   font:400 12px/1.2 var(--hm-font-en);
   letter-spacing:var(--hm-track-note);
 }
 
 html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
+  grid-column:2!important;
+  grid-row:1!important;
   margin:0!important;
   max-width:none!important;
   color:var(--hm-text-primary)!important;
@@ -36,6 +43,8 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
 }
 
 html body.reuse-current #direction .prototype-intro.hm-subsection>p{
+  grid-column:2!important;
+  grid-row:2!important;
   margin:20px 0 0!important;
   max-width:var(--hm-description-max-chars,40ch)!important;
   color:var(--hm-text-body)!important;
@@ -47,7 +56,8 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>p{
   word-break:keep-all!important;
 }
 
-/* Wide editorial: chapter title on the left and 04.1 on the right start on the same authored row. */
+/* Wide editorial: major title on the left and the 04.1 medium-title unit on the right
+   occupy the same first authored row, matching chapters 01–03. */
 @media(min-width:1600px){
   html body.reuse-current.hm-wide-editorial-test
   #live-main>#direction.hm-section>.hm-wrap>.prototype-intro.hm-subsection{
@@ -60,7 +70,21 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>p{
 }
 
 @media(max-width:780px){
+  html body.reuse-current #direction .prototype-intro.hm-subsection{
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto!important;
+    gap:16px!important;
+  }
+  html body.reuse-current #direction .prototype-intro.hm-subsection::before,
+  html body.reuse-current #direction .prototype-intro.hm-subsection>h3,
+  html body.reuse-current #direction .prototype-intro.hm-subsection>p{
+    grid-column:1!important;
+    grid-row:auto!important;
+  }
   html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
     font-size:var(--hm-type-subtitle-mobile,28px)!important;
+  }
+  html body.reuse-current #direction .prototype-intro.hm-subsection>p{
+    margin-top:4px!important;
   }
 }
