@@ -1,4 +1,4 @@
-/* HIMART Design System v2.6 — foundation tokens
+/* HIMART Design System v2.7 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
    Semantic text contrast and shared Hero meta typography are owned here only;
    component/page layers consume these tokens and do not redefine them. */
@@ -22,6 +22,13 @@
   --hm-green:#00EDBD;
   --hm-yellow:#F3EB01;
   --hm-red:#FA481B;
+
+  /* Graph-only palette.
+     Never use red/yellow in charts unless a project explicitly requests it.
+     If more graph series are required, derive lighter/darker local shades from these
+     two colors with color-mix(); derived shades are not design-system tokens. */
+  --hm-chart-deep-blue:#007DE3;
+  --hm-chart-deep-green:#00ED72;
 
   --hm-font-en:"Averta PE",Arial,sans-serif;
   --hm-font-en-thin:"Averta PE",Arial,sans-serif;
