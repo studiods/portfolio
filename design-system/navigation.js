@@ -302,6 +302,8 @@
 (() => {
   'use strict';
 
+  /* Only published case-study pages belong in this sequence. Draft/absent Works entries
+     are intentionally skipped so PREVIOUS/NEXT never points to a 404. */
   const projects = [
     {
       file:'himart.html', href:'./himart.html', name:'하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다.', en:false,
@@ -314,14 +316,6 @@
     {
       file:'himart-ways.html', href:'./himart-ways.html', name:'일이 남는 협업 방식 만들기', en:false,
       reflection:'협업 문제는 새 도구만으로 해결되지 않았습니다. <strong>문제·결정·책임과 그 근거가 남는 구조</strong>를 만들 때 팀이 같은 논의를 반복하지 않고 다음 단계로 갈 수 있었습니다.'
-    },
-    {
-      file:'himart-team.html', href:'./himart-team.html', name:'새 팀의 공통 언어 만들기', en:false,
-      reflection:'새 팀을 리드할 때 가장 먼저 필요한 것은 완성된 프로세스보다 <strong>서로 다른 경험을 하나의 언어로 연결하는 기준</strong>이었습니다. 기준을 함께 만들고 반복해서 쓰게 하는 과정이 결국 팀의 속도와 자율성을 높였습니다.'
-    },
-    {
-      file:'himart-automation.html', href:'./himart-automation.html', name:'반복 디자인 업무 자동화하기', en:false,
-      reflection:'자동화의 목표는 더 많은 산출물을 만드는 것이 아니었습니다. <strong>반복 작업을 줄이고 디자이너가 판단과 문제 해결에 더 많은 시간을 쓰게 하는 것</strong>이 리드 관점에서 가장 중요한 생산성 개선이었습니다.'
     },
     {
       file:'aimmo-system.html', href:'./aimmo-system.html', name:'AIMMO DESIGN SYSTEM DEVELOPMENT', en:true,
