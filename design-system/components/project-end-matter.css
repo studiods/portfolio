@@ -5,7 +5,8 @@ html body.himart-page-body .hm-project-reflection{
   position:relative;
   width:100%;
   margin:0;
-  padding:160px 0 140px;
+  padding:80px 0 140px;
+  border-top:1px solid var(--hm-line-weak);
   background:#000;
 }
 html body.himart-page-body .hm-project-reflection__inner{
@@ -29,7 +30,7 @@ html body.himart-page-body .hm-project-reflection__copy{
   font-size:32px!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
-  line-height:1.136!important;
+  line-height:1.363!important;
   letter-spacing:var(--hm-track-subsection)!important;
   word-break:keep-all!important;
 }
@@ -37,6 +38,12 @@ html body.himart-page-body .hm-project-reflection__copy strong{
   color:#fff!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
+}
+
+/* The preceding final chapter keeps its canonical 200px bottom padding. The reflection
+   begins immediately after that space with a full-viewport divider, then 80px to the label. */
+html body.himart-page-body #live-main > .hm-section:last-of-type{
+  padding-bottom:var(--hm-section-padding-bottom-last,200px)!important;
 }
 
 /* On the wide editorial layout the reflection starts on the same left edge as the
@@ -146,7 +153,7 @@ html body.himart-page-body .hm-project-footer__bottom-space{
 
 @media(max-width:780px){
   html body.himart-page-body .hm-project-reflection{
-    padding:100px 0 100px;
+    padding:80px 0 100px;
   }
   html body.himart-page-body .hm-project-reflection__inner,
   html body.himart-page-body .hm-project-footer__inner{
@@ -158,7 +165,7 @@ html body.himart-page-body .hm-project-footer__bottom-space{
   html body.himart-page-body .hm-project-reflection__copy{
     margin-top:32px!important;
     font-size:var(--hm-type-subsection-mobile,29px)!important;
-    line-height:1.14!important;
+    line-height:1.368!important;
   }
   html body.himart-page-body .hm-project-footer__rail{
     min-height:110px;
