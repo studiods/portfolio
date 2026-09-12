@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>HIMART — Wide Editorial Test Loader</title>
 <style>
-html,body{margin:0;min-height:100%;background:#000;color:#fff}
-body{font-family:Arial,sans-serif}
+html{margin:0;min-height:100%;background:#000!important;color-scheme:dark}
+body{margin:0;min-height:100%;background:#000!important;color:#fff;font-family:Arial,sans-serif}
 .hm-wide-loader{min-height:100vh;background:#000}
 </style>
 </head>
@@ -16,19 +16,28 @@ body{font-family:Arial,sans-serif}
 (async()=>{
   'use strict';
   try{
-    const response=await fetch('./himart_backup_02/himart.html?wide-source=20260908-3',{cache:'no-store'});
+    /*
+      First-paint contract:
+      - keep the initial canvas black;
+      - allow the browser cache to serve the validated source document;
+      - preload the current hero movie before non-critical editorial CSS;
+      - never hide the whole document while below-the-fold narrative code initializes.
+    */
+    const response=await fetch('./himart_backup_02/himart.html?wide-source=20260912-1',{cache:'default'});
     if(!response.ok)throw new Error('himart.html load failed');
     let html=await response.text();
 
     html=html
+      .replace('<head>',
+        '<head>' +
+        '<style id="hm-critical-first-paint">html,body{margin:0!important;min-height:100%!important;background:#000!important;color-scheme:dark}#top{background:#000!important}.hm-ds-hero__video{background:#000!important}</style>' +
+        '<link rel="preload" href="./assets/movies/himart_02.mp4" as="video" type="video/mp4">')
       .replace('<title>하이마트 온라인 구매여정 — Movie Test</title>','<title>하이마트 온라인 구매여정 — Wide Editorial Test</title>')
       .replace('./assets/himart_01.mp4','./assets/movies/himart_02.mp4')
       .replace('고객 인식과 실제 이용 흐름을 확인해,<br>구매 여정을 다시 정의했습니다.','고객 인식과 실제 이용 흐름을 확인해, 구매 여정을 다시 정의했습니다.')
       .replace('./design-system/himart-system.css?v=20260907-27','./design-system/himart-system.css?v=20260912-5')
       .replace('./design-system/test-content-final.js?v=20260907-1','./design-system/test-content-final.js?v=20260909-3')
       .replace('</head>',
-        '<style id="hm-wide-boot-lock">html body.hm-wide-booting{visibility:hidden!important;background:#000!important}</style>' +
-        '<script src="./design-system/himart-journey-coldload-guard.js?v=20260911-1"><' + '/script>' +
         '<link rel="stylesheet" href="./design-system/components/hero.css?v=20260908-7-wide">' +
         '<link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-10-himart">' +
         '<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260910-4">' +
@@ -41,11 +50,11 @@ body{font-family:Arial,sans-serif}
         '<link rel="stylesheet" href="./design-system/components/gallery-rhythm.css?v=20260912-2">' +
         '<link rel="stylesheet" href="./design-system/components/project-end-matter.css?v=20260912-4">' +
         '</head>')
-      .replace('<body class="','<body class="hm-wide-booting hm-wide-editorial-test hm-wide-himart-test ')
+      .replace('<body class="','<body class="hm-wide-editorial-test hm-wide-himart-test ')
       .replace('./design-system/scramble-final.js?v=20260907-3','./design-system/scramble-final.js?v=20260909-himart-wide-4')
       .replace('./design-system/navigation.js?v=20260907-4','./design-system/navigation.js?v=20260912-7')
       .replace('</body>',
-        '<script src="./design-system/himart-wide-editorial-adapter.js?v=20260911-2"><' + '/script>' +
+        '<script src="./design-system/himart-wide-editorial-adapter.js?v=20260912-3"><' + '/script>' +
         '</body>');
 
     document.open();
