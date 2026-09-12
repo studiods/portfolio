@@ -1,4 +1,4 @@
-/* HIMART Design System v2.7 — foundation tokens
+/* HIMART Design System v2.8 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
    Semantic text contrast and shared Hero meta typography are owned here only;
    component/page layers consume these tokens and do not redefine them. */
@@ -15,6 +15,9 @@
   --hm-line-default:rgba(255,255,255,.24);
   --hm-line-weak:rgba(255,255,255,.14);
   --hm-line-faint:rgba(255,255,255,.1);
+  /* Canonical internal content-divider line. Cards/subsections that divide peer content
+     use this token so page-local rules cannot silently become more opaque. */
+  --hm-line-content-divider:var(--hm-line-weak);
   --hm-blue-deep:#0572CB;
   --hm-blue-mid:#008DDD;
   --hm-blue:#00A6ED;
@@ -23,12 +26,18 @@
   --hm-yellow:#F3EB01;
   --hm-red:#FA481B;
 
-  /* Graph-only palette.
-     Never use red/yellow in charts unless a project explicitly requests it.
-     If more graph series are required, derive lighter/darker local shades from these
-     two colors with color-mix(); derived shades are not design-system tokens. */
+  /* Graph-only palette and application order.
+     Red/yellow are not used in charts unless a project explicitly requests them.
+     Series consume the blue family first; only additional series move to Green, then Deep Green.
+     Highest/primary values use Chart 01 whenever the chart has a clear maximum. */
   --hm-chart-deep-blue:#007DE3;
   --hm-chart-deep-green:#00ED72;
+  --hm-chart-01:var(--hm-blue);
+  --hm-chart-02:var(--hm-chart-deep-blue);
+  --hm-chart-03:var(--hm-blue-new);
+  --hm-chart-04:var(--hm-blue-mid);
+  --hm-chart-05:var(--hm-green);
+  --hm-chart-06:var(--hm-chart-deep-green);
 
   --hm-font-en:"Averta PE",Arial,sans-serif;
   --hm-font-en-thin:"Averta PE",Arial,sans-serif;
