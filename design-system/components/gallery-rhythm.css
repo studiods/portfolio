@@ -1,10 +1,10 @@
-/* Portfolio gallery rhythm — FINAL AUTHORITY v1.0
+/* Portfolio gallery rhythm — FINAL AUTHORITY v1.1
    ------------------------------------------------
-   Every case-study gallery uses one shared 32px gap between adjacent gallery items.
+   Every case-study gallery uses one shared 20px gap between adjacent gallery items.
    This contract intentionally targets gallery containers only; ordinary evidence grids,
    cards and charts keep their own component spacing. */
 :root{
-  --hm-gallery-gap:32px;
+  --hm-gallery-gap:20px;
 }
 
 html body.himart-page-body #live-main :is(
@@ -15,11 +15,13 @@ html body.himart-page-body #live-main :is(
   .aimmo-evidence-gallery,
   .aimmo-context-gallery,
   .aimmo-improvement-grid,
+  .aimmo-improvement-gallery,
+  .aimmo-family-gallery,
   .aimmo-story-gallery,
   .aimmo-visual-slots,
   .trenbe-field-gallery
 ){
-  gap:var(--hm-gallery-gap,32px)!important;
+  gap:var(--hm-gallery-gap,20px)!important;
 }
 
 /* Mobile keeps the same gallery-to-gallery rhythm. Column count and aspect ratios
@@ -33,10 +35,12 @@ html body.himart-page-body #live-main :is(
     .aimmo-evidence-gallery,
     .aimmo-context-gallery,
     .aimmo-improvement-grid,
+    .aimmo-improvement-gallery,
+    .aimmo-family-gallery,
     .aimmo-story-gallery,
     .aimmo-visual-slots,
     .trenbe-field-gallery
   ){
-    gap:var(--hm-gallery-gap,32px)!important;
+    gap:var(--hm-gallery-gap,20px)!important;
   }
 }
