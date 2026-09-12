@@ -29,21 +29,48 @@
   const next = rotator.querySelector('.aimmo-output-rotator__nav--next');
   if (slides.length < 2) return;
 
+  const HOLD_MS = 10000;
+  const DISSOLVE_MS = 680;
   let index = 0;
   let timer = 0;
+  let cleanupTimer = 0;
   let inView = false;
 
   const render = nextIndex => {
-    index = (nextIndex + slides.length) % slides.length;
-    slides.forEach((slide, i) => {
-      const active = i === index;
-      slide.classList.toggle('is-active', active);
-      slide.setAttribute('aria-hidden', active ? 'false' : 'true');
-      if (active) {
-        requestAnimationFrame(() => {
-          slide.querySelector('.aimmo-reference-bars')?.classList.add('is-bars-focused');
+    const previousIndex = index;
+    const resolvedIndex = (nextIndex + slides.length) % slides.length;
+    const previousSlide = slides[previousIndex];
+    const nextSlide = slides[resolvedIndex];
+
+    if (cleanupTimer) window.clearTimeout(cleanupTimer);
+
+    if (resolvedIndex === previousIndex) {
+      slides.forEach((slide, i) => {
+        const active = i === resolvedIndex;
+        slide.classList.toggle('is-active', active);
+        slide.classList.remove('is-leaving');
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+    } else {
+      previousSlide?.classList.remove('is-active');
+      previousSlide?.classList.add('is-leaving');
+      previousSlide?.setAttribute('aria-hidden', 'true');
+
+      nextSlide?.classList.remove('is-leaving');
+      nextSlide?.classList.add('is-active');
+      nextSlide?.setAttribute('aria-hidden', 'false');
+
+      cleanupTimer = window.setTimeout(() => {
+        slides.forEach((slide, i) => {
+          if (i !== resolvedIndex) slide.classList.remove('is-leaving','is-active');
         });
-      }
+      }, DISSOLVE_MS + 80);
+    }
+
+    index = resolvedIndex;
+
+    requestAnimationFrame(() => {
+      nextSlide?.querySelector('.aimmo-reference-bars')?.classList.add('is-bars-focused');
     });
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
   };
@@ -56,7 +83,7 @@
   const start = () => {
     stop();
     if (reduced || !inView || document.hidden) return;
-    timer = window.setInterval(() => render(index + 1), 5000);
+    timer = window.setInterval(() => render(index + 1), HOLD_MS);
   };
 
   const move = delta => {
