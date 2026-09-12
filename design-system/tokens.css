@@ -101,8 +101,9 @@
   --hm-section-padding-bottom-last-mobile:120px;
 
   --hm-rule-to-section-number:32px;
-  --hm-title-description-gap:20px;
+  --hm-title-description-gap:12px;
   --hm-title-description-max:40ch;
+  --hm-gallery-gap:20px;
   /* Hero title and description share one copy rail. Descriptions wrap naturally only
      when their text exceeds this rail; authored hard line breaks are not the default. */
   --hm-hero-copy-max-width:1280px;
