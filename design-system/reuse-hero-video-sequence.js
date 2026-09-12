@@ -4,18 +4,12 @@
   /*
     REUSE HERO VIDEO SEQUENCE — single-player authority.
 
-    Why this exists:
-    The previous implementation used two <video> elements and swapped their roles
-    (current / standby). On some browsers the hidden player could be decoded, reset or
-    paused while roles were changing, which made the third clip (reuse_01.mp4) appear
-    to stop before its intended finish.
-
-    This controller deliberately uses ONE video element only:
+    The sequence is intentionally controlled by ONE video element:
     - clips change only after the active video's native `ended` event;
     - no hidden video, no parallel decoder, no role swapping;
-    - viewport / tab visibility pause-resume never changes the current time;
+    - viewport / tab visibility pause-resume never changes currentTime;
     - waiting / stalled states never advance the playlist;
-    - an unexpected mid-clip pause is automatically resumed while the Hero is visible.
+    - the completed final frame is held briefly before the next clip loads.
   */
   const hero = document.querySelector('body.reuse-current #top[data-hm-hero]');
   const video = hero?.querySelector('video.hm-ds-hero__video');
@@ -47,6 +41,7 @@
 
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const FADE_MS = reduced ? 0 : 120;
+  const END_HOLD_MS = reduced ? 0 : 120;
   video.style.transition = FADE_MS ? `opacity ${FADE_MS}ms linear` : 'none';
   video.style.opacity = '1';
   video.style.willChange = 'opacity';
@@ -57,19 +52,24 @@
   let shouldPlay = true;
   let loadToken = 0;
   let resumeTimer = 0;
+  let endTimer = 0;
+  let pendingAdvance = false;
 
   const clearResumeTimer = () => {
     if (resumeTimer) window.clearTimeout(resumeTimer);
     resumeTimer = 0;
   };
 
-  const isAtNaturalEnd = () => {
-    if (!Number.isFinite(video.duration) || video.duration <= 0) return video.ended;
-    return video.ended || video.currentTime >= Math.max(0, video.duration - 0.12);
+  const clearEndTimer = () => {
+    if (endTimer) window.clearTimeout(endTimer);
+    endTimer = 0;
   };
 
+  /* Strict natural-end detection: never treat the final 100–200ms as already finished. */
+  const isAtNaturalEnd = () => video.ended;
+
   const playCurrent = async () => {
-    if (!shouldPlay || !heroVisible || document.hidden || changingClip) return false;
+    if (!shouldPlay || !heroVisible || document.hidden || changingClip || pendingAdvance || video.ended) return false;
     const attempt = video.play?.();
     if (attempt?.catch) {
       try { await attempt; } catch (_) { return false; }
@@ -103,7 +103,9 @@
   const setClip = async (targetIndex, { initial = false } = {}) => {
     const token = ++loadToken;
     changingClip = true;
+    pendingAdvance = false;
     clearResumeTimer();
+    clearEndTimer();
 
     if (!initial && FADE_MS) {
       video.style.opacity = '0';
@@ -133,12 +135,27 @@
     video.style.opacity = '1';
   };
 
+  const scheduleAdvance = () => {
+    clearEndTimer();
+    if (!pendingAdvance || changingClip || !shouldPlay || !heroVisible || document.hidden) return;
+    endTimer = window.setTimeout(() => {
+      endTimer = 0;
+      if (!pendingAdvance || changingClip || !shouldPlay || !heroVisible || document.hidden) return;
+      if (!video.ended) {
+        pendingAdvance = false;
+        playCurrent();
+        return;
+      }
+      setClip(index + 1);
+    }, END_HOLD_MS);
+  };
+
   const scheduleResume = () => {
     clearResumeTimer();
-    if (!shouldPlay || !heroVisible || document.hidden || changingClip || isAtNaturalEnd()) return;
+    if (!shouldPlay || !heroVisible || document.hidden || changingClip || pendingAdvance || isAtNaturalEnd()) return;
     resumeTimer = window.setTimeout(() => {
       resumeTimer = 0;
-      if (shouldPlay && heroVisible && !document.hidden && !changingClip && video.paused && !isAtNaturalEnd()) {
+      if (shouldPlay && heroVisible && !document.hidden && !changingClip && !pendingAdvance && video.paused && !isAtNaturalEnd()) {
         playCurrent();
       }
     }, 140);
@@ -147,7 +164,8 @@
   video.addEventListener('ended', () => {
     clearResumeTimer();
     if (changingClip) return;
-    setClip(index + 1);
+    pendingAdvance = true;
+    scheduleAdvance();
   });
 
   /* Buffering is not a reason to skip a clip. The browser keeps the same currentTime
@@ -155,7 +173,8 @@
   video.addEventListener('waiting', scheduleResume);
   video.addEventListener('stalled', scheduleResume);
   video.addEventListener('canplay', () => {
-    if (!changingClip && shouldPlay && heroVisible && !document.hidden && video.paused && !isAtNaturalEnd()) {
+    if (pendingAdvance && isAtNaturalEnd()) scheduleAdvance();
+    else if (!changingClip && shouldPlay && heroVisible && !document.hidden && video.paused && !isAtNaturalEnd()) {
       playCurrent();
     }
   });
@@ -163,7 +182,7 @@
   /* There is no user-facing pause control in the Hero. Any pause while the Hero should
      be running is therefore treated as an incidental browser/runtime pause and resumed. */
   video.addEventListener('pause', () => {
-    if (!changingClip && shouldPlay && heroVisible && !document.hidden && !isAtNaturalEnd()) scheduleResume();
+    if (!changingClip && !pendingAdvance && shouldPlay && heroVisible && !document.hidden && !isAtNaturalEnd()) scheduleResume();
   });
 
   if ('IntersectionObserver' in window) {
@@ -172,10 +191,12 @@
       heroVisible = Boolean(entry?.isIntersecting);
       if (!heroVisible) {
         clearResumeTimer();
+        clearEndTimer();
         video.pause();
         return;
       }
-      if (shouldPlay && !document.hidden && !changingClip && !isAtNaturalEnd()) playCurrent();
+      if (pendingAdvance && isAtNaturalEnd()) scheduleAdvance();
+      else if (shouldPlay && !document.hidden && !changingClip && !isAtNaturalEnd()) playCurrent();
     }, { threshold:0.1 });
     observer.observe(hero);
   }
@@ -183,10 +204,12 @@
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       clearResumeTimer();
+      clearEndTimer();
       video.pause();
       return;
     }
-    if (shouldPlay && heroVisible && !changingClip && !isAtNaturalEnd()) playCurrent();
+    if (pendingAdvance && isAtNaturalEnd()) scheduleAdvance();
+    else if (shouldPlay && heroVisible && !changingClip && !isAtNaturalEnd()) playCurrent();
   });
 
   /* Start from the requested first clip every time the page is entered. */
