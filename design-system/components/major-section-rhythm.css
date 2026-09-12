@@ -1,13 +1,19 @@
 /*
-  Portfolio major-section rhythm — FINAL AUTHORITY v1.4
+  Portfolio major-section rhythm — FINAL AUTHORITY v1.5
   ---------------------------------------------------
   Root-cause containment for major chapter spacing and title-description typography.
+
+  Root cause of the remaining 20px/14px cases
+  - the previous 12px rule only matched a small set of canonical class pairs;
+  - older/runtime-authored middle-title blocks such as .journey-block-title +
+    .journey-block-copy therefore kept their page-level 20px margins;
+  - some page-specific synthesis copy also carried its own 14px margin.
 
   Contract
   1) Major title = 52px token on every non-mobile viewport; mobile sizing starts only
      at the actual mobile breakpoint (<=780px).
-  2) Major title → description = 12px.
-  3) Middle title → its direct description = 12px.
+  2) Major title → its immediately following explanatory text = 12px.
+  3) Middle title → its immediately following explanatory text = 12px.
   4) Hero and group/card/content title → body spacing remain component-owned and unchanged.
   5) In stacked layouts, chapter head → first content is 160px desktop/tablet, 100px mobile.
   6) In >=1600px editorial split, left chapter title and right evidence start on the same line.
@@ -39,24 +45,52 @@
   }
 }
 
-/* Major title → direct description. Supports both authored chapter-head DOM patterns. */
+/* Major title → direct explanatory copy.
+   Supports both authored chapter-head DOM patterns: description outside the title
+   wrapper and description immediately after the h2 inside the wrapper. */
 html body.himart-page-body #live-main > .hm-section[data-chapter]
 > .hm-wrap > .hm-section-head > .hm-section-desc,
 html body.himart-page-body #live-main > .hm-section[data-chapter]
-> .hm-wrap > .hm-section-head .hm-section-title + .hm-section-desc{
+> .hm-wrap > .hm-section-head .hm-section-title + :is(.hm-section-desc,.hm-ds-section__description,p){
   display:block!important;
   margin:var(--hm-major-title-description-gap,12px) 0 0!important;
   padding:0!important;
 }
 
-/* Middle title → direct description only. Do not touch group/card h4 → p rhythm. */
+/* Middle title → direct explanatory copy only.
+   The selector is role-based rather than page-name based so runtime-authored legacy
+   blocks receive the same 12px rule. h4/group/card title spacing is intentionally
+   excluded unless that h4 is explicitly a 32px middle-title role. */
 html body.himart-page-body #live-main :is(
-  .hm-subhead .hm-subtitle + .hm-subcopy,
-  .hm-subhead .hm-subtitle + .hm-ds-subsection__description,
-  .data-card-head h3 + .desc,
-  .narrative-title + .narrative-copy,
-  .prototype-intro h3 + p
+  .hm-subtitle,
+  .hm-ds-subsection__title,
+  .data-card-head h3,
+  .narrative-title,
+  .prototype-intro h3,
+  .journey-block-title,
+  .journey-flow-block > h3,
+  .journey-role-block > h3,
+  .design-rule > h3,
+  .sentiment-conclusion h4
+) + :is(
+  .hm-subcopy,
+  .hm-ds-subsection__description,
+  .desc,
+  .narrative-copy,
+  .journey-block-copy,
+  p
 ){
+  margin-top:var(--hm-middle-title-description-gap,12px)!important;
+}
+
+/* Some current journey blocks wrap the title/copy in a local header but do not use
+   the canonical hm-subtitle class. Keep the semantic direct-adjacency rule explicit. */
+html body.himart-page-body #live-main :is(
+  .journey-flow-block,
+  .journey-role-block,
+  .journey-block,
+  .design-rule
+) :is(h2,h3).journey-block-title + .journey-block-copy{
   margin-top:var(--hm-middle-title-description-gap,12px)!important;
 }
 
