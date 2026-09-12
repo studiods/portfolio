@@ -4,19 +4,21 @@
    Reflection contract
    - the divider belongs to the editorial canvas, never the full viewport;
    - on wide editorial layouts the divider spans the combined left-title + gap + right-content rails;
-   - PROJECT REFLECTION and its copy live in the right content rail and are right-aligned.
+   - PROJECT REFLECTION and its copy live in the right content rail and are right-aligned;
+   - reflection starts 100px below its divider, title-to-copy gap is 20px,
+     and 200px breathing room remains below the reflection copy.
 
    Footer contract
-   - 20% white rules sit above and below the navigation rail;
+   - 10% white rules sit above and below the navigation rail;
    - on wide editorial layouts the rail spans the same combined left-title + gap + right-content width;
-   - rail height is exactly 60px and text is vertically centered;
+   - rail height is exactly 100px and text is vertically centered;
    - arrows match the two-line text block height and use 30% white opacity.
 */
 
-html body.himart-page-body .hm-project-reflection{position:relative;width:100%;margin:0;padding:0 0 140px;border-top:0;background:#000}
-html body.himart-page-body .hm-project-reflection__inner{box-sizing:border-box;width:min(calc(100% - 80px),var(--hm-container-wide,1360px));margin:0 auto;padding-top:80px;border-top:1px solid var(--hm-line-weak)}
+html body.himart-page-body .hm-project-reflection{position:relative;width:100%;margin:0;padding:0 0 200px;border-top:0;background:#000}
+html body.himart-page-body .hm-project-reflection__inner{box-sizing:border-box;width:min(calc(100% - 80px),var(--hm-container-wide,1360px));margin:0 auto;padding-top:100px;border-top:1px solid var(--hm-line-weak)}
 html body.himart-page-body .hm-project-reflection__title{margin:0!important;color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-size:12px!important;font-weight:300!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important;text-align:right!important}
-html body.himart-page-body .hm-project-reflection__copy{margin:32px 0 0 auto!important;max-width:42ch!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:32px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;line-height:1.363!important;letter-spacing:var(--hm-track-subsection)!important;word-break:keep-all!important;text-align:right!important}
+html body.himart-page-body .hm-project-reflection__copy{margin:20px 0 0 auto!important;max-width:42ch!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:32px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;line-height:1.363!important;letter-spacing:var(--hm-track-subsection)!important;word-break:keep-all!important;text-align:right!important}
 html body.himart-page-body .hm-project-reflection__copy strong{color:#fff!important;font-weight:300!important;font-variation-settings:"wght" 300!important}
 
 html body.himart-page-body #live-main > .hm-section:last-of-type{padding-bottom:var(--hm-section-padding-bottom-last,200px)!important}
@@ -40,11 +42,11 @@ html body.himart-page-body .hm-project-footer__rail{
   display:grid;
   grid-template-columns:1fr 1fr;
   align-items:center;
-  height:60px;
-  min-height:60px;
+  height:100px;
+  min-height:100px;
   box-sizing:border-box;
-  border-top:1px solid rgba(255,255,255,.20);
-  border-bottom:1px solid rgba(255,255,255,.20);
+  border-top:1px solid rgba(255,255,255,.10);
+  border-bottom:1px solid rgba(255,255,255,.10);
 }
 html body.himart-page-body .hm-project-footer__link{position:relative;display:flex;min-width:0;height:100%;align-items:center;gap:16px;color:#fff!important;text-decoration:none!important}
 html body.himart-page-body .hm-project-footer__link--prev{justify-self:start;padding-left:40px;text-align:left}
@@ -66,13 +68,13 @@ html body.himart-page-body .hm-project-footer__bottom-space{height:60px}
 }
 
 @media(max-width:780px){
-  html body.himart-page-body .hm-project-reflection{padding-bottom:100px}
+  html body.himart-page-body .hm-project-reflection{padding-bottom:200px}
   html body.himart-page-body .hm-project-reflection__inner,
   html body.himart-page-body .hm-project-footer__inner{width:calc(100% - 36px)}
-  html body.himart-page-body .hm-project-reflection__inner{padding-top:80px}
+  html body.himart-page-body .hm-project-reflection__inner{padding-top:100px}
   html body.himart-page-body .hm-project-reflection__title{font-size:12px!important}
-  html body.himart-page-body .hm-project-reflection__copy{margin-top:32px!important;font-size:var(--hm-type-subsection-mobile,29px)!important;line-height:1.368!important}
-  html body.himart-page-body .hm-project-footer__rail{height:60px;min-height:60px;gap:20px}
+  html body.himart-page-body .hm-project-reflection__copy{margin-top:20px!important;font-size:var(--hm-type-subsection-mobile,29px)!important;line-height:1.368!important}
+  html body.himart-page-body .hm-project-footer__rail{height:100px;min-height:100px;gap:20px}
   html body.himart-page-body .hm-project-footer__link--prev{padding-left:32px}
   html body.himart-page-body .hm-project-footer__link--next{padding-right:32px}
   html body.himart-page-body .hm-project-footer__arrow{width:24px;height:28px}
