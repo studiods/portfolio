@@ -1,20 +1,20 @@
 /* Legacy graph legend/data bridge.
-   Keeps old chart markup synchronized with the shared graph-only blue/green palette. */
-html body.himart-page-body .pie-layout .legend-row:nth-child(1) i{background:var(--hm-chart-deep-blue)!important}
-html body.himart-page-body .pie-layout .legend-row:nth-child(2) i{background:var(--hm-chart-deep-green)!important}
-html body.himart-page-body .pie-layout .legend-row:nth-child(3) i{background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
-html body.himart-page-body .pie-layout .legend-row:nth-child(4) i{background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
-html body.himart-page-body .pie-layout .legend-row:nth-child(5) i{background:color-mix(in srgb,var(--hm-chart-deep-blue) 55%,#fff)!important}
+   Keeps old chart markup synchronized with the shared blue-first chart order. */
+html body.himart-page-body .pie-layout .legend-row:nth-child(1) i{background:var(--hm-chart-01)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(2) i{background:var(--hm-chart-02)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(3) i{background:var(--hm-chart-03)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(4) i{background:var(--hm-chart-04)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(5) i{background:var(--hm-chart-05)!important}
 
-html body.himart-page-body .chart-legend span:nth-child(1) i{background:var(--hm-chart-deep-blue)!important}
-html body.himart-page-body .chart-legend span:nth-child(2) i{background:var(--hm-chart-deep-green)!important}
-html body.himart-page-body .chart-legend span:nth-child(3) i{background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
-html body.himart-page-body .chart-legend span:nth-child(4) i{background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
+html body.himart-page-body .chart-legend span:nth-child(1) i{background:var(--hm-chart-01)!important}
+html body.himart-page-body .chart-legend span:nth-child(2) i{background:var(--hm-chart-02)!important}
+html body.himart-page-body .chart-legend span:nth-child(3) i{background:var(--hm-chart-03)!important}
+html body.himart-page-body .chart-legend span:nth-child(4) i{background:var(--hm-chart-04)!important}
 
-/* HIMART PDP comparison pairs: apply Deep Blue to the actual larger value in each pair. */
-html body.himart-page-body .pdp-col:nth-child(1) i:first-of-type::after{background:var(--hm-chart-deep-green)!important}
-html body.himart-page-body .pdp-col:nth-child(1) i:nth-of-type(2)::after{background:var(--hm-chart-deep-blue)!important}
+/* HIMART PDP comparison pairs: the actual larger value stays Blue, the comparison uses Deep Blue. */
+html body.himart-page-body .pdp-col:nth-child(1) i:first-of-type::after{background:var(--hm-chart-02)!important}
+html body.himart-page-body .pdp-col:nth-child(1) i:nth-of-type(2)::after{background:var(--hm-chart-01)!important}
 html body.himart-page-body .pdp-col:nth-child(2) i:first-of-type::after,
-html body.himart-page-body .pdp-col:nth-child(3) i:first-of-type::after{background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body .pdp-col:nth-child(3) i:first-of-type::after{background:var(--hm-chart-01)!important}
 html body.himart-page-body .pdp-col:nth-child(2) i:nth-of-type(2)::after,
-html body.himart-page-body .pdp-col:nth-child(3) i:nth-of-type(2)::after{background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body .pdp-col:nth-child(3) i:nth-of-type(2)::after{background:var(--hm-chart-02)!important}
