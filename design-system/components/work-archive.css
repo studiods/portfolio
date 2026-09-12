@@ -1,9 +1,10 @@
-/* WORK ARCHIVE — HIMART / REUSE composition v3.2
+/* WORK ARCHIVE — HIMART / REUSE composition v3.3
    -------------------------------------------------
    Page shell follows the canonical Himart scroll-cover structure.
    Gallery motion/controls inherit from reuse-production-gallery.css.
    Archive-specific contract:
-   - Hero delegates sticky geometry, full-viewport height and fade variables to hero.css exactly as himart.html does;
+   - Hero uses the same sticky + overlay fade contract as himart.html;
+   - document scrolling stays on the viewport/root; body must never become a nested vertical scroll container;
    - a temporary 16:9 project image is rendered behind the Hero so scroll darkening / content cover can be visually verified;
    - first archive title starts 200px below the content-plane boundary;
    - project title is authored outside the image, followed by a 36px gap;
@@ -12,13 +13,23 @@
    - project-to-next-title gap is 120px;
    - description remains inside the image at lower-left, 16px.
 */
-html{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important}
-html body.work-archive-page{margin:0!important;min-height:100%!important;overflow-x:clip!important;overflow-y:auto!important;background:var(--hm-bg-page,#000)!important;color:var(--hm-text-primary,#fff)!important;touch-action:pan-y!important}
+html{height:auto!important;min-height:100%!important;overflow-x:clip!important;overflow-y:visible!important}
+html body.work-archive-page{margin:0!important;min-height:100%!important;overflow-x:clip!important;overflow-y:visible!important;background:var(--hm-bg-page,#000)!important;color:var(--hm-text-primary,#fff)!important;touch-action:pan-y!important}
 html body.work-archive-page *{box-sizing:border-box}
 html body.work-archive-page #live-main{display:block!important;position:relative!important;isolation:isolate!important;min-height:100vh!important;overflow:visible!important;background:#000!important}
 
-/* Hero geometry / sticky / overlay opacity are intentionally NOT re-authored here.
-   hero.css is the canonical owner, exactly like himart.html. */
+/* Canonical Hero geometry. The explicit lock below mirrors hero.css so legacy rules
+   cannot demote sticky back to relative on this archive page. */
+html body.work-archive-page #live-main>.wa-hero{
+  position:sticky!important;
+  top:0!important;
+  z-index:1!important;
+  width:100%!important;
+  height:100svh!important;
+  min-height:100svh!important;
+  overflow:hidden!important;
+  background:#000!important;
+}
 html body.work-archive-page #live-main>.wa-hero .wa-hero__image{
   display:block!important;
   position:absolute!important;
@@ -52,8 +63,8 @@ html body.work-archive-page #live-main .wa-hero .hm-lead{
 }
 
 /* Canonical scroll-cover stack:
-   Hero remains sticky at z1 via hero.css. The direct sibling content plane is z2 and
-   therefore physically rises from below the viewport and covers the Hero as the page scrolls. */
+   Hero remains sticky at z1. The direct sibling content plane is z2 and therefore
+   physically rises from below the viewport and covers the Hero as the document scrolls. */
 html body.work-archive-page #live-main>.wa-archive-content{
   position:relative!important;
   z-index:2!important;
@@ -75,26 +86,36 @@ html body.work-archive-page #live-main>.wa-archive-content::before{
   pointer-events:none;
 }
 
-/* WORKS-style compact project switcher. */
+/* Wide desktop: same rail as the current Himart Hero bottom metadata. */
+@media(min-width:1600px){
+  html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{
+    width:min(calc(100% - 128px),1600px)!important;
+    max-width:1600px!important;
+    margin-inline:auto!important;
+  }
+}
+
+/* WORKS compact-title project switcher.
+   WORKS ends at 32px / top 32px desktop, 24px mobile, using Averta ExtraLight. */
 html body.work-archive-page .wa-switcher{
   position:fixed;
   z-index:2147483647;
-  top:18px;
+  top:32px;
   left:var(--hm-inset-desktop,40px);
   width:400px;
   max-width:calc(100vw - (var(--hm-inset-desktop,40px) * 2));
 }
 html body.work-archive-page .wa-switcher__toggle{
-  position:relative;display:inline-flex;align-items:center;height:24px;margin:0;padding:0 24px 0 0;border:0;background:transparent;color:#fff;
-  font-family:var(--hm-font-en-extralight,var(--hm-font-en));font-size:24px;font-weight:200;line-height:1;letter-spacing:-.02em;cursor:pointer;
+  position:relative;display:inline-flex;align-items:flex-start;height:32px;margin:0;padding:0 48px 0 0;border:0;background:transparent;color:#fff;
+  font-family:var(--hm-font-en-extralight,var(--hm-font-en));font-size:32px;font-weight:200;line-height:1;letter-spacing:-.02em;cursor:pointer;
 }
 html body.work-archive-page .wa-switcher__toggle::after{
-  content:"";position:absolute;right:3px;top:50%;width:7px;height:7px;border-right:1px solid rgba(255,255,255,.60);border-bottom:1px solid rgba(255,255,255,.60);
+  content:"";position:absolute;right:8px;top:50%;width:7px;height:7px;border-right:1px solid rgba(255,255,255,.60);border-bottom:1px solid rgba(255,255,255,.60);
   transform:translateY(-70%) rotate(45deg);transition:transform .18s ease;
 }
 html body.work-archive-page .wa-switcher__toggle[aria-expanded="true"]::after{transform:translateY(-25%) rotate(225deg)}
 html body.work-archive-page .wa-switcher__menu{
-  position:absolute;top:42px;left:0;width:400px;max-width:calc(100vw - (var(--hm-inset-desktop,40px) * 2));max-height:min(60vh,560px);
+  position:absolute;top:56px;left:0;width:400px;max-width:calc(100vw - (var(--hm-inset-desktop,40px) * 2));max-height:min(60vh,560px);
   overflow-x:hidden;overflow-y:auto;margin:0;padding:0 14px 14px 0;background:#000;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-4px);
   transition:opacity .16s ease,transform .16s ease,visibility .16s ease;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.34) rgba(255,255,255,.06);
 }
@@ -150,9 +171,9 @@ html body.work-archive-page .wa-project .reuse-production-gallery[data-single-sl
 @media(max-width:780px){
   html body.work-archive-page #live-main>.wa-archive-content>.hm-wrap{width:calc(100% - (var(--hm-inset-mobile,18px) * 2))!important;max-width:none!important}
   html body.work-archive-page #live-main>.wa-archive-content{padding:120px 0 120px!important}
-  html body.work-archive-page .wa-switcher{top:17px;left:var(--hm-inset-mobile,18px);width:calc(100vw - 36px);max-width:none}
-  html body.work-archive-page .wa-switcher__toggle{font-size:20px}
-  html body.work-archive-page .wa-switcher__menu{width:calc(100vw - 36px);max-width:none;max-height:64vh}
+  html body.work-archive-page .wa-switcher{top:24px;left:var(--hm-inset-mobile,18px);width:calc(100vw - 36px);max-width:none}
+  html body.work-archive-page .wa-switcher__toggle{height:32px;font-size:32px}
+  html body.work-archive-page .wa-switcher__menu{top:56px;width:calc(100vw - 36px);max-width:none;max-height:64vh}
   html body.work-archive-page .wa-project+.wa-project{margin-top:120px}
   html body.work-archive-page .wa-project__head{margin-bottom:36px}
   html body.work-archive-page .wa-project__index{margin-bottom:9px;font-size:10px!important}
