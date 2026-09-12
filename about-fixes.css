@@ -1,3 +1,7 @@
+:root{
+  --about-title-line-height:1.296;
+}
+
 .about-stack{
   position:relative;
   z-index:1;
@@ -79,6 +83,15 @@
 .about-hero-main,
 .about-section-rule{
   padding-top:30px;
+}
+
+/*
+  All 54px editorial titles share one leading rule.
+  Previous About statement leading was 1.08; +20% = 1.296.
+*/
+.about-hero-title,
+.about-statement{
+  line-height:var(--about-title-line-height)!important;
 }
 
 .about-hero-bottom{
