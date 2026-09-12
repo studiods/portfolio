@@ -1,5 +1,5 @@
 /*
-  Portfolio major-section rhythm — FINAL AUTHORITY v1.3
+  Portfolio major-section rhythm — FINAL AUTHORITY v1.4
   ---------------------------------------------------
   Root-cause containment for major chapter spacing and title-description typography.
 
@@ -8,12 +8,11 @@
      at the actual mobile breakpoint (<=780px).
   2) Major title → description = 12px.
   3) Middle title → its direct description = 12px.
-  4) Group/card/content title → body spacing remains component-owned and unchanged.
+  4) Hero and group/card/content title → body spacing remain component-owned and unchanged.
   5) In stacked layouts, chapter head → first content is 160px desktop/tablet, 100px mobile.
   6) In >=1600px editorial split, left chapter title and right evidence start on the same line.
 */
 :root{
-  --hm-title-description-gap:12px;
   --hm-title-to-subsection-gap:var(--hm-space-title-subsection,160px);
   --hm-section-head-to-subsection:var(--hm-space-title-subsection,160px);
   --hm-section-head-after:var(--hm-section-head-to-subsection,160px);
@@ -46,7 +45,7 @@ html body.himart-page-body #live-main > .hm-section[data-chapter]
 html body.himart-page-body #live-main > .hm-section[data-chapter]
 > .hm-wrap > .hm-section-head .hm-section-title + .hm-section-desc{
   display:block!important;
-  margin:var(--hm-major-title-description-gap) 0 0!important;
+  margin:var(--hm-major-title-description-gap,12px) 0 0!important;
   padding:0!important;
 }
 
@@ -58,7 +57,7 @@ html body.himart-page-body #live-main :is(
   .narrative-title + .narrative-copy,
   .prototype-intro h3 + p
 ){
-  margin-top:var(--hm-middle-title-description-gap)!important;
+  margin-top:var(--hm-middle-title-description-gap,12px)!important;
 }
 
 /* Stacked case-study layout: the chapter head owns the gap exactly once. */
