@@ -1,6 +1,7 @@
-/* AIMMO Design System — final page-specific authority v1.2
+/* AIMMO Design System — final page-specific authority v1.3
    Shared portfolio rules remain design-system owned. This file only owns AIMMO-specific
-   synthesis, 01.2 repeated-work spacing, 02.2 Cloudworker research modules and 04.1 impact. */
+   synthesis, 01.2 repeated-work spacing, 02.2 Cloudworker research modules, 04.1 impact,
+   and the interview-summary treatment in 04.2. */
 
 /* 01.1 — synthesis label. */
 html body.aimmo-system-page #brand .aimmo-team-history-summary{margin-top:64px!important}
@@ -11,12 +12,20 @@ html body.aimmo-system-page #brand .aimmo-team-history-summary h4 + p{margin:12p
 /* 01.2 — top and bottom circular rows. */
 html body.aimmo-system-page #brand .aimmo-static-reuse-flow{gap:40px!important}
 
-/* 02.2 — all peer insight dividers use the same shared line as the 02.2 data-card. */
+/* 02.2 — peer insight dividers + typography. */
 html body.aimmo-system-page #data .aimmo-context-insights{display:grid;grid-template-columns:1fr;gap:72px;width:100%}
 html body.aimmo-system-page #data .aimmo-context-insight{min-width:0;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
 html body.aimmo-system-page #data .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
-html body.aimmo-system-page #data .aimmo-context-insight h4{margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:22px!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.3!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
-html body.aimmo-system-page #data .aimmo-context-insight__copy{margin:10px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;font:300 14px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+html body.aimmo-system-page #data .aimmo-context-insight h4{
+  margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;
+  line-height:1.24!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+}
+html body.aimmo-system-page #data .aimmo-context-insight__copy{
+  margin:4px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;
+  font-variation-settings:"wght" 300!important;line-height:1.5!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+}
 
 /* DURATION / DECISION / OUTPUT — HIMART REUSE 03.1 geometry. */
 html body.aimmo-system-page #data .aimmo-reference-bars{width:100%;min-width:0;margin:32px 0 0;padding:0}
@@ -38,11 +47,10 @@ html body.aimmo-system-page #data :is(.aimmo-reference-bars--decision,.aimmo-ref
 html body.aimmo-system-page #data :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
 html body.aimmo-system-page #data :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
 
-/* 02 · ENVIRONMENT — same composition as the supplied HIMART segmented reference:
-   one full-width horizontal bar, labels and values anchored inside the lower-left of each segment. */
-html body.aimmo-system-page #data .aimmo-environment-ratio{display:block;width:100%;margin:72px 0 0}
+/* 02 · ENVIRONMENT — supplied HIMART segmented-bar composition. */
+html body.aimmo-system-page #data .aimmo-environment-ratio{display:block;width:100%;margin:40px 0 0}
 html body.aimmo-system-page #data .aimmo-environment-ratio__pie{display:none!important}
-html body.aimmo-system-page #data .aimmo-environment-ratio__legend{display:flex;width:100%;height:clamp(180px,15vw,238px);gap:0;align-items:stretch;overflow:hidden}
+html body.aimmo-system-page #data .aimmo-environment-ratio__legend{display:flex;width:100%;height:200px;gap:0;align-items:stretch;overflow:hidden}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row{position:relative;display:flex!important;min-width:0;height:100%;flex-direction:column;align-items:flex-start!important;justify-content:flex-end!important;gap:0!important;padding:0 28px 26px!important;border:0!important;box-sizing:border-box;color:#fff!important;background:var(--segment-color);font-family:var(--hm-font-ko)!important}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row:first-child{flex:0 0 78.7%;--segment-color:var(--hm-chart-01,#00A6ED)}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row:nth-child(2){flex:0 0 21.3%;--segment-color:var(--hm-chart-02,#007DE3)}
@@ -51,25 +59,31 @@ html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row span{disp
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row b{display:block;margin:6px 0 0;color:#fff;font:300 30px/1 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);text-align:left;font-variant-numeric:tabular-nums}
 html body.aimmo-system-page #data .aimmo-environment-ratio__source{display:block;width:100%;margin:32px 0 0;padding:18px 0 0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));color:var(--hm-text-tertiary);font:300 10px/1.5 var(--hm-font-ko);letter-spacing:var(--hm-track-base)}
 
-/* OUTPUT — full content width. Controls sit together at the graph's top-right as < | >. */
+/* OUTPUT — full width, 10-second rotation. Enter/leave overlap creates a true dissolve. */
 html body.aimmo-system-page #data .aimmo-output-rotator{position:relative;width:100%;margin-top:32px;padding:0!important}
-html body.aimmo-system-page #data .aimmo-output-graph{display:none;width:100%;margin:0;padding:0}
-html body.aimmo-system-page #data .aimmo-output-graph.is-active{display:block;animation:aimmoOutputFade .34s ease both}
+html body.aimmo-system-page #data .aimmo-output-graph{display:none;width:100%;margin:0;padding:0;opacity:0}
+html body.aimmo-system-page #data .aimmo-output-graph.is-active{display:block;opacity:1;animation:aimmoOutputDissolveIn .68s ease both}
+html body.aimmo-system-page #data .aimmo-output-graph.is-leaving{display:block;position:absolute;z-index:2;top:0;right:0;left:0;opacity:0;pointer-events:none;animation:aimmoOutputDissolveOut .68s ease both}
 html body.aimmo-system-page #data .aimmo-output-graph figcaption{min-height:72px;padding-right:104px}
-html body.aimmo-system-page #data .aimmo-output-graph__title{display:block;margin:0 0 8px;color:#fff;font:300 28px/1.22 var(--hm-font-ko);letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.aimmo-system-page #data .aimmo-output-graph__title{
+  display:block;margin:0 0 8px;color:#fff;font-family:var(--hm-font-ko);font-size:22px;font-weight:100;
+  font-variation-settings:"wght" 100;line-height:1.25;letter-spacing:var(--hm-track-group);word-break:keep-all
+}
 html body.aimmo-system-page #data .aimmo-output-graph__note{display:block;margin:0;color:var(--hm-description-color);font:300 16px/1.45 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
 html body.aimmo-system-page #data .aimmo-output-graph .aimmo-reference-bars{width:100%;margin-top:30px}
 html body.aimmo-system-page #data .aimmo-output-rotator__nav{position:absolute;z-index:8;top:2px;width:40px;height:34px;margin:0;padding:0;border:0;outline:0;background:transparent;transform:none!important;cursor:pointer}
-html body.aimmo-system-page #data .aimmo-output-rotator__nav--prev{right:48px!important;left:auto!important;border-right:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important}
+html body.aimmo-system-page #data .aimmo-output-rotator__nav--prev{right:48px!important;left:auto!important}
 html body.aimmo-system-page #data .aimmo-output-rotator__nav--next{right:0!important;left:auto!important}
-html body.aimmo-system-page #data .aimmo-output-rotator__nav::before{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;border-top:1px solid rgba(255,255,255,.78);border-right:1px solid rgba(255,255,255,.78)}
+html body.aimmo-system-page #data .aimmo-output-rotator__nav::before{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;border-top:1px solid rgba(255,255,255,.50);border-right:1px solid rgba(255,255,255,.50)}
+html body.aimmo-system-page #data .aimmo-output-rotator::before{content:"";position:absolute;z-index:8;top:2px;right:44px;width:1px;height:34px;background:rgba(255,255,255,.24);pointer-events:none}
 html body.aimmo-system-page #data .aimmo-output-rotator__nav--prev::before{transform:translate(-35%,-50%) rotate(-135deg)}
 html body.aimmo-system-page #data .aimmo-output-rotator__nav--next::before{transform:translate(-65%,-50%) rotate(45deg)}
 html body.aimmo-system-page #data .aimmo-output-rotator__status{display:flex;gap:6px;margin-top:16px}
 html body.aimmo-system-page #data .aimmo-output-rotator__status i{display:block;width:22px;height:1px;background:var(--hm-line-content-divider,var(--hm-line-weak))}
 html body.aimmo-system-page #data .aimmo-output-rotator__status i.is-active{background:var(--hm-chart-01,#00A6ED)}
 html body.aimmo-system-page #data .aimmo-output-rotator > .aimmo-reference-bars__source{margin-top:18px}
-@keyframes aimmoOutputFade{from{opacity:0}to{opacity:1}}
+@keyframes aimmoOutputDissolveIn{from{opacity:0}to{opacity:1}}
+@keyframes aimmoOutputDissolveOut{from{opacity:1}to{opacity:0}}
 
 /* 04.1 — 80px impact bars. Values sit 16px from the fill edge and are white. */
 html body.aimmo-system-page .aimmo-impact-chart{width:100%;padding:32px 0 0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
@@ -84,20 +98,30 @@ html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(2){--bar-color:va
 html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
 html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
 
+/* 04.2 — condensed interview summaries: spoken Korean in blue, English category labels unchanged. */
+html body.aimmo-system-page #direction .aimmo-quote-grid article strong{
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
+
 @media(max-width:780px){
   html body.aimmo-system-page #data .aimmo-context-insights{gap:56px}
+  html body.aimmo-system-page #data .aimmo-context-insight h4{font-size:24px!important}
+  html body.aimmo-system-page #data .aimmo-context-insight__copy{font-size:15px!important}
   html body.aimmo-system-page #data .aimmo-reference-bars__rows{gap:14px}
   html body.aimmo-system-page #data .aimmo-reference-bars__row{grid-template-columns:88px minmax(0,1fr) 52px;gap:10px;min-height:24px}
   html body.aimmo-system-page #data .aimmo-reference-bars__label,
   html body.aimmo-system-page #data .aimmo-reference-bars__value{font-size:13px}
   html body.aimmo-system-page #data .aimmo-reference-bars__track{height:8px}
-  html body.aimmo-system-page #data .aimmo-environment-ratio{margin-top:48px}
-  html body.aimmo-system-page #data .aimmo-environment-ratio__legend{height:150px}
+  html body.aimmo-system-page #data .aimmo-environment-ratio{margin-top:40px}
+  html body.aimmo-system-page #data .aimmo-environment-ratio__legend{height:200px}
   html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row{padding:0 14px 18px!important}
   html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row span{font-size:15px}
   html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row b{font-size:22px}
   html body.aimmo-system-page #data .aimmo-output-graph figcaption{min-height:92px;padding-right:88px}
-  html body.aimmo-system-page #data .aimmo-output-graph__title{font-size:22px}
+  html body.aimmo-system-page #data .aimmo-output-graph__title{font-size:20px}
   html body.aimmo-system-page #data .aimmo-output-graph__note{font-size:14px}
   html body.aimmo-system-page .aimmo-impact-chart__row{grid-template-columns:130px minmax(0,1fr);gap:10px}
   html body.aimmo-system-page .aimmo-impact-chart__label strong{font-size:17px}
@@ -105,4 +129,7 @@ html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(4){--bar-color:va
   html body.aimmo-system-page .aimmo-impact-chart__bar strong{font-size:30px}
 }
 
-@media(prefers-reduced-motion:reduce){html body.aimmo-system-page #data .aimmo-output-graph.is-active{animation:none}}
+@media(prefers-reduced-motion:reduce){
+  html body.aimmo-system-page #data .aimmo-output-graph.is-active,
+  html body.aimmo-system-page #data .aimmo-output-graph.is-leaving{animation:none!important}
+}
