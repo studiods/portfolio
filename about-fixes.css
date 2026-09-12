@@ -1,5 +1,5 @@
 :root{
-  --about-title-line-height:1.296;
+  --about-title-line-height:1.188;
 }
 
 .about-stack{
@@ -87,7 +87,7 @@
 
 /*
   All 54px editorial titles share one leading rule.
-  Previous About statement leading was 1.08; +20% = 1.296.
+  Baseline About statement leading is 1.08; +10% = 1.188.
 */
 .about-hero-title,
 .about-statement{
