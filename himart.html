@@ -5,14 +5,20 @@ layout: null
 HIMART standalone build entry.
 The validated source remains in himart_backup_02/himart.html, but GitHub Pages now
 inlines it at build time instead of fetching and document.write-ing it in the browser.
-This removes the extra HTML request and loader paint from the critical path while
-preserving the current production transformations.
+
+Cold-load contract:
+- all CSS that owns layout/geometry is render-blocking;
+- the source narrative loading lock is duplicated in critical inline CSS so it exists
+  before the legacy commerce bundle has downloaded;
+- hm-wide-booting keeps #live-main hidden until the wide adapter has finished its final
+  DOM grouping and journey normalization.
+This prevents the raw square/oval circle geometry from ever reaching first paint.
 {% endcomment %}
 
 {% capture source %}{% include_relative himart_backup_02/himart.html %}{% endcapture %}
 
 {% capture critical_head %}<head>
-<style id="hm-critical-first-paint">html,body{margin:0!important;min-height:100%!important;background:#000!important;color-scheme:dark}#top{background:#000!important}.hm-ds-hero__video{background:#000!important}</style>
+<style id="hm-critical-first-paint">html,body{margin:0!important;min-height:100%!important;background:#000!important;color-scheme:dark}#top{background:#000!important}.hm-ds-hero__video{background:#000!important}body.himart-narrative-loading #live-main,body.hm-wide-booting #live-main{opacity:0!important;visibility:hidden!important}</style>
 <link rel="preload" href="./assets/movies/himart_02.mp4" as="video" type="video/mp4">{% endcapture %}
 {% assign page_html = source | replace: '<head>', critical_head %}
 
@@ -20,24 +26,16 @@ preserving the current production transformations.
 {% assign page_html = page_html | replace: './assets/himart_01.mp4', './assets/movies/himart_02.mp4' %}
 {% assign page_html = page_html | replace: '고객 인식과 실제 이용 흐름을 확인해,<br>구매 여정을 다시 정의했습니다.', '고객 인식과 실제 이용 흐름을 확인해, 구매 여정을 다시 정의했습니다.' %}
 
-{% capture commerce_async %}<link rel="stylesheet" href="./design-system/components/himart-commerce.css?v=20260907-4" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="./design-system/components/himart-commerce.css?v=20260907-4"></noscript>{% endcapture %}
-{% assign page_html = page_html | replace: '<link rel="stylesheet" href="./design-system/components/himart-commerce.css?v=20260907-4">', commerce_async %}
+{% comment %}
+IMPORTANT: himart-commerce.css must remain a normal render-blocking stylesheet.
+It imports the production bundle that owns the canonical circle aspect-ratio/border-radius
+rules as well as the original narrative loading lock. Converting it to media=print/onload
+causes cold-load FOUC and broken circle geometry.
+{% endcomment %}
 {% assign page_html = page_html | replace: './design-system/himart-system.css?v=20260907-27', './design-system/himart-system.css?v=20260912-5' %}
 {% assign page_html = page_html | replace: './design-system/test-content-final.js?v=20260907-1', './design-system/test-content-final.js?v=20260909-3' %}
 
 {% capture wide_head %}<link rel="stylesheet" href="./design-system/components/hero.css?v=20260908-7-wide">
-<link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-10-himart" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260910-4" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-polish-v5.css?v=20260909-5" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260909-3" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260912-9" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/himart-fluid-content.css?v=20260910-5" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/himart-fluid-responsive-guard.css?v=20260910-1" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/major-section-rhythm.css?v=20260912-6" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/gallery-rhythm.css?v=20260912-2" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="./design-system/components/project-end-matter.css?v=20260912-5" media="print" onload="this.media='all'">
-<noscript>
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-10-himart">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260910-4">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-himart-polish-v5.css?v=20260909-5">
@@ -48,11 +46,10 @@ preserving the current production transformations.
 <link rel="stylesheet" href="./design-system/components/major-section-rhythm.css?v=20260912-6">
 <link rel="stylesheet" href="./design-system/components/gallery-rhythm.css?v=20260912-2">
 <link rel="stylesheet" href="./design-system/components/project-end-matter.css?v=20260912-5">
-</noscript>
 </head>{% endcapture %}
 {% assign page_html = page_html | replace: '</head>', wide_head %}
 
-{% assign page_html = page_html | replace: '<body class="', '<body class="hm-wide-editorial-test hm-wide-himart-test ' %}
+{% assign page_html = page_html | replace: '<body class="', '<body class="hm-wide-editorial-test hm-wide-himart-test hm-wide-booting ' %}
 {% assign page_html = page_html | replace: './design-system/scramble-final.js?v=20260907-3', './design-system/scramble-final.js?v=20260909-himart-wide-4' %}
 {% assign page_html = page_html | replace: './design-system/navigation.js?v=20260907-4', './design-system/navigation.js?v=20260912-7' %}
 
