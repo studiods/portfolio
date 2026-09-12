@@ -5,6 +5,8 @@
 
   const slides = [...rotator.querySelectorAll('.aimmo-output-graph')];
   const dots = [...rotator.querySelectorAll('.aimmo-output-rotator__status i')];
+  const prev = rotator.querySelector('.aimmo-output-rotator__nav--prev');
+  const next = rotator.querySelector('.aimmo-output-rotator__nav--next');
   if (slides.length < 2) return;
 
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -14,7 +16,11 @@
 
   const render = nextIndex => {
     index = (nextIndex + slides.length) % slides.length;
-    slides.forEach((slide, i) => slide.classList.toggle('is-active', i === index));
+    slides.forEach((slide, i) => {
+      const active = i === index;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
   };
 
@@ -28,6 +34,32 @@
     if (reduced || !inView || document.hidden) return;
     timer = window.setInterval(() => render(index + 1), 5000);
   };
+
+  const move = delta => {
+    render(index + delta);
+    start();
+  };
+
+  prev?.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    move(-1);
+  });
+  next?.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    move(1);
+  });
+
+  rotator.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      move(-1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      move(1);
+    }
+  });
 
   render(0);
 
