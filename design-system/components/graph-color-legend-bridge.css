@@ -1,0 +1,12 @@
+/* Legacy graph legend bridge.
+   Keeps legend keys synchronized with the graph-only blue/green palette. */
+html body.himart-page-body .pie-layout .legend-row:nth-child(1) i{background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(2) i{background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(3) i{background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(4) i{background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
+html body.himart-page-body .pie-layout .legend-row:nth-child(5) i{background:color-mix(in srgb,var(--hm-chart-deep-blue) 55%,#fff)!important}
+
+html body.himart-page-body .chart-legend span:nth-child(1) i{background:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body .chart-legend span:nth-child(2) i{background:var(--hm-chart-deep-green)!important}
+html body.himart-page-body .chart-legend span:nth-child(3) i{background:color-mix(in srgb,var(--hm-chart-deep-blue) 72%,#000)!important}
+html body.himart-page-body .chart-legend span:nth-child(4) i{background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
