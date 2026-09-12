@@ -1,4 +1,4 @@
-/* HIMART editorial layout contract v3.8 — stable public entrypoint. */
+/* HIMART editorial layout contract v3.9 — stable public entrypoint. */
 @import url("./editorial-layout-contract-base-v21.css?v=20260910-1");
 @import url("./editorial-layout-alignment.css?v=20260911-2");
 /* Final portfolio rhythm authorities load after every page/editorial layer. */
@@ -8,3 +8,4 @@
 /* Graph palette is intentionally last: page-specific graph colors cannot reintroduce
    red/yellow unless a future project explicitly opts out after this contract. */
 @import url("./graph-color-policy.css?v=20260912-2");
+@import url("./graph-color-legend-bridge.css?v=20260912-1");
