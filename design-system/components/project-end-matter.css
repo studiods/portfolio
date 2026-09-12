@@ -1,0 +1,160 @@
+/* Shared project end matter — reflection + previous/next project navigation.
+   Applies to every HIMART-system case-study page. */
+
+html body.himart-page-body .hm-project-reflection{
+  position:relative;
+  width:100%;
+  margin:0;
+  padding:160px 0 140px;
+  background:#000;
+}
+html body.himart-page-body .hm-project-reflection__inner{
+  width:min(calc(100% - 80px),var(--hm-container-wide,1360px));
+  margin:0 auto;
+}
+html body.himart-page-body .hm-project-reflection__title{
+  margin:0!important;
+  color:rgba(255,255,255,.5)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:32px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.18!important;
+  letter-spacing:var(--hm-track-subsection)!important;
+}
+html body.himart-page-body .hm-project-reflection__copy{
+  margin:28px 0 0!important;
+  max-width:42ch!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:32px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.42!important;
+  letter-spacing:var(--hm-track-subsection)!important;
+  word-break:keep-all!important;
+}
+html body.himart-page-body .hm-project-reflection__copy strong{
+  color:#fff!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
+
+html body.himart-page-body .hm-project-footer{
+  width:100%;
+  margin:0;
+  padding:0;
+  background:#000!important;
+}
+html body.himart-page-body .hm-project-footer__inner{
+  width:min(calc(100% - 80px),var(--hm-container-wide,1360px));
+  margin:0 auto;
+}
+html body.himart-page-body .hm-project-footer__rail{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  min-height:116px;
+  border-top:1px solid rgba(255,255,255,.20);
+}
+html body.himart-page-body .hm-project-footer__link{
+  position:relative;
+  display:flex;
+  min-width:0;
+  align-items:center;
+  gap:16px;
+  color:#fff!important;
+  text-decoration:none!important;
+}
+html body.himart-page-body .hm-project-footer__link--prev{
+  justify-self:start;
+  padding-left:28px;
+  text-align:left;
+}
+html body.himart-page-body .hm-project-footer__link--next{
+  justify-self:end;
+  flex-direction:row-reverse;
+  padding-right:28px;
+  text-align:right;
+}
+html body.himart-page-body .hm-project-footer__arrow{
+  position:absolute;
+  top:50%;
+  width:14px;
+  height:14px;
+  transform:translateY(-50%);
+}
+html body.himart-page-body .hm-project-footer__link--prev .hm-project-footer__arrow{left:0}
+html body.himart-page-body .hm-project-footer__link--next .hm-project-footer__arrow{right:0}
+html body.himart-page-body .hm-project-footer__arrow::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:8px;
+  height:8px;
+  border-top:1px solid rgba(255,255,255,.78);
+  border-right:1px solid rgba(255,255,255,.78);
+}
+html body.himart-page-body .hm-project-footer__link--prev .hm-project-footer__arrow::before{
+  transform:translate(-35%,-50%) rotate(-135deg);
+}
+html body.himart-page-body .hm-project-footer__link--next .hm-project-footer__arrow::before{
+  transform:translate(-65%,-50%) rotate(45deg);
+}
+html body.himart-page-body .hm-project-footer__meta{
+  display:block;
+  min-width:0;
+}
+html body.himart-page-body .hm-project-footer__label{
+  display:block;
+  margin:0;
+  color:rgba(255,255,255,.5)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.himart-page-body .hm-project-footer__name{
+  display:block;
+  margin:12px 0 0;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-body)!important;
+  white-space:normal;
+}
+html body.himart-page-body .hm-project-footer__name.is-en{
+  font-family:var(--hm-font-en)!important;
+  font-weight:300!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.himart-page-body .hm-project-footer__bottom-space{
+  height:60px;
+}
+
+@media(max-width:780px){
+  html body.himart-page-body .hm-project-reflection{
+    padding:100px 0 100px;
+  }
+  html body.himart-page-body .hm-project-reflection__inner,
+  html body.himart-page-body .hm-project-footer__inner{
+    width:calc(100% - 36px);
+  }
+  html body.himart-page-body .hm-project-reflection__title,
+  html body.himart-page-body .hm-project-reflection__copy{
+    font-size:var(--hm-type-subsection-mobile,29px)!important;
+  }
+  html body.himart-page-body .hm-project-reflection__copy{margin-top:20px!important}
+  html body.himart-page-body .hm-project-footer__rail{
+    min-height:110px;
+    gap:20px;
+  }
+  html body.himart-page-body .hm-project-footer__link--prev{padding-left:22px}
+  html body.himart-page-body .hm-project-footer__link--next{padding-right:22px}
+  html body.himart-page-body .hm-project-footer__name{max-width:28vw}
+}
