@@ -1,5 +1,5 @@
 /*
-  Portfolio Graph Color Policy v1.0
+  Portfolio Graph Color Policy v1.1
   ---------------------------------
   Graph-only palette. Editorial/semantic red and yellow remain available elsewhere,
   but charts must not use red/yellow unless a page explicitly opts out.
@@ -13,23 +13,19 @@
   Default emphasis: the highest / primary value uses Deep Blue; remaining series
   alternate Deep Green and local blue/green luminance variants.
 */
+:root{
+  --hm-chart-deep-blue:#007DE3;
+  --hm-chart-deep-green:#00ED72;
+}
 
 /* HIMART / shared ring ratios: current authored rows are descending, so the first
    ring is the highest value and owns Deep Blue. */
-html body.himart-page-body :is(.hm-ds-ring-row,.ring-row) :is(.hm-ds-ring-card,.ring-card){
-  --ring:var(--hm-chart-deep-green)!important;
-}
-html body.himart-page-body :is(.hm-ds-ring-row,.ring-row) :is(.hm-ds-ring-card,.ring-card):first-child{
-  --ring:var(--hm-chart-deep-blue)!important;
-}
+html body.himart-page-body :is(.hm-ds-ring-row,.ring-row) :is(.hm-ds-ring-card,.ring-card){--ring:var(--hm-chart-deep-green)!important}
+html body.himart-page-body :is(.hm-ds-ring-row,.ring-row) :is(.hm-ds-ring-card,.ring-card):first-child{--ring:var(--hm-chart-deep-blue)!important}
 
 /* Split / sentiment graphs. */
-html body.himart-page-body :is(.hm-ds-split-ratio__block,.sentiment-block){
-  border-top-color:var(--hm-chart-deep-blue)!important;
-}
-html body.himart-page-body :is(.hm-ds-split-ratio__block.is-negative,.sentiment-block.negative){
-  border-top-color:var(--hm-chart-deep-green)!important;
-}
+html body.himart-page-body :is(.hm-ds-split-ratio__block,.sentiment-block){border-top-color:var(--hm-chart-deep-blue)!important}
+html body.himart-page-body :is(.hm-ds-split-ratio__block.is-negative,.sentiment-block.negative){border-top-color:var(--hm-chart-deep-green)!important}
 
 /* Segmented graphs: only graph palette + locally derived luminance variants. */
 html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(1){background:var(--hm-chart-deep-blue)!important}
@@ -38,8 +34,7 @@ html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-
 html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(4){background:color-mix(in srgb,var(--hm-chart-deep-green) 70%,#000)!important}
 html body.himart-page-body :is(.hm-ds-segmented-bar,.wide-segmented-bar) > :nth-child(5){background:color-mix(in srgb,var(--hm-chart-deep-blue) 58%,#fff)!important}
 
-/* Shared horizontal bars. Primary/highest values should carry .is-primary where
-   authored; otherwise current descending datasets use the first row as the maximum. */
+/* Shared horizontal bars. */
 html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(1) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:var(--hm-chart-deep-blue)!important}
 html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(2) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:var(--hm-chart-deep-green)!important}
 html body.himart-page-body :is(.hm-ds-home-bars,.wide-home-bars,.hbars) > :nth-child(3) :is(.hm-ds-home-bar__fill,.wide-home-bar-fill,.fill){background:color-mix(in srgb,var(--hm-chart-deep-blue) 74%,#000)!important}
