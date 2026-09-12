@@ -1,5 +1,6 @@
 /* AIMMO 02.2 — exact geometry bridge from HIMART REUSE 03.1 reference bars.
-   Kept page-local because labels/data are AIMMO-specific; visual geometry is identical. */
+   Labels/data are AIMMO-specific; visual bar geometry and reveal behavior are shared.
+   OUTPUT navigation geometry is owned only by aimmo-system-final.css. */
 html body.aimmo-system-page #data .aimmo-reference-bars__row{
   grid-template-columns:110px minmax(0,1fr) 62px!important;
   gap:16px!important;
@@ -24,13 +25,6 @@ html body.aimmo-system-page #data .aimmo-reference-bars.is-bars-focused .aimmo-r
 html body.aimmo-system-page #data .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(3) .aimmo-reference-bars__fill{transition-delay:.24s}
 html body.aimmo-system-page #data .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(4) .aimmo-reference-bars__fill{transition-delay:.36s}
 
-/* OUTPUT manual controls copy the existing AIMMO gallery-arrow geometry 1:1. */
-html body.aimmo-system-page #data .aimmo-output-rotator{padding-inline:54px!important}
-html body.aimmo-system-page #data .aimmo-output-rotator__nav{width:48px!important;height:80px!important}
-html body.aimmo-system-page #data .aimmo-output-rotator__nav--prev{left:6px!important}
-html body.aimmo-system-page #data .aimmo-output-rotator__nav--next{right:6px!important}
-html body.aimmo-system-page #data .aimmo-output-rotator__nav::before{width:18px!important;height:18px!important}
-
 @media(max-width:780px){
   html body.aimmo-system-page #data .aimmo-reference-bars__row{
     grid-template-columns:88px minmax(0,1fr) 52px!important;
@@ -41,11 +35,6 @@ html body.aimmo-system-page #data .aimmo-output-rotator__nav::before{width:18px!
   html body.aimmo-system-page #data .aimmo-reference-bars__value{font-size:13px!important}
   html body.aimmo-system-page #data .aimmo-reference-bars__track{height:8px!important}
   html body.aimmo-system-page #data .aimmo-reference-bars__rows{gap:14px!important}
-  html body.aimmo-system-page #data .aimmo-output-rotator{padding-inline:38px!important}
-  html body.aimmo-system-page #data .aimmo-output-rotator__nav{width:38px!important;height:64px!important}
-  html body.aimmo-system-page #data .aimmo-output-rotator__nav--prev{left:0!important}
-  html body.aimmo-system-page #data .aimmo-output-rotator__nav--next{right:0!important}
-  html body.aimmo-system-page #data .aimmo-output-rotator__nav::before{width:14px!important;height:14px!important}
 }
 @media(prefers-reduced-motion:reduce){
   html body.aimmo-system-page #data .aimmo-reference-bars__fill{transform:scaleX(1)!important;transition:none!important}
