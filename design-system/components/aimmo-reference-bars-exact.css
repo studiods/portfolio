@@ -1,0 +1,25 @@
+/* AIMMO 02.2 — exact geometry bridge from HIMART REUSE 03.1 reference bars.
+   Kept page-local because labels/data are AIMMO-specific; visual geometry is identical. */
+html body.aimmo-system-page #data .aimmo-reference-bars__row{
+  grid-template-columns:110px minmax(0,1fr) 62px!important;
+  gap:16px!important;
+  min-height:28px!important;
+}
+html body.aimmo-system-page #data .aimmo-reference-bars__label,
+html body.aimmo-system-page #data .aimmo-reference-bars__value{
+  font-size:16px!important;
+  line-height:1.3!important;
+}
+html body.aimmo-system-page #data .aimmo-reference-bars__track{height:10px!important}
+html body.aimmo-system-page #data .aimmo-reference-bars__rows{gap:18px!important}
+@media(max-width:780px){
+  html body.aimmo-system-page #data .aimmo-reference-bars__row{
+    grid-template-columns:88px minmax(0,1fr) 52px!important;
+    gap:10px!important;
+    min-height:24px!important;
+  }
+  html body.aimmo-system-page #data .aimmo-reference-bars__label,
+  html body.aimmo-system-page #data .aimmo-reference-bars__value{font-size:13px!important}
+  html body.aimmo-system-page #data .aimmo-reference-bars__track{height:8px!important}
+  html body.aimmo-system-page #data .aimmo-reference-bars__rows{gap:14px!important}
+}
