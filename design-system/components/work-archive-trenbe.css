@@ -1,0 +1,24 @@
+/* WORK ARCHIVE — TRENBE override
+   Removes the legacy CORE VALUE matte and keeps the authored reflection copy
+   in the standard archive body-copy position. */
+html body.work-archive-page .wa-company.is-trenbe .reuse-production-gallery.is-core-value::before{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+}
+html body.work-archive-page .wa-company.is-trenbe .wa-trenbe-copy{
+  display:block!important;
+  margin:0!important;
+  max-width:none!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.55!important;
+  letter-spacing:var(--hm-track-body)!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+  text-shadow:none!important;
+  mix-blend-mode:difference;
+}
