@@ -41,11 +41,11 @@
   /* Replaced images use versioned filenames so browser/CDN caches can never serve
      the former raster at the same URL after an editorial image replacement. */
   const sourceOverride={
-    29:'./assets/image/work-archive/archive-aimmo-p029-v3.webp',
-    33:'./assets/image/work-archive/archive-aimmo-p033-v3.webp',
-    36:'./assets/image/work-archive/archive-trenbe-p036-v3.webp',
-    37:'./assets/image/work-archive/archive-trenbe-p037-v3.webp',
-    38:'./assets/image/work-archive/archive-trenbe-p038-v3.webp'
+    29:'./assets/image/work-archive/archive-aimmo-p029-v5.webp',
+    33:'./assets/image/work-archive/archive-aimmo-p033-v5.webp',
+    36:'./assets/image/work-archive/archive-trenbe-p036-v5.webp',
+    37:'./assets/image/work-archive/archive-trenbe-p037-v5.webp',
+    38:'./assets/image/work-archive/archive-trenbe-p038-v5.webp'
   };
   const sourcePath=page=>sourceOverride[page]||`./assets/image/work-archive/archive-${sourcePrefix(page)}-p${pad3(page)}.webp`;
 
