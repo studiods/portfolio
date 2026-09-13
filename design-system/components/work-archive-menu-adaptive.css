@@ -1,0 +1,59 @@
+/* WORK ARCHIVE menu — adaptive readability layer
+   Keeps the project switcher readable over both light portfolio imagery and the dark archive canvas.
+   Surface state is supplied by work-archive-menu-contrast.js.
+*/
+html body.work-archive-page .wa-switcher{
+  --wa-menu-bg:rgba(0,0,0,.95);
+  --wa-menu-fg:#fff;
+  --wa-menu-line:rgba(255,255,255,.14);
+  --wa-menu-line-soft:rgba(255,255,255,.10);
+  --wa-menu-scroll-track:rgba(255,255,255,.06);
+  --wa-menu-scroll-thumb:rgba(255,255,255,.34);
+}
+
+html body.work-archive-page .wa-switcher[data-wa-surface="light"]{
+  --wa-menu-bg:rgba(255,255,255,.95);
+  --wa-menu-fg:#000;
+  --wa-menu-line:rgba(0,0,0,.14);
+  --wa-menu-line-soft:rgba(0,0,0,.10);
+  --wa-menu-scroll-track:rgba(0,0,0,.06);
+  --wa-menu-scroll-thumb:rgba(0,0,0,.34);
+}
+
+html body.work-archive-page .wa-switcher__toggle{
+  color:var(--wa-menu-fg)!important;
+  transition:color .16s ease!important;
+}
+html body.work-archive-page .wa-switcher__toggle::after{
+  border-right-color:currentColor!important;
+  border-bottom-color:currentColor!important;
+  opacity:.60;
+}
+
+html body.work-archive-page .wa-switcher__menu{
+  background:var(--wa-menu-bg)!important;
+  color:var(--wa-menu-fg)!important;
+  scrollbar-color:var(--wa-menu-scroll-thumb) var(--wa-menu-scroll-track)!important;
+  transition:opacity .16s ease,transform .16s ease,visibility .16s ease,background-color .16s ease,color .16s ease!important;
+  -webkit-backdrop-filter:blur(8px) saturate(.9);
+  backdrop-filter:blur(8px) saturate(.9);
+}
+html body.work-archive-page .wa-switcher__menu::-webkit-scrollbar-track{background:var(--wa-menu-scroll-track)!important}
+html body.work-archive-page .wa-switcher__menu::-webkit-scrollbar-thumb{background:var(--wa-menu-scroll-thumb)!important}
+html body.work-archive-page .wa-menu-group{border-top-color:var(--wa-menu-line)!important}
+html body.work-archive-page .wa-menu-group strong,
+html body.work-archive-page .wa-menu-group a{color:var(--wa-menu-fg)!important}
+html body.work-archive-page .wa-menu-group a+a{border-top-color:var(--wa-menu-line-soft)!important}
+html body.work-archive-page .wa-menu-group a:hover,
+html body.work-archive-page .wa-menu-group a:focus-visible{color:var(--wa-menu-fg)!important;opacity:1!important}
+html body.work-archive-page .wa-menu-group a.is-active{color:var(--hm-blue)!important}
+html body.work-archive-page .wa-menu-group a.is-visited{opacity:.30!important}
+
+@media(max-width:780px){
+  html body.work-archive-page .wa-switcher__menu{background:var(--wa-menu-bg)!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.work-archive-page .wa-switcher__toggle,
+  html body.work-archive-page .wa-switcher__menu{transition:none!important}
+}
