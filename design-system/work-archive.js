@@ -38,7 +38,16 @@
     if(page<=98)return'nbt';
     return'coupang';
   };
-  const sourcePath=page=>`./assets/image/work-archive/archive-${sourcePrefix(page)}-p${pad3(page)}.webp`;
+  /* Replaced images use versioned filenames so browser/CDN caches can never serve
+     the former raster at the same URL after an editorial image replacement. */
+  const sourceOverride={
+    29:'./assets/image/work-archive/archive-aimmo-p029-v2.webp',
+    33:'./assets/image/work-archive/archive-aimmo-p033-v2.webp',
+    36:'./assets/image/work-archive/archive-trenbe-p036-v2.webp',
+    37:'./assets/image/work-archive/archive-trenbe-p037-v2.webp',
+    38:'./assets/image/work-archive/archive-trenbe-p038-v2.webp'
+  };
+  const sourcePath=page=>sourceOverride[page]||`./assets/image/work-archive/archive-${sourcePrefix(page)}-p${pad3(page)}.webp`;
 
   const AIMMO_INTERNAL_COPY='신규로 제작된 그래픽 모티브를 바탕으로 내부 구성원들에게 브랜드 이미지를 각인시키고 소속감을 높일 수 있는 인터널 브랜딩 요소를 제작. 웰컴킷, 공용 문서 포멧, 행사용 배너 및 브로셔/굿즈 등 작은 것 부터 시작하여 브랜드 이미지가 달라졌다는 것을 알리면서 좋은 반응을 얻었고 이후 홈페이지와 CES 부스 디자인까지 많은 부분에 까지 적용하면서 다소 경직된 AI B2B 회사의 분위기를 바꿔갈 수 있도록 진행';
   const AIMMO_SITE_COPY='기존 사이트가 서비스와 제품의 특성을 제대로 반영하지 못하고 단순한 정보나열에 그쳐 고객사들로 부터 신뢰를 얻기 힘든 상황. 협업 부서 및 영업팀과의 미팅/인터뷰를 통해 제품의 특성과 주요 비지니스 포인트를 파악하여 카테고리화 후 정보의 우선 순위에 따라 화면을 재배치하여 리디자인 진행. 이후 CES 2023, 유럽 전시회 등에서 좋은 반응을 이끌어 냄';
