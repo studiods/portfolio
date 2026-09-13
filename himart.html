@@ -54,6 +54,7 @@ causes cold-load FOUC and broken circle geometry.
 {% assign page_html = page_html | replace: './design-system/navigation.js?v=20260907-4', './design-system/navigation.js?v=20260912-7' %}
 
 {% capture adapter_tail %}<script src="./design-system/himart-wide-editorial-adapter.js?v=20260912-3"></script>
+<script src="./design-system/himart-inertia-scroll.js?v=20260913-1"></script>
 </body>{% endcapture %}
 {% assign page_html = page_html | replace: '</body>', adapter_tail %}
 
