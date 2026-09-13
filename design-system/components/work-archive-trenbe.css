@@ -10,7 +10,7 @@ html body.work-archive-page .wa-company.is-trenbe .wa-trenbe-copy{
   display:block!important;
   margin:0!important;
   max-width:none!important;
-  color:#fff!important;
+  color:var(--wa-body-color,#000)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:14px!important;
   font-weight:300!important;
@@ -20,5 +20,5 @@ html body.work-archive-page .wa-company.is-trenbe .wa-trenbe-copy{
   white-space:normal!important;
   word-break:keep-all!important;
   text-shadow:none!important;
-  mix-blend-mode:difference;
+  mix-blend-mode:normal!important;
 }
