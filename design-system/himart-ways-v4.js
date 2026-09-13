@@ -13,7 +13,8 @@
       ['./design-system/components/himart-ways-title-owner.css?v=20260913-1', 'ways-title-owner'],
       ['./design-system/components/himart-ways-v7.css?v=20260913-2340', 'ways-v7'],
       ['./design-system/components/himart-ways-v8.css?v=20260914-1', 'ways-v8'],
-      ['./design-system/components/himart-ways-v9.css?v=20260914-2', 'ways-v9']
+      ['./design-system/components/himart-ways-v9.css?v=20260914-2', 'ways-v9'],
+      ['./design-system/components/himart-ways-v10.css?v=20260914-3', 'ways-v10']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
