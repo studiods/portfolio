@@ -1,9 +1,10 @@
 /* Structural index contract — portfolio-wide.
    Structural labels render numeric hierarchy only (01.1, 02.3, ...).
    English descriptors belong in content, not in the structural index.
-   Authoring pattern:
+   Preferred authoring pattern:
    <span class="hm-subno hm-ds-index-label" data-index="01.1">01.1</span>
-   If legacy text remains inside the element, data-index is the rendered authority. */
+   Legacy labels such as "01.3 / AS-IS" are visually constrained to the numeric index
+   until their source markup is migrated. Ordinary card labels (01 / DESIGN) are untouched. */
 html body.himart-page-body #live-main .hm-ds-index-label[data-index]{
   font-size:0!important;
   white-space:nowrap!important;
@@ -16,4 +17,17 @@ html body.himart-page-body #live-main .hm-ds-index-label[data-index]::before{
   line-height:1.2!important;
   letter-spacing:var(--hm-track-note)!important;
   font-variant-numeric:tabular-nums!important;
+}
+
+/* Legacy fallback: medium-title indexes may still contain "/ ENGLISH" in old HTML.
+   Only structural title positions are clipped; card/evidence labels keep their full copy. */
+html body.himart-page-body #live-main .hm-subhead > .hm-subno:not([data-index]),
+html body.himart-page-body #live-main .narrative-subno:not([data-index]),
+html body.himart-page-body #live-main .data-card-head > .hm-card-no:not([data-index]){
+  display:inline-block!important;
+  max-inline-size:4.35ch!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:clip!important;
+  vertical-align:top!important;
 }
