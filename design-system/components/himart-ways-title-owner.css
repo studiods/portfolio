@@ -1,0 +1,29 @@
+/* HIMART WAYS — chapter title ownership
+   The legacy Himart narrative bundle contains an old #journey title as a CSS ::before pseudo-element.
+   himart-ways.html owns its authored chapter titles, so generated legacy title content is disabled here.
+   This file must load after the legacy production bundle and the shared design-system layers. */
+
+html body.ways-page #live-main > #journey.hm-section .hm-section-head .hm-section-title::before,
+html body.ways-page #live-main > #journey.hm-section .hm-section-head .hm-section-title::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* Restore the real authored H2 because the legacy bundle also forces the journey H2 to font-size:0 / line-height:0. */
+html body.ways-page #live-main > #journey.hm-section .hm-section-head .hm-section-title{
+  width:100%!important;
+  max-width:none!important;
+  white-space:normal!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-section)!important;
+  font-weight:100!important;
+  line-height:1.12!important;
+  letter-spacing:var(--hm-track-section)!important;
+  color:#fff!important;
+}
+
+@media (min-width:1600px){
+  html body.ways-page #live-main > #journey.hm-section .hm-section-head .hm-section-title{
+    max-width:440px!important;
+  }
+}
