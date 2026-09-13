@@ -6,8 +6,24 @@
     document.body?.classList.contains('nbt-stepup-page') &&
     document.body?.classList.contains('hm-wide-stepup-test');
 
+  /* Hero copy normalization runs immediately when this deferred script executes,
+     before DOMContentLoaded and before scramble-final captures its authored source. */
+  const normalizeHeroTitle = () => {
+    if (!document.body?.classList.contains('nbt-stepup-page')) return;
+    const title = document.querySelector('#top .hm-ds-hero__title, #top .hm-title');
+    if (!title) return;
+    const text = (title.textContent || '').replace(/\s+/g, ' ').trim();
+    if (text === '만보계가 아닌 습관을 만드는 경험을 설계했습니다.') {
+      title.innerHTML = '만보계가 아닌 습관을 만드는<br>경험을 설계했습니다.';
+    }
+  };
+
+  normalizeHeroTitle();
+
   const mount = () => {
     if (!isTarget() || window.__hmWideStepupMounted) return;
+
+    normalizeHeroTitle();
 
     const sections = [...document.querySelectorAll('#live-main > .hm-section[data-chapter]')];
     if (!sections.length) return;
