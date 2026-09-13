@@ -9,6 +9,37 @@
     });
   }
 
+  /* HIMART AX hero: replace the legacy static hero image with the approved AX movie.
+     The page already loads this bootstrap at the end of body, so the swap happens before
+     the visitor can meaningfully interact with the hero. */
+  const mountHimartAxHeroVideo=()=>{
+    if(!document.body.classList.contains('himart-ax-page'))return;
+    const visual=document.querySelector('.ax-hero .ax-hero-visual');
+    if(!visual || visual.querySelector('video'))return;
+
+    const video=document.createElement('video');
+    video.src='./assets/movies/himart_ax_01.mp4';
+    video.autoplay=true;
+    video.loop=true;
+    video.muted=true;
+    video.defaultMuted=true;
+    video.playsInline=true;
+    video.preload='auto';
+    video.setAttribute('muted','');
+    video.setAttribute('playsinline','');
+    video.setAttribute('webkit-playsinline','');
+    video.setAttribute('aria-hidden','true');
+    video.style.cssText='display:block;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.72;filter:grayscale(.22) contrast(1.05)';
+
+    const image=visual.querySelector('img');
+    if(image)image.replaceWith(video);
+    else visual.prepend(video);
+
+    const attempt=video.play?.();
+    if(attempt?.catch)attempt.catch(()=>{});
+  };
+  mountHimartAxHeroVideo();
+
   /*
     REUSE 04 / PROTOTYPE
     --------------------
