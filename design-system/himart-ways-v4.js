@@ -5,13 +5,14 @@
 
   /*
     Ways chapter titles are authored in HTML. The legacy Himart production stylesheet
-    still contains a hard-coded #journey .hm-section-title::before title, so the correct
-    fix is CSS ownership, not another DOM MutationObserver.
+    still contains a hard-coded #journey .hm-section-title::before title, so CSS owns
+    that compatibility reset. Page-specific refinements load as the final layer.
   */
   const mountFinalCss = () => {
     const sheets = [
       ['./design-system/components/himart-ways-title-owner.css?v=20260913-1', 'ways-title-owner'],
-      ['./design-system/components/himart-ways-v7.css?v=20260913-2340', 'ways-v7']
+      ['./design-system/components/himart-ways-v7.css?v=20260913-2340', 'ways-v7'],
+      ['./design-system/components/himart-ways-v8.css?v=20260914-1', 'ways-v8']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
@@ -31,16 +32,15 @@
     const s23 = subsectionByNo('02.3');
     if (!s22 || !s23) return;
 
-    /* 02.2: keep the explanatory sentence, remove only the START TOGETHER rail label. */
-    const introLabel = s22.querySelector('.ways-parallel-model__intro > span');
-    if (introLabel) introLabel.remove();
+    /* 02.2: the old START TOGETHER rail label is removed; the explanation remains. */
+    s22.querySelector('.ways-parallel-model__intro > span')?.remove();
 
-    /* 02.3: copy change and remove the former closing conclusion from this block. */
+    /* 02.3: revised wording and no standalone conclusion block. */
     const title23 = s23.querySelector('.hm-subtitle');
     if (title23) title23.innerHTML = '그리고 R&amp;R을 산출물이 아니라<br>판단의 책임으로 다시 정의했습니다.';
     s23.querySelector('.ways-ownership-conclusion')?.remove();
 
-    /* 02.4: summarize the two changes with the exact 01 / MEMO card grammar. */
+    /* 02.4: summarize the two changes with the same card grammar used in 01 / MEMO. */
     let s24 = document.querySelector('#data .ways-decision-summary-subsection');
     if (!s24) {
       s24 = document.createElement('div');
@@ -48,17 +48,20 @@
       s24.innerHTML = `
         <div class="hm-subhead">
           <span class="hm-subno">02.4</span>
-          <div><h3 class="hm-subtitle hm-ds-subsection__title">같이 시작하고 책임과 권한을 나눴습니다.</h3></div>
+          <div>
+            <h3 class="hm-subtitle hm-ds-subsection__title">같이 시작하고 책임과 권한을 나눴습니다.</h3>
+            <p class="hm-subcopy hm-ds-subsection__description">함께 시작하는 구조와 역할별 판단 책임을 하나의 운영 원칙으로 정리했습니다.</p>
+          </div>
         </div>
         <div class="ways-signal-grid ways-decision-summary-grid hm-ds-subtitle-to-content">
           <article>
-            <span class="ways-kicker">01 / START TOGETHER</span>
+            <span class="ways-kicker">01</span>
             <strong>TOGETHER</strong>
             <h4>완성된 기획을 넘기지 않고 처음부터 같이 시작했습니다.</h4>
             <p>PO·UX·개발이 문제 정의부터 초안과 기술 검토까지 짧은 주기로 함께 맞췄습니다.</p>
           </article>
           <article>
-            <span class="ways-kicker">02 / R&amp;R</span>
+            <span class="ways-kicker">02</span>
             <strong>OWNERSHIP</strong>
             <h4>산출물이 아니라 판단의 책임과 권한을 나눴습니다.</h4>
             <p>PO는 문제를 정의하고, UX는 빠르게 경험을 만들며, 개발은 처음부터 함께 해결합니다.</p>
@@ -84,17 +87,36 @@
       desc.textContent = '팀의 의견을 실제 기능·프로세스·운영 규칙으로 연결했습니다.';
     }
 
-    const s31 = [...journey.querySelectorAll('.hm-subsection')]
-      .find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.1'));
-    if (!s31) return;
+    const subsections = [...journey.querySelectorAll('.hm-subsection')];
+    const s31 = subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.1'));
+    const s32 = subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.2'));
 
-    const desc31 = s31.querySelector('.hm-subcopy');
-    if (desc31) desc31.textContent = '확인한 소통 방식을 실제 업무 기능과 프로세스로 구체화했습니다.';
+    if (s31) {
+      const desc31 = s31.querySelector('.hm-subcopy');
+      if (desc31) desc31.textContent = '확인한 소통 방식을 실제 업무 기능과 프로세스로 구체화했습니다.';
 
-    /* Numeric labels only: 01 → 02 → 03 / 04 → 05 → 06. */
-    s31.querySelectorAll('.ways-research-path > article > span').forEach((node, index) => {
-      node.textContent = String(index + 1).padStart(2, '0');
-    });
+      /* Numeric labels only: 01 → 02 → 03 / 04 → 05 → 06. */
+      s31.querySelectorAll('.ways-research-path > article > span').forEach((node, index) => {
+        node.textContent = String(index + 1).padStart(2, '0');
+      });
+    }
+
+    /* 03.2: six equal cards; labels are numeric only and supporting copy is tightened. */
+    if (s32) {
+      const desc32 = s32.querySelector('.hm-subcopy');
+      if (desc32) desc32.textContent = '공식 소통·프로젝트·요청·일정·결정을 하나의 운영 흐름으로 연결했습니다.';
+
+      const stack = s32.querySelector('.ways-operating-stack');
+      if (stack) {
+        stack.innerHTML = `
+          <article><span>01</span><h4>공식 소통을 Teams로 모았습니다.</h4><p>개인 쪽지 대신 채널과 스레드에 요청·논의를 남겨 프로젝트 맥락을 함께 봤습니다.</p></article>
+          <article><span>02</span><h4>프로젝트 목표와 과정을 함께 보이게 했습니다.</h4><p>Teams에서 프로젝트와 서브 태스크를 등록해 목표·담당·진행 과정을 함께 확인했습니다.</p></article>
+          <article><span>03</span><h4>요청 양식을 만들고 DB로 축적했습니다.</h4><p>반복 요청은 표준 양식으로 받고, 요청 자체를 데이터로 남겨 검색·재활용할 수 있게 했습니다.</p></article>
+          <article><span>04</span><h4>일정을 한곳에서 확인하고 바로 초대했습니다.</h4><p>공용 일정을 공유해 가능한 시간을 바로 확인·초대하고 별도 일정 확인 대화를 줄였습니다.</p></article>
+          <article><span>05</span><h4>회의와 결정 사항을 바로 기록했습니다.</h4><p>결정·담당·다음 액션을 같은 공간에 남겨 회의 이후 다시 묻는 일을 줄였습니다.</p></article>
+          <article><span>06</span><h4>정착 이후에는 채널을 줄이고 자동화합니다.</h4><p>중복 채널을 정리하고 Jira·Power Automate 연계로 상태 알림과 반복 업무를 줄여가고 있습니다.</p></article>`;
+      }
+    }
   };
 
   const mountWaysReflection = () => {
