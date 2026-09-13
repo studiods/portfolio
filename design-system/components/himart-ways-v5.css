@@ -1,0 +1,211 @@
+/* HIMART WAYS v5 — proportional flow, interview rows, and shared R&R table grammar.
+   Page-specific composition only; global type/color tokens remain design-system owned. */
+
+/* 01.3 — exactly 17/20 for four circles + 3/20 for three arrows. */
+html body.ways-page #brand .ways-hm-flow--legacy .flow-row.row4{
+  --ways-legacy-arrow:5cqw!important;
+  --ways-legacy-node:21.25cqw!important;
+  width:100%!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node{
+  flex:0 0 var(--ways-legacy-node)!important;
+  width:var(--ways-legacy-node)!important;
+  min-width:var(--ways-legacy-node)!important;
+  max-width:var(--ways-legacy-node)!important;
+  height:var(--ways-legacy-node)!important;
+  min-height:var(--ways-legacy-node)!important;
+  max-height:var(--ways-legacy-node)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-left-color:rgba(255,255,255,.10)!important;
+  border-right-color:rgba(255,255,255,.10)!important;
+  container-type:inline-size!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-arrow{
+  flex:0 0 var(--ways-legacy-arrow)!important;
+  width:var(--ways-legacy-arrow)!important;
+  min-width:var(--ways-legacy-arrow)!important;
+  max-width:var(--ways-legacy-arrow)!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node h4{
+  font-size:clamp(16px,8.4cqi,20px)!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node p{
+  font-size:clamp(10px,5.1cqi,12px)!important;
+}
+
+/* 02.1 — left role rail 2/10, quote rail 8/10 split into three equal columns. */
+.ways-team-problems{gap:72px!important}
+.ways-team-problem__head{
+  display:grid!important;
+  grid-template-columns:20% 80%!important;
+  gap:0!important;
+  align-items:start!important;
+}
+.ways-team-problem__no{
+  padding-right:28px!important;
+  box-sizing:border-box!important;
+}
+.ways-team-problem__title{
+  margin:0!important;
+  max-width:34ch!important;
+  font-size:26px!important;
+  line-height:1.28!important;
+}
+.ways-team-problem__copy{
+  margin:12px 0 0!important;
+  max-width:54ch!important;
+}
+.ways-team-problem__quotes{
+  display:grid!important;
+  grid-template-columns:20% repeat(3,minmax(0,1fr))!important;
+  gap:0!important;
+  margin-top:40px!important;
+}
+.ways-team-problem__quotes::before{
+  content:"";
+  display:block;
+}
+.ways-team-problem__quotes blockquote{
+  display:flex!important;
+  min-width:0!important;
+  min-height:154px!important;
+  margin:0!important;
+  padding:20px 24px 0!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  border-top:1px solid color-mix(in srgb,var(--role-color) 38%,transparent)!important;
+}
+.ways-team-problem__quotes blockquote:first-of-type{padding-left:0!important}
+.ways-team-problem__quotes p{
+  min-height:calc(1.45em * 3)!important;
+  margin:0!important;
+  max-width:none!important;
+  line-height:1.45!important;
+}
+.ways-team-problem__quotes span{
+  min-height:1.2em!important;
+  margin-top:20px!important;
+  color:var(--role-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:10px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+
+/* 02.2 — one exact 2/10 + 8/10 alignment contract from intro through every role row. */
+.ways-parallel-model{
+  padding-top:28px!important;
+  border-top:1px solid rgba(255,255,255,1)!important;
+}
+.ways-parallel-model__intro{
+  display:grid!important;
+  grid-template-columns:20% 80%!important;
+  gap:0!important;
+  align-items:start!important;
+}
+.ways-parallel-model__intro>span{
+  color:#fff!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.18!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+.ways-parallel-model__intro>p{
+  margin:0!important;
+  max-width:54ch!important;
+}
+.ways-parallel-model__lanes{gap:16px!important;margin-top:48px!important}
+.ways-parallel-lane{
+  display:grid!important;
+  grid-template-columns:20% repeat(3,minmax(0,1fr))!important;
+  min-height:0!important;
+  align-items:stretch!important;
+}
+.ways-parallel-lane__role{
+  min-height:142px!important;
+  height:100%!important;
+  padding:22px 24px 22px 0!important;
+  justify-content:center!important;
+}
+.ways-parallel-lane__step{
+  min-height:142px!important;
+  height:100%!important;
+  padding:22px 24px!important;
+}
+.ways-parallel-lane__step b{
+  font-family:var(--hm-font-en)!important;
+  font-size:10px!important;
+  font-weight:400!important;
+}
+.ways-parallel-lane__step strong{margin-top:12px!important}
+.ways-parallel-lane__step p{margin:8px 0 0!important}
+.ways-sync-checkpoints{display:none!important}
+
+/* 02.3 — reuse the same row geometry as 02.2. */
+.ways-ownership-model{border-top-color:var(--hm-line-default)!important}
+.ways-ownership-model .ways-parallel-lane__role span{
+  font-size:11px!important;
+}
+.ways-ownership-conclusion{
+  display:grid!important;
+  grid-template-columns:20% 80%!important;
+  gap:0!important;
+  margin-top:16px!important;
+  padding:26px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.20)!important;
+}
+.ways-ownership-conclusion>span{
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.4!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+.ways-ownership-conclusion>p{
+  margin:0!important;
+  max-width:72ch!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.55!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+@media(max-width:1180px){
+  .ways-team-problem__head{grid-template-columns:20% 80%!important}
+  .ways-team-problem__quotes{grid-template-columns:20% repeat(3,minmax(0,1fr))!important}
+  .ways-parallel-model__intro,.ways-ownership-conclusion{grid-template-columns:20% 80%!important}
+  .ways-parallel-lane{grid-template-columns:20% repeat(3,minmax(0,1fr))!important}
+}
+
+@media(max-width:780px){
+  html body.ways-page #brand .ways-hm-flow--legacy .flow-row.row4{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  html body.ways-page #brand .ways-hm-flow--legacy .flow-node{
+    width:min(320px,88vw)!important;
+    min-width:0!important;
+    max-width:min(320px,88vw)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin-inline:auto!important;
+  }
+  html body.ways-page #brand .ways-hm-flow--legacy .flow-arrow{display:none!important}
+  .ways-team-problem__head,.ways-parallel-model__intro,.ways-ownership-conclusion{grid-template-columns:1fr!important}
+  .ways-team-problem__quotes{grid-template-columns:1fr!important}
+  .ways-team-problem__quotes::before{display:none!important}
+  .ways-team-problem__quotes blockquote,.ways-team-problem__quotes blockquote:first-of-type{padding-left:0!important;padding-right:0!important}
+  .ways-parallel-lane{grid-template-columns:1fr!important}
+  .ways-parallel-lane__role,.ways-parallel-lane__step{min-height:0!important}
+  .ways-ownership-conclusion>p{margin-top:12px!important}
+}
