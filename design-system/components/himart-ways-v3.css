@@ -267,6 +267,108 @@ html body.ways-page .ways-impact-chart__source{
   word-break:keep-all!important;
 }
 
+/* 2026-09-13 / 01 research narrative refinement. */
+html body.ways-page .ways-quote-grid article:first-child strong{color:#fff!important}
+
+html body.ways-page .ways-synthesis{
+  position:relative!important;
+  overflow:hidden!important;
+  margin-top:64px!important;
+  padding:24px!important;
+  border-top:1px solid var(--hm-blue)!important;
+  background:linear-gradient(to bottom,rgba(0,166,237,.20) 0,rgba(0,166,237,0) 100px)!important;
+}
+html body.ways-page .ways-synthesis>span{
+  position:relative!important;
+  z-index:1!important;
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.ways-page .ways-synthesis h4{
+  position:relative!important;
+  z-index:1!important;
+  margin:18px 0 0!important;
+  max-width:none!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
+  line-height:1.6!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.ways-page .ways-synthesis h4 strong{font:inherit!important;color:inherit!important}
+html body.ways-page .ways-synthesis p{display:none!important}
+
+/* 01.3 — AIMMO 01.2 circle/arrow grammar, recolored red and kept in one ordered row. */
+html body.ways-page .ways-hm-flow--legacy .flow-group{padding-top:0!important;container-type:inline-size!important}
+html body.ways-page .ways-hm-flow--legacy .flow-group::before,
+html body.ways-page .ways-hm-flow--legacy .flow-label{display:none!important}
+html body.ways-page .ways-hm-flow--legacy .flow-row.row4{
+  --ways-legacy-arrow:30.8px;
+  --ways-legacy-node:min(250px,calc((100cqw - (var(--ways-legacy-arrow) * 3)) / 4));
+  display:flex!important;
+  flex-flow:row nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:0!important;
+  width:100%!important;
+  min-width:0!important;
+}
+html body.ways-page .ways-hm-flow--legacy .flow-node{
+  flex:0 0 var(--ways-legacy-node)!important;
+  width:var(--ways-legacy-node)!important;
+  min-width:var(--ways-legacy-node)!important;
+  max-width:var(--ways-legacy-node)!important;
+  height:var(--ways-legacy-node)!important;
+  min-height:var(--ways-legacy-node)!important;
+  max-height:var(--ways-legacy-node)!important;
+  aspect-ratio:1/1!important;
+  margin:0!important;
+  padding:28px!important;
+  border:1px solid var(--hm-red)!important;
+  border-radius:50%!important;
+  background:#000!important;
+}
+html body.ways-page .ways-hm-flow--legacy .flow-node .hm-card-no{
+  margin:0!important;
+  color:var(--hm-red)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:11px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.ways-page .ways-hm-flow--legacy .flow-node h4{color:var(--hm-red)!important}
+html body.ways-page .ways-hm-flow--legacy .flow-arrow{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 var(--ways-legacy-arrow)!important;
+  width:var(--ways-legacy-arrow)!important;
+  min-width:var(--ways-legacy-arrow)!important;
+  max-width:var(--ways-legacy-arrow)!important;
+  height:40px!important;
+  margin:0!important;
+  padding:0!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+}
+html body.ways-page .ways-hm-flow--legacy .flow-arrow::before{
+  width:12px!important;
+  height:12px!important;
+  border-top:1px solid rgba(255,255,255,.48)!important;
+  border-right:1px solid rgba(255,255,255,.48)!important;
+  transform:translate(-65%,-50%) rotate(45deg)!important;
+}
+
 @media(max-width:1180px){
   html body.ways-page .ways-hm-flow .flow-row.row4,
   html body.ways-page .ways-hm-flow .flow-row.row3{
@@ -275,6 +377,10 @@ html body.ways-page .ways-impact-chart__source{
   }
   html body.ways-page .ways-hm-flow .flow-arrow{display:none!important}
   html body.ways-page .ways-hm-flow .flow-node{width:100%!important;min-width:0!important;height:auto!important;min-height:240px!important;aspect-ratio:1!important}
+
+  html body.ways-page .ways-hm-flow--legacy .flow-row.row4{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;container-type:normal!important}
+  html body.ways-page .ways-hm-flow--legacy .flow-arrow{display:none!important}
+  html body.ways-page .ways-hm-flow--legacy .flow-node{width:100%!important;min-width:0!important;max-width:none!important;height:auto!important;min-height:240px!important;max-height:none!important;aspect-ratio:1!important}
 }
 @media(max-width:780px){
   html body.ways-page .ways-hm-flow .flow-label{position:static!important;margin:0 0 24px!important;white-space:normal!important}
@@ -288,4 +394,9 @@ html body.ways-page .ways-impact-chart__source{
   html body.ways-page .ways-impact-chart__row{grid-template-columns:1fr!important;gap:10px!important}
   html body.ways-page .ways-impact-chart__track{height:64px!important}
   html body.ways-page .ways-impact-chart__bar strong{font-size:32px!important}
+
+  html body.ways-page .ways-synthesis{padding:24px 0!important}
+  html body.ways-page .ways-hm-flow--legacy .flow-group{padding-top:0!important}
+  html body.ways-page .ways-hm-flow--legacy .flow-row.row4{grid-template-columns:1fr!important;gap:16px!important}
+  html body.ways-page .ways-hm-flow--legacy .flow-node{max-width:360px!important;margin-inline:auto!important;min-height:0!important}
 }
