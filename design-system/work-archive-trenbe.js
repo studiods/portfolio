@@ -3,8 +3,9 @@
 
   const trenbeSlide=document.querySelector('[data-wa-source-page="36"]');
   const company=trenbeSlide?.closest('[data-wa-company]');
+  const gallery=company?.querySelector('[data-wa-gallery]');
   const overlayBody=company?.querySelector('.wa-gallery-overlay__body');
-  if(!company||!overlayBody)return;
+  if(!company||!gallery||!overlayBody)return;
 
   company.classList.add('is-trenbe');
 
@@ -17,4 +18,60 @@
     overlayBody.prepend(paragraph);
   }
   paragraph.textContent=copy;
+
+  const sampleBodyLuminance=img=>{
+    if(!img?.naturalWidth||!img?.naturalHeight)return null;
+    try{
+      const sx=0;
+      const sy=Math.round(img.naturalHeight*.02);
+      const sw=Math.max(1,Math.round(img.naturalWidth*.48));
+      const sh=Math.max(1,Math.round(img.naturalHeight*.30));
+      const canvas=document.createElement('canvas');
+      canvas.width=18;
+      canvas.height=18;
+      const ctx=canvas.getContext('2d',{willReadFrequently:true});
+      ctx.drawImage(img,sx,sy,sw,sh,0,0,18,18);
+      const pixels=ctx.getImageData(0,0,18,18).data;
+      let sum=0;
+      let count=0;
+      for(let i=0;i<pixels.length;i+=4){
+        if(pixels[i+3]<32)continue;
+        sum+=(0.2126*pixels[i]+0.7152*pixels[i+1]+0.0722*pixels[i+2])/255;
+        count+=1;
+      }
+      return count?sum/count:null;
+    }catch(_){
+      return null;
+    }
+  };
+
+  const activeImage=()=>{
+    const incoming=gallery.querySelector('.reuse-production-gallery__slide.is-next.is-entering img');
+    if(incoming)return incoming;
+    return gallery.querySelector('.reuse-production-gallery__slide.is-active img');
+  };
+
+  const syncContrast=()=>{
+    const img=activeImage();
+    const commit=()=>{
+      const luminance=sampleBodyLuminance(img);
+      gallery.style.setProperty('--wa-body-color',luminance!==null&&luminance<.46?'#fff':'#000');
+    };
+    if(img?.complete&&img.naturalWidth)commit();
+    else img?.addEventListener('load',commit,{once:true});
+  };
+
+  let frame=0;
+  const queueContrast=()=>{
+    if(frame)cancelAnimationFrame(frame);
+    frame=requestAnimationFrame(()=>{
+      frame=0;
+      syncContrast();
+    });
+  };
+
+  const observer=new MutationObserver(queueContrast);
+  gallery.querySelectorAll('.reuse-production-gallery__slide').forEach(slide=>observer.observe(slide,{attributes:true,attributeFilter:['class']}));
+  window.addEventListener('resize',queueContrast,{passive:true});
+  syncContrast();
 })();
