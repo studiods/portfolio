@@ -209,3 +209,72 @@ html body.ways-page #brand .ways-hm-flow--legacy .flow-node p{
   .ways-parallel-lane__role,.ways-parallel-lane__step{min-height:0!important}
   .ways-ownership-conclusion>p{margin-top:12px!important}
 }
+
+/* v5.1 — role color, row alignment and 03.1 hierarchy refinement. */
+html body.ways-page #data .ways-team-problem__title{
+  color:var(--role-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:26px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
+html body.ways-page #data .ways-team-problem__quotes span{
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-weight:300!important;
+}
+html body.ways-page #data .ways-parallel-model:not(.ways-ownership-model){
+  border-top:1px solid rgba(255,255,255,.70)!important;
+}
+html body.ways-page #data .ways-parallel-lane__step{border-left:0!important}
+html body.ways-page #data .ways-parallel-lane__role{
+  min-height:142px!important;
+  height:100%!important;
+  padding:22px 24px 22px 0!important;
+  justify-content:flex-start!important;
+  box-sizing:border-box!important;
+}
+html body.ways-page #data .ways-parallel-lane__role strong{
+  margin-top:12px!important;
+  color:var(--role-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.3!important;
+}
+html body.ways-page #data .ways-ownership-model{
+  padding-top:0!important;
+  border-top:0!important;
+}
+html body.ways-page #data .ways-ownership-model .ways-parallel-lane__role strong{font-size:22px!important}
+html body.ways-page #data .ways-ownership-conclusion>span{
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.ways-page #data .ways-ownership-conclusion>p{
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:18px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+}
+html body.ways-page #journey .ways-research-path article h4{
+  font-size:26px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.28!important;
+}
+@media(max-width:780px){
+  html body.ways-page #data .ways-parallel-lane__role{min-height:0!important}
+  html body.ways-page #data .ways-team-problem__title,
+  html body.ways-page #journey .ways-research-path article h4{font-size:22px!important}
+  html body.ways-page #data .ways-ownership-conclusion>span{font-size:20px!important}
+  html body.ways-page #data .ways-ownership-conclusion>p{font-size:16px!important}
+}
