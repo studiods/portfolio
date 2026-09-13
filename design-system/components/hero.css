@@ -7,6 +7,14 @@
   bottom metadata rail and scroll-cover rendering. Legacy page bundles may
   still contain old .hm-* selectors, so canonical hm-ds-* selectors use a
   stable scoped lock instead of page-local overrides.
+
+  HERO VISUAL CONTRACT:
+  - source image/video is shown at its native brightness (opacity 1 / no filter);
+  - exactly one black matte is applied above the media;
+  - the matte starts at 50% opacity;
+  - animation.js may increase that same matte from 50% to 100% while scrolling;
+  - page-specific gradients, brightness filters or additional black layers must not
+    alter the base 50% state.
 */
 html body.himart-page-body #live-main > .hm-ds-hero{
   position:sticky!important;
@@ -30,6 +38,8 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__video{
   object-fit:cover!important;
   z-index:0!important;
+  opacity:1!important;
+  filter:none!important;
 }
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
   z-index:1!important;
@@ -38,6 +48,20 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
   opacity:var(--hm-hero-overlay-opacity,.5)!important;
   transition:opacity .12s linear!important;
 }
+
+/* HIMART AX previously stacked media opacity + a directional gradient + the shared
+   black matte, making the movie nearly disappear. AX still uses a nested visual
+   wrapper, so normalize that legacy wrapper here as part of the same Hero contract. */
+html body.himart-page-body.himart-ax-page #live-main > .hm-ds-hero .ax-hero-visual :is(img,video){
+  opacity:1!important;
+  filter:none!important;
+}
+html body.himart-page-body.himart-ax-page #live-main > .hm-ds-hero .ax-hero-visual::after{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+}
+
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__inner{
   position:relative!important;
   z-index:2!important;
