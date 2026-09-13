@@ -1,0 +1,125 @@
+/* HIMART WAYS v9 — 02.2 cleanup, 02.4 spacing, and 03.1 image-grid composition. */
+
+/* 02.2 — remove the old intro copy and its rule completely. */
+html body.ways-page #data .ways-parallel-model.ways-no-intro-model{
+  padding-top:0!important;
+  border-top:0!important;
+}
+html body.ways-page #data .ways-parallel-model.ways-no-intro-model .ways-parallel-model__lanes{
+  margin-top:0!important;
+}
+
+/* 02.4 — tighten title/description to the first summary card by half. */
+html body.ways-page #data .ways-decision-summary-subsection .ways-decision-summary-grid{
+  margin-top:40px!important;
+}
+
+/* 03.1 — 2 x 3 editorial image cards, 4:3, 50% black matte, copy bottom-left. */
+html body.ways-page #journey .ways-research-path.ways-research-path--image-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:28px!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content)!important;
+  border:0!important;
+  overflow:visible!important;
+}
+html body.ways-page #journey .ways-research-path.ways-research-path--image-grid::before,
+html body.ways-page #journey .ways-research-path.ways-research-path--image-grid::after{
+  content:none!important;
+  display:none!important;
+}
+html body.ways-page #journey .ways-research-path--image-grid .ways-research-card,
+html body.ways-page #journey .ways-research-path--image-grid .ways-research-card+article{
+  position:relative!important;
+  isolation:isolate!important;
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  aspect-ratio:4 / 3!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  border:0!important;
+  background:#000!important;
+}
+html body.ways-page #journey .ways-research-path--image-grid .ways-research-card::before,
+html body.ways-page #journey .ways-research-path--image-grid .ways-research-card::after{
+  content:none!important;
+  display:none!important;
+}
+html body.ways-page #journey .ways-research-card__image{
+  position:absolute!important;
+  z-index:0!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+html body.ways-page #journey .ways-research-card__matte{
+  position:absolute!important;
+  z-index:1!important;
+  inset:0!important;
+  background:rgba(0,0,0,.50)!important;
+  pointer-events:none!important;
+}
+html body.ways-page #journey .ways-research-card__content{
+  position:absolute!important;
+  z-index:2!important;
+  left:28px!important;
+  right:28px!important;
+  bottom:28px!important;
+  display:block!important;
+  color:#fff!important;
+}
+html body.ways-page #journey .ways-research-card__content>span{
+  display:block!important;
+  margin:0 0 14px!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.ways-page #journey .ways-research-card__content h4{
+  margin:0!important;
+  max-width:22ch!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:26px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.25!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.ways-page #journey .ways-research-card__content p{
+  margin:10px 0 0!important;
+  max-width:38ch!important;
+  color:rgba(255,255,255,.76)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+@media(max-width:780px){
+  html body.ways-page #data .ways-decision-summary-subsection .ways-decision-summary-grid{margin-top:28px!important}
+  html body.ways-page #journey .ways-research-path.ways-research-path--image-grid{
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+  }
+  html body.ways-page #journey .ways-research-card__content{
+    left:22px!important;
+    right:22px!important;
+    bottom:22px!important;
+  }
+  html body.ways-page #journey .ways-research-card__content h4{font-size:22px!important}
+  html body.ways-page #journey .ways-research-card__content p{font-size:13px!important}
+}
