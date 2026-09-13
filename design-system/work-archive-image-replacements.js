@@ -8,7 +8,7 @@
   const replacements={
     29:'./assets/image/work-archive/archive-aimmo-p029-v5.webp',
     33:'./assets/image/work-archive/archive-aimmo-p033-v5.webp',
-    36:'./assets/image/work-archive/archive-trenbe-p036-v5.webp',
+    36:'./assets/image/work-archive/archive-trenbe-p036-v6.webp',
     37:'./assets/image/work-archive/archive-trenbe-p037-v5.webp',
     38:'./assets/image/work-archive/archive-trenbe-p038-v5.webp'
   };
