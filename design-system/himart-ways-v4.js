@@ -12,7 +12,8 @@
     const sheets = [
       ['./design-system/components/himart-ways-title-owner.css?v=20260913-1', 'ways-title-owner'],
       ['./design-system/components/himart-ways-v7.css?v=20260913-2340', 'ways-v7'],
-      ['./design-system/components/himart-ways-v8.css?v=20260914-1', 'ways-v8']
+      ['./design-system/components/himart-ways-v8.css?v=20260914-1', 'ways-v8'],
+      ['./design-system/components/himart-ways-v9.css?v=20260914-2', 'ways-v9']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
@@ -32,8 +33,12 @@
     const s23 = subsectionByNo('02.3');
     if (!s22 || !s23) return;
 
-    /* 02.2: the old START TOGETHER rail label is removed; the explanation remains. */
-    s22.querySelector('.ways-parallel-model__intro > span')?.remove();
+    /* 02.2: remove the former START TOGETHER intro copy and its top rule completely. */
+    const model22 = s22.querySelector('.ways-parallel-model');
+    if (model22) {
+      model22.querySelector('.ways-parallel-model__intro')?.remove();
+      model22.classList.add('ways-no-intro-model');
+    }
 
     /* 02.3: revised wording and no standalone conclusion block. */
     const title23 = s23.querySelector('.hm-subtitle');
@@ -95,10 +100,28 @@
       const desc31 = s31.querySelector('.hm-subcopy');
       if (desc31) desc31.textContent = '확인한 소통 방식을 실제 업무 기능과 프로세스로 구체화했습니다.';
 
-      /* Numeric labels only: 01 → 02 → 03 / 04 → 05 → 06. */
-      s31.querySelectorAll('.ways-research-path > article > span').forEach((node, index) => {
-        node.textContent = String(index + 1).padStart(2, '0');
-      });
+      const path = s31.querySelector('.ways-research-path');
+      if (path) {
+        path.classList.add('ways-research-path--image-grid');
+        const cards = [
+          { no:'01', title:'필요 기능 정리', copy:'상태·기록·파일·일정 등 반복 업무를 기능 단위로 정리했습니다.', image:'./assets/image/himart-rnr/himart_rnr_01.png' },
+          { no:'02', title:'업무 흐름 설계', copy:'요청부터 완료까지 무엇을 어디에 남길지 정의했습니다.', image:'./assets/image/himart-rnr/himart_rnr_02.png' },
+          { no:'03', title:'기존 시스템 검토', copy:'Teams·Planner·Lists·Calendar의 연결 방식을 검토했습니다.', image:'./assets/image/himart-rnr/himart_rnr_03.png' },
+          { no:'04', title:'소규모 적용', copy:'실제 과제에 적용해 예외와 운영 규칙을 확인했습니다.', image:'./assets/image/himart-rnr/himart_rnr_01.png' },
+          { no:'05', title:'가이드 제작', copy:'소통·프로젝트·회의·일정 규칙을 문서화했습니다.', image:'./assets/image/himart-rnr/himart_rnr_02.png' },
+          { no:'06', title:'부서별 배포', copy:'가이드를 배포하고 팀별 정착을 시작했습니다.', image:'./assets/image/himart-rnr/himart_rnr_03.png' }
+        ];
+        path.innerHTML = cards.map(card => `
+          <article class="ways-research-card">
+            <img class="ways-research-card__image" src="${card.image}" alt="" loading="lazy" decoding="async">
+            <span class="ways-research-card__matte" aria-hidden="true"></span>
+            <div class="ways-research-card__content">
+              <span>${card.no}</span>
+              <h4>${card.title}</h4>
+              <p>${card.copy}</p>
+            </div>
+          </article>`).join('');
+      }
     }
 
     /* 03.2: six equal cards; labels are numeric only and supporting copy is tightened. */
