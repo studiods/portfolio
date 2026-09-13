@@ -275,7 +275,7 @@ html body.ways-page .ways-synthesis{
   overflow:hidden!important;
   margin-top:64px!important;
   padding:24px!important;
-  border-top:1px solid var(--hm-blue)!important;
+  border-top:1px solid #00A6ED!important;
   background:linear-gradient(to bottom,rgba(0,166,237,.20) 0,rgba(0,166,237,0) 100px)!important;
 }
 html body.ways-page .ways-synthesis>span{
@@ -295,17 +295,32 @@ html body.ways-page .ways-synthesis h4{
   z-index:1!important;
   margin:18px 0 0!important;
   max-width:none!important;
-  color:var(--hm-blue)!important;
+  color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:16px!important;
-  font-weight:400!important;
-  font-variation-settings:"wght" 400!important;
-  line-height:1.6!important;
-  letter-spacing:var(--hm-track-body)!important;
+  font-size:22px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.42!important;
+  letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
 html body.ways-page .ways-synthesis h4 strong{font:inherit!important;color:inherit!important}
 html body.ways-page .ways-synthesis p{display:none!important}
+html body.ways-page .ways-synthesis::after{
+  content:"익숙한 불편을 그대로 두는 대신, 문제를 드러내고 함께 바꿀 수 있는 업무 구조부터 다시 정의했습니다.";
+  position:relative!important;
+  z-index:1!important;
+  display:block!important;
+  margin:12px 0 0!important;
+  max-width:68ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
 
 /* 01.3 — AIMMO 01.2 circle/arrow grammar, recolored red and kept in one ordered row. */
 html body.ways-page .ways-hm-flow--legacy .flow-group{padding-top:0!important;container-type:inline-size!important}
