@@ -3,6 +3,20 @@
   Also owns the migration/runtime layer for the canonical quantitative SOURCE note.
   HOME / ABOUT / CONTACT never receive the right-side navigator.
 */
+
+/* Global Design System motion bootstrap.
+   All portfolio pages that load navigation.js inherit the same restrained inertial scroll. */
+(() => {
+  'use strict';
+  if (window.__portfolioInertiaLoaderMounted) return;
+  window.__portfolioInertiaLoaderMounted = true;
+  const script = document.createElement('script');
+  script.src = './design-system/inertia-scroll.js?v=20260913-2';
+  script.async = false;
+  script.dataset.portfolioInertia = 'true';
+  (document.head || document.documentElement).appendChild(script);
+})();
+
 (() => {
   'use strict';
 
