@@ -1,4 +1,4 @@
-/* WORK ARCHIVE — HIMART / REUSE composition v5.0
+/* WORK ARCHIVE — HIMART / REUSE composition v5.1
    -------------------------------------------------
    Canonical Himart Hero/scroll-cover shell + REUSE manual gallery interaction.
    Archive-specific contract:
@@ -6,7 +6,7 @@
    - project title sits above the media, source body copy sits at media top-left;
    - authored vector/text pages use full-page raster renders from the source PDF;
    - default overlay/arrow color is black and JS switches to white on dark imagery;
-   - navigation hit areas remain 10% x 100%, arrow heads sit 32px from outer edges;
+   - navigation hit areas remain 10% x 100%, arrow heads sit 32px from outer edges at every breakpoint;
    - no lower readability gradient; CORE VALUE alone keeps one 40% black matte;
    - company-to-company gap = 80px;
    - footer follows the canonical Himart Design System contract.
@@ -56,8 +56,8 @@ html body.work-archive-page .wa-company{position:relative;width:100%;margin:0;sc
 html body.work-archive-page .wa-company+.wa-company{margin-top:80px}
 html body.work-archive-page .wa-project-anchor{position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none}
 
-/* Project title returns above the gallery. Black is the semantic default; this page's
-   black content plane marks the header as dark and therefore resolves it to white. */
+/* Project title sits above the gallery. Black is the semantic default; the current
+   archive plane is dark, so .is-dark switches the rendered title to white. */
 html body.work-archive-page .wa-project__head{--wa-title-color:#000;width:100%;margin:0 0 36px;padding:0;color:var(--wa-title-color)}
 html body.work-archive-page .wa-project__head.is-dark{--wa-title-color:#fff}
 html body.work-archive-page .wa-project__meta{display:flex;align-items:baseline;gap:12px;min-width:0;margin:0 0 14px}
@@ -74,7 +74,8 @@ html body.work-archive-page .wa-company .reuse-production-gallery__media>img{dis
 /* Remove the REUSE lower gradient entirely. */
 html body.work-archive-page .wa-company .reuse-production-gallery::after{display:none!important;content:none!important;background:none!important}
 
-/* Source portfolio description: left-top, 14px. Color is sampled per active image. */
+/* Source portfolio body copy only: media left-top, 14px. JS samples the active image;
+   light imagery keeps the black default and dark imagery switches to white. */
 html body.work-archive-page .wa-gallery-overlay{position:absolute;z-index:6;top:32px;left:32px;width:min(760px,58%);pointer-events:none;color:var(--wa-body-color,#000)}
 html body.work-archive-page .wa-gallery-overlay__body{min-width:0;color:inherit}
 html body.work-archive-page .wa-gallery-overlay__body p{margin:0!important;max-width:none!important;color:inherit!important;font-family:var(--hm-font-ko)!important;font-size:14px!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.55!important;letter-spacing:var(--hm-track-body)!important;white-space:pre-line;word-break:keep-all!important;text-shadow:none!important}
@@ -82,7 +83,7 @@ html body.work-archive-page .wa-gallery-note{display:block;margin:10px 0 0;color
 html body.work-archive-page .wa-gallery-note[hidden],
 html body.work-archive-page .wa-gallery-overlay__body p[hidden]{display:none!important}
 
-/* Full-height 10% hit areas; only the visible arrow heads are 32px from the media edges. */
+/* Full-height 10% hit areas; visible arrow heads remain exactly 32px from media edges. */
 html body.work-archive-page .wa-company .reuse-production-gallery__nav{z-index:8!important;top:0!important;width:10%!important;height:100%!important;margin:0!important;padding:0!important;transform:none!important;background:transparent!important}
 html body.work-archive-page .wa-company .reuse-production-gallery__nav--prev{left:0!important;color:var(--wa-prev-color,#000)!important}
 html body.work-archive-page .wa-company .reuse-production-gallery__nav--next{right:0!important;color:var(--wa-next-color,#000)!important}
@@ -125,8 +126,8 @@ html body.work-archive-page>.hm-footer>.hm-wrap>div{display:flex!important;gap:v
   html body.work-archive-page .wa-project__title{font-size:clamp(22px,6.6vw,28px)!important;line-height:1.08!important}
   html body.work-archive-page .wa-gallery-overlay{top:20px;left:20px;width:calc(100% - 72px)}
   html body.work-archive-page .wa-gallery-overlay__body p{font-size:14px!important;line-height:1.45!important}
-  html body.work-archive-page .wa-company .reuse-production-gallery__nav--prev::before{left:18px!important}
-  html body.work-archive-page .wa-company .reuse-production-gallery__nav--next::before{right:18px!important}
+  html body.work-archive-page .wa-company .reuse-production-gallery__nav--prev::before{left:32px!important}
+  html body.work-archive-page .wa-company .reuse-production-gallery__nav--next::before{right:32px!important}
   html body.work-archive-page .wa-company .reuse-production-gallery__status{right:18px!important;bottom:18px!important}
   html body.work-archive-page>.hm-footer{padding:60px 0 32px!important}
   html body.work-archive-page>.hm-footer>.hm-wrap{width:calc(100% - 36px)!important;max-width:none!important;display:block!important}
