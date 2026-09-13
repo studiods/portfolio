@@ -1,0 +1,90 @@
+/* HIMART WAYS v8 — 02.2/02.3 row rules, 02.4 summary, 01.3 circles, 03.2 operating cards. */
+
+/* 01.3 — circle contrast and internal type. */
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node{
+  border-color:rgba(255,255,255,.30)!important;
+  border-left-color:rgba(255,255,255,.30)!important;
+  border-right-color:rgba(255,255,255,.30)!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node h4{
+  font-size:22px!important;
+  line-height:1.22!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node p{
+  font-size:12px!important;
+  line-height:1.46!important;
+}
+
+/* 02.2 / 02.3 — team-colored rule spans the full row, including the PO/UX/DEV role rail. */
+html body.ways-page #data .ways-parallel-lane::before{
+  left:0!important;
+}
+
+/* 02.4 — clean two-card summary with no top rules. */
+html body.ways-page #data .ways-decision-summary-grid>article{
+  border-top:0!important;
+  background:transparent!important;
+}
+html body.ways-page #data .ways-decision-summary-subsection .hm-subcopy{
+  margin-top:var(--hm-title-description-gap)!important;
+}
+
+/* 03.2 — six equal operating cards. */
+html body.ways-page #journey .ways-operating-stack{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:20px 28px!important;
+}
+html body.ways-page #journey .ways-operating-stack>article,
+html body.ways-page #journey .ways-operating-stack>article.ways-operating-stack__anchor,
+html body.ways-page #journey .ways-operating-stack>article.ways-operating-stack__next{
+  grid-column:auto!important;
+  display:block!important;
+  min-width:0!important;
+  min-height:220px!important;
+  padding:32px 28px 36px!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  background:transparent!important;
+}
+html body.ways-page #journey .ways-operating-stack>article>span{
+  display:block!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+}
+html body.ways-page #journey .ways-operating-stack>article h4,
+html body.ways-page #journey .ways-operating-stack>article.ways-operating-stack__anchor h4,
+html body.ways-page #journey .ways-operating-stack>article.ways-operating-stack__next h4{
+  margin:24px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.ways-page #journey .ways-operating-stack>article p,
+html body.ways-page #journey .ways-operating-stack>article.ways-operating-stack__anchor p,
+html body.ways-page #journey .ways-operating-stack>article.ways-operating-stack__next p{
+  margin:14px 0 0!important;
+  max-width:42ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+@media(max-width:780px){
+  html body.ways-page #brand .ways-hm-flow--legacy .flow-node h4{font-size:20px!important}
+  html body.ways-page #journey .ways-operating-stack{grid-template-columns:1fr!important}
+  html body.ways-page #journey .ways-operating-stack>article{min-height:0!important}
+  html body.ways-page #journey .ways-operating-stack>article h4{font-size:24px!important}
+  html body.ways-page #journey .ways-operating-stack>article p{font-size:15px!important}
+}
