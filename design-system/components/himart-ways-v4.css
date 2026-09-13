@@ -1,0 +1,172 @@
+/* HIMART WAYS v4 — R&R / operating-model narrative refinement.
+   Page-specific composition only. Shared typography/tokens remain design-system owned. */
+
+/* 01.2 synthesis: same blue line, softer 10% gradient. */
+html body.ways-page .ways-synthesis{
+  border-top:1px solid var(--hm-blue)!important;
+  background:linear-gradient(to bottom,rgba(0,166,237,.10) 0,rgba(0,166,237,0) 100px)!important;
+}
+
+/* 01.3 — compact legacy flow. Shared flow type is already defined globally; this layer only
+   adds container-relative scaling because these circles are intentionally reduced. */
+html body.ways-page .ways-hm-flow .flow-node{container-type:inline-size!important}
+html body.ways-page .ways-hm-flow .flow-node .hm-card-no{
+  font-size:clamp(9px,4.5cqi,11px)!important;
+}
+html body.ways-page .ways-hm-flow .flow-node h4{
+  font-size:clamp(15px,8.6cqi,20px)!important;
+  line-height:1.22!important;
+}
+html body.ways-page .ways-hm-flow .flow-node p{
+  font-size:clamp(10px,5.2cqi,12px)!important;
+  line-height:1.46!important;
+}
+html body.ways-page .ways-hm-flow--legacy .flow-row.row4{
+  --ways-legacy-arrow:34px;
+  --ways-legacy-node:min(225px,calc((100cqw - (var(--ways-legacy-arrow) * 3)) / 4));
+  justify-content:center!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node{
+  padding:20px!important;
+  border:1px solid var(--hm-red)!important;
+  border-left:1px solid var(--hm-red)!important;
+  border-right:1px solid var(--hm-red)!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node h4{
+  margin:12px 0 0!important;
+  color:var(--hm-red)!important;
+}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node p{margin:8px 0 0!important}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-node .hm-card-no{color:var(--hm-red)!important}
+html body.ways-page #brand .ways-hm-flow--legacy .flow-arrow::before{
+  border-top-color:var(--hm-red)!important;
+  border-right-color:var(--hm-red)!important;
+}
+
+/* 02.1 — three role-problem rows. Each role owns one accent across rule, index and labels. */
+.ways-team-problems{display:grid;width:100%;gap:72px}
+.ways-team-problem{--role-color:var(--hm-blue);padding-top:24px;border-top:1px solid var(--role-color)}
+.ways-team-problem.is-ux{--role-color:var(--hm-blue-new)}
+.ways-team-problem.is-dev{--role-color:var(--hm-green)}
+.ways-team-problem__head{display:grid;grid-template-columns:76px minmax(0,1fr);gap:28px;align-items:start}
+.ways-team-problem__no{color:var(--role-color);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-team-problem__title{margin:0!important;max-width:32ch;color:#fff;font:100 22px/1.3 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+.ways-team-problem__copy{margin:12px 0 0!important;max-width:68ch!important;color:var(--hm-description-color)!important;font:300 16px/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.ways-team-problem__quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+.ways-team-problem__quotes blockquote{min-width:0;margin:0;padding:20px 0 0;border-top:1px solid color-mix(in srgb,var(--role-color) 38%,transparent)}
+.ways-team-problem__quotes p{margin:0!important;max-width:28ch!important;color:#fff!important;font:100 18px/1.45 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.ways-team-problem__quotes span{display:block;margin-top:20px;color:var(--role-color);font:400 10px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+
+/* 02.2 — parallel model: three roles start together and meet at shared sync checkpoints. */
+.ways-parallel-model{width:100%;padding-top:28px;border-top:1px solid var(--hm-line-default)}
+.ways-parallel-model__intro{display:grid;grid-template-columns:180px minmax(0,1fr);gap:28px;align-items:start}
+.ways-parallel-model__intro>span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-parallel-model__intro>p{margin:0!important;max-width:58ch!important;color:#fff!important;font:100 22px/1.4 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+.ways-parallel-model__lanes{display:grid;gap:16px;margin-top:48px}
+.ways-parallel-lane{--role-color:var(--hm-blue);display:grid;grid-template-columns:150px repeat(3,minmax(0,1fr));min-height:132px;border-top:1px solid var(--role-color)}
+.ways-parallel-lane.is-ux{--role-color:var(--hm-blue-new)}
+.ways-parallel-lane.is-dev{--role-color:var(--hm-green)}
+.ways-parallel-lane__role{display:flex;flex-direction:column;justify-content:center;padding:18px 20px 18px 0}
+.ways-parallel-lane__role span{color:var(--role-color);font:400 11px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-parallel-lane__role strong{margin-top:10px;color:#fff;font:300 18px/1.25 var(--hm-font-ko);letter-spacing:var(--hm-track-group)}
+.ways-parallel-lane__step{padding:22px 24px;border-left:1px solid var(--hm-line-faint)}
+.ways-parallel-lane__step b{display:block;color:var(--role-color);font:400 10px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-parallel-lane__step strong{display:block;margin-top:12px;color:#fff;font:100 18px/1.3 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+.ways-parallel-lane__step p{margin:8px 0 0!important;max-width:26ch!important;color:var(--hm-description-color)!important;font:300 12px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.ways-sync-checkpoints{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:28px 0 0 150px;padding-top:24px;border-top:1px solid var(--hm-line-weak)}
+.ways-sync-checkpoints article span{color:var(--hm-text-tertiary);font:400 10px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-sync-checkpoints article strong{display:block;margin-top:9px;color:#fff;font:100 16px/1.35 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-body);word-break:keep-all}
+
+/* 02.3 — ownership contract, intentionally not another card grid. */
+.ways-ownership-contract{width:100%;border-top:1px solid var(--hm-line-default)}
+.ways-ownership-band{--role-color:var(--hm-blue);display:grid;grid-template-columns:160px minmax(0,1fr);gap:36px;padding:34px 0;border-bottom:1px solid var(--hm-line-faint)}
+.ways-ownership-band.is-ux{--role-color:var(--hm-blue-new)}
+.ways-ownership-band.is-dev{--role-color:var(--hm-green)}
+.ways-ownership-band__role span{display:block;color:var(--role-color);font:400 11px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-ownership-band__role strong{display:block;margin-top:10px;color:#fff;font:300 22px/1.2 var(--hm-font-ko);letter-spacing:var(--hm-track-group)}
+.ways-ownership-band__body{display:grid;grid-template-columns:1.05fr 1fr 1fr;gap:28px}
+.ways-ownership-band__body div b{display:block;color:var(--role-color);font:400 10px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-ownership-band__body div p{margin:10px 0 0!important;max-width:28ch!important;color:var(--hm-description-color)!important;font:300 14px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.ways-ownership-principle{margin-top:32px;padding:28px 0 0;border-top:1px solid var(--hm-blue)}
+.ways-ownership-principle p{margin:0!important;max-width:72ch!important;color:#fff!important;font:100 22px/1.4 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+
+/* 03.1 — 3 + 3 grid, no vertical dividers, a long down arrow between rows. */
+html body.ways-page .ways-research-path{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  row-gap:128px!important;
+  column-gap:28px!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  border-bottom:0!important;
+}
+html body.ways-page .ways-research-path::after{
+  content:"";
+  position:absolute;
+  top:calc(50% - 43px);
+  left:50%;
+  width:22px;
+  height:86px;
+  transform:translateX(-50%);
+  opacity:.20;
+  background:
+    linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,.9)) center top/1px 70px no-repeat,
+    linear-gradient(45deg,transparent 47%,rgba(255,255,255,.9) 48% 52%,transparent 53%) left bottom/11px 16px no-repeat,
+    linear-gradient(-45deg,transparent 47%,rgba(255,255,255,.9) 48% 52%,transparent 53%) right bottom/11px 16px no-repeat;
+  pointer-events:none;
+}
+html body.ways-page .ways-research-path article,
+html body.ways-page .ways-research-path article+article{
+  min-height:190px!important;
+  padding:26px 0 28px!important;
+  border-left:0!important;
+  border-top:0!important;
+}
+html body.ways-page .ways-research-path article:nth-child(-n+3){border-bottom:1px solid var(--hm-line-faint)!important}
+
+/* 03.2 — one operating stack instead of six identical cards. */
+.ways-operating-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;width:100%}
+.ways-operating-stack article{min-width:0;padding:26px 28px 30px;border-top:1px solid var(--hm-line-default);background:rgba(255,255,255,.018)}
+.ways-operating-stack article>span{display:block;color:var(--hm-blue);font:400 11px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-operating-stack article h4{margin:22px 0 0!important;color:#fff!important;font:100 22px/1.3 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+.ways-operating-stack article p{margin:12px 0 0!important;max-width:42ch!important;color:var(--hm-description-color)!important;font:300 14px/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.ways-operating-stack__anchor{grid-column:1/-1;display:grid!important;grid-template-columns:180px minmax(0,1fr);gap:32px;align-items:center;min-height:150px;border-top-color:var(--hm-blue)!important;background:linear-gradient(90deg,rgba(0,166,237,.10),rgba(0,166,237,0) 70%)!important}
+.ways-operating-stack__anchor h4{margin:0!important;font-size:28px!important}
+.ways-operating-stack__next{grid-column:1/-1;display:grid!important;grid-template-columns:180px minmax(0,1fr);gap:32px;align-items:center;background:transparent!important}
+.ways-operating-stack__next h4{margin:0!important}
+
+/* 03.3 — horizontal rulebook rows rather than another card grid. */
+.ways-operating-rules{width:100%;border-top:1px solid var(--hm-blue)}
+.ways-operating-rule{display:grid;grid-template-columns:70px minmax(240px,.9fr) minmax(0,1.1fr);gap:28px;align-items:start;padding:28px 0;border-bottom:1px solid var(--hm-line-faint)}
+.ways-operating-rule>span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.ways-operating-rule h4{margin:0!important;color:#fff!important;font:100 20px/1.35 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+.ways-operating-rule p{margin:0!important;max-width:42ch!important;color:var(--hm-description-color)!important;font:300 14px/1.52 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+
+/* Remove local leadership closing statement; project reflection below owns the ending. */
+html body.ways-page .ways-final-statement{display:none!important}
+
+@media(max-width:1180px){
+  .ways-team-problem__quotes{grid-template-columns:1fr}
+  .ways-parallel-lane{grid-template-columns:130px repeat(3,minmax(0,1fr))}
+  .ways-sync-checkpoints{margin-left:130px}
+  .ways-ownership-band__body{grid-template-columns:1fr}
+  html body.ways-page .ways-research-path{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+
+@media(max-width:780px){
+  .ways-team-problem__head,.ways-parallel-model__intro,.ways-ownership-band,.ways-operating-stack__anchor,.ways-operating-stack__next{grid-template-columns:1fr}
+  .ways-team-problem__quotes{gap:20px}
+  .ways-parallel-lane{grid-template-columns:1fr}
+  .ways-parallel-lane__step{border-left:0;border-top:1px solid var(--hm-line-faint)}
+  .ways-sync-checkpoints{grid-template-columns:1fr;margin-left:0}
+  .ways-ownership-band__body{grid-template-columns:1fr}
+  html body.ways-page .ways-research-path{grid-template-columns:1fr!important;row-gap:0!important}
+  html body.ways-page .ways-research-path::after{display:none!important}
+  html body.ways-page .ways-research-path article,html body.ways-page .ways-research-path article+article{border-bottom:1px solid var(--hm-line-faint)!important}
+  .ways-operating-stack{grid-template-columns:1fr}
+  .ways-operating-stack__anchor,.ways-operating-stack__next{grid-column:auto}
+  .ways-operating-rule{grid-template-columns:50px minmax(0,1fr)}
+  .ways-operating-rule p{grid-column:2}
+  html body.ways-page .ways-hm-flow--legacy .flow-row.row4{grid-template-columns:1fr!important}
+  html body.ways-page #brand .ways-hm-flow--legacy .flow-node{width:var(--hm-mobile-circle-size)!important;max-width:var(--hm-mobile-circle-size)!important;height:var(--hm-mobile-circle-size)!important;min-height:var(--hm-mobile-circle-size)!important;margin-inline:auto!important}
+}
