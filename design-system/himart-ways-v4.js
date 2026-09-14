@@ -16,7 +16,8 @@
       ['./design-system/components/himart-ways-v9.css?v=20260914-2', 'ways-v9'],
       ['./design-system/components/himart-ways-v10.css?v=20260914-3', 'ways-v10'],
       ['./design-system/components/himart-ways-v11.css?v=20260914-4', 'ways-v11'],
-      ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12']
+      ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
+      ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
@@ -92,12 +93,12 @@
   };
 
   const operatingIcons = [
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8h36v26H20l-8 7v-7H6z"/><path d="M13 16h22M13 23h15"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="34"/><rect x="11" y="13" width="5" height="5"/><path d="M21 15.5h14M11 25h5v5h-5zM21 27.5h14M11 36h5M21 36h14"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 8h32v32H8zM8 17h32M8 26h32M8 35h32M18 8v32"/><path d="M23 13h11M23 22h8M23 31h12"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="10" width="36" height="32"/><path d="M14 6v8M34 6v8M6 18h36M13 25h6v6h-6zM25 25h6v6h-6zM13 35h6"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="7" width="34" height="34"/><path d="M15 17h18M15 24h13M15 31h8M29 31l3 3 6-7"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="8" height="8"/><rect x="34" y="32" width="8" height="8"/><path d="M14 12h10v10h10M34 18l4 4-4 4M34 36H24V26H14M14 22l-4 4 4 4"/></svg>`
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8h36v26H10l-4 7v-7H6z"/><path d="M13 16h22M13 23h15"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="34"/><rect x="11" y="12" width="5" height="5"/><path d="M21 14.5h14"/><rect x="11" y="22" width="5" height="5"/><path d="M21 24.5h14"/><rect x="11" y="32" width="5" height="5"/><path d="M21 34.5h14"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="6" width="34" height="36"/><rect x="12" y="11" width="24" height="7"/><rect x="12" y="21" width="24" height="7"/><rect x="12" y="31" width="24" height="7"/><path d="M16 14.5h3M16 24.5h3M16 34.5h3M23 14.5h9M23 24.5h9M23 34.5h9"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="10" width="36" height="32"/><path d="M14 6v8M34 6v8M6 18h36"/><rect x="12" y="23" width="6" height="6"/><rect x="26" y="23" width="6" height="6"/><rect x="12" y="33" width="6" height="6"/><rect x="26" y="33" width="6" height="6"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="7" width="34" height="34"/><path d="M15 17h18M15 24h13M15 31h8"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10h17l-4-4M31 10l-4 4M38 14v17l4-4M38 31l-4-4M34 38H17l4 4M17 38l4-4M10 34V17l-4 4M10 17l4 4"/></svg>`
   ];
 
   const refineJourney = () => {
