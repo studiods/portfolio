@@ -1,6 +1,7 @@
 /* HIMART REUSE 03.2 — local six-frame 360 viewer.
    Replaces the former external iframe/link viewer before reuse-image-display-final.js mounts.
-   The source frames are local assets and rotate by horizontal pointer drag. */
+   The source frames are local assets and rotate by horizontal pointer drag.
+   Each frame is individually normalized so the washer keeps a stable apparent size/axis. */
 (() => {
   'use strict';
 
@@ -9,6 +10,18 @@
   const FRAME_SOURCES = Array.from({ length: 6 }, (_, index) =>
     `./assets/image/himart/reuse/reuse_360_${String(index + 1).padStart(2, '0')}.png`
   );
+
+  /* Frame-by-frame visual normalization.
+     01 is the reference frame. The following values compensate for the different
+     photographed washer size while keeping the six views on one perceived rotation axis. */
+  const FRAME_ADJUSTMENTS = [
+    { scale:1.000, x: 0.0, y:0.0 },
+    { scale:1.040, x:-0.2, y:0.0 },
+    { scale:1.070, x:-0.4, y:0.0 },
+    { scale:1.060, x: 0.4, y:0.0 },
+    { scale:1.030, x: 0.2, y:0.0 },
+    { scale:1.000, x: 0.0, y:0.0 }
+  ];
 
   const normalize = (value, length) => ((value % length) + length) % length;
 
@@ -47,6 +60,12 @@
       image.loading = index === 0 ? 'eager' : 'lazy';
       image.decoding = 'async';
       image.draggable = false;
+
+      const adjustment = FRAME_ADJUSTMENTS[index] || { scale:1, x:0, y:0 };
+      image.style.setProperty('--reuse-360-scale', String(adjustment.scale));
+      image.style.setProperty('--reuse-360-x', `${adjustment.x}%`);
+      image.style.setProperty('--reuse-360-y', `${adjustment.y}%`);
+
       frame.appendChild(image);
       viewport.appendChild(frame);
     });
