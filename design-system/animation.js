@@ -259,11 +259,19 @@
 
     const hero = document.querySelector('[data-hm-hero]');
     if (hero && !reduce) {
+      const heroStyles = getComputedStyle(hero);
+      const readHeroOpacity = (name, fallback) => {
+        const value = Number.parseFloat(heroStyles.getPropertyValue(name));
+        return Number.isFinite(value) ? Math.min(1, Math.max(0, value)) : fallback;
+      };
+      const matteBaseOpacity = readHeroOpacity('--hm-hero-matte-base-opacity', 0.5);
+      const matteMaxOpacity = Math.max(matteBaseOpacity, readHeroOpacity('--hm-hero-matte-scroll-max-opacity', 1));
+
       const updateHero = () => {
         const progress = Math.min(1, Math.max(0, window.scrollY / Number(hero.dataset.hmFadeDistance || 420)));
         const eased = 1 - Math.pow(1 - progress, 3);
         hero.style.setProperty('--hm-scroll-progress', progress.toFixed(3));
-        hero.style.setProperty('--hm-hero-overlay-opacity', (0.5 + eased * 0.5).toFixed(3));
+        hero.style.setProperty('--hm-hero-overlay-opacity', (matteBaseOpacity + eased * (matteMaxOpacity - matteBaseOpacity)).toFixed(3));
         hero.style.setProperty('--hm-hero-copy-opacity', (1 - eased * 0.88).toFixed(3));
       };
       updateHero();
