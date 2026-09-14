@@ -1,6 +1,6 @@
 /* HIMART REUSE 03.2 — local eight-frame 360 viewer.
    Uses reuse_360_01.png through reuse_360_08.png.
-   - Plays one 01→08 focus preview at 300ms per frame on first viewport focus.
+   - Plays one 01→08→01 focus preview at 200ms per frame on first viewport focus.
    - Horizontal pointer drag / keyboard arrows rotate the product manually.
    - Interaction hint hides immediately on interaction and returns after 5s idle.
    - Normalizes REUSE 04.1 into the canonical number / title / body subsection pattern. */
@@ -12,7 +12,7 @@
   const FRAME_SOURCES = Array.from({ length: 8 }, (_, index) =>
     `./assets/image/himart/reuse/reuse_360_${String(index + 1).padStart(2, '0')}.png`
   );
-  const PREVIEW_FRAME_MS = 300;
+  const PREVIEW_FRAME_MS = 200;
   const HINT_IDLE_MS = 5000;
   const FOCUS_RATIO = 0.38;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -145,12 +145,12 @@
       const tick = () => {
         if (!previewRunning || document.hidden) return;
         step += 1;
+        render(step % frames.length);
         if (step >= frames.length) {
           previewRunning = false;
           previewTimer = 0;
           return;
         }
-        render(step);
         previewTimer = window.setTimeout(tick, PREVIEW_FRAME_MS);
       };
 
@@ -229,7 +229,7 @@
       }
     });
 
-    /* First-focus preview: one cycle only per page load. */
+    /* First-focus preview: one complete 01→08→01 cycle only per page load. */
     if (!reducedMotion && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         const entry = entries.find(item => item.target === card);
