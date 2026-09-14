@@ -23,11 +23,11 @@
   opacity:1;
 }
 
-/* Once the shared slideshow mounts, remove the former single-image fallback from paint.
-   This is important for missing frames: a missing workshop file must resolve to blank,
-   not reveal himart_ws_01.png underneath. */
-.himart-team-page .team-hero[data-himart-workshop-slideshow] > .team-hero__image,
-.works-page-body #works-project-6 .works-card-media[data-himart-workshop-slideshow] > .works-card-image{
+/* Hide the former single-image fallback from first paint. This guarantees that an
+   unavailable workshop frame resolves to a clean blank field instead of a broken
+   image or himart_ws_01.png showing through underneath. */
+.himart-team-page .team-hero > .team-hero__image,
+.works-page-body #works-project-6 .works-card-media > .works-card-image{
   opacity:0!important;
   visibility:hidden!important;
 }
