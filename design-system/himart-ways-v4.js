@@ -15,7 +15,8 @@
       ['./design-system/components/himart-ways-v8.css?v=20260914-1', 'ways-v8'],
       ['./design-system/components/himart-ways-v9.css?v=20260914-2', 'ways-v9'],
       ['./design-system/components/himart-ways-v10.css?v=20260914-3', 'ways-v10'],
-      ['./design-system/components/himart-ways-v11.css?v=20260914-4', 'ways-v11']
+      ['./design-system/components/himart-ways-v11.css?v=20260914-4', 'ways-v11'],
+      ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
@@ -90,6 +91,15 @@
     revealDecisionSummary(s24);
   };
 
+  const operatingIcons = [
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8h36v26H20l-8 7v-7H6z"/><path d="M13 16h22M13 23h15"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="34"/><rect x="11" y="13" width="5" height="5"/><path d="M21 15.5h14M11 25h5v5h-5zM21 27.5h14M11 36h5M21 36h14"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M8 8h32v32H8zM8 17h32M8 26h32M8 35h32M18 8v32"/><path d="M23 13h11M23 22h8M23 31h12"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="10" width="36" height="32"/><path d="M14 6v8M34 6v8M6 18h36M13 25h6v6h-6zM25 25h6v6h-6zM13 35h6"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="7" width="34" height="34"/><path d="M15 17h18M15 24h13M15 31h8M29 31l3 3 6-7"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="8" height="8"/><rect x="34" y="32" width="8" height="8"/><path d="M14 12h10v10h10M34 18l4 4-4 4M34 36H24V26H14M14 22l-4 4 4 4"/></svg>`
+  ];
+
   const refineJourney = () => {
     const journey = document.querySelector('#journey');
     if (!journey) return;
@@ -109,6 +119,7 @@
     const subsections = [...journey.querySelectorAll('.hm-subsection')];
     const s31 = subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.1'));
     const s32 = subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.2'));
+    const s33 = subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.3'));
 
     if (s31) {
       const desc31 = s31.querySelector('.hm-subcopy');
@@ -138,21 +149,34 @@
       }
     }
 
-    /* 03.2: six equal cards; labels are numeric only and supporting copy is tightened. */
+    /* 03.2: six square, sharp line-icon cards aligned to their top rule. */
     if (s32) {
       const desc32 = s32.querySelector('.hm-subcopy');
       if (desc32) desc32.textContent = '공식 소통·프로젝트·요청·일정·결정을 하나의 운영 흐름으로 연결했습니다.';
 
       const stack = s32.querySelector('.ways-operating-stack');
       if (stack) {
-        stack.innerHTML = `
-          <article><span>01</span><h4>공식 소통을 Teams로 모았습니다.</h4><p>개인 쪽지 대신 채널과 스레드에 요청·논의를 남겨 프로젝트 맥락을 함께 봤습니다.</p></article>
-          <article><span>02</span><h4>프로젝트 목표와 과정을 함께 보이게 했습니다.</h4><p>Teams에서 프로젝트와 서브 태스크를 등록해 목표·담당·진행 과정을 함께 확인했습니다.</p></article>
-          <article><span>03</span><h4>요청 양식을 만들고 DB로 축적했습니다.</h4><p>반복 요청은 표준 양식으로 받고, 요청 자체를 데이터로 남겨 검색·재활용할 수 있게 했습니다.</p></article>
-          <article><span>04</span><h4>일정을 한곳에서 확인하고 바로 초대했습니다.</h4><p>공용 일정을 공유해 가능한 시간을 바로 확인·초대하고 별도 일정 확인 대화를 줄였습니다.</p></article>
-          <article><span>05</span><h4>회의와 결정 사항을 바로 기록했습니다.</h4><p>결정·담당·다음 액션을 같은 공간에 남겨 회의 이후 다시 묻는 일을 줄였습니다.</p></article>
-          <article><span>06</span><h4>정착 이후에는 채널을 줄이고 자동화합니다.</h4><p>중복 채널을 정리하고 Jira·Power Automate 연계로 상태 알림과 반복 업무를 줄여가고 있습니다.</p></article>`;
+        const cards = [
+          ['01','공식 소통을 Teams로 모았습니다.','개인 쪽지 대신 채널과 스레드에 요청·논의를 남겨 프로젝트 맥락을 함께 봤습니다.'],
+          ['02','프로젝트 목표와 과정을 함께 보이게 했습니다.','Teams에서 프로젝트와 서브 태스크를 등록해 목표·담당·진행 과정을 함께 확인했습니다.'],
+          ['03','요청 양식을 만들고 DB로 축적했습니다.','반복 요청은 표준 양식으로 받고 요청 자체를 데이터로 남겨 검색·재활용할 수 있게 했습니다.'],
+          ['04','일정을 한곳에서 확인하고 바로 초대했습니다.','공용 일정을 바로 확인·초대해 별도의 일정 확인 대화를 줄였습니다.'],
+          ['05','회의와 결정 사항을 바로 기록했습니다.','결정·담당·다음 액션을 같은 공간에 남겨 회의 이후 재확인을 줄였습니다.'],
+          ['06','정착 이후에는 채널을 줄이고 자동화합니다.','중복 채널을 정리하고 Jira·Power Automate 연계로 반복 업무를 줄여가고 있습니다.']
+        ];
+        stack.innerHTML = cards.map((card, index) => `
+          <article>
+            <span>${card[0]}</span>
+            <h4>${card[1]}</h4>
+            <p>${card[2]}</p>
+            ${operatingIcons[index]}
+          </article>`).join('');
       }
+    }
+
+    if (s33) {
+      const title33 = s33.querySelector('.hm-subtitle');
+      if (title33) title33.innerHTML = '관리하지 않으면 다시 이전으로 돌아갑니다.<br>규칙과 가이드도 같이 만들어 배포했습니다.';
     }
   };
 
@@ -171,14 +195,17 @@
     /* navigation.js mounts the project reflection slightly later. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
       rebuildRoleSections();
+      refineJourney();
       mountWaysReflection();
     }));
     window.setTimeout(() => {
       rebuildRoleSections();
+      refineJourney();
       mountWaysReflection();
     }, 180);
     window.setTimeout(() => {
       rebuildRoleSections();
+      refineJourney();
       mountWaysReflection();
     }, 700);
   };
