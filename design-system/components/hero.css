@@ -1,4 +1,4 @@
-@import url("../tokens.css?v=20260908-19");
+@import url("../tokens.css?v=20260915-1");
 @import url("../typography.css");
 
 /*
@@ -9,12 +9,12 @@
   stable scoped lock instead of page-local overrides.
 
   HERO VISUAL CONTRACT:
-  - source image/video is shown at its native brightness (opacity 1 / no filter);
+  - source image/video is shown at native brightness (opacity 1 / no filter);
   - exactly one black matte is applied above the media;
-  - the matte starts at 50% opacity;
-  - animation.js may increase that same matte from 50% to 100% while scrolling;
-  - page-specific gradients, brightness filters or additional black layers must not
-    alter the base 50% state.
+  - initial matte opacity comes only from --hm-hero-matte-base-opacity (50%);
+  - animation.js may increase that same matte up to --hm-hero-matte-scroll-max-opacity;
+  - Hero root pseudo-elements are disabled so page-level gradients cannot stack;
+  - page-specific brightness filters or additional black layers are prohibited.
 */
 html body.himart-page-body #live-main > .hm-ds-hero{
   position:sticky!important;
@@ -28,6 +28,17 @@ html body.himart-page-body #live-main > .hm-ds-hero{
   background:var(--hm-bg-page)!important;
   color:var(--hm-text-primary)!important;
 }
+
+/* One-matte-only lock. Old page CSS sometimes added ::before/::after gradients to
+   the Hero root; those layers are explicitly disabled by the shared system. */
+html body.himart-page-body #live-main > .hm-ds-hero::before,
+html body.himart-page-body #live-main > .hm-ds-hero::after{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__video,
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
   position:absolute!important;
@@ -45,7 +56,7 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__overlay{
   z-index:1!important;
   pointer-events:none!important;
   background:#000!important;
-  opacity:var(--hm-hero-overlay-opacity,.5)!important;
+  opacity:var(--hm-hero-overlay-opacity,var(--hm-hero-matte-base-opacity))!important;
   transition:opacity .12s linear!important;
 }
 
@@ -56,6 +67,7 @@ html body.himart-page-body.himart-ax-page #live-main > .hm-ds-hero .ax-hero-visu
   opacity:1!important;
   filter:none!important;
 }
+html body.himart-page-body.himart-ax-page #live-main > .hm-ds-hero .ax-hero-visual::before,
 html body.himart-page-body.himart-ax-page #live-main > .hm-ds-hero .ax-hero-visual::after{
   display:none!important;
   content:none!important;
