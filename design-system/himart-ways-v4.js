@@ -17,7 +17,8 @@
       ['./design-system/components/himart-ways-v10.css?v=20260914-3', 'ways-v10'],
       ['./design-system/components/himart-ways-v11.css?v=20260914-4', 'ways-v11'],
       ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
-      ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13']
+      ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13'],
+      ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
@@ -94,9 +95,9 @@
 
   const operatingIcons = [
     `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8h36v26H10l-4 7v-7H6z"/><path d="M13 16h22M13 23h15"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="34"/><rect x="11" y="12" width="5" height="5"/><path d="M21 14.5h14"/><rect x="11" y="22" width="5" height="5"/><path d="M21 24.5h14"/><rect x="11" y="32" width="5" height="5"/><path d="M21 34.5h14"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="34"/><rect x="12.25" y="13.25" width="2.5" height="2.5"/><path d="M20 14.5h15"/><rect x="12.25" y="23.25" width="2.5" height="2.5"/><path d="M20 24.5h15"/><rect x="12.25" y="33.25" width="2.5" height="2.5"/><path d="M20 34.5h15"/></svg>`,
     `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="6" width="34" height="36"/><rect x="12" y="11" width="24" height="7"/><rect x="12" y="21" width="24" height="7"/><rect x="12" y="31" width="24" height="7"/><path d="M16 14.5h3M16 24.5h3M16 34.5h3M23 14.5h9M23 24.5h9M23 34.5h9"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="10" width="36" height="32"/><path d="M14 6v8M34 6v8M6 18h36"/><rect x="12" y="23" width="6" height="6"/><rect x="26" y="23" width="6" height="6"/><rect x="12" y="33" width="6" height="6"/><rect x="26" y="33" width="6" height="6"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="10" width="36" height="32"/><path d="M14 6v8M34 6v8M6 18h36M13 25h22M13 31h17M13 37h12"/></svg>`,
     `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="7" width="34" height="34"/><path d="M15 17h18M15 24h13M15 31h8"/></svg>`,
     `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10h17l-4-4M31 10l-4 4M38 14v17l4-4M38 31l-4-4M34 38H17l4 4M17 38l4-4M10 34V17l-4 4M10 17l4 4"/></svg>`
   ];
@@ -181,6 +182,42 @@
     }
   };
 
+  const refineDirection = () => {
+    const direction = document.querySelector('#direction');
+    if (!direction) return;
+
+    const subsections = [...direction.querySelectorAll('.hm-subsection')];
+    subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('04.1'))?.remove();
+    subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('04.2'))?.remove();
+
+    const s43 = [...direction.querySelectorAll('.hm-subsection')]
+      .find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('04.3'));
+    if (!s43) return;
+
+    const grid = s43.querySelector('.ways-feedback-grid');
+    if (grid) {
+      const feedback = [
+        ['“관리되고 있으니 진행 상황을 매번 물어보지 않아도 돼서 좋습니다.”','PO팀'],
+        ['“자료가 한 공간에 같이 있으니 찾고 다시 보내는 소통이 확실히 줄었습니다.”','UX디자인팀'],
+        ['“목표와 방향을 같이 보고 시작하니 결과물도 이전보다 더 잘 맞는 것 같습니다.”','UX디자인팀'],
+        ['“프로젝트 히스토리가 남으니 누가 무엇을 왜 바꿨는지 다시 확인하기 쉬워졌습니다.”','개발팀'],
+        ['“요청 양식이 정리되니 필요한 정보를 다시 물어보는 일이 줄었습니다.”','사업팀'],
+        ['“서로 일정을 확인할 수 있어 가능한 시간을 다시 묻고 맞추는 일이 훨씬 줄었습니다.”','사업팀'],
+        ['“초안부터 같이 보니 마지막에 처음 듣는 요구사항이 생기는 일이 줄었습니다.”','개발팀'],
+        ['“개인 쪽지가 아니라 같은 공간에 남으니 담당자가 없어도 맥락을 이어가기 편해졌습니다.”','PO팀']
+      ];
+      grid.innerHTML = feedback.map(item => `<article><strong>${item[0]}</strong><span>${item[1]}</span></article>`).join('');
+    }
+
+    let synthesis = s43.querySelector('.ways-feedback-synthesis');
+    if (!synthesis) {
+      synthesis = document.createElement('div');
+      synthesis.className = 'ways-synthesis ways-feedback-synthesis';
+      synthesis.innerHTML = '<span>SYNTHESIS</span><h4>툴을 바꾼 것보다, 다시 묻고 찾고 맞추는 일이 줄었다는 반응이 먼저 나타났습니다.</h4>';
+      grid?.insertAdjacentElement('afterend', synthesis);
+    }
+  };
+
   const mountWaysReflection = () => {
     const copy = document.querySelector('.hm-project-reflection__copy');
     if (!copy) return;
@@ -191,22 +228,26 @@
     mountFinalCss();
     rebuildRoleSections();
     refineJourney();
+    refineDirection();
     window.__hmAnimationScan?.();
 
     /* navigation.js mounts the project reflection slightly later. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
       rebuildRoleSections();
       refineJourney();
+      refineDirection();
       mountWaysReflection();
     }));
     window.setTimeout(() => {
       rebuildRoleSections();
       refineJourney();
+      refineDirection();
       mountWaysReflection();
     }, 180);
     window.setTimeout(() => {
       rebuildRoleSections();
       refineJourney();
+      refineDirection();
       mountWaysReflection();
     }, 700);
   };
