@@ -1,0 +1,159 @@
+/* HIMART TEAM — final workshop card contract.
+   This file is intentionally loaded after himart-team.css and himart-team-v2.css.
+   It neutralizes legacy workshop-card sizing/alignment rules so 02.2, 02.3 and 03.1
+   share one predictable layout. Exact desktop height/overlap is supplied by
+   himart-team-card-geometry.js from the rendered image height. */
+
+@media (min-width:768px){
+  .himart-team-page .team-workshop-visual{
+    position:relative!important;
+    width:100%!important;
+  }
+
+  .himart-team-page .team-workshop-visual__image{
+    position:relative!important;
+    width:100%!important;
+    aspect-ratio:16/9!important;
+    overflow:visible!important;
+  }
+
+  .himart-team-page .team-workshop-visual__image::after{
+    display:none!important;
+    content:none!important;
+  }
+
+  .himart-team-page .team-workshop-visual__cards{
+    position:absolute!important;
+    z-index:2!important;
+    top:auto!important;
+    right:0!important;
+    bottom:0!important;
+    left:auto!important;
+    width:80%!important;
+    margin:0!important;
+    padding:0!important;
+    background:rgba(0,0,0,.95)!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+
+  .himart-team-page .team-workshop-visual .team-workshop-card{
+    position:relative!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:space-between!important;
+    align-items:stretch!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-height:none!important;
+    height:100%!important;
+    margin:0!important;
+    padding:28px!important;
+    background:transparent!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+
+  .himart-team-page .team-workshop-visual .team-workshop-card>span{
+    position:static!important;
+    display:block!important;
+    flex:0 0 auto!important;
+    margin:0!important;
+    padding:0!important;
+    color:var(--hm-blue)!important;
+    font:400 12px/1 var(--hm-font-en)!important;
+    letter-spacing:var(--hm-track-note)!important;
+    text-align:left!important;
+  }
+
+  .himart-team-page .team-workshop-card__copy{
+    position:static!important;
+    display:block!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+    align-self:auto!important;
+    justify-self:auto!important;
+    text-align:left!important;
+  }
+
+  .himart-team-page .team-workshop-visual .team-workshop-card h4{
+    margin:0!important;
+    padding:0!important;
+    max-width:none!important;
+    font-size:24px!important;
+    font-weight:300!important;
+    line-height:1.28!important;
+    text-align:left!important;
+  }
+
+  .himart-team-page .team-workshop-visual .team-workshop-card p{
+    margin:10px 0 0!important;
+    padding:0!important;
+    max-width:38ch!important;
+    font-size:16px!important;
+    font-weight:300!important;
+    line-height:1.5!important;
+    text-align:left!important;
+  }
+
+  .himart-team-page .team-workshop-visual--people .team-workshop-card{
+    border:0!important;
+  }
+
+  .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{
+    border:0!important;
+    border-left:1px solid rgba(255,255,255,.15)!important;
+  }
+
+  .himart-team-page .team-workshop-visual--core .team-workshop-visual__cards{
+    grid-template-columns:1fr!important;
+  }
+  .himart-team-page .team-workshop-visual--core .team-workshop-card{
+    border:0!important;
+  }
+  .himart-team-page .team-workshop-visual--core .team-workshop-card>span{
+    color:rgba(255,255,255,.62)!important;
+    font-size:10px!important;
+  }
+  .himart-team-page .team-workshop-visual--core .team-workshop-card__copy{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-end!important;
+    text-align:right!important;
+  }
+  .himart-team-page .team-workshop-visual--core .team-core-value__word-v2{
+    font-size:64px!important;
+    font-weight:400!important;
+    line-height:1!important;
+    text-align:right!important;
+    text-transform:uppercase!important;
+  }
+  .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{
+    margin:8px 0 0!important;
+    max-width:none!important;
+    font-size:16px!important;
+    line-height:1.5!important;
+    text-align:right!important;
+    white-space:nowrap!important;
+  }
+  .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2 br{
+    display:none!important;
+  }
+}
+
+@media (max-width:767px){
+  .himart-team-page .team-workshop-visual__image{
+    overflow:visible!important;
+  }
+  .himart-team-page .team-workshop-visual__cards{
+    overflow:visible!important;
+  }
+  .himart-team-page .team-workshop-visual .team-workshop-card{
+    overflow:visible!important;
+  }
+}
