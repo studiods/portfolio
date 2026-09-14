@@ -8,12 +8,12 @@ html body.himart-ax-page .ax-pattern-block:not(.is-blue){
   border-color:rgba(255,255,255,.60)!important;
 }
 
-/* 02.2 — supplied guides: one tall reference on the left, three stacked rows on the right.
-   Captions live below the images; the left caption settles on the same bottom baseline as 04. */
+/* 02.2 — supplied guides: one tall reference on the left, three equal rows on the right.
+   Captions live below the images; 01 and 04 finish on the same baseline. */
 html body.himart-ax-page .ax-banner-reference-grid{
   display:grid!important;
   grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;
-  grid-template-rows:repeat(3,auto)!important;
+  grid-template-rows:repeat(3,minmax(0,1fr))!important;
   gap:18px 20px!important;
   width:100%!important;
   align-items:stretch!important;
@@ -21,6 +21,7 @@ html body.himart-ax-page .ax-banner-reference-grid{
 html body.himart-ax-page .ax-banner-reference{
   display:flex!important;
   min-width:0!important;
+  min-height:0!important;
   height:100%!important;
   margin:0!important;
   flex-direction:column!important;
@@ -34,15 +35,11 @@ html body.himart-ax-page .ax-banner-reference img{
   display:block!important;
   width:100%!important;
   max-width:100%!important;
-  height:auto!important;
-  object-fit:contain!important;
-  background:#fff!important;
-}
-html body.himart-ax-page .ax-banner-reference.is-hero img{
-  flex:1 1 auto!important;
   min-height:0!important;
   height:0!important;
+  flex:1 1 auto!important;
   object-fit:contain!important;
+  background:#fff!important;
 }
 html body.himart-ax-page .ax-banner-reference figcaption{
   order:2!important;
@@ -51,6 +48,7 @@ html body.himart-ax-page .ax-banner-reference figcaption{
   gap:10px!important;
   margin:10px 0 0!important;
   min-height:21px!important;
+  flex:0 0 21px!important;
   color:#fff!important;
 }
 html body.himart-ax-page .ax-banner-reference figcaption span{
@@ -178,7 +176,7 @@ html body.himart-ax-page #journey .ways-operating-stack .ways-operating-icon *{
 @media(max-width:1180px){
   html body.himart-ax-page .ax-banner-reference-grid{grid-template-columns:1fr!important;grid-template-rows:auto!important}
   html body.himart-ax-page .ax-banner-reference.is-hero{grid-row:auto!important}
-  html body.himart-ax-page .ax-banner-reference.is-hero img{height:auto!important;flex:none!important}
+  html body.himart-ax-page .ax-banner-reference img{height:auto!important;min-height:0!important;flex:none!important}
   html body.himart-ax-page #journey .ways-operating-stack{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 @media(max-width:780px){
