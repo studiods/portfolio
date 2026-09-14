@@ -1,4 +1,4 @@
-@import url("../tokens.css?v=20260915-1");
+@import url("../tokens.css?v=20260915-2");
 @import url("../typography.css");
 
 /*
@@ -11,7 +11,7 @@
   HERO VISUAL CONTRACT:
   - source image/video is shown at native brightness (opacity 1 / no filter);
   - exactly one black matte is applied above the media;
-  - initial matte opacity comes only from --hm-hero-matte-base-opacity (50%);
+  - initial matte opacity comes only from --hm-hero-matte-base-opacity (40%);
   - animation.js may increase that same matte up to --hm-hero-matte-scroll-max-opacity;
   - Hero root pseudo-elements are disabled so page-level gradients cannot stack;
   - page-specific brightness filters or additional black layers are prohibited.
