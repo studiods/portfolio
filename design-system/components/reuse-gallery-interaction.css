@@ -1,0 +1,222 @@
+/* HIMART REUSE — gallery interaction contract v1.0
+   - Navigation hit targets occupy 10% of gallery width and full gallery height.
+   - Arrow glyphs stay at their existing visual edge positions.
+   - 03.2 Gallery 03 uses a local six-frame 360 viewer, with no external links/iframes. */
+
+/* 03.1 reference chart emphasis: only the primary row is 100% blue. */
+html body.reuse-current .reuse-reference-bars{
+  --reuse-ref-muted:rgba(0,166,237,.30);
+  --reuse-ref-primary:#00A6ED;
+}
+html body.reuse-current .reuse-reference-bars__row:not(.is-primary) .reuse-reference-bars__fill{
+  background:rgba(0,166,237,.30)!important;
+}
+html body.reuse-current .reuse-reference-bars__row.is-primary .reuse-reference-bars__fill{
+  background:#00A6ED!important;
+}
+
+/* Full-height 1/10 navigation hit zones. The glyph remains where the former 48px/80px
+   control placed it (about 30px from the edge on desktop). */
+html body.reuse-current :is(.reuse-image-display-card__nav,.reuse-production-gallery__nav){
+  top:0!important;
+  bottom:0!important;
+  width:10%!important;
+  height:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  transform:none!important;
+  background:transparent!important;
+}
+html body.reuse-current :is(.reuse-image-display-card__nav--prev,.reuse-production-gallery__nav--prev){
+  left:0!important;
+  right:auto!important;
+}
+html body.reuse-current :is(.reuse-image-display-card__nav--next,.reuse-production-gallery__nav--next){
+  right:0!important;
+  left:auto!important;
+}
+html body.reuse-current :is(.reuse-image-display-card__nav,.reuse-production-gallery__nav)::before{
+  top:50%!important;
+  left:auto!important;
+}
+html body.reuse-current :is(.reuse-image-display-card__nav--prev,.reuse-production-gallery__nav--prev)::before{
+  left:30px!important;
+  right:auto!important;
+  transform:translateY(-50%) rotate(-135deg)!important;
+}
+html body.reuse-current :is(.reuse-image-display-card__nav--next,.reuse-production-gallery__nav--next)::before{
+  right:30px!important;
+  left:auto!important;
+  transform:translateY(-50%) rotate(45deg)!important;
+}
+
+/* Local 360 viewer ------------------------------------------------------- */
+html body.reuse-current .reuse-image-display-card.is-local360-viewer{
+  cursor:grab;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action:pan-y;
+  background:#0a0a0a;
+}
+html body.reuse-current .reuse-image-display-card.is-local360-viewer.is-dragging{
+  cursor:grabbing;
+}
+
+html body.reuse-current .reuse-local360__viewport{
+  position:absolute;
+  z-index:1;
+  inset:0;
+  overflow:hidden;
+  background:#0a0a0a;
+}
+html body.reuse-current .reuse-local360__frame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+html body.reuse-current .reuse-local360__frame.is-active{
+  opacity:1;
+  visibility:visible;
+}
+html body.reuse-current .reuse-local360__frame img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:50% 50%;
+  transform:translate3d(0,-10%,0);
+  transform-origin:50% 50%;
+  pointer-events:none;
+  -webkit-user-drag:none;
+  user-select:none;
+}
+
+html body.reuse-current .reuse-local360__hint{
+  position:absolute;
+  z-index:7;
+  top:50%;
+  left:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  transform:translate(-50%,-50%);
+  color:#fff;
+  font-family:var(--hm-font-ko),Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.35;
+  letter-spacing:var(--hm-track-body,-.02em);
+  text-align:center;
+  white-space:nowrap;
+  pointer-events:none;
+  text-shadow:0 1px 12px rgba(0,0,0,.28);
+}
+html body.reuse-current .reuse-local360__hint-copy{
+  display:block;
+}
+
+/* Thin line arrows: no filled arrow head. */
+html body.reuse-current .reuse-local360__hint-arrow{
+  position:relative;
+  display:block;
+  width:42px;
+  height:14px;
+  flex:0 0 42px;
+}
+html body.reuse-current .reuse-local360__hint-arrow::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:0;
+  width:100%;
+  height:1px;
+  background:#fff;
+  transform:translateY(-50%);
+}
+html body.reuse-current .reuse-local360__hint-arrow::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  width:8px;
+  height:8px;
+  border-top:1px solid #fff;
+  border-right:1px solid #fff;
+}
+html body.reuse-current .reuse-local360__hint-arrow--left::after{
+  left:0;
+  transform:translateY(-50%) rotate(-135deg);
+}
+html body.reuse-current .reuse-local360__hint-arrow--right::after{
+  right:0;
+  transform:translateY(-50%) rotate(45deg);
+}
+
+html body.reuse-current .reuse-local360__badge{
+  position:absolute;
+  z-index:8;
+  top:28px;
+  right:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:0 16px;
+  border:0;
+  border-radius:999px;
+  background:rgba(0,0,0,.30);
+  color:#fff;
+  font-family:var(--hm-font-en-thin,var(--hm-font-en)),sans-serif;
+  font-size:16px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:var(--hm-track-base,0);
+  pointer-events:none;
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+
+/* Do not render gallery arrows/status or any external-link affordance in the local viewer. */
+html body.reuse-current .reuse-image-display-card.is-local360-viewer :is(
+  .reuse-image-display-card__nav,
+  .reuse-image-display-card__status,
+  .reuse-live360__open,
+  .reuse-live360__viewport,
+  iframe,
+  a
+){
+  display:none!important;
+}
+
+@media(max-width:780px){
+  html body.reuse-current :is(.reuse-image-display-card__nav--prev,.reuse-production-gallery__nav--prev)::before{
+    left:19px!important;
+  }
+  html body.reuse-current :is(.reuse-image-display-card__nav--next,.reuse-production-gallery__nav--next)::before{
+    right:19px!important;
+  }
+  html body.reuse-current .reuse-local360__hint{
+    gap:14px;
+    font-size:14px;
+  }
+  html body.reuse-current .reuse-local360__hint-arrow{
+    width:30px;
+    flex-basis:30px;
+  }
+  html body.reuse-current .reuse-local360__badge{
+    top:18px;
+    right:18px;
+    min-height:34px;
+    padding:0 12px;
+    font-size:14px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current .reuse-local360__frame{transition:none!important}
+}
