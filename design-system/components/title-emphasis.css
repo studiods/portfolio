@@ -1,0 +1,14 @@
+/* Shared title emphasis contract — use Pretendard Light inside major/mid titles. */
+html body.himart-page-body #live-main :is(
+  .hm-title,
+  .hm-section-title,
+  .hm-subtitle,
+  .narrative-title,
+  .data-card-head h3,
+  .prototype-intro h3,
+  .sentiment-conclusion h4
+) :is(.hm-title-emphasis,strong){
+  font-family:var(--hm-font-ko)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
