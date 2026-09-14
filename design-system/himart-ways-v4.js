@@ -18,7 +18,8 @@
       ['./design-system/components/himart-ways-v11.css?v=20260914-4', 'ways-v11'],
       ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
       ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13'],
-      ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14']
+      ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14'],
+      ['./design-system/components/himart-ways-v15.css?v=20260914-8', 'ways-v15']
     ];
     sheets.forEach(([href, key]) => {
       if (document.querySelector(`link[data-${key}]`)) return;
@@ -93,13 +94,18 @@
     revealDecisionSummary(s24);
   };
 
+  /*
+    03.2 icon system: every icon shares a 48×48 canvas, 6px outer inset,
+    6px inner inset and a consistent 1.5px square/miter stroke. Internal geometry
+    is centered on the same grid so visual weight and whitespace stay balanced.
+  */
   const operatingIcons = [
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8h36v26H10l-4 7v-7H6z"/><path d="M13 16h22M13 23h15"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="34"/><rect x="12.25" y="13.25" width="2.5" height="2.5"/><path d="M20 14.5h15"/><rect x="12.25" y="23.25" width="2.5" height="2.5"/><path d="M20 24.5h15"/><rect x="12.25" y="33.25" width="2.5" height="2.5"/><path d="M20 34.5h15"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="6" width="34" height="36"/><rect x="12" y="11" width="24" height="7"/><rect x="12" y="21" width="24" height="7"/><rect x="12" y="31" width="24" height="7"/><path d="M16 14.5h3M16 24.5h3M16 34.5h3M23 14.5h9M23 24.5h9M23 34.5h9"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="10" width="36" height="32"/><path d="M14 6v8M34 6v8M6 18h36M13 25h22M13 31h17M13 37h12"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="7" y="7" width="34" height="34"/><path d="M15 17h18M15 24h13M15 31h8"/></svg>`,
-    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10h17l-4-4M31 10l-4 4M38 14v17l4-4M38 31l-4-4M34 38H17l4 4M17 38l4-4M10 34V17l-4 4M10 17l4 4"/></svg>`
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8H42V34H12L6 40V34H6Z"/><path d="M12 17H36M12 24H30"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="12" y="12.5" width="3" height="3"/><path d="M20 14H36"/><rect x="12" y="22.5" width="3" height="3"/><path d="M20 24H36"/><rect x="12" y="32.5" width="3" height="3"/><path d="M20 34H36"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="11" y="11" width="26" height="7"/><rect x="11" y="21" width="26" height="7"/><rect x="11" y="31" width="26" height="7"/><rect x="14" y="13.25" width="2.5" height="2.5"/><path d="M21 14.5H33"/><rect x="14" y="23.25" width="2.5" height="2.5"/><path d="M21 24.5H33"/><rect x="14" y="33.25" width="2.5" height="2.5"/><path d="M21 34.5H33"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="36" height="34"/><path d="M14 6V12M34 6V12M6 18H42M12 25H36M12 31H30M12 37H24"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><path d="M12 15H36M12 24H30M12 33H24"/></svg>`,
+    `<svg class="ways-operating-icon" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10H34L30 6M34 10L30 14M38 14V34L42 30M38 34L34 30M34 38H14L18 42M14 38L18 34M10 34V14L6 18M10 14L14 18"/></svg>`
   ];
 
   const refineJourney = () => {
