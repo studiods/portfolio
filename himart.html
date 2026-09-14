@@ -32,10 +32,10 @@ It imports the production bundle that owns the canonical circle aspect-ratio/bor
 rules as well as the original narrative loading lock. Converting it to media=print/onload
 causes cold-load FOUC and broken circle geometry.
 {% endcomment %}
-{% assign page_html = page_html | replace: './design-system/himart-system.css?v=20260907-27', './design-system/himart-system.css?v=20260912-5' %}
+{% assign page_html = page_html | replace: './design-system/himart-system.css?v=20260907-27', './design-system/himart-system.css?v=20260915-1' %}
 {% assign page_html = page_html | replace: './design-system/test-content-final.js?v=20260907-1', './design-system/test-content-final.js?v=20260909-3' %}
 
-{% capture wide_head %}<link rel="stylesheet" href="./design-system/components/hero.css?v=20260908-7-wide">
+{% capture wide_head %}<link rel="stylesheet" href="./design-system/components/hero.css?v=20260915-1">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-test.css?v=20260908-10-himart">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-himart-test.css?v=20260910-4">
 <link rel="stylesheet" href="./design-system/components/wide-editorial-himart-polish-v5.css?v=20260909-5">
