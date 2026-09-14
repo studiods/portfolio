@@ -1,0 +1,237 @@
+/* HIMART TEAM v2 — image-led workshop cards for 02.2, 02.3 and 03.1.
+   Keeps the shared design-system typography/rhythm while standardizing the visual-card grammar. */
+
+/* 01.2 question */
+.himart-team-page .team-turning-point__copy,
+.himart-team-page .team-turning-point__copy strong{
+  color:var(--hm-blue)!important;
+}
+
+/* Shared image-led visual --------------------------------------------------- */
+.himart-team-page .team-workshop-visual{
+  width:100%;
+  padding:0 0 7.03125%;
+}
+.himart-team-page .team-workshop-visual__image{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+}
+.himart-team-page .team-workshop-visual__image>img{
+  position:absolute;
+  z-index:0;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+/* Remove the previous image matte completely. */
+.himart-team-page .team-workshop-visual__image::after{
+  display:none!important;
+  content:none!important;
+}
+
+/* User request: right-aligned card with a one-tenth rail. To keep title/body legible,
+   the card occupies the remaining 9/10 of the content width. */
+.himart-team-page .team-workshop-visual__cards{
+  position:absolute;
+  z-index:2;
+  right:0;
+  bottom:0;
+  left:auto;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:90%;
+  height:50%;
+  transform:translateY(25%);
+  background:rgba(0,0,0,.90);
+}
+.himart-team-page .team-workshop-visual .team-workshop-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:48px minmax(0,1fr);
+  grid-template-rows:1fr auto;
+  min-height:0;
+  height:100%;
+  margin:0;
+  padding:24px 28px 26px;
+  border:0!important;
+  background:transparent;
+  overflow:hidden;
+}
+.himart-team-page .team-workshop-visual .team-workshop-card::after{
+  display:none!important;
+  content:none!important;
+}
+.himart-team-page .team-workshop-visual .team-workshop-card>span{
+  grid-column:1;
+  grid-row:1;
+  align-self:start;
+  display:block;
+  margin:0;
+  color:var(--hm-blue);
+  font:400 12px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+.himart-team-page .team-workshop-card__copy{
+  grid-column:2;
+  grid-row:2;
+  align-self:end;
+  min-width:0;
+}
+.himart-team-page .team-workshop-visual .team-workshop-card h4{
+  margin:0!important;
+  max-width:none;
+  color:#fff;
+  font-family:var(--hm-font-ko);
+  font-size:24px;
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.28;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+.himart-team-page .team-workshop-visual .team-workshop-card p{
+  margin:10px 0 0!important;
+  max-width:34ch;
+  color:rgba(255,255,255,.68);
+  font-family:var(--hm-font-ko);
+  font-size:16px;
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.5;
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+
+/* 02.2 has no separators at all. */
+.himart-team-page .team-workshop-visual--people .team-workshop-card{
+  border:0!important;
+}
+
+/* 02.3 — same structure, but three strengths separated only by vertical dividers. */
+.himart-team-page .team-workshop-visual--strengths{
+  padding-bottom:0;
+}
+.himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{
+  border-left:1px solid rgba(255,255,255,.15)!important;
+}
+.himart-team-page .team-strength-summary-v2{
+  width:90%;
+  margin:calc(7.03125% + 38px) 0 0 auto;
+  color:#fff;
+  font-family:var(--hm-font-ko);
+  font-size:24px;
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.45;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+.himart-team-page .team-strength-summary-v2::after{
+  content:"";
+  display:block;
+  width:100%;
+  height:1px;
+  margin-top:32px;
+  background:var(--hm-line-content-divider,var(--hm-line-weak));
+}
+
+/* 03.1 — same image/card geometry, one core-value card. */
+.himart-team-page .team-workshop-visual--core .team-workshop-visual__cards{
+  grid-template-columns:1fr;
+}
+.himart-team-page .team-workshop-visual--core .team-workshop-card{
+  grid-template-columns:1fr;
+  grid-template-rows:auto 1fr;
+  padding:24px 30px 26px;
+}
+.himart-team-page .team-workshop-visual--core .team-workshop-card>span{
+  grid-column:1;
+  grid-row:1;
+  color:rgba(255,255,255,.62);
+  font-family:var(--hm-font-en);
+  font-size:10px;
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:var(--hm-track-note);
+}
+.himart-team-page .team-workshop-visual--core .team-workshop-card__copy{
+  grid-column:1;
+  grid-row:2;
+  align-self:end;
+}
+.himart-team-page .team-workshop-visual--core .team-core-value__word-v2{
+  display:block;
+  margin:0;
+  color:#fff;
+  font-family:"Averta PE",Averta,Arial,sans-serif;
+  font-size:32px;
+  font-weight:400;
+  line-height:1.05;
+  letter-spacing:-.03em;
+}
+.himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{
+  margin:12px 0 0!important;
+  max-width:none;
+  color:rgba(255,255,255,.78);
+  font-family:var(--hm-font-ko);
+  font-size:16px;
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.5;
+  letter-spacing:var(--hm-track-body);
+}
+
+@media(max-width:1199px){
+  .himart-team-page .team-workshop-visual__cards,
+  .himart-team-page .team-strength-summary-v2{
+    width:94%;
+  }
+  .himart-team-page .team-workshop-visual__cards{
+    height:54%;
+  }
+}
+
+@media(max-width:767px){
+  .himart-team-page .team-workshop-visual{
+    padding-bottom:0;
+  }
+  .himart-team-page .team-workshop-visual__image{
+    aspect-ratio:auto;
+    padding-top:62.5%;
+    margin-bottom:0;
+  }
+  .himart-team-page .team-workshop-visual__cards{
+    position:relative;
+    right:auto;
+    bottom:auto;
+    grid-template-columns:1fr;
+    width:100%;
+    height:auto;
+    transform:none;
+  }
+  .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{
+    grid-template-columns:1fr;
+  }
+  .himart-team-page .team-workshop-visual .team-workshop-card{
+    min-height:220px;
+    height:auto;
+    padding:24px;
+  }
+  .himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{
+    border-left:0!important;
+    border-top:1px solid rgba(255,255,255,.15)!important;
+  }
+  .himart-team-page .team-strength-summary-v2{
+    width:100%;
+    margin:32px 0 0;
+    font-size:22px;
+  }
+}
