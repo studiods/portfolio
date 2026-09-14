@@ -38,6 +38,23 @@ html body.himart-ax-page #journey .ax-maker-step.is-current{
   background:transparent!important;
   border-top-color:rgba(255,255,255,.30)!important;
 }
+/* Bottom rule text starts flush on the card rail with no bullet/left indent. */
+html body.himart-ax-page #journey .ax-maker-step ul{
+  justify-items:start!important;
+  margin:34px 0 0 -24px!important;
+  padding:0!important;
+  text-align:left!important;
+}
+html body.himart-ax-page #journey .ax-maker-step li{
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+}
+html body.himart-ax-page #journey .ax-maker-step li::before{
+  content:none!important;
+  margin:0!important;
+}
 
 /* 04.1 — replace circular result cards with open line-led modules. */
 html body.himart-ax-page #direction .ax-result-grid{
@@ -86,6 +103,9 @@ html body.himart-ax-page #direction .ax-result-card p{
   html body.himart-ax-page #data .ax-composition-step>span,
   html body.himart-ax-page #data .ax-composition-step>h4{
     padding-right:0!important;
+  }
+  html body.himart-ax-page #journey .ax-maker-step ul{
+    margin-left:-24px!important;
   }
   html body.himart-ax-page #direction .ax-result-grid{
     grid-template-columns:1fr!important;
