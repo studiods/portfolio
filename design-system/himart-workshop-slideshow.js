@@ -11,6 +11,7 @@
 
   const mount = (root) => {
     if (!root || root.dataset.hmWorkshopSlideshowMounted === 'true') return;
+    root.dataset.himartWorkshopSlideshow = '';
     root.dataset.hmWorkshopSlideshowMounted = 'true';
 
     const frameCount = Math.max(1, Number(root.dataset.hmWorkshopFrames || DEFAULT_FRAMES));
@@ -72,7 +73,12 @@
   };
 
   const init = () => {
-    document.querySelectorAll('[data-himart-workshop-slideshow]').forEach(mount);
+    const targets = new Set([
+      ...document.querySelectorAll('[data-himart-workshop-slideshow]'),
+      ...document.querySelectorAll('.himart-team-page .team-hero'),
+      ...document.querySelectorAll('.works-page-body #works-project-6 .works-card-media')
+    ]);
+    targets.forEach(mount);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once:true });
