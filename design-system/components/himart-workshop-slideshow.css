@@ -1,0 +1,45 @@
+/* HIMART WORKSHOP SLIDESHOW — shared hero / Works media component
+   Six workshop frames, 3s interval, soft dissolve. Missing frames intentionally resolve to blank. */
+[data-himart-workshop-slideshow]{
+  position:relative;
+  overflow:hidden;
+  background:#000;
+}
+[data-himart-workshop-slideshow] .hm-ws-slideshow__frame{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-size:cover;
+  opacity:0;
+  transition:opacity 1s cubic-bezier(.4,0,.2,1);
+  will-change:opacity;
+  pointer-events:none;
+}
+[data-himart-workshop-slideshow] .hm-ws-slideshow__frame.is-active{
+  opacity:1;
+}
+
+/* HIMART TEAM hero keeps the same photographic treatment used by the former single image. */
+.himart-team-page .team-hero__slideshow{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  filter:saturate(.82) brightness(.72);
+  transform:scale(1.002);
+}
+
+/* Works project media owns its full visual area. */
+.works-page-body .works-card-media[data-himart-workshop-slideshow]{
+  position:relative;
+}
+
+@media (prefers-reduced-motion:reduce){
+  [data-himart-workshop-slideshow] .hm-ws-slideshow__frame{
+    transition:none;
+  }
+}
