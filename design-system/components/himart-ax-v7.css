@@ -1,0 +1,66 @@
+/* HIMART AX v7 — 03.1 flush text alignment, 02.3 SELECT cleanup, 03.2 quote color. */
+
+/* 03.1 — every text element begins exactly on the card's top-rule left edge. */
+html body.himart-ax-page #journey .ax-maker-step,
+html body.himart-ax-page #journey .ax-maker-step.is-current{
+  padding:24px 0 0!important;
+}
+html body.himart-ax-page #journey .ax-maker-step>span,
+html body.himart-ax-page #journey .ax-maker-step h4,
+html body.himart-ax-page #journey .ax-maker-step p,
+html body.himart-ax-page #journey .ax-maker-step ul,
+html body.himart-ax-page #journey .ax-maker-step li{
+  margin-left:0!important;
+  padding-left:0!important;
+  text-align:left!important;
+  transform:none!important;
+}
+html body.himart-ax-page #journey .ax-maker-step ul{
+  width:100%!important;
+  margin-top:34px!important;
+  margin-right:0!important;
+  margin-bottom:0!important;
+  justify-items:start!important;
+}
+html body.himart-ax-page #journey .ax-maker-step li::before{
+  content:none!important;
+  display:none!important;
+}
+
+/* 02.3 / SELECT — remove legacy pseudo-blocks that produced duplicate bottom rules.
+   All five mini models stretch to one common top/bottom rail. */
+html body.himart-ax-page #data .ax-select-visual{
+  align-items:stretch!important;
+}
+html body.himart-ax-page #data .ax-select-mini{
+  align-self:stretch!important;
+  min-height:0!important;
+  height:100%!important;
+  overflow:hidden!important;
+}
+html body.himart-ax-page #data .ax-select-mini::before,
+html body.himart-ax-page #data .ax-select-mini::after{
+  content:none!important;
+  display:none!important;
+  border:0!important;
+  height:0!important;
+  flex:none!important;
+}
+
+/* 03.2 — interview-card titles are uniformly white. */
+html body.himart-ax-page #journey .ways-quote-grid strong,
+html body.himart-ax-page #journey .ways-quote-grid article:first-child strong{
+  color:#fff!important;
+}
+
+@media(max-width:780px){
+  html body.himart-ax-page #journey .ax-maker-step,
+  html body.himart-ax-page #journey .ax-maker-step.is-current{
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+  html body.himart-ax-page #journey .ax-maker-step ul{
+    width:100%!important;
+    transform:none!important;
+  }
+}
