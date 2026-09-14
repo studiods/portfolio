@@ -10,7 +10,7 @@
 /* Shared image-led visual --------------------------------------------------- */
 .himart-team-page .team-workshop-visual{
   width:100%;
-  padding:0 0 40px;
+  padding:0 0 100px;
 }
 .himart-team-page .team-workshop-visual__image{
   position:relative;
@@ -33,8 +33,8 @@
   content:none!important;
 }
 
-/* Shared overlay contract: 8/10 width, 220px fixed height, right aligned.
-   180px overlaps the image and 40px exits below it. */
+/* Shared overlay contract: 8/10 width, 240px fixed height, right aligned.
+   140px overlaps the image and 100px exits below it. */
 .himart-team-page .team-workshop-visual__cards{
   position:absolute;
   z-index:2;
@@ -44,8 +44,8 @@
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   width:80%;
-  height:220px;
-  transform:translateY(40px);
+  height:240px;
+  transform:translateY(100px);
   background:rgba(0,0,0,.95);
 }
 .himart-team-page .team-workshop-visual .team-workshop-card{
@@ -119,7 +119,7 @@
 
 /* 02.3 — same structure, but three strengths separated only by vertical dividers. */
 .himart-team-page .team-workshop-visual--strengths{
-  padding-bottom:40px;
+  padding-bottom:100px;
 }
 .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{
   grid-template-columns:repeat(3,minmax(0,1fr));
@@ -171,6 +171,7 @@
   line-height:1;
   letter-spacing:-.03em;
   text-align:right;
+  text-transform:uppercase;
 }
 .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{
   margin:8px 0 0!important;
@@ -212,7 +213,7 @@
     grid-template-columns:1fr;
   }
   .himart-team-page .team-workshop-visual .team-workshop-card{
-    min-height:220px;
+    min-height:240px;
     height:auto;
     padding:28px;
   }
