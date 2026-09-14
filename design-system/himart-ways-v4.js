@@ -26,7 +26,7 @@
       ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
       ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13'],
       ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14'],
-      ['./design-system/components/himart-ways-v15.css?v=20260914-9', 'ways-v15']
+      ['./design-system/components/himart-ways-v15.css?v=20260914-10', 'ways-v15']
     ];
 
     finalCssPromise = Promise.all(sheets.map(([href, key]) => new Promise(resolve => {
