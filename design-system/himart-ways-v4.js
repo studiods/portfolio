@@ -26,7 +26,7 @@
       ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
       ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13'],
       ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14'],
-      ['./design-system/components/himart-ways-v15.css?v=20260914-8', 'ways-v15']
+      ['./design-system/components/himart-ways-v15.css?v=20260914-9', 'ways-v15']
     ];
 
     finalCssPromise = Promise.all(sheets.map(([href, key]) => new Promise(resolve => {
@@ -115,12 +115,12 @@
   };
 
   const operatingIcons = [
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8H42V34H12L6 40V34H6Z"/><path d="M12 17H36M12 24H30"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="12" y="12.5" width="3" height="3"/><path d="M20 14H36"/><rect x="12" y="22.5" width="3" height="3"/><path d="M20 24H36"/><rect x="12" y="32.5" width="3" height="3"/><path d="M20 34H36"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="9"/><rect x="6" y="19.5" width="36" height="9"/><rect x="6" y="32" width="36" height="9"/><rect x="10" y="10" width="3" height="3"/><path d="M18 11.5H37"/><rect x="10" y="22.5" width="3" height="3"/><path d="M18 24H37"/><rect x="10" y="35" width="3" height="3"/><path d="M18 36.5H37"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="36" height="34"/><path d="M15 6V12M33 6V12M9 18H39M12 25H36M12 31H36M12 37H36"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><path d="M12 18H36M12 24H30M12 30H24"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10H34L30 6M34 10L30 14M38 14V34L42 30M38 34L34 30M34 38H14L18 42M14 38L18 34M10 34V14L6 18M10 14L14 18"/></svg>`
+    `<svg class="ways-operating-icon" width="39.66" height="39.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8H42V34H12L6 40V34H6Z"/><path d="M12 17H36M12 24H30"/></svg>`,
+    `<svg class="ways-operating-icon" width="39.66" height="39.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="12" y="12.5" width="3" height="3"/><path d="M20 14H36"/><rect x="12" y="22.5" width="3" height="3"/><path d="M20 24H36"/><rect x="12" y="32.5" width="3" height="3"/><path d="M20 34H36"/></svg>`,
+    `<svg class="ways-operating-icon" width="39.66" height="39.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="9"/><rect x="6" y="19.5" width="36" height="9"/><rect x="6" y="32" width="36" height="9"/><rect x="10" y="10" width="3" height="3"/><path d="M18 11.5H37"/><rect x="10" y="22.5" width="3" height="3"/><path d="M18 24H37"/><rect x="10" y="35" width="3" height="3"/><path d="M18 36.5H37"/></svg>`,
+    `<svg class="ways-operating-icon" width="39.66" height="39.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="36" height="34"/><path d="M15 6V12M33 6V12M9 18H39M12 25H36M12 31H36M12 37H36"/></svg>`,
+    `<svg class="ways-operating-icon" width="39.66" height="39.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><path d="M12 18H36M12 24H30M12 30H24"/></svg>`,
+    `<svg class="ways-operating-icon" width="39.66" height="39.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10H34L30 6M34 10L30 14M38 14V34L42 30M38 34L34 30M34 38H14L18 42M14 38L18 34M10 34V14L6 18M10 14L14 18"/></svg>`
   ];
 
   const refineJourney = () => {
