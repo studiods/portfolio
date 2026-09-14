@@ -1,4 +1,4 @@
-/* HIMART Design System v2.9 — foundation tokens
+/* HIMART Design System v3.0 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
    Semantic text contrast, shared Hero matte and shared Hero meta typography are owned here only;
    component/page layers consume these tokens and do not redefine them. */
@@ -27,10 +27,10 @@
   --hm-red:#FA481B;
 
   /* Canonical Hero matte contract.
-     Every portfolio detail Hero starts with exactly one black matte at 50% opacity.
+     Every portfolio detail Hero starts with exactly one black matte at 40% opacity.
      Page-level gradients, brightness filters and additional black layers are prohibited.
      On scroll, animation may increase the same matte up to the shared max value only. */
-  --hm-hero-matte-base-opacity:.5;
+  --hm-hero-matte-base-opacity:.4;
   --hm-hero-matte-scroll-max-opacity:1;
 
   /* Graph-only palette and application order.
