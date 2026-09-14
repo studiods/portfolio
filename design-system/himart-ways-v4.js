@@ -73,19 +73,16 @@
     const s23 = subsectionByNo('02.3');
     if (!s22 || !s23) return;
 
-    /* 02.2: remove the former START TOGETHER intro copy and its top rule completely. */
     const model22 = s22.querySelector('.ways-parallel-model');
     if (model22) {
       model22.querySelector('.ways-parallel-model__intro')?.remove();
       model22.classList.add('ways-no-intro-model');
     }
 
-    /* 02.3: revised wording and no standalone conclusion block. */
     const title23 = s23.querySelector('.hm-subtitle');
     if (title23) title23.innerHTML = '그리고 R&amp;R을 산출물이 아니라<br>판단의 책임으로 다시 정의했습니다.';
     s23.querySelector('.ways-ownership-conclusion')?.remove();
 
-    /* 02.4: summarize the two changes with the same card grammar used in 01 / MEMO. */
     let s24 = document.querySelector('#data .ways-decision-summary-subsection');
     if (!s24) {
       s24 = document.createElement('div');
@@ -117,11 +114,6 @@
     revealDecisionSummary(s24);
   };
 
-  /*
-    03.2 icon system: every icon shares a 48×48 canvas and a consistent 1.5px
-    square/miter stroke. Internal geometry is optically balanced inside that grid,
-    while explicit intrinsic dimensions prevent unstyled SVG flashes on cold load.
-  */
   const operatingIcons = [
     `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8H42V34H12L6 40V34H6Z"/><path d="M12 17H36M12 24H30"/></svg>`,
     `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="12" y="12.5" width="3" height="3"/><path d="M20 14H36"/><rect x="12" y="22.5" width="3" height="3"/><path d="M20 24H36"/><rect x="12" y="32.5" width="3" height="3"/><path d="M20 34H36"/></svg>`,
@@ -135,7 +127,6 @@
     const journey = document.querySelector('#journey');
     if (!journey) return;
 
-    /* Major chapter description: short and tightly tied to the authored title. */
     const head = journey.querySelector(':scope > .hm-wrap > .hm-section-head');
     if (head) {
       let desc = head.querySelector('.hm-section-desc');
@@ -160,12 +151,12 @@
       if (path) {
         path.classList.add('ways-research-path--image-grid');
         const cards = [
-          { no:'01', title:'필요 기능 정리', copy:'상태·기록·파일·일정 등 반복 업무를 기능 단위로 정리했습니다.', image:'./assets/image/himart-rnr/himart_rnr_01.png' },
-          { no:'02', title:'업무 흐름 설계', copy:'요청부터 완료까지 무엇을 어디에 남길지 정의했습니다.', image:'./assets/image/himart-rnr/himart_rnr_02.png' },
-          { no:'03', title:'기존 시스템 검토', copy:'Teams·Planner·Lists·Calendar의 연결 방식을 검토했습니다.', image:'./assets/image/himart-rnr/himart_rnr_03.png' },
-          { no:'04', title:'소규모 적용', copy:'실제 과제에 적용해 예외와 운영 규칙을 확인했습니다.', image:'./assets/image/himart-rnr/himart_rnr_04.png' },
-          { no:'05', title:'가이드 제작', copy:'소통·프로젝트·회의·일정 규칙을 문서화했습니다.', image:'./assets/image/himart-rnr/himart_rnr_05.png' },
-          { no:'06', title:'부서별 배포', copy:'가이드를 배포하고 팀별 정착을 시작했습니다.', image:'./assets/image/himart-rnr/himart_rnr_06.png' }
+          { no:'01', title:'필요 기능 정리', copy:'상태·기록·파일·일정 등 반복 업무를 기능 단위로 정리했습니다.', image:'./assets/image/himart-rnr/himart_rnr_01.png?v=062e173a' },
+          { no:'02', title:'업무 흐름 설계', copy:'요청부터 완료까지 무엇을 어디에 남길지 정의했습니다.', image:'./assets/image/himart-rnr/himart_rnr_02.png?v=f527e673' },
+          { no:'03', title:'기존 시스템 검토', copy:'Teams·Planner·Lists·Calendar의 연결 방식을 검토했습니다.', image:'./assets/image/himart-rnr/himart_rnr_03.png?v=2fd6e717' },
+          { no:'04', title:'소규모 적용', copy:'실제 과제에 적용해 예외와 운영 규칙을 확인했습니다.', image:'./assets/image/himart-rnr/himart_rnr_04.png?v=cf85f70e' },
+          { no:'05', title:'가이드 제작', copy:'소통·프로젝트·회의·일정 규칙을 문서화했습니다.', image:'./assets/image/himart-rnr/himart_rnr_05.png?v=88bc3a83' },
+          { no:'06', title:'부서별 배포', copy:'가이드를 배포하고 팀별 정착을 시작했습니다.', image:'./assets/image/himart-rnr/himart_rnr_06.png?v=b0e4ab76' }
         ];
         path.innerHTML = cards.map(card => `
           <article class="ways-research-card">
@@ -180,7 +171,6 @@
       }
     }
 
-    /* 03.2: six square, sharp line-icon cards aligned to their top rule. */
     if (s32) {
       const desc32 = s32.querySelector('.hm-subcopy');
       if (desc32) desc32.textContent = '공식 소통·프로젝트·요청·일정·결정을 하나의 운영 흐름으로 연결했습니다.';
@@ -261,7 +251,6 @@
     refineDirection();
     window.__hmAnimationScan?.();
 
-    /* navigation.js mounts the project reflection slightly later. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
       rebuildRoleSections();
       refineJourney();
@@ -282,7 +271,6 @@
     }, 700);
   };
 
-  /* Start fetching final CSS immediately, but postpone DOM rewrites until it is ready. */
   mountFinalCss();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once:true});
   else mount();
