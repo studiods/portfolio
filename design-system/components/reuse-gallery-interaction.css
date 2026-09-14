@@ -1,4 +1,4 @@
-/* HIMART REUSE — gallery interaction contract v1.0
+/* HIMART REUSE — gallery interaction contract v1.1
    - Navigation hit targets occupy 10% of gallery width and full gallery height.
    - Arrow glyphs stay at their existing visual edge positions.
    - 03.2 Gallery 03 uses a local six-frame 360 viewer, with no external links/iframes. */
@@ -86,9 +86,9 @@ html body.reuse-current .reuse-local360__frame img{
   display:block;
   width:100%;
   height:100%;
-  object-fit:contain;
-  object-position:50% 50%;
-  transform:translate3d(0,-10%,0);
+  object-fit:cover;
+  object-position:50% 40%;
+  transform:none;
   transform-origin:50% 50%;
   pointer-events:none;
   -webkit-user-drag:none;
