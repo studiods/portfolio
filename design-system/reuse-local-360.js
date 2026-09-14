@@ -1,27 +1,14 @@
-/* HIMART REUSE 03.2 — local six-frame 360 viewer.
-   Replaces the former external iframe/link viewer before reuse-image-display-final.js mounts.
-   The source frames are local assets and rotate by horizontal pointer drag.
-   Each frame is individually normalized so the washer keeps a stable apparent size/axis. */
+/* HIMART REUSE 03.2 — local eight-frame 360 viewer.
+   Uses the repository assets reuse_360_01.png through reuse_360_08.png.
+   Frames rotate by horizontal pointer drag and keep one shared display geometry. */
 (() => {
   'use strict';
 
   if (!document.body?.classList.contains('reuse-current')) return;
 
-  const FRAME_SOURCES = Array.from({ length: 6 }, (_, index) =>
+  const FRAME_SOURCES = Array.from({ length: 8 }, (_, index) =>
     `./assets/image/himart/reuse/reuse_360_${String(index + 1).padStart(2, '0')}.png`
   );
-
-  /* Frame-by-frame visual normalization.
-     01 is the reference frame. The following values compensate for the different
-     photographed washer size while keeping the six views on one perceived rotation axis. */
-  const FRAME_ADJUSTMENTS = [
-    { scale:1.000, x: 0.0, y:0.0 },
-    { scale:1.040, x:-0.2, y:0.0 },
-    { scale:1.070, x:-0.4, y:0.0 },
-    { scale:1.060, x: 0.4, y:0.0 },
-    { scale:1.030, x: 0.2, y:0.0 },
-    { scale:1.000, x: 0.0, y:0.0 }
-  ];
 
   const normalize = (value, length) => ((value % length) + length) % length;
 
@@ -42,7 +29,7 @@
     card.classList.remove('is-live360-viewer', 'is-360-viewer', 'is-reverse', 'has-rotated');
     card.classList.add('is-local360-viewer');
     card.tabIndex = 0;
-    card.setAttribute('aria-label', '제품을 좌우로 움직여 여섯 방향의 360도 상태 이미지를 확인할 수 있습니다.');
+    card.setAttribute('aria-label', '제품을 좌우로 움직여 여덟 방향의 360도 상태 이미지를 확인할 수 있습니다.');
 
     card.querySelectorAll(':scope > .reuse-image-display-card__media, .reuse-image-display-card__viewport, .reuse-live360__viewport, .reuse-live360__open, .reuse-image-display-card__nav, .reuse-image-display-card__status, iframe, a').forEach(node => node.remove());
 
@@ -60,12 +47,6 @@
       image.loading = index === 0 ? 'eager' : 'lazy';
       image.decoding = 'async';
       image.draggable = false;
-
-      const adjustment = FRAME_ADJUSTMENTS[index] || { scale:1, x:0, y:0 };
-      image.style.setProperty('--reuse-360-scale', String(adjustment.scale));
-      image.style.setProperty('--reuse-360-x', `${adjustment.x}%`);
-      image.style.setProperty('--reuse-360-y', `${adjustment.y}%`);
-
       frame.appendChild(image);
       viewport.appendChild(frame);
     });
@@ -147,8 +128,7 @@
       }
     });
 
-    /* Pre-decode the local sequence as soon as the first frame is ready so drag rotation
-       does not flash between frames on the first interaction. */
+    /* Pre-decode the sequence so the first manual rotation does not flash between frames. */
     FRAME_SOURCES.slice(1).forEach(src => {
       const image = new Image();
       image.src = src;
