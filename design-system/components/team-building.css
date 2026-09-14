@@ -1,12 +1,10 @@
 /* DESIGN SYSTEM — Team Building / Workshop editorial patterns
    Canonical shared rules for team-building narratives, workshop cards and review loops.
-   This replaces the former himart-team.css / himart-team-v2.css / card-contract stack. */
+   Hero media brightness and matte are intentionally not defined here; every detail page
+   consumes the shared Hero visual contract from components/hero.css. */
 
-/* Page shell / hero -------------------------------------------------------- */
+/* Page shell --------------------------------------------------------------- */
 .himart-team-page{background:#000;color:#fff}
-.himart-team-page .team-hero__image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(.82) brightness(.72);transform:scale(1.002)}
-.himart-team-page .team-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.62) 0%,rgba(0,0,0,.28) 42%,rgba(0,0,0,.12) 100%);pointer-events:none}
-.himart-team-page .team-hero .hm-ds-hero__inner,.himart-team-page .team-hero .hm-movie-overlay{z-index:2}
 
 /* 01 — role / direction ---------------------------------------------------- */
 .himart-team-page .team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -104,7 +102,6 @@
 }
 
 @media(max-width:767px){
-  .himart-team-page .team-hero:after{background:rgba(0,0,0,.5)}
   .himart-team-page #data .team-agenda{grid-template-columns:1fr;gap:20px}
   .himart-team-page #data .team-agenda article:last-child{grid-column:auto}
   .himart-team-page #data .team-agenda strong{min-height:0}
