@@ -118,17 +118,16 @@
   };
 
   /*
-    03.2 icon system: every icon shares a 48×48 canvas, 6px outer inset,
-    6px inner inset and a consistent 1.5px square/miter stroke. Internal geometry
-    is centered on the same grid so visual weight and whitespace stay balanced.
-    Explicit intrinsic dimensions are a safety net against unstyled SVG flashes.
+    03.2 icon system: every icon shares a 48×48 canvas and a consistent 1.5px
+    square/miter stroke. Internal geometry is optically balanced inside that grid,
+    while explicit intrinsic dimensions prevent unstyled SVG flashes on cold load.
   */
   const operatingIcons = [
     `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M6 8H42V34H12L6 40V34H6Z"/><path d="M12 17H36M12 24H30"/></svg>`,
     `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="12" y="12.5" width="3" height="3"/><path d="M20 14H36"/><rect x="12" y="22.5" width="3" height="3"/><path d="M20 24H36"/><rect x="12" y="32.5" width="3" height="3"/><path d="M20 34H36"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><rect x="11" y="11" width="26" height="7"/><rect x="11" y="21" width="26" height="7"/><rect x="11" y="31" width="26" height="7"/><rect x="14" y="13.25" width="2.5" height="2.5"/><path d="M21 14.5H33"/><rect x="14" y="23.25" width="2.5" height="2.5"/><path d="M21 24.5H33"/><rect x="14" y="33.25" width="2.5" height="2.5"/><path d="M21 34.5H33"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="36" height="34"/><path d="M14 6V12M34 6V12M6 18H42M12 25H36M12 31H30M12 37H24"/></svg>`,
-    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><path d="M12 15H36M12 24H30M12 33H24"/></svg>`,
+    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="7" width="36" height="9"/><rect x="6" y="19.5" width="36" height="9"/><rect x="6" y="32" width="36" height="9"/><rect x="10" y="10" width="3" height="3"/><path d="M18 11.5H37"/><rect x="10" y="22.5" width="3" height="3"/><path d="M18 24H37"/><rect x="10" y="35" width="3" height="3"/><path d="M18 36.5H37"/></svg>`,
+    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="8" width="36" height="34"/><path d="M15 6V12M33 6V12M9 18H39M12 25H36M12 31H36M12 37H36"/></svg>`,
+    `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><rect x="6" y="6" width="36" height="36"/><path d="M12 18H36M12 24H30M12 30H24"/></svg>`,
     `<svg class="ways-operating-icon" width="46.66" height="46.66" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"><path d="M14 10H34L30 6M34 10L30 14M38 14V34L42 30M38 34L34 30M34 38H14L18 42M14 38L18 34M10 34V14L6 18M10 14L14 18"/></svg>`
   ];
 
