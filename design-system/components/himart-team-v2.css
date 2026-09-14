@@ -10,7 +10,8 @@
 /* Shared image-led visual --------------------------------------------------- */
 .himart-team-page .team-workshop-visual{
   width:100%;
-  padding:0 0 100px;
+  /* 16:9 image: 40% card height × 1/3 outside = 7.5% of content width. */
+  padding:0 0 7.5%;
 }
 .himart-team-page .team-workshop-visual__image{
   position:relative;
@@ -33,8 +34,8 @@
   content:none!important;
 }
 
-/* Shared overlay contract: 8/10 width, 240px fixed height, right aligned.
-   140px overlaps the image and 100px exits below it. */
+/* Shared overlay contract: 8/10 width, 4/10 of image height, right aligned.
+   One third of the card exits below the image; two thirds remain over the image. */
 .himart-team-page .team-workshop-visual__cards{
   position:absolute;
   z-index:2;
@@ -44,8 +45,8 @@
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   width:80%;
-  height:240px;
-  transform:translateY(100px);
+  height:40%;
+  transform:translateY(33.333333%);
   background:rgba(0,0,0,.95);
 }
 .himart-team-page .team-workshop-visual .team-workshop-card{
@@ -119,7 +120,7 @@
 
 /* 02.3 — same structure, but three strengths separated only by vertical dividers. */
 .himart-team-page .team-workshop-visual--strengths{
-  padding-bottom:100px;
+  padding-bottom:7.5%;
 }
 .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{
   grid-template-columns:repeat(3,minmax(0,1fr));
