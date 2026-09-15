@@ -32,6 +32,15 @@
       sources: Array.from({ length:8 }, (_, index) =>
         `./assets/image/himart-workshop/himart_ws_03_${String(index + 1).padStart(2, '0')}.png`
       )
+    },
+    {
+      root: '#journey .team-workshop-visual--core .team-workshop-visual__image',
+      sources: [
+        './assets/image/himart-workshop/himart_ws_06.png',
+        ...Array.from({ length:7 }, (_, index) =>
+          `./assets/image/himart-workshop/himart_ws_04_${String(index + 1).padStart(2, '0')}.png`
+        )
+      ]
     }
   ];
 
