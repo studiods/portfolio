@@ -1,4 +1,4 @@
-/* HIMART Design System v3.0 — foundation tokens
+/* HIMART Design System v3.1 — foundation tokens
    Canonical hierarchy is taken from the current himart.html production treatment.
    Semantic text contrast, shared Hero matte and shared Hero meta typography are owned here only;
    component/page layers consume these tokens and do not redefine them. */
@@ -32,6 +32,15 @@
      On scroll, animation may increase the same matte up to the shared max value only. */
   --hm-hero-matte-base-opacity:.4;
   --hm-hero-matte-scroll-max-opacity:1;
+
+  /* Canonical gallery navigation contract.
+     Each previous/next click zone occupies 10% of the gallery width and the full gallery height.
+     Arrow artwork remains visually near the original edge position while the hit target expands. */
+  --hm-gallery-nav-hit-width:10%;
+  --hm-gallery-nav-arrow-size:18px;
+  --hm-gallery-nav-arrow-edge:30px;
+  --hm-gallery-nav-arrow-size-mobile:14px;
+  --hm-gallery-nav-arrow-edge-mobile:21px;
 
   /* Graph-only palette and application order.
      Red/yellow are not used in charts unless a project explicitly requests them.
