@@ -1,4 +1,4 @@
-/* HIMART Design System v7.5 — static style entrypoint
+/* HIMART Design System v7.6 — static style entrypoint
    Animation remains separate: load design-system/animation.js explicitly. */
 @import url("./tokens.css?v=20260915-3");
 @import url("./typography.css?v=20260907-8");
@@ -9,7 +9,7 @@
 @import url("./components/hero-meta-wide.css?v=20260912-2");
 @import url("./components/section.css?v=20260909-1");
 @import url("./components/cards.css?v=20260912-1");
-@import url("./components/team-building.css?v=20260915-4");
+@import url("./components/team-building.css?v=20260915-5");
 @import url("./components/data-viz.css?v=20260909-1");
 @import url("./components/landing-action.css?v=20260909-4");
 @import url("./components/table.css?v=20260907-1");
