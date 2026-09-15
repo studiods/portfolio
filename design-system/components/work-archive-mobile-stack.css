@@ -1,0 +1,49 @@
+/* WORK ARCHIVE — mobile-only editorial stack.
+   Desktop behavior remains untouched. On mobile, each archive item reads:
+   title -> gallery -> source text. */
+@media(max-width:780px){
+  html body.work-archive-page .wa-project__head{
+    margin-bottom:24px!important;
+  }
+
+  html body.work-archive-page .wa-gallery-overlay.is-mobile-stacked{
+    position:relative!important;
+    z-index:auto!important;
+    top:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:20px 0 0!important;
+    padding:0!important;
+    color:rgba(255,255,255,.70)!important;
+    pointer-events:none!important;
+  }
+
+  html body.work-archive-page .wa-gallery-overlay.is-mobile-stacked .wa-gallery-overlay__body{
+    width:100%!important;
+    color:inherit!important;
+  }
+
+  html body.work-archive-page .wa-gallery-overlay.is-mobile-stacked .wa-gallery-overlay__body p{
+    margin:0!important;
+    max-width:none!important;
+    color:rgba(255,255,255,.70)!important;
+    font-family:var(--hm-font-ko)!important;
+    font-size:14px!important;
+    font-weight:300!important;
+    font-variation-settings:"wght" 300!important;
+    line-height:1.55!important;
+    letter-spacing:var(--hm-track-body)!important;
+    white-space:pre-line!important;
+    word-break:keep-all!important;
+    text-shadow:none!important;
+  }
+
+  html body.work-archive-page .wa-gallery-overlay.is-mobile-stacked .wa-gallery-note{
+    margin:10px 0 0!important;
+    color:rgba(255,255,255,.70)!important;
+  }
+}
