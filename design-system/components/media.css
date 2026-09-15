@@ -143,11 +143,16 @@
 
 /*
   Canonical gallery navigation hit-area contract.
-  Apply .hm-ds-gallery-nav plus --prev / --next to every interactive image gallery.
-  The click/tap target occupies 1/10 of the gallery width and 100% of its height,
-  while the arrow itself stays close to the former visual edge position.
+  Every interactive image gallery uses the same full-height click/tap zones:
+  10% of gallery width on each side, 100% of gallery height.
+  Existing gallery controls are included as compatibility aliases so old markup
+  receives the shared rule without waiting for page-specific JavaScript caches.
 */
-html body.himart-page-body .hm-ds-gallery-nav{
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav,
+  .team-workshop-gallery__nav,
+  .aimmo-evidence-card__nav
+){
   position:absolute!important;
   z-index:6!important;
   top:0!important;
@@ -162,9 +167,21 @@ html body.himart-page-body .hm-ds-gallery-nav{
   transform:none!important;
   cursor:pointer!important;
 }
-html body.himart-page-body .hm-ds-gallery-nav--prev{left:0!important;right:auto!important}
-html body.himart-page-body .hm-ds-gallery-nav--next{right:0!important;left:auto!important}
-html body.himart-page-body .hm-ds-gallery-nav::before{
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav--prev,
+  .team-workshop-gallery__nav--prev,
+  .aimmo-evidence-card__nav--prev
+){left:0!important;right:auto!important}
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav--next,
+  .team-workshop-gallery__nav--next,
+  .aimmo-evidence-card__nav--next
+){right:0!important;left:auto!important}
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav,
+  .team-workshop-gallery__nav,
+  .aimmo-evidence-card__nav
+)::before{
   content:""!important;
   position:absolute!important;
   top:50%!important;
@@ -174,18 +191,29 @@ html body.himart-page-body .hm-ds-gallery-nav::before{
   border-right:1px solid rgba(255,255,255,.78)!important;
   box-sizing:border-box!important;
 }
-html body.himart-page-body .hm-ds-gallery-nav--prev::before{
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav--prev,
+  .team-workshop-gallery__nav--prev,
+  .aimmo-evidence-card__nav--prev
+)::before{
   left:var(--hm-gallery-nav-arrow-edge,30px)!important;
   right:auto!important;
   transform:translate(-35%,-50%) rotate(-135deg)!important;
 }
-html body.himart-page-body .hm-ds-gallery-nav--next::before{
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav--next,
+  .team-workshop-gallery__nav--next,
+  .aimmo-evidence-card__nav--next
+)::before{
   right:var(--hm-gallery-nav-arrow-edge,30px)!important;
   left:auto!important;
   transform:translate(35%,-50%) rotate(45deg)!important;
 }
-html body.himart-page-body .hm-ds-gallery-nav:hover::before,
-html body.himart-page-body .hm-ds-gallery-nav:focus-visible::before{
+html body.himart-page-body :is(
+  .hm-ds-gallery-nav,
+  .team-workshop-gallery__nav,
+  .aimmo-evidence-card__nav
+):is(:hover,:focus-visible)::before{
   border-color:#fff!important;
 }
 
@@ -209,10 +237,22 @@ html body.himart-page-body .hm-ds-gallery-nav:focus-visible::before{
     min-height:64vw;
   }
   .hm-ds-media-mosaic__caption{padding:14px 16px;font-size:11px}
-  html body.himart-page-body .hm-ds-gallery-nav::before{
+  html body.himart-page-body :is(
+    .hm-ds-gallery-nav,
+    .team-workshop-gallery__nav,
+    .aimmo-evidence-card__nav
+  )::before{
     width:var(--hm-gallery-nav-arrow-size-mobile,14px)!important;
     height:var(--hm-gallery-nav-arrow-size-mobile,14px)!important;
   }
-  html body.himart-page-body .hm-ds-gallery-nav--prev::before{left:var(--hm-gallery-nav-arrow-edge-mobile,21px)!important}
-  html body.himart-page-body .hm-ds-gallery-nav--next::before{right:var(--hm-gallery-nav-arrow-edge-mobile,21px)!important}
+  html body.himart-page-body :is(
+    .hm-ds-gallery-nav--prev,
+    .team-workshop-gallery__nav--prev,
+    .aimmo-evidence-card__nav--prev
+  )::before{left:var(--hm-gallery-nav-arrow-edge-mobile,21px)!important}
+  html body.himart-page-body :is(
+    .hm-ds-gallery-nav--next,
+    .team-workshop-gallery__nav--next,
+    .aimmo-evidence-card__nav--next
+  )::before{right:var(--hm-gallery-nav-arrow-edge-mobile,21px)!important}
 }
