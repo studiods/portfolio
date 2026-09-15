@@ -6,6 +6,7 @@
 
 - 갤러리가 뷰포트에서 의미 있게 보일 때만 자동 재생합니다.
 - 뷰포트를 벗어나면 timer / interval / 자동 video 재생을 즉시 중지합니다.
+- `position: sticky`로 뒤에 남는 히어로·배경 갤러리는 실제 DOM이 화면에 남아 있어도 원래 문서 흐름 영역이 지나가면 자동 재생을 중지합니다.
 - 브라우저 탭이 비활성화되면 자동 재생을 중지합니다.
 - 다시 보이기 시작하면 현재 프레임에서 이어서 재생합니다. 첫 프레임으로 reset하지 않습니다.
 - 화면 재진입 때 이미지·영상을 다시 다운로드하거나 gallery DOM을 다시 만들지 않습니다.
@@ -25,12 +26,12 @@
 
 ## Visibility threshold
 
-공통 Runtime은 `IntersectionObserver`를 하나만 사용하며 기본 visible 기준은 intersection ratio 12%입니다. 단순히 1px이 보이는 상태에서는 autoplay를 시작하지 않습니다.
+공통 Runtime은 일반 갤러리에 `IntersectionObserver` 하나를 공유하며 기본 visible 기준은 intersection ratio 12%입니다. 단순히 1px이 보이는 상태에서는 autoplay를 시작하지 않습니다. Sticky 갤러리는 IntersectionObserver만으로 가려짐을 판단할 수 없기 때문에, 같은 Runtime의 단일 passive scroll listener가 원래 document-flow 범위를 rAF 단위로 확인합니다.
 
 ## Current implementations
 
 - HIMART Team workshop galleries — shared runtime + current/next lazy loading
-- HIMART workshop slideshow — shared runtime, current frame resume
+- HIMART Team sticky hero slideshow — shared runtime + document-flow visibility check
 - Works HIMART Team project slideshow — shared runtime, current frame resume
 - AIMMO observation / improvement galleries — shared-runtime aware + current/next lazy loading
 - AIMMO output rotator — shared-runtime aware
