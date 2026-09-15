@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const runtime = window.HMDSGalleryRuntime;
+  const reduced = runtime?.reducedMotion ?? window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const referenceBars = [...document.querySelectorAll('.aimmo-system-page #data .aimmo-reference-bars')];
 
   /* Reuse 03.1-style viewport reveal for DURATION / DECISION / OUTPUT. */
@@ -34,7 +35,7 @@
   let index = 0;
   let timer = 0;
   let cleanupTimer = 0;
-  let inView = false;
+  let autoActive = false;
 
   const render = nextIndex => {
     const previousIndex = index;
@@ -68,7 +69,6 @@
     }
 
     index = resolvedIndex;
-
     requestAnimationFrame(() => {
       nextSlide?.querySelector('.aimmo-reference-bars')?.classList.add('is-bars-focused');
     });
@@ -82,7 +82,7 @@
 
   const start = () => {
     stop();
-    if (reduced || !inView || document.hidden) return;
+    if (reduced || !autoActive || slides.length < 2) return;
     timer = window.setInterval(() => render(index + 1), HOLD_MS);
   };
 
@@ -114,20 +114,24 @@
 
   render(0);
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      inView = Boolean(entries[0]?.isIntersecting);
-      if (inView) start();
-      else stop();
-    }, { threshold:.18, rootMargin:'0px 0px -5% 0px' });
-    observer.observe(rotator);
-  } else {
-    inView = true;
-    start();
-  }
+  const setAutoActive = active => {
+    autoActive = Boolean(active);
+    if (autoActive) start();
+    else stop();
+  };
 
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stop();
-    else start();
-  });
+  if (runtime) {
+    runtime.register(rotator, setAutoActive);
+  } else if ('IntersectionObserver' in window) {
+    let inView = false;
+    const observer = new IntersectionObserver(entries => {
+      const entry = entries[0];
+      inView = Boolean(entry?.isIntersecting && entry.intersectionRatio >= .12);
+      setAutoActive(inView && !document.hidden && !reduced);
+    }, { threshold:[0,.12,.25,.5,1] });
+    observer.observe(rotator);
+    document.addEventListener('visibilitychange', () => setAutoActive(inView && !document.hidden && !reduced));
+  } else {
+    setAutoActive(!document.hidden && !reduced);
+  }
 })();
