@@ -1,45 +1,59 @@
 /*
-  HIMART Design System — per-character fail-safe title scramble.
-  Contract:
-  - authored HTML is the immutable source of truth;
-  - each visible character resolves to its final glyph independently and never becomes random again;
-  - normal pages restore authored HTML after completion;
-  - Himart wide-test chapter titles keep their already-resolved character DOM after completion,
-    avoiding a second visual reflow caused solely by swapping spans back to text nodes;
-  - each title runs once per page lifecycle. Scrolling away never re-arms the scramble;
-  - interruption, tab hiding, pagehide, or runtime errors always settle to the authored title;
-  - wide-editorial chapter titles begin scrambling only after their actual rise/reveal has started;
-  - Himart wide-editorial titles wait for the canonical narrative runtime before source capture;
-  - legacy same-text title guards may not replace active/resolved scramble markup.
+  HIMART / WORKS Design System — title scramble runtime.
+
+  Shared contract
+  - One runtime owns Hero, major-section and medium-subsection title scramble across Works case pages.
+  - Hero title runs once on page entry.
+  - Major titles run once when their section heading becomes visible.
+  - Medium titles run once when their subsection/data-card heading becomes visible.
+  - Wide-editorial pages synchronize scramble with the existing reveal owner instead of firing early.
+  - No translate / magnetic / sticky motion is created here. This file changes glyphs only.
+  - Authored HTML remains the immutable source of truth; <br> and inline emphasis are preserved.
+  - Each visible character resolves independently and never becomes random again.
+  - Every title runs once per page lifecycle. Scrolling away never re-arms the animation.
+  - interruption, tab hiding, pagehide, or runtime errors settle to the authored title.
+  - prefers-reduced-motion disables automatic scramble.
+
+  Canonical selectors
+  - Hero: .hm-title inside a Works hero
+  - Major: .hm-section-title inside .hm-section-head
+  - Medium: .hm-subtitle inside .hm-subhead, data-card headings, prototype headings,
+            and Work Archive project headings
+  - Future components may opt in with [data-hm-major-title] / [data-hm-medium-title].
 */
 (() => {
   'use strict';
 
+  if (window.HMDSTitleScrambleRuntime) return;
+
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const titleSelector = '#live-main .hm-section-head .hm-section-title.js-scramble, #live-main .hm-section-head .hm-section-title';
-  const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title.js-scramble, :is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title';
+  const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title';
+  const majorSelector = [
+    '#live-main .hm-section-head .hm-section-title',
+    '#live-main [data-hm-major-title]'
+  ].join(',');
+  const mediumSelector = [
+    '#live-main .hm-subhead .hm-subtitle',
+    '#live-main .data-card-head h3',
+    '#live-main .prototype-intro > h3',
+    '#live-main .wa-project__head .wa-project__title',
+    '#live-main [data-hm-medium-title]'
+  ].join(',');
+
   const stateByElement = new WeakMap();
   const activeAnimations = new Set();
   const observed = new WeakSet();
-  const WIDE_CHAPTER_RISE_SYNC_DELAY = 90;
+  const revealWatchers = new WeakMap();
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const REVEAL_SYNC_DELAY = 70;
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
   const normalizeText = value => (value || '').replace(/\s+/g, ' ').trim();
-  const isWideEditorialChapter = (element, kind) =>
-    kind === 'chapter' &&
+
+  const isWideMajor = (element, state) =>
+    state?.kind === 'major' &&
     document.body?.classList.contains('hm-wide-editorial-test') &&
     !!element.closest('.hm-section-head');
-  const isHimartWideChapter = (element, state) =>
-    state?.kind === 'chapter' &&
-    document.body?.classList.contains('hm-wide-editorial-test') &&
-    document.body?.classList.contains('hm-wide-himart-test') &&
-    !!element.closest('.hm-section-head');
-  const isHimartWidePage = () =>
-    document.body?.classList.contains('hm-wide-editorial-test') &&
-    document.body?.classList.contains('hm-wide-himart-test');
-  const isContentReady = () =>
-    document.body?.classList.contains('himart-narrative-ready') &&
-    (!isHimartWidePage() || document.body?.classList.contains('narrative-v2-final-ready'));
 
   const cloneWithCharacters = (node, chars) => {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -83,17 +97,10 @@
     element.innerHTML = state.originalHTML;
   };
 
-  /*
-    content-runtime.js still contains an old canonical-title guard which compares
-    innerHTML, not visible text. Per-character scramble markup is therefore treated as
-    "different" even after every glyph has resolved, and the guard rewrites the H2 once
-    more. Rebuild the same resolved/active character DOM inside the same mutation
-    checkpoint whenever that legacy guard writes the exact same canonical text.
-    Because MutationObserver callbacks run before the next paint, the redundant raw-text
-    rewrite never becomes a second visible title change.
-  */
+  /* Himart's canonical narrative guard may rewrite the same major title while the
+     scramble is running. Rebuild only when the visible text is still identical. */
   const repairCanonicalRewrite = (element, state) => {
-    if (!isHimartWideChapter(element, state) || !document.contains(element)) return false;
+    if (!isWideMajor(element, state) || !document.contains(element)) return false;
     if (ownsAnimatedDOM(element, state)) return true;
     if (normalizeText(element.textContent) !== normalizeText(state.originalText)) return false;
 
@@ -116,7 +123,7 @@
   };
 
   const protectCanonicalMarkup = (element, state) => {
-    if (!isHimartWideChapter(element, state) || !('MutationObserver' in window) || state.canonicalObserver) return;
+    if (!isWideMajor(element, state) || !('MutationObserver' in window) || state.canonicalObserver) return;
     const mutationObserver = new MutationObserver(() => {
       const live = stateByElement.get(element);
       if (live !== state || !document.contains(element)) {
@@ -126,7 +133,7 @@
       if (ownsAnimatedDOM(element, state)) return;
       repairCanonicalRewrite(element, state);
     });
-    mutationObserver.observe(element, {childList:true, subtree:true, characterData:true});
+    mutationObserver.observe(element, { childList:true, subtree:true, characterData:true });
     state.canonicalObserver = mutationObserver;
   };
 
@@ -146,7 +153,7 @@
     }
 
     const finalize = () => {
-      const preserveResolvedMarkup = !immediate && isHimartWideChapter(element, state);
+      const preserveResolvedMarkup = !immediate && isWideMajor(element, state);
       if (!preserveResolvedMarkup && document.contains(element) && ownsAnimatedDOM(element, state)) {
         restoreAuthoredHTML(element, state);
       }
@@ -163,7 +170,7 @@
   };
 
   const startScramble = (element, kind) => {
-    if (!element || !document.contains(element)) return false;
+    if (!element || !document.contains(element) || reduce) return false;
 
     let state = stateByElement.get(element);
     if (state?.completed || state?.running) return false;
@@ -174,8 +181,8 @@
     if (!chars.length) return false;
 
     const count = chars.length;
-    const stagger = Math.max(10, Math.min(22, 520 / Math.max(1, count)));
-    const randomPhase = 250;
+    const stagger = Math.max(9, Math.min(kind === 'medium' ? 18 : 22, 520 / Math.max(1, count)));
+    const randomPhase = kind === 'medium' ? 190 : 250;
     const totalDuration = randomPhase + (count - 1) * stagger + 80;
 
     state = {
@@ -214,7 +221,6 @@
 
       if (!ownsAnimatedDOM(element, state)) {
         if (!repairCanonicalRewrite(element, state) || !ownsAnimatedDOM(element, state)) {
-          /* A genuinely different runtime title wins. Do not fight real content changes. */
           state.running = false;
           state.completed = true;
           activeAnimations.delete(element);
@@ -246,7 +252,6 @@
       });
 
       if (resolved === count || elapsed >= state.totalDuration) {
-        /* All visible glyphs are already final before settle; wide Himart keeps this exact DOM. */
         settle(element, false);
         return;
       }
@@ -257,105 +262,122 @@
     return true;
   };
 
-  const captureSource = element => {
+  const captureSource = (element, kind) => {
     if (!element || stateByElement.has(element)) return;
     stateByElement.set(element, {
       originalHTML: element.innerHTML,
       originalText: element.textContent || '',
       chars:[],
       running:false,
-      completed:false,
+      completed:reduce,
       raf:0,
-      kind:null,
+      kind,
       canonicalObserver:null
     });
   };
 
-  /*
-    Wide editorial titles must not use their own viewport intersection as the trigger.
-    A sticky/grid title can intersect well before the visible rise begins, which lets the
-    scramble finish offscreen. Instead, watch the parent reveal unit and start only after
-    animation.js adds .is-visible. A short 90ms sync delay lets the title visibly begin
-    moving upward before the random glyphs start, so both motions are seen together.
-  */
-  const registerWideChapterRiseTrigger = (element, kind, fallbackObserver) => {
-    const head = element.closest('.hm-section-head');
-    if (!head || !('MutationObserver' in window)) {
-      fallbackObserver?.observe(element);
-      return;
+  const revealOwner = (element, kind) => {
+    if (kind === 'major') return element.closest('.hm-section-head');
+    if (kind === 'medium') {
+      return element.closest('.hm-subsection, .data-card, .prototype-intro, .wa-project__head, [data-hm-medium-owner]');
     }
+    return null;
+  };
 
-    let mutationObserver = null;
+  const registerRevealSynchronized = (element, kind, owner) => {
+    if (!owner?.classList.contains('hm-reveal') || !('MutationObserver' in window)) return false;
+
+    let watcher = revealWatchers.get(element);
+    if (watcher) return true;
+
     let timer = 0;
-
     const launch = () => {
-      if (!head.classList.contains('is-visible')) return;
-      mutationObserver?.disconnect();
-      mutationObserver = null;
+      if (!owner.classList.contains('is-visible')) return;
+      watcher?.disconnect();
+      revealWatchers.delete(element);
       if (timer) return;
       timer = window.setTimeout(() => {
         timer = 0;
-        if (!document.contains(element)) return;
         startScramble(element, kind);
-      }, WIDE_CHAPTER_RISE_SYNC_DELAY);
+      }, REVEAL_SYNC_DELAY);
     };
 
-    if (head.classList.contains('is-visible')) {
-      requestAnimationFrame(launch);
-      return;
-    }
-
-    mutationObserver = new MutationObserver(launch);
-    mutationObserver.observe(head, {attributes:true, attributeFilter:['class']});
+    watcher = new MutationObserver(launch);
+    revealWatchers.set(element, watcher);
+    watcher.observe(owner, { attributes:true, attributeFilter:['class'] });
     requestAnimationFrame(launch);
+    return true;
   };
 
-  const register = (element, kind, observer) => {
-    if (!element || observed.has(element)) return;
-    captureSource(element);
-    observed.add(element);
-
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches || !observer) {
-      const state = stateByElement.get(element);
-      if (state) state.completed = true;
-      return;
-    }
-    element.dataset.hmScrambleKind = kind;
-
-    if (isWideEditorialChapter(element, kind)) {
-      registerWideChapterRiseTrigger(element, kind, observer);
-      return;
-    }
-
-    observer.observe(element);
-  };
-
-  const observer = 'IntersectionObserver' in window
+  const observer = !reduce && 'IntersectionObserver' in window
     ? new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const element = entry.target;
           observer.unobserve(element);
-          startScramble(element, element.dataset.hmScrambleKind || 'chapter');
+          startScramble(element, element.dataset.hmScrambleKind || 'major');
         });
-      }, {threshold:.24, rootMargin:'0px 0px -6% 0px'})
+      }, { threshold:.22, rootMargin:'0px 0px -8% 0px' })
     : null;
+
+  const register = (element, kind) => {
+    if (!element || observed.has(element)) return;
+    captureSource(element, kind);
+    observed.add(element);
+    element.dataset.hmScrambleKind = kind;
+
+    if (reduce) return;
+
+    const owner = revealOwner(element, kind);
+    if (registerRevealSynchronized(element, kind, owner)) return;
+
+    if (observer) observer.observe(element);
+    else startScramble(element, kind);
+  };
 
   const scan = () => {
     const hero = document.querySelector(heroSelector);
-    if (hero) register(hero, 'hero', observer);
-    document.querySelectorAll(titleSelector).forEach(title => register(title, 'chapter', observer));
+    if (hero) register(hero, 'hero');
+    document.querySelectorAll(majorSelector).forEach(title => register(title, 'major'));
+    document.querySelectorAll(mediumSelector).forEach(title => register(title, 'medium'));
   };
 
   const finishAll = () => [...activeAnimations].forEach(element => settle(element, true));
 
+  const pageNeedsNarrativeReady = () =>
+    document.body?.classList.contains('himart-narrative-loading') ||
+    document.body?.classList.contains('hm-wide-booting');
+
+  const isContentReady = () => {
+    if (!pageNeedsNarrativeReady()) return true;
+    if (!document.body?.classList.contains('himart-narrative-ready')) return false;
+    if (document.body?.classList.contains('hm-wide-booting')) return false;
+    return true;
+  };
+
+  let mutationScanQueued = false;
+  const scheduleScan = () => {
+    if (mutationScanQueued) return;
+    mutationScanQueued = true;
+    requestAnimationFrame(() => {
+      mutationScanQueued = false;
+      scan();
+    });
+  };
+
+  const observeDynamicTitles = () => {
+    const root = document.querySelector('#live-main');
+    if (!root || !('MutationObserver' in window)) return;
+    const mutationObserver = new MutationObserver(mutations => {
+      if (!mutations.some(mutation => mutation.addedNodes.length)) return;
+      scheduleScan();
+    });
+    mutationObserver.observe(root, { childList:true, subtree:true });
+  };
+
   const initialise = () => {
     scan();
-    if (!observer) {
-      const hero = document.querySelector(heroSelector);
-      if (hero) startScramble(hero, 'hero');
-      document.querySelectorAll(titleSelector).forEach(title => startScramble(title, 'chapter'));
-    }
+    observeDynamicTitles();
   };
 
   const waitForContentReady = () => {
@@ -363,18 +385,21 @@
       initialise();
       return;
     }
-    const timer = setInterval(() => {
+
+    const timer = window.setInterval(() => {
       if (!isContentReady()) return;
-      clearInterval(timer);
+      window.clearInterval(timer);
       initialise();
-    }, 16);
-    setTimeout(() => {
-      clearInterval(timer);
+    }, 32);
+
+    window.setTimeout(() => {
+      window.clearInterval(timer);
       initialise();
     }, 12000);
+
     document.addEventListener('himart:narrative-ready', () => {
       if (isContentReady()) initialise();
-    }, {once:true});
+    }, { once:true });
   };
 
   document.addEventListener('visibilitychange', () => {
@@ -382,7 +407,13 @@
   });
   addEventListener('pagehide', finishAll);
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', waitForContentReady, {once:true});
+  window.HMDSTitleScrambleRuntime = Object.freeze({
+    version:'2026.09.15-works-1',
+    selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
+    scan
+  });
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', waitForContentReady, { once:true });
   else waitForContentReady();
-  addEventListener('load', () => setTimeout(scan, 0), {once:true});
+  addEventListener('load', scheduleScan, { once:true });
 })();
