@@ -1,4 +1,10 @@
-/* HIMART AX v7 — 03.1 flush text alignment, 02.3 SELECT cleanup, 03.2 quote color. */
+/* HIMART AX v7 — 02.1 label grammar, 03.1 maker details, 03.2 quote color, 04 subsection rhythm. */
+
+/* 02.1 — slash convention keeps the primary label and its qualifier as one phrase. */
+html body.himart-ax-page #data .ax-pattern-block .ax-paren{
+  display:inline!important;
+  margin:0!important;
+}
 
 /* 03.1 — every text element begins exactly on the card's top-rule left edge. */
 html body.himart-ax-page #journey .ax-maker-step,
@@ -15,6 +21,10 @@ html body.himart-ax-page #journey .ax-maker-step li{
   text-align:left!important;
   transform:none!important;
 }
+html body.himart-ax-page #journey .ax-maker-step p{
+  font-size:16px!important;
+  line-height:1.5!important;
+}
 html body.himart-ax-page #journey .ax-maker-step ul{
   width:100%!important;
   margin-top:34px!important;
@@ -22,9 +32,17 @@ html body.himart-ax-page #journey .ax-maker-step ul{
   margin-bottom:0!important;
   justify-items:start!important;
 }
+html body.himart-ax-page #journey .ax-maker-step li{
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:6px!important;
+}
 html body.himart-ax-page #journey .ax-maker-step li::before{
-  content:none!important;
-  display:none!important;
+  content:"・"!important;
+  display:inline-block!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
 }
 
 /* 02.3 / SELECT — remove legacy pseudo-blocks that produced duplicate bottom rules.
@@ -51,6 +69,12 @@ html body.himart-ax-page #data .ax-select-mini::after{
 html body.himart-ax-page #journey .ways-quote-grid strong,
 html body.himart-ax-page #journey .ways-quote-grid article:first-child strong{
   color:#fff!important;
+}
+
+/* 04.2+ — explicitly lock the canonical subsection rhythm: 100px unit gap + 40px line-to-title inset. */
+html body.himart-ax-page #direction .hm-wide-right-rail > .hm-subsection + .hm-subsection{
+  margin-top:var(--hm-space-subsection,100px)!important;
+  padding-top:var(--hm-space-component,40px)!important;
 }
 
 @media(max-width:780px){
