@@ -26,6 +26,12 @@
         './assets/image/himart-workshop/himart_ws_01_08.png',
         './assets/image/himart-workshop/himart_ws_01_09.png'
       ]
+    },
+    {
+      root: '#data .team-workshop-visual--voices .team-workshop-visual__image',
+      sources: Array.from({ length:8 }, (_, index) =>
+        `./assets/image/himart-workshop/himart_ws_03_${String(index + 1).padStart(2, '0')}.png`
+      )
     }
   ];
 
@@ -37,10 +43,13 @@
   });
 
   const setupGallery = async (root, requested) => {
-    if (!root || root.dataset.teamGalleryMounted === 'true') return;
+    if (!root || root.dataset.teamGalleryMounted === 'true' || !requested.length) return;
 
-    const loaded = (await Promise.all(requested.map(preload))).filter(Boolean);
-    if (!loaded.length) return;
+    /* Preserve every authored slot. Missing workshop files intentionally render as a
+       clean black frame instead of being removed from the sequence, so future uploads
+       become active on refresh without changing gallery numbering or code. */
+    const availability = await Promise.all(requested.map(preload));
+    const frames = requested.map((src, index) => ({ src, available:Boolean(availability[index]) }));
 
     root.dataset.teamGalleryMounted = 'true';
     root.classList.add('team-workshop-gallery');
@@ -54,22 +63,24 @@
     const viewport = document.createElement('div');
     viewport.className = 'team-workshop-gallery__viewport';
 
-    loaded.forEach((src, slideIndex) => {
+    frames.forEach((frame, slideIndex) => {
       const slide = document.createElement('article');
       slide.className = `team-workshop-gallery__slide${slideIndex === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', slideIndex === 0 ? 'false' : 'true');
 
       const media = document.createElement('div');
-      media.className = 'team-workshop-gallery__media';
+      media.className = `team-workshop-gallery__media${frame.available ? '' : ' is-missing'}`;
 
-      const image = document.createElement('img');
-      image.src = src;
-      image.alt = slideIndex === 0 ? alt : '';
-      image.loading = slideIndex === 0 ? 'eager' : 'lazy';
-      image.decoding = 'async';
-      image.draggable = false;
+      if (frame.available) {
+        const image = document.createElement('img');
+        image.src = frame.src;
+        image.alt = slideIndex === 0 ? alt : '';
+        image.loading = slideIndex === 0 ? 'eager' : 'lazy';
+        image.decoding = 'async';
+        image.draggable = false;
+        media.appendChild(image);
+      }
 
-      media.appendChild(image);
       slide.appendChild(media);
       viewport.appendChild(slide);
     });
@@ -78,12 +89,12 @@
     root.insertBefore(viewport, cards || root.firstChild);
 
     const prev = document.createElement('button');
-    prev.className = 'team-workshop-gallery__nav team-workshop-gallery__nav--prev';
+    prev.className = 'team-workshop-gallery__nav team-workshop-gallery__nav--prev hm-ds-gallery-nav hm-ds-gallery-nav--prev';
     prev.type = 'button';
     prev.setAttribute('aria-label', '이전 이미지');
 
     const next = document.createElement('button');
-    next.className = 'team-workshop-gallery__nav team-workshop-gallery__nav--next';
+    next.className = 'team-workshop-gallery__nav team-workshop-gallery__nav--next hm-ds-gallery-nav hm-ds-gallery-nav--next';
     next.type = 'button';
     next.setAttribute('aria-label', '다음 이미지');
 
