@@ -29,8 +29,8 @@
     },
     {
       root: '#data .team-workshop-visual--voices .team-workshop-visual__image',
-      sources: Array.from({ length:8 }, (_, index) =>
-        `./assets/image/himart-workshop/himart_ws_03_${String(index + 1).padStart(2, '0')}.png`
+      sources: Array.from({ length:9 }, (_, index) =>
+        `./assets/image/himart-workshop/himart_ws_03_${String(index).padStart(2, '0')}.png`
       )
     },
     {
