@@ -5,7 +5,7 @@ body.works-page-body{
   --works-media-column:60vw;
   --works-title-media-gap:8vw;
   --works-title-content-width:calc(var(--works-title-column) - var(--works-title-media-gap) - var(--hm-inset-desktop));
-  --works-project-rule-width:10vw;
+  --works-project-rule-width:calc(var(--works-title-column) * .25);
   --works-project-rule-gap:44px;
   --works-footer-gap:400px;
   margin:0;
