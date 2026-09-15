@@ -1,13 +1,37 @@
 /* HIMART WORKSHOP SLIDESHOW
    Shared by himart-team.html hero and Works project card.
    Plays himart_ws_01.png ~ himart_ws_06.png every 3 seconds with a soft dissolve.
-   Missing files are intentionally left blank rather than replaced or skipped. */
+   Visibility/autoplay lifecycle is owned by design-system/gallery-runtime.js. */
 (() => {
   'use strict';
 
+  const runtime = window.HMDSGalleryRuntime;
+  const reducedMotion = runtime?.reducedMotion ?? window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const DEFAULT_INTERVAL = 3000;
   const DEFAULT_FRAMES = 6;
   const BASE_PATH = './assets/image/himart-workshop/';
+
+  const registerVisibilityFallback = (root, callback) => {
+    let inView = false;
+    const update = value => {
+      inView = Boolean(value);
+      callback(inView && !document.hidden && !reducedMotion);
+    };
+    let observer = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(entries => {
+        const entry = entries[0];
+        update(Boolean(entry?.isIntersecting && entry.intersectionRatio >= .12));
+      }, { threshold:[0,.12,.25,.5,1] });
+      observer.observe(root);
+    } else update(true);
+    const onVisibility = () => callback(inView && !document.hidden && !reducedMotion);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  };
 
   const mount = (root) => {
     if (!root || root.dataset.hmWorkshopSlideshowMounted === 'true') return;
@@ -16,7 +40,7 @@
 
     const frameCount = Math.max(1, Number(root.dataset.hmWorkshopFrames || DEFAULT_FRAMES));
     const interval = Math.max(500, Number(root.dataset.hmWorkshopInterval || DEFAULT_INTERVAL));
-    const sources = Array.from({ length: frameCount }, (_, index) =>
+    const sources = Array.from({ length:frameCount }, (_, index) =>
       `${BASE_PATH}himart_ws_${String(index + 1).padStart(2, '0')}.png`
     );
 
@@ -31,9 +55,14 @@
     let index = 0;
     let activeLayer = 0;
     let timer = 0;
+    let autoActive = false;
+    const loaded = new Set();
 
     const setSource = (layer, src) => {
+      if (layer.dataset.hmWsSource === src) return;
+      layer.dataset.hmWsSource = src;
       layer.style.backgroundImage = `url("${src}")`;
+      loaded.add(src);
     };
 
     setSource(layers[0], sources[0]);
@@ -53,23 +82,28 @@
       activeLayer = nextLayer;
     };
 
-    const start = () => {
-      if (timer || sources.length < 2) return;
-      timer = window.setInterval(advance, interval);
-    };
-
     const stop = () => {
       if (!timer) return;
       window.clearInterval(timer);
       timer = 0;
     };
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) stop();
-      else start();
-    });
+    const start = () => {
+      stop();
+      if (!autoActive || reducedMotion || sources.length < 2) return;
+      /* Do not reset index or reload existing frames on re-entry. Browser cache and the
+         two retained layers make resume cheaper and prevent a visible flash. */
+      timer = window.setInterval(advance, interval);
+    };
 
-    start();
+    const setAutoActive = active => {
+      autoActive = Boolean(active);
+      if (autoActive) start();
+      else stop();
+    };
+
+    if (runtime) runtime.register(root, setAutoActive);
+    else registerVisibilityFallback(root, setAutoActive);
   };
 
   const init = () => {
