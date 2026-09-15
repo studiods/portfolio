@@ -26,16 +26,16 @@
 
 /* Shared 16:9 image + overlay-card contract --------------------------------
    - media width: 100%
-   - overlay width: 80% of media
-   - overlay height: 40% of media height
-   - outside portion: 1/3 of overlay height
-   Because media is 16:9 and overlay width is 80%, aspect-ratio 32/9 yields
-   exactly 40% of the media height without JS measurement. */
-.himart-team-page .team-workshop-visual{position:relative;width:100%;padding:0 0 7.5%}
+   - overlay width: 90% of media
+   - overlay height: 35% (7/20) of media height
+   - overlap with media: 1/3 of overlay height
+   - outside portion: 2/3 of overlay height
+   For 16:9 media, 90%-wide overlay at aspect-ratio 32/7 is exactly 35% of media height. */
+.himart-team-page .team-workshop-visual{position:relative;width:100%;padding:0 0 13.125%}
 .himart-team-page .team-workshop-visual__image{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:visible}
 .himart-team-page .team-workshop-visual__image>img{position:absolute;z-index:0;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .himart-team-page .team-workshop-visual__image::after{display:none;content:none}
-.himart-team-page .team-workshop-visual__cards{position:absolute;z-index:2;right:0;bottom:0;left:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:80%;aspect-ratio:32/9;transform:translateY(33.333333%);background:rgba(0,0,0,.95);overflow:visible}
+.himart-team-page .team-workshop-visual__cards{position:absolute;z-index:2;right:0;bottom:0;left:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:90%;aspect-ratio:32/7;transform:translateY(66.666667%);background:rgba(0,0,0,.85);overflow:visible}
 .himart-team-page .team-workshop-visual .team-workshop-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;min-width:0;min-height:0;height:100%;margin:0;padding:28px;border:0;background:transparent;overflow:visible;box-sizing:border-box}
 .himart-team-page .team-workshop-visual .team-workshop-card::after{display:none;content:none}
 .himart-team-page .team-workshop-visual .team-workshop-card>span{display:block;flex:0 0 auto;margin:0;padding:0;color:var(--hm-blue);font:400 12px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note);text-align:left}
@@ -50,6 +50,9 @@
 .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{grid-template-columns:repeat(3,minmax(0,1fr))}
 .himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{border-left:1px solid rgba(255,255,255,.15)}
 .himart-team-page .team-strength-summary-v2{display:none}
+
+/* 02.4: workshop-voice gallery follows the same two-card contract as 02.2. */
+.himart-team-page .team-workshop-visual--voices .team-workshop-card{border:0}
 
 /* 03.1: one core-value card. */
 .himart-team-page .team-workshop-visual--core .team-workshop-visual__cards{grid-template-columns:1fr}
