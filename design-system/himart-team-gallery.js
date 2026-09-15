@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const runtime = window.HMDSGalleryRuntime;
+  const reducedMotion = runtime?.reducedMotion ?? window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const HOLD_MS = 3000;
   const TRANSITION_MS = 720;
 
@@ -44,21 +45,34 @@
     }
   ];
 
-  const preload = src => new Promise(resolve => {
-    const image = new Image();
-    image.onload = () => resolve(src);
-    image.onerror = () => resolve(null);
-    image.src = src;
-  });
+  const registerVisibilityFallback = (root, callback) => {
+    let inView = false;
+    const update = value => {
+      inView = Boolean(value);
+      callback(inView && !document.hidden && !reducedMotion);
+    };
 
-  const setupGallery = async (root, requested) => {
-    if (!root || root.dataset.teamGalleryMounted === 'true' || !requested.length) return;
+    let observer = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(entries => {
+        const entry = entries[0];
+        update(Boolean(entry?.isIntersecting && entry.intersectionRatio >= .12));
+      }, { threshold:[0,.12,.25,.5,1] });
+      observer.observe(root);
+    } else {
+      update(true);
+    }
 
-    /* Preserve every authored slot. Missing workshop files intentionally render as a
-       clean black frame instead of being removed from the sequence, so future uploads
-       become active on refresh without changing gallery numbering or code. */
-    const availability = await Promise.all(requested.map(preload));
-    const frames = requested.map((src, index) => ({ src, available:Boolean(availability[index]) }));
+    const visibilityHandler = () => callback(inView && !document.hidden && !reducedMotion);
+    document.addEventListener('visibilitychange', visibilityHandler);
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', visibilityHandler);
+    };
+  };
+
+  const setupGallery = (root, sources) => {
+    if (!root || root.dataset.teamGalleryMounted === 'true' || !sources.length) return;
 
     root.dataset.teamGalleryMounted = 'true';
     root.classList.add('team-workshop-gallery');
@@ -72,24 +86,14 @@
     const viewport = document.createElement('div');
     viewport.className = 'team-workshop-gallery__viewport';
 
-    frames.forEach((frame, slideIndex) => {
+    sources.forEach((src, slideIndex) => {
       const slide = document.createElement('article');
       slide.className = `team-workshop-gallery__slide${slideIndex === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', slideIndex === 0 ? 'false' : 'true');
+      slide.dataset.gallerySrc = src;
 
       const media = document.createElement('div');
-      media.className = `team-workshop-gallery__media${frame.available ? '' : ' is-missing'}`;
-
-      if (frame.available) {
-        const image = document.createElement('img');
-        image.src = frame.src;
-        image.alt = slideIndex === 0 ? alt : '';
-        image.loading = slideIndex === 0 ? 'eager' : 'lazy';
-        image.decoding = 'async';
-        image.draggable = false;
-        media.appendChild(image);
-      }
-
+      media.className = 'team-workshop-gallery__media';
       slide.appendChild(media);
       viewport.appendChild(slide);
     });
@@ -117,9 +121,27 @@
     let index = 0;
     let timer = 0;
     let busy = false;
-    let inView = false;
-    let hasStarted = false;
+    let autoActive = false;
     let pointerStart = null;
+
+    const ensureLoaded = slideIndex => {
+      const slide = slides[slideIndex];
+      if (!slide || slide.dataset.galleryLoaded === 'true') return;
+      slide.dataset.galleryLoaded = 'true';
+
+      const media = slide.querySelector('.team-workshop-gallery__media');
+      const image = document.createElement('img');
+      image.alt = slideIndex === 0 ? alt : '';
+      image.decoding = 'async';
+      image.draggable = false;
+      image.loading = slideIndex === 0 ? 'eager' : 'lazy';
+      image.addEventListener('error', () => {
+        media?.classList.add('is-missing');
+        image.remove();
+      }, { once:true });
+      image.src = slide.dataset.gallerySrc;
+      media?.appendChild(image);
+    };
 
     const clearTimer = () => {
       if (timer) window.clearTimeout(timer);
@@ -143,13 +165,17 @@
 
     const schedule = (delay = HOLD_MS) => {
       clearTimer();
-      if (!inView || document.hidden || busy || slides.length < 2) return;
+      if (!autoActive || busy || reducedMotion || slides.length < 2) return;
+      /* Prewarm only the next frame while visible instead of preloading every gallery
+         image on page load. Loaded frames stay cached and are never re-requested on resume. */
+      ensureLoaded((index + 1) % slides.length);
       timer = window.setTimeout(() => move(1), delay);
     };
 
     const transitionTo = (targetIndex, direction = 1) => {
       if (busy || slides.length < 2 || targetIndex === index) return;
       clearTimer();
+      ensureLoaded(targetIndex);
       busy = true;
 
       const current = slides[index];
@@ -214,42 +240,36 @@
 
     root.addEventListener('pointerdown', event => {
       pointerStart = { x:event.clientX, y:event.clientY };
+      clearTimer();
     });
     root.addEventListener('pointerup', event => {
       if (!pointerStart) return;
       const dx = event.clientX - pointerStart.x;
       const dy = event.clientY - pointerStart.y;
       pointerStart = null;
-      if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) {
-        move(dx < 0 ? 1 : -1);
-      }
-    });
-    root.addEventListener('pointercancel', () => { pointerStart = null; });
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(entries => {
-        inView = Boolean(entries[0]?.isIntersecting);
-        if (inView) {
-          const delay = hasStarted ? HOLD_MS : HOLD_MS;
-          hasStarted = true;
-          schedule(delay);
-        } else {
-          clearTimer();
-        }
-      }, { threshold:.20, rootMargin:'0px 0px -5% 0px' });
-      observer.observe(root);
-    } else {
-      inView = true;
-      hasStarted = true;
-      schedule();
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) clearTimer();
+      if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) move(dx < 0 ? 1 : -1);
       else schedule();
     });
+    root.addEventListener('pointercancel', () => {
+      pointerStart = null;
+      schedule();
+    });
 
+    const setAutoActive = active => {
+      autoActive = Boolean(active);
+      if (autoActive) {
+        ensureLoaded(index);
+        schedule();
+      } else {
+        clearTimer();
+      }
+    };
+
+    ensureLoaded(0);
     settle();
+
+    if (runtime) runtime.register(root, setAutoActive);
+    else registerVisibilityFallback(root, setAutoActive);
   };
 
   const init = () => {
