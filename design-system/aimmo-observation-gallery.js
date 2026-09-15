@@ -100,12 +100,12 @@
     card.style.touchAction = 'pan-y';
 
     const prev = document.createElement('button');
-    prev.className = 'aimmo-evidence-card__nav aimmo-evidence-card__nav--prev';
+    prev.className = 'aimmo-evidence-card__nav aimmo-evidence-card__nav--prev hm-ds-gallery-nav hm-ds-gallery-nav--prev';
     prev.type = 'button';
     prev.setAttribute('aria-label', '이전 이미지');
 
     const next = document.createElement('button');
-    next.className = 'aimmo-evidence-card__nav aimmo-evidence-card__nav--next';
+    next.className = 'aimmo-evidence-card__nav aimmo-evidence-card__nav--next hm-ds-gallery-nav hm-ds-gallery-nav--next';
     next.type = 'button';
     next.setAttribute('aria-label', '다음 이미지');
 
