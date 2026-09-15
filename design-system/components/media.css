@@ -1,4 +1,4 @@
-@import url("../tokens.css");
+@import url("../tokens.css?v=20260915-3");
 @import url("../typography.css");
 
 /* HIMART Design System — Media component */
@@ -141,6 +141,54 @@
   letter-spacing:var(--hm-track-body);
 }
 
+/*
+  Canonical gallery navigation hit-area contract.
+  Apply .hm-ds-gallery-nav plus --prev / --next to every interactive image gallery.
+  The click/tap target occupies 1/10 of the gallery width and 100% of its height,
+  while the arrow itself stays close to the former visual edge position.
+*/
+html body.himart-page-body .hm-ds-gallery-nav{
+  position:absolute!important;
+  z-index:6!important;
+  top:0!important;
+  bottom:0!important;
+  width:var(--hm-gallery-nav-hit-width,10%)!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  background:transparent!important;
+  transform:none!important;
+  cursor:pointer!important;
+}
+html body.himart-page-body .hm-ds-gallery-nav--prev{left:0!important;right:auto!important}
+html body.himart-page-body .hm-ds-gallery-nav--next{right:0!important;left:auto!important}
+html body.himart-page-body .hm-ds-gallery-nav::before{
+  content:""!important;
+  position:absolute!important;
+  top:50%!important;
+  width:var(--hm-gallery-nav-arrow-size,18px)!important;
+  height:var(--hm-gallery-nav-arrow-size,18px)!important;
+  border-top:1px solid rgba(255,255,255,.78)!important;
+  border-right:1px solid rgba(255,255,255,.78)!important;
+  box-sizing:border-box!important;
+}
+html body.himart-page-body .hm-ds-gallery-nav--prev::before{
+  left:var(--hm-gallery-nav-arrow-edge,30px)!important;
+  right:auto!important;
+  transform:translate(-35%,-50%) rotate(-135deg)!important;
+}
+html body.himart-page-body .hm-ds-gallery-nav--next::before{
+  right:var(--hm-gallery-nav-arrow-edge,30px)!important;
+  left:auto!important;
+  transform:translate(35%,-50%) rotate(45deg)!important;
+}
+html body.himart-page-body .hm-ds-gallery-nav:hover::before,
+html body.himart-page-body .hm-ds-gallery-nav:focus-visible::before{
+  border-color:#fff!important;
+}
+
 @media(max-width:780px){
   .hm-ds-media-bleed__frame{aspect-ratio:4/5}
   .hm-ds-media-bleed__caption{
@@ -161,4 +209,10 @@
     min-height:64vw;
   }
   .hm-ds-media-mosaic__caption{padding:14px 16px;font-size:11px}
+  html body.himart-page-body .hm-ds-gallery-nav::before{
+    width:var(--hm-gallery-nav-arrow-size-mobile,14px)!important;
+    height:var(--hm-gallery-nav-arrow-size-mobile,14px)!important;
+  }
+  html body.himart-page-body .hm-ds-gallery-nav--prev::before{left:var(--hm-gallery-nav-arrow-edge-mobile,21px)!important}
+  html body.himart-page-body .hm-ds-gallery-nav--next::before{right:var(--hm-gallery-nav-arrow-edge-mobile,21px)!important}
 }
