@@ -17,12 +17,13 @@
 .himart-team-page .team-turning-point__copy{max-width:980px;margin:0;font-size:clamp(30px,3.2vw,54px);line-height:1.24;letter-spacing:-.055em;font-weight:500;color:var(--hm-blue)}
 .himart-team-page .team-turning-point__copy strong{font-weight:500;color:var(--hm-blue)}
 
-/* 02.1 — shared agenda grammar -------------------------------------------- */
-.himart-team-page #data .team-agenda{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px;width:100%;border:0}
-.himart-team-page #data .team-agenda article{min-width:0;min-height:0;padding:24px 0 28px;border:0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
-.himart-team-page #data .team-agenda span{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
-.himart-team-page #data .team-agenda strong{display:block;min-height:64px;margin:32px 0 0;color:#fff;font-family:var(--hm-font-ko);font-size:24px;font-weight:100;font-variation-settings:"wght" 100;line-height:1.3;letter-spacing:var(--hm-track-group);word-break:keep-all}
-.himart-team-page #data .team-agenda p{margin:16px 0 0;max-width:22ch;color:var(--hm-description-color);font-family:var(--hm-font-ko);font-size:16px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.5;letter-spacing:var(--hm-track-body);word-break:keep-all}
+/* Shared agenda grammar — used by 02.1 and 04.1 ---------------------------- */
+.himart-team-page .team-agenda{--team-agenda-columns:5;display:grid;grid-template-columns:repeat(var(--team-agenda-columns),minmax(0,1fr));gap:28px;width:100%;border:0}
+.himart-team-page .team-agenda--four{--team-agenda-columns:4}
+.himart-team-page .team-agenda article{min-width:0;min-height:0;padding:24px 0 28px;border:0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+.himart-team-page .team-agenda span{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.himart-team-page .team-agenda strong{display:block;min-height:64px;margin:32px 0 0;color:#fff;font-family:var(--hm-font-ko);font-size:24px;font-weight:100;font-variation-settings:"wght" 100;line-height:1.3;letter-spacing:var(--hm-track-group);word-break:keep-all}
+.himart-team-page .team-agenda p{margin:16px 0 0;max-width:22ch;color:var(--hm-description-color);font-family:var(--hm-font-ko);font-size:16px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.5;letter-spacing:var(--hm-track-body);word-break:keep-all}
 
 /* Shared 16:9 image + overlay-card contract --------------------------------
    - media width: 100%
@@ -70,15 +71,7 @@
 .himart-team-page .team-wow p{margin:14px 0 0;max-width:680px;font-size:15px;line-height:1.7;color:rgba(255,255,255,.56)}
 .himart-team-page .team-wow__highlight{display:inline;padding:0 .08em .03em;background:#D30202;color:#fff;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 
-/* 04 — review loop / close ------------------------------------------------- */
-.himart-team-page .team-review-loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
-.himart-team-page .team-review-loop article{position:relative;min-height:250px;padding:30px 28px;border-right:1px solid rgba(255,255,255,.15)}
-.himart-team-page .team-review-loop article:last-child{border-right:0}
-.himart-team-page .team-review-loop article:not(:last-child):after{content:"→";position:absolute;right:-10px;top:28px;z-index:2;padding:0 3px;background:#000;font-size:16px;color:rgba(255,255,255,.4)}
-.himart-team-page .team-review-loop span{font-size:12px;color:rgba(255,255,255,.4)}
-.himart-team-page .team-review-loop strong{display:block;margin-top:72px;font-size:21px;line-height:1.4;letter-spacing:-.03em;font-weight:600}
-.himart-team-page .team-review-loop p{margin:12px 0 0;font-size:14px;line-height:1.65;color:rgba(255,255,255,.54)}
-
+/* 04 — close --------------------------------------------------------------- */
 .himart-team-page .team-final{padding:54px 0 10px;border-top:1px solid rgba(255,255,255,.15)}
 /* 04.2 closing statement deliberately shares the exact 01.2 statement scale and color. */
 .himart-team-page .team-final__title{max-width:980px!important;margin:0!important;font-size:clamp(30px,3.2vw,54px)!important;line-height:1.24!important;letter-spacing:-.055em!important;font-weight:500!important;color:var(--hm-blue)!important}
@@ -87,18 +80,15 @@
 
 @media(max-width:1199px){
   .himart-team-page .team-grid{grid-template-columns:1fr}
-  .himart-team-page #data .team-agenda{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .himart-team-page #data .team-agenda article:last-child{grid-column:1/-1}
-  .himart-team-page .team-review-loop{grid-template-columns:1fr 1fr}
-  .himart-team-page .team-review-loop article:nth-child(2){border-right:0}
-  .himart-team-page .team-review-loop article:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.15)}
+  .himart-team-page .team-agenda{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .himart-team-page .team-agenda:not(.team-agenda--four) article:last-child{grid-column:1/-1}
 }
 
 @media(max-width:767px){
-  .himart-team-page #data .team-agenda{grid-template-columns:1fr;gap:20px}
-  .himart-team-page #data .team-agenda article:last-child{grid-column:auto}
-  .himart-team-page #data .team-agenda strong{min-height:0}
-  .himart-team-page .team-wow-grid,.himart-team-page .team-review-loop{grid-template-columns:1fr}
+  .himart-team-page .team-agenda{grid-template-columns:1fr;gap:20px}
+  .himart-team-page .team-agenda article:last-child{grid-column:auto}
+  .himart-team-page .team-agenda strong{min-height:0}
+  .himart-team-page .team-wow-grid{grid-template-columns:1fr}
   .himart-team-page .team-card,.himart-team-page .team-wow{min-height:auto}
 
   .himart-team-page .team-workshop-visual{padding-bottom:0}
@@ -110,8 +100,4 @@
   .himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{border-left:0;border-top:0}
   .himart-team-page .team-workshop-visual--core .team-core-value__word-v2{font-size:48px}
   .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{white-space:normal}
-
-  .himart-team-page .team-review-loop article{border-right:0;border-bottom:1px solid rgba(255,255,255,.15)}
-  .himart-team-page .team-review-loop article:last-child{border-bottom:0}
-  .himart-team-page .team-review-loop article:not(:last-child):after{display:none}
 }
