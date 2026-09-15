@@ -23,11 +23,10 @@
   opacity:1;
 }
 
-/* Hide the former single-image fallback from first paint. This guarantees that an
-   unavailable workshop frame resolves to a clean blank field instead of a broken
-   image or himart_ws_01.png showing through underneath. */
-.himart-team-page .team-hero > .team-hero__image,
-.works-page-body #works-project-6 .works-card-media > .works-card-image{
+/* Hide the former single-image fallback only while the legacy slideshow is explicitly mounted.
+   MP4 hero / Works media must remain visible when the slideshow is not opted in. */
+.himart-team-page .team-hero[data-himart-workshop-slideshow] > img.team-hero__image,
+.works-page-body #works-project-6 .works-card-media[data-himart-workshop-slideshow] > .works-card-image{
   opacity:0!important;
   visibility:hidden!important;
 }
