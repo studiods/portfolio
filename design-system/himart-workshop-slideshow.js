@@ -1,6 +1,7 @@
 /* HIMART WORKSHOP SLIDESHOW
-   Shared by himart-team.html hero and Works project card.
-   Plays himart_ws_01.png ~ himart_ws_06.png every 3 seconds with a soft dissolve.
+   Legacy/explicit slideshow helper only.
+   It now mounts only on elements that explicitly opt in with data-himart-workshop-slideshow.
+   The Team hero and Works project card are no longer auto-mounted so MP4 media remains visible.
    Visibility/autoplay lifecycle is owned by design-system/gallery-runtime.js. */
 (() => {
   'use strict';
@@ -56,13 +57,11 @@
     let activeLayer = 0;
     let timer = 0;
     let autoActive = false;
-    const loaded = new Set();
 
     const setSource = (layer, src) => {
       if (layer.dataset.hmWsSource === src) return;
       layer.dataset.hmWsSource = src;
       layer.style.backgroundImage = `url("${src}")`;
-      loaded.add(src);
     };
 
     setSource(layers[0], sources[0]);
@@ -91,8 +90,6 @@
     const start = () => {
       stop();
       if (!autoActive || reducedMotion || sources.length < 2) return;
-      /* Do not reset index or reload existing frames on re-entry. Browser cache and the
-         two retained layers make resume cheaper and prevent a visible flash. */
       timer = window.setInterval(advance, interval);
     };
 
@@ -107,11 +104,7 @@
   };
 
   const init = () => {
-    const targets = new Set([
-      ...document.querySelectorAll('[data-himart-workshop-slideshow]'),
-      ...document.querySelectorAll('.himart-team-page .team-hero'),
-      ...document.querySelectorAll('.works-page-body #works-project-6 .works-card-media')
-    ]);
+    const targets = document.querySelectorAll('[data-himart-workshop-slideshow]');
     targets.forEach(mount);
   };
 
