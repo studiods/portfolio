@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const runtime = window.HMDSGalleryRuntime;
+  const reducedMotion = runtime?.reducedMotion ?? window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const HOLD_MS = 2500;
   const TRANSITION_MS = 720;
 
@@ -58,38 +59,45 @@
     }
   ];
 
-  const preload = src => new Promise(resolve => {
-    const image = new Image();
-    image.onload = () => resolve(src);
-    image.onerror = () => resolve(null);
-    image.src = src;
-  });
+  const registerVisibilityFallback = (root, callback) => {
+    let inView = false;
+    const update = value => {
+      inView = Boolean(value);
+      callback(inView && !document.hidden && !reducedMotion);
+    };
+    let observer = null;
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(entries => {
+        const entry = entries[0];
+        update(Boolean(entry?.isIntersecting && entry.intersectionRatio >= .12));
+      }, { threshold:[0,.12,.25,.5,1] });
+      observer.observe(root);
+    } else update(true);
+    const onVisibility = () => callback(inView && !document.hidden && !reducedMotion);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  };
 
-  const setupCard = async (card, requested, initialDelay = 0) => {
-    const loaded = (await Promise.all(requested.map(preload))).filter(Boolean);
-    if (!loaded.length) return;
+  const setupCard = (card, sources, initialDelay = 0) => {
+    if (!card || !sources.length || card.dataset.aimmoGalleryMounted === 'true') return;
+    card.dataset.aimmoGalleryMounted = 'true';
 
     const authoredImage = card.querySelector(':scope > img');
     const caption = card.querySelector('figcaption');
     const viewport = document.createElement('div');
     viewport.className = 'aimmo-evidence-card__viewport';
 
-    loaded.forEach((src, slideIndex) => {
+    sources.forEach((src, slideIndex) => {
       const slide = document.createElement('article');
       slide.className = `aimmo-evidence-card__slide${slideIndex === 0 ? ' is-active' : ''}`;
       slide.setAttribute('aria-hidden', slideIndex === 0 ? 'false' : 'true');
+      slide.dataset.gallerySrc = src;
 
       const media = document.createElement('div');
       media.className = 'aimmo-evidence-card__media';
-
-      const image = document.createElement('img');
-      image.src = src;
-      image.alt = '';
-      image.loading = slideIndex === 0 ? 'eager' : 'lazy';
-      image.decoding = 'async';
-      image.draggable = false;
-
-      media.appendChild(image);
       slide.appendChild(media);
       viewport.appendChild(slide);
     });
@@ -119,9 +127,27 @@
     let index = 0;
     let timer = 0;
     let busy = false;
-    let inView = false;
+    let autoActive = false;
     let hasStarted = false;
     let pointerStart = null;
+
+    const ensureLoaded = slideIndex => {
+      const slide = slides[slideIndex];
+      if (!slide || slide.dataset.galleryLoaded === 'true') return;
+      slide.dataset.galleryLoaded = 'true';
+      const media = slide.querySelector('.aimmo-evidence-card__media');
+      const image = document.createElement('img');
+      image.alt = '';
+      image.loading = slideIndex === 0 ? 'eager' : 'lazy';
+      image.decoding = 'async';
+      image.draggable = false;
+      image.addEventListener('error', () => {
+        media?.classList.add('is-missing');
+        image.remove();
+      }, { once:true });
+      image.src = slide.dataset.gallerySrc;
+      media?.appendChild(image);
+    };
 
     const clearTimer = () => {
       if (timer) window.clearTimeout(timer);
@@ -145,13 +171,15 @@
 
     const schedule = (delay = HOLD_MS) => {
       clearTimer();
-      if (!inView || document.hidden || busy || slides.length < 2) return;
+      if (!autoActive || reducedMotion || busy || slides.length < 2) return;
+      ensureLoaded((index + 1) % slides.length);
       timer = window.setTimeout(() => move(1), delay);
     };
 
     const transitionTo = (targetIndex, direction = 1) => {
       if (busy || slides.length < 2 || targetIndex === index) return;
       clearTimer();
+      ensureLoaded(targetIndex);
       busy = true;
 
       const current = slides[index];
@@ -216,42 +244,37 @@
 
     card.addEventListener('pointerdown', event => {
       pointerStart = { x:event.clientX, y:event.clientY };
+      clearTimer();
     });
     card.addEventListener('pointerup', event => {
       if (!pointerStart) return;
       const dx = event.clientX - pointerStart.x;
       const dy = event.clientY - pointerStart.y;
       pointerStart = null;
-      if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) {
-        move(dx < 0 ? 1 : -1);
-      }
-    });
-    card.addEventListener('pointercancel', () => { pointerStart = null; });
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(entries => {
-        inView = Boolean(entries[0]?.isIntersecting);
-        if (inView) {
-          const delay = hasStarted ? HOLD_MS : HOLD_MS + initialDelay;
-          hasStarted = true;
-          schedule(delay);
-        } else {
-          clearTimer();
-        }
-      }, { threshold: .20, rootMargin: '0px 0px -5% 0px' });
-      observer.observe(card);
-    } else {
-      inView = true;
-      hasStarted = true;
-      schedule(HOLD_MS + initialDelay);
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) clearTimer();
+      if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) move(dx < 0 ? 1 : -1);
       else schedule();
     });
+    card.addEventListener('pointercancel', () => {
+      pointerStart = null;
+      schedule();
+    });
 
+    const setAutoActive = active => {
+      autoActive = Boolean(active);
+      if (!autoActive) {
+        clearTimer();
+        return;
+      }
+      ensureLoaded(index);
+      const delay = hasStarted ? HOLD_MS : HOLD_MS + initialDelay;
+      hasStarted = true;
+      schedule(delay);
+    };
+
+    ensureLoaded(0);
     settle();
+    if (runtime) runtime.register(card, setAutoActive);
+    else registerVisibilityFallback(card, setAutoActive);
   };
 
   galleryConfigs.forEach(config => {
