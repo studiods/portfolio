@@ -68,7 +68,7 @@
 .himart-team-page .team-wow:before{content:"0" counter(wow);display:block;font-family:var(--hm-font-en);font-size:12px;color:rgba(255,255,255,.4)}
 .himart-team-page .team-wow h4{margin:58px 0 0;font-size:24px;line-height:1.42;letter-spacing:-.035em;font-weight:600}
 .himart-team-page .team-wow p{margin:14px 0 0;max-width:680px;font-size:15px;line-height:1.7;color:rgba(255,255,255,.56)}
-.himart-team-page .team-wow__highlight{display:inline;padding:0 .08em .03em;background:var(--hm-red);color:#fff;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.himart-team-page .team-wow__highlight{display:inline;padding:0 .08em .03em;background:#D30202;color:#fff;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 
 /* 04 — review loop / close ------------------------------------------------- */
 .himart-team-page .team-review-loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
