@@ -1,5 +1,5 @@
 /*
-  HIMART / WORKS Design System — title scramble runtime.
+  HIMART / WORKS Design System — title scramble runtime v2.1.
 
   Shared contract
   - One runtime owns Hero, major-section and medium-subsection title scramble across Works case pages.
@@ -55,27 +55,52 @@
     document.body?.classList.contains('hm-wide-editorial-test') &&
     !!element.closest('.hm-section-head');
 
-  const cloneWithCharacters = (node, chars) => {
+  const createScrambleCharacter = (char, chars) => {
+    const span = document.createElement('span');
+    span.className = 'hm-scramble-char';
+    span.dataset.hmFinalChar = char;
+    span.textContent = randomGlyph();
+    chars.push(span);
+    return span;
+  };
+
+  const cloneWithCharacters = (node, chars, groupByWord = false) => {
     if (node.nodeType === Node.TEXT_NODE) {
       const fragment = document.createDocumentFragment();
-      [...(node.nodeValue || '')].forEach(char => {
+      const value = node.nodeValue || '';
+
+      if (groupByWord) {
+        value.split(/(\s+|·)/).filter(Boolean).forEach(token => {
+          if (/^\s+$/.test(token) || token === '·') {
+            fragment.appendChild(document.createTextNode(token));
+            return;
+          }
+
+          /* Major titles must wrap only at authored whitespace. Character-level
+             scramble spans stay inside one atomic word wrapper. */
+          const word = document.createElement('span');
+          word.className = 'hm-scramble-word';
+          word.style.display = 'inline-block';
+          word.style.whiteSpace = 'nowrap';
+          [...token].forEach(char => word.appendChild(createScrambleCharacter(char, chars)));
+          fragment.appendChild(word);
+        });
+        return fragment;
+      }
+
+      [...value].forEach(char => {
         if (/\s/.test(char) || char === '·') {
           fragment.appendChild(document.createTextNode(char));
           return;
         }
-        const span = document.createElement('span');
-        span.className = 'hm-scramble-char';
-        span.dataset.hmFinalChar = char;
-        span.textContent = randomGlyph();
-        fragment.appendChild(span);
-        chars.push(span);
+        fragment.appendChild(createScrambleCharacter(char, chars));
       });
       return fragment;
     }
 
     if (node.nodeType !== Node.ELEMENT_NODE) return node.cloneNode(true);
     const clone = node.cloneNode(false);
-    node.childNodes.forEach(child => clone.appendChild(cloneWithCharacters(child, chars)));
+    node.childNodes.forEach(child => clone.appendChild(cloneWithCharacters(child, chars, groupByWord)));
     return clone;
   };
 
@@ -84,7 +109,10 @@
     template.innerHTML = originalHTML;
     const fragment = document.createDocumentFragment();
     const chars = [];
-    template.content.childNodes.forEach(node => fragment.appendChild(cloneWithCharacters(node, chars)));
+    const groupByWord = element.matches(majorSelector);
+    template.content.childNodes.forEach(node =>
+      fragment.appendChild(cloneWithCharacters(node, chars, groupByWord))
+    );
     element.replaceChildren(fragment);
     return chars;
   };
