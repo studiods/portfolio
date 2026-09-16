@@ -249,18 +249,18 @@
   setupImageDisplayGalleries();
 
   const STUDIO_MEDIA = [
-    './assets/image/himart/reuse/reuse_studiio_01.png',
-    './assets/image/himart/reuse/reuse_studiio_02.png',
-    './assets/image/himart/reuse/reuse_studiio_03.png',
-    './assets/image/himart/reuse/reuse_studiio_04.png',
-    './assets/image/himart/reuse/reuse_studiio_05.png',
-    './assets/image/himart/reuse/reuse_studiio_06.png'
+    './assets/image/himart-reuse/reuse_studiio_01.png',
+    './assets/image/himart-reuse/reuse_studiio_02.png',
+    './assets/image/himart-reuse/reuse_studiio_03.png',
+    './assets/image/himart-reuse/reuse_studiio_04.png',
+    './assets/image/himart-reuse/reuse_studiio_05.png',
+    './assets/image/himart-reuse/reuse_studiio_06.png'
   ].map((src) => ({ type: 'image', src }));
 
   const SHOOTING_MEDIA = [
-    { type: 'image', src: './assets/image/himart/reuse/reuse_shooting_01.png' },
-    { type: 'image', src: './assets/image/himart/reuse/reuse_shooting_02.png' },
-    { type: 'image', src: './assets/image/himart/reuse/reuse_shooting_03.png' },
+    { type: 'image', src: './assets/image/himart-reuse/reuse_shooting_01.png' },
+    { type: 'image', src: './assets/image/himart-reuse/reuse_shooting_02.png' },
+    { type: 'image', src: './assets/image/himart-reuse/reuse_shooting_03.png' },
     { type: 'video', src: './assets/movies/reuse_02.mp4' }
   ];
 
@@ -314,15 +314,11 @@
     viewport.replaceChildren(fragment);
   };
 
-  /* 03.3 Gallery 01: studio environment, fixed 01–06 sequence only. */
   buildSlides(galleries[0], STUDIO_MEDIA);
-
-  /* 03.3 Gallery 02: shooting 01–03, then reuse_02.mp4, then back to 01. */
   if (galleries[1]) buildSlides(galleries[1], SHOOTING_MEDIA);
 
   const controllers = new Map();
 
-  /* Galleries 01–02 retain the timed rolling behavior. */
   galleries.slice(0, 2).forEach((gallery, galleryIndex) => {
     const slides = Array.from(gallery.querySelectorAll('.reuse-production-gallery__slide'));
     const prev = gallery.querySelector('[data-reuse-gallery-prev]');
@@ -520,7 +516,6 @@
     settle();
   });
 
-  /* Gallery 03: manually started AI video playlist with hover controls while playing. */
   const setupAiVideoGallery = (gallery) => {
     if (!gallery) return;
     const viewport = gallery.querySelector('.reuse-production-gallery__viewport');
