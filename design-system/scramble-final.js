@@ -1,5 +1,5 @@
 /*
-  HIMART / WORKS Design System — title scramble runtime v2.1.
+  HIMART / WORKS Design System — title scramble runtime v2.2.
 
   Shared contract
   - One runtime owns Hero, major-section and medium-subsection title scramble across Works case pages.
@@ -290,8 +290,24 @@
     return true;
   };
 
+  const normalizeMajorTitleWrapping = (element, kind) => {
+    if (!element || kind !== 'major') return;
+
+    /* Major titles use the available left-rail width as the only line-length rule.
+       Retired authored <br> tags made every page keep a different fixed line break,
+       so replace them with spaces and allow wrapping only at word boundaries. */
+    element.querySelectorAll('br').forEach(br => br.replaceWith(document.createTextNode(' ')));
+    element.normalize();
+    element.style.setProperty('white-space', 'normal', 'important');
+    element.style.setProperty('word-break', 'keep-all', 'important');
+    element.style.setProperty('overflow-wrap', 'normal', 'important');
+    element.style.setProperty('line-break', 'strict', 'important');
+    element.style.setProperty('hyphens', 'none', 'important');
+  };
+
   const captureSource = (element, kind) => {
     if (!element || stateByElement.has(element)) return;
+    normalizeMajorTitleWrapping(element, kind);
     stateByElement.set(element, {
       originalHTML: element.innerHTML,
       originalText: element.textContent || '',
