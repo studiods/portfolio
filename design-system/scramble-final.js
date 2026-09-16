@@ -1,5 +1,5 @@
 /*
-  HIMART / WORKS Design System — title scramble runtime v2.2.
+  HIMART / WORKS Design System — title scramble runtime v2.3.
 
   Shared contract
   - One runtime owns Hero, major-section and medium-subsection title scramble across Works case pages.
@@ -413,7 +413,14 @@
     const root = document.querySelector('#live-main');
     if (!root || !('MutationObserver' in window)) return;
     const mutationObserver = new MutationObserver(mutations => {
-      if (!mutations.some(mutation => mutation.addedNodes.length)) return;
+      if (!mutations.some(mutation => mutation.addedNodes.length || mutation.removedNodes.length)) return;
+
+      /* Legacy narrative layers can rewrite an already-registered H2 after the initial
+         scan. Re-apply the wrapping contract even when the title element itself survives
+         and only its innerHTML changes. */
+      root.querySelectorAll(majorSelector).forEach(title =>
+        normalizeMajorTitleWrapping(title, 'major')
+      );
       scheduleScan();
     });
     mutationObserver.observe(root, { childList:true, subtree:true });
