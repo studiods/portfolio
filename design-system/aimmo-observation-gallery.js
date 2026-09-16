@@ -39,15 +39,16 @@
       stagger: [250, 950, 1650, 2350],
       sequences: [
         [
-          './assets/image/aimmo-system/aimmo_system_01_01.png',
-          './assets/image/aimmo-system/aimmo_system_01_02.png',
-          './assets/image/aimmo-system/aimmo_system_01_03.png',
-          './assets/image/aimmo-system/aimmo_system_01_04.png'
+          './assets/image/aimmo-system/aimmo_system_06_01.png',
+          './assets/image/aimmo-system/aimmo_system_06_02.png',
+          './assets/image/aimmo-system/aimmo_system_06_03.png',
+          './assets/image/aimmo-system/aimmo_system_06_04.png'
         ],
         [
-          './assets/image/aimmo-system/aimmo_system_02_01.png',
-          './assets/image/aimmo-system/aimmo_system_02_02.png',
-          './assets/image/aimmo-system/aimmo_system_02_03.png'
+          './assets/image/aimmo-system/aimmo_system_07_01.png',
+          './assets/image/aimmo-system/aimmo_system_07_02.png',
+          './assets/image/aimmo-system/aimmo_system_07_03.png',
+          './assets/image/aimmo-system/aimmo_system_07_04.png'
         ],
         [
           './assets/image/aimmo-system/aimmo_system_03_01.png',
