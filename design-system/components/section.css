@@ -8,6 +8,15 @@
 .hm-ds-section__title{margin:0}
 .hm-ds-section__description{margin:20px 0 0;max-width:900px;color:var(--hm-text-body)}
 
+/* WORKS detail chapter contract: remove only the supporting sentence attached to
+   the large chapter title (01 / 02 / 03 / 04 ...). Hero descriptions and subsection
+   descriptions remain visible. Covers both current hm-ds markup and legacy NBT markup. */
+html body.himart-page-body #live-main .hm-ds-section__head > .hm-ds-section__description,
+html body.himart-page-body #live-main .hm-section-head > .hm-section-desc{
+  display:none!important;
+  margin:0!important;
+}
+
 /* Canonical medium-title divider contract.
    Every authored subsection begins with a faint horizontal rule, then keeps the
    shared 40px component gap before its number/title. Chapter-to-subsection distance
