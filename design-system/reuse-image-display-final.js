@@ -21,8 +21,8 @@
   ];
 
   const ROLLING_MEDIA = [
-    Array.from({ length: 5 }, (_, i) => `./assets/image/himart/reuse/03.2_01_${String(i + 1).padStart(2, '0')}.png`),
-    Array.from({ length: 5 }, (_, i) => `./assets/image/himart/reuse/03.2_02_${String(i + 1).padStart(2, '0')}.png`)
+    Array.from({ length: 5 }, (_, i) => `./assets/image/himart-reuse/03.2_01_${String(i + 1).padStart(2, '0')}.png`),
+    Array.from({ length: 5 }, (_, i) => `./assets/image/himart-reuse/03.2_02_${String(i + 1).padStart(2, '0')}.png`)
   ];
 
   const LIVE_360 = [
