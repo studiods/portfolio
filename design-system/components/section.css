@@ -10,9 +10,10 @@
 
 /* WORKS detail chapter contract: remove only the supporting sentence attached to
    the large chapter title (01 / 02 / 03 / 04 ...). Hero descriptions and subsection
-   descriptions remain visible. Covers both current hm-ds markup and legacy NBT markup. */
-html body.himart-page-body #live-main .hm-ds-section__head > .hm-ds-section__description,
-html body.himart-page-body #live-main .hm-section-head > .hm-section-desc{
+   descriptions remain visible. Repeated classes intentionally outrank legacy final
+   authority rules that still set .hm-section-desc to display:block!important. */
+html body.himart-page-body #live-main .hm-ds-section__head.hm-ds-section__head > .hm-ds-section__description.hm-ds-section__description,
+html body.himart-page-body #live-main .hm-section-head.hm-section-head > .hm-section-desc.hm-section-desc{
   display:none!important;
   margin:0!important;
 }
