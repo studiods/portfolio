@@ -10,7 +10,7 @@
   if (!document.body?.classList.contains('reuse-current')) return;
 
   const FRAME_SOURCES = Array.from({ length: 8 }, (_, index) =>
-    `./assets/image/himart/reuse/reuse_360_${String(index + 1).padStart(2, '0')}.png`
+    `./assets/image/himart-reuse/reuse_360_${String(index + 1).padStart(2, '0')}.png`
   );
   const PREVIEW_FRAME_MS = 200;
   const HINT_IDLE_MS = 5000;
@@ -64,7 +64,6 @@
 
     const card = sourceCard.cloneNode(true);
     card.dataset.local360Mounted = 'true';
-    /* Prevent the legacy iframe/link builder from mounting on Gallery 03. */
     card.dataset.live360Mounted = 'true';
     card.dataset.spinMounted = 'true';
     card.classList.remove('is-live360-viewer', 'is-360-viewer', 'is-reverse', 'has-rotated');
@@ -229,7 +228,6 @@
       }
     });
 
-    /* First-focus preview: one complete 01→08→01 cycle only per page load. */
     if (!reducedMotion && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         const entry = entries.find(item => item.target === card);
@@ -244,7 +242,6 @@
       if (document.hidden) stopPreview();
     });
 
-    /* Pre-decode the sequence so both the focus preview and first drag stay flash-free. */
     FRAME_SOURCES.slice(1).forEach(src => {
       const image = new Image();
       image.src = src;
