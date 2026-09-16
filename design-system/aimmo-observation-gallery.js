@@ -51,9 +51,9 @@
           './assets/image/aimmo-system/aimmo_system_07_04.png'
         ],
         [
-          './assets/image/aimmo-system/aimmo_system_03_01.png',
-          './assets/image/aimmo-system/aimmo_system_03_02.png',
-          './assets/image/aimmo-system/aimmo_system_03_03.png'
+          './assets/image/aimmo-system/aimmo_system_08_01.png',
+          './assets/image/aimmo-system/aimmo_system_08_02.png',
+          './assets/image/aimmo-system/aimmo_system_08_03.png'
         ],
         [
           './assets/image/aimmo-system/aimmo-source-010.jpg',
