@@ -20,12 +20,17 @@
         [
           './assets/image/aimmo-system/aimmo_system_02_01.png',
           './assets/image/aimmo-system/aimmo_system_02_02.png',
-          './assets/image/aimmo-system/aimmo_system_02_03.png'
+          './assets/image/aimmo-system/aimmo_system_02_03.png',
+          './assets/image/aimmo-system/aimmo_system_02_04.png',
+          './assets/image/aimmo-system/aimmo_system_02_05.png',
+          './assets/image/aimmo-system/aimmo_system_02_06.png'
         ],
         [
           './assets/image/aimmo-system/aimmo_system_03_01.png',
           './assets/image/aimmo-system/aimmo_system_03_02.png',
-          './assets/image/aimmo-system/aimmo_system_03_03.png'
+          './assets/image/aimmo-system/aimmo_system_03_03.png',
+          './assets/image/aimmo-system/aimmo_system_03_04.png',
+          './assets/image/aimmo-system/aimmo_system_03_05.png'
         ]
       ]
     },
