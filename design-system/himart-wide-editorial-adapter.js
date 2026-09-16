@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v8.1
+  HIMART Wide Editorial adapter — TEST ONLY v8.2
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
   contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
@@ -38,6 +38,78 @@
     if (!document.body) return;
     document.body.classList.remove('hm-wide-booting');
     document.getElementById('hm-wide-boot-lock')?.remove();
+  };
+
+  const unlockJourneyGeometry = () => {
+    document.body?.classList.add('hm-journey-geometry-ready');
+  };
+
+  const journeyGeometryIsStable = () => {
+    const block = document.querySelector('#live-main > #journey .journey-flow-block');
+    if (!block) return false;
+    const nodes = [...block.querySelectorAll('.flow-node')];
+    if (!nodes.length) return false;
+
+    return nodes.every(node => {
+      const rect = node.getBoundingClientRect();
+      if (rect.width < 120 || rect.height < 120) return false;
+      return Math.abs(rect.width - rect.height) <= 2;
+    });
+  };
+
+  const pinJourneyNodeSize = () => {
+    if (window.matchMedia?.('(max-width: 1024px)').matches) return;
+    const journey = document.querySelector('#live-main > #journey');
+    const rail = journey?.querySelector('.hm-wide-right-rail');
+    const block = journey?.querySelector('.journey-flow-block');
+    if (!journey || !rail || !block) return;
+
+    const styles = getComputedStyle(journey);
+    const number = (name, fallback) => {
+      const value = Number.parseFloat(styles.getPropertyValue(name));
+      return Number.isFinite(value) ? value : fallback;
+    };
+    const railWidth = rail.getBoundingClientRect().width;
+    const gap = number('--hm-hj-gap', 10);
+    const arrow = number('--hm-hj-arrow', 20);
+    const inset = number('--hm-hj-cluster-inset', 18);
+    const size = Math.min(292, Math.floor((railWidth - (arrow * 3) - (gap * 6) - (inset * 2) - 2) / 4));
+    if (size < 120) return;
+
+    /* A resolved pixel value removes the cold-load container-unit race. */
+    rail.style.setProperty('--hm-hj-node-size', `${size}px`, 'important');
+    block.querySelectorAll('.flow-node').forEach(node => {
+      node.style.setProperty('flex', `0 0 ${size}px`, 'important');
+      node.style.setProperty('width', `${size}px`, 'important');
+      node.style.setProperty('min-width', `${size}px`, 'important');
+      node.style.setProperty('max-width', `${size}px`, 'important');
+      node.style.setProperty('height', `${size}px`, 'important');
+      node.style.setProperty('min-height', `${size}px`, 'important');
+      node.style.setProperty('max-height', `${size}px`, 'important');
+      node.style.setProperty('aspect-ratio', '1 / 1', 'important');
+      node.style.setProperty('border-radius', '50%', 'important');
+      node.style.setProperty('box-sizing', 'border-box', 'important');
+    });
+  };
+
+  const prepareJourneyForReveal = (attempt = 0) => {
+    enforceCanonicalJourneyFlow();
+    pinJourneyNodeSize();
+    window.dispatchEvent(new Event('resize'));
+
+    requestAnimationFrame(() => {
+      if (journeyGeometryIsStable()) {
+        unlockJourneyGeometry();
+        return;
+      }
+      if (attempt < 20) {
+        prepareJourneyForReveal(attempt + 1);
+        return;
+      }
+
+      /* Keep the malformed flow out of first paint; retry after late font/runtime work. */
+      window.setTimeout(() => prepareJourneyForReveal(0), 250);
+    });
   };
 
   const clusterNodeNumbers = cluster =>
@@ -220,7 +292,7 @@
     if (window.__hmWideHimartAdapterMounted) {
       removeRetiredVoiceSourceCopy();
       enforceCanonicalJourneyFlow();
-      window.dispatchEvent(new Event('resize'));
+      prepareJourneyForReveal();
       releaseBootLock();
       return;
     }
@@ -266,7 +338,7 @@
     requestAnimationFrame(() => requestAnimationFrame(() => {
       removeLegacyJourneyRollbackAssets();
       enforceCanonicalJourneyFlow();
-      window.dispatchEvent(new Event('resize'));
+      prepareJourneyForReveal();
       releaseBootLock();
     }));
   };
