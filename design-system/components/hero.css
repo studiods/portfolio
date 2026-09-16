@@ -105,19 +105,16 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
   letter-spacing:var(--hm-track-hero)!important;
   word-break:keep-all!important;
 }
-/* Hero description authoring contract:
-   - title and description share the same maximum copy rail;
-   - descriptions use natural word-unit wrapping only when they exceed that rail;
-   - do not author hard <br> solely to force a visual line break;
-   - never clamp, ellipsize, fix height or hide overflow. */
+/* WORKS detail Hero contract: the large title stands alone; supporting description
+   copy is intentionally removed from visual output across all case-study pages. */
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
-  display:block!important;
+  display:none!important;
   width:fit-content!important;
   max-width:var(--hm-hero-description-width)!important;
   min-height:0!important;
   height:auto!important;
   max-height:none!important;
-  margin:var(--hm-title-description-gap) 0 0!important;
+  margin:0!important;
   padding:0!important;
   overflow:visible!important;
   text-overflow:clip!important;
@@ -224,10 +221,8 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
     line-height:1.08!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
-    max-width:min(var(--hm-hero-description-width-mobile),88%)!important;
-    margin-top:16px!important;
-    font-size:var(--hm-type-body-mobile)!important;
-    line-height:1.5!important;
+    display:none!important;
+    margin:0!important;
   }
   html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__bottom{
     bottom:28px!important;
