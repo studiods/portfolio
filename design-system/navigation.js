@@ -337,7 +337,7 @@
     },
     {
       file:'aimmo-graphic.html', href:'./aimmo-graphic.html', name:'AIMMO GRAPHIC MOTIF DEVELOPMENT', en:true,
-      reflection:'브랜드 리뉴얼보다 중요한 것은 기존 자산이 실제 접점에서 계속 작동하게 만드는 것이었습니다. <strong>형태의 원리를 정리하고 변주 가능한 규칙으로 바꾸면</strong> 제품·웹·전시가 하나의 언어로 연결될 수 있었습니다.'
+      reflection:'매번 새로 만들 순 없습니다. 그래서 리뉴얼보다 중요한 것은 기존 자산을 어떻게 활용하여 계속 작동하게 만드느냐가 중요합니다. 분석과 재창조를 통해 <strong>원리를 만들고 이를 변화 가능한 규칙으로 바꾸면</strong> 브랜드가 전달하는 메세지는 하나의 언어로 연결될 수 있다는 것을 배운 의미있는 작업이였습니다.'
     },
     {
       file:'trenbe-ut.html', href:'./trenbe-ut.html', name:'TRENBE USABILITY TEST', en:true,
@@ -365,6 +365,8 @@
     const main = document.querySelector('#live-main');
     if (!main) return;
 
+    /* Page-authored reflection is the source of truth. The registry is only a fallback. */
+    const existingReflectionCopy = document.querySelector('.hm-project-reflection__copy')?.innerHTML.trim() || '';
     document.querySelectorAll('.hm-project-reflection,.hm-project-footer,footer.hm-footer').forEach(node => node.remove());
 
     const previous = index > 0 ? projects[index - 1] : legacyPrevious;
@@ -376,7 +378,7 @@
     reflection.innerHTML = `
       <div class="hm-project-reflection__inner">
         <h2 class="hm-project-reflection__title">PROJECT REFLECTION</h2>
-        <p class="hm-project-reflection__copy">${project.reflection}</p>
+        <p class="hm-project-reflection__copy">${existingReflectionCopy || project.reflection}</p>
       </div>`;
 
     const footer = document.createElement('footer');
