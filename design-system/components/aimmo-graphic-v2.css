@@ -298,3 +298,79 @@ html body.aimmo-graphic-page #direction .aimmo-impact-source{
     font-size:54px!important;
   }
 }
+
+
+/* AIMMO Graphic detail refinements — 2026-09-17 v5 */
+
+/* 01.2 — fourth problem state becomes the terminal red state. */
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){
+  background:var(--hm-red,#D30202)!important;
+  border-color:var(--hm-red,#D30202)!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4)>span,
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4)>h4{
+  color:#fff!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4)>p{
+  color:rgba(255,255,255,.60)!important;
+}
+
+/* 02.1 — keep the requested 80px breathing room between copy and the icon. */
+html body.aimmo-graphic-page #data .aimmo-company-signals>article p{
+  padding-right:0!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article .hm-ds-icon{
+  position:static!important;
+  display:block!important;
+  margin:80px 0 0 auto!important;
+}
+
+/* 03.3 — one-stage carousel presentation; controls remain visible for the gallery contract. */
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__item{
+  position:relative!important;
+}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__nav{
+  position:absolute!important;
+  z-index:4!important;
+  top:50%!important;
+  width:44px!important;
+  height:44px!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  border-radius:50%!important;
+  background:rgba(0,0,0,.34)!important;
+  transform:translateY(-50%)!important;
+  opacity:1!important;
+  cursor:default!important;
+}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__nav::before{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:9px;
+  height:9px;
+  border-top:1px solid #fff;
+  border-right:1px solid #fff;
+}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__nav--prev{left:24px!important}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__nav--next{right:24px!important}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__nav--prev::before{transform:translate(-35%,-50%) rotate(-135deg)}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__nav--next::before{transform:translate(-65%,-50%) rotate(45deg)}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__item>figcaption>span{
+  margin-bottom:10px!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:13px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+}
+html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__item>figcaption>h4{
+  font-size:22px!important;
+}
+
+/* 04.1 — evidence rules use the same standard divider opacity as the subsection rhythm. */
+html body.aimmo-graphic-page #direction .aimmo-impact-grid>article{
+  border-top:1px solid var(--hm-line-default)!important;
+}
