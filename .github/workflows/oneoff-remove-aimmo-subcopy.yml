@@ -1,0 +1,41 @@
+name: One-off AIMMO subsection copy cleanup
+on:
+  push:
+    paths:
+      - '.github/workflows/oneoff-remove-aimmo-subcopy.yml'
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Remove subsection descriptions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('aimmo-graphic.html')
+          s = p.read_text(encoding='utf-8')
+          s, n1 = re.subn(r'<p class="hm-subcopy hm-ds-subsection__description">.*?</p>', '', s)
+          s, n2 = re.subn(r'<p class="desc">.*?</p>', '', s)
+          if n1 != 8:
+              raise SystemExit(f'Expected 8 hm-subcopy removals, got {n1}')
+          if n2 != 2:
+              raise SystemExit(f'Expected 2 desc removals, got {n2}')
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Verify cleanup
+        run: |
+          if grep -q 'hm-subcopy hm-ds-subsection__description' aimmo-graphic.html; then exit 1; fi
+          if grep -q '<p class="desc">' aimmo-graphic.html; then exit 1; fi
+      - name: Commit changes and self-delete
+        run: |
+          rm .github/workflows/oneoff-remove-aimmo-subcopy.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add aimmo-graphic.html .github/workflows/oneoff-remove-aimmo-subcopy.yml
+          git commit -m 'Remove AIMMO subsection descriptions'
+          git push
