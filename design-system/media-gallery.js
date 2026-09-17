@@ -114,6 +114,7 @@
 
     const prev = root.querySelector(':scope > .hm-ds-gallery-nav--prev');
     const next = root.querySelector(':scope > .hm-ds-gallery-nav--next');
+    const status = root.querySelector(':scope > [data-hm-ds-carousel-status]');
     let index = Math.max(0, slides.findIndex((slide) => slide.classList.contains('is-active')));
     let timer = 0;
     let busy = false;
@@ -125,6 +126,11 @@
       timer = 0;
     };
 
+    const updateStatus = () => {
+      if (!status) return;
+      status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    };
+
     const settle = () => {
       slides.forEach((slide, slideIndex) => {
         const active = slideIndex === index;
@@ -133,6 +139,7 @@
         slide.setAttribute('aria-hidden', active ? 'false' : 'true');
       });
       root.classList.remove('is-reverse');
+      updateStatus();
     };
 
     const canAutoPlay = () => inView && !document.hidden && !reducedMotion && slides.length > 1;
