@@ -4,7 +4,7 @@
  * Symbol IDs are declared in /assets/icons/portfolio-icons.svg.
  */
 :root {
-  --hm-ds-icon-blue: #2f7cff;
+  --hm-ds-icon-blue: var(--hm-blue, #00A6ED);
   --hm-ds-icon-size: 39.66px;
   --hm-ds-icon-inset: 24px;
 }
@@ -19,10 +19,24 @@
   color: var(--hm-ds-icon-blue);
   fill: none;
   stroke: currentColor;
-  stroke-width: 2px;
+  stroke-width: 1px !important;
   overflow: visible;
   pointer-events: none;
   flex: none;
+}
+
+.ways-operating-stack,
+.aimmo-collaboration-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  width: 100%;
+}
+
+/* The 02.1 workshop agenda is a six-card, three-column system. Keep the separate 04.1 four-card variant intact. */
+.himart-team-page .team-agenda:not(.team-agenda--four) {
+  --team-agenda-columns: 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .ways-operating-stack > article,
@@ -32,6 +46,12 @@
 }
 
 @media (max-width: 767px) {
+  .ways-operating-stack,
+  .aimmo-collaboration-grid,
+  .himart-team-page .team-agenda:not(.team-agenda--four) {
+    grid-template-columns: 1fr;
+  }
+
   :root {
     --hm-ds-icon-size: 32px;
     --hm-ds-icon-inset: 18px;
