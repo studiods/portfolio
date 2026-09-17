@@ -2,11 +2,19 @@
  * Portfolio icon registry
  * Grid: 24 × 24; stroke: 1px; color: var(--hm-blue); placement: card lower-right.
  * Symbol IDs are declared in /assets/icons/portfolio-icons.svg.
+ *
+ * Icon-card layout authority:
+ * HIMART WAYS 03.2 is the reference composition. Other icon-bearing card sections
+ * copy the same geometry: rule → number → title → body → icon.
  */
 :root {
   --hm-ds-icon-blue: var(--hm-blue, #00A6ED);
   --hm-ds-icon-size: 39.66px;
   --hm-ds-icon-inset: 24px;
+  --hm-icon-card-gap: 12px;
+  --hm-icon-card-padding-y: 24px;
+  --hm-icon-card-number-title-gap: 18px;
+  --hm-icon-card-title-body-gap: 12px;
 }
 
 .hm-ds-icon {
@@ -29,7 +37,7 @@
 .aimmo-collaboration-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px;
+  gap: var(--hm-icon-card-gap);
   width: 100%;
 }
 
@@ -45,24 +53,96 @@
   position: relative;
 }
 
-@media (max-width: 767px) {
-  .ways-operating-stack,
-  .aimmo-collaboration-grid,
-  .himart-team-page .team-agenda:not(.team-agenda--four) {
-    grid-template-columns: 1fr;
-  }
-
-  :root {
-    --hm-ds-icon-size: 32px;
-    --hm-ds-icon-inset: 18px;
-  }
-}
-
-
-/* Final page-local overrides load after the legacy ways v4 stylesheet. */
-html body.himart-page-body .ways-operating-stack {
+/*
+ * Exact HIMART WAYS 03.2 card geometry copied to every other icon-card section.
+ * Targeted with page + chapter IDs so this remains authoritative even when legacy
+ * page-specific CSS loads later in the document.
+ */
+html body.himart-team-page #data .ways-operating-stack,
+html body.himart-ax-page #journey .ways-operating-stack,
+html body.aimmo-system-page #brand .aimmo-collaboration-grid {
+  display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: var(--hm-icon-card-gap) !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
+
+html body.himart-team-page #data .ways-operating-stack > article,
+html body.himart-ax-page #journey .ways-operating-stack > article,
+html body.aimmo-system-page #brand .aimmo-collaboration-grid > article {
+  position: relative !important;
+  display: block !important;
+  grid-column: auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  aspect-ratio: 1 / 1 !important;
+  margin: 0 !important;
+  padding: var(--hm-icon-card-padding-y) 0 !important;
+  box-sizing: border-box !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255,255,255,.30) !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+html body.himart-team-page #data .ways-operating-stack > article > span,
+html body.himart-ax-page #journey .ways-operating-stack > article > span,
+html body.aimmo-system-page #brand .aimmo-collaboration-grid > article > span {
+  display: block !important;
+  margin: 0 !important;
+  color: var(--hm-blue-new, var(--hm-blue)) !important;
+  font-family: var(--hm-font-en) !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  letter-spacing: var(--hm-track-note) !important;
+}
+
+html body.himart-team-page #data .ways-operating-stack > article h4,
+html body.himart-ax-page #journey .ways-operating-stack > article h4,
+html body.aimmo-system-page #brand .aimmo-collaboration-grid > article h4 {
+  margin: var(--hm-icon-card-number-title-gap) 0 0 !important;
+  max-width: 12ch !important;
+  color: #fff !important;
+  font-family: var(--hm-font-ko) !important;
+  font-size: 28px !important;
+  font-weight: 100 !important;
+  font-variation-settings: "wght" 100 !important;
+  line-height: 1.24 !important;
+  letter-spacing: var(--hm-track-group) !important;
+  word-break: keep-all !important;
+}
+
+html body.himart-team-page #data .ways-operating-stack > article p,
+html body.himart-ax-page #journey .ways-operating-stack > article p,
+html body.aimmo-system-page #brand .aimmo-collaboration-grid > article p {
+  margin: var(--hm-icon-card-title-body-gap) 0 0 !important;
+  max-width: 24ch !important;
+  color: var(--hm-description-color) !important;
+  font-family: var(--hm-font-ko) !important;
+  font-size: 16px !important;
+  font-weight: 300 !important;
+  font-variation-settings: "wght" 300 !important;
+  line-height: 1.5 !important;
+  letter-spacing: var(--hm-track-body) !important;
+  word-break: keep-all !important;
+}
+
+html body.himart-team-page #data .ways-operating-stack > article .hm-ds-icon,
+html body.himart-ax-page #journey .ways-operating-stack > article .hm-ds-icon,
+html body.aimmo-system-page #brand .aimmo-collaboration-grid > article .hm-ds-icon {
+  position: absolute !important;
+  right: var(--hm-ds-icon-inset) !important;
+  bottom: var(--hm-ds-icon-inset) !important;
+  width: var(--hm-ds-icon-size) !important;
+  height: var(--hm-ds-icon-size) !important;
+  margin: 0 !important;
+}
+
+/* Final visibility guard against legacy reveal/icon rules. */
 html body.himart-page-body .hm-ds-icon {
   display: block !important;
   visibility: visible !important;
@@ -71,10 +151,45 @@ html body.himart-page-body .hm-ds-icon {
   z-index: 2;
 }
 
+@media (max-width: 1180px) and (min-width: 768px) {
+  html body.himart-team-page #data .ways-operating-stack,
+  html body.himart-ax-page #journey .ways-operating-stack,
+  html body.aimmo-system-page #brand .aimmo-collaboration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
 @media (max-width: 767px) {
-  html body.himart-page-body .ways-operating-stack,
-  html body.himart-page-body .aimmo-collaboration-grid,
-  html body.himart-page-body .himart-team-page .team-agenda:not(.team-agenda--four) {
+  .ways-operating-stack,
+  .aimmo-collaboration-grid,
+  .himart-team-page .team-agenda:not(.team-agenda--four),
+  html body.himart-team-page #data .ways-operating-stack,
+  html body.himart-ax-page #journey .ways-operating-stack,
+  html body.aimmo-system-page #brand .aimmo-collaboration-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  html body.himart-team-page #data .ways-operating-stack > article,
+  html body.himart-ax-page #journey .ways-operating-stack > article,
+  html body.aimmo-system-page #brand .aimmo-collaboration-grid > article {
+    aspect-ratio: auto !important;
+    min-height: 320px !important;
+  }
+
+  html body.himart-team-page #data .ways-operating-stack > article h4,
+  html body.himart-ax-page #journey .ways-operating-stack > article h4,
+  html body.aimmo-system-page #brand .aimmo-collaboration-grid > article h4 {
+    font-size: 24px !important;
+  }
+
+  html body.himart-team-page #data .ways-operating-stack > article p,
+  html body.himart-ax-page #journey .ways-operating-stack > article p,
+  html body.aimmo-system-page #brand .aimmo-collaboration-grid > article p {
+    font-size: 15px !important;
+  }
+
+  :root {
+    --hm-ds-icon-size: 32px;
+    --hm-ds-icon-inset: 18px;
   }
 }
