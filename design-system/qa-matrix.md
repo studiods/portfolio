@@ -122,3 +122,11 @@
 - 최소 항목 간격은 `--hm-meta-column-gap:24px`을 사용한다.
 - Mobile ≤780px는 기존 2×2 구조를 유지하고 좁은 폭에서는 `white-space:normal`로 줄바꿈을 허용한다.
 - canonical Hero title token은 Desktop `64px`이다.
+
+
+## Numbered subsection description visibility
+
+- [ ] 모든 운영 case page의 `<body>`에 `hm-ds-subsection-copy-hidden`이 존재한다.
+- [ ] `.hm-subno` 또는 `.hm-card-no`가 있는 헤더의 직하 설명만 비노출되며, Hero·대섹션 설명·카드 본문은 유지된다.
+- [ ] 설명문 비노출 시 해당 문단의 높이·상하 margin·padding이 레이아웃에 남지 않아 다음 콘텐츠가 위로 이동한다.
+- [ ] body 클래스만 제거했을 때 원본 설명문·서체·간격이 복원된다.
