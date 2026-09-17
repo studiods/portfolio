@@ -105,7 +105,8 @@ html body.himart-team-page #data .ways-operating-stack > article h4,
 html body.himart-ax-page #journey .ways-operating-stack > article h4,
 html body.aimmo-system-page #brand .aimmo-collaboration-grid > article h4 {
   margin: var(--hm-icon-card-number-title-gap) 0 0 !important;
-  max-width: 12ch !important;
+  width: 100% !important;
+  max-width: none !important;
   color: #fff !important;
   font-family: var(--hm-font-ko) !important;
   font-size: 28px !important;
@@ -113,7 +114,10 @@ html body.aimmo-system-page #brand .aimmo-collaboration-grid > article h4 {
   font-variation-settings: "wght" 100 !important;
   line-height: 1.24 !important;
   letter-spacing: var(--hm-track-group) !important;
+  white-space: normal !important;
   word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  text-wrap: pretty;
 }
 
 html body.himart-team-page #data .ways-operating-stack > article p,
