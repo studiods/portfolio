@@ -5,6 +5,11 @@
   const ITEM_SELECTOR = '.hm-ds-media-gallery__item, .aimmo-application-gallery__item';
   const SINGLE_COLUMN_SELECTOR = '.hm-ds-media-gallery--single-column, .aimmo-wide-gallery';
   const IMAGE_SELECTOR = ':scope > img';
+  const CAROUSEL_SELECTOR = '[data-hm-ds-carousel]';
+  const CAROUSEL_SLIDE_SELECTOR = '.hm-ds-media-carousel__slide';
+  const HOLD_MS = 3000;
+  const TRANSITION_MS = 720;
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   let lightbox = null;
   let lightboxImage = null;
@@ -97,8 +102,155 @@
     items.forEach((item) => bindExpandableImage(item.querySelector(IMAGE_SELECTOR)));
   };
 
+  const activateCarousel = (root) => {
+    if (!root || root.dataset.hmDsCarouselMounted === 'true') return;
+
+    const slides = Array.from(root.querySelectorAll(`:scope > .hm-ds-media-carousel__viewport > ${CAROUSEL_SLIDE_SELECTOR}`));
+    if (!slides.length) return;
+
+    root.dataset.hmDsCarouselMounted = 'true';
+    root.tabIndex = root.tabIndex >= 0 ? root.tabIndex : 0;
+    root.style.touchAction = 'pan-y';
+
+    const prev = root.querySelector(':scope > .hm-ds-gallery-nav--prev');
+    const next = root.querySelector(':scope > .hm-ds-gallery-nav--next');
+    let index = Math.max(0, slides.findIndex((slide) => slide.classList.contains('is-active')));
+    let timer = 0;
+    let busy = false;
+    let inView = false;
+    let pointerStart = null;
+
+    const clearTimer = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+    };
+
+    const settle = () => {
+      slides.forEach((slide, slideIndex) => {
+        const active = slideIndex === index;
+        slide.classList.toggle('is-active', active);
+        slide.classList.remove('is-next', 'is-entering', 'is-exiting');
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      root.classList.remove('is-reverse');
+    };
+
+    const canAutoPlay = () => inView && !document.hidden && !reducedMotion && slides.length > 1;
+
+    const schedule = (delay = HOLD_MS) => {
+      clearTimer();
+      if (!canAutoPlay() || busy) return;
+      timer = window.setTimeout(() => move(1), delay);
+    };
+
+    const transitionTo = (targetIndex, direction = 1) => {
+      if (busy || slides.length < 2 || targetIndex === index) return;
+      clearTimer();
+      busy = true;
+
+      const current = slides[index];
+      const incoming = slides[targetIndex];
+      root.classList.toggle('is-reverse', direction < 0);
+
+      slides.forEach((slide, slideIndex) => {
+        if (slideIndex !== index && slideIndex !== targetIndex) {
+          slide.classList.remove('is-active', 'is-next', 'is-entering', 'is-exiting');
+          slide.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      current.classList.add('is-active');
+      current.classList.remove('is-next', 'is-entering');
+      incoming.classList.remove('is-active', 'is-exiting', 'is-entering');
+      incoming.classList.add('is-next');
+      incoming.setAttribute('aria-hidden', 'true');
+
+      const complete = () => {
+        index = targetIndex;
+        busy = false;
+        settle();
+        schedule();
+      };
+
+      if (reducedMotion) {
+        complete();
+        return;
+      }
+
+      void incoming.offsetWidth;
+      current.classList.add('is-exiting');
+      incoming.classList.add('is-entering');
+      window.setTimeout(complete, TRANSITION_MS + 30);
+    };
+
+    function move(delta) {
+      if (busy || slides.length < 2) return;
+      const targetIndex = (index + delta + slides.length) % slides.length;
+      transitionTo(targetIndex, delta < 0 ? -1 : 1);
+    }
+
+    prev?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      move(-1);
+    });
+    next?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      move(1);
+    });
+
+    root.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        move(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        move(1);
+      }
+    });
+
+    root.addEventListener('pointerdown', (event) => {
+      pointerStart = { x:event.clientX, y:event.clientY };
+      clearTimer();
+    });
+    root.addEventListener('pointerup', (event) => {
+      if (!pointerStart) return;
+      const dx = event.clientX - pointerStart.x;
+      const dy = event.clientY - pointerStart.y;
+      pointerStart = null;
+      if (Math.abs(dx) >= 45 && Math.abs(dx) > Math.abs(dy) * 1.15) move(dx < 0 ? 1 : -1);
+      else schedule();
+    });
+    root.addEventListener('pointercancel', () => {
+      pointerStart = null;
+      schedule();
+    });
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        inView = Boolean(entry?.isIntersecting && entry.intersectionRatio >= .12);
+        if (canAutoPlay()) schedule();
+        else clearTimer();
+      }, { threshold:[0,.12,.25,.5,1] });
+      observer.observe(root);
+    } else {
+      inView = true;
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (canAutoPlay()) schedule();
+      else clearTimer();
+    });
+
+    settle();
+    schedule();
+  };
+
   const init = () => {
     document.querySelectorAll(GALLERY_SELECTOR).forEach(activateGallery);
+    document.querySelectorAll(CAROUSEL_SELECTOR).forEach(activateCarousel);
     ensureLightbox();
 
     lightbox.addEventListener('click', closeLightbox);
