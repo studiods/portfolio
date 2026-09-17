@@ -84,13 +84,26 @@ html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card f
   word-break:keep-all!important;
 }
 
-/* 02.3 — original copy length and natural wrapping restored. */
+/* 02.3 — keep the restored copy length; body copy stays merged into the gallery title. */
 html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
   display:none!important;
 }
 
-/* ENVIRONMENT / DECISION / OUTPUT — desktop editorial copy stays on one line. */
+/* OUTPUT — use the same 32px title-to-chart rhythm as the DECISION chart. */
+html body.aimmo-system-page #data .aimmo-output-graph figcaption{
+  min-height:0!important;
+}
+html body.aimmo-system-page #data .aimmo-output-graph__title{
+  margin-bottom:0!important;
+}
+html body.aimmo-system-page #data .aimmo-output-graph .aimmo-reference-bars{
+  margin-top:32px!important;
+}
+
+/* Requested editorial lines stay unbroken on desktop only. */
 @media(min-width:781px){
+  html body.aimmo-system-page #data .data-list > .data-card:nth-child(2) .data-card-head .desc,
+  html body.aimmo-system-page #data .data-list > .data-card:nth-child(3) .data-card-head .desc,
   html body.aimmo-system-page #data .aimmo-context-insight:nth-child(2) .aimmo-context-insight__copy,
   html body.aimmo-system-page #data .aimmo-context-insight:nth-child(3) .aimmo-context-insight__copy,
   html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy{
