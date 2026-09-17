@@ -219,6 +219,21 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   display:none!important;
   content:none!important;
 }
+.hm-ds-media-carousel__status{
+  position:absolute!important;
+  z-index:7!important;
+  top:24px!important;
+  right:24px!important;
+  margin:0!important;
+  padding:0!important;
+  color:rgba(255,255,255,.62)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+  pointer-events:none!important;
+}
 
 /* Single-image / single-column gallery interaction contract.
    media-gallery.js marks each expandable image automatically. */
@@ -318,6 +333,11 @@ body.hm-ds-lightbox-open{
   .hm-ds-media-gallery__item>figcaption>h4,
   html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption>h4{
     font-size:22px!important;
+  }
+  .hm-ds-media-carousel__status{
+    top:18px!important;
+    right:18px!important;
+    font-size:11px!important;
   }
   .hm-ds-image-lightbox{
     padding:24px 0!important;
