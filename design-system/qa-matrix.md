@@ -130,3 +130,10 @@
 - [ ] `.hm-subno` 또는 `.hm-card-no`가 있는 헤더의 직하 설명만 비노출되며, Hero·대섹션 설명·카드 본문은 유지된다.
 - [ ] 설명문 비노출 시 해당 문단의 높이·상하 margin·padding이 레이아웃에 남지 않아 다음 콘텐츠가 위로 이동한다.
 - [ ] body 클래스만 제거했을 때 원본 설명문·서체·간격이 복원된다.
+
+
+## Structural index visibility
+
+- [ ] 모든 운영 case page가 `structural-index-contract.css`의 동일한 버전을 로드한다.
+- [ ] `.hm-subno`·`.hm-card-no`의 `data-index`는 숫자만 렌더링하고, 원본 영문 descriptor 텍스트는 DOM에 남아 있다.
+- [ ] 12px blue structural label 외의 본문·카드·캡션 텍스트는 이 규칙으로 잘리지 않는다.

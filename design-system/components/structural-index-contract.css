@@ -6,11 +6,12 @@
    - medium title index: 01.1
    - small/major structural index: 01
 
-   Preferred authoring pattern:
-   <span class="hm-subno hm-ds-index-label" data-index="01.1">01.1</span>
+   Preferred authoring pattern (keep the descriptor in source markup):
+   <span class="hm-subno hm-ds-index-label" data-index="01.1">01.1 / RESEARCH SIGNALS</span>
+   The contract renders only data-index; the source descriptor remains intact and is not deleted.
 
    Legacy labels such as "01.3 / AS-IS", "01 / REFRAME" and "01 · DARK MODE"
-   are visually constrained to the numeric index until their source markup is migrated.
+   are visually constrained to the numeric index until their source markup is migrated to data-index. Their source text remains intact.
    Non-numbered 12px blue labels are intentionally untouched. */
 html body.himart-page-body #live-main .hm-ds-index-label[data-index]{
   font-size:0!important;
