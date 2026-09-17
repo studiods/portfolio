@@ -1,6 +1,6 @@
 /**
  * Portfolio icon registry
- * Grid: 24 × 24; stroke: 2px; color: blue; placement: card lower-right.
+ * Grid: 24 × 24; stroke: 1px; color: var(--hm-blue); placement: card lower-right.
  * Symbol IDs are declared in /assets/icons/portfolio-icons.svg.
  */
 :root {
@@ -16,9 +16,9 @@
   display: block;
   width: var(--hm-ds-icon-size);
   height: var(--hm-ds-icon-size);
-  color: var(--hm-ds-icon-blue);
+  color: var(--hm-ds-icon-blue) !important;
   fill: none;
-  stroke: currentColor;
+  stroke: currentColor !important;
   stroke-width: 1px !important;
   overflow: visible;
   pointer-events: none;
