@@ -1,5 +1,12 @@
 /* AIMMO Graphic v2 — narrative refinement and shared-system adoption. */
 
+/* AIMMO Graphic intentionally keeps its editorial gallery stack edge-to-edge,
+   while the shared design-system default is 24px. */
+html body.aimmo-graphic-page{
+  --hm-ds-media-gallery-gap:0px;
+  --hm-ds-media-carousel-ratio:2/1;
+}
+
 /* 01.1 — four signals stay on one row on desktop. */
 html body.aimmo-graphic-page #brand .aimmo-graphic-signal-grid{
   display:grid!important;
@@ -255,6 +262,9 @@ html body.aimmo-graphic-page #direction .aimmo-impact-source{
 }
 
 @media(max-width:780px){
+  html body.aimmo-graphic-page{
+    --hm-ds-media-carousel-ratio:16/9;
+  }
   html body.aimmo-graphic-page #brand .aimmo-graphic-signal-grid{
     grid-template-columns:1fr!important;
   }
@@ -299,8 +309,7 @@ html body.aimmo-graphic-page #direction .aimmo-impact-source{
   }
 }
 
-
-/* AIMMO Graphic detail refinements — 2026-09-17 v5 */
+/* AIMMO Graphic detail refinements — 2026-09-17 v6 */
 
 /* 01.2 — fourth problem state becomes the terminal red state. */
 html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){
