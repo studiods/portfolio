@@ -1,0 +1,144 @@
+/* AIMMO Graphic v2 — narrative refinement and shared-system adoption. */
+
+/* 01.2 — responsive circular value flow. */
+html body.aimmo-graphic-page #brand .aimmo-business-flow article{
+  container-type:inline-size!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article h4{
+  margin:13px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:clamp(14px,9cqi,22px)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.22!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article p{
+  margin:9px 0 0!important;
+  max-width:17ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:clamp(9px,5.2cqi,12px)!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow{
+  align-self:center!important;
+  justify-self:center!important;
+  opacity:.30!important;
+}
+
+/* 01.3 — shared design-system gallery is intentionally full width and edge-to-edge. */
+html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery{
+  margin-top:0!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery + .aimmo-graphic-reframe{
+  margin-top:40px!important;
+}
+
+/* 02.1 — same operating-stack grammar as HIMART WAYS 03.2, specialized to four brand signals. */
+html body.aimmo-graphic-page #data .aimmo-company-signals{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px!important;
+  width:100%!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article{
+  position:relative!important;
+  display:block!important;
+  min-width:0!important;
+  min-height:250px!important;
+  margin:0!important;
+  padding:26px 28px 30px!important;
+  border:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  background:rgba(255,255,255,.018)!important;
+  overflow:hidden!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article>span{
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:11px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article h4{
+  margin:22px 0 0!important;
+  max-width:24ch!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article p{
+  margin:12px 0 0!important;
+  max-width:34ch!important;
+  padding-right:64px!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article .hm-ds-icon{
+  position:absolute!important;
+  right:24px!important;
+  bottom:24px!important;
+  width:40px!important;
+  height:40px!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1px!important;
+  opacity:1!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-source{
+  margin:18px 0 0!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:10px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+@media(min-width:781px){
+  html body.aimmo-graphic-page #data .data-list>.data-card:first-child .data-card-head .desc{
+    max-width:none!important;
+    white-space:nowrap!important;
+  }
+}
+
+@media(max-width:780px){
+  html body.aimmo-graphic-page #brand .aimmo-business-flow{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow{
+    display:none!important;
+  }
+  html body.aimmo-graphic-page #brand .aimmo-business-flow article{
+    width:min(320px,88vw)!important;
+    margin-inline:auto!important;
+  }
+  html body.aimmo-graphic-page #data .aimmo-company-signals{
+    grid-template-columns:1fr!important;
+  }
+  html body.aimmo-graphic-page #data .aimmo-company-signals>article{
+    min-height:260px!important;
+  }
+  html body.aimmo-graphic-page #data .data-list>.data-card:first-child .data-card-head .desc{
+    white-space:normal!important;
+  }
+}
