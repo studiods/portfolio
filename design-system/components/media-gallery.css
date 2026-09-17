@@ -1,7 +1,8 @@
 /* Shared media gallery — reusable evidence/gallery contract.
    Default composition: 2-column square media grid with edge-to-edge items.
-   Modifiers describe intended use; item count determines 2x2 vs 2x1 rows. */
-.hm-ds-media-gallery{
+   AIMMO System 03.2 is migrated through the legacy aliases below so both pages share one contract. */
+.hm-ds-media-gallery,
+html body.aimmo-system-page #journey .aimmo-application-gallery{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   width:100%!important;
@@ -17,7 +18,8 @@
 .hm-ds-media-gallery--2x1{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
-.hm-ds-media-gallery__item{
+.hm-ds-media-gallery__item,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item{
   position:relative!important;
   width:100%!important;
   min-width:0!important;
@@ -30,7 +32,9 @@
   background:#050505!important;
 }
 .hm-ds-media-gallery__item>img,
-.hm-ds-media-gallery__item>video{
+.hm-ds-media-gallery__item>video,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item>img,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item>video{
   display:block!important;
   width:100%!important;
   height:100%!important;
@@ -40,7 +44,8 @@
   filter:none!important;
   transform:none!important;
 }
-.hm-ds-media-gallery__item::after{
+.hm-ds-media-gallery__item::after,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item::after{
   content:"";
   position:absolute;
   z-index:1;
@@ -51,7 +56,8 @@
   pointer-events:none;
   background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.48) 52%,rgba(0,0,0,0) 100%);
 }
-.hm-ds-media-gallery__item>figcaption{
+.hm-ds-media-gallery__item>figcaption,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption{
   position:absolute!important;
   z-index:2!important;
   right:0!important;
@@ -60,7 +66,8 @@
   margin:0!important;
   padding:28px!important;
 }
-.hm-ds-media-gallery__item>figcaption>span{
+.hm-ds-media-gallery__item>figcaption>span,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption>span{
   display:block!important;
   margin:0 0 10px!important;
   color:var(--hm-blue)!important;
@@ -70,7 +77,8 @@
   line-height:1.2!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-.hm-ds-media-gallery__item>figcaption>h4{
+.hm-ds-media-gallery__item>figcaption>h4,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption>h4{
   margin:0!important;
   max-width:30ch!important;
   color:#fff!important;
@@ -83,7 +91,8 @@
   white-space:normal!important;
   word-break:keep-all!important;
 }
-.hm-ds-media-gallery__item>figcaption>p{
+.hm-ds-media-gallery__item>figcaption>p,
+html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption>p{
   margin:8px 0 0!important;
   max-width:38ch!important;
   color:rgba(255,255,255,.68)!important;
@@ -113,13 +122,16 @@
 @media(max-width:780px){
   .hm-ds-media-gallery,
   .hm-ds-media-gallery--2x2,
-  .hm-ds-media-gallery--2x1{
+  .hm-ds-media-gallery--2x1,
+  html body.aimmo-system-page #journey .aimmo-application-gallery{
     grid-template-columns:1fr!important;
   }
-  .hm-ds-media-gallery__item>figcaption{
+  .hm-ds-media-gallery__item>figcaption,
+  html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption{
     padding:22px!important;
   }
-  .hm-ds-media-gallery__item>figcaption>h4{
+  .hm-ds-media-gallery__item>figcaption>h4,
+  html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption>h4{
     font-size:22px!important;
   }
 }
