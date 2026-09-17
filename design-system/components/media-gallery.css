@@ -22,6 +22,9 @@ html body.aimmo-system-page #journey .aimmo-application-gallery{
 .hm-ds-media-gallery--2x1{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
+.hm-ds-media-gallery--single-column{
+  grid-template-columns:1fr!important;
+}
 .hm-ds-media-gallery__item,
 html body.aimmo-system-page #journey .aimmo-application-gallery__item{
   position:relative!important;
