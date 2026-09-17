@@ -1,0 +1,42 @@
+name: One-off AIMMO 01.3 gallery image update
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/oneoff-aimmo-brand-image.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Update AIMMO 01.3 gallery image
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('aimmo-graphic.html')
+          text = path.read_text(encoding='utf-8')
+          pattern = r'(<div class="hm-ds-media-gallery aimmo-wide-gallery aimmo-wide-gallery--clean aimmo-brand-rule-gallery hm-ds-subtitle-to-content" aria-label="AIMMO 브랜드 자산 확장 규칙"><figure class="hm-ds-media-gallery__item"><img src=")[^"]+(" alt="AIMMO 브랜드 자산 확장 규칙 더미 이미지")'
+          replacement = r'\1./assets/image/aimmo-graphic/aimmo_brand_01_01.png\2'
+          updated, count = re.subn(pattern, replacement, text, count=1)
+          if count != 1:
+              raise SystemExit(f'Expected exactly one 01.3 gallery image match, found {count}')
+          path.write_text(updated, encoding='utf-8')
+          PY
+          rm .github/workflows/oneoff-aimmo-brand-image.yml
+      - name: Commit update
+        run: |
+          git config user.name "studiods"
+          git config user.email "garci@naver.com"
+          git add aimmo-graphic.html .github/workflows/oneoff-aimmo-brand-image.yml
+          git commit -m "Show AIMMO brand image in 01.3 gallery"
+          git push origin main
