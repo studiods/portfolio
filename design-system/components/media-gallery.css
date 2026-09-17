@@ -131,14 +131,12 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   width:100%!important;
 }
 
-/* Single-image gallery interaction contract.
-   media-gallery.js marks any one-image gallery automatically. */
-.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img,
-html body.aimmo-system-page #journey .aimmo-application-gallery.is-single-expand .aimmo-application-gallery__item>img{
+/* Single-image / single-column gallery interaction contract.
+   media-gallery.js marks each expandable image automatically. */
+.hm-ds-gallery-expand-target{
   cursor:zoom-in!important;
 }
-.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img:focus-visible,
-html body.aimmo-system-page #journey .aimmo-application-gallery.is-single-expand .aimmo-application-gallery__item>img:focus-visible{
+.hm-ds-gallery-expand-target:focus-visible{
   outline:1px solid rgba(255,255,255,.72)!important;
   outline-offset:-1px!important;
 }
