@@ -13,8 +13,15 @@
 
   let lightbox = null;
   let lightboxImage = null;
+  let lightboxIncoming = null;
+  let lightboxPrev = null;
+  let lightboxNext = null;
   let closeButton = null;
   let lastTrigger = null;
+  let lightboxGroup = [];
+  let lightboxIndex = 0;
+  let lightboxBusy = false;
+  let lightboxTransitionTimer = 0;
 
   const ensureLightbox = () => {
     if (lightbox) return lightbox;
@@ -29,38 +36,132 @@
     const stage = document.createElement('div');
     stage.className = 'hm-ds-image-lightbox__stage';
 
+    const viewport = document.createElement('div');
+    viewport.className = 'hm-ds-image-lightbox__viewport';
+
     lightboxImage = document.createElement('img');
     lightboxImage.className = 'hm-ds-image-lightbox__image';
     lightboxImage.alt = '';
+
+    lightboxIncoming = document.createElement('img');
+    lightboxIncoming.className = 'hm-ds-image-lightbox__image hm-ds-image-lightbox__image--incoming';
+    lightboxIncoming.alt = '';
+
+    lightboxPrev = document.createElement('button');
+    lightboxPrev.className = 'hm-ds-image-lightbox__nav hm-ds-image-lightbox__nav--prev';
+    lightboxPrev.type = 'button';
+    lightboxPrev.setAttribute('aria-label', '이전 확대 이미지');
+
+    lightboxNext = document.createElement('button');
+    lightboxNext.className = 'hm-ds-image-lightbox__nav hm-ds-image-lightbox__nav--next';
+    lightboxNext.type = 'button';
+    lightboxNext.setAttribute('aria-label', '다음 확대 이미지');
 
     closeButton = document.createElement('button');
     closeButton.className = 'hm-ds-image-lightbox__close';
     closeButton.type = 'button';
     closeButton.setAttribute('aria-label', '확대 이미지 닫기');
 
-    stage.append(lightboxImage, closeButton);
+    viewport.append(lightboxImage, lightboxIncoming);
+    stage.append(viewport, lightboxPrev, lightboxNext, closeButton);
     lightbox.append(stage);
     document.body.append(lightbox);
 
     return lightbox;
   };
 
+  const getLightboxGroup = (image) => {
+    const stack = image.closest('.hm-ds-media-gallery-stack');
+    const selector = '.hm-ds-media-gallery__item > img, .aimmo-application-gallery__item > img';
+    if (stack) {
+      const images = Array.from(stack.querySelectorAll(selector)).filter((item) => item.dataset.galleryExpandBound === 'true');
+      if (images.length) return images;
+    }
+
+    const gallery = image.closest(GALLERY_SELECTOR);
+    if (gallery) {
+      const images = Array.from(gallery.querySelectorAll(selector)).filter((item) => item.dataset.galleryExpandBound === 'true');
+      if (images.length) return images;
+    }
+    return [image];
+  };
+
+  const updateLightboxNav = () => {
+    if (!lightboxPrev || !lightboxNext) return;
+    const hidden = lightboxGroup.length < 2;
+    lightboxPrev.hidden = hidden;
+    lightboxNext.hidden = hidden;
+  };
+
   const closeLightbox = () => {
     if (!lightbox || !lightbox.classList.contains('is-open')) return;
-    lightbox.classList.remove('is-open');
+    if (lightboxTransitionTimer) window.clearTimeout(lightboxTransitionTimer);
+    lightboxTransitionTimer = 0;
+    lightboxBusy = false;
+    lightbox.classList.remove('is-open', 'is-reverse');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('hm-ds-lightbox-open');
+    lightboxImage.classList.remove('is-exiting');
+    lightboxIncoming.classList.remove('is-next', 'is-entering');
     lightboxImage.removeAttribute('src');
+    lightboxIncoming.removeAttribute('src');
     lightboxImage.alt = '';
+    lightboxIncoming.alt = '';
+    lightboxGroup = [];
+    lightboxIndex = 0;
+    updateLightboxNav();
     if (lastTrigger) lastTrigger.focus({ preventScroll: true });
     lastTrigger = null;
+  };
+
+  const moveLightbox = (delta) => {
+    if (lightboxBusy || lightboxGroup.length < 2) return;
+    const targetIndex = (lightboxIndex + delta + lightboxGroup.length) % lightboxGroup.length;
+    const target = lightboxGroup[targetIndex];
+    if (!target) return;
+
+    lightboxBusy = true;
+    lightbox.classList.toggle('is-reverse', delta < 0);
+    lightboxIncoming.src = target.currentSrc || target.src;
+    lightboxIncoming.alt = target.alt || '';
+    lightboxIncoming.classList.add('is-next');
+
+    const complete = () => {
+      lightboxIndex = targetIndex;
+      lightboxImage.src = lightboxIncoming.src;
+      lightboxImage.alt = lightboxIncoming.alt;
+      lightboxImage.classList.remove('is-exiting');
+      lightboxIncoming.classList.remove('is-next', 'is-entering');
+      lightboxIncoming.removeAttribute('src');
+      lightboxIncoming.alt = '';
+      lightbox.classList.remove('is-reverse');
+      lightboxBusy = false;
+      lightboxTransitionTimer = 0;
+    };
+
+    if (reducedMotion) {
+      complete();
+      return;
+    }
+
+    void lightboxIncoming.offsetWidth;
+    lightboxImage.classList.add('is-exiting');
+    lightboxIncoming.classList.add('is-entering');
+    lightboxTransitionTimer = window.setTimeout(complete, TRANSITION_MS + 30);
   };
 
   const openLightbox = (image) => {
     ensureLightbox();
     lastTrigger = image;
+    lightboxGroup = getLightboxGroup(image);
+    lightboxIndex = Math.max(0, lightboxGroup.indexOf(image));
+    lightboxBusy = false;
+    lightboxImage.classList.remove('is-exiting');
+    lightboxIncoming.classList.remove('is-next', 'is-entering');
+    lightboxIncoming.removeAttribute('src');
     lightboxImage.src = image.currentSrc || image.src;
     lightboxImage.alt = image.alt || '';
+    updateLightboxNav();
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('hm-ds-lightbox-open');
@@ -265,9 +366,30 @@
       event.stopPropagation();
       closeLightbox();
     });
+    lightboxPrev.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      moveLightbox(-1);
+    });
+    lightboxNext.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      moveLightbox(1);
+    });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLightbox();
+      if (event.key === 'Escape') {
+        closeLightbox();
+        return;
+      }
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        moveLightbox(-1);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        moveLightbox(1);
+      }
     });
   };
 

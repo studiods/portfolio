@@ -4,7 +4,7 @@
    while the shared design-system default is 24px. */
 html body.aimmo-graphic-page{
   --hm-ds-media-gallery-gap:0px;
-  --hm-ds-media-carousel-ratio:2/1;
+  --hm-ds-media-carousel-ratio:16/9;
 }
 
 /* 01.1 — four signals stay on one row on desktop. */
@@ -84,7 +84,7 @@ html body.aimmo-graphic-page .aimmo-wide-gallery--stack{
 }
 html body.aimmo-graphic-page .aimmo-wide-gallery .hm-ds-media-gallery__item{
   grid-column:1/-1!important;
-  aspect-ratio:2/1!important;
+  aspect-ratio:16/9!important;
 }
 html body.aimmo-graphic-page .aimmo-wide-gallery--clean .hm-ds-media-gallery__item::after{
   display:none!important;
@@ -382,4 +382,16 @@ html body.aimmo-graphic-page #journey .aimmo-carousel-gallery__item>figcaption>h
 /* 04.1 — evidence rules use the same standard divider opacity as the subsection rhythm. */
 html body.aimmo-graphic-page #direction .aimmo-impact-grid>article{
   border-top:1px solid var(--hm-line-default)!important;
+}
+
+
+/* AIMMO Graphic page-only gallery contract — 2026-09-18 v7. */
+html body.aimmo-graphic-page .hm-ds-media-gallery__item{
+  aspect-ratio:16/9!important;
+}
+html body.aimmo-graphic-page #brand .hm-subhead + .aimmo-wide-gallery,
+html body.aimmo-graphic-page #data .data-card-head + .hm-ds-media-gallery-stack,
+html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-gallery-stack,
+html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-carousel{
+  margin-top:40px!important;
 }
