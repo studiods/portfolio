@@ -1,0 +1,39 @@
+/**
+ * Portfolio icon registry
+ * Grid: 24 × 24; stroke: 2px; color: blue; placement: card lower-right.
+ * Symbol IDs are declared in /assets/icons/portfolio-icons.svg.
+ */
+:root {
+  --hm-ds-icon-blue: #2f7cff;
+  --hm-ds-icon-size: 39.66px;
+  --hm-ds-icon-inset: 24px;
+}
+
+.hm-ds-icon {
+  position: absolute;
+  right: var(--hm-ds-icon-inset);
+  bottom: var(--hm-ds-icon-inset);
+  display: block;
+  width: var(--hm-ds-icon-size);
+  height: var(--hm-ds-icon-size);
+  color: var(--hm-ds-icon-blue);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2px;
+  overflow: visible;
+  pointer-events: none;
+  flex: none;
+}
+
+.ways-operating-stack > article,
+.aimmo-collaboration-grid > article,
+.team-agenda > article {
+  position: relative;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --hm-ds-icon-size: 32px;
+    --hm-ds-icon-inset: 18px;
+  }
+}
