@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  const GALLERY_SELECTOR = '.hm-ds-media-gallery';
-  const ITEM_SELECTOR = '.hm-ds-media-gallery__item';
+  const GALLERY_SELECTOR = '.hm-ds-media-gallery, .aimmo-application-gallery';
+  const ITEM_SELECTOR = '.hm-ds-media-gallery__item, .aimmo-application-gallery__item';
   const IMAGE_SELECTOR = ':scope > img';
 
   let lightbox = null;
@@ -64,7 +64,7 @@
   const activateGallery = (gallery) => {
     if (gallery.dataset.galleryNoExpand === 'true') return;
 
-    const items = gallery.querySelectorAll(ITEM_SELECTOR);
+    const items = Array.from(gallery.children).filter((child) => child.matches(ITEM_SELECTOR));
     if (items.length !== 1) return;
 
     const image = items[0].querySelector(IMAGE_SELECTOR);
