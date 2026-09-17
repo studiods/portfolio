@@ -15,163 +15,53 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Update AIMMO 03 numbering and application gallery
+      - name: Apply AIMMO chapter 03 update
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-
-          html_path = Path('aimmo-system.html')
-          html = html_path.read_text(encoding='utf-8')
-
-          css_link = '<link rel="stylesheet" href="./design-system/components/aimmo-system-v8.css?v=20260917-1">'
+          p = Path('aimmo-system.html')
+          h = p.read_text(encoding='utf-8')
+          css = '<link rel="stylesheet" href="./design-system/components/aimmo-system-v8.css?v=20260917-1">'
           anchor = '<link rel="stylesheet" href="./design-system/components/aimmo-reference-bars-exact.css?v=20260912-3">'
-          if css_link not in html:
-              assert anchor in html, 'CSS insertion anchor missing'
-              html = html.replace(anchor, anchor + '\n' + css_link, 1)
-
-          family_old = '<span class="hm-subno">03.3</span><div><h3 class="hm-subtitle hm-ds-subsection__title">같은 제품군으로 보이되,<br>각 제품은 구분되게 했습니다.</h3>'
-          family_new = '<span class="hm-subno">03.2</span><div><h3 class="hm-subtitle hm-ds-subsection__title">같은 제품군으로 보이되,<br>각 제품은 구분되게 했습니다.</h3>'
-          assert family_old in html, '03.3 family block marker missing'
-          html = html.replace(family_old, family_new, 1)
-
+          if css not in h:
+              assert anchor in h
+              h = h.replace(anchor, anchor + '\n' + css, 1)
+          old = '<span class="hm-subno">03.3</span><div><h3 class="hm-subtitle hm-ds-subsection__title">같은 제품군으로 보이되,<br>각 제품은 구분되게 했습니다.</h3>'
+          new = '<span class="hm-subno">03.2</span><div><h3 class="hm-subtitle hm-ds-subsection__title">같은 제품군으로 보이되,<br>각 제품은 구분되게 했습니다.</h3>'
+          assert old in h
+          h = h.replace(old, new, 1)
           start_marker = '<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.4</span>'
           end_marker = '\n</div></div></section>\n\n<section class="hm-section hm-ds-section" id="direction"'
-          start = html.find(start_marker)
-          end = html.find(end_marker, start)
-          assert start != -1 and end != -1, '03.4 replacement boundaries missing'
-
-          new_block = '''<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.3</span><div><h3 class="hm-subtitle hm-ds-subsection__title">각자의 오너십으로 만든 시스템을,<br>실제 제품에 적용하며 함께 완성했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">담당 영역별로 만든 기준을 실제 화면에 적용하고, 디자이너·개발자와 리뷰와 회의를 반복하며 예외와 운영 기준까지 정리했습니다.</p></div></div><div class="aimmo-application-gallery hm-ds-subtitle-to-content" aria-label="AIMMO 디자인 시스템 제작·적용·협업 과정">
-<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-014.jpg" alt="디자이너들이 각자 맡은 디자인 시스템 영역을 분업해 제작하는 장면" loading="lazy" decoding="async"><figcaption><span>01 · OWNERSHIP</span><h4>영역을 나누고 각자의 오너십으로 만들었습니다.</h4><p>타이포·컬러·그래픽·컴포넌트·토큰을 담당별로 나눠 병렬로 구축했습니다.</p></figcaption></figure>
-<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-016.jpg" alt="디자이너들이 디자인 시스템 결과물을 함께 리뷰하는 장면" loading="lazy" decoding="async"><figcaption><span>02 · SYSTEM REVIEW</span><h4>각자 만든 기준을 한 시스템으로 계속 맞췄습니다.</h4><p>주기적인 리뷰로 중복과 예외를 확인하고 하나의 품질 기준으로 통합했습니다.</p></figcaption></figure>
-<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-010.jpg" alt="디자인 시스템을 실제 제품 화면에 적용하고 검토하는 장면" loading="lazy" decoding="async"><figcaption><span>03 · PRODUCT APPLY</span><h4>실제 제품 화면에 적용하며 예외를 검증했습니다.</h4><p>라이브 화면과 신규 기능에 적용해 재사용성과 제품별 예외를 함께 확인했습니다.</p></figcaption></figure>
-<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-018.jpg" alt="디자이너와 개발자가 디자인 시스템 적용 기준을 회의하는 장면" loading="lazy" decoding="async"><figcaption><span>04 · ALIGNMENT</span><h4>적용을 위해 디자인과 개발이 함께 기준을 맞췄습니다.</h4><p>컴포넌트 상태·토큰·적용 우선순위를 회의에서 맞추며 실제 업무에 정착시켰습니다.</p></figcaption></figure>
-</div></div>'''
-
-          html = html[:start] + new_block + html[end:]
-
-          journey = html[html.find('id="journey"'):html.find('id="direction"')]
-          for expected in ('03.1', '03.2', '03.3'):
-              assert journey.count(f'<span class="hm-subno">{expected}</span>') == 1, f'{expected} count mismatch'
-          assert '<span class="hm-subno">03.4</span>' not in journey, '03.4 still exists'
-
-          html_path.write_text(html, encoding='utf-8')
-
-          css = r'''/* AIMMO System v8 — chapter 03 application / adoption photo evidence. */
-html body.aimmo-system-page #journey .aimmo-application-gallery{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  width:100%!important;
-  max-width:none!important;
-  gap:0!important;
-  margin-right:0!important;
-  margin-left:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  background:#000!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item{
-  position:relative!important;
-  width:100%!important;
-  min-width:0!important;
-  aspect-ratio:1/1!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  border:0!important;
-  border-radius:0!important;
-  background:#050505!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  margin:0!important;
-  object-fit:cover!important;
-  object-position:center!important;
-  filter:none!important;
-  transform:none!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item::after{
-  content:"";
-  position:absolute;
-  z-index:1;
-  inset:auto 0 0;
-  height:52%;
-  pointer-events:none;
-  background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.48) 52%,rgba(0,0,0,0) 100%);
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
-  position:absolute!important;
-  z-index:2!important;
-  right:0!important;
-  bottom:0!important;
-  left:0!important;
-  margin:0!important;
-  padding:28px!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption span{
-  display:block!important;
-  margin:0 0 10px!important;
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:10px!important;
-  font-weight:400!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4{
-  margin:0!important;
-  max-width:27ch!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:20px!important;
-  font-weight:300!important;
-  line-height:1.35!important;
-  word-break:keep-all!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption p{
-  margin:8px 0 0!important;
-  max-width:38ch!important;
-  color:rgba(255,255,255,.68)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:13px!important;
-  font-weight:300!important;
-  line-height:1.55!important;
-  word-break:keep-all!important;
-}
-@media(max-width:780px){
-  html body.aimmo-system-page #journey .aimmo-application-gallery{
-    grid-template-columns:1fr!important;
-  }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
-    padding:22px!important;
-  }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4{
-    font-size:18px!important;
-  }
-}
-'''
-          Path('design-system/components/aimmo-system-v8.css').write_text(css, encoding='utf-8')
+          s = h.find(start_marker)
+          e = h.find(end_marker, s)
+          assert s != -1 and e != -1
+          block = '\n'.join([
+              '<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno">03.3</span><div><h3 class="hm-subtitle hm-ds-subsection__title">각자의 오너십으로 만든 시스템을,<br>실제 제품에 적용하며 함께 완성했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">담당 영역별로 만든 기준을 실제 화면에 적용하고, 디자이너·개발자와 리뷰와 회의를 반복하며 예외와 운영 기준까지 정리했습니다.</p></div></div><div class="aimmo-application-gallery hm-ds-subtitle-to-content" aria-label="AIMMO 디자인 시스템 제작·적용·협업 과정">',
+              '<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-014.jpg" alt="디자이너들이 각자 맡은 디자인 시스템 영역을 분업해 제작하는 장면" loading="lazy" decoding="async"><figcaption><span>01 · OWNERSHIP</span><h4>영역을 나누고 각자의 오너십으로 만들었습니다.</h4><p>타이포·컬러·그래픽·컴포넌트·토큰을 담당별로 나눠 병렬로 구축했습니다.</p></figcaption></figure>',
+              '<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-016.jpg" alt="디자이너들이 디자인 시스템 결과물을 함께 리뷰하는 장면" loading="lazy" decoding="async"><figcaption><span>02 · SYSTEM REVIEW</span><h4>각자 만든 기준을 한 시스템으로 계속 맞췄습니다.</h4><p>주기적인 리뷰로 중복과 예외를 확인하고 하나의 품질 기준으로 통합했습니다.</p></figcaption></figure>',
+              '<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-010.jpg" alt="디자인 시스템을 실제 제품 화면에 적용하고 검토하는 장면" loading="lazy" decoding="async"><figcaption><span>03 · PRODUCT APPLY</span><h4>실제 제품 화면에 적용하며 예외를 검증했습니다.</h4><p>라이브 화면과 신규 기능에 적용해 재사용성과 제품별 예외를 함께 확인했습니다.</p></figcaption></figure>',
+              '<figure class="aimmo-application-gallery__item"><img src="./assets/image/aimmo-system/aimmo-source-018.jpg" alt="디자이너와 개발자가 디자인 시스템 적용 기준을 회의하는 장면" loading="lazy" decoding="async"><figcaption><span>04 · ALIGNMENT</span><h4>적용을 위해 디자인과 개발이 함께 기준을 맞췄습니다.</h4><p>컴포넌트 상태·토큰·적용 우선순위를 회의에서 맞추며 실제 업무에 정착시켰습니다.</p></figcaption></figure>',
+              '</div></div>'
+          ])
+          h = h[:s] + block + h[e:]
+          j = h[h.find('id="journey"'):h.find('id="direction"')]
+          for x in ('03.1', '03.2', '03.3'):
+              assert j.count(f'<span class="hm-subno">{x}</span>') == 1
+          assert '<span class="hm-subno">03.4</span>' not in j
+          p.write_text(h, encoding='utf-8')
           PY
-
-      - name: Verify changes
-        shell: bash
-        run: |
           grep -q 'aimmo-system-v8.css?v=20260917-1' aimmo-system.html
-          grep -q '<span class="hm-subno">03.1</span>' aimmo-system.html
           grep -q '<span class="hm-subno">03.2</span>' aimmo-system.html
           grep -q '<span class="hm-subno">03.3</span>' aimmo-system.html
           ! grep -q '<span class="hm-subno">03.4</span>' aimmo-system.html
           grep -q 'aimmo-application-gallery' aimmo-system.html
-          test -f design-system/components/aimmo-system-v8.css
-
       - name: Commit and remove one-off workflow
         shell: bash
         run: |
           rm -f .github/workflows/oneoff-aimmo-03-structure.yml
           git config user.name 'studiods'
           git config user.email 'garci@naver.com'
-          git add aimmo-system.html design-system/components/aimmo-system-v8.css .github/workflows/oneoff-aimmo-03-structure.yml
+          git add aimmo-system.html .github/workflows/oneoff-aimmo-03-structure.yml
           git commit -m 'Refine AIMMO chapter 03 ownership and application story'
           git push origin main
