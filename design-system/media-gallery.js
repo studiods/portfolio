@@ -3,6 +3,7 @@
 
   const GALLERY_SELECTOR = '.hm-ds-media-gallery, .aimmo-application-gallery';
   const ITEM_SELECTOR = '.hm-ds-media-gallery__item, .aimmo-application-gallery__item';
+  const SINGLE_COLUMN_SELECTOR = '.hm-ds-media-gallery--single-column, .aimmo-wide-gallery';
   const IMAGE_SELECTOR = ':scope > img';
 
   let lightbox = null;
@@ -61,16 +62,11 @@
     closeButton.focus({ preventScroll: true });
   };
 
-  const activateGallery = (gallery) => {
-    if (gallery.dataset.galleryNoExpand === 'true') return;
+  const bindExpandableImage = (image) => {
+    if (!image || image.dataset.galleryExpandBound === 'true') return;
 
-    const items = Array.from(gallery.children).filter((child) => child.matches(ITEM_SELECTOR));
-    if (items.length !== 1) return;
-
-    const image = items[0].querySelector(IMAGE_SELECTOR);
-    if (!image) return;
-
-    gallery.classList.add('is-single-expand');
+    image.dataset.galleryExpandBound = 'true';
+    image.classList.add('hm-ds-gallery-expand-target');
     image.setAttribute('role', 'button');
     image.setAttribute('tabindex', '0');
     image.setAttribute('aria-label', `${image.alt || '이미지'} 크게 보기`);
@@ -86,6 +82,19 @@
         openLightbox(image);
       }
     });
+  };
+
+  const activateGallery = (gallery) => {
+    if (gallery.dataset.galleryNoExpand === 'true') return;
+
+    const items = Array.from(gallery.children).filter((child) => child.matches(ITEM_SELECTOR));
+    const isSingleImage = items.length === 1;
+    const isSingleColumn = gallery.matches(SINGLE_COLUMN_SELECTOR);
+
+    if (!isSingleImage && !isSingleColumn) return;
+
+    gallery.classList.add(isSingleImage ? 'is-single-expand' : 'is-item-expand');
+    items.forEach((item) => bindExpandableImage(item.querySelector(IMAGE_SELECTOR)));
   };
 
   const init = () => {
