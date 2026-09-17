@@ -1,0 +1,35 @@
+name: One-off shared gallery migration
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/oneoff-share-media-gallery.yml'
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Load shared gallery after AIMMO System local layer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('aimmo-system.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<link rel="stylesheet" href="./design-system/components/aimmo-system-v8.css?v=20260917-7">'
+          new = old + '\n<link rel="stylesheet" href="./design-system/components/media-gallery.css?v=20260917-2">'
+          if old not in s:
+              raise SystemExit('Expected AIMMO System v8 link not found')
+          if 'media-gallery.css?v=20260917-2' not in s:
+              s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit migration and remove workflow
+        run: |
+          rm .github/workflows/oneoff-share-media-gallery.yml
+          git config user.name studiods
+          git config user.email garci@naver.com
+          git add aimmo-system.html .github/workflows/oneoff-share-media-gallery.yml
+          git commit -m "Share media gallery contract with AIMMO System"
+          git push
