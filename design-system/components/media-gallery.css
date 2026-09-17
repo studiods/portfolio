@@ -1,13 +1,17 @@
 /* Shared media gallery — reusable evidence/gallery contract.
    Default composition: 2-column square media grid with edge-to-edge items.
    AIMMO System 03.2 is migrated through the legacy aliases below so both pages share one contract. */
+:root{
+  --hm-ds-media-gallery-gap:0px;
+}
+
 .hm-ds-media-gallery,
 html body.aimmo-system-page #journey .aimmo-application-gallery{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   width:100%!important;
   max-width:none!important;
-  gap:0!important;
+  gap:var(--hm-ds-media-gallery-gap,0px)!important;
   margin-right:0!important;
   margin-left:0!important;
   padding:0!important;
@@ -119,20 +123,22 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   pointer-events:none!important;
 }
 
-/* Shared vertical stack for multiple one-image galleries. */
+/* Gallery-to-gallery spacing follows the AIMMO System gallery contract: edge-to-edge, no gap. */
 .hm-ds-media-gallery-stack{
   display:grid!important;
   grid-template-columns:1fr!important;
-  gap:var(--hm-space-component,40px)!important;
+  gap:var(--hm-ds-media-gallery-gap,0px)!important;
   width:100%!important;
 }
 
 /* Single-image gallery interaction contract.
-   media-gallery.js marks one-image galleries automatically. */
-.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img{
+   media-gallery.js marks any one-image gallery automatically. */
+.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img,
+html body.aimmo-system-page #journey .aimmo-application-gallery.is-single-expand .aimmo-application-gallery__item>img{
   cursor:zoom-in!important;
 }
-.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img:focus-visible{
+.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img:focus-visible,
+html body.aimmo-system-page #journey .aimmo-application-gallery.is-single-expand .aimmo-application-gallery__item>img:focus-visible{
   outline:1px solid rgba(255,255,255,.72)!important;
   outline-offset:-1px!important;
 }
@@ -161,13 +167,13 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
-  width:70vw!important;
-  max-width:1600px!important;
+  width:85vw!important;
+  max-width:none!important;
   max-height:calc(100dvh - 96px)!important;
 }
 .hm-ds-image-lightbox__image{
   display:block!important;
-  width:auto!important;
+  width:100%!important;
   max-width:100%!important;
   height:auto!important;
   max-height:calc(100dvh - 96px)!important;
@@ -178,15 +184,15 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
 .hm-ds-image-lightbox__close{
   position:absolute!important;
   z-index:2!important;
-  top:16px!important;
-  right:16px!important;
-  width:40px!important;
-  height:40px!important;
+  top:0!important;
+  right:-48px!important;
+  width:32px!important;
+  height:32px!important;
   margin:0!important;
   padding:0!important;
-  border:1px solid rgba(255,255,255,.34)!important;
-  border-radius:50%!important;
-  background:rgba(0,0,0,.42)!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
   color:#fff!important;
   cursor:pointer!important;
 }
@@ -196,9 +202,9 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   position:absolute!important;
   top:50%!important;
   left:50%!important;
-  width:16px!important;
+  width:24px!important;
   height:1px!important;
-  background:currentColor!important;
+  background:#fff!important;
   transform-origin:center!important;
 }
 .hm-ds-image-lightbox__close::before{transform:translate(-50%,-50%) rotate(45deg)!important}
@@ -230,16 +236,16 @@ body.hm-ds-lightbox-open{
     padding:24px 0!important;
   }
   .hm-ds-image-lightbox__stage{
-    width:92vw!important;
+    width:78vw!important;
     max-height:calc(100dvh - 48px)!important;
   }
   .hm-ds-image-lightbox__image{
     max-height:calc(100dvh - 48px)!important;
   }
   .hm-ds-image-lightbox__close{
-    top:10px!important;
-    right:10px!important;
-    width:36px!important;
-    height:36px!important;
+    top:0!important;
+    right:-40px!important;
+    width:32px!important;
+    height:32px!important;
   }
 }
