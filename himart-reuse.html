@@ -21,10 +21,15 @@
 <link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260910-3-overflow">
 <link rel="stylesheet" href="./design-system/components/subsection-copy-visibility.css?v=20260918-1">
 <style>
-/* 03.1 page-only exception: keep this emphasis out of the shared design system. */
-html body.reuse-current #journey .reuse-reference-bars{
-  --reuse-ref-muted:rgba(0,166,237,.30);
-  --reuse-ref-primary:#00A6ED;
+/* 03.1 page-only exception. graph-color-policy.css applies per-row !important colors,
+   so this page must override the actual fill background, not only its variables. */
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:not(.is-primary) .reuse-reference-bars__fill{
+  background:rgba(0,166,237,.30)!important;
+  opacity:1!important;
+}
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row.is-primary .reuse-reference-bars__fill{
+  background:#00A6ED!important;
+  opacity:1!important;
 }
 </style>
 </head>
