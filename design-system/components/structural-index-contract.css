@@ -1,10 +1,17 @@
 /* Structural index contract — portfolio-wide.
-   Structural labels render numeric hierarchy only (01.1, 02.3, ...).
-   English descriptors belong in content, not in the structural index.
+   Blue 12px structural numbering renders the numeric hierarchy only.
+   English descriptors belong in the title/content, not beside the structural index.
+
+   Target output:
+   - medium title index: 01.1
+   - small/major structural index: 01
+
    Preferred authoring pattern:
    <span class="hm-subno hm-ds-index-label" data-index="01.1">01.1</span>
-   Legacy labels such as "01.3 / AS-IS" are visually constrained to the numeric index
-   until their source markup is migrated. Ordinary card labels (01 / DESIGN) are untouched. */
+
+   Legacy labels such as "01.3 / AS-IS", "01 / REFRAME" and "01 · DARK MODE"
+   are visually constrained to the numeric index until their source markup is migrated.
+   Non-numbered 12px blue labels are intentionally untouched. */
 html body.himart-page-body #live-main .hm-ds-index-label[data-index]{
   font-size:0!important;
   white-space:nowrap!important;
@@ -19,8 +26,8 @@ html body.himart-page-body #live-main .hm-ds-index-label[data-index]::before{
   font-variant-numeric:tabular-nums!important;
 }
 
-/* Legacy fallback: medium-title indexes may still contain "/ ENGLISH" in old HTML.
-   Only structural title positions are clipped; card/evidence labels keep their full copy. */
+/* 01.1 / ENGLISH → 01.1
+   These are the canonical medium-title numbering positions. */
 html body.himart-page-body #live-main .hm-subhead > .hm-subno:not([data-index]),
 html body.himart-page-body #live-main .narrative-subno:not([data-index]),
 html body.himart-page-body #live-main .data-card-head > .hm-card-no:not([data-index]){
@@ -30,4 +37,58 @@ html body.himart-page-body #live-main .data-card-head > .hm-card-no:not([data-in
   white-space:nowrap!important;
   text-overflow:clip!important;
   vertical-align:top!important;
+}
+
+/* 01 / ENGLISH or 01 · ENGLISH → 01
+   Only known structural numbering roles that use the portfolio blue 12px label style
+   are included here. Descriptive labels without a leading structural number are excluded. */
+html body.himart-page-body #live-main :is(
+  .hm-section-head .hm-section-no:not([data-index]),
+  .flow-node > .hm-card-no:not([data-index]),
+  .hm-ds-flow__node > .hm-card-no:not([data-index]),
+  .aimmo-evidence-card figcaption > span:first-child,
+  .aimmo-context-insight__label,
+  .team-card > span:first-child,
+  .ways-kicker,
+  .ways-team-problem__no,
+  .ax-friction-card > span:first-child,
+  .ax-rule-summary > article > span:first-child,
+  .ax-composition-step > span:first-child,
+  .yanolja-answer-card > span:first-child,
+  .yanolja-context-grid > article > span:first-child,
+  .yanolja-direction-card > span:first-child,
+  .yanolja-goal-card > span:first-child,
+  .yanolja-demo-panel > span:first-child,
+  .yanolja-glance-grid > article > span:first-child,
+  .yanolja-coverage-card > span:first-child,
+  .yanolja-lead-step > span:first-child
+){
+  display:inline-block!important;
+  max-inline-size:2.55ch!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:clip!important;
+  vertical-align:top!important;
+}
+
+/* AX maker labels are authored as "STEP 01 · ...". They are structural numbering too,
+   so render the sequence as 01 / 02 / 03 while leaving the source copy intact. */
+html body.himart-page-body #live-main .ax-maker-flow{
+  counter-reset:hm-structural-small-index!important;
+}
+html body.himart-page-body #live-main .ax-maker-step{
+  counter-increment:hm-structural-small-index!important;
+}
+html body.himart-page-body #live-main .ax-maker-step > span:first-child{
+  font-size:0!important;
+  white-space:nowrap!important;
+}
+html body.himart-page-body #live-main .ax-maker-step > span:first-child::before{
+  content:counter(hm-structural-small-index, decimal-leading-zero);
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note)!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+  font-variant-numeric:tabular-nums!important;
 }
