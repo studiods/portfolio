@@ -1,0 +1,23 @@
+/*
+  Numbered subsection description visibility
+  ------------------------------------------
+  Purpose: keep the explanatory copy immediately below numbered subsection
+  titles (01.1, 02.3, etc.) in the document while removing it and its layout
+  space from the current presentation.
+
+  Current state is activated per page by adding the body class:
+    hm-ds-subsection-copy-hidden
+
+  To restore the copy later, remove only that body class. Do not delete the
+  paragraph markup; original typography and spacing will return automatically.
+*/
+
+body.hm-ds-subsection-copy-hidden .hm-subsection:has(.hm-subno) .hm-ds-subsection__description,
+body.hm-ds-subsection-copy-hidden .hm-subsection:has(.hm-subno) .hm-subcopy,
+body.hm-ds-subsection-copy-hidden .data-card:has(.hm-card-no) .data-card-head .desc,
+body.hm-ds-subsection-copy-hidden :is(.hm-subhead,.data-card-head):has(> :is(.hm-subno,.hm-card-no)) > div > :is(h3,h4) + p,
+body.hm-ds-subsection-copy-hidden [class*="subhead"]:has(> .hm-subno) > div > :is(h3,h4) + p {
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+}

@@ -236,3 +236,8 @@
 - Do not add flex/grid row gaps between lines that are semantically one sentence/block; line-height alone owns the vertical rhythm.
 
 - Comparison display text uses `--hm-type-comparison: 32px` with `--hm-leading-group` for Reuse trust/anxiety keywords and the matching Himart synthesis copy.
+
+
+## Numbered subsection description visibility
+
+Numbered middle-title descriptions are preserved in source but can be globally collapsed with the `hm-ds-subsection-copy-hidden` body state. The state removes both the copy and its layout space; removing the class restores the original text and spacing. See `SUBSECTION_COPY_SYSTEM.md` and `components/subsection-copy-visibility.css`.
