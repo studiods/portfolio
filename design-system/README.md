@@ -249,3 +249,8 @@ Numbered middle-title descriptions are preserved in source but can be globally c
 - Authoring pattern: `<span class="hm-subno hm-ds-index-label" data-index="01.1">01.1 / RESEARCH SIGNALS</span>`. The descriptor is hidden visually, not deleted.
 - To show the descriptor again, remove the `data-index` attribute or use a future visible variant; do not delete or replace the text node.
 - Legacy small structural labels without `data-index` are clipped only within explicitly scoped blue-number roles. Ordinary body labels remain unaffected.
+
+
+### Structural visibility final layer
+
+Legacy case pages run content/motion scripts after their static styles load. `structural-visibility-runtime.js` is therefore loaded last on every active case page. It preserves authored descriptions and full index labels in the DOM, then enforces the presentation contract: direct numbered-subsection descriptions are removed from layout while `hm-ds-subsection-copy-hidden` is present; blue structural labels render only their numeric `data-index` value. Removing that body class restores descriptions and their authored layout.

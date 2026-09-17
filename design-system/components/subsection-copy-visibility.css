@@ -1,37 +1,32 @@
-/*
-  Numbered subsection description visibility
-  ------------------------------------------
-  Default presentation state is controlled per page by:
-    <body class="hm-ds-subsection-copy-hidden">
+/* Numbered subsection description visibility
+   ------------------------------------------
+   Default presentation state is controlled per page by:
+     <body class="hm-ds-subsection-copy-hidden">
 
-  The explanatory paragraph remains in the HTML, but is removed from layout.
-  The following content keeps its normal title → content rhythm; only the
-  description's own text height and title → description gap are removed.
+   The explanatory paragraph stays in the HTML and is removed from layout.
+   The final runtime layer is loaded after legacy page scripts because several
+   older pages reinstate display styles during motion/content initialization.
 
-  Restoration: remove only `hm-ds-subsection-copy-hidden` from <body>.
-  This restores the authored text, typography, and spacing without changing
-  paragraph markup or individual component CSS.
+   Restoration: remove only hm-ds-subsection-copy-hidden from <body>.
+   The runtime clears its own inline display values and the authored text and
+   original spacing return without any markup change.
 
-  Scope: numbered subsection/card headers only (01.1, 02.3, …).
-  Hero copy, chapter descriptions, card body copy, captions, and evidence
-  copy are intentionally outside this contract.
-*/
+   Scope: direct descriptions beneath numbered medium-title/card headers only.
+   Hero copy, chapter descriptions, card body copy, captions, and evidence
+   copy remain outside this contract. */
 
-body.hm-ds-subsection-copy-hidden .hm-subsection:has(> .hm-subhead > .hm-subno) > .hm-subhead > div > :is(.hm-subcopy,.hm-ds-subsection__description,[data-hm-subsection-copy]),
-body.hm-ds-subsection-copy-hidden .hm-subsection:has(> .hm-subhead > .hm-subno) > .hm-subhead > div > .hm-subtitle + p,
-body.hm-ds-subsection-copy-hidden .hm-subsection:has(.hm-subno) [class*="subhead"] > div > :is(.hm-subcopy,.hm-ds-subsection__description,[data-hm-subsection-copy]),
-body.hm-ds-subsection-copy-hidden .hm-subsection:has(.hm-subno) [class*="subhead"] > div > .hm-subtitle + p,
-body.hm-ds-subsection-copy-hidden .data-card:has(> .data-card-head > .hm-card-no) > .data-card-head > div > :is(.desc,[data-hm-subsection-copy]),
-body.hm-ds-subsection-copy-hidden .data-card:has(.hm-card-no) .data-card-head > div > :is(.desc,[data-hm-subsection-copy]),
-body.hm-ds-subsection-copy-hidden .data-card:has(.hm-card-no) .data-card-head > div > :is(h3,h4) + p {
+body.hm-ds-subsection-copy-hidden .hm-subhead > div > :is(.hm-subcopy,.hm-ds-subsection__description,[data-hm-subsection-copy]),
+body.hm-ds-subsection-copy-hidden .hm-subhead > div > .hm-subtitle + p,
+body.hm-ds-subsection-copy-hidden .data-card-head > div > :is(.desc,[data-hm-subsection-copy]),
+body.hm-ds-subsection-copy-hidden .data-card-head > div > :is(h3,h4) + p {
   display:none!important;
   margin:0!important;
   padding:0!important;
 }
 
-/* No compensating spacer is introduced while copy is hidden. */
-body.hm-ds-subsection-copy-hidden .hm-subsection:has(> .hm-subhead > .hm-subno) > .hm-subhead > div:has(> :is(.hm-subcopy,.hm-ds-subsection__description,[data-hm-subsection-copy])),
-body.hm-ds-subsection-copy-hidden .data-card:has(> .data-card-head > .hm-card-no) > .data-card-head > div:has(> :is(.desc,[data-hm-subsection-copy])) {
+/* The direct description's own gap disappears with the content. */
+body.hm-ds-subsection-copy-hidden .hm-subhead > div,
+body.hm-ds-subsection-copy-hidden .data-card-head > div {
   margin-bottom:0!important;
   padding-bottom:0!important;
 }

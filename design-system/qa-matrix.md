@@ -137,3 +137,10 @@
 - [ ] 모든 운영 case page가 `structural-index-contract.css`의 동일한 버전을 로드한다.
 - [ ] `.hm-subno`·`.hm-card-no`의 `data-index`는 숫자만 렌더링하고, 원본 영문 descriptor 텍스트는 DOM에 남아 있다.
 - [ ] 12px blue structural label 외의 본문·카드·캡션 텍스트는 이 규칙으로 잘리지 않는다.
+
+
+### Structural visibility runtime QA
+
+- [ ] After all content/motion scripts finish, each direct `.hm-subhead` / `.data-card-head` description is `display:none` when `hm-ds-subsection-copy-hidden` is on `body`.
+- [ ] Removing that body class restores the same description nodes and their original spacing without HTML edits.
+- [ ] Every `.hm-ds-index-label[data-index]` renders only its numeric index after late animation scripts run; original descriptor text remains in DOM.

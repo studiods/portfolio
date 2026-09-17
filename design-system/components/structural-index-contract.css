@@ -1,6 +1,6 @@
 /* Structural index contract — portfolio-wide.
    Blue 12px structural numbering renders the numeric hierarchy only.
-   English descriptors belong in the title/content, not beside the structural index.
+   English descriptors belong in the title/content, not beside the structural index.\n   A final runtime layer reasserts the numeric-only presentation after legacy animation scripts inject inline font styles.
 
    Target output:
    - medium title index: 01.1
