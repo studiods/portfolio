@@ -63,16 +63,16 @@
 .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{margin:8px 0 0;max-width:none;color:rgba(255,255,255,.78);font-family:var(--hm-font-ko);font-size:16px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.5;letter-spacing:var(--hm-track-body);text-align:right;white-space:nowrap}
 .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2 br{display:none}
 
-/* 03.2 — Way of Working ---------------------------------------------------- */
-.himart-team-page .team-wow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:wow}
-.himart-team-page .team-wow{counter-increment:wow;min-height:280px;padding:30px;border:1px solid rgba(255,255,255,.15);background:#050505}
+/* 03.2 — Way of Working: open editorial rows, not cards. ------------------- */
+.himart-team-page .team-wow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;counter-reset:wow}
+.himart-team-page .team-wow{counter-increment:wow;min-height:0;padding:24px 0 28px;border:0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));background:transparent}
 .himart-team-page .team-wow:before{content:"0" counter(wow);display:block;font-family:var(--hm-font-en);font-size:12px;color:rgba(255,255,255,.4)}
-.himart-team-page .team-wow h4{margin:58px 0 0;font-size:24px;line-height:1.42;letter-spacing:-.035em;font-weight:600}
+.himart-team-page .team-wow h4{margin:32px 0 0;font-size:24px;line-height:1.42;letter-spacing:-.035em;font-weight:600}
 .himart-team-page .team-wow p{margin:14px 0 0;max-width:680px;font-size:16px;line-height:1.7;color:rgba(255,255,255,.56)}
 .himart-team-page .team-wow__highlight{display:inline;padding:0 .08em .03em;background:#D30202;color:#fff;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 
 /* 04 — close --------------------------------------------------------------- */
-.himart-team-page .team-final{padding:54px 0 10px;border-top:1px solid rgba(255,255,255,.15)}
+.himart-team-page .team-final{padding:0 0 10px;border-top:0}
 /* 04.2 closing statement deliberately shares the exact 01.2 statement scale and color. */
 .himart-team-page .team-final__title{max-width:980px!important;margin:0!important;font-size:clamp(30px,3.2vw,54px)!important;line-height:1.24!important;letter-spacing:-.055em!important;font-weight:500!important;color:var(--hm-blue)!important}
 .himart-team-page .team-final__title strong{font-weight:500!important;color:var(--hm-blue)!important}
