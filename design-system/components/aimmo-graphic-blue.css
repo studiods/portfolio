@@ -14,8 +14,9 @@ html body.aimmo-graphic-page .aimmo-module-flow__stage>span,
 html body.aimmo-graphic-page .aimmo-impact-grid strong,
 html body.aimmo-graphic-page .aimmo-final-statement>span{color:var(--hm-blue)!important}
 
-html body.aimmo-graphic-page :is(.aimmo-graphic-signal-grid article.is-accent,.aimmo-character-grid article.is-accent,.aimmo-module-flow__stage.is-accent,.aimmo-impact-grid article.is-metric,.aimmo-internal-grid article.is-accent){border-top-color:var(--hm-blue)!important}
-html body.aimmo-graphic-page .aimmo-business-flow article.is-accent{border-color:var(--hm-blue)!important}
+/* Accent meaning stays in typography and media only; structural lines remain neutral like the surrounding cards. */
+html body.aimmo-graphic-page :is(.aimmo-graphic-signal-grid article.is-accent,.aimmo-character-grid article.is-accent,.aimmo-module-flow__stage.is-accent,.aimmo-impact-grid article.is-metric,.aimmo-internal-grid article.is-accent){border-top-color:var(--hm-line-default)!important}
+html body.aimmo-graphic-page .aimmo-business-flow article.is-accent{border-color:var(--hm-line-default)!important}
 
 html body.aimmo-graphic-page :is(.atom--dot,.atom--bar,.atom--join::before,.atom--join::after,.mini-motif i){background:var(--hm-blue)!important}
 html body.aimmo-graphic-page .atom--pill{background:linear-gradient(90deg,var(--hm-blue),var(--hm-blue-deep))!important}
