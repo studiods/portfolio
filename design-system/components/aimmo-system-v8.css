@@ -84,21 +84,16 @@ html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card f
   word-break:keep-all!important;
 }
 
-/* 02.3 — compact one-line copy and one-line gallery titles. */
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
-  max-width:none!important;
-  white-space:nowrap!important;
-}
+/* 02.3 — original copy length and natural wrapping restored. */
 html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
   display:none!important;
 }
 
-/* 02.2 / 02.3 — desktop editorial copy stays on one line where requested. */
+/* ENVIRONMENT / DECISION / OUTPUT — desktop editorial copy stays on one line. */
 @media(min-width:781px){
   html body.aimmo-system-page #data .aimmo-context-insight:nth-child(2) .aimmo-context-insight__copy,
   html body.aimmo-system-page #data .aimmo-context-insight:nth-child(3) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .data-list > .data-card:nth-child(3) .data-card-head .desc{
+  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy{
     max-width:none!important;
     white-space:nowrap!important;
   }
