@@ -119,6 +119,98 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   pointer-events:none!important;
 }
 
+/* Shared vertical stack for multiple one-image galleries. */
+.hm-ds-media-gallery-stack{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:var(--hm-space-component,40px)!important;
+  width:100%!important;
+}
+
+/* Single-image gallery interaction contract.
+   media-gallery.js marks one-image galleries automatically. */
+.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img{
+  cursor:zoom-in!important;
+}
+.hm-ds-media-gallery.is-single-expand .hm-ds-media-gallery__item>img:focus-visible{
+  outline:1px solid rgba(255,255,255,.72)!important;
+  outline-offset:-1px!important;
+}
+.hm-ds-image-lightbox{
+  position:fixed!important;
+  z-index:10000!important;
+  inset:0!important;
+  display:grid!important;
+  place-items:center!important;
+  width:100vw!important;
+  height:100dvh!important;
+  padding:48px 0!important;
+  background:rgba(0,0,0,.80)!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transition:opacity 180ms ease,visibility 180ms ease!important;
+}
+.hm-ds-image-lightbox.is-open{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+.hm-ds-image-lightbox__stage{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:70vw!important;
+  max-width:1600px!important;
+  max-height:calc(100dvh - 96px)!important;
+}
+.hm-ds-image-lightbox__image{
+  display:block!important;
+  width:auto!important;
+  max-width:100%!important;
+  height:auto!important;
+  max-height:calc(100dvh - 96px)!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  box-shadow:none!important;
+}
+.hm-ds-image-lightbox__close{
+  position:absolute!important;
+  z-index:2!important;
+  top:16px!important;
+  right:16px!important;
+  width:40px!important;
+  height:40px!important;
+  margin:0!important;
+  padding:0!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  border-radius:50%!important;
+  background:rgba(0,0,0,.42)!important;
+  color:#fff!important;
+  cursor:pointer!important;
+}
+.hm-ds-image-lightbox__close::before,
+.hm-ds-image-lightbox__close::after{
+  content:""!important;
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
+  width:16px!important;
+  height:1px!important;
+  background:currentColor!important;
+  transform-origin:center!important;
+}
+.hm-ds-image-lightbox__close::before{transform:translate(-50%,-50%) rotate(45deg)!important}
+.hm-ds-image-lightbox__close::after{transform:translate(-50%,-50%) rotate(-45deg)!important}
+.hm-ds-image-lightbox__close:focus-visible{
+  outline:1px solid #fff!important;
+  outline-offset:3px!important;
+}
+body.hm-ds-lightbox-open{
+  overflow:hidden!important;
+}
+
 @media(max-width:780px){
   .hm-ds-media-gallery,
   .hm-ds-media-gallery--2x2,
@@ -133,5 +225,21 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption
   .hm-ds-media-gallery__item>figcaption>h4,
   html body.aimmo-system-page #journey .aimmo-application-gallery__item>figcaption>h4{
     font-size:22px!important;
+  }
+  .hm-ds-image-lightbox{
+    padding:24px 0!important;
+  }
+  .hm-ds-image-lightbox__stage{
+    width:92vw!important;
+    max-height:calc(100dvh - 48px)!important;
+  }
+  .hm-ds-image-lightbox__image{
+    max-height:calc(100dvh - 48px)!important;
+  }
+  .hm-ds-image-lightbox__close{
+    top:10px!important;
+    right:10px!important;
+    width:36px!important;
+    height:36px!important;
   }
 }
