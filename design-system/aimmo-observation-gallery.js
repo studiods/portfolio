@@ -56,10 +56,9 @@
           './assets/image/aimmo-system/aimmo_system_08_03.png'
         ],
         [
-          './assets/image/aimmo-system/aimmo-source-010.jpg',
-          './assets/image/aimmo-system/aimmo-source-014.jpg',
-          './assets/image/aimmo-system/aimmo-source-016.jpg',
-          './assets/image/aimmo-system/aimmo-source-018.jpg'
+          './assets/image/aimmo-system/aimmo_system_09_01.png',
+          './assets/image/aimmo-system/aimmo_system_09_02.png',
+          './assets/image/aimmo-system/aimmo_system_09_03.png'
         ]
       ]
     }
