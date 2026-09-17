@@ -13,170 +13,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Refine AIMMO copy and typography
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          import base64
 
           html_path = Path('aimmo-system.html')
           s = html_path.read_text(encoding='utf-8')
-
           replacements = {
-            './design-system/components/aimmo-system-v8.css?v=20260917-4': './design-system/components/aimmo-system-v8.css?v=20260917-5',
-            './design-system/navigation.js?v=20260912-7': './design-system/navigation.js?v=20260917-1',
-            '다크 모드를 정답으로 두지 않고, 저조도·장시간 사용 환경과 관련 연구를 함께 검토했습니다.': '저조도·장시간 사용 환경을 기준으로 주요 개선 포인트를 정리했습니다.',
-            '저조도·장시간 작업 환경을 고려해 전체 화면을 다크 모드로 전환했습니다.': '다크 모드로 전환했습니다.',
-            '행동·상태 대비를 명확히 하고 실제 장비 기준으로 컬러를 다시 조정했습니다.': '컬러 체계를 다시 조정했습니다.',
-            '주요 사용 장비를 기준으로 컴포넌트 크기와 간격을 다시 설정했습니다.': '컴포넌트 크기를 조정했습니다.',
-            '그래픽 표현과 활용 규칙을 통일하고 해외 적용을 위한 영문 가이드까지 만들었습니다.': '그래픽 규칙을 통일했습니다.',
-            '작업자를 대상으로 한 설문 조사에서는 업무시간의 78.7%를 재택으로 진행한다고 답변했습니다.': '업무시간의 78.7%를 재택으로 진행한다고 답했습니다.',
-            '현재 상태와 다음 행동을 즉시 구분할수록 재확인 시간이 줄고 작업 흐름을 빠르게 이어갈 수 있었습니다.': '상태와 다음 행동을 즉시 구분할수록 재확인 시간이 줄었습니다.',
-            '선택과 탐색에 드는 시간을 줄이는 것이 곧 처리량과 생산성, 그리고 작업자의 급여와 직결되는 부분이었습니다.': '탐색·판단 시간을 줄이는 것이 처리량과 보상에 직접 연결됐습니다.'
+              './design-system/components/aimmo-system-v8.css?v=20260917-4': './design-system/components/aimmo-system-v8.css?v=20260917-5',
+              './design-system/navigation.js?v=20260912-7': './design-system/navigation.js?v=20260917-1',
+              '다크 모드를 정답으로 두지 않고, 저조도·장시간 사용 환경과 관련 연구를 함께 검토했습니다.': '저조도·장시간 사용 환경을 기준으로 주요 개선 포인트를 정리했습니다.',
+              '저조도·장시간 작업 환경을 고려해 전체 화면을 다크 모드로 전환했습니다.': '다크 모드로 전환했습니다.',
+              '행동·상태 대비를 명확히 하고 실제 장비 기준으로 컬러를 다시 조정했습니다.': '컬러 체계를 다시 조정했습니다.',
+              '주요 사용 장비를 기준으로 컴포넌트 크기와 간격을 다시 설정했습니다.': '컴포넌트 크기를 조정했습니다.',
+              '그래픽 표현과 활용 규칙을 통일하고 해외 적용을 위한 영문 가이드까지 만들었습니다.': '그래픽 규칙을 통일했습니다.',
+              '작업자를 대상으로 한 설문 조사에서는 업무시간의 78.7%를 재택으로 진행한다고 답변했습니다.': '업무시간의 78.7%를 재택으로 진행한다고 답했습니다.',
+              '현재 상태와 다음 행동을 즉시 구분할수록 재확인 시간이 줄고 작업 흐름을 빠르게 이어갈 수 있었습니다.': '상태와 다음 행동을 즉시 구분할수록 재확인 시간이 줄었습니다.',
+              '선택과 탐색에 드는 시간을 줄이는 것이 곧 처리량과 생산성, 그리고 작업자의 급여와 직결되는 부분이었습니다.': '탐색·판단 시간을 줄이는 것이 처리량과 보상에 직접 연결됐습니다.'
           }
           for old, new in replacements.items():
               if old not in s:
-                  raise SystemExit(f'Missing expected HTML text: {old}')
+                  raise SystemExit('Missing expected HTML text: ' + old)
               s = s.replace(old, new, 1)
-
-          notes = [
-            '업무 UI가 더 많은 작업을 정확하게 처리하도록 도와야 한다는 응답 경향',
-            '탐색·판단 시간을 줄이면 같은 시간 안에 더 많은 작업을 처리할 수 있다는 응답 경향',
-            '작업량에 비례해 보상이 달라지는 Cloudworker의 업무 구조를 확인한 응답 경향'
-          ]
-          for note in notes:
-              node = f'<span class="aimmo-output-graph__note">{note}</span>'
+          for note in (
+              '업무 UI가 더 많은 작업을 정확하게 처리하도록 도와야 한다는 응답 경향',
+              '탐색·판단 시간을 줄이면 같은 시간 안에 더 많은 작업을 처리할 수 있다는 응답 경향',
+              '작업량에 비례해 보상이 달라지는 Cloudworker의 업무 구조를 확인한 응답 경향'
+          ):
+              node = '<span class="aimmo-output-graph__note">' + note + '</span>'
               if node not in s:
-                  raise SystemExit(f'Missing OUTPUT note: {note}')
+                  raise SystemExit('Missing OUTPUT note: ' + note)
               s = s.replace(node, '', 1)
-
           html_path.write_text(s, encoding='utf-8')
 
-          css_path = Path('design-system/components/aimmo-system-v8.css')
-          css_path.write_text(r'''/* AIMMO System v8 — chapter 03 application / adoption photo evidence. */
-html body.aimmo-system-page #journey .aimmo-application-gallery{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  width:100%!important;
-  max-width:none!important;
-  gap:0!important;
-  margin-right:0!important;
-  margin-left:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  background:#000!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item{
-  position:relative!important;
-  width:100%!important;
-  min-width:0!important;
-  aspect-ratio:1/1!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:hidden!important;
-  border:0!important;
-  border-radius:0!important;
-  background:#050505!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item img{
-  display:block!important;
-  width:100%!important;
-  height:100%!important;
-  margin:0!important;
-  object-fit:cover!important;
-  object-position:center!important;
-  filter:none!important;
-  transform:none!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item::after{
-  content:"";
-  position:absolute;
-  z-index:1;
-  inset:auto 0 0;
-  height:52%;
-  pointer-events:none;
-  background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.48) 52%,rgba(0,0,0,0) 100%);
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
-  position:absolute!important;
-  z-index:2!important;
-  right:0!important;
-  bottom:0!important;
-  left:0!important;
-  margin:0!important;
-  padding:28px!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption span{
-  display:block!important;
-  margin:0 0 10px!important;
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
-  font-weight:400!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4{
-  margin:0!important;
-  max-width:30ch!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  line-height:1.35!important;
-  word-break:keep-all!important;
-}
-
-/* 02.1 — keep the subsection heading on the shared/default scale; only gallery titles are 22px. */
-html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card figcaption strong{
-  display:block!important;
-  margin:0!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:1.35!important;
-  word-break:keep-all!important;
-}
-
-/* 02.3 — compact one-line copy and one-line gallery titles. */
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
-  max-width:none!important;
-  white-space:nowrap!important;
-}
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
-  display:none!important;
-}
-
-/* 02.2 / 02.3 — desktop editorial copy stays on one line where requested. */
-@media(min-width:781px){
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(2) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(3) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .data-list > .data-card:nth-child(3) .data-card-head .desc{
-    max-width:none!important;
-    white-space:nowrap!important;
-  }
-}
-
-@media(max-width:780px){
-  html body.aimmo-system-page #journey .aimmo-application-gallery{
-    grid-template-columns:1fr!important;
-  }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
-    padding:22px!important;
-  }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4,
-  html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card figcaption strong{
-    font-size:22px!important;
-  }
-  html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
-    white-space:normal!important;
-  }
-}
-''', encoding='utf-8')
+          css_b64 = 'LyogQUlNTU8gU3lzdGVtIHY4IOKAlCBjaGFwdGVyIDAzIGFwcGxpY2F0aW9uIC8gYWRvcHRpb24gcGhvdG8gZXZpZGVuY2UuICovCmh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjam91cm5leSAuYWltbW8tYXBwbGljYXRpb24tZ2FsbGVyeXsKICBkaXNwbGF5OmdyaWQhaW1wb3J0YW50OwogIGdyaWQtdGVtcGxhdGUtY29sdW1uczpyZXBlYXQoMixtaW5tYXgoMCwxZnIpKSFpbXBvcnRhbnQ7CiAgd2lkdGg6MTAwJSFpbXBvcnRhbnQ7CiAgbWF4LXdpZHRoOm5vbmUhaW1wb3J0YW50OwogIGdhcDowIWltcG9ydGFudDsKICBtYXJnaW4tcmlnaHQ6MCFpbXBvcnRhbnQ7CiAgbWFyZ2luLWxlZnQ6MCFpbXBvcnRhbnQ7CiAgcGFkZGluZzowIWltcG9ydGFudDsKICBvdmVyZmxvdzpoaWRkZW4haW1wb3J0YW50OwogIGJhY2tncm91bmQ6IzAwMCFpbXBvcnRhbnQ7Cn0KaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNqb3VybmV5IC5haW1tby1hcHBsaWNhdGlvbi1nYWxsZXJ5X19pdGVtewogIHBvc2l0aW9uOnJlbGF0aXZlIWltcG9ydGFudDsKICB3aWR0aDoxMDAlIWltcG9ydGFudDsKICBtaW4td2lkdGg6MCFpbXBvcnRhbnQ7CiAgYXNwZWN0LXJhdGlvOjEvMSFpbXBvcnRhbnQ7CiAgbWFyZ2luOjAhaW1wb3J0YW50OwogIHBhZGRpbmc6MCFpbXBvcnRhbnQ7CiAgb3ZlcmZsb3c6aGlkZGVuIWltcG9ydGFudDsKICBib3JkZXI6MCFpbXBvcnRhbnQ7CiAgYm9yZGVyLXJhZGl1czowIWltcG9ydGFudDsKICBiYWNrZ3JvdW5kOiMwNTA1MDUhaW1wb3J0YW50Owp9Cmh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjam91cm5leSAuYWltbW8tYXBwbGljYXRpb24tZ2FsbGVyeV9faXRlbSBpbWd7CiAgZGlzcGxheTpibG9jayFpbXBvcnRhbnQ7CiAgd2lkdGg6MTAwJSFpbXBvcnRhbnQ7CiAgaGVpZ2h0OjEwMCUhaW1wb3J0YW50OwogIG1hcmdpbjowIWltcG9ydGFudDsKICBvYmplY3QtZml0OmNvdmVyIWltcG9ydGFudDsKICBvYmplY3QtcG9zaXRpb246Y2VudGVyIWltcG9ydGFudDsKICBmaWx0ZXI6bm9uZSFpbXBvcnRhbnQ7CiAgdHJhbnNmb3JtOm5vbmUhaW1wb3J0YW50Owp9Cmh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjam91cm5leSAuYWltbW8tYXBwbGljYXRpb24tZ2FsbGVyeV9faXRlbTo6YWZ0ZXJ7CiAgY29udGVudDoiIjsKICBwb3NpdGlvbjphYnNvbHV0ZTsKICB6LWluZGV4OjE7CiAgaW5zZXQ6YXV0byAwIDA7CiAgaGVpZ2h0OjUyJTsKICBwb2ludGVyLWV2ZW50czpub25lOwogIGJhY2tncm91bmQ6bGluZWFyLWdyYWRpZW50KHRvIHRvcCxyZ2JhKDAsMCwwLC44MikgMCUscmdiYSgwLDAsMCwuNDgpIDUyJSxyZ2JhKDAsMCwwLDApIDEwMCUpOwp9Cmh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjam91cm5leSAuYWltbW8tYXBwbGljYXRpb24tZ2FsbGVyeV9faXRlbSBmaWdjYXB0aW9uewogIHBvc2l0aW9uOmFic29sdXRlIWltcG9ydGFudDsKICB6LWluZGV4OjIhaW1wb3J0YW50OwogIHJpZ2h0OjAhaW1wb3J0YW50OwogIGJvdHRvbTowIWltcG9ydGFudDsKICBsZWZ0OjAhaW1wb3J0YW50OwogIG1hcmdpbjowIWltcG9ydGFudDsKICBwYWRkaW5nOjI4cHghaW1wb3J0YW50Owp9Cmh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjam91cm5leSAuYWltbW8tYXBwbGljYXRpb24tZ2FsbGVyeV9faXRlbSBmaWdjYXB0aW9uIHNwYW57CiAgZGlzcGxheTpibG9jayFpbXBvcnRhbnQ7CiAgbWFyZ2luOjAgMCAxMHB4IWltcG9ydGFudDsKICBjb2xvcjp2YXIoLS1obS1ibHVlKSFpbXBvcnRhbnQ7CiAgZm9udC1mYW1pbHk6dmFyKC0taG0tZm9udC1lbikhaW1wb3J0YW50OwogIGZvbnQtc2l6ZToxMnB4IWltcG9ydGFudDsKICBmb250LXdlaWdodDo0MDAhaW1wb3J0YW50OwogIGxldHRlci1zcGFjaW5nOnZhcigtLWhtLXRyYWNrLW5vdGUpIWltcG9ydGFudDsKfQpodG1sIGJvZHkuYWltbW8tc3lzdGVtLXBhZ2UgI2pvdXJuZXkgLmFpbW1vLWFwcGxpY2F0aW9uLWdhbGxlcnlfX2l0ZW0gZmlnY2FwdGlvbiBoNHsKICBtYXJnaW46MCFpbXBvcnRhbnQ7CiAgbWF4LXdpZHRoOjMwY2ghaW1wb3J0YW50OwogIGNvbG9yOiNmZmYhaW1wb3J0YW50OwogIGZvbnQtZmFtaWx5OnZhcigtLWhtLWZvbnQta28pIWltcG9ydGFudDsKICBmb250LXNpemU6MjJweCFpbXBvcnRhbnQ7CiAgZm9udC13ZWlnaHQ6MzAwIWltcG9ydGFudDsKICBsaW5lLWhlaWdodDoxLjM1IWltcG9ydGFudDsKICB3b3JkLWJyZWFrOmtlZXAtYWxsIWltcG9ydGFudDsKfQoKLyogMDIuMSDigJQga2VlcCB0aGUgc3Vic2VjdGlvbiBoZWFkaW5nIG9uIHRoZSBzaGFyZWQvZGVmYXVsdCBzY2FsZTsgb25seSBnYWxsZXJ5IHRpdGxlcyBhcmUgMjJweC4gKi8KaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNkYXRhIC5haW1tby1ldmlkZW5jZS1nYWxsZXJ5IC5haW1tby1ldmlkZW5jZS1jYXJkIGZpZ2NhcHRpb24gc3Ryb25newogIGRpc3BsYXk6YmxvY2shaW1wb3J0YW50OwogIG1hcmdpbjowIWltcG9ydGFudDsKICBjb2xvcjojZmZmIWltcG9ydGFudDsKICBmb250LWZhbWlseTp2YXIoLS1obS1mb250LWtvKSFpbXBvcnRhbnQ7CiAgZm9udC1zaXplOjIycHghaW1wb3J0YW50OwogIGZvbnQtd2VpZ2h0OjMwMCFpbXBvcnRhbnQ7CiAgZm9udC12YXJpYXRpb24tc2V0dGluZ3M6IndnaHQiIDMwMCFpbXBvcnRhbnQ7CiAgbGluZS1oZWlnaHQ6MS4zNSFpbXBvcnRhbnQ7CiAgd29yZC1icmVhazprZWVwLWFsbCFpbXBvcnRhbnQ7Cn0KCi8qIDAyLjMg4oCUIGNvbXBhY3Qgb25lLWxpbmUgY29weSBhbmQgb25lLWxpbmUgZ2FsbGVyeSB0aXRsZXMuICovCmh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjZGF0YSAuYWltbW8taW1wcm92ZW1lbnQtZ2FsbGVyeSAuYWltbW8tZXZpZGVuY2UtY2FyZCBmaWdjYXB0aW9uIHN0cm9uZ3sKICBtYXgtd2lkdGg6bm9uZSFpbXBvcnRhbnQ7CiAgd2hpdGUtc3BhY2U6bm93cmFwIWltcG9ydGFudDsKfQpodG1sIGJvZHkuYWltbW8tc3lzdGVtLXBhZ2UgI2RhdGEgLmFpbW1vLWltcHJvdmVtZW50LWdhbGxlcnkgLmFpbW1vLWV2aWRlbmNlLWNhcmQgZmlnY2FwdGlvbiBwewogIGRpc3BsYXk6bm9uZSFpbXBvcnRhbnQ7Cn0KCi8qIDAyLjIgLyAwMi4zIOKAlCBkZXNrdG9wIGVkaXRvcmlhbCBjb3B5IHN0YXlzIG9uIG9uZSBsaW5lIHdoZXJlIHJlcXVlc3RlZC4gKi8KQG1lZGlhKG1pbi13aWR0aDo3ODFweCl7CiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNkYXRhIC5haW1tby1jb250ZXh0LWluc2lnaHQ6bnRoLWNoaWxkKDIpIC5haW1tby1jb250ZXh0LWluc2lnaHRfX2NvcHksCiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNkYXRhIC5haW1tby1jb250ZXh0LWluc2lnaHQ6bnRoLWNoaWxkKDMpIC5haW1tby1jb250ZXh0LWluc2lnaHRfX2NvcHksCiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNkYXRhIC5haW1tby1jb250ZXh0LWluc2lnaHQ6bnRoLWNoaWxkKDQpIC5haW1tby1jb250ZXh0LWluc2lnaHRfX2NvcHksCiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNkYXRhIC5kYXRhLWxpc3QgPiAuZGF0YS1jYXJkOm50aC1jaGlsZCgzKSAuZGF0YS1jYXJkLWhlYWQgLmRlc2N7CiAgICBtYXgtd2lkdGg6bm9uZSFpbXBvcnRhbnQ7CiAgICB3aGl0ZS1zcGFjZTpub3dyYXAhaW1wb3J0YW50OwogIH0KfQoKQG1lZGlhKG1heC13aWR0aDo3ODBweCl7CiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNqb3VybmV5IC5haW1tby1hcHBsaWNhdGlvbi1nYWxsZXJ5ewogICAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOjFmciFpbXBvcnRhbnQ7CiAgfQogIGh0bWwgYm9keS5haW1tby1zeXN0ZW0tcGFnZSAjam91cm5leSAuYWltbW8tYXBwbGljYXRpb24tZ2FsbGVyeV9faXRlbSBmaWdjYXB0aW9uewogICAgcGFkZGluZzoyMnB4IWltcG9ydGFudDsKICB9CiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNqb3VybmV5IC5haW1tby1hcHBsaWNhdGlvbi1nYWxsZXJ5X19pdGVtIGZpZ2NhcHRpb24gaDQsCiAgaHRtbCBib2R5LmFpbW1vLXN5c3RlbS1wYWdlICNkYXRhIC5haW1tby1ldmlkZW5jZS1nYWxsZXJ5IC5haW1tby1ldmlkZW5jZS1jYXJkIGZpZ2NhcHRpb24gc3Ryb25newogICAgZm9udC1zaXplOjIycHghaW1wb3J0YW50OwogIH0KICBodG1sIGJvZHkuYWltbW8tc3lzdGVtLXBhZ2UgI2RhdGEgLmFpbW1vLWltcHJvdmVtZW50LWdhbGxlcnkgLmFpbW1vLWV2aWRlbmNlLWNhcmQgZmlnY2FwdGlvbiBzdHJvbmd7CiAgICB3aGl0ZS1zcGFjZTpub3JtYWwhaW1wb3J0YW50OwogIH0KfQo='
+          Path('design-system/components/aimmo-system-v8.css').write_text(base64.b64decode(css_b64).decode('utf-8'), encoding='utf-8')
 
           nav_path = Path('design-system/navigation.js')
           nav = nav_path.read_text(encoding='utf-8')
@@ -184,10 +58,8 @@ html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-car
           new = "reflection:'이번 디자인 시스템 제작은 사용 환경과 업무 요구사항 분석에서 시작했습니다. 디자인 시스템 구축을 넘어 제품의 근본적인 사용성과 생산성까지 개선했고, 생산성과 효율성이 중요한 B2B 환경에서 <strong>내부 제작 효율과 실제 사용자 생산성을 함께 높여본</strong> 값진 경험이었습니다.'"
           if old not in nav:
               raise SystemExit('Missing AIMMO reflection source')
-          nav = nav.replace(old, new, 1)
-          nav_path.write_text(nav, encoding='utf-8')
+          nav_path.write_text(nav.replace(old, new, 1), encoding='utf-8')
           PY
-
       - name: Verify and commit
         shell: bash
         run: |
@@ -198,22 +70,14 @@ html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-car
           n = Path('design-system/navigation.js').read_text(encoding='utf-8')
           assert 'aimmo-system-v8.css?v=20260917-5' in h
           assert 'navigation.js?v=20260917-1' in h
-          assert '업무시간의 78.7%를 재택으로 진행한다고 답했습니다.' in h
-          assert '상태와 다음 행동을 즉시 구분할수록 재확인 시간이 줄었습니다.' in h
-          assert '탐색·판단 시간을 줄이는 것이 처리량과 보상에 직접 연결됐습니다.' in h
           assert 'aimmo-output-graph__note' not in h
-          assert '다크 모드로 전환했습니다.' in h
-          assert '컬러 체계를 다시 조정했습니다.' in h
-          assert '컴포넌트 크기를 조정했습니다.' in h
-          assert '그래픽 규칙을 통일했습니다.' in h
           assert '.data-card:first-child .data-card-head h3' not in c
           assert '.aimmo-evidence-gallery .aimmo-evidence-card figcaption strong' in c
-          assert 'font-size:22px!important' in c
           assert '이번 디자인 시스템 제작은 사용 환경과 업무 요구사항 분석에서 시작했습니다.' in n
           PY
           rm .github/workflows/oneoff-aimmo-copy-layout-refine.yml
-          git config user.name "studiods"
-          git config user.email "garci@naver.com"
+          git config user.name 'studiods'
+          git config user.email 'garci@naver.com'
           git add aimmo-system.html design-system/components/aimmo-system-v8.css design-system/navigation.js .github/workflows/oneoff-aimmo-copy-layout-refine.yml
-          git commit -m "Refine AIMMO one-line copy and reflection"
+          git commit -m 'Refine AIMMO one-line copy and reflection'
           git push origin HEAD:main
