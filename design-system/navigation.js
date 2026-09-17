@@ -333,7 +333,7 @@
     },
     {
       file:'aimmo-system.html', href:'./aimmo-system.html', name:'AIMMO DESIGN SYSTEM DEVELOPMENT', en:true,
-      reflection:'디자인 시스템은 컴포넌트 묶음보다 <strong>팀이 더 적은 반복으로 더 좋은 판단을 하게 만드는 업무 시스템</strong>에 가까웠습니다. 리드로서 기준을 직접 정하는 것보다 재사용 가능한 판단 구조와 운영 방식을 남기는 것이 더 오래 가는 성과라고 느꼈습니다.'
+      reflection:'이번 디자인 시스템 제작은 사용 환경과 업무 요구사항 분석에서 시작했습니다. 디자인 시스템 구축을 넘어 제품의 근본적인 사용성과 생산성까지 개선했고, 생산성과 효율성이 중요한 B2B 환경에서 <strong>내부 제작 효율과 실제 사용자 생산성을 함께 높여본</strong> 값진 경험이었습니다.'
     },
     {
       file:'aimmo-graphic.html', href:'./aimmo-graphic.html', name:'AIMMO GRAPHIC MOTIF DEVELOPMENT', en:true,

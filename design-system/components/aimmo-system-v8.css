@@ -71,14 +71,9 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption
   word-break:keep-all!important;
 }
 
-/* v8.1 — AIMMO requested title hierarchy. */
-html body.aimmo-system-page #data .data-list > .data-card:first-child .data-card-head h3{
-  font-size:22px!important;
-  line-height:1.35!important;
-}
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
+/* 02.1 — keep the subsection heading on the shared/default scale; only gallery titles are 22px. */
+html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card figcaption strong{
   display:block!important;
-  max-width:30ch!important;
   margin:0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
@@ -88,8 +83,25 @@ html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-car
   line-height:1.35!important;
   word-break:keep-all!important;
 }
+
+/* 02.3 — compact one-line copy and one-line gallery titles. */
+html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
+  max-width:none!important;
+  white-space:nowrap!important;
+}
 html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
   display:none!important;
+}
+
+/* 02.2 / 02.3 — desktop editorial copy stays on one line where requested. */
+@media(min-width:781px){
+  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(2) .aimmo-context-insight__copy,
+  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(3) .aimmo-context-insight__copy,
+  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy,
+  html body.aimmo-system-page #data .data-list > .data-card:nth-child(3) .data-card-head .desc{
+    max-width:none!important;
+    white-space:nowrap!important;
+  }
 }
 
 @media(max-width:780px){
@@ -99,11 +111,11 @@ html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-car
   html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
     padding:22px!important;
   }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4{
+  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4,
+  html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card figcaption strong{
     font-size:22px!important;
   }
-  html body.aimmo-system-page #data .data-list > .data-card:first-child .data-card-head h3,
   html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
-    font-size:22px!important;
+    white-space:normal!important;
   }
 }
