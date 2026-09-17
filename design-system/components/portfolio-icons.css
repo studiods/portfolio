@@ -70,3 +70,11 @@ html body.himart-page-body .hm-ds-icon {
   transform: none !important;
   z-index: 2;
 }
+
+@media (max-width: 767px) {
+  html body.himart-page-body .ways-operating-stack,
+  html body.himart-page-body .aimmo-collaboration-grid,
+  html body.himart-page-body .himart-team-page .team-agenda:not(.team-agenda--four) {
+    grid-template-columns: 1fr !important;
+  }
+}
