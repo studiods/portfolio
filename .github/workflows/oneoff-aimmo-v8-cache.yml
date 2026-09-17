@@ -1,0 +1,31 @@
+name: One-off AIMMO v8 cache bump
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/oneoff-aimmo-v8-cache.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump AIMMO v8 cache
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('aimmo-system.html')
+          s = p.read_text(encoding='utf-8')
+          old = 'aimmo-system-v8.css?v=20260917-3'
+          new = 'aimmo-system-v8.css?v=20260917-4'
+          if old not in s:
+              raise SystemExit('Expected v8 cache token not found')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+          rm .github/workflows/oneoff-aimmo-v8-cache.yml
+          git config user.name 'studiods'
+          git config user.email 'garci@naver.com'
+          git add aimmo-system.html .github/workflows/oneoff-aimmo-v8-cache.yml
+          git commit -m 'Bump AIMMO typography cache version'
+          git push
