@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Restore AIMMO 02.3 copy and wrapping
         shell: bash
         run: |
@@ -24,59 +22,32 @@ jobs:
           html_path = Path('aimmo-system.html')
           h = html_path.read_text(encoding='utf-8')
           replacements = {
-            './design-system/components/aimmo-system-v8.css?v=20260917-5': './design-system/components/aimmo-system-v8.css?v=20260917-6',
-            '저조도·장시간 사용 환경을 기준으로 주요 개선 포인트를 정리했습니다.': '다크 모드를 정답으로 두지 않고, 저조도·장시간 사용 환경과 관련 연구를 함께 검토했습니다.',
-            '다크 모드로 전환했습니다.': '저조도·장시간 작업 환경을 고려해 전체 화면을 다크 모드로 전환했습니다.',
-            '컬러 체계를 다시 조정했습니다.': '행동·상태 대비를 명확히 하고 실제 장비 기준으로 컬러를 다시 조정했습니다.',
-            '컴포넌트 크기를 조정했습니다.': '주요 사용 장비를 기준으로 컴포넌트 크기와 간격을 다시 설정했습니다.',
-            '그래픽 규칙을 통일했습니다.': '그래픽 표현과 활용 규칙을 통일하고 해외 적용을 위한 영문 가이드까지 만들었습니다.'
+              './design-system/components/aimmo-system-v8.css?v=20260917-5': './design-system/components/aimmo-system-v8.css?v=20260917-6',
+              '저조도·장시간 사용 환경을 기준으로 주요 개선 포인트를 정리했습니다.': '다크 모드를 정답으로 두지 않고, 저조도·장시간 사용 환경과 관련 연구를 함께 검토했습니다.',
+              '다크 모드로 전환했습니다.': '저조도·장시간 작업 환경을 고려해 전체 화면을 다크 모드로 전환했습니다.',
+              '컬러 체계를 다시 조정했습니다.': '행동·상태 대비를 명확히 하고 실제 장비 기준으로 컬러를 다시 조정했습니다.',
+              '컴포넌트 크기를 조정했습니다.': '주요 사용 장비를 기준으로 컴포넌트 크기와 간격을 다시 설정했습니다.',
+              '그래픽 규칙을 통일했습니다.': '그래픽 표현과 활용 규칙을 통일하고 해외 적용을 위한 영문 가이드까지 만들었습니다.'
           }
           for old, new in replacements.items():
               if old not in h:
-                  raise SystemExit(f'Missing expected HTML text: {old}')
+                  raise SystemExit('Missing expected HTML text: ' + old)
               h = h.replace(old, new, 1)
           html_path.write_text(h, encoding='utf-8')
 
           css_path = Path('design-system/components/aimmo-system-v8.css')
           c = css_path.read_text(encoding='utf-8')
-          old_block = '''/* 02.3 — compact one-line copy and one-line gallery titles. */
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
-  max-width:none!important;
-  white-space:nowrap!important;
-}
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
-  display:none!important;
-}
-
-/* 02.2 / 02.3 — desktop editorial copy stays on one line where requested. */
-@media(min-width:781px){
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(2) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(3) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .data-list > .data-card:nth-child(3) .data-card-head .desc{
-    max-width:none!important;
-    white-space:nowrap!important;
-  }
-}
-'''
-          new_block = '''/* 02.3 — restore the original copy length and natural wrapping. */
-html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
-  display:none!important;
-}
-
-/* ENVIRONMENT / DECISION / OUTPUT — desktop editorial copy remains on one line. */
-@media(min-width:781px){
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(2) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(3) .aimmo-context-insight__copy,
-  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy{
-    max-width:none!important;
-    white-space:nowrap!important;
-  }
-}
-'''
-          if old_block not in c:
-              raise SystemExit('Missing expected 02.3 CSS block')
-          c = c.replace(old_block, new_block, 1)
+          strong_block = 'html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{\n  max-width:none!important;\n  white-space:nowrap!important;\n}\n'
+          if strong_block not in c:
+              raise SystemExit('Missing 02.3 nowrap title block')
+          c = c.replace(strong_block, '', 1)
+          old_selector = '  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy,\n  html body.aimmo-system-page #data .data-list > .data-card:nth-child(3) .data-card-head .desc{'
+          new_selector = '  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(4) .aimmo-context-insight__copy{'
+          if old_selector not in c:
+              raise SystemExit('Missing 02.3 description nowrap selector')
+          c = c.replace(old_selector, new_selector, 1)
+          c = c.replace('/* 02.3 — compact one-line copy and one-line gallery titles. */', '/* 02.3 — original copy length and natural wrapping restored. */', 1)
+          c = c.replace('/* 02.2 / 02.3 — desktop editorial copy stays on one line where requested. */', '/* ENVIRONMENT / DECISION / OUTPUT — desktop editorial copy stays on one line. */', 1)
           css_path.write_text(c, encoding='utf-8')
           PY
 
@@ -94,7 +65,7 @@ html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-car
           assert '그래픽 표현과 활용 규칙을 통일하고 해외 적용을 위한 영문 가이드까지 만들었습니다.' in h
           assert 'aimmo-system-v8.css?v=20260917-6' in h
           assert '.data-list > .data-card:nth-child(3) .data-card-head .desc' not in c
-          assert '.aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{\n  max-width:none!important;\n  white-space:nowrap!important;' not in c
+          assert 'white-space:nowrap!important;\n}\nhtml body.aimmo-system-page #data .aimmo-improvement-gallery' not in c
           PY
           rm .github/workflows/oneoff-aimmo-023-rollback.yml
           git config user.name "studiods"
