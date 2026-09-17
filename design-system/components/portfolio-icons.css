@@ -57,3 +57,16 @@
     --hm-ds-icon-inset: 18px;
   }
 }
+
+
+/* Final page-local overrides load after the legacy ways v4 stylesheet. */
+html body.himart-page-body .ways-operating-stack {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+html body.himart-page-body .hm-ds-icon {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  z-index: 2;
+}
