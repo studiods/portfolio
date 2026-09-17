@@ -71,25 +71,6 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption
   word-break:keep-all!important;
 }
 
-@media(max-width:780px){
-  html body.aimmo-system-page #journey .aimmo-application-gallery{
-    grid-template-columns:1fr!important;
-  }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
-    padding:22px!important;
-  }
-  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4{
-  margin:0!important;
-  max-width:30ch!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  line-height:1.35!important;
-  word-break:keep-all!important;
-}
-
-
 /* v8.1 — AIMMO requested title hierarchy. */
 html body.aimmo-system-page #data .data-list > .data-card:first-child .data-card-head h3{
   font-size:22px!important;
@@ -109,4 +90,20 @@ html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-car
 }
 html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{
   display:none!important;
+}
+
+@media(max-width:780px){
+  html body.aimmo-system-page #journey .aimmo-application-gallery{
+    grid-template-columns:1fr!important;
+  }
+  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption{
+    padding:22px!important;
+  }
+  html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption h4{
+    font-size:22px!important;
+  }
+  html body.aimmo-system-page #data .data-list > .data-card:first-child .data-card-head h3,
+  html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
+    font-size:22px!important;
+  }
 }
