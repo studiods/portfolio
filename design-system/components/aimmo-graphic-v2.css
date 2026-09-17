@@ -1,14 +1,24 @@
 /* AIMMO Graphic v2 — narrative refinement and shared-system adoption. */
 
-/* 01.2 — responsive circular value flow. */
+/* 01.2 — red problem flow. Default type remains 22px / 12px at the current circle size,
+   then scales down only when the circle itself becomes smaller. */
 html body.aimmo-graphic-page #brand .aimmo-business-flow article{
   container-type:inline-size!important;
+  border:1px solid var(--hm-red,#D30202)!important;
+  background:transparent!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article span{
+  color:var(--hm-red,#D30202)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:clamp(9px,6cqi,12px)!important;
+  font-weight:400!important;
+  line-height:1!important;
 }
 html body.aimmo-graphic-page #brand .aimmo-business-flow article h4{
   margin:13px 0 0!important;
-  color:#fff!important;
+  color:var(--hm-red,#D30202)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:clamp(14px,9cqi,22px)!important;
+  font-size:clamp(16px,11cqi,22px)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
   line-height:1.22!important;
@@ -19,7 +29,7 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article p{
   max-width:17ch!important;
   color:var(--hm-description-color)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:clamp(9px,5.2cqi,12px)!important;
+  font-size:clamp(9px,6cqi,12px)!important;
   font-weight:300!important;
   line-height:1.4!important;
   word-break:keep-all!important;
@@ -27,34 +37,64 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article p{
 html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow{
   align-self:center!important;
   justify-self:center!important;
+  color:var(--hm-red,#D30202)!important;
   opacity:.30!important;
 }
 
-/* 01.3 — shared design-system gallery is intentionally full width and edge-to-edge. */
-html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery{
-  margin-top:0!important;
+/* 01.3 + chapter 02/03 — full-width gallery variant built on the shared gallery contract.
+   One wide image occupies the width that two square cells previously used. */
+html body.aimmo-graphic-page .aimmo-wide-gallery{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  width:100%!important;
+  gap:0!important;
+  margin-right:0!important;
+  margin-left:0!important;
+  padding:0!important;
 }
-html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery + .aimmo-graphic-reframe{
-  margin-top:40px!important;
+html body.aimmo-graphic-page .hm-subhead + .aimmo-wide-gallery,
+html body.aimmo-graphic-page .data-card-head + .aimmo-wide-gallery,
+html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery{
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.aimmo-graphic-page .aimmo-wide-gallery--stack{
+  gap:var(--hm-space-component,40px)!important;
+}
+html body.aimmo-graphic-page .aimmo-wide-gallery .hm-ds-media-gallery__item{
+  grid-column:1/-1!important;
+  aspect-ratio:2/1!important;
+}
+html body.aimmo-graphic-page .aimmo-wide-gallery--clean .hm-ds-media-gallery__item::after{
+  display:none!important;
+  content:none!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery .hm-ds-media-gallery__item>figcaption>h4{
+  max-width:none!important;
+  white-space:nowrap!important;
 }
 
-/* 02.1 — same operating-stack grammar as HIMART WAYS 03.2, specialized to four brand signals. */
+/* 02.1 — exact HIMART WAYS 03.2 card grammar, with the requested transparent background. */
 html body.aimmo-graphic-page #data .aimmo-company-signals{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:16px!important;
   width:100%!important;
+  margin-left:0!important;
+  padding-left:0!important;
 }
 html body.aimmo-graphic-page #data .aimmo-company-signals>article{
   position:relative!important;
   display:block!important;
+  grid-column:auto!important;
+  width:100%!important;
   min-width:0!important;
   min-height:250px!important;
   margin:0!important;
   padding:26px 28px 30px!important;
+  box-sizing:border-box!important;
   border:0!important;
   border-top:1px solid var(--hm-line-default)!important;
-  background:rgba(255,255,255,.018)!important;
+  background:transparent!important;
   overflow:hidden!important;
 }
 html body.aimmo-graphic-page #data .aimmo-company-signals>article>span{
@@ -69,19 +109,19 @@ html body.aimmo-graphic-page #data .aimmo-company-signals>article>span{
 }
 html body.aimmo-graphic-page #data .aimmo-company-signals>article h4{
   margin:22px 0 0!important;
-  max-width:24ch!important;
+  max-width:28ch!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:22px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
   line-height:1.3!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
 html body.aimmo-graphic-page #data .aimmo-company-signals>article p{
   margin:12px 0 0!important;
-  max-width:34ch!important;
+  max-width:38ch!important;
   padding-right:64px!important;
   color:var(--hm-description-color)!important;
   font-family:var(--hm-font-ko)!important;
@@ -95,6 +135,7 @@ html body.aimmo-graphic-page #data .aimmo-company-signals>article .hm-ds-icon{
   position:absolute!important;
   right:24px!important;
   bottom:24px!important;
+  display:block!important;
   width:40px!important;
   height:40px!important;
   margin:0!important;
@@ -103,16 +144,29 @@ html body.aimmo-graphic-page #data .aimmo-company-signals>article .hm-ds-icon{
   stroke:currentColor!important;
   stroke-width:1px!important;
   opacity:1!important;
+  transform:none!important;
 }
-html body.aimmo-graphic-page #data .aimmo-company-source{
-  margin:18px 0 0!important;
-  color:rgba(255,255,255,.50)!important;
+
+/* 02.2 — same blue statement treatment as HIMART Team 01.2. */
+html body.aimmo-graphic-page #data .aimmo-direction-statement{
+  padding:54px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.15)!important;
+}
+html body.aimmo-graphic-page #data .aimmo-direction-statement p{
+  max-width:980px!important;
+  margin:0!important;
+}
+html body.aimmo-graphic-page #data .aimmo-direction-statement strong{
+  color:var(--hm-blue)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:10px!important;
-  font-weight:300!important;
-  line-height:1.5!important;
-  letter-spacing:var(--hm-track-note)!important;
+  font-size:clamp(30px,3.2vw,54px)!important;
+  font-weight:500!important;
+  font-variation-settings:"wght" 500!important;
+  line-height:1.24!important;
+  letter-spacing:-.055em!important;
+  word-break:keep-all!important;
 }
+
 @media(min-width:781px){
   html body.aimmo-graphic-page #data .data-list>.data-card:first-child .data-card-head .desc{
     max-width:none!important;
@@ -132,6 +186,18 @@ html body.aimmo-graphic-page #data .aimmo-company-source{
     width:min(320px,88vw)!important;
     margin-inline:auto!important;
   }
+  html body.aimmo-graphic-page #brand .aimmo-business-flow article h4{
+    font-size:clamp(16px,7vw,22px)!important;
+  }
+  html body.aimmo-graphic-page #brand .aimmo-business-flow article p{
+    font-size:clamp(10px,3.8vw,12px)!important;
+  }
+  html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery .hm-ds-media-gallery__item>figcaption>h4{
+    white-space:normal!important;
+  }
+  html body.aimmo-graphic-page .aimmo-wide-gallery .hm-ds-media-gallery__item{
+    aspect-ratio:16/9!important;
+  }
   html body.aimmo-graphic-page #data .aimmo-company-signals{
     grid-template-columns:1fr!important;
   }
@@ -140,5 +206,8 @@ html body.aimmo-graphic-page #data .aimmo-company-source{
   }
   html body.aimmo-graphic-page #data .data-list>.data-card:first-child .data-card-head .desc{
     white-space:normal!important;
+  }
+  html body.aimmo-graphic-page #data .aimmo-direction-statement strong{
+    font-size:clamp(28px,9vw,42px)!important;
   }
 }
