@@ -230,23 +230,26 @@ html body.yanolja-system-page #brand .yanolja-team-grid{
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card{
   min-height:300px!important;
-  padding:30px!important;
-  border:1px solid rgba(255,255,255,.15)!important;
-  background:#050505!important;
+  padding:30px 0!important;
+  border:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  background:transparent!important;
   display:flex!important;
   flex-direction:column!important;
-  justify-content:space-between!important;
+  justify-content:flex-start!important;
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card>span{
   font-family:var(--hm-font-en)!important;font-size:12px!important;line-height:1.2!important;
-  letter-spacing:.08em!important;color:rgba(255,255,255,.42)!important
+  letter-spacing:.08em!important;color:var(--hm-blue)!important
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card strong{
-  display:block!important;margin-top:24px!important;font-family:var(--hm-font-ko)!important;
-  font-size:24px!important;line-height:1.36!important;font-weight:600!important;letter-spacing:-.035em!important
+  display:block!important;margin-top:12px!important;font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;line-height:1.28!important;font-weight:300!important;font-variation-settings:"wght" 300!important;
+  letter-spacing:var(--hm-track-group)!important
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card p{
-  margin:auto 0 0 auto!important;max-width:31ch!important;font-size:16px!important;line-height:1.62!important;color:rgba(255,255,255,.58)!important;text-align:right!important
+  margin:auto 0 0 0!important;max-width:31ch!important;font-size:16px!important;line-height:1.62!important;
+  color:rgba(255,255,255,.58)!important;text-align:left!important
 }
 
 /* 01.2 — HIMART WAYS 03.2 copied geometry: number / title / body / icon. */
@@ -368,7 +371,7 @@ html body.yanolja-system-page #journey .yanolja-palette-wrap{margin-top:40px!imp
 
 /* 03.2 */
 html body.yanolja-system-page #journey .yanolja-blue-access{
-  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,3fr)!important;gap:24px!important;width:100%!important
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,2fr)!important;gap:24px!important;width:100%!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__swatch{
   display:flex!important;min-height:280px!important;flex-direction:column!important;justify-content:flex-end!important;
@@ -396,7 +399,7 @@ html body.yanolja-system-page #journey .yanolja-blue-access__research p{
   margin:16px 0 0!important;max-width:52ch!important;color:var(--hm-description-color)!important;font:300 16px/1.58 var(--hm-font-ko)!important;word-break:keep-all!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-summary{
-  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,3fr)!important;gap:24px!important;
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,2fr)!important;gap:24px!important;
   align-items:start!important;width:100%!important;margin-top:24px!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-grid--reframed{
@@ -882,31 +885,30 @@ html body.yanolja-system-page #direction .hst-tip.is-error::before{border-top-co
 html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
+html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid>article{
+  aspect-ratio:2/1!important;
+}
 
 html body.yanolja-system-page #journey .yanolja-usability-row--type{
   min-height:420px!important;
 }
 html body.yanolja-system-page #journey .yanolja-type-legibility{
   position:relative!important;
-  height:320px!important;
+  width:100%!important;
+  height:auto!important;
   margin:0!important;
-  overflow:hidden!important;
-  background:#e0e0e0!important;
+  overflow:visible!important;
+  background:#fff!important;
 }
 html body.yanolja-system-page #journey .yanolja-type-legibility img{
   display:block!important;
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
   object-fit:contain!important;
   object-position:center!important;
+  background:#fff!important;
 }
 html body.yanolja-system-page #journey .yanolja-type-legibility::after{
-  content:""!important;
-  position:absolute!important;
-  right:0!important;
-  bottom:0!important;
-  width:46%!important;
-  height:25%!important;
-  background:#e0e0e0!important;
-  pointer-events:none!important;
+  display:none!important;
+  content:none!important;
 }
