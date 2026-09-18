@@ -368,7 +368,7 @@ html body.yanolja-system-page #journey .yanolja-palette-wrap{margin-top:40px!imp
 
 /* 03.2 */
 html body.yanolja-system-page #journey .yanolja-blue-access{
-  display:grid!important;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)!important;gap:24px!important;width:100%!important
+  display:grid!important;grid-template-columns:minmax(0,.52fr) minmax(0,1.48fr)!important;gap:24px!important;width:100%!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__swatch{
   display:flex!important;min-height:420px!important;flex-direction:column!important;justify-content:flex-end!important;
@@ -395,7 +395,34 @@ html body.yanolja-system-page #journey .yanolja-blue-access__research h4{
 html body.yanolja-system-page #journey .yanolja-blue-access__research p{
   margin:16px 0 0!important;max-width:52ch!important;color:var(--hm-description-color)!important;font:300 16px/1.58 var(--hm-font-ko)!important;word-break:keep-all!important
 }
-html body.yanolja-system-page #journey .yanolja-vision-grid--reframed{margin-top:24px!important}
+html body.yanolja-system-page #journey .yanolja-vision-summary{
+  display:grid!important;grid-template-columns:minmax(0,.52fr) minmax(0,1.48fr)!important;gap:24px!important;
+  align-items:start!important;width:100%!important;margin-top:24px!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed{
+  display:grid!important;grid-template-columns:1fr!important;gap:12px!important;width:100%!important;margin:0!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-vision-card{
+  min-width:0!important;padding:18px 0 20px!important;border-top:1px solid var(--hm-line-default)!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot-matrix{
+  grid-template-columns:repeat(6,18px)!important;gap:6px!important;margin-top:16px!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot{width:18px!important;height:18px!important}
+html body.yanolja-system-page #journey .yanolja-vision-copy{
+  padding:24px 0 0!important;border-top:1px solid var(--hm-line-default)!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-copy>span{
+  color:var(--hm-blue)!important;font:400 12px/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-copy h4{
+  margin:38px 0 0!important;color:#fff!important;font:100 28px/1.28 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-copy p{
+  margin:16px 0 0!important;max-width:54ch!important;color:var(--hm-description-color)!important;
+  font:300 16px/1.58 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+}
 
 /* 03.3 — one row per principle. */
 html body.yanolja-system-page #journey .yanolja-usability-rows{
@@ -441,9 +468,12 @@ html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-
   display:grid!important;grid-template-columns:1fr 1fr!important;gap:16px!important;align-content:center!important
 }
 html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-meter>div{
-  min-height:180px!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;padding:24px!important
+  min-height:220px!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;padding:24px 0!important;
+  border-left:0!important;border-right:0!important
 }
-html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-meter strong{font-size:42px!important}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-meter strong{
+  font-size:105px!important;font-weight:100!important;line-height:.88!important;letter-spacing:-.05em!important
+}
 html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-demo{
   display:grid!important;grid-template-columns:1fr 1fr!important;min-height:280px!important
 }
@@ -454,6 +484,38 @@ html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sam
   position:absolute!important;left:18px!important;bottom:16px!important;color:rgba(0,0,0,.54)!important;font:400 10px/1 var(--hm-font-en)!important
 }
 html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sample.is-dark span{color:rgba(255,255,255,.66)!important}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sample{
+  display:flex!important;align-items:center!important;justify-content:center!important;padding:28px!important;box-sizing:border-box!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel{
+  width:100%!important;max-width:280px!important;border:1px solid rgba(0,0,0,.10)!important;border-radius:4px!important;
+  background:#fff!important;box-shadow:0 12px 30px rgba(0,0,0,.10)!important;overflow:hidden!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__head{
+  display:flex!important;gap:6px!important;align-items:center!important;height:34px!important;padding:0 12px!important;background:#f2f4f8!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__head i{
+  display:block!important;width:6px!important;height:6px!important;border-radius:50%!important;background:#b8bec9!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body{padding:20px!important}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body b{
+  display:block!important;color:#20242c!important;font:400 14px/1.2 var(--hm-font-ko)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body p{
+  margin:8px 0 18px!important;color:#707782!important;font:300 11px/1.45 var(--hm-font-ko)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body button{
+  width:100%!important;height:42px!important;border:0!important;border-radius:4px!important;background:#003AA7!important;
+  color:#fff!important;font:300 13px/1 var(--hm-font-ko)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel{
+  border-color:rgba(255,255,255,.10)!important;background:#262626!important;box-shadow:0 14px 34px rgba(0,0,0,.34)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__head{background:#323232!important}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__head i{background:#6d6d6d!important}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__body b{color:#fff!important}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__body p{color:rgba(255,255,255,.58)!important}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__body button{background:#174EC0!important}
 
 /* 03.4 */
 html body.yanolja-system-page #journey .yanolja-type-reference{
@@ -485,6 +547,7 @@ html body.yanolja-system-page #journey .yanolja-type-reference__copy p{
   html body.yanolja-system-page #brand .yanolja-answer-stack,
   html body.yanolja-system-page #brand .yanolja-system-direction,
   html body.yanolja-system-page #journey .yanolja-blue-access,
+  html body.yanolja-system-page #journey .yanolja-vision-summary,
   html body.yanolja-system-page #journey .yanolja-usability-row{grid-template-columns:1fr!important}
   html body.yanolja-system-page #journey .yanolja-color-motif figcaption>span{margin:0 0 14px 14px!important}
   html body.yanolja-system-page #journey .yanolja-color-motif figcaption b{font-size:16px!important}
