@@ -56,8 +56,12 @@ causes cold-load FOUC and broken circle geometry.
 {% capture adapter_tail %}<script src="./design-system/himart-wide-editorial-adapter.js?v=20260916-1"></script>
 <script src="./design-system/himart-inertia-scroll.js?v=20260913-1"></script>
 <!-- Must remain last: legacy wide adapters can inject inline !important styles.
-     Inline inclusion prevents an independently cached runtime asset from changing
-     the final output of this wrapper page. -->
+     The static fallback also covers narrative blocks generated after the
+     authored subsection headers have been replaced. -->
+<style id="hm-structural-visibility-final-style">
+body.hm-ds-subsection-copy-hidden #live-main .narrative-block > .narrative-copy{display:none!important;margin:0!important;padding:0!important}
+body.hm-ds-subsection-copy-hidden #live-main .narrative-block{margin-bottom:0!important;padding-bottom:0!important}
+</style>
 <script id="hm-structural-visibility-final">
 {% include_relative design-system/components/structural-visibility-runtime.js %}
 </script>

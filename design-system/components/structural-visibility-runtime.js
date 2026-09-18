@@ -16,7 +16,13 @@
   }
   function getDescriptionNodes() {
     var nodes = [];
-    document.querySelectorAll(".hm-subhead, .data-card-head").forEach(function (head) {
+    document.querySelectorAll(".hm-subhead, .data-card-head, .narrative-block").forEach(function (head) {
+      if (head.matches(".narrative-block")) {
+        directChildrenBySelector(head, ".narrative-copy, [data-hm-subsection-copy]").forEach(function (child) {
+          if (nodes.indexOf(child) === -1) nodes.push(child);
+        });
+        return;
+      }
       var number = directChildrenBySelector(head, ".hm-subno, .hm-card-no")[0];
       if (!number) return;
       directChildrenBySelector(head, "div").forEach(function (group) {
@@ -31,7 +37,7 @@
     return nodes;
   }
   function getIndexNodes() {
-    var candidates = document.querySelectorAll(".hm-ds-index-label, .hm-subno, .hm-card-no, .hm-section-no");
+    var candidates = document.querySelectorAll(".hm-ds-index-label, .hm-subno, .hm-card-no, .hm-section-no, .narrative-subno, .synthesis-subno");
     return Array.prototype.filter.call(candidates, function (node) {
       var match = (node.textContent || "").trim().match(/^(\d{1,2}(?:\.\d{1,2})?)(?=\s*(?:\/|·|$))/);
       if (!match) return false;

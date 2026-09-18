@@ -93,3 +93,18 @@ html body.himart-page-body #live-main .ax-maker-step > span:first-child::before{
   letter-spacing:var(--hm-track-note)!important;
   font-variant-numeric:tabular-nums!important;
 }
+
+
+/* HIMART narrative runtime fallback.
+   The live content layer replaces some authored subsection headers with
+   .narrative-block after page load. Keep that generated structure inside the
+   same numeric-only contract while the final runtime assigns data-index. */
+html body.himart-page-body #live-main .narrative-subno:not([data-index]),
+html body.himart-page-body #live-main .synthesis-subno:not([data-index]){
+  display:inline-block!important;
+  max-inline-size:3.85ch!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-overflow:clip!important;
+  vertical-align:top!important;
+}
