@@ -189,3 +189,14 @@ html body.himart-ax-page .ax-closing-principle p{margin:12px 0 0;max-width:58ch;
 }
 
 @media(prefers-reduced-motion:reduce){html body.himart-ax-page .ax-workload__fill{transform:scaleX(1);transition:none}}
+
+/* Shared four-column maker-flow variant. */
+html body.himart-ax-page .ax-maker-flow.ax-maker-flow--four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+@media(max-width:1180px) and (min-width:781px){
+  html body.himart-ax-page .ax-maker-flow.ax-maker-flow--four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
