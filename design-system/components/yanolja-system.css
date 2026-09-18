@@ -490,3 +490,21 @@ html body.yanolja-system-page #journey .yanolja-type-reference__copy p{
   html body.yanolja-system-page #journey .yanolja-color-motif figcaption b{font-size:16px!important}
   html body.yanolja-system-page #journey .yanolja-color-motif figcaption small{font-size:9px!important}
 }
+
+
+/* YANOLJA 03 asset proof — source images are preserved at their native ratio. */
+html body.yanolja-system-page #journey .yanolja-access-reference{
+  display:block!important;width:100%!important;margin:24px 0 0!important;background:#fff!important
+}
+html body.yanolja-system-page #journey .yanolja-access-reference img{
+  display:block!important;width:100%!important;height:auto!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-reference{
+  display:block!important;width:100%!important;margin:0!important;min-height:0!important;background:#fff!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-reference img{
+  display:block!important;width:100%!important;height:auto!important
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__copy h4 em{
+  color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-style:normal!important;font-weight:400!important
+}
