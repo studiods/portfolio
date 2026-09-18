@@ -102,16 +102,26 @@
   .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{white-space:normal}
 }
 
-/* Shared workshop modifier: full-width four-card strip with 25% card-height image overlap. */
-.himart-team-page .team-workshop-visual--full-four{padding-bottom:180px}
+/* Shared workshop modifier: full-width four-card strip placed 24px below media. */
+.himart-team-page .team-workshop-visual--full-four{
+  padding-bottom:0;
+}
 .himart-team-page .team-workshop-visual--full-four .team-workshop-visual__cards{
-  right:0;
-  left:0;
+  position:relative;
+  right:auto;
+  bottom:auto;
+  left:auto;
   width:100%;
-  height:240px;
+  height:auto;
+  min-height:240px;
   aspect-ratio:auto;
+  margin-top:24px;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  transform:translateY(75%);
+  transform:none;
+}
+.himart-team-page .team-workshop-visual--full-four .team-workshop-card{
+  min-height:240px;
+  height:auto;
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card + .team-workshop-card{
   border-left:1px solid rgba(255,255,255,.15);
@@ -122,29 +132,17 @@
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card__copy>strong{
   display:block;
-  margin:0 0 8px;
+  margin:0 0 10px;
   color:var(--hm-blue);
   font-family:var(--hm-font-en);
-  font-size:32px;
+  font-size:44px;
   font-weight:100;
   line-height:1;
   letter-spacing:var(--hm-track-data-number);
 }
 @media(max-width:1180px){
-  .himart-team-page .team-workshop-visual--full-four{padding-bottom:0}
   .himart-team-page .team-workshop-visual--full-four .team-workshop-visual__cards{
-    position:relative;
-    right:auto;
-    bottom:auto;
-    left:auto;
-    width:100%;
-    height:auto;
     grid-template-columns:repeat(2,minmax(0,1fr));
-    transform:none;
-  }
-  .himart-team-page .team-workshop-visual--full-four .team-workshop-card{
-    min-height:240px;
-    height:auto;
   }
 }
 @media(max-width:780px){
