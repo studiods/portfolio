@@ -571,3 +571,329 @@ html body.yanolja-system-page #journey .yanolja-usability-reference img{
 html body.yanolja-system-page #journey .yanolja-type-reference__copy h4 em{
   color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-style:normal!important;font-weight:400!important
 }
+
+/* 04.1 HST source gallery — HTML/CSS reconstruction of portfolio pp.57–59. */
+html body.yanolja-system-page #direction .hst-ds-gallery{
+  position:relative!important;width:100%!important;overflow:visible!important
+}
+html body.yanolja-system-page #direction .hst-ds-gallery__viewport{
+  position:relative!important;width:100%!important;aspect-ratio:4/3!important;overflow:hidden!important;background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-ds-gallery__track{
+  display:flex!important;width:100%!important;height:100%!important;transform:translate3d(0,0,0);transition:transform .52s cubic-bezier(.22,.61,.36,1)!important;will-change:transform
+}
+html body.yanolja-system-page #direction .hst-ds-sheet{
+  position:relative!important;flex:0 0 100%!important;width:100%!important;height:100%!important;padding:5.8% 6.3% 4.4%!important;
+  box-sizing:border-box!important;overflow:hidden!important;background:#fff!important;color:#222!important;
+  font-family:Arial,var(--hm-font-ko),sans-serif!important;font-size:8px!important;line-height:1.3!important
+}
+html body.yanolja-system-page #direction .hst-ds-sheet *,
+html body.yanolja-system-page #direction .hst-ds-sheet *::before,
+html body.yanolja-system-page #direction .hst-ds-sheet *::after{box-sizing:border-box!important}
+html body.yanolja-system-page #direction .hst-ds-sheet__brand{
+  position:absolute!important;top:5.6%!important;left:6.3%!important;display:flex!important;gap:4px!important;align-items:baseline!important;
+  color:#111!important;font-family:Arial,var(--hm-font-ko),sans-serif!important;font-size:15px!important;line-height:1!important;letter-spacing:-.02em!important
+}
+html body.yanolja-system-page #direction .hst-ds-sheet__brand b{font-weight:700!important}
+html body.yanolja-system-page #direction .hst-ds-sheet__brand span{font-weight:400!important}
+html body.yanolja-system-page #direction .hst-ds-sheet__footnote{
+  position:absolute!important;right:6.2%!important;bottom:4.6%!important;margin:0!important;color:#161616!important;
+  font:400 9px/1.2 Arial,var(--hm-font-ko),sans-serif!important;letter-spacing:-.02em!important
+}
+html body.yanolja-system-page #direction .hst-ds-gallery__nav{
+  position:absolute!important;z-index:8!important;top:50%!important;width:44px!important;height:44px!important;margin:0!important;padding:0!important;
+  transform:translateY(-50%)!important;border:1px solid rgba(255,255,255,.28)!important;border-radius:50%!important;background:rgba(0,0,0,.68)!important;
+  color:#fff!important;display:grid!important;place-items:center!important;cursor:pointer!important;box-shadow:0 8px 24px rgba(0,0,0,.22)!important
+}
+html body.yanolja-system-page #direction .hst-ds-gallery__nav.is-prev{left:-22px!important}
+html body.yanolja-system-page #direction .hst-ds-gallery__nav.is-next{right:-22px!important}
+html body.yanolja-system-page #direction .hst-ds-gallery__nav span{
+  display:block!important;margin-top:-3px!important;font:100 36px/1 Arial,sans-serif!important
+}
+
+/* Shared HST UI atoms. Minimum type is intentionally 8px inside this faithful gallery. */
+html body.yanolja-system-page #direction .hst-ds-sheet h5{
+  margin:0 0 10px!important;padding:0 0 7px!important;border-bottom:1px solid #d9d9d9!important;color:#222!important;
+  font:600 9px/1.1 Arial,var(--hm-font-ko),sans-serif!important;letter-spacing:-.02em!important
+}
+html body.yanolja-system-page #direction .hst-btn{
+  display:grid!important;min-width:0!important;height:22px!important;place-items:center!important;margin:0!important;border:1px solid transparent!important;border-radius:1px!important;
+  color:#fff!important;background:#004cb6!important;font:600 8px/1 Arial,var(--hm-font-ko),sans-serif!important;font-style:normal!important;white-space:nowrap!important
+}
+html body.yanolja-system-page #direction .hst-btn.is-primary.is-hover{background:#00419b!important}
+html body.yanolja-system-page #direction .hst-btn.is-primary.is-pressed{background:#00357f!important}
+html body.yanolja-system-page #direction .hst-btn.is-primary.is-disabled{background:#bfd2ed!important;color:#fff!important}
+html body.yanolja-system-page #direction .hst-btn.is-secondary{border-color:#004cb6!important;background:#fff!important;color:#004cb6!important}
+html body.yanolja-system-page #direction .hst-btn.is-secondary.is-hover{background:#eef4ff!important}
+html body.yanolja-system-page #direction .hst-btn.is-secondary.is-pressed{background:#bfd2ed!important}
+html body.yanolja-system-page #direction .hst-btn.is-secondary.is-disabled{border-color:#bfd2ed!important;color:#bfd2ed!important}
+html body.yanolja-system-page #direction .hst-btn.is-tertiary{border-color:#bdbdbd!important;background:#fff!important;color:#656565!important}
+html body.yanolja-system-page #direction .hst-btn.is-tertiary.is-hover{background:#f2f2f2!important}
+html body.yanolja-system-page #direction .hst-btn.is-tertiary.is-pressed{background:#dedede!important}
+html body.yanolja-system-page #direction .hst-btn.is-tertiary.is-disabled{border-color:#ddd!important;color:#c8c8c8!important}
+html body.yanolja-system-page #direction .hst-btn.is-danger{background:#b50000!important}
+html body.yanolja-system-page #direction .hst-btn.is-danger.is-hover{background:#960000!important}
+html body.yanolja-system-page #direction .hst-btn.is-danger.is-pressed{background:#760000!important}
+html body.yanolja-system-page #direction .hst-btn.is-danger.is-disabled{background:#efbcbc!important}
+
+/* p.57 */
+html body.yanolja-system-page #direction .hst57-layout{
+  position:absolute!important;top:18.5%!important;left:18.2%!important;right:10.6%!important;bottom:12.5%!important;
+  display:grid!important;grid-template-columns:72px minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto auto 1fr!important;
+  column-gap:34px!important;row-gap:24px!important;align-items:start!important
+}
+html body.yanolja-system-page #direction .hst57-label{
+  color:#111!important;font:700 9px/1.15 Arial,var(--hm-font-ko),sans-serif!important;padding-top:3px!important
+}
+html body.yanolja-system-page #direction .hst57-label.is-groups{line-height:1.1!important}
+html body.yanolja-system-page #direction .hst-button-matrix__head,
+html body.yanolja-system-page #direction .hst-button-matrix__row{
+  display:grid!important;grid-template-columns:48px repeat(4,minmax(0,1fr))!important;gap:12px!important;align-items:center!important
+}
+html body.yanolja-system-page #direction .hst-button-matrix__head{
+  margin-bottom:8px!important;color:#9a9a9a!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important;text-align:center!important
+}
+html body.yanolja-system-page #direction .hst-button-matrix__head span:first-child,
+html body.yanolja-system-page #direction .hst-button-matrix__row>span{text-align:left!important}
+html body.yanolja-system-page #direction .hst-button-matrix__row{
+  margin-top:9px!important;color:#9a9a9a!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-button-matrix.is-small .hst-button-matrix__head,
+html body.yanolja-system-page #direction .hst-button-matrix.is-small .hst-button-matrix__row{
+  grid-template-columns:44px repeat(4,minmax(0,1fr))!important;gap:9px!important
+}
+html body.yanolja-system-page #direction .hst-button-matrix.is-small .hst-btn{height:18px!important}
+html body.yanolja-system-page #direction .hst-icon-row__head,
+html body.yanolja-system-page #direction .hst-icon-row__items{
+  display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:18px!important
+}
+html body.yanolja-system-page #direction .hst-icon-row__head{
+  margin-bottom:8px!important;color:#858585!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-icon-row.is-small .hst-icon-row__head,
+html body.yanolja-system-page #direction .hst-icon-row.is-small .hst-icon-row__items{gap:12px!important}
+html body.yanolja-system-page #direction .hst-icon-row.is-small .hst-btn{height:18px!important}
+html body.yanolja-system-page #direction .hst-group-demo{min-width:0!important}
+html body.yanolja-system-page #direction .hst-demo-caption{
+  display:block!important;margin:7px 0 4px!important;color:#a0a0a0!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-segment{display:grid!important;grid-template-columns:repeat(4,1fr)!important}
+html body.yanolja-system-page #direction .hst-segment i{
+  height:20px!important;display:grid!important;place-items:center!important;border:1px solid #bfc1c5!important;border-right:0!important;background:#fff!important;
+  color:#787878!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important;font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-segment i:last-child{border-right:1px solid #bfc1c5!important}
+html body.yanolja-system-page #direction .hst-segment i.is-selected{position:relative!important;z-index:1!important;border:1.5px solid #004cb6!important;color:#004cb6!important;font-weight:700!important}
+html body.yanolja-system-page #direction .hst-segment i.is-disabled{color:#cfcfcf!important}
+html body.yanolja-system-page #direction .hst-select-demo{position:relative!important}
+html body.yanolja-system-page #direction .hst-select-demo>div{display:grid!important;grid-template-columns:repeat(3,1fr)!important}
+html body.yanolja-system-page #direction .hst-select-demo>div span{
+  height:21px!important;padding:0 6px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;border:1px solid #bfc1c5!important;border-right:0!important;
+  color:#777!important;background:#fff!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-select-demo>div span:last-child{border-right:1px solid #bfc1c5!important}
+html body.yanolja-system-page #direction .hst-select-demo>div span.is-selected{border:1.5px solid #004cb6!important;color:#004cb6!important}
+html body.yanolja-system-page #direction .hst-select-demo ul{
+  position:absolute!important;z-index:3!important;right:0!important;top:20px!important;width:33.33%!important;margin:0!important;padding:3px 0!important;list-style:none!important;
+  border:1px solid #bfc1c5!important;background:#fff!important;box-shadow:0 3px 8px rgba(0,0,0,.08)!important
+}
+html body.yanolja-system-page #direction .hst-select-demo li{
+  height:20px!important;padding:0 6px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;color:#777!important;
+  font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-select-demo li.is-selected{color:#004cb6!important;font-weight:700!important}
+html body.yanolja-system-page #direction .hst-select-demo li.is-disabled{color:#cfcfcf!important}
+html body.yanolja-system-page #direction .hst57-layout>.hst-group-demo:nth-of-type(5){
+  grid-column:3!important;width:58%!important
+}
+html body.yanolja-system-page #direction .hst-pagination-demo{
+  grid-column:3!important;grid-row:3!important;justify-self:end!important;width:36%!important;margin-top:0!important
+}
+html body.yanolja-system-page #direction .hst-page-skeleton{display:grid!important;grid-template-columns:repeat(7,1fr)!important;height:18px!important;margin-bottom:12px!important}
+html body.yanolja-system-page #direction .hst-page-skeleton i{border:1px solid #c9c9c9!important;border-right:0!important}
+html body.yanolja-system-page #direction .hst-page-skeleton i:last-child{border-right:1px solid #c9c9c9!important}
+html body.yanolja-system-page #direction .hst-pagination{display:flex!important;width:100%!important;height:19px!important;margin-top:9px!important}
+html body.yanolja-system-page #direction .hst-pagination>*{
+  flex:1!important;display:grid!important;place-items:center!important;border:1px solid #c5c5c5!important;border-right:0!important;background:#fff!important;color:#666!important;
+  font:400 8px/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-pagination>*:last-child{border-right:1px solid #c5c5c5!important}
+html body.yanolja-system-page #direction .hst-pagination.is-disabled{opacity:.42!important}
+
+/* p.58 */
+html body.yanolja-system-page #direction .hst58-layout{
+  position:absolute!important;top:18.5%!important;left:13.2%!important;right:10.6%!important;bottom:12.5%!important;
+  display:grid!important;grid-template-columns:78px minmax(0,.86fr) minmax(0,.86fr) 72px minmax(0,1.22fr)!important;column-gap:26px!important;align-items:start!important
+}
+html body.yanolja-system-page #direction .hst58-title{
+  color:#111!important;font:700 10px/1.15 Arial,var(--hm-font-ko),sans-serif!important;padding-top:3px!important
+}
+html body.yanolja-system-page #direction .hst58-title.is-area{grid-column:4!important}
+html body.yanolja-system-page #direction .hst-field-column{grid-column:2!important}
+html body.yanolja-system-page #direction .hst-field-column.is-small{grid-column:3!important}
+html body.yanolja-system-page #direction .hst-textarea-column{grid-column:5!important;margin-top:26px!important}
+html body.yanolja-system-page #direction .hst-field-state{
+  display:grid!important;grid-template-columns:54px minmax(0,1fr)!important;gap:12px!important;align-items:start!important;margin-top:10px!important;
+  color:#9a9a9a!important;font:400 8px/1.1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-field-column.is-small .hst-field-state{grid-template-columns:48px minmax(0,1fr)!important;margin-top:9px!important}
+html body.yanolja-system-page #direction .hst-field-state>span{padding-top:6px!important}
+html body.yanolja-system-page #direction .hst-field-control{
+  position:relative!important;display:flex!important;align-items:center!important;height:23px!important;padding:0 7px!important;border:1px solid #c5c5c5!important;border-radius:1px!important;background:#fff!important;
+  color:#777!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-field-column.is-small .hst-field-control{height:19px!important}
+html body.yanolja-system-page #direction .hst-field-control.is-placeholder{color:#c7c7c7!important}
+html body.yanolja-system-page #direction .hst-field-control.is-hover,
+html body.yanolja-system-page #direction .hst-field-control.is-focused{border-color:#004cb6!important}
+html body.yanolja-system-page #direction .hst-field-control.is-focused i{
+  display:block!important;width:1px!important;height:11px!important;background:#333!important
+}
+html body.yanolja-system-page #direction .hst-field-control.is-disabled{background:#f3f3f3!important;color:#c6c6c6!important}
+html body.yanolja-system-page #direction .hst-field-control.is-error{border-color:#e12222!important}
+html body.yanolja-system-page #direction .hst-field-control.is-confirm{border-color:#55a630!important}
+html body.yanolja-system-page #direction .hst-field-state small{
+  display:block!important;margin:0 0 4px!important;color:#777!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-field-state em{
+  display:block!important;margin-top:3px!important;font:400 8px/1.2 Arial,var(--hm-font-ko),sans-serif!important;font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-field-state em.is-error{color:#e00000!important}
+html body.yanolja-system-page #direction .hst-field-state em.is-confirm{color:#55a630!important}
+html body.yanolja-system-page #direction .hst-field-control.is-spin{justify-content:space-between!important}
+html body.yanolja-system-page #direction .hst-field-control.is-spin b{
+  position:absolute!important;right:0!important;top:0!important;width:16px!important;height:100%!important;display:grid!important;place-items:center!important;border-left:1px solid #c5c5c5!important;
+  color:#858585!important;font:400 7px/.65 Arial,sans-serif!important;white-space:pre!important
+}
+html body.yanolja-system-page #direction .hst-field-select{position:relative!important;color:#777!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important}
+html body.yanolja-system-page #direction .hst-field-select>div{
+  height:23px!important;padding:0 7px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;border:1px solid #bfc1c5!important;background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-field-column.is-small .hst-field-select>div{height:19px!important}
+html body.yanolja-system-page #direction .hst-field-select ul{
+  position:absolute!important;z-index:3!important;top:22px!important;left:0!important;right:0!important;margin:0!important;padding:4px 0!important;list-style:none!important;border:1px solid #004cb6!important;background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-field-column.is-small .hst-field-select ul{top:18px!important}
+html body.yanolja-system-page #direction .hst-field-select li{
+  height:23px!important;padding:0 7px!important;display:flex!important;align-items:center!important;justify-content:space-between!important
+}
+html body.yanolja-system-page #direction .hst-field-select li.is-selected{color:#004cb6!important;font-weight:700!important;background:#f3f5fa!important}
+html body.yanolja-system-page #direction .hst-field-select li.is-disabled{color:#c9c9c9!important}
+html body.yanolja-system-page #direction .hst-textarea-column .hst-field-state{grid-template-columns:58px minmax(0,1fr)!important;margin-top:11px!important}
+html body.yanolja-system-page #direction .hst-textarea-control{
+  position:relative!important;min-height:45px!important;padding:7px!important;border:1px solid #c5c5c5!important;background:#fff!important;color:#777!important;
+  font:400 8px/1.45 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-textarea-control.is-placeholder{color:#c7c7c7!important}
+html body.yanolja-system-page #direction .hst-textarea-control.is-hover,
+html body.yanolja-system-page #direction .hst-textarea-control.is-focused{border-color:#004cb6!important}
+html body.yanolja-system-page #direction .hst-textarea-control.is-focused i{display:block!important;width:1px!important;height:12px!important;background:#333!important}
+html body.yanolja-system-page #direction .hst-textarea-control.is-disabled{background:#f3f3f3!important;color:#c7c7c7!important}
+html body.yanolja-system-page #direction .hst-textarea-control.is-error{border-color:#e12222!important}
+html body.yanolja-system-page #direction .hst-field-state.is-counter>div{position:relative!important}
+html body.yanolja-system-page #direction .hst-field-state.is-counter small{margin:3px 0 0!important;text-align:right!important;color:#888!important}
+
+/* p.59 */
+html body.yanolja-system-page #direction .hst59-layout{
+  position:absolute!important;top:16.8%!important;left:13.2%!important;right:10.6%!important;bottom:12.3%!important;
+  display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-template-rows:auto minmax(0,1.05fr) minmax(0,.78fr)!important;
+  column-gap:18px!important;row-gap:34px!important;align-items:start!important
+}
+html body.yanolja-system-page #direction .hst-tabs-demo{grid-column:1/8!important}
+html body.yanolja-system-page #direction .hst-tabs-demo.is-small{grid-column:8/13!important}
+html body.yanolja-system-page #direction .hst-tabs{
+  display:grid!important;grid-template-columns:repeat(8,1fr)!important;border-bottom:1px solid #ddd!important
+}
+html body.yanolja-system-page #direction .hst-tabs-demo.is-small .hst-tabs{grid-template-columns:repeat(7,1fr)!important}
+html body.yanolja-system-page #direction .hst-tabs b{
+  position:relative!important;height:28px!important;display:grid!important;place-items:center!important;color:#777!important;
+  font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-tabs b.is-active{color:#004cb6!important;font-weight:700!important}
+html body.yanolja-system-page #direction .hst-tabs b.is-active::after{
+  content:""!important;position:absolute!important;left:0!important;right:0!important;bottom:-1px!important;height:2px!important;background:#004cb6!important
+}
+html body.yanolja-system-page #direction .hst-tabs b.is-disabled{color:#cfcfcf!important}
+html body.yanolja-system-page #direction .hst59-title{
+  grid-column:1/2!important;grid-row:2!important;color:#111!important;font:700 10px/1.15 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst59-title.is-choice{grid-column:7/8!important}
+html body.yanolja-system-page #direction .hst-datepicker{
+  grid-column:2/7!important;grid-row:2!important;border:1px solid #d0d0d0!important;background:#fff!important;box-shadow:0 5px 12px rgba(0,0,0,.15)!important;padding:16px!important
+}
+html body.yanolja-system-page #direction .hst-calendar-months{display:grid!important;grid-template-columns:1fr 1fr!important;gap:18px!important}
+html body.yanolja-system-page #direction .hst-month header{
+  height:24px!important;display:grid!important;grid-template-columns:24px 1fr 24px!important;align-items:center!important;text-align:center!important
+}
+html body.yanolja-system-page #direction .hst-month header strong{grid-column:2!important;color:#444!important;font:600 12px/1 Arial,sans-serif!important}
+html body.yanolja-system-page #direction .hst-month header b{color:#7d7d7d!important;font:300 28px/1 Arial,sans-serif!important}
+html body.yanolja-system-page #direction .hst-month:nth-child(2) header b{grid-column:3!important}
+html body.yanolja-system-page #direction .hst-week,
+html body.yanolja-system-page #direction .hst-days{
+  display:grid!important;grid-template-columns:repeat(7,1fr)!important;text-align:center!important
+}
+html body.yanolja-system-page #direction .hst-week{margin-top:9px!important;border-bottom:1px solid #ddd!important}
+html body.yanolja-system-page #direction .hst-week span{
+  height:20px!important;color:#666!important;font:400 8px/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-week span.is-sun,
+html body.yanolja-system-page #direction .hst-days span.is-sun{color:#e00000!important}
+html body.yanolja-system-page #direction .hst-days span{
+  height:24px!important;display:grid!important;place-items:center!important;border-bottom:1px solid #e4e4e4!important;color:#666!important;font:400 8px/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-days span.is-selected{background:#004cb6!important;color:#fff!important}
+html body.yanolja-system-page #direction .hst-days span.is-soft{background:#f0f1f4!important}
+html body.yanolja-system-page #direction .hst-choice-demo{
+  grid-column:8/13!important;grid-row:2!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:34px!important;padding-left:18px!important
+}
+html body.yanolja-system-page #direction .hst-choice-column h5{border:0!important;padding:0!important;margin:0 0 12px!important}
+html body.yanolja-system-page #direction .hst-choice-column>div{
+  height:27px!important;display:grid!important;grid-template-columns:24px 1fr!important;align-items:center!important;color:#8b8b8b!important;font:400 8px/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-check,
+html body.yanolja-system-page #direction .hst-radio{
+  width:14px!important;height:14px!important;display:grid!important;place-items:center!important;border:1px solid #777!important;background:#fff!important;color:#fff!important;
+  font:700 9px/1 Arial,sans-serif!important;font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-radio{border-radius:50%!important}
+html body.yanolja-system-page #direction .hst-check.is-hover,
+html body.yanolja-system-page #direction .hst-radio.is-hover{border:2px solid #004cb6!important}
+html body.yanolja-system-page #direction .hst-check.is-selected{border-color:#004cb6!important;background:#004cb6!important}
+html body.yanolja-system-page #direction .hst-check.is-indeterminate{border-color:#004cb6!important;color:#004cb6!important;background:#fff!important}
+html body.yanolja-system-page #direction .hst-radio.is-selected{border:4px solid #004cb6!important}
+html body.yanolja-system-page #direction .hst-check.is-disabled,
+html body.yanolja-system-page #direction .hst-radio.is-disabled{border-color:#c9c9c9!important;background:#efefef!important;color:#fff!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo{grid-row:3!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo.is-left{grid-column:1/4!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo.is-right{grid-column:4/7!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo.is-center{grid-column:7/10!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo.is-title{grid-column:10/13!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo h5{margin-bottom:16px!important}
+html body.yanolja-system-page #direction .hst-tooltip-demo h5.is-error-label{margin-top:18px!important}
+html body.yanolja-system-page #direction .hst-tip{
+  position:relative!important;min-height:44px!important;margin:0 0 24px!important;padding:10px 12px!important;background:#008ad4!important;color:#fff!important;
+  font:400 8px/1.38 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-tip b{display:block!important;margin-bottom:5px!important;font-weight:700!important}
+html body.yanolja-system-page #direction .hst-tip::before{
+  content:""!important;position:absolute!important;width:0!important;height:0!important;border-left:7px solid transparent!important;border-right:7px solid transparent!important
+}
+html body.yanolja-system-page #direction .hst-tip.is-top::before{top:-7px!important;border-bottom:8px solid #008ad4!important}
+html body.yanolja-system-page #direction .hst-tip.is-bottom::before{bottom:-7px!important;border-top:8px solid #008ad4!important}
+html body.yanolja-system-page #direction .hst-tip.is-left::before{left:7px!important}
+html body.yanolja-system-page #direction .hst-tip.is-right::before{right:7px!important}
+html body.yanolja-system-page #direction .hst-tip.is-center::before{left:calc(50% - 7px)!important}
+html body.yanolja-system-page #direction .hst-tip.is-title::before{left:10px!important}
+html body.yanolja-system-page #direction .hst-tip.is-error{background:#c60000!important}
+html body.yanolja-system-page #direction .hst-tip.is-error::before{border-top-color:#c60000!important;border-bottom-color:#c60000!important}
+
+@media(max-width:900px){
+  html body.yanolja-system-page #direction .hst-ds-gallery__nav{width:36px!important;height:36px!important}
+  html body.yanolja-system-page #direction .hst-ds-gallery__nav.is-prev{left:8px!important}
+  html body.yanolja-system-page #direction .hst-ds-gallery__nav.is-next{right:8px!important}
+  html body.yanolja-system-page #direction .hst-ds-gallery__nav span{font-size:30px!important}
+  html body.yanolja-system-page #direction .hst-ds-sheet{padding:5.2% 4.8% 4%!important}
+  html body.yanolja-system-page #direction .hst-ds-sheet__brand{left:4.8%!important;font-size:12px!important}
+  html body.yanolja-system-page #direction .hst-ds-sheet__footnote{right:4.8%!important;font-size:8px!important}
+}
+
