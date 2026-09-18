@@ -240,3 +240,16 @@
 ## 2026-09-05 폰트 연결
 
 Averta PE 3종과 Pretendard Variable을 로컬 assets에 연결했다. 테스트 페이지의 디자인 시스템 typography가 더 이상 CDN Pretendard에 의존하지 않는다.
+
+## 운영 페이지 구조 계약 (2026-09-18)
+
+`himart.html`은 다른 HIMART 포트폴리오 페이지와 동일하게 하나의 독립 HTML 문서로 운영한다. Jekyll의 `include_relative` 캡처·문자열 치환·인라인 런타임 삽입은 운영 경로에서 사용하지 않는다.
+
+- 공통 기반: `design-system/himart-system.css`, `navigation.css`, `subsection-copy-visibility.css`, `structural-index-contract.css`
+- 페이지 전용 레이아웃: Hero, editorial, journey, gallery 컴포넌트 CSS
+- 콘텐츠 보정: 기존 `content-runtime.js` 및 최종 보정 스크립트의 정의된 순서만 유지
+- 구조 가시성: `structural-visibility-runtime.js`을 마지막 외부 스크립트로 한 번만 연결
+- 섹션 설명은 `body.hm-ds-subsection-copy-hidden`에서 DOM을 보존한 채 표시와 여백만 제거한다. 이 클래스를 해제하면 콘텐츠와 원래 여백이 복원된다.
+- 번호 레이블은 `data-index`와 `structural-index-contract.css`가 소유하며, 영어 보조 레이블은 DOM에 남기되 화면에는 표시하지 않는다.
+
+이 계약을 통해 제목·설명 가시성 규칙이 후속 DOM 변환보다 항상 마지막에 적용되며, 다른 HIMART 페이지와 동일한 공통 디자인 시스템 진입점을 사용한다.
