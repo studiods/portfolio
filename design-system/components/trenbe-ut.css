@@ -102,16 +102,30 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 
 /* 01.1 / 02 — AIMMO System 02.2 second insight, exact segmented-bar composition. */
 html body.trenbe-ut-page #brand .aimmo-context-insight{min-width:0;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
-html body.trenbe-ut-page #brand .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.trenbe-ut-page #brand .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font-family:var(--hm-font-en)!important;font-size:var(--hm-type-note)!important;font-weight:400!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important}
 html body.trenbe-ut-page #brand .aimmo-context-insight h4{
-  margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;
-  font-size:28px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;
-  line-height:1.24!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+  margin:18px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important
 }
-html body.trenbe-ut-page #brand .aimmo-context-insight h4 strong{color:var(--hm-blue)!important;font:inherit!important;font-weight:inherit!important;font-variation-settings:inherit!important}\nhtml body.trenbe-ut-page #brand .aimmo-context-insight__copy{
-  margin:4px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;
-  font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;
-  font-variation-settings:"wght" 300!important;line-height:1.5!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+html body.trenbe-ut-page #brand .aimmo-context-insight h4 strong{color:var(--hm-blue)!important;font-family:inherit!important;font-size:inherit!important;font-weight:inherit!important;font-variation-settings:inherit!important;line-height:inherit!important;letter-spacing:inherit!important}
+html body.trenbe-ut-page #brand .aimmo-context-insight__copy{
+  margin:4px 0 0!important;
+  max-width:var(--hm-description-max-chars)!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important
 }
 
 /* Copied from AIMMO 02.2 / 02 · ENVIRONMENT. */
@@ -155,8 +169,6 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(5
 html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n+2) b{font-size:18px}
 
 @media(max-width:780px){
-  html body.trenbe-ut-page #brand .aimmo-context-insight h4{font-size:24px!important}
-  html body.trenbe-ut-page #brand .aimmo-context-insight__copy{font-size:15px!important}
   html body.trenbe-ut-page #brand .aimmo-environment-ratio{margin-top:40px}
   html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend{height:160px}
   html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row{padding:0 14px 18px!important}
