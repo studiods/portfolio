@@ -40,6 +40,14 @@ html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__ro
 html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(4){--reuse-ref-width:48.3%!important}
 html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(5){--reuse-ref-width:29%!important}
 html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(6){--reuse-ref-width:10.9%!important}
+
+/* 04.1 page-only layout repair: the legacy Reuse direction bridge creates an extra
+   left-column 04.1 with ::before. Keep the canonical 04.1 beside the title and
+   suppress only this duplicate pseudo index on this page. */
+html body.reuse-current #direction .prototype-intro.hm-subsection::before{
+  content:none!important;
+  display:none!important;
+}
 </style>
 <link rel="stylesheet" href="./design-system/components/structural-index-contract.css?v=20260918-1">
 </head>
