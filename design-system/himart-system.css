@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260911-1");
+@import url("./index.css?v=20260916-4");
 
 /*
   HIMART Shared System v3.9 — sole final-authority layer.
@@ -218,9 +218,10 @@ html body.himart-page-body #live-main .hm-section-head .hm-section-no{
   padding:0!important;
   color:var(--hm-blue)!important;
 }
+/* Major chapter descriptions are intentionally removed. Hero and subsection copy remain. */
 html body.himart-page-body #live-main .hm-section-head .hm-section-desc{
-  display:block!important;
-  margin:var(--hm-title-description-gap) 0 0!important;
+  display:none!important;
+  margin:0!important;
   padding:0!important;
 }
 html body.himart-page-body #live-main .hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
