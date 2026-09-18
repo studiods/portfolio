@@ -417,6 +417,10 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(1){
 html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(2){--aimmo-flow-delay:250ms}
 html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(3){--aimmo-flow-delay:500ms}
 html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){--aimmo-flow-delay:750ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){
+  border-color:rgba(255,255,255,.30)!important;
+  background:transparent!important;
+}
 
 html body.aimmo-graphic-page #brand .aimmo-business-flow article>span,
 html body.aimmo-graphic-page #brand .aimmo-business-flow article>h4{
