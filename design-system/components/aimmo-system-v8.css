@@ -71,6 +71,13 @@ html body.aimmo-system-page #journey .aimmo-application-gallery__item figcaption
   word-break:keep-all!important;
 }
 
+/* 03.2 — third gallery caption: match the standard desktop editorial left inset. */
+@media(min-width:781px){
+  html body.aimmo-system-page #journey .aimmo-application-gallery__item:nth-child(3) figcaption{
+    padding-left:40px!important;
+  }
+}
+
 /* 02.1 — keep the subsection heading on the shared/default scale; only gallery titles are 22px. */
 html body.aimmo-system-page #data .aimmo-evidence-gallery .aimmo-evidence-card figcaption strong{
   display:block!important;
