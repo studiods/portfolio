@@ -91,7 +91,7 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 }
 
 
-/* 01.1 — luxury evidence rows. */
+/* 01.2 — luxury evidence rows. */
 .trenbe-luxury-evidence{display:grid;grid-template-columns:1fr;gap:72px;width:100%}
 .trenbe-luxury-time-table{width:100%;margin-top:32px;border-top:1px solid var(--hm-line-faint)}
 .trenbe-luxury-time-row{display:grid;grid-template-columns:88px minmax(0,1fr) 48px;gap:14px;align-items:center;min-height:42px;border-bottom:1px solid var(--hm-line-faint)}
@@ -100,7 +100,7 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 .trenbe-luxury-time-row>i::before{content:"";display:block;width:calc(var(--value) * 1%);height:100%;border-radius:inherit;background:var(--hm-blue)}
 .trenbe-luxury-time-row>b{color:#fff;font:300 12px/1 var(--hm-font-en);text-align:right;font-variant-numeric:tabular-nums}
 
-/* 01.1 / 02 — AIMMO System 02.2 second insight, exact segmented-bar composition. */
+/* 01.2 / 02 — AIMMO System 02.2 second insight, exact segmented-bar composition. */
 html body.trenbe-ut-page #brand .aimmo-context-insight{min-width:0;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
 html body.trenbe-ut-page #brand .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font-family:var(--hm-font-en)!important;font-size:var(--hm-type-note)!important;font-weight:400!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important}
 html body.trenbe-ut-page #brand .aimmo-context-insight h4{
@@ -151,12 +151,6 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row b{
   display:block;margin:6px 0 0;color:#fff;font:300 30px/1 var(--hm-font-en);
   letter-spacing:var(--hm-track-data-number);text-align:left;font-variant-numeric:tabular-nums
 }
-html body.trenbe-ut-page #brand .aimmo-environment-ratio__source{
-  display:block;width:100%;margin:32px 0 0;padding:18px 0 0;
-  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
-  color:var(--hm-text-tertiary);font:300 10px/1.5 var(--hm-font-ko);letter-spacing:var(--hm-track-base)
-}
-
 /* Small segments keep the AIMMO bar composition but collapse long labels to protect geometry. */
 html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n+2){padding-right:10px!important;padding-left:10px!important}
 html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n+2) span{
@@ -179,7 +173,7 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n
   html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n+2) b{font-size:14px}
 }
 
-/* 01.2 — GA / NPS / UT as a HIMART-style circular reasoning flow. */
+/* 01.3 — GA / NPS / UT as a HIMART-style circular reasoning flow. */
 .trenbe-evidence-flow,
 .trenbe-segment-flow,
 .trenbe-decision-flow{
@@ -248,7 +242,7 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n
   text-align:center;
 }
 
-/* 01.3 original process image. */
+/* 01.4 original process image. */
 .trenbe-source-image{
   margin:64px 0 0;
 }
@@ -501,7 +495,6 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n
   .trenbe-decision-flow>.trenbe-flow-arrow{display:none}
 }
 
-}
 
 @media(max-width:780px){
   .trenbe-context-grid,.trenbe-profile-grid,.trenbe-conclusion-grid,.trenbe-research-bridge,.trenbe-roadmap,.trenbe-model-process,.trenbe-findings,.trenbe-field-gallery{grid-template-columns:1fr!important}
