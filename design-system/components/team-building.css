@@ -102,8 +102,8 @@
   .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{white-space:normal}
 }
 
-/* Shared workshop modifier: full-width four-card strip with 40px image overlap. */
-.himart-team-page .team-workshop-visual--full-four{padding-bottom:200px}
+/* Shared workshop modifier: full-width four-card strip with 25% card-height image overlap. */
+.himart-team-page .team-workshop-visual--full-four{padding-bottom:180px}
 .himart-team-page .team-workshop-visual--full-four .team-workshop-visual__cards{
   right:0;
   left:0;
@@ -111,10 +111,14 @@
   height:240px;
   aspect-ratio:auto;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  transform:translateY(200px);
+  transform:translateY(75%);
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card + .team-workshop-card{
   border-left:1px solid rgba(255,255,255,.15);
+}
+.himart-team-page .team-workshop-visual--full-four .team-workshop-card>span{
+  font-family:var(--hm-font-en);
+  font-weight:100;
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card__copy>strong{
   display:block;
@@ -122,7 +126,7 @@
   color:var(--hm-blue);
   font-family:var(--hm-font-en);
   font-size:32px;
-  font-weight:400;
+  font-weight:100;
   line-height:1;
   letter-spacing:var(--hm-track-data-number);
 }
