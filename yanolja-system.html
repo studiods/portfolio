@@ -8,7 +8,7 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-2">
+<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-3">
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260916-6">
 <link rel="stylesheet" href="./design-system/components/portfolio-icons.css?v=20260919-2">
 <link rel="stylesheet" href="./design-system/components/himart-ax.css?v=20260919-2">
@@ -251,13 +251,226 @@
   <div class="hm-wide-right-rail">
     <div class="hm-subsection hm-ds-subsection hm-reveal">
       <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="04.1">04.1 / CORE COMPONENTS</span><div><h3 class="hm-subtitle hm-ds-subsection__title">자주 쓰는 입력과 선택부터,<br>상태 변화까지 하나의 규칙으로 묶었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">Normal/Small과 Hover·Pressed·Disabled 상태를 공통 규칙으로 설계했습니다.</p></div></div>
-      <div class="yanolja-component-board hm-ds-subtitle-to-content">
-        <article class="yanolja-component-card"><span>BUTTON / BUTTON GROUP</span><h4>행동의 중요도와 상태가 즉시 구분되는 버튼</h4><div class="yanolja-ui-row"><button class="yanolja-mini-button">Primary</button><button class="yanolja-mini-button is-outline">Secondary</button><button class="yanolja-mini-button is-muted">Disabled</button></div><div class="yanolja-ui-row"><button class="yanolja-mini-button">확인</button><button class="yanolja-mini-button is-outline">취소</button><button class="yanolja-mini-button is-danger">삭제</button></div></article>
-        <article class="yanolja-component-card"><span>TEXT FIELD / TEXT AREA</span><h4>입력 상태와 오류·확인을 일관되게 전달하는 필드</h4><div class="yanolja-field-stack"><div class="yanolja-field">Normal text field</div><div class="yanolja-field is-error">Error message</div><div class="yanolja-field is-confirm">Confirm message</div><div class="yanolja-field yanolja-textarea">Text area</div></div></article>
-        <article class="yanolja-component-card"><span>CHECK BOX / RADIO</span><h4>선택 여부와 Disabled 상태를 짧은 시선 이동으로 확인</h4><div class="yanolja-choice-grid"><span class="yanolja-choice"><i></i>Check box</span><span class="yanolja-choice is-selected"><i></i>Selected</span><span class="yanolja-choice is-radio"><i></i>Radio</span><span class="yanolja-choice is-radio is-selected"><i></i>Selected</span></div></article>
-        <article class="yanolja-component-card"><span>DATE PICKER</span><h4>예약·운영 업무에 필요한 날짜 선택 패턴을 공통화</h4><div class="yanolja-calendar"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="is-selected">11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span></div></article>
+
+      <div class="hst-ds-gallery hm-ds-subtitle-to-content" data-hst-gallery data-autoplay="2000" aria-label="HST Group Design System 57-59 페이지 갤러리">
+        <div class="hst-ds-gallery__viewport">
+          <div class="hst-ds-gallery__track">
+
+            <article class="hst-ds-sheet hst-ds-sheet--57" data-hst-slide aria-label="HST Group Design System page 57">
+              <div class="hst-ds-sheet__brand"><b>HST GROUP</b><span>DESIGN SYSTEM</span></div>
+
+              <div class="hst57-layout">
+                <div class="hst57-label">Basic button</div>
+
+                <section class="hst-button-matrix">
+                  <h5>normal size</h5>
+                  <div class="hst-button-matrix__head"><span>status/level</span><span>primary</span><span>secondary</span><span>tertiary</span><span>destructive</span></div>
+                  <div class="hst-button-matrix__row"><span>normal</span><i class="hst-btn is-primary">확인</i><i class="hst-btn is-secondary">확인</i><i class="hst-btn is-tertiary">취소</i><i class="hst-btn is-danger">삭제</i></div>
+                  <div class="hst-button-matrix__row"><span>hover</span><i class="hst-btn is-primary is-hover">확인</i><i class="hst-btn is-secondary is-hover">확인</i><i class="hst-btn is-tertiary is-hover">취소</i><i class="hst-btn is-danger is-hover">삭제</i></div>
+                  <div class="hst-button-matrix__row"><span>pressed</span><i class="hst-btn is-primary is-pressed">확인</i><i class="hst-btn is-secondary is-pressed">확인</i><i class="hst-btn is-tertiary is-pressed">취소</i><i class="hst-btn is-danger is-pressed">삭제</i></div>
+                  <div class="hst-button-matrix__row"><span>disabled</span><i class="hst-btn is-primary is-disabled">확인</i><i class="hst-btn is-secondary is-disabled">확인</i><i class="hst-btn is-tertiary is-disabled">취소</i><i class="hst-btn is-danger is-disabled">삭제</i></div>
+                </section>
+
+                <section class="hst-button-matrix is-small">
+                  <h5>small size</h5>
+                  <div class="hst-button-matrix__head"><span>status/level</span><span>primary</span><span>secondary</span><span>tertiary</span><span>destructive</span></div>
+                  <div class="hst-button-matrix__row"><span>normal</span><i class="hst-btn is-primary">확인</i><i class="hst-btn is-secondary">확인</i><i class="hst-btn is-tertiary">취소</i><i class="hst-btn is-danger">삭제</i></div>
+                  <div class="hst-button-matrix__row"><span>hover</span><i class="hst-btn is-primary is-hover">확인</i><i class="hst-btn is-secondary is-hover">확인</i><i class="hst-btn is-tertiary is-hover">취소</i><i class="hst-btn is-danger is-hover">삭제</i></div>
+                  <div class="hst-button-matrix__row"><span>pressed</span><i class="hst-btn is-primary is-pressed">확인</i><i class="hst-btn is-secondary is-pressed">확인</i><i class="hst-btn is-tertiary is-pressed">취소</i><i class="hst-btn is-danger is-pressed">삭제</i></div>
+                  <div class="hst-button-matrix__row"><span>disabled</span><i class="hst-btn is-primary is-disabled">확인</i><i class="hst-btn is-secondary is-disabled">확인</i><i class="hst-btn is-tertiary is-disabled">취소</i><i class="hst-btn is-danger is-disabled">삭제</i></div>
+                </section>
+
+                <div class="hst57-label">With Icon</div>
+                <section class="hst-icon-row">
+                  <h5>normal size</h5>
+                  <div class="hst-icon-row__head"><span>primary</span><span>secondary</span><span>tertiary</span><span>destructive</span></div>
+                  <div class="hst-icon-row__items"><i class="hst-btn is-primary">✓&nbsp;&nbsp;확인</i><i class="hst-btn is-secondary">✓&nbsp;&nbsp;확인</i><i class="hst-btn is-tertiary">✓&nbsp;&nbsp;확인</i><i class="hst-btn is-danger">×&nbsp;&nbsp;삭제</i></div>
+                </section>
+                <section class="hst-icon-row is-small">
+                  <h5>small size</h5>
+                  <div class="hst-icon-row__head"><span>primary</span><span>secondary</span><span>tertiary</span><span>destructive</span></div>
+                  <div class="hst-icon-row__items"><i class="hst-btn is-primary">✓&nbsp;확인</i><i class="hst-btn is-secondary">✓&nbsp;확인</i><i class="hst-btn is-tertiary">✓&nbsp;확인</i><i class="hst-btn is-danger">×&nbsp;삭제</i></div>
+                </section>
+
+                <div class="hst57-label is-groups">Button<br>groups</div>
+                <section class="hst-group-demo">
+                  <h5>normal size</h5>
+                  <span class="hst-demo-caption">normal</span>
+                  <div class="hst-segment"><i>버튼01</i><i>버튼02</i><i>버튼03</i><i>버튼04</i></div>
+                  <span class="hst-demo-caption">selected</span>
+                  <div class="hst-segment"><i>버튼01</i><i>버튼02</i><i>버튼03</i><i class="is-selected">버튼04</i></div>
+                  <span class="hst-demo-caption">disabled (partly)</span>
+                  <div class="hst-segment"><i>버튼01</i><i>버튼02</i><i class="is-disabled">버튼03</i><i class="is-disabled">버튼04</i></div>
+                  <span class="hst-demo-caption">select box</span>
+                  <div class="hst-select-demo is-open"><div><span>버튼01</span><span>버튼02⌄</span><span class="is-selected">버튼03⌄</span></div><ul><li>옵션명 01</li><li class="is-selected">옵션명 02 <b>✓</b></li><li>옵션명 03</li><li>옵션명 04</li></ul></div>
+                </section>
+
+                <section class="hst-group-demo is-small">
+                  <h5>small size</h5>
+                  <span class="hst-demo-caption">normal</span>
+                  <div class="hst-segment"><i>버튼01</i><i>버튼02</i><i>버튼03</i><i>버튼04</i></div>
+                  <span class="hst-demo-caption">selected</span>
+                  <div class="hst-segment"><i>버튼01</i><i>버튼02</i><i>버튼03</i><i class="is-selected">버튼04</i></div>
+                  <span class="hst-demo-caption">disabled (partly)</span>
+                  <div class="hst-segment"><i>버튼01</i><i>버튼02</i><i class="is-disabled">버튼03</i><i class="is-disabled">버튼04</i></div>
+                  <span class="hst-demo-caption">select box</span>
+                  <div class="hst-select-demo"><div><span>버튼01⌄</span><span>버튼02⌄</span><span class="is-selected">버튼03⌄</span></div></div>
+                </section>
+
+                <section class="hst-pagination-demo">
+                  <h5>pagination</h5>
+                  <div class="hst-page-skeleton"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                  <div class="hst-pagination"><b>≪</b><b>‹</b><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><b>›</b><b>≫</b></div>
+                  <div class="hst-pagination is-disabled"><b>≪</b><b>‹</b><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><b>›</b><b>≫</b></div>
+                </section>
+              </div>
+
+              <p class="hst-ds-sheet__footnote">*DESIGN SYSTEM 설명 중 일부를 발췌함</p>
+            </article>
+
+            <article class="hst-ds-sheet hst-ds-sheet--58" data-hst-slide aria-label="HST Group Design System page 58">
+              <div class="hst-ds-sheet__brand"><b>HST GROUP</b><span>DESIGN SYSTEM</span></div>
+
+              <div class="hst58-layout">
+                <div class="hst58-title">Text field</div>
+
+                <section class="hst-field-column">
+                  <h5>normal size</h5>
+                  <div class="hst-field-state"><span>normal</span><div class="hst-field-control is-placeholder">내용을 입력해 주세요.</div></div>
+                  <div class="hst-field-state"><span>hover</span><div class="hst-field-control is-hover">내용을 입력해 주세요.</div></div>
+                  <div class="hst-field-state"><span>focused</span><div class="hst-field-control is-focused"><i></i></div></div>
+                  <div class="hst-field-state"><span>filled</span><div class="hst-field-control">요구사항 입력완료</div></div>
+                  <div class="hst-field-state"><span>disabled</span><div class="hst-field-control is-disabled">요구사항 입력완료</div></div>
+                  <div class="hst-field-state is-label"><span>label</span><div><small>아이디</small><div class="hst-field-control">yanoljahst</div></div></div>
+                  <div class="hst-field-state"><span>error msg</span><div><div class="hst-field-control is-error">yanoljahst</div><em class="is-error">ⓘ 이미 사용 중인 아이디입니다.</em></div></div>
+                  <div class="hst-field-state"><span>confirm msg</span><div><div class="hst-field-control is-confirm">yanoljahst</div><em class="is-confirm">✓ 사용 가능한 아이디입니다.</em></div></div>
+                  <div class="hst-field-state"><span>spin button</span><div class="hst-field-control is-spin">40,000 <b>⌃<br>⌄</b></div></div>
+                  <div class="hst-field-state is-select"><span>select box</span><div class="hst-field-select is-open"><div>옵션 선택 <b>⌄</b></div><ul><li>옵션명 01</li><li class="is-selected">옵션명 02 <b>✓</b></li><li>옵션명 03</li><li class="is-disabled">옵션명 04</li></ul></div></div>
+                </section>
+
+                <section class="hst-field-column is-small">
+                  <h5>small size</h5>
+                  <div class="hst-field-state"><span>normal</span><div class="hst-field-control is-placeholder">내용을 입력해 주세요.</div></div>
+                  <div class="hst-field-state"><span>hover</span><div class="hst-field-control is-hover">내용을 입력해 주세요.</div></div>
+                  <div class="hst-field-state"><span>focused</span><div class="hst-field-control is-focused"><i></i></div></div>
+                  <div class="hst-field-state"><span>filled</span><div class="hst-field-control">요구사항 입력완료</div></div>
+                  <div class="hst-field-state"><span>disabled</span><div class="hst-field-control is-disabled">요구사항 입력완료</div></div>
+                  <div class="hst-field-state is-label"><span>label</span><div><small>아이디</small><div class="hst-field-control">요구사항 입력완료</div></div></div>
+                  <div class="hst-field-state"><span>error msg</span><div><div class="hst-field-control is-error">yanoljahst</div><em class="is-error">ⓘ 이미 사용 중인 아이디입니다.</em></div></div>
+                  <div class="hst-field-state"><span>confirm msg</span><div><div class="hst-field-control is-confirm">yanoljahst</div><em class="is-confirm">✓ 사용 가능한 아이디입니다.</em></div></div>
+                  <div class="hst-field-state"><span>spin button</span><div class="hst-field-control is-spin">40,000 <b>⌃<br>⌄</b></div></div>
+                  <div class="hst-field-state is-select"><span>select box</span><div class="hst-field-select is-open"><div>옵션 선택 <b>⌄</b></div><ul><li>옵션명 01</li><li class="is-selected">옵션명 02 <b>✓</b></li><li>옵션명 03</li><li class="is-disabled">옵션명 04</li></ul></div></div>
+                </section>
+
+                <div class="hst58-title is-area">Text area</div>
+                <section class="hst-textarea-column">
+                  <div class="hst-field-state"><span>normal</span><div class="hst-textarea-control is-placeholder">입력하신 내용은 다음과 같습니다.<br>내용을 입력해 주세요.</div></div>
+                  <div class="hst-field-state"><span>hover</span><div class="hst-textarea-control is-hover">입력하신 내용은 다음과 같습니다.<br>내용을 입력해 주세요.</div></div>
+                  <div class="hst-field-state"><span>focused</span><div class="hst-textarea-control is-focused"><i></i></div></div>
+                  <div class="hst-field-state"><span>filled</span><div class="hst-textarea-control">다음 내용을 확인하시고 예약 시 참고하시기 바랍니다.<br>안내에 따라 이동해 주시고 부득이한 경우 연락 바랍니다.</div></div>
+                  <div class="hst-field-state"><span>disabled</span><div class="hst-textarea-control is-disabled">입력하신 내용은 다음과 같습니다.</div></div>
+                  <div class="hst-field-state is-label"><span>label</span><div><small>상세설명</small><div class="hst-textarea-control">다음 내용을 확인하시고 예약 시 참고하시기 바랍니다.<br>안내에 따라 이동해 주시고 부득이한 경우 연락 바랍니다.</div></div></div>
+                  <div class="hst-field-state is-counter"><span>counter</span><div><div class="hst-textarea-control">다음 내용을 확인하시고 예약 시 참고하시기 바랍니다.<br>안내에 따라 이동해 주시고 부득이한 경우 연락 바랍니다.</div><small>362/2000</small></div></div>
+                  <div class="hst-field-state"><span>error msg</span><div><div class="hst-textarea-control is-error">@#%RT$#%*&amp;&amp;^%</div><em class="is-error">ⓘ 요청사항에 특수문자는 사용할 수 없습니다.</em></div></div>
+                </section>
+              </div>
+
+              <p class="hst-ds-sheet__footnote">*DESIGN SYSTEM 설명 중 일부를 발췌함</p>
+            </article>
+
+            <article class="hst-ds-sheet hst-ds-sheet--59" data-hst-slide aria-label="HST Group Design System page 59">
+              <div class="hst-ds-sheet__brand"><b>HST GROUP</b><span>DESIGN SYSTEM</span></div>
+
+              <div class="hst59-layout">
+                <section class="hst-tabs-demo">
+                  <h5>normal size</h5>
+                  <div class="hst-tabs"><b class="is-active">탭이름 01</b><b>탭이름 02</b><b>탭이름 03</b><b>탭이름 04</b><b>탭이름 05</b><b>탭이름 06</b><b>탭이름 07</b><b class="is-disabled">탭이름 08</b></div>
+                </section>
+                <section class="hst-tabs-demo is-small">
+                  <h5>small size</h5>
+                  <div class="hst-tabs"><b class="is-active">탭이름 01</b><b>탭이름 02</b><b>탭이름 03</b><b>탭이름 04</b><b>탭이름 05</b><b>탭이름 06</b><b class="is-disabled">탭이름 07</b></div>
+                </section>
+
+                <div class="hst59-title">Date picker</div>
+                <section class="hst-datepicker">
+                  <div class="hst-calendar-months">
+                    <article class="hst-month">
+                      <header><b>‹</b><strong>2020.10</strong></header>
+                      <div class="hst-week"><span class="is-sun">Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                      <div class="hst-days">
+                        <span class="is-sun">4</span><span>5</span><span>6</span><span>7</span><span class="is-soft">8</span><span>9</span><span>10</span>
+                        <span class="is-sun">11</span><span class="is-selected">12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+                        <span class="is-sun">18</span><span>19</span><span>20</span><span class="is-soft">21</span><span>22</span><span>23</span><span>24</span>
+                        <span class="is-sun">25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span></span>
+                      </div>
+                    </article>
+                    <article class="hst-month">
+                      <header><strong>2020.11</strong><b>›</b></header>
+                      <div class="hst-week"><span class="is-sun">Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                      <div class="hst-days">
+                        <span class="is-sun">1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+                        <span class="is-sun">8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+                        <span class="is-sun">15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+                        <span class="is-sun">22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                        <span class="is-sun">29</span><span>30</span><span></span><span></span><span></span><span></span><span></span>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+
+                <div class="hst59-title is-choice">Check box<br>&amp; Radio</div>
+                <section class="hst-choice-demo">
+                  <div class="hst-choice-column">
+                    <h5>Check box</h5>
+                    <div><i class="hst-check"></i><span>normal</span></div>
+                    <div><i class="hst-check is-hover"></i><span>hover</span></div>
+                    <div><i class="hst-check is-selected">✓</i><span>selected</span></div>
+                    <div><i class="hst-check is-selected is-disabled">✓</i><span>selected, disabled</span></div>
+                    <div><i class="hst-check is-indeterminate">−</i><span>Indeterminate</span></div>
+                    <div><i class="hst-check is-disabled"></i><span>disabled</span></div>
+                  </div>
+                  <div class="hst-choice-column">
+                    <h5>Radio</h5>
+                    <div><i class="hst-radio"></i><span>normal</span></div>
+                    <div><i class="hst-radio is-hover"></i><span>hover</span></div>
+                    <div><i class="hst-radio is-selected"></i><span>selected</span></div>
+                    <div><i class="hst-radio is-selected is-disabled"></i><span>selected, disabled</span></div>
+                    <div><i class="hst-radio is-disabled"></i><span>disabled</span></div>
+                  </div>
+                </section>
+
+                <section class="hst-tooltip-demo is-left">
+                  <h5>left aligned</h5>
+                  <div class="hst-tip is-top is-left">별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                  <div class="hst-tip is-bottom is-left">별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                </section>
+                <section class="hst-tooltip-demo is-right">
+                  <h5>right aligned</h5>
+                  <div class="hst-tip is-top is-right">별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                  <div class="hst-tip is-bottom is-right">별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                </section>
+                <section class="hst-tooltip-demo is-center">
+                  <h5>center aligned</h5>
+                  <div class="hst-tip is-top is-center">별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                  <div class="hst-tip is-bottom is-center">별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                </section>
+                <section class="hst-tooltip-demo is-title">
+                  <h5>with a title</h5>
+                  <div class="hst-tip is-top is-title"><b>정산이 왜 맞지 않나요?</b>별도의 정산기준을 적용하고 있습니다. 포함된 내용이 필요한 경우 패키지 항목에서 요청해 주시기 바랍니다.</div>
+                  <h5 class="is-error-label">with an error</h5>
+                  <div class="hst-tip is-error is-bottom is-left">입력하신 내용이 맞지 않습니다. 확인 후 다시 시도해 주세요.</div>
+                </section>
+              </div>
+
+              <p class="hst-ds-sheet__footnote">*DESIGN SYSTEM 설명 중 일부를 발췌함</p>
+            </article>
+
+          </div>
+        </div>
+
+        <button class="hst-ds-gallery__nav is-prev" type="button" aria-label="이전 페이지"><span aria-hidden="true">‹</span></button>
+        <button class="hst-ds-gallery__nav is-next" type="button" aria-label="다음 페이지"><span aria-hidden="true">›</span></button>
       </div>
-      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.57-59</div>
     </div>
 
     <div class="hm-subsection hm-ds-subsection hm-reveal">
@@ -296,5 +509,56 @@
 <script src="./design-system/scramble-final.js?v=20260916-4"></script>
 <script src="./design-system/navigation.js?v=20260908-1"></script>
 <script src="./design-system/components/structural-visibility-runtime.js?v=20260918-1"></script>
+
+<script>
+(() => {
+  document.querySelectorAll('[data-hst-gallery]').forEach((gallery) => {
+    const track = gallery.querySelector('.hst-ds-gallery__track');
+    const slides = [...gallery.querySelectorAll('[data-hst-slide]')];
+    const prev = gallery.querySelector('.hst-ds-gallery__nav.is-prev');
+    const next = gallery.querySelector('.hst-ds-gallery__nav.is-next');
+    if (!track || slides.length < 2) return;
+
+    let index = 0;
+    let timer = null;
+    const delay = Number(gallery.dataset.autoplay) || 2000;
+
+    const render = () => {
+      track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
+      slides.forEach((slide, i) => slide.setAttribute('aria-hidden', i === index ? 'false' : 'true'));
+    };
+
+    const stop = () => {
+      if (timer) window.clearInterval(timer);
+      timer = null;
+    };
+
+    const start = () => {
+      stop();
+      timer = window.setInterval(() => {
+        index = (index + 1) % slides.length;
+        render();
+      }, delay);
+    };
+
+    const move = (delta) => {
+      index = (index + delta + slides.length) % slides.length;
+      render();
+      start();
+    };
+
+    prev?.addEventListener('click', () => move(-1));
+    next?.addEventListener('click', () => move(1));
+    gallery.addEventListener('mouseenter', stop);
+    gallery.addEventListener('mouseleave', start);
+    gallery.addEventListener('focusin', stop);
+    gallery.addEventListener('focusout', start);
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+
+    render();
+    start();
+  });
+})();
+</script>
 </body>
 </html>
