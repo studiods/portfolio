@@ -11,7 +11,7 @@ html body.trenbe-ut-page #live-main .hm-wide-right-rail{min-width:0;width:100%;m
 html body.trenbe-ut-page #live-main .hm-title{max-width:1060px!important}
 html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 
-/* Common evidence-card grammar — blue is the only portfolio accent. */
+/* Common evidence-card grammar — blue is reserved for data/text accents; divider rules stay neutral. */
 .trenbe-context-grid,
 .trenbe-profile-grid,
 .trenbe-conclusion-grid,
@@ -49,7 +49,7 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 .trenbe-research-bridge article:first-child,
 .trenbe-roadmap article:first-child,
 .trenbe-model-process article:first-child,
-.trenbe-findings article:first-child{border-top-color:var(--hm-blue)}
+.trenbe-findings article:first-child{border-top-color:var(--hm-line-default)}
 
 .trenbe-context-grid span,
 .trenbe-profile-grid span,
