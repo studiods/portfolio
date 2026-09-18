@@ -122,6 +122,14 @@
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card{
   min-height:240px;
   height:auto;
+  justify-content:flex-start;
+  padding:28px 20px;
+}
+.himart-team-page .team-workshop-visual--full-four .team-workshop-card:first-child{
+  padding-left:0;
+}
+.himart-team-page .team-workshop-visual--full-four .team-workshop-card:last-child{
+  padding-right:0;
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card + .team-workshop-card{
   border-left:1px solid rgba(255,255,255,.15);
@@ -129,6 +137,9 @@
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card>span{
   font-family:var(--hm-font-en);
   font-weight:100;
+}
+.himart-team-page .team-workshop-visual--full-four .team-workshop-card__copy{
+  margin-top:40px;
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card__copy>strong{
   display:block;
@@ -139,6 +150,9 @@
   font-weight:100;
   line-height:1;
   letter-spacing:var(--hm-track-data-number);
+}
+.himart-team-page .team-workshop-visual--full-four .team-workshop-card h4{
+  font-size:22px;
 }
 @media(max-width:1180px){
   .himart-team-page .team-workshop-visual--full-four .team-workshop-visual__cards{
