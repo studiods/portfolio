@@ -395,3 +395,62 @@ html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-gallery-stack,
 html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-carousel{
   margin-top:40px!important;
 }
+
+
+/* AIMMO Graphic 01.2 focus sequence — 2026-09-18 */
+/*
+  Default: four unfilled white circles (30% rule), white number/title and white arrows at 30%.
+  Trigger: the owning .hm-reveal subsection receives .is-visible once from animation.js.
+  Timing: 500ms per circle; each next circle starts after 250ms (50% overlap).
+  The final circle fills red while keeping number/title white and lifting body copy to 80% white.
+*/
+html body.aimmo-graphic-page #brand .aimmo-business-flow article{
+  --aimmo-flow-duration:500ms;
+  --aimmo-flow-delay:0ms;
+  border-color:rgba(255,255,255,.30)!important;
+  background:transparent!important;
+  transition:
+    border-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay),
+    background-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(2){--aimmo-flow-delay:250ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(3){--aimmo-flow-delay:500ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){--aimmo-flow-delay:750ms}
+
+html body.aimmo-graphic-page #brand .aimmo-business-flow article>span,
+html body.aimmo-graphic-page #brand .aimmo-business-flow article>h4{
+  color:#fff!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article>p{
+  color:rgba(255,255,255,.60)!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow{
+  color:#fff!important;
+  border-color:currentColor!important;
+  opacity:.30!important;
+}
+
+/* 01 → 03: rule + number + title transition to red. */
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(-n+3){
+  border-color:var(--hm-red,#D30202)!important;
+}
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(-n+3)>span,
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(-n+3)>h4{
+  color:var(--hm-red,#D30202)!important;
+}
+
+/* 04: terminal state fills red; number/title stay white; body rises to 80% white. */
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(4){
+  border-color:var(--hm-red,#D30202)!important;
+  background-color:var(--hm-red,#D30202)!important;
+}
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(4)>span,
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(4)>h4{
+  color:#fff!important;
+}
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow article:nth-of-type(4)>p{
+  color:rgba(255,255,255,.80)!important;
+}
