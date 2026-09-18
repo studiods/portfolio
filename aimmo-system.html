@@ -27,6 +27,27 @@
 <link rel="stylesheet" href="./design-system/components/aimmo-system-v8.css?v=20260917-7">
 <link rel="stylesheet" href="./design-system/components/media-gallery.css?v=20260917-2">
 <style>
+/* 03.2 local-only gallery layout: remove the shared media-gallery gap and let the 2×2 items resize to fill the full rail. */
+html body.aimmo-system-page #journey .aimmo-application-gallery{
+  --hm-ds-media-gallery-gap:0px!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:0!important;
+  column-gap:0!important;
+  row-gap:0!important;
+  width:100%!important;
+}
+html body.aimmo-system-page #journey .aimmo-application-gallery__item{
+  width:100%!important;
+  max-width:none!important;
+  aspect-ratio:1/1!important;
+}
+@media(max-width:780px){
+  html body.aimmo-system-page #journey .aimmo-application-gallery{
+    grid-template-columns:1fr!important;
+    gap:0!important;
+  }
+}
+
 /* 02.3 local-only override: intentionally kept out of the shared design system. */
 html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card:nth-child(n+2)::after{
   height:50%!important;
