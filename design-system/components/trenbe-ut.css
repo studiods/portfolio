@@ -106,6 +106,7 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 .trenbe-luxury-time-row>b{color:#fff;font:300 12px/1 var(--hm-font-en);text-align:right;font-variant-numeric:tabular-nums}
 
 /* 01.1 / 02 — exact AIMMO System 02.2 context-insight + reference-bars rendering. */
+html body.trenbe-ut-page #brand .aimmo-context-insights{display:grid;grid-template-columns:1fr;gap:72px;width:100%}
 html body.trenbe-ut-page #brand .aimmo-context-insight{min-width:0;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
 html body.trenbe-ut-page #brand .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
 html body.trenbe-ut-page #brand .aimmo-context-insight h4{
