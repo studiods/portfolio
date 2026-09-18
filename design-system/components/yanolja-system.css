@@ -703,8 +703,8 @@ html body.yanolja-system-page #direction .hst-select-demo li{
 }
 html body.yanolja-system-page #direction .hst-select-demo li.is-selected{color:#004cb6!important;font-weight:700!important}
 html body.yanolja-system-page #direction .hst-select-demo li.is-disabled{color:#cfcfcf!important}
-html body.yanolja-system-page #direction .hst57-layout>.hst-group-demo:nth-of-type(5){
-  grid-column:3!important;width:58%!important
+html body.yanolja-system-page #direction .hst57-layout>.hst-group-demo.is-small{
+  grid-column:3!important;grid-row:3!important;width:58%!important;justify-self:start!important
 }
 html body.yanolja-system-page #direction .hst-pagination-demo{
   grid-column:3!important;grid-row:3!important;justify-self:end!important;width:36%!important;margin-top:0!important
