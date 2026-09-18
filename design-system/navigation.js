@@ -327,7 +327,7 @@
     },
     {
       file:'trenbe-ut.html', href:'./trenbe-ut.html', name:'TRENBE USABILITY TEST', en:true,
-      reflection:'UT의 가치는 문제를 많이 발견하는 데 있지 않았습니다. <strong>관찰과 정성 데이터가 팀의 우선순위와 정책 결정을 바꾸는 근거가 될 때</strong> 리서치가 실제 제품 변화로 이어진다는 점을 다시 확인했습니다.'
+      reflection:'우리 고객이 누구이고 서비스를 어떻게 사용하는지 제대로 이해하기 위해 UT를 시작했습니다. 실제 행동을 관찰하면서 고객뿐 아니라 우리가 만든 서비스 자체를 더 깊이 이해할 수 있었습니다. <strong>정량 데이터만으로는 보이지 않던 망설임과 고민을 발견했고, 그 지점들이 UX를 어디서부터 개선해야 하는지 알려주는 실마리가 되었습니다.</strong>'
     },
     {
       file:'yanolja-system.html', href:'./yanolja-system.html', name:'YANOLJA B2B DESIGN SYSTEM DEVELOPMENT', en:true,
