@@ -345,7 +345,7 @@
     },
     {
       file:'yanolja-system.html', href:'./yanolja-system.html', name:'YANOLJA B2B DESIGN SYSTEM DEVELOPMENT', en:true,
-      reflection:'디자인 시스템은 시각적 완성도를 높이는 작업만으로 충분하지 않다고 생각합니다. <strong>B2B와 B2C 모두 사용자의 환경·행동·맥락을 충분히 분석하고 이해한 결과가 컬러·타이포그래피·컴포넌트와 인터랙션의 규칙으로 이어져야 합니다.</strong> 그래야 디자인 시스템이 단순한 스타일 가이드를 넘어 실제 제품 경험의 일관성과 사용성을 만드는 기준으로 작동합니다.'
+      reflection:'당연한 이야기겠지만, 디자인 시스템은 시각적 완성도를 높이는 데서 끝나지 않아야 합니다. <strong>B2B와 B2C 모두 사용자의 환경·행동·맥락을 충분히 분석하고 이해한 결과가 컬러·타이포그래피·컴포넌트와 인터랙션의 규칙으로 이어져야 한다고 생각합니다.</strong> 그래야 디자인 시스템이 단순한 스타일 가이드를 넘어 실제 제품 경험의 일관성과 사용성을 만드는 기준으로 작동하기 때문입니다.'
     },
     {
       file:'nbt_stepup.html', href:'./nbt_stepup.html', name:'만보기보다 습관을 만드는 경험', en:false,
