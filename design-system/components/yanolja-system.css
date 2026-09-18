@@ -34,8 +34,8 @@ html body.yanolja-system-page :is(
   .yanolja-lead-step:nth-child(5),
   .yanolja-final-statement
 ){
-  border-color:var(--yanolja-portfolio-point)!important;
-  border-top-color:var(--yanolja-portfolio-point)!important;
+  border-color:var(--hm-line-default)!important;
+  border-top-color:var(--hm-line-default)!important;
 }
 
 html body.yanolja-system-page :is(
@@ -71,3 +71,152 @@ html body.yanolja-system-page :is(
    - 04.2 3x3 component demos
    Red/green/etc. are therefore allowed only inside these factual Yanolja examples,
    not as portfolio-page decorative point colors. */
+
+/* 2026-09-18 — neutral editorial surface contract.
+   Yanolja product/design-system examples keep their factual UI colors; portfolio cards do not. */
+html body.yanolja-system-page :is(
+  .yanolja-question-card,
+  .yanolja-direction-card,
+  .yanolja-goal-card
+){
+  border-color:var(--hm-line-default)!important;
+  background:transparent!important;
+}
+html body.yanolja-system-page :is(
+  .yanolja-answer-card,
+  .yanolja-field-metric,
+  .yanolja-context-grid article,
+  .yanolja-rule-grid article,
+  .yanolja-demo-panel,
+  .yanolja-type-demo,
+  .yanolja-component-card,
+  .yanolja-coverage-card,
+  .yanolja-lead-step,
+  .yanolja-accessibility__statement,
+  .yanolja-final-statement
+){
+  border-top-color:var(--hm-line-default)!important;
+}
+html body.yanolja-system-page :is(
+  .yanolja-answer-card,
+  .yanolja-field-metric,
+  .yanolja-demo-panel,
+  .yanolja-component-card,
+  .yanolja-coverage-card
+){
+  background:transparent!important;
+}
+
+/* 01.2 — HIMART WAYS 03.2 operating-card source; content/icons only changed. */
+html body.yanolja-system-page #brand .yanolja-answer-stack{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px!important;
+  width:100%!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article{
+  position:relative!important;
+  min-width:0!important;
+  padding:26px 28px 30px!important;
+  border:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  background:transparent!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article>span{
+  display:block!important;
+  color:#fff!important;
+  font:400 11px/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article h4{
+  margin:22px 0 0!important;
+  color:#fff!important;
+  font:100 22px/1.3 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article p{
+  margin:12px 0 0!important;
+  max-width:42ch!important;
+  color:var(--hm-description-color)!important;
+  font:300 14px/1.52 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article .hm-ds-icon{
+  color:var(--hm-blue)!important;
+}
+
+/* 01.3 — one 16:9 field image, then two evidence rows. */
+html body.yanolja-system-page #brand .yanolja-field-scene{
+  position:relative!important;
+  width:100%!important;
+  min-height:0!important;
+  aspect-ratio:16/9!important;
+  margin:var(--hm-subtitle-to-content) 0 0!important;
+  overflow:hidden!important;
+  background:transparent!important;
+  isolation:auto!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-scene>img{
+  position:static!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:50% 50%!important;
+  filter:none!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-scene::after{display:none!important}
+html body.yanolja-system-page #brand .yanolja-field-metrics{
+  position:static!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:20px!important;
+  width:100%!important;
+  margin:24px 0 0!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-metric{
+  min-height:250px!important;
+  padding:24px 0 28px!important;
+  border:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  background:transparent!important;
+  backdrop-filter:none!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-metric>span{
+  color:#fff!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-metric p{
+  margin:10px 0 0!important;
+  max-width:28ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
+html body.yanolja-system-page #brand .yanolja-context-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+html body.yanolja-system-page #brand .yanolja-context-grid>article>span{
+  color:#fff!important;
+}
+
+@media(max-width:1180px){
+  html body.yanolja-system-page #brand .yanolja-answer-stack,
+  html body.yanolja-system-page #brand .yanolja-field-metrics,
+  html body.yanolja-system-page #brand .yanolja-context-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:780px){
+  html body.yanolja-system-page #brand .yanolja-answer-stack,
+  html body.yanolja-system-page #brand .yanolja-field-metrics,
+  html body.yanolja-system-page #brand .yanolja-context-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+
