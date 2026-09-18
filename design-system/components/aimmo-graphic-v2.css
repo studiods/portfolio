@@ -432,9 +432,21 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article>p{
   transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
 }
 html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow{
+  --aimmo-arrow-delay:0ms;
   color:#fff!important;
   border-color:currentColor!important;
   opacity:.30!important;
+  transition:
+    color 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay),
+    opacity 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay)!important;
+}
+html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow:nth-of-type(1){--aimmo-arrow-delay:0ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow:nth-of-type(2){--aimmo-arrow-delay:650ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow>.hm-ds-gallery-arrow:nth-of-type(3){--aimmo-arrow-delay:1300ms}
+
+html body.aimmo-graphic-page #brand .hm-subsection.hm-reveal.is-visible .aimmo-business-flow>.hm-ds-gallery-arrow{
+  color:var(--hm-red,#D30202)!important;
+  opacity:1!important;
 }
 
 /* 01 → 03: rule + number + title transition to red. */
