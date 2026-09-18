@@ -31,6 +31,15 @@ html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__ro
   background:#00A6ED!important;
   opacity:1!important;
 }
+
+/* 03.1 page-only scale correction: bar length uses the actual percentage against 100%,
+   not the previous 70% reference ceiling normalization. */
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(1){--reuse-ref-width:67.7%!important}
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(2){--reuse-ref-width:58.6%!important}
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(3){--reuse-ref-width:49.8%!important}
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(4){--reuse-ref-width:48.3%!important}
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(5){--reuse-ref-width:29%!important}
+html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(6){--reuse-ref-width:10.9%!important}
 </style>
 <link rel="stylesheet" href="./design-system/components/structural-index-contract.css?v=20260918-1">
 </head>
