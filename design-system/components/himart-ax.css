@@ -1,0 +1,202 @@
+/* HIMART AX — page-specific content components only.
+   Layout, typography hierarchy, section rhythm, gallery rhythm, reflection and footer
+   are owned by the shared HIMART design system. */
+
+html body.himart-ax-page{background:#000;color:#fff}
+/* Do not create a scrolling ancestor here: it breaks the shared wide-layout sticky title rail. */
+html body.himart-ax-page #live-main{overflow:visible}
+
+/* Hero keeps the shared HIMART copy/meta geometry. */
+html body.himart-ax-page .ax-hero{position:relative;isolation:isolate;background:#000}
+html body.himart-ax-page .ax-hero-visual{position:absolute;inset:0;z-index:-2;overflow:hidden;background:#000}
+html body.himart-ax-page .ax-hero-visual :is(img,video){display:block;width:100%;height:100%;object-fit:cover;object-position:center;opacity:.72;filter:grayscale(.22) contrast(1.05)}
+html body.himart-ax-page .ax-hero-visual::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.84) 0%,rgba(0,0,0,.48) 52%,rgba(0,0,0,.70) 100%),linear-gradient(0deg,#000 0%,rgba(0,0,0,.08) 44%,rgba(0,0,0,.16) 100%)}
+
+/* 01.1 workload evidence — same label/track/value grammar as current portfolio graphs. */
+html body.himart-ax-page .ax-workload{width:100%}
+html body.himart-ax-page .ax-workload__summary{display:block;padding:0 0 24px;border-bottom:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-workload__summary span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-workload__rows{display:grid;gap:18px;margin-top:32px}
+html body.himart-ax-page .ax-workload__row{display:grid;grid-template-columns:132px minmax(0,1fr) 70px;gap:16px;align-items:center;min-height:28px}
+html body.himart-ax-page .ax-workload__label{color:var(--hm-text-secondary);font:300 16px/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+html body.himart-ax-page .ax-workload__track{height:10px;overflow:hidden;background:rgba(255,255,255,.07)}
+html body.himart-ax-page .ax-workload__fill{display:block;width:calc(var(--value) * 1%);height:100%;background:var(--bar,var(--hm-chart-02,#007DE3));transform:scaleX(0);transform-origin:left center;transition:transform .72s cubic-bezier(.22,1,.36,1)}
+html body.himart-ax-page .is-visible .ax-workload__fill{transform:scaleX(1)}
+html body.himart-ax-page .ax-workload__row:nth-child(1){--bar:var(--hm-chart-01,#00A6ED)}
+html body.himart-ax-page .ax-workload__row:nth-child(2){--bar:var(--hm-chart-02,#007DE3)}
+html body.himart-ax-page .ax-workload__row:nth-child(3){--bar:var(--hm-chart-03,#00B8DE)}
+html body.himart-ax-page .ax-workload__row:nth-child(4){--bar:var(--hm-chart-04,#008DDD)}
+html body.himart-ax-page .ax-workload__row:nth-child(5){--bar:var(--hm-chart-05,#00EDBD)}
+html body.himart-ax-page .ax-workload__value{color:rgba(255,255,255,.84);font:300 16px/1.3 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);text-align:right;font-variant-numeric:tabular-nums}
+html body.himart-ax-page .ax-workload__total{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.30);color:#fff;font-family:var(--hm-font-en),var(--hm-font-ko);font-size:16px;font-weight:400;line-height:1.3;letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums}
+html body.himart-ax-page .ax-workload__total :is(span,strong){font:inherit;color:inherit}
+
+/* 01.2 — why the first Figma hand-off did not solve adoption. */
+html body.himart-ax-page .ax-friction-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%}
+html body.himart-ax-page .ax-friction-card{min-height:260px;padding:24px 0 0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-friction-card>span{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-friction-card h4{margin:54px 0 0;color:#fff;font:100 22px/1.3 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.himart-ax-page .ax-friction-card p{margin:12px 0 0;max-width:28ch;color:var(--hm-description-color);font:300 14px/1.55 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+
+/* 01.3 — operating principles. */
+html body.himart-ax-page .ax-rule-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-rule-summary article{min-height:144px}
+html body.himart-ax-page .ax-rule-summary span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-rule-summary strong{display:block;margin-top:34px;color:#fff;font:100 22px/1.3 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+
+/* 02.1 — five promotion/page patterns reconstructed from the working guide.
+   All five comparison frames share the same 800px vertical measure. */
+html body.himart-ax-page .ax-pattern-system{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;width:100%;align-items:start}
+html body.himart-ax-page .ax-pattern-figure{min-width:0;margin:0}
+html body.himart-ax-page .ax-pattern-figure>figcaption{display:block;min-height:44px;margin:0 0 14px;color:#fff;font:300 18px/1.25 var(--hm-font-ko);letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.himart-ax-page .ax-pattern-wire{display:flex;width:100%;height:800px;flex-direction:column;gap:6px}
+html body.himart-ax-page .ax-pattern-block{display:flex;min-height:0;align-items:center;justify-content:center;padding:10px 8px;border:1px solid rgba(255,255,255,.70);background:transparent;color:rgba(255,255,255,.72);font:300 12px/1.3 var(--hm-font-ko);letter-spacing:var(--hm-track-body);text-align:center;word-break:keep-all}
+html body.himart-ax-page .ax-pattern-block.is-blue{border-color:var(--hm-blue);background:rgba(0,166,237,.10);color:#fff}
+html body.himart-ax-page .ax-pattern-block.is-title{flex:0 0 15%}
+html body.himart-ax-page .ax-pattern-block.is-content{flex:0 0 22%}
+html body.himart-ax-page .ax-pattern-block.is-product{flex:1 1 auto}
+html body.himart-ax-page .ax-pattern-block.is-recommend{flex:0 0 13%}
+html body.himart-ax-page .ax-pattern-block.is-divider{flex:0 0 20%}
+html body.himart-ax-page .ax-pattern-figure.is-display .ax-pattern-block.is-title{flex-basis:28%}
+html body.himart-ax-page .ax-pattern-figure.is-display .ax-pattern-block.is-divider{flex:1 1 auto}
+html body.himart-ax-page .ax-pattern-figure.is-category .ax-pattern-block.is-title{flex-basis:18%}
+html body.himart-ax-page .ax-pattern-figure.is-category .ax-pattern-block.is-product{flex-basis:38%}
+html body.himart-ax-page .ax-pattern-figure.is-category .ax-pattern-block.is-recommend{flex-basis:16%}
+html body.himart-ax-page .ax-pattern-figure.is-category .ax-pattern-block.is-divider{flex:1 1 auto}
+
+/* 02.2 — banner-layout grammar redrawn from the four supplied references. */
+html body.himart-ax-page .ax-banner-layouts{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-rows:repeat(3,minmax(0,1fr));gap:12px;width:100%;min-height:620px}
+html body.himart-ax-page .ax-banner-sample{position:relative;display:flex;min-width:0;flex-direction:column;margin:0;padding:0}
+html body.himart-ax-page .ax-banner-sample>figcaption{margin:0 0 10px;color:rgba(255,255,255,.72);font:400 11px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-banner-sample__canvas{position:relative;flex:1 1 auto;min-height:0;border:1px solid rgba(255,255,255,.70);background:#000;overflow:hidden}
+html body.himart-ax-page .ax-banner-sample--hero{grid-row:1 / span 3}
+html body.himart-ax-page .ax-banner-sample--hero .ax-banner-sample__canvas{display:grid;grid-template-rows:46% 54%}
+html body.himart-ax-page .ax-banner-hero-copy{position:relative;padding:28px 24px 20px 54px;border-bottom:1px solid rgba(255,255,255,.70)}
+html body.himart-ax-page .ax-banner-hero-copy::before{content:"";position:absolute;inset:0 auto 0 0;width:42px;border-right:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.04)}
+html body.himart-ax-page .ax-wire-chip{display:inline-flex;height:26px;align-items:center;padding:0 13px;border:1px solid rgba(255,255,255,.70);border-radius:999px;color:rgba(255,255,255,.72);font:400 10px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-wire-line{display:block;height:10px;margin-top:14px;background:rgba(255,255,255,.82)}
+html body.himart-ax-page .ax-wire-line.is-lg{height:16px;width:88%}
+html body.himart-ax-page .ax-wire-line.is-md{width:72%}
+html body.himart-ax-page .ax-wire-line.is-sm{height:7px;width:58%;background:rgba(255,255,255,.38)}
+html body.himart-ax-page .ax-banner-kv{position:relative;border:1px solid var(--hm-blue);border-width:0;background:rgba(0,166,237,.10)}
+html body.himart-ax-page .ax-banner-kv::before{content:"KV";position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);color:var(--hm-blue);font:400 12px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-banner-page{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);padding:8px 15px;border-radius:999px;background:rgba(255,255,255,.14);color:rgba(255,255,255,.8);font:400 12px/1 var(--hm-font-en)}
+html body.himart-ax-page .ax-banner-split{display:grid;height:100%;grid-template-columns:60% 40%}
+html body.himart-ax-page .ax-banner-split.is-detail{grid-template-columns:58% 42%}
+html body.himart-ax-page .ax-banner-split.is-brand{grid-template-columns:68% 32%}
+html body.himart-ax-page .ax-banner-copy{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:20px}
+html body.himart-ax-page .ax-banner-copy .ax-wire-line{margin-top:10px}
+html body.himart-ax-page .ax-banner-copy .ax-wire-link{margin-top:18px;color:rgba(255,255,255,.52);font:300 12px/1.2 var(--hm-font-ko)}
+html body.himart-ax-page .ax-banner-image{position:relative;border-left:1px solid var(--hm-blue);background:rgba(0,166,237,.10)}
+html body.himart-ax-page .ax-banner-image::after{content:"IMAGE";position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);color:var(--hm-blue);font:400 10px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-banner-benefit{position:absolute;top:14px;right:14px;z-index:2;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);color:rgba(255,255,255,.72);font:300 11px/1 var(--hm-font-ko)}
+html body.himart-ax-page .ax-brand-mark{display:flex;align-items:center;gap:10px;color:#fff;font:700 18px/1 var(--hm-font-en);letter-spacing:.04em}
+html body.himart-ax-page .ax-brand-mark i{width:44%;height:16px;background:rgba(255,255,255,.78)}
+
+/* 02.3 — selection/upload/assembly shown as actual module geometry. */
+html body.himart-ax-page .ax-composition-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%}
+html body.himart-ax-page .ax-composition-step{min-width:0;padding-top:20px;border-top:1px solid rgba(255,255,255,.30)}
+html body.himart-ax-page .ax-composition-step>span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-composition-step h4{margin:18px 0 0;color:#fff;font:100 22px/1.3 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.himart-ax-page .ax-composition-visual{position:relative;height:240px;margin-top:28px;border:1px solid rgba(255,255,255,.70);overflow:hidden;background:#000}
+html body.himart-ax-page .ax-select-visual{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding:14px}
+html body.himart-ax-page .ax-select-visual i{display:flex;flex-direction:column;gap:4px}
+html body.himart-ax-page .ax-select-visual i::before{content:"";height:20%;border:1px solid var(--hm-blue);background:rgba(0,166,237,.10)}
+html body.himart-ax-page .ax-select-visual i::after{content:"";flex:1;border:1px solid rgba(255,255,255,.70)}
+html body.himart-ax-page .ax-upload-visual{display:grid;grid-template-columns:1fr .8fr;gap:12px;padding:20px}
+html body.himart-ax-page .ax-upload-fields{display:grid;align-content:center;gap:12px}
+html body.himart-ax-page .ax-upload-fields i{height:28px;border:1px solid rgba(255,255,255,.70)}
+html body.himart-ax-page .ax-upload-image{border:1px solid var(--hm-blue);background:rgba(0,166,237,.10)}
+html body.himart-ax-page .ax-assemble-visual{display:grid;grid-template-columns:58% 42%}
+html body.himart-ax-page .ax-assemble-copy{display:grid;align-content:center;gap:10px;padding:20px}
+html body.himart-ax-page .ax-assemble-copy i{height:10px;background:rgba(255,255,255,.78)}
+html body.himart-ax-page .ax-assemble-copy i:nth-child(2){width:78%}
+html body.himart-ax-page .ax-assemble-copy i:nth-child(3){width:56%;height:7px;background:rgba(255,255,255,.35)}
+html body.himart-ax-page .ax-assemble-image{border-left:1px solid var(--hm-blue);background:rgba(0,166,237,.10)}
+
+/* 03 — module -> maker -> operating system. */
+html body.himart-ax-page .ax-maker-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%}
+html body.himart-ax-page .ax-maker-step{position:relative;min-height:330px;padding:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));background:#050505}
+html body.himart-ax-page .ax-maker-step.is-current{background:rgba(0,166,237,.08);border-top-color:var(--hm-blue)}
+html body.himart-ax-page .ax-maker-step>span{display:block;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-maker-step h4{margin:74px 0 0;color:#fff;font:100 28px/1.2 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-subsection);word-break:keep-all}
+html body.himart-ax-page .ax-maker-step p{margin:14px 0 0;max-width:30ch;color:var(--hm-description-color);font:300 14px/1.55 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+html body.himart-ax-page .ax-maker-step ul{display:grid;gap:8px;margin:34px 0 0;padding:0;list-style:none;color:rgba(255,255,255,.72);font:300 12px/1.35 var(--hm-font-ko);letter-spacing:var(--hm-track-body)}
+html body.himart-ax-page .ax-maker-step li::before{content:"·";margin-right:7px;color:var(--hm-blue)}
+
+html body.himart-ax-page .ax-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%}
+html body.himart-ax-page .ax-feature-card{min-height:210px;padding:22px 0 0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-feature-card span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-feature-card h4{margin:42px 0 0;color:#fff;font:100 22px/1.28 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.himart-ax-page .ax-feature-card p{margin:10px 0 0;max-width:30ch;color:var(--hm-description-color);font:300 13px/1.52 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+
+html body.himart-ax-page .ax-operating-loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;width:100%;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));border-bottom:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-operating-loop article{position:relative;min-height:188px;padding:24px;border-right:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-operating-loop article:last-child{border-right:0}
+html body.himart-ax-page .ax-operating-loop span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-operating-loop h4{margin:42px 0 0;color:#fff;font:100 20px/1.28 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.himart-ax-page .ax-operating-loop p{margin:8px 0 0;color:var(--hm-description-color);font:300 12px/1.45 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+
+/* 04 — operating outcome. */
+html body.himart-ax-page .ax-result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;width:100%}
+html body.himart-ax-page .ax-result-card{display:flex;aspect-ratio:1/1;min-width:0;flex-direction:column;align-items:center;justify-content:space-between;padding:28px;border:1px solid var(--hm-line-default);border-radius:50%;text-align:center}
+html body.himart-ax-page .ax-result-card:nth-child(1){border-color:var(--hm-chart-01,#00A6ED)}
+html body.himart-ax-page .ax-result-card:nth-child(2){border-color:var(--hm-chart-02,#007DE3)}
+html body.himart-ax-page .ax-result-card:nth-child(3){border-color:var(--hm-chart-03,#00B8DE)}
+html body.himart-ax-page .ax-result-card span{color:var(--hm-text-secondary);font:400 10px/1.3 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-result-card strong{color:#fff;font:100 clamp(52px,5vw,84px)/.9 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums}
+html body.himart-ax-page .ax-result-card p{max-width:17ch;margin:0;color:var(--hm-description-color);font:300 12px/1.42 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+
+html body.himart-ax-page .ax-closing-principle{padding-top:28px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.himart-ax-page .ax-closing-principle>span{color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.himart-ax-page .ax-closing-principle h4{margin:28px 0 0;max-width:28ch;color:#fff;font:100 32px/1.3 var(--hm-font-ko);font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-subsection);word-break:keep-all}
+html body.himart-ax-page .ax-closing-principle p{margin:12px 0 0;max-width:58ch;color:var(--hm-description-color);font:300 16px/1.55 var(--hm-font-ko);letter-spacing:var(--hm-track-body);word-break:keep-all}
+
+@media(max-width:1180px){
+  html body.himart-ax-page .ax-pattern-system{grid-template-columns:repeat(5,minmax(150px,1fr));overflow-x:auto;padding-bottom:12px}
+  html body.himart-ax-page .ax-pattern-wire{height:720px}
+  html body.himart-ax-page .ax-banner-layouts{grid-template-columns:1fr;grid-template-rows:auto;min-height:0}
+  html body.himart-ax-page .ax-banner-sample--hero{grid-row:auto}
+  html body.himart-ax-page .ax-banner-sample__canvas{min-height:220px}
+  html body.himart-ax-page .ax-banner-sample--hero .ax-banner-sample__canvas{min-height:520px}
+  html body.himart-ax-page .ax-maker-flow{grid-template-columns:1fr}
+  html body.himart-ax-page .ax-maker-step{min-height:250px}
+  html body.himart-ax-page .ax-operating-loop{grid-template-columns:repeat(2,minmax(0,1fr))}
+  html body.himart-ax-page .ax-operating-loop article:nth-child(2){border-right:0}
+  html body.himart-ax-page .ax-operating-loop article:nth-child(-n+2){border-bottom:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+}
+
+@media(max-width:780px){
+  html body.himart-ax-page .ax-workload__row{grid-template-columns:92px minmax(0,1fr) 54px;gap:10px}
+  html body.himart-ax-page .ax-workload__label,html body.himart-ax-page .ax-workload__value{font-size:13px}
+  html body.himart-ax-page .ax-workload__total{font-size:14px}
+  html body.himart-ax-page .ax-friction-grid,html body.himart-ax-page .ax-feature-grid,html body.himart-ax-page .ax-result-grid,html body.himart-ax-page .ax-composition-flow{grid-template-columns:1fr}
+  html body.himart-ax-page .ax-friction-card{min-height:200px}
+  html body.himart-ax-page .ax-pattern-system{grid-template-columns:repeat(5,150px)}
+  html body.himart-ax-page .ax-pattern-wire{height:640px}
+  html body.himart-ax-page .ax-pattern-figure>figcaption{font-size:15px}
+  html body.himart-ax-page .ax-banner-sample__canvas{min-height:180px}
+  html body.himart-ax-page .ax-banner-sample--hero .ax-banner-sample__canvas{min-height:430px}
+  html body.himart-ax-page .ax-banner-hero-copy{padding:22px 18px 16px 44px}
+  html body.himart-ax-page .ax-composition-visual{height:210px}
+  html body.himart-ax-page .ax-rule-summary{grid-template-columns:1fr}
+  html body.himart-ax-page .ax-maker-step h4{margin-top:52px;font-size:24px}
+  html body.himart-ax-page .ax-operating-loop{grid-template-columns:1fr}
+  html body.himart-ax-page .ax-operating-loop article{border-right:0;border-bottom:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+  html body.himart-ax-page .ax-operating-loop article:last-child{border-bottom:0}
+  html body.himart-ax-page .ax-result-card{aspect-ratio:1.35}
+  html body.himart-ax-page .ax-closing-principle h4{font-size:var(--hm-type-subsection-mobile,29px)}
+}
+
+@media(prefers-reduced-motion:reduce){html body.himart-ax-page .ax-workload__fill{transform:scaleX(1);transition:none}}
+
+/* Shared four-column maker-flow variant. */
+html body.himart-ax-page .ax-maker-flow.ax-maker-flow--four{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+@media(max-width:1180px) and (min-width:781px){
+  html body.himart-ax-page .ax-maker-flow.ax-maker-flow--four{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
