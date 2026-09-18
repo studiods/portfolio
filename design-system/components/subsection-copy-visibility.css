@@ -19,7 +19,8 @@ body.hm-ds-subsection-copy-hidden .hm-subhead > div > :is(.hm-subcopy,.hm-ds-sub
 body.hm-ds-subsection-copy-hidden .hm-subhead > div > .hm-subtitle + p,
 body.hm-ds-subsection-copy-hidden .data-card-head > div > :is(.desc,[data-hm-subsection-copy]),
 body.hm-ds-subsection-copy-hidden .data-card-head > div > :is(h3,h4) + p,
-body.hm-ds-subsection-copy-hidden .narrative-block > :is(.narrative-copy,[data-hm-subsection-copy]) {
+body.hm-ds-subsection-copy-hidden .narrative-block > :is(.narrative-copy,[data-hm-subsection-copy]),
+body.hm-ds-subsection-copy-hidden .journey-role-block > :is(.journey-block-copy,[data-hm-subsection-copy]) {
   display:none!important;
   margin:0!important;
   padding:0!important;
@@ -28,7 +29,8 @@ body.hm-ds-subsection-copy-hidden .narrative-block > :is(.narrative-copy,[data-h
 /* The direct description's own gap disappears with the content. */
 body.hm-ds-subsection-copy-hidden .hm-subhead > div,
 body.hm-ds-subsection-copy-hidden .data-card-head > div,
-body.hm-ds-subsection-copy-hidden .narrative-block {
+body.hm-ds-subsection-copy-hidden .narrative-block,
+body.hm-ds-subsection-copy-hidden .journey-role-block {
   margin-bottom:0!important;
   padding-bottom:0!important;
 }

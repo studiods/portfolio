@@ -52,7 +52,7 @@ causes cold-load FOUC and broken circle geometry.
 {% assign page_html = page_html | replace: '<body class="', '<body class="hm-wide-editorial-test hm-wide-himart-test hm-wide-booting ' %}
 {% assign page_html = page_html | replace: './design-system/scramble-final.js?v=20260907-3', './design-system/scramble-final.js?v=20260916-4' %}
 {% assign page_html = page_html | replace: './design-system/navigation.js?v=20260907-4', './design-system/navigation.js?v=20260912-7' %}
-{% assign page_html = page_html | replace: './design-system/components/structural-visibility-runtime.js?v=20260918-1', './design-system/components/structural-visibility-runtime.js?v=20260918-3' %}
+{% assign page_html = page_html | replace: './design-system/components/structural-visibility-runtime.js?v=20260918-1', './design-system/components/structural-visibility-runtime.js?v=20260918-4' %}
 
 {% capture adapter_tail %}<script src="./design-system/himart-wide-editorial-adapter.js?v=20260916-1"></script>
 <script src="./design-system/himart-inertia-scroll.js?v=20260913-1"></script>
@@ -60,8 +60,10 @@ causes cold-load FOUC and broken circle geometry.
      The static fallback also covers narrative blocks generated after the
      authored subsection headers have been replaced. -->
 <style id="hm-structural-visibility-final-style">
-body.hm-ds-subsection-copy-hidden #live-main .narrative-block > .narrative-copy{display:none!important;margin:0!important;padding:0!important}
-body.hm-ds-subsection-copy-hidden #live-main .narrative-block{margin-bottom:0!important;padding-bottom:0!important}
+body.hm-ds-subsection-copy-hidden #live-main .narrative-block > .narrative-copy,
+body.hm-ds-subsection-copy-hidden #live-main .journey-role-block > .journey-block-copy{display:none!important;margin:0!important;padding:0!important}
+body.hm-ds-subsection-copy-hidden #live-main .narrative-block,
+body.hm-ds-subsection-copy-hidden #live-main .journey-role-block{margin-bottom:0!important;padding-bottom:0!important}
 </style>
 <script id="hm-structural-visibility-final">
 {% include_relative design-system/components/structural-visibility-runtime.js %}

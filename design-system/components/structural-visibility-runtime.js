@@ -16,9 +16,9 @@
   }
   function getDescriptionNodes() {
     var nodes = [];
-    document.querySelectorAll(".hm-subhead, .data-card-head, .narrative-block").forEach(function (head) {
-      if (head.matches(".narrative-block")) {
-        directChildrenBySelector(head, ".narrative-copy, [data-hm-subsection-copy]").forEach(function (child) {
+    document.querySelectorAll(".hm-subhead, .data-card-head, .narrative-block, .journey-role-block").forEach(function (head) {
+      if (head.matches(".narrative-block, .journey-role-block")) {
+        directChildrenBySelector(head, ".narrative-copy, .journey-block-copy, [data-hm-subsection-copy]").forEach(function (child) {
           if (nodes.indexOf(child) === -1) nodes.push(child);
         });
         return;
