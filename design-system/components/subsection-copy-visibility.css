@@ -1,0 +1,36 @@
+/* Numbered subsection description visibility
+   ------------------------------------------
+   Default presentation state is controlled per page by:
+     <body class="hm-ds-subsection-copy-hidden">
+
+   The explanatory paragraph stays in the HTML and is removed from layout.
+   The final runtime layer is loaded after legacy page scripts because several
+   older pages reinstate display styles during motion/content initialization.
+
+   Restoration: remove only hm-ds-subsection-copy-hidden from <body>.
+   The runtime clears its own inline display values and the authored text and
+   original spacing return without any markup change.
+
+   Scope: direct descriptions beneath numbered medium-title/card headers only.
+   Hero copy, chapter descriptions, card body copy, captions, and evidence
+   copy remain outside this contract. */
+
+body.hm-ds-subsection-copy-hidden .hm-subhead > div > :is(.hm-subcopy,.hm-ds-subsection__description,[data-hm-subsection-copy]),
+body.hm-ds-subsection-copy-hidden .hm-subhead > div > .hm-subtitle + p,
+body.hm-ds-subsection-copy-hidden .data-card-head > div > :is(.desc,[data-hm-subsection-copy]),
+body.hm-ds-subsection-copy-hidden .data-card-head > div > :is(h3,h4) + p,
+body.hm-ds-subsection-copy-hidden .narrative-block > :is(.narrative-copy,[data-hm-subsection-copy]),
+body.hm-ds-subsection-copy-hidden .journey-role-block > :is(.journey-block-copy,[data-hm-subsection-copy]) {
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* The direct description's own gap disappears with the content. */
+body.hm-ds-subsection-copy-hidden .hm-subhead > div,
+body.hm-ds-subsection-copy-hidden .data-card-head > div,
+body.hm-ds-subsection-copy-hidden .narrative-block,
+body.hm-ds-subsection-copy-hidden .journey-role-block {
+  margin-bottom:0!important;
+  padding-bottom:0!important;
+}
