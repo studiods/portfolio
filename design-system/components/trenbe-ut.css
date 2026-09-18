@@ -226,6 +226,8 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
+html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-blue)!important}
+
 .trenbe-evidence-node p,
 .trenbe-segment-flow article p,
 .trenbe-decision-flow article p{
@@ -240,24 +242,6 @@ html body.trenbe-ut-page #brand .aimmo-environment-ratio__legend-row:nth-child(n
   color:rgba(255,255,255,.46);
   font:100 34px/1 var(--hm-font-en);
   text-align:center;
-}
-
-/* 01.4 original process image. */
-.trenbe-source-image{
-  margin:64px 0 0;
-}
-.trenbe-source-image img{
-  display:block;
-  width:100%;
-  aspect-ratio:16/9;
-  object-fit:contain;
-  background:#050505;
-}
-.trenbe-source-image figcaption{
-  margin-top:12px;
-  color:var(--hm-text-tertiary);
-  font:400 var(--hm-type-source)/1.45 var(--hm-font-en);
-  letter-spacing:var(--hm-track-note);
 }
 
 /* 02.1 — recreated GA age graph. */
