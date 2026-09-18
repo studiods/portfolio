@@ -91,126 +91,51 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 }
 
 
-/* 01.1 — external luxury category evidence. 01 / 02 are stacked as separate rows. */
-.trenbe-luxury-evidence{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:72px;
-  width:100%;
-}
-.trenbe-luxury-insight{
-  min-width:0;
-  padding:26px 0 0;
-  border-top:1px solid var(--hm-line-default);
-}
-.trenbe-luxury-insight__label{
-  display:block;
-  color:var(--hm-blue);
-  font:400 var(--hm-type-note)/1.2 var(--hm-font-en);
-  letter-spacing:var(--hm-track-note);
-}
-.trenbe-luxury-insight h4{
-  margin:22px 0 0!important;
-  color:#fff!important;
-  font:100 var(--hm-type-group)/1.3 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 100;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
-}
-.trenbe-luxury-insight h4 strong{
-  color:var(--hm-blue);
-  font-weight:300;
-  font-variation-settings:"wght" 300;
-}
-.trenbe-luxury-insight__copy{
-  margin:12px 0 0!important;
-  max-width:42ch!important;
-  color:var(--hm-description-color)!important;
-  font:300 var(--hm-type-body)/1.55 var(--hm-font-ko)!important;
-  letter-spacing:var(--hm-track-body)!important;
-  word-break:keep-all!important;
-}
-.trenbe-luxury-time-table{
-  width:100%;
-  margin-top:32px;
-  border-top:1px solid var(--hm-line-faint);
-}
-.trenbe-luxury-time-row{
-  display:grid;
-  grid-template-columns:88px minmax(0,1fr) 48px;
-  gap:14px;
-  align-items:center;
-  min-height:42px;
-  border-bottom:1px solid var(--hm-line-faint);
-}
-.trenbe-luxury-time-row>span:first-child{
-  color:rgba(255,255,255,.72);
-  font:300 12px/1.2 var(--hm-font-ko);
-  white-space:nowrap;
-}
-.trenbe-luxury-time-row>i{
-  display:block;
-  height:8px;
-  overflow:hidden;
-  border-radius:999px;
-  background:rgba(255,255,255,.10);
-}
-.trenbe-luxury-time-row>i::before{
-  content:"";
-  display:block;
-  width:calc(var(--value) * 1%);
-  height:100%;
-  border-radius:inherit;
-  background:var(--hm-blue);
-}
-.trenbe-luxury-time-row>b{
-  color:#fff;
-  font:300 12px/1 var(--hm-font-en);
-  text-align:right;
-  font-variant-numeric:tabular-nums;
-}
+/* 01.1 — luxury evidence rows. */
+.trenbe-luxury-evidence{display:grid;grid-template-columns:1fr;gap:72px;width:100%}
+.trenbe-luxury-insight{min-width:0;padding:26px 0 0;border-top:1px solid var(--hm-line-default)}
+.trenbe-luxury-insight__label{display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+.trenbe-luxury-insight h4{margin:22px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.3 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+.trenbe-luxury-insight h4 strong{color:var(--hm-blue);font-weight:300;font-variation-settings:"wght" 300}
+.trenbe-luxury-insight__copy{margin:12px 0 0!important;max-width:42ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+.trenbe-luxury-time-table{width:100%;margin-top:32px;border-top:1px solid var(--hm-line-faint)}
+.trenbe-luxury-time-row{display:grid;grid-template-columns:88px minmax(0,1fr) 48px;gap:14px;align-items:center;min-height:42px;border-bottom:1px solid var(--hm-line-faint)}
+.trenbe-luxury-time-row>span:first-child{color:rgba(255,255,255,.72);font:300 12px/1.2 var(--hm-font-ko);white-space:nowrap}
+.trenbe-luxury-time-row>i{display:block;height:8px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.10)}
+.trenbe-luxury-time-row>i::before{content:"";display:block;width:calc(var(--value) * 1%);height:100%;border-radius:inherit;background:var(--hm-blue)}
+.trenbe-luxury-time-row>b{color:#fff;font:300 12px/1 var(--hm-font-en);text-align:right;font-variant-numeric:tabular-nums}
 
-/* AIMMO System 02.2 reference-bars source, mirrored without changing its geometry. */
+/* 01.1 / 02 — exact AIMMO System 02.2 context-insight + reference-bars rendering. */
+html body.trenbe-ut-page #brand .aimmo-context-insight{min-width:0;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.trenbe-ut-page #brand .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+html body.trenbe-ut-page #brand .aimmo-context-insight h4{
+  margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;
+  line-height:1.24!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+}
+html body.trenbe-ut-page #brand .aimmo-context-insight__copy{
+  margin:4px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;
+  font-variation-settings:"wght" 300!important;line-height:1.5!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+}
 html body.trenbe-ut-page #brand .aimmo-reference-bars{width:100%;min-width:0;margin:32px 0 0;padding:0}
 html body.trenbe-ut-page #brand .aimmo-reference-bars__rows{display:grid;width:100%;gap:18px!important;margin:0;padding:0}
 html body.trenbe-ut-page #brand .aimmo-reference-bars__row{
-  display:grid;
-  grid-template-columns:110px minmax(0,1fr) 62px!important;
-  gap:16px!important;
-  align-items:center;
-  width:100%;
-  min-width:0;
-  min-height:28px!important;
-  margin:0;
-  padding:0;
+  display:grid;grid-template-columns:110px minmax(0,1fr) 62px!important;gap:16px!important;align-items:center;
+  width:100%;min-width:0;min-height:28px!important;margin:0;padding:0
 }
 html body.trenbe-ut-page #brand .aimmo-reference-bars__label{
-  margin:0;
-  color:rgba(255,255,255,.50);
-  font:300 16px/1.3 var(--hm-font-ko)!important;
-  letter-spacing:var(--hm-track-body);
-  white-space:normal;
-  text-align:left;
-  word-break:keep-all;
+  margin:0;color:rgba(255,255,255,.50);font:300 16px/1.3 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body);white-space:normal;text-align:left;word-break:keep-all
 }
 html body.trenbe-ut-page #brand .aimmo-reference-bars__track{
-  position:relative;
-  width:100%;
-  height:10px!important;
-  min-width:0;
-  overflow:hidden;
-  background:rgba(255,255,255,.07);
+  position:relative;width:100%;height:10px!important;min-width:0;overflow:hidden;background:rgba(255,255,255,.07)
 }
 html body.trenbe-ut-page #brand .aimmo-reference-bars__fill{
-  display:block;
-  width:calc(var(--value,0) * 1%);
-  height:100%;
-  min-width:2px;
+  display:block;width:calc(var(--value,0) * 1%);height:100%;min-width:2px;
   background:var(--bar-color,var(--hm-chart-02,#007DE3));
-  transform:scaleX(0);
-  transform-origin:left center;
-  transition:transform .72s cubic-bezier(.22,1,.36,1);
-  will-change:transform;
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform .72s cubic-bezier(.22,1,.36,1);will-change:transform
 }
 html body.trenbe-ut-page #brand .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__fill{transform:scaleX(1)}
 html body.trenbe-ut-page #brand .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
@@ -219,29 +144,36 @@ html body.trenbe-ut-page #brand .aimmo-reference-bars.is-bars-focused .aimmo-ref
 html body.trenbe-ut-page #brand .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(4) .aimmo-reference-bars__fill{transition-delay:.36s}
 html body.trenbe-ut-page #brand .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(5) .aimmo-reference-bars__fill{transition-delay:.48s}
 html body.trenbe-ut-page #brand .aimmo-reference-bars__value{
-  margin:0;
-  color:rgba(255,255,255,.84);
-  font:300 16px/1.3 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-data-number);
-  font-variant-numeric:tabular-nums;
-  white-space:nowrap;
-  text-align:right;
+  margin:0;color:rgba(255,255,255,.84);font:300 16px/1.3 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right
 }
 html body.trenbe-ut-page #brand .aimmo-reference-bars__source{
-  display:block;
-  width:100%;
-  margin:48px 0 0;
-  padding:18px 0 0;
+  display:block;width:100%;margin:48px 0 0;padding:18px 0 0;
   border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
-  color:var(--hm-text-tertiary);
-  font:300 10px/1.5 var(--hm-font-ko);
-  letter-spacing:var(--hm-track-base);
+  color:var(--hm-text-tertiary);font:300 10px/1.5 var(--hm-font-ko);letter-spacing:var(--hm-track-base)
 }
 html body.trenbe-ut-page #brand .aimmo-reference-bars--decision .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
 html body.trenbe-ut-page #brand .aimmo-reference-bars--decision .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
 html body.trenbe-ut-page #brand .aimmo-reference-bars--decision .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
 html body.trenbe-ut-page #brand .aimmo-reference-bars--decision .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
-html body.trenbe-ut-page #brand .aimmo-reference-bars--decision .aimmo-reference-bars__row:nth-child(5){--bar-color:var(--hm-blue,#00A6ED)}
+html body.trenbe-ut-page #brand .aimmo-reference-bars--decision .aimmo-reference-bars__row:nth-child(5){--bar-color:var(--hm-chart-01,#00A6ED)}
+
+@media(max-width:780px){
+  html body.trenbe-ut-page #brand .aimmo-context-insight h4{font-size:24px!important}
+  html body.trenbe-ut-page #brand .aimmo-context-insight__copy{font-size:15px!important}
+  html body.trenbe-ut-page #brand .aimmo-reference-bars__row{
+    grid-template-columns:88px minmax(0,1fr) 52px!important;
+    gap:10px!important;
+    min-height:24px!important;
+  }
+  html body.trenbe-ut-page #brand .aimmo-reference-bars__label,
+  html body.trenbe-ut-page #brand .aimmo-reference-bars__value{font-size:13px!important}
+  html body.trenbe-ut-page #brand .aimmo-reference-bars__track{height:8px!important}
+  html body.trenbe-ut-page #brand .aimmo-reference-bars__rows{gap:14px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body.trenbe-ut-page #brand .aimmo-reference-bars__fill{transform:scaleX(1)!important;transition:none!important}
+}
 
 /* 01.2 — GA / NPS / UT as a HIMART-style circular reasoning flow. */
 .trenbe-evidence-flow,
