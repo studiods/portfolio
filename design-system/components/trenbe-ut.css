@@ -93,11 +93,6 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 
 /* 01.1 — luxury evidence rows. */
 .trenbe-luxury-evidence{display:grid;grid-template-columns:1fr;gap:72px;width:100%}
-.trenbe-luxury-insight{min-width:0;padding:26px 0 0;border-top:1px solid var(--hm-line-default)}
-.trenbe-luxury-insight__label{display:block;color:var(--hm-blue);font:400 var(--hm-type-note)/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
-.trenbe-luxury-insight h4{margin:22px 0 0!important;color:#fff!important;font:100 var(--hm-type-group)/1.3 var(--hm-font-ko)!important;font-variation-settings:"wght" 100;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
-.trenbe-luxury-insight h4 strong{color:var(--hm-blue);font-weight:300;font-variation-settings:"wght" 300}
-.trenbe-luxury-insight__copy{margin:12px 0 0!important;max-width:42ch!important;color:var(--hm-description-color)!important;font:300 var(--hm-type-body)/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 .trenbe-luxury-time-table{width:100%;margin-top:32px;border-top:1px solid var(--hm-line-faint)}
 .trenbe-luxury-time-row{display:grid;grid-template-columns:88px minmax(0,1fr) 48px;gap:14px;align-items:center;min-height:42px;border-bottom:1px solid var(--hm-line-faint)}
 .trenbe-luxury-time-row>span:first-child{color:rgba(255,255,255,.72);font:300 12px/1.2 var(--hm-font-ko);white-space:nowrap}
@@ -113,7 +108,7 @@ html body.trenbe-ut-page #brand .aimmo-context-insight h4{
   font-size:28px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;
   line-height:1.24!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
 }
-html body.trenbe-ut-page #brand .aimmo-context-insight__copy{
+html body.trenbe-ut-page #brand .aimmo-context-insight h4 strong{color:var(--hm-blue)!important;font:inherit!important;font-weight:inherit!important;font-variation-settings:inherit!important}\nhtml body.trenbe-ut-page #brand .aimmo-context-insight__copy{
   margin:4px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;
   font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;
   font-variation-settings:"wght" 300!important;line-height:1.5!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
