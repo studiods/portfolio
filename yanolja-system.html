@@ -8,8 +8,9 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-3">
+<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-4">
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260916-6">
+<link rel="stylesheet" href="./design-system/components/media.css?v=20260915-3">
 <link rel="stylesheet" href="./design-system/components/portfolio-icons.css?v=20260919-2">
 <link rel="stylesheet" href="./design-system/components/himart-ax.css?v=20260919-2">
 <link rel="stylesheet" href="./design-system/components/himart-ways-v4.css?v=20260913-1">
@@ -252,7 +253,7 @@
     <div class="hm-subsection hm-ds-subsection hm-reveal">
       <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="04.1">04.1 / CORE COMPONENTS</span><div><h3 class="hm-subtitle hm-ds-subsection__title">자주 쓰는 입력과 선택부터,<br>상태 변화까지 하나의 규칙으로 묶었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">Normal/Small과 Hover·Pressed·Disabled 상태를 공통 규칙으로 설계했습니다.</p></div></div>
 
-      <div class="hst-ds-gallery hm-ds-subtitle-to-content" data-hst-gallery data-autoplay="2000" aria-label="HST Group Design System 57-59 페이지 갤러리">
+      <div class="hst-ds-gallery hm-ds-subtitle-to-content" data-hst-gallery data-autoplay="5000" aria-label="HST Group Design System 57-59 페이지 갤러리">
         <div class="hst-ds-gallery__viewport">
           <div class="hst-ds-gallery__track">
 
@@ -468,29 +469,13 @@
           </div>
         </div>
 
-        <button class="hst-ds-gallery__nav is-prev" type="button" aria-label="이전 페이지"><span aria-hidden="true">‹</span></button>
-        <button class="hst-ds-gallery__nav is-next" type="button" aria-label="다음 페이지"><span aria-hidden="true">›</span></button>
+        <button class="hm-ds-gallery-nav hm-ds-gallery-nav--prev hst-ds-gallery__nav" type="button" aria-label="이전 페이지"></button>
+        <button class="hm-ds-gallery-nav hm-ds-gallery-nav--next hst-ds-gallery__nav" type="button" aria-label="다음 페이지"></button>
       </div>
     </div>
 
     <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="04.2">04.2 / SYSTEM COVERAGE</span><div><h3 class="hm-subtitle hm-ds-subsection__title">컴포넌트 이름만 나열하지 않고,<br>실제 화면에서 반복되는 9가지 패턴을 한 번에 볼 수 있게 정리했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">반복되는 업무 패턴을 3×3 구조로 정리해 각 컴포넌트의 역할을 보여줍니다.</p></div></div>
-      <div class="yanolja-coverage-grid hm-ds-subtitle-to-content">
-        <article class="yanolja-coverage-card"><span>01</span><h4>주요 행동</h4><p>확정·저장처럼 가장 중요한 액션.</p><div class="yanolja-coverage-demo"><button class="yanolja-mini-button">예약 확정</button></div></article>
-        <article class="yanolja-coverage-card"><span>02</span><h4>보조·위험 행동</h4><p>취소·삭제 위계를 채움·외곽선·색으로 구분.</p><div class="yanolja-coverage-demo"><button class="yanolja-mini-button is-outline">취소</button><button class="yanolja-mini-button is-danger">삭제</button></div></article>
-        <article class="yanolja-coverage-card"><span>03</span><h4>빠른 상태 전환</h4><p>객실·예약 상태를 한 위치에서 전환.</p><div class="yanolja-coverage-demo"><div class="yanolja-coverage-tab"><span class="is-active">전체</span><span>예약</span><span>입실</span></div></div></article>
-        <article class="yanolja-coverage-card"><span>04</span><h4>단일 정보 입력</h4><p>이름·예약번호처럼 빠르게 확인하는 값.</p><div class="yanolja-coverage-demo is-stack"><div class="yanolja-coverage-field">예약자 이름</div><div class="yanolja-coverage-field">010-0000-0000</div></div></article>
-        <article class="yanolja-coverage-card"><span>05</span><h4>고객 요청 기록</h4><p>메모·특이사항 등 여러 줄의 운영 정보.</p><div class="yanolja-coverage-demo"><div class="yanolja-coverage-field yanolja-coverage-area">고객 요청사항을 입력합니다.</div></div></article>
-        <article class="yanolja-coverage-card"><span>06</span><h4>정해진 값 선택</h4><p>객실 유형·상태처럼 오류를 줄이는 선택값.</p><div class="yanolja-coverage-demo"><div class="yanolja-coverage-select">객실 상태</div></div></article>
-        <article class="yanolja-coverage-card"><span>07</span><h4>복수 조건 선택</h4><p>청소·정산·알림 등 복수 조건 설정.</p><div class="yanolja-coverage-demo"><span class="yanolja-choice is-selected"><i></i>청소 완료</span><span class="yanolja-choice"><i></i>알림</span></div></article>
-        <article class="yanolja-coverage-card"><span>08</span><h4>단일 상태 결정</h4><p>하나만 선택하는 운영 상태.</p><div class="yanolja-coverage-demo"><span class="yanolja-choice is-radio is-selected"><i></i>확정</span><span class="yanolja-choice is-radio"><i></i>대기</span></div></article>
-        <article class="yanolja-coverage-card"><span>09</span><h4>예약 날짜 선택</h4><p>예약·입실·퇴실의 날짜 선택.</p><div class="yanolja-coverage-demo"><div class="yanolja-coverage-calendar"><span>8</span><span>9</span><span>10</span><span class="is-active">11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span></div></div></article>
-      </div>
-      <div class="hm-source hm-ds-source-note">SOURCE - 신동식 Portfolio / HST GROUP DESIGN SYSTEM, p.57-59</div>
-    </div>
-
-    <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="04.3">04.3 / RESULT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">UX디자인팀 리드로서 디자인 시스템을<br>‘디자이너를 위한 라이브러리’가 아니라 ‘제품 목적성과 생산성을 높이는 운영 기준’으로 만들었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">문제 정의부터 환경 분석, 원칙 도출, 컴포넌트 실행까지 전체 흐름을 디렉팅했습니다.</p></div></div>
+      <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="04.3">04.3 / RESULT</span><div><h3 class="hm-subtitle hm-ds-subsection__title">사용자의 실제 근무 환경과 이용 패턴을 면밀히 분석해,<br>디자인 시스템의 규칙과 우선순위에 반영했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">조도·이동·응대 방식·반복 업무 등 현장의 조건을 관찰하고, 이를 컬러·타이포·컴포넌트의 공통 기준으로 연결했습니다.</p></div></div>
       <div class="yanolja-lead-flow hm-ds-subtitle-to-content">
         <article class="yanolja-lead-step"><span>01</span><strong>PROBLEM</strong><p>현장 업무의 속도와 정확도를 핵심 문제로 정의했습니다.</p></article>
         <article class="yanolja-lead-step"><span>02</span><strong>CONTEXT</strong><p>근무자·모니터·조도·이동 등 실제 사용 조건을 수집했습니다.</p></article>
@@ -498,7 +483,7 @@
         <article class="yanolja-lead-step"><span>04</span><strong>EXECUTION</strong><p>컬러·형태·타이포·컴포넌트의 기준을 하나로 조율했습니다.</p></article>
         <article class="yanolja-lead-step"><span>05</span><strong>PRODUCTIVITY</strong><p>반복 판단을 줄여 개발·운영 생산성을 높이는 시스템으로 정리했습니다.</p></article>
       </div>
-      <div class="yanolja-final-statement"><span>UX DESIGN LEAD → PRODUCT SYSTEM DIRECTION</span><p>디자인 시스템의 목적은 화면을 통일하는 데 있지 않았습니다.<br><strong>현장 근무자가 더 빠르고 정확하게 일하고, 여러 제품이 하나의 신뢰 가능한 제품군으로 작동하도록 만드는 것</strong>이 목표였습니다. 그 관점에서 문제 정의부터 적용 방법, 실행과 정리까지 전 과정을 리드했습니다.</p></div>
+      <div class="yanolja-final-statement"><span>FIELD RESEARCH → DESIGN SYSTEM PRINCIPLES</span><p>디자인 시스템의 목적은 화면을 보기 좋게 통일하는 데 있지 않았습니다.<br><strong>실제 근무 환경과 반복되는 이용 패턴을 이해하고, 그 조건을 일관된 판단 기준으로 바꾸는 것</strong>이 핵심이었습니다.</p></div>
     </div>
   </div>
 </div></section>
@@ -507,7 +492,7 @@
 <footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>YANOLJA 2020—2021</span><a href="#top">Back to top ↑</a></div></div></footer>
 <script src="./design-system/animation.js?v=20260906-14"></script>
 <script src="./design-system/scramble-final.js?v=20260916-4"></script>
-<script src="./design-system/navigation.js?v=20260908-1"></script>
+<script src="./design-system/navigation.js?v=20260919-yanolja-reflection-1"></script>
 <script src="./design-system/components/structural-visibility-runtime.js?v=20260918-1"></script>
 
 <script>
@@ -521,7 +506,7 @@
 
     let index = 0;
     let timer = null;
-    const delay = Number(gallery.dataset.autoplay) || 2000;
+    const delay = Number(gallery.dataset.autoplay) || 5000;
 
     const render = () => {
       track.style.transform = 'translate3d(' + (-index * 100) + '%,0,0)';
