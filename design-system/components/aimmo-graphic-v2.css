@@ -401,11 +401,11 @@ html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-carousel{
 /*
   Default: four unfilled white circles (30% rule), white number/title and white arrows at 30%.
   Trigger: the owning .hm-reveal subsection receives .is-visible once from animation.js.
-  Timing: 1000ms per circle; each next circle starts after 500ms (50% overlap).
+  Timing: 1300ms per circle; each next circle starts after 650ms (50% overlap).
   The final circle fills red while keeping number/title white and lifting body copy to 80% white.
 */
 html body.aimmo-graphic-page #brand .aimmo-business-flow article{
-  --aimmo-flow-duration:1000ms;
+  --aimmo-flow-duration:1300ms;
   --aimmo-flow-delay:0ms;
   border-color:rgba(255,255,255,.30)!important;
   background:transparent!important;
@@ -414,9 +414,9 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article{
     background-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
 }
 html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
-html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(2){--aimmo-flow-delay:500ms}
-html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(3){--aimmo-flow-delay:1000ms}
-html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){--aimmo-flow-delay:1500ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(2){--aimmo-flow-delay:650ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(3){--aimmo-flow-delay:1300ms}
+html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){--aimmo-flow-delay:1950ms}
 html body.aimmo-graphic-page #brand .aimmo-business-flow article:nth-of-type(4){
   border-color:rgba(255,255,255,.30)!important;
   background:transparent!important;
