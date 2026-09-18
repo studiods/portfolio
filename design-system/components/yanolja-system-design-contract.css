@@ -1,0 +1,707 @@
+/*
+  YANOLJA SYSTEM — final layout/typography contract
+  2026-09-19
+
+  Purpose:
+  - Preserve current content, colors and authored assets.
+  - Re-apply the shared portfolio typography, spacing and component geometry after
+    legacy/page-specific Yanolja CSS.
+  - Reference components:
+    01.1 = HIMART TEAM 01.1
+    01.2 = HIMART WAYS 03.2 / portfolio icon-card authority
+    01.3 = HIMART TEAM 02.2 with Yanolja-specific 100% overlay / 80px overlap
+    01.4 = HIMART AX 03.1 with four-column adaptation
+*/
+
+/* -------------------------------------------------------------------------- */
+/* GLOBAL EDITORIAL TYPOGRAPHY / RHYTHM                                        */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #live-main .hm-section-title{
+  margin:0!important;
+  padding:0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-section,52px)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.12!important;
+  letter-spacing:var(--hm-track-section)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #live-main .hm-subtitle{
+  margin:0!important;
+  padding:0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-subsection,32px)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.18!important;
+  letter-spacing:var(--hm-track-subsection)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #live-main .hm-subcopy{
+  width:100%!important;
+  max-width:max(50%,var(--hm-description-max-chars,40ch))!important;
+  margin:var(--hm-title-description-gap,12px) 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body,16px)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+  text-wrap:pretty!important;
+}
+html body.yanolja-system-page #live-main .hm-subhead .hm-subno{
+  margin:0 0 18px!important;
+  padding:0!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:var(--hm-type-note,12px)!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #live-main .hm-subhead + *{
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.yanolja-system-page #live-main .hm-wide-right-rail > .hm-subsection{
+  margin-top:0!important;
+  padding-top:var(--hm-space-component,40px)!important;
+}
+html body.yanolja-system-page #live-main .hm-wide-right-rail > .hm-subsection + .hm-subsection{
+  margin-top:var(--hm-subsection-gap,100px)!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 01.1 — HIMART TEAM 01.1 geometry, expanded to four columns                 */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #brand .yanolja-team-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:100%!important;
+}
+html body.yanolja-system-page #brand .yanolja-team-grid .team-card{
+  display:flex!important;
+  min-width:0!important;
+  min-height:250px!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  margin:0!important;
+  padding:30px!important;
+  box-sizing:border-box!important;
+}
+html body.yanolja-system-page #brand .yanolja-team-grid .team-card>span{
+  margin:0!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:.08em!important;
+}
+html body.yanolja-system-page #brand .yanolja-team-grid .team-card strong{
+  display:block!important;
+  margin:42px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:24px!important;
+  font-weight:600!important;
+  font-variation-settings:"wght" 600!important;
+  line-height:1.36!important;
+  letter-spacing:-.035em!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #brand .yanolja-team-grid .team-card p{
+  margin:14px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.62!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 01.2 — exact current HIMART WAYS 03.2 icon-card geometry                   */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #brand .yanolja-answer-stack{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:var(--hm-icon-card-gap,12px)!important;
+  width:100%!important;
+  margin-left:0!important;
+  padding-left:0!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article{
+  position:relative!important;
+  display:block!important;
+  grid-column:auto!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  aspect-ratio:1/1!important;
+  margin:0!important;
+  padding:var(--hm-icon-card-padding-y,24px) 0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article>span{
+  display:block!important;
+  margin:0!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article h4{
+  width:100%!important;
+  max-width:none!important;
+  margin:var(--hm-icon-card-number-title-gap,18px) 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.24!important;
+  letter-spacing:var(--hm-track-group)!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+  text-wrap:pretty!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article p{
+  max-width:24ch!important;
+  margin:var(--hm-icon-card-title-body-gap,12px) 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #brand .yanolja-answer-stack>article .hm-ds-icon{
+  position:absolute!important;
+  right:var(--hm-ds-icon-inset,24px)!important;
+  bottom:var(--hm-ds-icon-inset,24px)!important;
+  width:var(--hm-ds-icon-size,39.66px)!important;
+  height:var(--hm-ds-icon-size,39.66px)!important;
+  margin:0!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 01.3 — HIMART TEAM 02.2 typography + requested full-width overlay          */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #brand .yanolja-field-workshop{
+  position:relative!important;
+  width:100%!important;
+  padding:0 0 160px!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-visual__image{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:16/9!important;
+  overflow:visible!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-visual__image>img{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-visual__cards{
+  position:absolute!important;
+  z-index:2!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  width:100%!important;
+  height:240px!important;
+  transform:translateY(160px)!important; /* 240 - 160 = 80px image overlap */
+  overflow:visible!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card{
+  position:relative!important;
+  display:flex!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:100%!important;
+  flex-direction:column!important;
+  justify-content:space-between!important;
+  align-items:stretch!important;
+  margin:0!important;
+  padding:28px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card>span{
+  display:block!important;
+  flex:0 0 auto!important;
+  margin:0!important;
+  padding:0!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+  text-align:left!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card__copy{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  text-align:left!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card__copy>strong{
+  display:block!important;
+  margin:0 0 8px!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:32px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card h4{
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:24px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
+}
+html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card p{
+  max-width:38ch!important;
+  margin:10px 0 0!important;
+  padding:0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
+}
+html body.yanolja-system-page #brand .yanolja-context-grid{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:20px!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.yanolja-system-page #brand .yanolja-context-grid>article h4{
+  margin:32px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group,22px)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.yanolja-system-page #brand .yanolja-context-grid>article p{
+  margin:12px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-body,16px)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 01.4 — HIMART AX 03.1 typography / rhythm, four-column adaptation          */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #brand .yanolja-system-direction{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:20px!important;
+  width:100%!important;
+}
+html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step{
+  position:relative!important;
+  min-width:0!important;
+  min-height:330px!important;
+  margin:0!important;
+  padding:24px 0 0!important;
+}
+html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step>span{
+  display:block!important;
+  margin:0!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step h4{
+  margin:74px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-subsection)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step p{
+  max-width:30ch!important;
+  margin:14px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step ul{
+  display:grid!important;
+  gap:8px!important;
+  width:100%!important;
+  margin:34px 0 0!important;
+  padding:0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.35!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 02.1 — circular goal body copy                                             */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #data .yanolja-goal-card p{
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 03.1 — authored media sequence and canonical spacing                       */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #journey .yanolja-color-origin{
+  width:100%!important;
+  margin:var(--hm-subtitle-to-content,80px) 0 0!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-origin img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-motif{
+  position:relative!important;
+  width:100%!important;
+  margin:24px 0 0!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-motif img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-motif figcaption{
+  position:absolute!important;
+  inset:0!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,1fr)!important;
+  grid-template-rows:repeat(2,1fr)!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-motif figcaption>span{
+  display:flex!important;
+  flex-direction:column!important;
+  align-self:end!important;
+  justify-self:start!important;
+  margin:0 0 28px 28px!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-motif figcaption b{
+  font-family:var(--hm-font-en)!important;
+  font-size:22px!important;
+  font-weight:400!important;
+  line-height:1.1!important;
+  letter-spacing:0!important;
+}
+html body.yanolja-system-page #journey .yanolja-color-motif figcaption small{
+  margin-top:6px!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.1!important;
+  letter-spacing:var(--hm-track-note)!important;
+  opacity:.70!important;
+}
+html body.yanolja-system-page #journey .yanolja-palette-wrap{
+  width:100%!important;
+  margin-top:40px!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 03.2 — restore content spacing and design-system text roles                */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #journey .yanolja-blue-access{
+  display:grid!important;
+  grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)!important;
+  gap:24px!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__swatch{
+  display:flex!important;
+  min-height:420px!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  padding:32px!important;
+  box-sizing:border-box!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__swatch span{
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__swatch strong{
+  margin-top:12px!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:42px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  letter-spacing:-.02em!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__swatch b{
+  margin-top:14px!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:16px!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__research{
+  min-height:420px!important;
+  padding:28px 0 0!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__research>span{
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__research h4{
+  margin:54px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group,22px)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #journey .yanolja-blue-access__research p{
+  max-width:52ch!important;
+  margin:16px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed{
+  margin-top:24px!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 03.3 — one row / copy left / visual right, authored 28px + 16px scale      */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #journey .yanolja-usability-rows{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:0!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.yanolja-system-page #journey .yanolja-usability-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;
+  gap:56px!important;
+  align-items:center!important;
+  min-height:380px!important;
+  padding:40px 0!important;
+}
+html body.yanolja-system-page #journey .yanolja-usability-row__copy>span{
+  display:block!important;
+  margin:0!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #journey .yanolja-usability-row__copy h4{
+  margin:30px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #journey .yanolja-usability-row__copy p{
+  max-width:45ch!important;
+  margin:14px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #journey .yanolja-usability-row__visual{
+  min-width:0!important;
+  min-height:250px!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* 03.4 — image first, explanatory copy follows canonical content rhythm       */
+/* -------------------------------------------------------------------------- */
+html body.yanolja-system-page #journey .yanolja-type-reference{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:32px!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__image{
+  width:100%!important;
+  margin:0!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__image img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__copy{
+  padding:28px 0 0!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__copy>span{
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__copy h4{
+  margin:28px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group,22px)!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-reference__copy p{
+  max-width:64ch!important;
+  margin:14px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.58!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* RESPONSIVE                                                                 */
+/* -------------------------------------------------------------------------- */
+@media(max-width:1180px){
+  html body.yanolja-system-page #brand .yanolja-team-grid,
+  html body.yanolja-system-page #brand .yanolja-system-direction{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-answer-stack{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-field-workshop{
+    padding-bottom:0!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-visual__cards{
+    position:relative!important;
+    right:auto!important;
+    bottom:auto!important;
+    left:auto!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    width:100%!important;
+    height:auto!important;
+    transform:none!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-field-workshop .team-workshop-card{
+    min-height:240px!important;
+    height:auto!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-context-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:780px){
+  html body.yanolja-system-page #live-main .hm-section-title{
+    font-size:var(--hm-type-section-mobile,clamp(28px,7.4vw,34px))!important;
+    line-height:1.16!important;
+  }
+  html body.yanolja-system-page #live-main .hm-subtitle{
+    font-size:var(--hm-type-subsection-mobile,29px)!important;
+    line-height:1.22!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-team-grid,
+  html body.yanolja-system-page #brand .yanolja-answer-stack,
+  html body.yanolja-system-page #brand .yanolja-system-direction,
+  html body.yanolja-system-page #brand .yanolja-context-grid,
+  html body.yanolja-system-page #journey .yanolja-blue-access,
+  html body.yanolja-system-page #journey .yanolja-usability-row{
+    grid-template-columns:1fr!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-answer-stack>article{
+    aspect-ratio:auto!important;
+    min-height:320px!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-answer-stack>article h4{
+    font-size:24px!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-answer-stack>article p{
+    font-size:15px!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step{
+    min-height:250px!important;
+  }
+  html body.yanolja-system-page #brand .yanolja-system-direction .ax-maker-step h4{
+    margin-top:52px!important;
+    font-size:24px!important;
+  }
+  html body.yanolja-system-page #journey .yanolja-color-motif figcaption>span{
+    margin:0 0 14px 14px!important;
+  }
+  html body.yanolja-system-page #journey .yanolja-color-motif figcaption b{
+    font-size:16px!important;
+  }
+  html body.yanolja-system-page #journey .yanolja-color-motif figcaption small{
+    font-size:9px!important;
+  }
+}
