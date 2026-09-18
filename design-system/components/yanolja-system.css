@@ -225,11 +225,11 @@ html body.yanolja-system-page #brand .yanolja-context-grid>article>span{
 /* 01.1 — HIMART TEAM 01.1 copied geometry, expanded from 3 to 4 columns. */
 html body.yanolja-system-page #brand .yanolja-team-grid{
   display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:12px!important;
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card{
-  min-height:250px!important;
+  min-height:300px!important;
   padding:30px!important;
   border:1px solid rgba(255,255,255,.15)!important;
   background:#050505!important;
@@ -242,11 +242,11 @@ html body.yanolja-system-page #brand .yanolja-team-grid .team-card>span{
   letter-spacing:.08em!important;color:rgba(255,255,255,.42)!important
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card strong{
-  display:block!important;margin-top:42px!important;font-family:var(--hm-font-ko)!important;
+  display:block!important;margin-top:24px!important;font-family:var(--hm-font-ko)!important;
   font-size:24px!important;line-height:1.36!important;font-weight:600!important;letter-spacing:-.035em!important
 }
 html body.yanolja-system-page #brand .yanolja-team-grid .team-card p{
-  margin:14px 0 0!important;font-size:16px!important;line-height:1.62!important;color:rgba(255,255,255,.58)!important
+  margin:auto 0 0 auto!important;max-width:31ch!important;font-size:16px!important;line-height:1.62!important;color:rgba(255,255,255,.58)!important;text-align:right!important
 }
 
 /* 01.2 — HIMART WAYS 03.2 copied geometry: number / title / body / icon. */
@@ -358,20 +358,20 @@ html body.yanolja-system-page #journey .yanolja-color-motif figcaption>span{
   margin:0 0 28px 28px!important;color:#fff!important;text-shadow:0 1px 12px rgba(0,0,0,.45)!important
 }
 html body.yanolja-system-page #journey .yanolja-color-motif figcaption b{
-  font-family:var(--hm-font-en)!important;font-size:22px!important;font-weight:400!important;line-height:1.1!important;letter-spacing:0!important
+  font-family:var(--hm-font-en)!important;font-size:18px!important;font-weight:400!important;line-height:1.1!important;letter-spacing:0!important
 }
 html body.yanolja-system-page #journey .yanolja-color-motif figcaption small{
-  margin-top:6px!important;font-family:var(--hm-font-en)!important;font-size:12px!important;font-weight:400!important;
+  margin-top:6px!important;font-family:var(--hm-font-en)!important;font-size:10px!important;font-weight:400!important;
   line-height:1.1!important;letter-spacing:var(--hm-track-note)!important;opacity:.70!important
 }
 html body.yanolja-system-page #journey .yanolja-palette-wrap{margin-top:40px!important}
 
 /* 03.2 */
 html body.yanolja-system-page #journey .yanolja-blue-access{
-  display:grid!important;grid-template-columns:minmax(0,.52fr) minmax(0,1.48fr)!important;gap:24px!important;width:100%!important
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,3fr)!important;gap:24px!important;width:100%!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__swatch{
-  display:flex!important;min-height:420px!important;flex-direction:column!important;justify-content:flex-end!important;
+  display:flex!important;min-height:280px!important;flex-direction:column!important;justify-content:flex-end!important;
   padding:32px!important;background:#003AA7!important;color:#fff!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__swatch span{
@@ -384,7 +384,7 @@ html body.yanolja-system-page #journey .yanolja-blue-access__swatch b{
   margin-top:14px!important;font:400 16px/1 var(--hm-font-en)!important;opacity:.72!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__research{
-  min-height:420px!important;padding:28px 0 0!important;border-top:1px solid var(--hm-line-default)!important
+  min-height:280px!important;padding:28px 0 0!important;border-top:1px solid var(--hm-line-default)!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__research>span{
   color:var(--hm-blue)!important;font:400 12px/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important
@@ -396,7 +396,7 @@ html body.yanolja-system-page #journey .yanolja-blue-access__research p{
   margin:16px 0 0!important;max-width:52ch!important;color:var(--hm-description-color)!important;font:300 16px/1.58 var(--hm-font-ko)!important;word-break:keep-all!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-summary{
-  display:grid!important;grid-template-columns:minmax(0,.52fr) minmax(0,1.48fr)!important;gap:24px!important;
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,3fr)!important;gap:24px!important;
   align-items:start!important;width:100%!important;margin-top:24px!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-grid--reframed{
@@ -406,9 +406,9 @@ html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-v
   min-width:0!important;padding:18px 0 20px!important;border-top:1px solid var(--hm-line-default)!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot-matrix{
-  grid-template-columns:repeat(6,18px)!important;gap:6px!important;margin-top:16px!important
+  grid-template-columns:repeat(6,27px)!important;gap:8px!important;margin-top:16px!important
 }
-html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot{width:18px!important;height:18px!important}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot{width:27px!important;height:27px!important}
 html body.yanolja-system-page #journey .yanolja-vision-copy{
   padding:24px 0 0!important;border-top:1px solid var(--hm-line-default)!important
 }
@@ -878,3 +878,35 @@ html body.yanolja-system-page #direction .hst-tip.is-error::before{border-top-co
   html body.yanolja-system-page #direction .hst-ds-sheet__brand{top:32px!important;left:32px!important;font-size:12px!important}
 }
 
+
+html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+}
+
+html body.yanolja-system-page #journey .yanolja-usability-row--type{
+  min-height:420px!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-legibility{
+  position:relative!important;
+  height:320px!important;
+  margin:0!important;
+  overflow:hidden!important;
+  background:#e0e0e0!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-legibility img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+}
+html body.yanolja-system-page #journey .yanolja-type-legibility::after{
+  content:""!important;
+  position:absolute!important;
+  right:0!important;
+  bottom:0!important;
+  width:46%!important;
+  height:25%!important;
+  background:#e0e0e0!important;
+  pointer-events:none!important;
+}
