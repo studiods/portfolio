@@ -1,9 +1,11 @@
 (() => {
   'use strict';
 
-  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const runtime = window.HMDSGalleryRuntime;
+  const reduced = runtime?.reducedMotion ?? window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const referenceBars = [...document.querySelectorAll('.trenbe-ut-page #brand .aimmo-reference-bars')];
 
+  /* Reuse AIMMO 02.2 viewport reveal exactly. */
   if (reduced) {
     referenceBars.forEach(chart => chart.classList.add('is-bars-focused'));
   } else if ('IntersectionObserver' in window) {
