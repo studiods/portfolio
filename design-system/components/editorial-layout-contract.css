@@ -9,3 +9,38 @@
    red/yellow unless a future project explicitly opts out after this contract. */
 @import url("./graph-color-policy.css?v=20260912-2");
 @import url("./graph-color-legend-bridge.css?v=20260912-1");
+
+/* Editorial copy-measure contract — medium/small-title descriptions.
+   Automatic wrapping must not begin before the copy can use at least 50% of its content width.
+   If a semantic break is needed, author exactly one <br> at the meaningful phrase boundary.
+   Modules that require equal body starts should author the same title line count and declare
+   data-hm-equal-title-lines so body copy aligns across sibling cards. */
+html body.himart-page-body #live-main :is(
+  .hm-subcopy,
+  .hm-ds-subsection__description,
+  .data-card-head .desc,
+  .narrative-copy,
+  .journey-block-copy,
+  .aimmo-context-insight__copy,
+  .hm-ds-card__body,
+  .hm-ds-role__body,
+  .hm-ds-numbered-list>article>p
+){
+  width:100%!important;
+  max-width:max(50%,var(--hm-description-max-chars,40ch))!important;
+  text-wrap:pretty!important;
+}
+html body.himart-page-body #live-main [data-hm-equal-title-lines="2"] h4{
+  min-block-size:2.6em!important;
+}
+html body.himart-page-body #live-main [data-hm-two-line-copy]{
+  width:100%!important;
+  max-width:none!important;
+}
+html body.himart-page-body #live-main [data-hm-two-line-copy]>span{
+  display:block!important;
+  white-space:nowrap!important;
+}
+@media(max-width:780px){
+  html body.himart-page-body #live-main [data-hm-two-line-copy]>span{white-space:normal!important}
+}
