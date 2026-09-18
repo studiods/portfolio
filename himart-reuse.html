@@ -41,12 +41,27 @@ html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__ro
 html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(5){--reuse-ref-width:29%!important}
 html body.reuse-current #journey .reuse-reference-bars .reuse-reference-bars__row:nth-child(6){--reuse-ref-width:10.9%!important}
 
-/* 04.1 page-only layout repair: the legacy Reuse direction bridge creates an extra
-   left-column 04.1 with ::before. Keep the canonical 04.1 beside the title and
-   suppress only this duplicate pseudo index on this page. */
+/* 04.1 page-only layout repair.
+   The legacy Reuse direction bridge reserves a 180px index column even after the
+   duplicate ::before index is suppressed, which makes the title wrap word by word.
+   Collapse that unused column locally and keep the authored <br> as the only line break. */
+html body.reuse-current #direction .prototype-intro.hm-subsection{
+  grid-template-columns:minmax(0,1fr)!important;
+}
 html body.reuse-current #direction .prototype-intro.hm-subsection::before{
   content:none!important;
   display:none!important;
+}
+html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
+  grid-column:1!important;
+  width:100%!important;
+  max-width:none!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  text-wrap:nowrap!important;
+}
+html body.reuse-current #direction .prototype-intro.hm-subsection>p{
+  grid-column:1!important;
 }
 </style>
 <link rel="stylesheet" href="./design-system/components/structural-index-contract.css?v=20260918-1">
