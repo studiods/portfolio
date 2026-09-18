@@ -540,6 +540,7 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 }
 
 @media(max-width:780px){
+  .trenbe-luxury-evidence{grid-template-columns:1fr!important;gap:64px!important}
   .trenbe-context-grid,.trenbe-profile-grid,.trenbe-conclusion-grid,.trenbe-research-bridge,.trenbe-roadmap,.trenbe-model-process,.trenbe-findings,.trenbe-field-gallery{grid-template-columns:1fr!important}
   .trenbe-findings article:last-child,.trenbe-field-gallery figure:first-child{grid-column:auto}
   .trenbe-evidence-flow,.trenbe-segment-flow,.trenbe-decision-flow{grid-template-columns:1fr!important;gap:16px!important}
