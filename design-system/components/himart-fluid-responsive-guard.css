@@ -105,7 +105,7 @@
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-node .hm-card-no{
     margin:0 0 12px!important;
-    font-size:10px!important;
+    font-size:clamp(10px,3.2vw,var(--hm-type-journey-circle-number,12px))!important;
     line-height:1.2!important;
   }
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
@@ -113,7 +113,7 @@
   .flow-node h4{
     margin:0!important;
     max-width:100%!important;
-    font-size:clamp(18px,5.2vw,22px)!important;
+    font-size:clamp(18px,5.2vw,var(--hm-type-journey-circle-title,22px))!important;
     line-height:1.22!important;
   }
   html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
@@ -121,7 +121,7 @@
   .flow-node p{
     margin:12px 0 0!important;
     max-width:84%!important;
-    font-size:clamp(12px,3.3vw,14px)!important;
+    font-size:clamp(12px,3.7vw,var(--hm-type-journey-circle-body,16px))!important;
     line-height:1.5!important;
   }
 
