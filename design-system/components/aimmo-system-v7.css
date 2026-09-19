@@ -49,9 +49,9 @@ html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figc
 html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{display:block!important;color:#fff!important;font:400 22px/1.32 var(--hm-font-ko)!important;font-variation-settings:"wght" 400!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
 html body.aimmo-system-page .aimmo-improvement-gallery .aimmo-evidence-card figcaption p{margin:10px 0 0!important;max-width:62ch!important;color:rgba(255,255,255,.88)!important;font:100 16px/1.52 var(--hm-font-ko)!important;font-variation-settings:"wght" 100!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
-/* 03.1 — local five-owner alignment capsule. Circle geometry is responsive; at the current
-   circle size titles resolve to about 22px and descriptions to about 12px, then scale down
-   or up with the circle instead of using a fixed shared-system size. */
+/* 03.1 — local five-owner alignment capsule.
+   Geometry remains responsive, while circle typography starts from the shared 12 / 22 / 12
+   baseline and only scales down through the shared responsive contract. */
 html body.aimmo-system-page .aimmo-ownership-sync{
   --aimmo-owner-gap:clamp(8px,1vw,12px);
   --aimmo-owner-size:clamp(152px,calc((100cqw - 36px - (var(--aimmo-owner-gap) * 4)) / 5),214px);
@@ -68,19 +68,19 @@ html body.aimmo-system-page .aimmo-ownership-sync{
 }
 html body.aimmo-system-page .aimmo-ownership-sync__label{position:absolute;z-index:3;top:0;left:50%;transform:translate(-50%,-50%);margin:0;padding:0 16px;background:#000;color:var(--hm-blue);font-family:var(--hm-font-ko);font-size:12px;font-weight:300;line-height:1.25;letter-spacing:var(--hm-track-body);white-space:nowrap}
 html body.aimmo-system-page .aimmo-ownership-sync__node{display:flex;width:min(100%,var(--aimmo-owner-size));aspect-ratio:1/1;min-width:0;margin:auto;flex-direction:column;align-items:center;justify-content:center;padding:clamp(14px,2cqi,24px);border:1px solid var(--hm-line-default);border-radius:50%;background:#000;text-align:center;container-type:inline-size}
-html body.aimmo-system-page .aimmo-ownership-sync__node>span{color:var(--hm-blue)!important;font:300 clamp(9px,5cqi,12px)/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important}
+html body.aimmo-system-page .aimmo-ownership-sync__node>span{color:var(--hm-blue)!important;font:300 var(--hm-type-journey-circle-number)/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important}
 html body.aimmo-system-page .aimmo-ownership-sync__node h4{
   margin:clamp(10px,5cqi,16px) 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:clamp(16px,10.3cqi,26px)!important;
+  font-size:var(--hm-type-journey-circle-title)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
   line-height:1.16!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
-html body.aimmo-system-page .aimmo-ownership-sync__node p{margin:clamp(8px,4cqi,12px) 0 0!important;max-width:16ch!important;color:var(--hm-description-color)!important;font-family:var(--hm-font-ko)!important;font-size:clamp(10px,5.6cqi,14px)!important;font-weight:300!important;line-height:1.42!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+html body.aimmo-system-page .aimmo-ownership-sync__node p{margin:clamp(8px,4cqi,12px) 0 0!important;max-width:16ch!important;color:var(--hm-description-color)!important;font-family:var(--hm-font-ko)!important;font-size:var(--hm-type-journey-circle-body)!important;font-weight:300!important;line-height:1.42!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
 /* 03.3 — four single-image square galleries, no rolling controls. */
 html body.aimmo-system-page .aimmo-family-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px!important;width:100%}
