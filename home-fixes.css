@@ -380,11 +380,11 @@
   border-top:1px solid rgba(255,255,255,.18);
   font-family:'Averta PE',sans-serif;
   font-weight:300;
-  font-size:16px;
+  font-size:14px;
   line-height:1.45;
   letter-spacing:0;
   color:#111;
-  opacity:.60;
+  opacity:.40;
 }
 .impact-capabilities>span{
   display:block!important;
@@ -514,7 +514,7 @@
   .impact-statement>.impact-line{margin:0!important;padding:0!important;line-height:1.17645!important}
   .impact-copy{margin-top:32px;font-size:16px!important;line-height:1.377!important}
   .impact-copy br{display:none}
-  .impact-capabilities{margin-top:64px;padding-top:24px;font-size:12px;line-height:1.55}
+  .impact-capabilities{margin-top:64px;padding-top:24px;font-size:14px;line-height:1.55}
   .work-shortcut{padding:72px 0 104px}
   .work-shortcut-link{grid-column:1;font-size:52px}
 
