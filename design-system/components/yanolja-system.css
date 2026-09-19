@@ -1796,7 +1796,7 @@ html body.yanolja-system-page #direction .hst-product-gallery__slide:not(.is-gue
   height:100%!important;
   object-fit:contain!important;
   object-position:center center!important;
-  transform:translateY(-20%) scale(1.265)!important;
+  transform:translateY(-10%) scale(1.265)!important;
   transform-origin:center center!important
 }
 
@@ -1812,7 +1812,7 @@ html body.yanolja-system-page #direction .hst-product-gallery__slide.is-guest-se
   max-height:100%!important;
   object-fit:contain!important;
   object-position:center center!important;
-  transform:translateY(-15%) scale(1.20)!important;
+  transform:translateY(-5%) scale(1.20)!important;
   transform-origin:center center!important;
   background:#fff!important
 }
