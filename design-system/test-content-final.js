@@ -9,7 +9,7 @@
      No shared design-system wrapping rule is introduced yet. */
   const roleCards = [
     ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다', 'team-purpose'],
-    ['SUBHOME / CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다', 'aimmo-layers'],
+    ['CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다', 'aimmo-layers'],
     ['SEARCH', '검색은 불확실성을<br>확신으로 바꿔줘야 한다', 'trenbe-search'],
     ['SRP / PLP', '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다', 'aimmo-sliders'],
     ['PDP', '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다', 'trenbe-product'],
