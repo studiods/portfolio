@@ -5436,9 +5436,9 @@ html body.himart-wide-test-page #live-main p{color:var(--hm-body-60)!important}
 html body.himart-wide-test-page .hm-section-title{font-family:var(--hm-ko)!important;font-size:52px!important;font-weight:100!important;line-height:1.12!important;letter-spacing:-.045em!important}
 html body.himart-wide-test-page :is(.narrative-title,.hm-subtitle,.forced-redesign-title,.journey-block-title){font-family:var(--hm-ko)!important;font-size:42px!important;font-weight:100!important;line-height:1.18!important;letter-spacing:-.045em!important}
 html body.himart-wide-test-page #live-main :is(#brand,#data,#journey,#direction)>.hm-wrap>.hm-section-head .hm-section-no{display:block!important;margin:0 0 16px!important;color:var(--hm-blue)!important;font-family:var(--hm-en)!important;font-size:16px!important;font-weight:300!important;line-height:1.2!important;letter-spacing:.02em!important}
-html body.himart-wide-test-page #live-main :is(.narrative-subno,.synthesis-subno,.hm-subno,.hm-card-no,.problem-item small,.proof-label,.proof-compare,.journey-role-grid small){font-size:12px!important;line-height:1.5!important}
-html body.himart-wide-test-page :is(.problem-item h4,.proof-item h4,.behavior-card h4,.synthesis-card b,.journey-role-grid h4){font-family:var(--hm-ko)!important;font-weight:100!important}
-html body.himart-wide-test-page :is(.hm-section-desc,.narrative-copy,.problem-item p,.proof-item p,.synthesis-card p,.behavior-note,.journey-block-copy,.journey-role-grid p){font-size:16px!important;line-height:1.58!important}
+html body.himart-wide-test-page #live-main :is(.narrative-subno,.synthesis-subno,.hm-subno,.hm-card-no,.problem-item small,.proof-label,.proof-compare){font-size:12px!important;line-height:1.5!important}
+html body.himart-wide-test-page :is(.problem-item h4,.proof-item h4,.behavior-card h4,.synthesis-card b){font-family:var(--hm-ko)!important;font-weight:100!important}
+html body.himart-wide-test-page :is(.hm-section-desc,.narrative-copy,.problem-item p,.proof-item p,.synthesis-card p,.behavior-note,.journey-block-copy){font-size:16px!important;line-height:1.58!important}
 html body.himart-wide-test-page :is(.hm-section-title strong,.narrative-title strong,.problem-item h4 strong,.proof-item h4 strong,.behavior-card h4 strong,.brand-synthesis>h4 strong){font-weight:100!important}
 
 html body.himart-wide-test-page .problem-grid{align-items:stretch!important}
@@ -5492,10 +5492,8 @@ html body.himart-wide-test-page #journey .journey-flow-block .row-bottom .journe
 html body.himart-wide-test-page #journey .journey-flow-block .group-label{position:absolute!important;top:0!important;left:50%!important;transform:translate(-50%,-50%)!important;padding:0 10px!important;background:#000000!important;color:var(--hm-blue)!important;font-family:var(--hm-ko)!important;font-size:10px!important;font-weight:400!important;line-height:1.2!important;white-space:nowrap!important;text-align:center!important}
 
 html body.himart-wide-test-page #journey .journey-role-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:34px 32px!important;margin-top:64px!important}
-html body.himart-wide-test-page #journey .journey-role-grid article{min-height:270px!important;padding:24px 0 0!important;border-top:1px solid rgba(255,255,255,.22)!important;display:grid!important;grid-template-rows:auto minmax(116px,auto) auto!important;align-content:start!important}
-html body.himart-wide-test-page #journey .journey-role-grid small{color:var(--hm-blue)!important;font-family:var(--hm-en)!important}
-html body.himart-wide-test-page #journey .journey-role-grid h4{margin:18px 0 0!important;min-height:116px!important;color:#fff!important;font-size:28px!important;line-height:1.28!important}
-html body.himart-wide-test-page #journey .journey-role-grid p{margin:40px 0 0!important;padding:0!important;align-self:start!important}
+html body.himart-wide-test-page #journey .journey-role-grid article{min-height:270px!important;border-top:1px solid rgba(255,255,255,.22)!important;align-content:start!important}
+/* ROLE DEFINITION typography and inner layout are owned by portfolio-icons.css. */
 
 /* expanded content is cloned from the production 1 / 2 journey sections without rewriting */
 html body.himart-wide-test-page #journey details.hm-more.journey-more{margin-top:110px!important}
@@ -5987,10 +5985,6 @@ html body.himart-wide-test-page #journey .journey-flow-block .journey-diagram-gr
 html body.himart-wide-test-page #journey .journey-role-grid{
   align-items:stretch!important;
 }
-html body.himart-wide-test-page #journey .journey-role-grid article p{
-  color:rgba(255,255,255,.50)!important;
-}
-
 /* Expanded production 1/2 flow circles: preserve the original h4 titles. */
 html body.himart-wide-test-page #journey details.journey-more .v2-production-copy .flow-node{
   background:#000!important;
