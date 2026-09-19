@@ -125,8 +125,9 @@
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const definitionSourceChars = $$('.definition-source .fill-char', hero);
-  const subChars = $$('.subtractive-title .fill-char', hero);
-  const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
+  const subChars = $('.subtractive-title .fill-char', hero);
+  const subKoreanChars = $('.subtractive-korean .fill-char', hero);
+  const subIdentityChars = $('.hero-identity .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   const HERO = Object.freeze({
@@ -150,6 +151,7 @@
   rememberFinalChars(definitionChars);
   rememberFinalChars(definitionSourceChars);
   rememberFinalChars(subChars);
+  rememberFinalChars(subIdentityChars);
   rememberFinalChars(quoteChars);
 
   const randomGlyph = (index, step) =>
@@ -379,6 +381,14 @@
       phaseProgress(p, HERO.subFillEnd, HERO.subCaptionFillEnd),
       '17,17,17',
       0
+    );
+    renderThreeCycleReveal(
+      subIdentityChars,
+      phaseProgress(p, 0.955, HERO.subHoldEnd),
+      '17,17,17',
+      0,
+      0.70,
+      0.82
     );
 
     setAttribute(
@@ -672,7 +682,7 @@
     });
   };
 
-  const entryScrambleTargets = $$('.showcase-project h3');
+  const entryScrambleTargets = $('.showcase-project h3, .js-entry-scramble');
   const animateEntryScramble = target => {
     if (!target || target.dataset.scrambleDone === '1') return;
     target.dataset.scrambleDone = '1';
