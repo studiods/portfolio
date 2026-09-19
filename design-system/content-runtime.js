@@ -73,15 +73,14 @@ function data(main){
 const fn=(n,t,p)=>`<article class="flow-node hm-ds-flow-node"><span class="hm-card-no">${n}</span><h4>${t}</h4><p>${p}</p></article>`;
 const ar=()=>'<div class="flow-arrow">›</div>';
 const roles=[
-  ['HOME','원하는 곳으로<br>보내주는 허브','최근 관심 상품·혜택·서비스를 기억하고 원하는 목적지로 바로 이어줍니다.'],
-  ['CATEGORY','고민의 시간을<br>줄이는 곳','선택 기준을 먼저 보여 카테고리 안에서 후보를 빠르게 좁힙니다.'],
-  ['SEARCH','모호한 니즈를<br>후보로 바꾸는 곳','정확한 모델명을 몰라도 목적을 상품 후보와 판단 기준으로 바꿉니다.'],
-  ['SRP · PLP','비교를<br>끝내는 곳','가격·혜택·배송·설치·리뷰·스펙을 한눈에 비교해 후보를 압축합니다.'],
-  ['PDP','구매 확신을<br>형성하는 곳','가격·설치·리뷰·혜택·상담·서비스를 함께 보여 구매 확신을 만듭니다.'],
-  ['CART','선택 조건을<br>정리하는 곳','옵션·혜택·설치 조건과 최종 금액을 다시 확인해 이탈을 줄입니다.'],
-  ['CHECKOUT','결제를<br>완료하는 곳','결제 수단·혜택·배송 조건을 한 번에 확인하고 결제를 끝냅니다.'],
-  ['FULFILL','설치·회수를<br>확정하는 곳','설치 일정과 기존 제품 회수 정보를 명확히 안내합니다.'],
-  ['MY · CARE','구매 이후 관계를<br>이어가는 곳','케어·수리·이전설치·점검을 상품 이력과 연결합니다.']
+  ['HOME','원하는 곳으로<br>보내주는 허브','team-purpose'],
+  ['SUBHOME / CATEGORY','고민의 시간을<br>줄이는 곳','aimmo-layers'],
+  ['SEARCH','모호한 니즈를<br>후보로 바꾸는 곳','trenbe-search'],
+  ['SRP / PLP','비교를<br>끝내는 곳','aimmo-sliders'],
+  ['PDP','구매 확신을<br>형성하는 곳','trenbe-product'],
+  ['CART / PAY','선택 조건을<br>정리하는 곳','trenbe-check'],
+  ['INSTALL / CARE','설치·회수를<br>확정하는 곳','ax-update'],
+  ['MYPAGE / CARE','구매 이후 관계를<br>이어가는 곳','aimmo-link']
 ];
 
 function flow(){
@@ -94,7 +93,7 @@ function flow(){
 function role(){
   const s=document.createElement('section');
   s.className='journey-role-block';
-  s.innerHTML=`<span class="narrative-subno">03.2 / ROLE DEFINITION</span><h3 class="journey-block-title">그리고 각 화면은,<br>다음 행동을 만드는 역할로 다시 정의했습니다.</h3><p class="journey-block-copy">각 접점의 목적을 ‘무엇을 보여줄 것인가’가 아니라 ‘다음에 무엇을 할 수 있어야 하는가’로 정의했습니다.</p><div class="journey-role-grid">${roles.map(x=>`<article><small>${x[0]}</small><h4>${x[1]}</h4><p>${x[2]}</p></article>`).join('')}</div>`;
+  s.innerHTML=`<span class="narrative-subno">03.2</span><h3 class="journey-block-title">그리고 각 화면은,<br>다음 행동을 만드는 역할로 다시 정의했습니다.</h3><p class="journey-block-copy">각 접점의 목적을 ‘무엇을 보여줄 것인가’가 아니라 ‘다음에 무엇을 할 수 있어야 하는가’로 정의했습니다.</p><div class="journey-role-grid">${roles.map(x=>`<article><small>${x[0]}</small><h4>${x[1]}</h4><svg class="hm-ds-icon" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#${x[2]}"></use></svg></article>`).join('')}</div>`;
   return s;
 }
 
@@ -297,14 +296,14 @@ const expectedTitles={
 };
 
 const productionRoles=[
-  ["HOME","홈은 보여주는 곳이 아닌 원하는 곳으로 보내주는 곳이어야 한다","최근 관심 상품·혜택·서비스를 기억하고 사용자가 원하는 목적지로 바로 이어줍니다."],
-  ["SUBHOME / CATEGORY","선택한 카테고리 안에서는 고민의 시간을 줄여야 한다.","많이 찾는 상품과 선택 기준을 먼저 보여줘 카테고리 안에서 비교와 선택을 빠르게 만듭니다."],
-  ["SEARCH","검색은 불확실성을 확신으로 바꿔줘야 한다","정확한 모델명을 몰라도 모호한 니즈를 구체적인 상품 후보로 바꾸는 탐색을 지원합니다."],
-  ["SRP / PLP","검색 결과는 단순 상품 목록이 아니라 비교를 끝내는 화면이어야 한다","가격·혜택·브랜드·배송·설치·리뷰·스펙을 한눈에 비교해 구매 후보를 빠르게 압축합니다."],
-  ["PDP","상세페이지는 설명하는 화면이 아니라 결정을 끝내는 화면이어야 한다","가격과 설치 가능성, 리뷰, 혜택, 서비스 정보를 함께 보여 구매 결정을 완료하도록 돕습니다."],
-  ["CART / PAY","장바구니는 결제 직전의 마지막 확신을 줘야 한다","가격·혜택·옵션·설치 조건과 최종 금액을 한 번에 재확인해 결제 직전의 불확실성을 줄입니다."],
-  ["INSTALL / CARE","설치 조율에서는 결제 이후의 불안을 일정 확정으로 바꿔야 한다","설치 일정과 가능 여부, 기존 제품 처리 정보를 명확히 안내해 결제 이후의 불안을 줄입니다."],
-  ["MYPAGE / CARE","마이페이지에서는 구매 이후에도 관리받고 있다는 느낌을 줘야 한다","안심케어·수리·이전설치·정기점검을 상품 이력과 연결해 구매 이후의 관리 경험을 이어갑니다."]
+  ["HOME","홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다","team-purpose"],
+  ["SUBHOME / CATEGORY","선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다","aimmo-layers"],
+  ["SEARCH","검색은 불확실성을<br>확신으로 바꿔줘야 한다","trenbe-search"],
+  ["SRP / PLP","검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다","aimmo-sliders"],
+  ["PDP","상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다","trenbe-product"],
+  ["CART / PAY","장바구니는 결제 직전의<br>마지막 확신을 줘야 한다","trenbe-check"],
+  ["INSTALL / CARE","설치 조율은 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다","ax-update"],
+  ["MYPAGE / CARE","구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다","aimmo-link"]
 ];
 
 function alignProofCopy(){
@@ -338,7 +337,7 @@ function rebuildRoleDefinition(){
   const block=document.querySelector('#journey .journey-role-block');
   if(!block)return;
   const label=block.querySelector('.narrative-subno');
-  if(label)label.textContent='03.2 / ROLE DEFINITION';
+  if(label)label.textContent='03.2';
   const title=block.querySelector('.journey-block-title');
   if(title)title.innerHTML='그리고 각 화면의 역할을<br>다시 정의했습니다.';
   const copy=block.querySelector('.journey-block-copy');
@@ -351,7 +350,7 @@ function rebuildRoleDefinition(){
   }
   const signature=productionRoles.map(x=>x.join('|')).join('||');
   if(grid.dataset.productionRoles===signature)return;
-  grid.innerHTML=productionRoles.map(([k,t,p])=>`<article><small>${k}</small><h4>${t}</h4><p>${p}</p></article>`).join('');
+  grid.innerHTML=productionRoles.map(([k,t,icon])=>`<article><small>${k}</small><h4>${t}</h4><svg class="hm-ds-icon" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#${icon}"></use></svg></article>`).join('');
   grid.dataset.productionRoles=signature;
 }
 
