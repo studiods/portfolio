@@ -1599,3 +1599,158 @@ html body.yanolja-system-page #direction .yanolja-lead-step:nth-child(6){
     font-size:10px!important
   }
 }
+
+/* 2026-09-19 — Yanolja environment + product family refinement v10. */
+
+/* 03.2 — align COLOR VISION copy baseline with the bottom of the left color-chip stack. */
+html body.yanolja-system-page #journey .yanolja-vision-summary{
+  align-items:stretch!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed{
+  align-self:stretch!important;
+  height:100%!important
+}
+html body.yanolja-system-page #journey .yanolja-vision-copy{
+  align-self:stretch!important;
+  min-height:0!important;
+  height:auto!important;
+  justify-content:flex-end!important;
+  padding-top:28px!important;
+  padding-bottom:20px!important
+}
+
+/* 03.3 / 04 ENVIRONMENT — restore the later HTML/CSS light-vs-low-light demo. */
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-demo{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  min-height:280px!important;
+  overflow:hidden!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sample{
+  position:relative!important;
+  min-height:280px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:28px!important;
+  box-sizing:border-box!important;
+  background:#f2f2f2!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sample.is-dark{
+  background:#1d1d1d!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sample>span{
+  position:absolute!important;
+  left:18px!important;
+  bottom:16px!important;
+  color:rgba(0,0,0,.54)!important;
+  font:400 10px/1 var(--hm-font-en)!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-sample.is-dark>span{
+  color:rgba(255,255,255,.66)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel{
+  width:100%!important;
+  max-width:280px!important;
+  border:1px solid rgba(0,0,0,.10)!important;
+  border-radius:4px!important;
+  background:#fff!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.10)!important;
+  overflow:hidden!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__head{
+  display:flex!important;
+  gap:6px!important;
+  align-items:center!important;
+  height:34px!important;
+  padding:0 12px!important;
+  background:#f2f4f8!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__head i{
+  display:block!important;
+  width:6px!important;
+  height:6px!important;
+  border-radius:50%!important;
+  background:#b8bec9!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body{
+  padding:20px!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body b{
+  display:block!important;
+  color:#20242c!important;
+  font:400 14px/1.2 var(--hm-font-ko)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body p{
+  margin:8px 0 18px!important;
+  color:#707782!important;
+  font:300 11px/1.45 var(--hm-font-ko)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-panel__body button{
+  width:100%!important;
+  height:42px!important;
+  border:0!important;
+  border-radius:4px!important;
+  background:#003AA7!important;
+  color:#fff!important;
+  font:300 13px/1 var(--hm-font-ko)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel{
+  border-color:rgba(255,255,255,.10)!important;
+  background:#262626!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.34)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__head{
+  background:#323232!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__head i{
+  background:#6d6d6d!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__body b{
+  color:#fff!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__body p{
+  color:rgba(255,255,255,.58)!important
+}
+html body.yanolja-system-page #journey .yanolja-theme-sample.is-dark .yanolja-theme-panel__body button{
+  background:#174EC0!important
+}
+
+/* 04.2 — 16:9 product-family gallery, +15% media scale and centered placement. */
+html body.yanolja-system-page #direction .hst-product-gallery .hst-ds-gallery__viewport{
+  aspect-ratio:16/9!important;
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide{
+  padding:28px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide>img{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:scale(1.15)!important;
+  transform-origin:center center!important
+}
+/* Guest Service sources are original 16:9 portfolio pages; crop their headers to match the supplied visual-only references. */
+html body.yanolja-system-page #direction .hst-product-gallery__slide.is-guest-service{
+  padding:0!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide.is-guest-service>img{
+  transform:scale(1.35)!important
+}
+
+@media(max-width:780px){
+  html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-theme-demo{
+    grid-template-columns:1fr!important
+  }
+  html body.yanolja-system-page #direction .hst-product-gallery__slide{
+    padding:12px!important
+  }
+}
