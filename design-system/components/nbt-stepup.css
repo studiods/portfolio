@@ -833,7 +833,7 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
 /* 04.1 — HIMART 04 v18 source grammar inside the shared media carousel.
    Two phone screens on the left, explanatory copy on the right. */
 html body.nbt-stepup-page #screens .stepup-screens-carousel{
-  --hm-ds-media-carousel-ratio:16/10!important;
+  --hm-ds-media-carousel-ratio:16/11!important;
   width:100%!important;
   margin-top:80px!important;
   background:#000!important;
@@ -981,7 +981,7 @@ html body.nbt-stepup-page .hm-project-reflection__copy{
 
 @media(max-width:1000px){
   html body.nbt-stepup-page #screens .stepup-screens-carousel{
-    --hm-ds-media-carousel-ratio:4/5!important;
+    --hm-ds-media-carousel-ratio:3/4!important;
   }
   html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-row{
     grid-template-columns:1fr!important;
