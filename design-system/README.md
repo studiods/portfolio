@@ -201,7 +201,7 @@
 - 공통 token은 `--hm-type-journey-circle-number:12px`, `--hm-type-journey-circle-title:22px`, `--hm-type-journey-circle-body:12px`이다.
 - 기본 상태에서 circle/container 크기를 이유로 위 기준보다 크게 확대하지 않는다. 반응형 축소는 `780px` 이하에서만 허용하며 각 값은 기준값을 최대값으로 사용한다.
 - 동일 구조의 `.journey-flow-block .flow-node`, `.reuse-confidence-node`, `.aimmo-ownership-sync__node`, `.aimmo-business-flow > article`, `.stepup-habit-flow > article`은 이 공통 규칙을 상속한다.
-- 퍼센트 metric ring처럼 숫자 자체가 핵심 데이터인 원형과 Reuse image-order처럼 명시적으로 별도 variant가 정의된 경우에만 예외를 둔다.
+- 퍼센트 metric ring처럼 숫자 자체가 핵심 데이터인 원형처럼 의미 구조가 다른 컴포넌트만 예외로 두며, 숫자 + 타이틀 + 본문 구조의 원형에는 페이지별 폰트 크기 예외를 두지 않는다.
 
 ## Evidence stat card contract
 
