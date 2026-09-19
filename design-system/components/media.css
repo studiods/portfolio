@@ -187,8 +187,8 @@ html body.himart-page-body :is(
   top:50%!important;
   width:var(--hm-gallery-nav-arrow-size,18px)!important;
   height:var(--hm-gallery-nav-arrow-size,18px)!important;
-  border-top:1px solid rgba(255,255,255,.78)!important;
-  border-right:1px solid rgba(255,255,255,.78)!important;
+  border-top:1px solid var(--hm-gallery-nav-color,rgba(255,255,255,.78))!important;
+  border-right:1px solid var(--hm-gallery-nav-color,rgba(255,255,255,.78))!important;
   box-sizing:border-box!important;
 }
 html body.himart-page-body :is(
@@ -196,6 +196,7 @@ html body.himart-page-body :is(
   .team-workshop-gallery__nav--prev,
   .aimmo-evidence-card__nav--prev
 )::before{
+  --hm-gallery-nav-color:var(--hm-gallery-nav-prev-color,rgba(255,255,255,.78));
   left:var(--hm-gallery-nav-arrow-edge,30px)!important;
   right:auto!important;
   transform:translate(-35%,-50%) rotate(-135deg)!important;
@@ -205,6 +206,7 @@ html body.himart-page-body :is(
   .team-workshop-gallery__nav--next,
   .aimmo-evidence-card__nav--next
 )::before{
+  --hm-gallery-nav-color:var(--hm-gallery-nav-next-color,rgba(255,255,255,.78));
   right:var(--hm-gallery-nav-arrow-edge,30px)!important;
   left:auto!important;
   transform:translate(35%,-50%) rotate(45deg)!important;
