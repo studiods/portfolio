@@ -131,6 +131,9 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
   line-clamp:var(--hm-hero-description-max-lines,3)!important;
   -webkit-box-orient:vertical!important;
 }
+html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description br{
+  display:none!important;
+}
 
 /* Approved himart.html bottom rail: desktop 40px / mobile 28px. */
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__bottom{
