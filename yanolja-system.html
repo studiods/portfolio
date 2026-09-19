@@ -8,7 +8,7 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-8">
+<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-9">
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260916-6">
 <link rel="stylesheet" href="./design-system/components/media.css?v=20260915-3">
 <link rel="stylesheet" href="./design-system/components/media-gallery.css?v=20260919-4">
@@ -76,8 +76,14 @@
     <div class="hm-subsection hm-ds-subsection hm-reveal">
       <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="01.3">01.3</span><div><h3 class="hm-subtitle hm-ds-subsection__title">근무자에게서 수집한 환경 조건을 바탕으로,<br>실제 프론트에서 놓치지 않는 정보 체계를 만들었습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">연령·역할, 모니터, 조도, 업무 자세와 이동 패턴을 디자인 기준으로 전환했습니다.</p></div></div>
       <div class="team-workshop-visual team-workshop-visual--full-four hm-ds-subtitle-to-content">
-        <div class="team-workshop-visual__image">
-          <img src="./assets/image/yanolja/yanolja_01_01.png" alt="호텔 프론트 실제 업무 환경" loading="lazy" decoding="async">
+        <div class="team-workshop-visual__image yanolja-field-gallery" data-hst-gallery data-autoplay="4000" aria-label="호텔 프론트 근무 환경 이미지">
+          <div class="yanolja-field-gallery__viewport">
+            <div class="hst-ds-gallery__track yanolja-field-gallery__track">
+              <figure class="yanolja-field-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_01_01.png" alt="호텔 프론트 근무 환경 1" loading="lazy" decoding="async"></figure>
+              <figure class="yanolja-field-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_01_02.png" alt="호텔 프론트 근무 환경 2" loading="lazy" decoding="async"></figure>
+              <figure class="yanolja-field-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_01_03.png" alt="호텔 프론트 근무 환경 3" loading="lazy" decoding="async"></figure>
+            </div>
+          </div>
         </div>
         <div class="team-workshop-visual__cards">
           <article class="team-workshop-card"><span>LIGHTING REFERENCE</span><div class="team-workshop-card__copy"><strong>300 lx</strong><h4>리셉션 작업면 기준</h4><p>호텔 reception/cashier desk 300 lx를 디자인 검토 기준으로 삼았습니다.</p></div></article>
@@ -431,41 +437,55 @@
               </div>
             </article>
 
-            <article class="hst-ds-sheet hst-ds-sheet--60" data-hst-slide aria-label="HST Group Design System page 60">
+                        <article class="hst-ds-sheet hst-ds-sheet--60" data-hst-slide aria-label="HST Group Design System page 60">
               <div class="hst-ds-sheet__brand"><b>HST GROUP</b><span>DESIGN SYSTEM</span></div>
               <div class="hst60-layout">
-                <section class="hst60-demo hst60-badges">
-                  <h5>Status badge</h5>
-                  <div class="hst60-badge-row"><span class="is-default">대기</span><span class="is-info">진행중</span><span class="is-success">완료</span><span class="is-warning">확인필요</span><span class="is-error">오류</span></div>
-                  <div class="hst60-caption">상태는 색상과 텍스트를 함께 사용해 구분합니다.</div>
+                <section class="hst60-demo hst60-reservation">
+                  <h5>Reservation status</h5>
+                  <div class="hst60-badge-row"><span class="is-info">예약</span><span class="is-success">체크인</span><span class="is-warning">대기</span><span class="is-error">취소</span></div>
+                  <div class="hst60-caption">예약 상태를 색상과 텍스트로 함께 구분</div>
                 </section>
 
-                <section class="hst60-demo hst60-switches">
-                  <h5>Toggle switch</h5>
-                  <div class="hst60-control-list"><div><i class="hst-switch"></i><span>normal</span></div><div><i class="hst-switch is-on"></i><span>selected</span></div><div><i class="hst-switch is-disabled"></i><span>disabled</span></div></div>
+                <section class="hst60-demo hst60-rooms">
+                  <h5>Room status</h5>
+                  <div class="hst-room-grid"><i><b>201</b><span>재실</span></i><i class="is-clean"><b>202</b><span>청소완료</span></i><i class="is-service"><b>203</b><span>정비중</span></i><i><b>204</b><span>공실</span></i><i class="is-vip"><b>205</b><span>VIP</span></i><i><b>206</b><span>예약</span></i></div>
                 </section>
 
-                <section class="hst60-demo hst60-progress">
-                  <h5>Progress &amp; slider</h5>
-                  <div class="hst-progress"><i style="width:72%"></i></div><span class="hst60-caption">72% complete</span>
-                  <div class="hst-slider"><i></i><b></b></div><span class="hst60-caption">range control</span>
+                <section class="hst60-demo hst60-actions">
+                  <h5>Front desk quick action</h5>
+                  <div class="hst-quick-actions"><i class="is-primary">체크인</i><i>체크아웃</i><i>키 발급</i><i>객실 변경</i></div>
+                </section>
+
+                <section class="hst60-demo hst60-search">
+                  <h5>Guest search</h5>
+                  <div class="hst-search-field"><span>예약자명 · 예약번호 검색</span><b>⌕</b></div>
+                  <div class="hst-search-meta"><span>최근 검색</span><i>SHIN DONG SIK</i><i>R-20260919</i></div>
+                </section>
+
+                <section class="hst60-demo hst60-dates">
+                  <h5>Stay date</h5>
+                  <div class="hst-date-range"><div><span>CHECK-IN</span><b>09.19</b><small>15:00</small></div><em>→</em><div><span>CHECK-OUT</span><b>09.21</b><small>11:00</small></div></div>
+                </section>
+
+                <section class="hst60-demo hst60-housekeeping">
+                  <h5>Housekeeping task</h5>
+                  <div class="hst-task-list"><div><b>301</b><span>객실 청소</span><i class="is-done">완료</i></div><div><b>305</b><span>미니바 확인</span><i>진행중</i></div><div><b>408</b><span>린넨 교체</span><i class="is-wait">대기</i></div></div>
+                </section>
+
+                <section class="hst60-demo hst60-payment">
+                  <h5>Payment summary</h5>
+                  <div class="hst-payment-card"><span>결제 예정 금액</span><strong>₩ 428,000</strong><div><i class="is-selected">CARD</i><i>CASH</i><i>ROOM CHARGE</i></div></div>
                 </section>
 
                 <section class="hst60-demo hst60-alerts">
                   <h5>Alert &amp; toast</h5>
-                  <div class="hst-alert is-info"><b>안내</b><span>예약 정보가 업데이트되었습니다.</span></div>
-                  <div class="hst-alert is-success"><b>완료</b><span>변경 사항을 저장했습니다.</span></div>
-                  <div class="hst-alert is-error"><b>오류</b><span>입력 내용을 다시 확인해 주세요.</span></div>
-                </section>
-
-                <section class="hst60-demo hst60-modal">
-                  <h5>Modal dialog</h5>
-                  <div class="hst-modal-card"><b>예약을 취소하시겠습니까?</b><p>취소 이후에는 이전 상태로 되돌릴 수 없습니다.</p><div><i>닫기</i><i class="is-primary">예약 취소</i></div></div>
+                  <div class="hst-alert is-info"><b>안내</b><span>객실 203의 상태가 변경되었습니다.</span></div>
+                  <div class="hst-alert is-error"><b>확인</b><span>미결제 예약이 2건 있습니다.</span></div>
                 </section>
 
                 <section class="hst60-demo hst60-table-demo">
-                  <h5>Data table</h5>
-                  <div class="hst-mini-table"><div class="is-head"><span>객실</span><span>상태</span><span>요금</span></div><div><span>101호</span><span class="is-blue">체크인</span><span>120,000</span></div><div><span>203호</span><span>청소중</span><span>98,000</span></div><div><span>305호</span><span class="is-green">판매중</span><span>145,000</span></div></div>
+                  <h5>Reservation list</h5>
+                  <div class="hst-mini-table"><div class="is-head"><span>객실</span><span>상태</span><span>예약자</span></div><div><span>101</span><span class="is-blue">체크인</span><span>김지현</span></div><div><span>203</span><span>대기</span><span>Lee J.</span></div><div><span>305</span><span class="is-green">확정</span><span>Park M.</span></div></div>
                 </section>
               </div>
             </article>
@@ -473,8 +493,27 @@
           </div>
         </div>
 
+        <div class="hm-ds-media-carousel__status hst-ds-gallery__status" data-hst-gallery-status>01 / 04</div>
         <button class="hm-ds-gallery-nav hm-ds-gallery-nav--prev hst-ds-gallery__nav" type="button" aria-label="이전 페이지"></button>
         <button class="hm-ds-gallery-nav hm-ds-gallery-nav--next hst-ds-gallery__nav" type="button" aria-label="다음 페이지"></button>
+      </div>
+    </div>
+
+    <div class="hm-subsection hm-ds-subsection hm-reveal">
+      <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="04.2">04.2 / PRODUCT FAMILY</span><div><h3 class="hm-subtitle hm-ds-subsection__title">하나의 디자인 시스템을 기반으로,<br>제품별 기능과 브랜드 특성을 함께 확장했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">그룹 내 주요 제품의 기능적 특성에 맞는 UI 컴포넌트를 적용하고 대표 컬러로 제품군을 구분했습니다. 컬러 사용은 제한하고 크기·명도 차이로 정보의 우선순위를 분명히 해, 빠른 정보 파악과 액션을 지원했습니다.</p></div></div>
+      <div class="hst-ds-gallery hst-product-gallery hm-ds-subtitle-to-content" data-hst-gallery data-autoplay="5000" aria-label="HST Group 주요 제품군 디자인 갤러리">
+        <div class="hst-ds-gallery__viewport">
+          <div class="hst-ds-gallery__track">
+            <figure class="hst-product-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_02_01.png" alt="PMS 객실 현황 화면" loading="lazy" decoding="async"></figure>
+            <figure class="hst-product-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_02_02.png" alt="PMS 신규 예약 팝업 화면" loading="lazy" decoding="async"></figure>
+            <figure class="hst-product-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_02_03.png" alt="PMS 타임라인 운영 화면" loading="lazy" decoding="async"></figure>
+            <figure class="hst-product-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_02_04.png" alt="RS 객실 운영 리스트 화면" loading="lazy" decoding="async"></figure>
+            <figure class="hst-product-gallery__slide" data-hst-slide><img src="./assets/image/yanolja/yanolja_02_05.png" alt="CM 요금 관리 화면" loading="lazy" decoding="async"></figure>
+          </div>
+        </div>
+        <div class="hm-ds-media-carousel__status hst-ds-gallery__status" data-hst-gallery-status>01 / 05</div>
+        <button class="hm-ds-gallery-nav hm-ds-gallery-nav--prev hst-ds-gallery__nav" type="button" aria-label="이전 제품 화면"></button>
+        <button class="hm-ds-gallery-nav hm-ds-gallery-nav--next hst-ds-gallery__nav" type="button" aria-label="다음 제품 화면"></button>
       </div>
     </div>
 
@@ -508,6 +547,7 @@
     const slides = [...gallery.querySelectorAll('[data-hst-slide]')];
     const prev = gallery.querySelector('.hm-ds-gallery-nav--prev');
     const next = gallery.querySelector('.hm-ds-gallery-nav--next');
+    const status = gallery.querySelector('[data-hst-gallery-status]');
     if (!track || slides.length < 2) return;
 
     const firstClone = slides[0].cloneNode(true);
@@ -525,8 +565,14 @@
       track.style.transform = 'translate3d(' + (-position * 100) + '%,0,0)';
     };
 
+    const updateStatus = () => {
+      if (!status) return;
+      status.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    };
+
     const syncA11y = () => {
       slides.forEach((slide, i) => slide.setAttribute('aria-hidden', i === index ? 'false' : 'true'));
+      updateStatus();
     };
 
     const render = () => {
@@ -547,7 +593,6 @@
     const loopForward = () => {
       if (looping) return;
       looping = true;
-      syncA11y();
       setTransform(slides.length);
       const settle = () => {
         track.classList.add('is-no-transition');
