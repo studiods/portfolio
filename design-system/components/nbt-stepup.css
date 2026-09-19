@@ -268,39 +268,6 @@ html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .step
 html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>p{
   color:rgba(255,255,255,.80)!important;
 }
-@container (max-width:190px){
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow article h4{font-size:clamp(16px,11cqi,22px)!important}
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow article p{font-size:clamp(10px,6cqi,12px)!important}
-}
-
-/* 04.2 — AIMMO System 02.2 graph source; StepUp labels/values only. */
-html body.nbt-stepup-page #screens .stepup-context-insights{display:grid!important;grid-template-columns:1fr!important;gap:72px!important;width:100%!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight{min-width:0!important;padding-top:24px!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight__label{display:block!important;margin:0!important;color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-size:var(--hm-type-note)!important;font-weight:400!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight h4{margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:var(--hm-type-group)!important;font-weight:100!important;font-variation-settings:"wght" 100!important;line-height:1.3!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight__copy{margin:4px 0 0!important;max-width:var(--hm-description-max-chars)!important;color:var(--hm-description-color)!important;font-family:var(--hm-font-ko)!important;font-size:var(--hm-type-body)!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.58!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars{width:100%!important;min-width:0!important;margin:32px 0 0!important;padding:0!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__rows{display:grid!important;width:100%!important;gap:18px!important;margin:0!important;padding:0!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row{display:grid!important;grid-template-columns:110px minmax(0,1fr) 62px!important;gap:16px!important;align-items:center!important;width:100%!important;min-width:0!important;min-height:28px!important;margin:0!important;padding:0!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__label{margin:0!important;color:rgba(255,255,255,.50)!important;font:300 16px/1.3 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;white-space:normal!important;text-align:left!important;word-break:keep-all!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__track{position:relative!important;width:100%!important;height:10px!important;min-width:0!important;overflow:hidden!important;background:rgba(255,255,255,.07)!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__fill{display:block!important;width:calc(var(--value,0) * 1%)!important;height:100%!important;min-width:2px!important;background:var(--bar-color,var(--hm-chart-02,#007DE3))!important;transform:scaleX(0);transform-origin:left center;transition:transform .72s cubic-bezier(.22,1,.36,1);will-change:transform}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__value{margin:0!important;color:rgba(255,255,255,.84)!important;font:300 16px/1.3 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important;text-align:right!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__source{display:block!important;width:100%!important;margin:48px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__fill{transform:scaleX(1)}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
-
-/* 05.2 — Trenbe UT horizontal bar source. */
-html body.nbt-stepup-page #habit .trenbe-luxury-time-table{width:100%!important;margin-top:32px!important;border-top:1px solid var(--hm-line-faint)!important}
-html body.nbt-stepup-page #habit .trenbe-luxury-time-row{display:grid!important;grid-template-columns:88px minmax(0,1fr) 48px!important;gap:14px!important;align-items:center!important;min-height:42px!important;border-bottom:1px solid var(--hm-line-faint)!important}
-html body.nbt-stepup-page #habit .trenbe-luxury-time-row>span:first-child{color:rgba(255,255,255,.72)!important;font:300 12px/1.2 var(--hm-font-ko)!important;white-space:nowrap!important}
-html body.nbt-stepup-page #habit .trenbe-luxury-time-row>i{display:block!important;height:8px!important;overflow:hidden!important;border-radius:999px!important;background:rgba(255,255,255,.10)!important}
-html body.nbt-stepup-page #habit .trenbe-luxury-time-row>i::before{content:""!important;display:block!important;width:calc(var(--value) * 1%)!important;height:100%!important;border-radius:inherit!important;background:var(--hm-blue)!important}
-html body.nbt-stepup-page #habit .trenbe-luxury-time-row>b{color:#fff!important;font:300 12px/1 var(--hm-font-en)!important;text-align:right!important;font-variant-numeric:tabular-nums!important}
-html body.nbt-stepup-page #habit .chart-note{margin:24px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;font:300 14px/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important}
 
 /* 05.3 — Trenbe UT / AIMMO 02.2 segmented ratio source; values changed to 20 / 80. */
 html body.nbt-stepup-page #habit .aimmo-environment-ratio{display:block!important;width:100%!important;margin:40px 0 0!important}
@@ -314,10 +281,6 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row span{displ
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row b{display:block!important;margin:6px 0 0!important;color:#fff!important;font:300 30px/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;text-align:left!important;font-variant-numeric:tabular-nums!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!important;width:100%!important;margin:32px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
 
-@media(max-width:1180px){
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:16px!important}
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{display:none!important}
-}
 @media(max-width:780px){
   html body.nbt-stepup-page #habit-model .stepup-habit-flow{grid-template-columns:1fr!important;gap:16px!important}
   html body.nbt-stepup-page #habit-model .stepup-habit-flow article{width:min(320px,88vw)!important;margin-inline:auto!important}
@@ -337,4 +300,320 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!
   html body.nbt-stepup-page #habit-model .stepup-habit-flow article,
   html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{transition:none!important}
   html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__fill{transform:scaleX(1)!important;transition:none!important}
+}
+
+
+/* ==========================================================================
+   STEPUP 2026-09-19 v3 — narrative/source-component corrections
+   ========================================================================== */
+
+/* 01.2 — exact TRENBE 03.3 motion/circle grammar reduced to two nodes.
+   Both begin as white outline circles; only the right node resolves to blue. */
+html body.nbt-stepup-page #reframe .stepup-reframe-flow{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr)!important;
+  align-items:center!important;
+  width:min(760px,100%)!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article{
+  --aimmo-flow-duration:1300ms;
+  --aimmo-flow-delay:0ms;
+  display:flex!important;
+  aspect-ratio:1!important;
+  min-width:0!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:24px!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  text-align:center!important;
+  container-type:inline-size!important;
+  transition:
+    border-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay),
+    background-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article:nth-of-type(2){--aimmo-flow-delay:650ms}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>span{
+  color:#fff!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
+  margin:13px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.22!important;
+  word-break:keep-all!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
+  margin:9px 0 0!important;
+  max-width:17ch!important;
+  color:rgba(255,255,255,.60)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+  word-break:keep-all!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
+  --aimmo-arrow-delay:0ms;
+  place-self:center!important;
+  margin:0!important;
+  color:#fff!important;
+  border-color:currentColor!important;
+  opacity:.30!important;
+  transition:
+    color 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay),
+    opacity 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay)!important;
+}
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow>.hm-ds-gallery-arrow{
+  color:var(--hm-blue)!important;
+  opacity:1!important;
+}
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2){
+  border-color:var(--hm-blue)!important;
+  background-color:var(--hm-blue)!important;
+}
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>span,
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>h4{
+  color:#fff!important;
+}
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>p{
+  color:rgba(255,255,255,.80)!important;
+}
+
+/* 02.2 — AIMMO System 03.2 application gallery source.
+   Images are transparent dummies until final StepUp assets are uploaded. */
+html body.nbt-stepup-page #strategy .stepup-application-gallery{
+  --hm-ds-media-gallery-gap:0px!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:0!important;
+  column-gap:0!important;
+  row-gap:0!important;
+  width:100%!important;
+}
+html body.nbt-stepup-page #strategy .stepup-application-gallery .aimmo-application-gallery__item{
+  position:relative!important;
+  width:100%!important;
+  max-width:none!important;
+  aspect-ratio:1/1!important;
+  background:#0a0a0a!important;
+}
+html body.nbt-stepup-page #strategy .stepup-application-gallery .aimmo-application-gallery__item::before{
+  content:"IMAGE PLACEHOLDER";
+  position:absolute;
+  z-index:0;
+  top:50%;
+  left:50%;
+  color:rgba(255,255,255,.18);
+  font:300 11px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+  transform:translate(-50%,-50%);
+}
+html body.nbt-stepup-page #strategy .stepup-application-gallery .aimmo-application-gallery__item>img{
+  position:relative!important;
+  z-index:0!important;
+}
+
+/* 03.1 — local-only typography. No container/font scaling. */
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
+  container-type:normal!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
+  margin:13px 0 0!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
+  line-height:1.22!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>p{
+  margin:9px 0 0!important;
+  max-width:17ch!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{
+  place-self:center!important;
+  width:11px!important;
+  height:11px!important;
+  margin:0!important;
+}
+
+/* 04.2 — exact TRENBE 04.1 card grammar, with 64px numeric impact added. */
+html body.nbt-stepup-page #screens .stepup-impact-signals{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px!important;
+  width:100%!important;
+  margin-left:0!important;
+  padding-left:0!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article{
+  position:relative!important;
+  display:block!important;
+  grid-column:auto!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:340px!important;
+  margin:0!important;
+  padding:26px 0 30px!important;
+  box-sizing:border-box!important;
+  border:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  background:transparent!important;
+  overflow:hidden!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article>span{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:var(--hm-text-tertiary)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article>.stepup-impact-number{
+  display:flex!important;
+  align-items:flex-end!important;
+  gap:3px!important;
+  margin:28px 0 0!important;
+  padding:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:64px!important;
+  font-weight:300!important;
+  line-height:.92!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article>.stepup-impact-number small{
+  margin:0 0 5px!important;
+  color:inherit!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:20px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article h4{
+  margin:26px 0 0!important;
+  padding:0!important;
+  max-width:25ch!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article p{
+  margin:12px 0 0!important;
+  padding-right:0!important;
+  max-width:38ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.52!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #screens .stepup-impact-signals>article .hm-ds-icon{
+  position:static!important;
+  display:block!important;
+  width:40px!important;
+  height:40px!important;
+  margin:80px 0 0 auto!important;
+  color:var(--hm-blue)!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1px!important;
+  opacity:1!important;
+  transform:none!important;
+}
+
+/* 05.2 — same metric-card visual family as 02.1, two cards only. */
+html body.nbt-stepup-page #habit .stepup-behavior-grid--pair{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:28px!important;
+}
+html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-card{
+  min-height:340px!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #habit .stepup-behavior-grid--pair :is(.behavior-value,h4,.behavior-note){
+  text-align:left!important;
+}
+
+/* 07.1 — 2×2 result grid, all card text left aligned. */
+html body.nbt-stepup-page #outcome .stepup-outcome-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:28px!important;
+}
+html body.nbt-stepup-page #outcome .stepup-outcome-grid .behavior-card{
+  min-height:340px!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.behavior-note){
+  text-align:left!important;
+}
+
+@media(max-width:780px){
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow{
+    grid-template-columns:1fr!important;
+    gap:20px!important;
+    width:100%!important;
+  }
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{display:none!important}
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow article{
+    width:min(320px,88vw)!important;
+    aspect-ratio:auto!important;
+    min-height:250px!important;
+    margin-inline:auto!important;
+  }
+  html body.nbt-stepup-page #strategy .stepup-application-gallery{
+    grid-template-columns:1fr!important;
+    gap:0!important;
+  }
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{display:none!important}
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
+    width:min(320px,88vw)!important;
+    margin-inline:auto!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-impact-signals,
+  html body.nbt-stepup-page #habit .stepup-behavior-grid--pair,
+  html body.nbt-stepup-page #outcome .stepup-outcome-grid{
+    grid-template-columns:1fr!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-impact-signals>article{min-height:300px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow article,
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{transition:none!important}
 }
