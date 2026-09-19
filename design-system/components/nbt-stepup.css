@@ -842,7 +842,7 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
 html body.nbt-stepup-page #screens .stepup-screens-carousel{
   --hm-ds-media-carousel-ratio:auto!important;
   width:100%!important;
-  height:980px!important;
+  height:940px!important;
   margin-top:80px!important;
   background:#000!important;
 }
@@ -859,7 +859,7 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-row{
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-phones{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:24px!important;
+  gap:36px!important;
   width:85%!important;
   min-width:0!important;
   margin:0 auto!important;
@@ -869,7 +869,7 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   align-items:start!important;
-  gap:24px!important;
+  gap:36px!important;
   width:85%!important;
   min-width:0!important;
   margin:24px auto 0!important;
@@ -963,8 +963,9 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   line-height:1.5!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-media-carousel__status{
-  top:24px!important;
+  top:auto!important;
   right:24px!important;
+  bottom:24px!important;
 }
 
 /* 03.2 — impact numbers only. */
@@ -1002,7 +1003,7 @@ html body.nbt-stepup-page .hm-project-reflection__copy{
   }
   html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-phones{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:24px!important;
+    gap:36px!important;
   }
   html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame{
     border-radius:24px!important;
@@ -1019,7 +1020,13 @@ html body.nbt-stepup-page .hm-project-reflection__copy{
 
 /* 03.1 — adaptive carousel arrows: white over dark pixels, black over light pixels.
    White strokes with difference blending react to the actual rendered background, not a fixed theme token. */
+html body.nbt-stepup-page #screens .stepup-screens-carousel{
+  container-type:inline-size!important;
+}
 html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-gallery-nav{
+  top:0!important;
+  bottom:auto!important;
+  height:calc(75.5556cqw - 32px)!important;
   background:transparent!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-gallery-nav::before{
