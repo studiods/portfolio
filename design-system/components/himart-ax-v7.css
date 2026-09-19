@@ -170,6 +170,67 @@ html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-i
 html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-item>img.is-missing{
   opacity:0!important;
 }
+
+/* Per-image promotional copy safe area.
+   12.5% padding on all sides equals 1/8 of each image's inline width. */
+html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-copy{
+  position:absolute!important;
+  z-index:3!important;
+  inset:0!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  height:100%!important;
+  padding:12.5%!important;
+  pointer-events:none!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-copy>strong{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:#000!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:24px!important;
+  font-weight:700!important;
+  font-variation-settings:"wght" 700!important;
+  line-height:1.25!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-copy>span{
+  display:block!important;
+  margin:24px 0 0!important;
+  padding:0!important;
+  color:rgba(0,0,0,.60)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:500!important;
+  font-variation-settings:"wght" 500!important;
+  line-height:1.45!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-page--light-copy .ax-banner-output-copy>strong{
+  color:#fff!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-page--light-copy .ax-banner-output-copy>span{
+  color:rgba(255,255,255,.60)!important;
+}
+
+/* Keep shared arrows and numeric page status adaptive over light/dark banner artwork. */
+html body.himart-ax-page #journey .ax-banner-output-carousel .hm-ds-gallery-nav::before,
+html body.himart-ax-page #journey .ax-banner-output-carousel .hm-ds-media-carousel__status{
+  color:#fff!important;
+  mix-blend-mode:difference!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-carousel .hm-ds-gallery-nav::before{
+  border-top-color:#fff!important;
+  border-right-color:#fff!important;
+}
+
 @media(max-width:780px){
   html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-page{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
