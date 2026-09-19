@@ -15,6 +15,36 @@
   <link rel="stylesheet" href="./home-test-fixes.css?v=20">
   <link rel="stylesheet" href="./home-dark-theme.css?v=2">
   <link rel="stylesheet" href="./design-system/navigation.css?v=20260907-4">
+  <style id="impact-leading-lock">
+    /* Hard lock: match FROM PRINCIPLES TO IMPACT to DESIGN PRINCIPLES leading. */
+    html body.home-test #impact .impact-statement{
+      line-height:.99!important;
+    }
+    html body.home-test #impact .impact-statement > .impact-line{
+      display:block!important;
+      height:.99em!important;
+      min-height:.99em!important;
+      margin:0!important;
+      padding:0!important;
+      line-height:.99!important;
+      overflow:visible!important;
+    }
+    html body.home-test #impact .impact-statement > .impact-line > .fill-char,
+    html body.home-test #impact .impact-statement .live-scramble-glyph{
+      line-height:inherit!important;
+      vertical-align:baseline!important;
+    }
+    @media(max-width:850px){
+      html body.home-test #impact .impact-statement{
+        line-height:1.023!important;
+      }
+      html body.home-test #impact .impact-statement > .impact-line{
+        height:1.023em!important;
+        min-height:1.023em!important;
+        line-height:1.023!important;
+      }
+    }
+  </style>
 </head>
 <body class="home-test home-dark">
 <nav class="top">
