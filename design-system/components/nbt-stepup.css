@@ -33,7 +33,7 @@ html body.nbt-stepup-page #live-main .hm-meta>div{display:flex!important;min-wid
 html body.nbt-stepup-page #live-main .hm-meta span,html body.nbt-stepup-page #live-main .hm-meta b{display:block!important;margin:0!important;font-family:var(--hm-font-en)!important;font-size:12px!important;line-height:1.5!important;letter-spacing:var(--hm-track-base)!important}.hm-meta span{color:rgba(255,255,255,.5)!important;font-weight:400!important}.hm-meta b{margin-top:2px!important;color:#fff!important;font-weight:400!important;white-space:nowrap!important}
 
 /* Editorial two-column blocks. Typography is inherited from canonical group/body rules. */
-.stepup-content{width:100%}.stepup-question-grid,.stepup-experience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;width:100%}.stepup-question-grid article,.stepup-experience-grid article{padding-top:24px;border-top:1px solid var(--hm-line-default)}.stepup-question-grid .shift{border-top-color:var(--hm-blue)}
+.stepup-content{width:100%}.stepup-question-grid,.stepup-experience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px;width:100%}.stepup-question-grid article,.stepup-experience-grid article{padding-top:24px;border-top:1px solid var(--hm-line-default)}.stepup-question-grid .shift{border-top-color:var(--hm-line-default)}
 .stepup-label{display:block;margin:0 0 18px;color:var(--hm-text-tertiary)!important}.stepup-question-grid h4,.stepup-experience-grid h4{margin:0!important}.stepup-question-grid p,.stepup-experience-grid p{margin:20px 0 0!important}
 
 /* HIMART NUMBER STYLE — same behavior-card structure and sizing, Stepup values only. */
@@ -41,15 +41,6 @@ html body.nbt-stepup-page #live-main .hm-meta span,html body.nbt-stepup-page #li
 .nbt-stepup-page .behavior-card{min-height:370px!important;padding:24px 20px 22px!important;border-top:1px solid rgba(255,255,255,.22)!important;background:transparent!important;display:grid!important;grid-template-rows:auto minmax(96px,auto) auto!important;align-content:start!important}
 .nbt-stepup-page .behavior-value{display:flex!important;align-items:flex-end!important;color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-size:84px!important;font-weight:300!important;line-height:.88!important;letter-spacing:var(--hm-track-data-number)!important;font-variant-numeric:tabular-nums!important}.nbt-stepup-page .behavior-value b{font:inherit!important;font-weight:300!important}.nbt-stepup-page .behavior-value span{font-size:.38em!important;line-height:1!important;margin-left:3px!important}
 .nbt-stepup-page .behavior-card h4{margin:22px 0 0!important;min-height:96px!important}.nbt-stepup-page .behavior-note{margin:40px 0 0!important;padding:0!important;max-width:100%!important;align-self:start!important}
-
-/* HIMART horizontal data-series graph — copied from the commerce-journey data pattern. */
-.nbt-stepup-page .hm-month-series{display:grid;gap:10px;width:100%}.nbt-stepup-page .hm-series-row{display:grid;grid-template-columns:110px minmax(0,1fr) 100px;gap:12px;align-items:center;min-width:0}.nbt-stepup-page .hm-series-row>span{font:400 11px/1.2 var(--hm-font-en);color:var(--hm-text-body);letter-spacing:var(--hm-track-note)}.nbt-stepup-page .hm-series-track{position:relative;height:8px;background:var(--hm-line-faint);overflow:hidden;border-radius:999px}.nbt-stepup-page .hm-series-track i{position:absolute;inset:0 auto 0 0;width:var(--bar);background:currentColor;border-radius:999px;opacity:.8}.nbt-stepup-page .hm-series-row b{font:400 13px/1.2 var(--hm-font-en);text-align:right;letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums}.nbt-stepup-page .hm-series-legend{display:flex;gap:18px;margin:0 0 18px 122px;font:400 10px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note);color:var(--hm-text-body)}.nbt-stepup-page .hm-series-legend i{display:inline-block;width:12px;height:1px;margin-right:6px;vertical-align:middle;background:currentColor}.nbt-stepup-page .hm-data-total{display:flex;justify-content:space-between;gap:20px;align-items:baseline;margin-top:24px;padding-top:18px;border-top:1px solid var(--hm-line-faint)}.nbt-stepup-page .hm-data-total span{font:400 10px/1.2 var(--hm-font-en);color:var(--hm-text-body);letter-spacing:var(--hm-track-note)}.nbt-stepup-page .hm-data-total strong{font:300 clamp(30px,3vw,48px)/1 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums}
-
-/* HIMART donut / legend pattern. */
-.nbt-stepup-page .pie-layout{display:grid!important;grid-template-columns:360px 1fr!important;gap:64px!important;align-items:center!important;width:100%!important}.nbt-stepup-page .pie{width:360px!important;aspect-ratio:1!important;border-radius:50%!important;background:conic-gradient(var(--hm-blue) 0 20%,rgba(255,255,255,.12) 20% 100%)!important;position:relative!important}.nbt-stepup-page .pie::after{content:""!important;position:absolute!important;inset:29%!important;border-radius:50%!important;background:#000!important}.nbt-stepup-page .pie-center{position:absolute!important;inset:0!important;z-index:2!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;color:#fff!important}.nbt-stepup-page .pie-center strong{font:300 61px/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;font-variant-numeric:tabular-nums}.nbt-stepup-page .pie-center small{margin-top:12px!important;color:var(--hm-text-body)!important;font:300 11px/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important}.nbt-stepup-page .legend{display:grid!important;gap:16px!important}.nbt-stepup-page .legend-row{display:grid!important;grid-template-columns:12px 1fr auto!important;gap:12px!important;align-items:center!important;padding-bottom:12px!important;border-bottom:1px solid rgba(255,255,255,.07)!important;font:300 16px/1.45 var(--hm-font-ko)!important;color:rgba(255,255,255,.7)!important;letter-spacing:var(--hm-track-body)!important}.nbt-stepup-page .legend-row i{width:9px!important;height:9px!important;border-radius:50%!important;background:var(--c)!important}.nbt-stepup-page .legend-row b{font:300 19px/1 var(--hm-font-en)!important;color:#fff!important;letter-spacing:var(--hm-track-data-number)!important;font-variant-numeric:tabular-nums}.nbt-stepup-page .chart-note{margin:24px 0 0!important;color:var(--hm-text-body)!important;font:300 14px/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;max-width:58ch!important}
-
-/* Habit loop */
-.stepup-loop{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));align-items:center;width:100%;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-default);padding:32px 0}.stepup-loop article{text-align:center}.stepup-loop article span{display:block;color:var(--hm-blue);font:400 11px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note)}.stepup-loop article b{display:block;margin-top:14px;color:#fff;font:300 18px/1.1 var(--hm-font-en);letter-spacing:var(--hm-track-base)}.stepup-loop article p{margin:10px 0 0!important;max-width:none!important;color:var(--hm-text-body)!important;font-size:14px!important}.stepup-loop>i{text-align:center;color:var(--hm-text-tertiary);font-style:normal;font-size:18px}
 
 /* Six-step process */
 .stepup-process{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;border-top:1px solid var(--hm-line-default);border-bottom:1px solid var(--hm-line-default)}.stepup-process article{min-height:220px;padding:24px 22px;border-right:1px solid var(--hm-line-faint)}.stepup-process article:last-child{border-right:0}.stepup-process article>span{display:block;color:var(--hm-blue);font:400 11px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note)}.stepup-process h4{margin:36px 0 0!important}.stepup-process p{margin:20px 0 0!important;font-size:14px!important}
@@ -59,78 +50,12 @@ html body.nbt-stepup-page #live-main .hm-meta span,html body.nbt-stepup-page #li
 .nbt-stepup-page .hm-footer{position:relative!important;z-index:2!important;padding:80px 0 40px!important;background:#000!important}.stepup-footer-inner{display:flex!important;justify-content:space-between!important;gap:40px!important;padding-top:16px!important;border-top:1px solid var(--hm-line-default)!important;color:var(--hm-text-secondary)!important;font:400 12px/1.5 var(--hm-font-en)!important;letter-spacing:var(--hm-track-base)!important}.stepup-footer-inner>div{display:flex!important;gap:20px!important}.stepup-footer-inner span{color:var(--hm-text-tertiary)!important}
 
 @media(max-width:980px){.stepup-hero-phones{right:-14vw;opacity:.52;transform:translateY(-48%) rotate(-4deg) scale(.82)}.nbt-stepup-page .narrative-signals .behavior-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.stepup-process{grid-template-columns:repeat(3,minmax(0,1fr))}.stepup-process article:nth-child(3){border-right:0}.stepup-process article:nth-child(-n+3){border-bottom:1px solid var(--hm-line-faint)}}
-@media(max-width:780px){.stepup-hero-phones{right:-260px;opacity:.35;transform:translateY(-50%) scale(.7)}html body.nbt-stepup-page #live-main .hm-hero-bottom{bottom:28px!important}html body.nbt-stepup-page #live-main .hm-meta{grid-template-columns:1fr 1fr!important;height:auto!important}.hm-meta>div{height:auto!important;min-height:62px!important;padding:10px 10px 10px 0!important}.hm-meta>div:nth-child(2n){padding-left:10px!important}.hm-meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)}.hm-meta b{white-space:normal!important;font-size:11px!important}.stepup-question-grid,.stepup-experience-grid{grid-template-columns:1fr;gap:48px}.nbt-stepup-page .narrative-signals .behavior-grid{grid-template-columns:1fr!important;gap:0!important}.nbt-stepup-page .behavior-card{min-height:300px!important}.nbt-stepup-page .behavior-value{font-size:68px!important}.nbt-stepup-page .pie-layout{grid-template-columns:1fr!important;gap:40px!important}.nbt-stepup-page .pie{width:min(290px,82vw)!important;margin:auto!important}.nbt-stepup-page .hm-series-row{grid-template-columns:74px minmax(0,1fr) 72px;gap:8px}.nbt-stepup-page .hm-series-legend{margin-left:82px}.stepup-loop{grid-template-columns:1fr;gap:0;padding:0}.stepup-loop article{padding:22px 0;border-bottom:1px solid var(--hm-line-faint)}.stepup-loop>i{display:none}.stepup-process{grid-template-columns:1fr}.stepup-process article{min-height:0;border-right:0;border-bottom:1px solid var(--hm-line-faint)}.stepup-process article:last-child{border-bottom:0}.stepup-final-statement{margin-top:100px}.stepup-final-statement p{font-size:clamp(28px,7.5vw,32px)!important}.stepup-footer-inner{display:grid!important;gap:24px!important}.stepup-footer-inner>div{display:grid!important;gap:4px!important}}
-@media(prefers-reduced-motion:reduce){.hm-series-track i{transition:none!important}}
+@media(max-width:780px){.stepup-hero-phones{right:-260px;opacity:.35;transform:translateY(-50%) scale(.7)}html body.nbt-stepup-page #live-main .hm-hero-bottom{bottom:28px!important}html body.nbt-stepup-page #live-main .hm-meta{grid-template-columns:1fr 1fr!important;height:auto!important}.hm-meta>div{height:auto!important;min-height:62px!important;padding:10px 10px 10px 0!important}.hm-meta>div:nth-child(2n){padding-left:10px!important}.hm-meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)}.hm-meta b{white-space:normal!important;font-size:11px!important}.stepup-question-grid,.stepup-experience-grid{grid-template-columns:1fr;gap:48px}.nbt-stepup-page .narrative-signals .behavior-grid{grid-template-columns:1fr!important;gap:0!important}.nbt-stepup-page .behavior-card{min-height:300px!important}.nbt-stepup-page .behavior-value{font-size:68px!important}.stepup-process{grid-template-columns:1fr}.stepup-process article{min-height:0;border-right:0;border-bottom:1px solid var(--hm-line-faint)}.stepup-process article:last-child{border-bottom:0}.stepup-final-statement{margin-top:100px}.stepup-final-statement p{font-size:clamp(28px,7.5vw,32px)!important}.stepup-footer-inner{display:grid!important;gap:24px!important}.stepup-footer-inner>div{display:grid!important;gap:4px!important}}
+
 
 
 /* STEPUP 2026-09 — composition only. Typography, section rhythm and colors inherit the portfolio design-system tokens. */
 html body.nbt-stepup-page #live-main .stepup-question-grid .shift{border-top-color:var(--hm-line-default)!important}
-
-/* AIMMO 01.2 circle-flow structure, retitled for the StepUp habit loop. */
-html body.nbt-stepup-page #screens .stepup-business-flow{
-  display:grid!important;
-  grid-template-columns:repeat(5,minmax(0,1fr))!important;
-  align-items:center!important;
-  gap:0!important;
-  width:100%!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow article{
-  position:relative!important;
-  display:flex!important;
-  aspect-ratio:1!important;
-  min-width:0!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  padding:clamp(18px,2vw,30px)!important;
-  border:1px solid rgba(255,255,255,.30)!important;
-  border-radius:50%!important;
-  background:transparent!important;
-  text-align:center!important;
-  transition:border-color 1.3s cubic-bezier(.22,.61,.36,1),background-color 1.3s cubic-bezier(.22,.61,.36,1)!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow article span{
-  color:var(--hm-blue)!important;
-  font:400 var(--hm-type-note)/1 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow article h4{
-  margin:13px 0 0!important;
-  color:#fff!important;
-  font:100 clamp(16px,1.55vw,22px)/1.22 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 100!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow article p{
-  margin:9px 0 0!important;
-  max-width:15ch!important;
-  color:var(--hm-text-body)!important;
-  font:300 clamp(10px,.9vw,13px)/1.4 var(--hm-font-ko)!important;
-  word-break:keep-all!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow > i{
-  position:relative!important;
-  width:0!important;
-  z-index:1!important;
-  color:transparent!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow > i::after{
-  content:"";
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:clamp(18px,2vw,32px);
-  border-top:1px solid rgba(255,255,255,.30);
-  transform:translate(-50%,-50%);
-}
-html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5){
-  border-color:var(--hm-blue)!important;
-  background:var(--hm-blue)!important;
-}
-html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5) span,
-html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5) p{color:#fff!important}
-html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5){animation:stepup-circle-focus 1.3s cubic-bezier(.22,.61,.36,1) both}
-html body.nbt-stepup-page #screens .hm-subsection:not(.is-visible) .stepup-business-flow article:nth-of-type(5){animation-play-state:paused}
-@keyframes stepup-circle-focus{from{background:transparent;border-color:rgba(255,255,255,.30)}to{background:var(--hm-blue);border-color:var(--hm-blue)}}
 
 /* Himart lower mockup module, now populated with the original StepUp product screens. */
 html body.nbt-stepup-page #screens .stepup-phone-gallery{
@@ -181,89 +106,23 @@ html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-meta p{
   font-size:12px!important;
 }
 
-/* AIMMO 02.2 reference-bar source, with StepUp values only. */
-html body.nbt-stepup-page #screens .stepup-context-insights{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:48px!important;
-  width:100%!important;
-}
-html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight{
-  padding-top:24px!important;
-  border-top:1px solid var(--hm-line-default)!important;
-}
-html body.nbt-stepup-page #screens .aimmo-context-insight__label{
-  display:block!important;
-  color:var(--hm-blue)!important;
-  font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.nbt-stepup-page #screens .aimmo-context-insight h4{margin:28px 0 0!important}
-html body.nbt-stepup-page #screens .aimmo-context-insight__copy{
-  margin:14px 0 28px!important;
-  max-width:38ch!important;
-  color:var(--hm-text-body)!important;
-}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__rows{display:grid!important;gap:18px!important}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__row{
-  display:grid!important;
-  grid-template-columns:110px minmax(0,1fr) 68px!important;
-  gap:16px!important;
-  align-items:center!important;
-  min-height:28px!important;
-}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__label,
-html body.nbt-stepup-page #screens .aimmo-reference-bars__value{
-  font:300 14px/1.3 var(--hm-font-ko)!important;
-}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__value{
-  text-align:right!important;
-  color:#fff!important;
-  font-family:var(--hm-font-en)!important;
-  font-variant-numeric:tabular-nums!important;
-}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__track{
-  position:relative!important;
-  height:10px!important;
-  overflow:hidden!important;
-  background:var(--hm-line-faint)!important;
-}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__fill{
-  position:absolute!important;
-  inset:0 auto 0 0!important;
-  width:calc(var(--value) * 1%)!important;
-  background:var(--hm-blue)!important;
-  transform:scaleX(0);
-  transform-origin:left center;
-  transition:transform .72s cubic-bezier(.22,1,.36,1);
-}
-html body.nbt-stepup-page #screens .is-bars-focused .aimmo-reference-bars__fill{transform:scaleX(1)}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
-html body.nbt-stepup-page #screens .aimmo-reference-bars__source{
-  display:block!important;
-  margin-top:18px!important;
-  color:var(--hm-text-tertiary)!important;
-  font:400 10px/1.35 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-
-/* 05.1 working loop: compact 2 × 2 system grid. */
-html body.nbt-stepup-page #iteration .stepup-process--2x2{
+/* Shared 2 × 2 product-cycle grid. */
+html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:0!important;
   border-top:1px solid var(--hm-line-default)!important;
   border-bottom:0!important;
 }
-html body.nbt-stepup-page #iteration .stepup-process--2x2 article{
+html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article{
   min-height:250px!important;
   padding:28px 0 32px!important;
   border-right:0!important;
   border-bottom:1px solid var(--hm-line-default)!important;
 }
-html body.nbt-stepup-page #iteration .stepup-process--2x2 article:nth-child(odd){padding-right:28px!important}
-html body.nbt-stepup-page #iteration .stepup-process--2x2 article:nth-child(even){padding-left:28px!important;border-left:1px solid var(--hm-line-faint)!important}
-html body.nbt-stepup-page #iteration .stepup-process--2x2 h4{margin-top:34px!important}
+html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nth-child(odd){padding-right:28px!important}
+html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nth-child(even){padding-left:28px!important;border-left:1px solid var(--hm-line-faint)!important}
+html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 h4{margin-top:34px!important}
 
 html body.nbt-stepup-page .hm-project-reflection{
   width:min(var(--hm-content-max,1280px),calc(100% - 2 * var(--hm-page-padding,64px)))!important;
@@ -291,12 +150,191 @@ html body.nbt-stepup-page .hm-project-reflection__copy strong{color:var(--hm-blu
   html body.nbt-stepup-page #screens .stepup-context-insights{grid-template-columns:1fr!important}
 }
 @media(max-width:780px){
-  html body.nbt-stepup-page #screens .stepup-business-flow{grid-template-columns:1fr!important;gap:0!important}
-  html body.nbt-stepup-page #screens .stepup-business-flow article{width:min(290px,80vw)!important;margin:0 auto!important}
-  html body.nbt-stepup-page #screens .stepup-business-flow > i{display:block!important;width:100%!important;height:28px!important}
-  html body.nbt-stepup-page #screens .stepup-business-flow > i::after{width:1px!important;height:28px!important;border-top:0!important;border-left:1px solid rgba(255,255,255,.30)!important}
+  
+  
+  
+  
   html body.nbt-stepup-page #screens .stepup-phone-gallery{gap:28px 16px!important;margin-top:56px!important}
-  html body.nbt-stepup-page #screens .aimmo-reference-bars__row{grid-template-columns:80px minmax(0,1fr) 58px!important;gap:10px!important}
-  html body.nbt-stepup-page #iteration .stepup-process--2x2{grid-template-columns:1fr!important}
-  html body.nbt-stepup-page #iteration .stepup-process--2x2 article:nth-child(n){padding:24px 0!important;border-left:0!important}
+  
+  html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2{grid-template-columns:1fr!important}
+  html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nth-child(n){padding:24px 0!important;border-left:0!important}
+}
+
+
+/* ==========================================================================
+   STEPUP — DESIGN-SYSTEM SOURCE COMPONENTS
+   Circle: AIMMO Graphic 01.2 source (accent red -> blue, 5 nodes)
+   Bar/ratio: Trenbe UT source
+   Reward bars: AIMMO System 02.2 source
+   ========================================================================== */
+
+/* 03.1 — AIMMO Graphic 01.2 circle flow, same motion; only node count/blue accent changed. */
+html body.nbt-stepup-page #habit-model .stepup-habit-flow{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr)!important;
+  align-items:center!important;
+  width:100%!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
+  --aimmo-flow-duration:1300ms;
+  --aimmo-flow-delay:0ms;
+  display:flex!important;
+  aspect-ratio:1!important;
+  min-width:0!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:24px!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  text-align:center!important;
+  container-type:inline-size!important;
+  transition:
+    border-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay),
+    background-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(2){--aimmo-flow-delay:650ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(3){--aimmo-flow-delay:1300ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(4){--aimmo-flow-delay:1950ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(5){--aimmo-flow-delay:2600ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>span,
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
+  color:#fff!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>span{
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
+  margin:13px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:var(--hm-type-group)!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.22!important;
+  word-break:keep-all!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow article>p{
+  margin:9px 0 0!important;
+  max-width:17ch!important;
+  color:rgba(255,255,255,.60)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.4!important;
+  word-break:keep-all!important;
+  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{
+  --aimmo-arrow-delay:0ms;
+  align-self:center!important;
+  justify-self:center!important;
+  color:#fff!important;
+  border-color:currentColor!important;
+  opacity:.30!important;
+  transition:
+    color 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay),
+    opacity 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay)!important;
+}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(1){--aimmo-arrow-delay:0ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(2){--aimmo-arrow-delay:650ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(3){--aimmo-arrow-delay:1300ms}
+html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(4){--aimmo-arrow-delay:1950ms}
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow>.hm-ds-gallery-arrow{
+  color:var(--hm-blue)!important;
+  opacity:1!important;
+}
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4){
+  border-color:var(--hm-blue)!important;
+}
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4)>span,
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4)>h4{
+  color:var(--hm-blue)!important;
+}
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5){
+  border-color:var(--hm-blue)!important;
+  background-color:var(--hm-blue)!important;
+}
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>span,
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>h4{
+  color:#fff!important;
+}
+html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>p{
+  color:rgba(255,255,255,.80)!important;
+}
+@container (max-width:190px){
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow article h4{font-size:clamp(16px,11cqi,22px)!important}
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow article p{font-size:clamp(10px,6cqi,12px)!important}
+}
+
+/* 04.2 — AIMMO System 02.2 graph source; StepUp labels/values only. */
+html body.nbt-stepup-page #screens .stepup-context-insights{display:grid!important;grid-template-columns:1fr!important;gap:72px!important;width:100%!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight{min-width:0!important;padding-top:24px!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight__label{display:block!important;margin:0!important;color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-size:var(--hm-type-note)!important;font-weight:400!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight h4{margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;font-size:var(--hm-type-group)!important;font-weight:100!important;font-variation-settings:"wght" 100!important;line-height:1.3!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight__copy{margin:4px 0 0!important;max-width:var(--hm-description-max-chars)!important;color:var(--hm-description-color)!important;font-family:var(--hm-font-ko)!important;font-size:var(--hm-type-body)!important;font-weight:300!important;font-variation-settings:"wght" 300!important;line-height:1.58!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars{width:100%!important;min-width:0!important;margin:32px 0 0!important;padding:0!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__rows{display:grid!important;width:100%!important;gap:18px!important;margin:0!important;padding:0!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row{display:grid!important;grid-template-columns:110px minmax(0,1fr) 62px!important;gap:16px!important;align-items:center!important;width:100%!important;min-width:0!important;min-height:28px!important;margin:0!important;padding:0!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__label{margin:0!important;color:rgba(255,255,255,.50)!important;font:300 16px/1.3 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;white-space:normal!important;text-align:left!important;word-break:keep-all!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__track{position:relative!important;width:100%!important;height:10px!important;min-width:0!important;overflow:hidden!important;background:rgba(255,255,255,.07)!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__fill{display:block!important;width:calc(var(--value,0) * 1%)!important;height:100%!important;min-width:2px!important;background:var(--bar-color,var(--hm-chart-02,#007DE3))!important;transform:scaleX(0);transform-origin:left center;transition:transform .72s cubic-bezier(.22,1,.36,1);will-change:transform}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__value{margin:0!important;color:rgba(255,255,255,.84)!important;font:300 16px/1.3 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important;text-align:right!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__source{display:block!important;width:100%!important;margin:48px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__fill{transform:scaleX(1)}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
+
+/* 05.2 — Trenbe UT horizontal bar source. */
+html body.nbt-stepup-page #habit .trenbe-luxury-time-table{width:100%!important;margin-top:32px!important;border-top:1px solid var(--hm-line-faint)!important}
+html body.nbt-stepup-page #habit .trenbe-luxury-time-row{display:grid!important;grid-template-columns:88px minmax(0,1fr) 48px!important;gap:14px!important;align-items:center!important;min-height:42px!important;border-bottom:1px solid var(--hm-line-faint)!important}
+html body.nbt-stepup-page #habit .trenbe-luxury-time-row>span:first-child{color:rgba(255,255,255,.72)!important;font:300 12px/1.2 var(--hm-font-ko)!important;white-space:nowrap!important}
+html body.nbt-stepup-page #habit .trenbe-luxury-time-row>i{display:block!important;height:8px!important;overflow:hidden!important;border-radius:999px!important;background:rgba(255,255,255,.10)!important}
+html body.nbt-stepup-page #habit .trenbe-luxury-time-row>i::before{content:""!important;display:block!important;width:calc(var(--value) * 1%)!important;height:100%!important;border-radius:inherit!important;background:var(--hm-blue)!important}
+html body.nbt-stepup-page #habit .trenbe-luxury-time-row>b{color:#fff!important;font:300 12px/1 var(--hm-font-en)!important;text-align:right!important;font-variant-numeric:tabular-nums!important}
+html body.nbt-stepup-page #habit .chart-note{margin:24px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;font:300 14px/1.55 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important}
+
+/* 05.3 — Trenbe UT / AIMMO 02.2 segmented ratio source; values changed to 20 / 80. */
+html body.nbt-stepup-page #habit .aimmo-environment-ratio{display:block!important;width:100%!important;margin:40px 0 0!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__pie{display:none!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend{display:flex!important;width:100%!important;height:160px!important;gap:0!important;align-items:stretch!important;overflow:hidden!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row{position:relative!important;display:flex!important;min-width:0!important;height:100%!important;flex-direction:column!important;align-items:flex-start!important;justify-content:flex-end!important;gap:0!important;padding:0 28px 26px!important;border:0!important;box-sizing:border-box!important;color:#fff!important;background:var(--segment-color)!important;font-family:var(--hm-font-ko)!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(1){flex:0 0 20%!important;--segment-color:var(--hm-chart-01,#00A6ED)}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){flex:0 0 80%!important;--segment-color:var(--hm-chart-02,#007DE3)}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row i{display:none!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row span{display:block!important;margin:0!important;color:rgba(255,255,255,.92)!important;font:300 22px/1.15 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-group)!important;white-space:nowrap!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row b{display:block!important;margin:6px 0 0!important;color:#fff!important;font:300 30px/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;text-align:left!important;font-variant-numeric:tabular-nums!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!important;width:100%!important;margin:32px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
+
+@media(max-width:1180px){
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:16px!important}
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{display:none!important}
+}
+@media(max-width:780px){
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow{grid-template-columns:1fr!important;gap:16px!important}
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow article{width:min(320px,88vw)!important;margin-inline:auto!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights{gap:56px!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__rows{gap:14px!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row{grid-template-columns:88px minmax(0,1fr) 52px!important;gap:10px!important;min-height:24px!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights :is(.aimmo-reference-bars__label,.aimmo-reference-bars__value){font-size:13px!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__track{height:8px!important}
+  html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend{height:160px!important}
+  html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row{padding:0 14px 18px!important}
+  html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row span{font-size:15px!important}
+  html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row b{font-size:22px!important}
+  html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2{grid-template-columns:1fr!important}
+  html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nth-child(n){padding:24px 0!important;border-left:0!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow article,
+  html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{transition:none!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__fill{transform:scaleX(1)!important;transition:none!important}
 }
