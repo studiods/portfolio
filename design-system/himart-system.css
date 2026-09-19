@@ -250,6 +250,23 @@ html body.himart-page-body #live-main .data-card-head > div{width:100%!important
 html body.himart-page-body #live-main .hm-subhead + *,
 html body.himart-page-body #live-main .data-card-head + *{margin-top:var(--hm-subtitle-to-content)!important}
 
+/* Middle title -> immediate image/gallery contract: 40px.
+   This overrides the general 80px subtitle-to-content rhythm only when the next
+   block is visual media or a gallery. Page-specific spacing must not redefine it. */
+html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head) + :is(
+  figure,
+  [data-hst-gallery],
+  .hm-ds-media-gallery,
+  .hm-ds-media-gallery-stack,
+  .hm-ds-media-carousel,
+  .team-workshop-visual,
+  .trenbe-ut-gallery-stack,
+  [class*="-gallery"].hm-ds-subtitle-to-content,
+  [class*="-visual"].hm-ds-subtitle-to-content
+){
+  margin-top:var(--hm-subtitle-to-media-gap,40px)!important;
+}
+
 /* Prototype explanation → media row uses the same shared 80px content rhythm. */
 html body.himart-page-body #live-main .hm-ds-prototype-grid + .hm-ds-media-grid{
   margin-top:var(--hm-subtitle-to-content)!important;
