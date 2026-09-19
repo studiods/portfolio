@@ -287,90 +287,112 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!
    STEPUP 2026-09-19 v3 — narrative/source-component corrections
    ========================================================================== */
 
-/* 01.2 — exact TRENBE 03.3 motion/circle grammar reduced to two nodes.
-   Both begin as white outline circles; only the right node resolves to blue. */
+/* 01.2 — canonical StepUp-only reframe circles.
+   This is the single source of truth for 01.2; no shared semantic-circle class is attached in the HTML. */
 html body.nbt-stepup-page #reframe .stepup-reframe-flow{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) 38px minmax(0,1fr)!important;
-  align-items:center!important;
-  width:min(760px,100%)!important;
+  --stepup-reframe-duration:1300ms;
+  display:grid;
+  grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,2fr);
+  align-items:center;
+  width:100%;
+  max-width:none;
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow article{
-  --aimmo-flow-duration:1300ms;
-  --aimmo-flow-delay:0ms;
-  display:flex!important;
-  aspect-ratio:1!important;
-  min-width:0!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  padding:24px!important;
-  border:1px solid rgba(255,255,255,.30)!important;
-  border-radius:50%!important;
-  background:transparent!important;
-  text-align:center!important;
-  container-type:inline-size!important;
+  --stepup-reframe-delay:0ms;
+  display:flex;
+  aspect-ratio:1;
+  min-width:0;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  border:1px solid rgba(255,255,255,.30);
+  border-radius:50%;
+  background:transparent;
+  text-align:center;
+  container-type:inline-size;
   transition:
-    border-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay),
-    background-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+    border-color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-reframe-delay),
+    background-color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-reframe-delay);
 }
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article:nth-of-type(2){--aimmo-flow-delay:650ms}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article:nth-of-type(1){--stepup-reframe-delay:0ms}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article:nth-of-type(2){--stepup-reframe-delay:650ms}
 html body.nbt-stepup-page #reframe .stepup-reframe-flow article>span{
-  color:#fff!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
-  font-weight:400!important;
-  line-height:1!important;
-  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+  color:var(--hm-blue);
+  font-family:var(--hm-font-en);
+  font-size:12px;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:var(--hm-track-note);
+  transition:color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-reframe-delay);
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
-  margin:13px 0 0!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-  line-height:1.22!important;
-  word-break:keep-all!important;
-  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+  margin:13px 0 0;
+  color:#fff;
+  font-family:var(--hm-font-ko);
+  font-size:32px;
+  font-weight:300;
+  font-variation-settings:"wght" 300;
+  line-height:1.22;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+  transition:color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-reframe-delay);
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
-  margin:9px 0 0!important;
-  max-width:17ch!important;
-  color:rgba(255,255,255,.60)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:12px!important;
-  font-weight:300!important;
-  line-height:1.4!important;
-  word-break:keep-all!important;
-  transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
+  margin:9px 0 0;
+  max-width:18ch;
+  color:rgba(255,255,255,.60);
+  font-family:var(--hm-font-ko);
+  font-size:16px;
+  font-weight:300;
+  line-height:1.45;
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+  transition:color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-reframe-delay);
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
-  --aimmo-arrow-delay:0ms;
-  place-self:center!important;
-  margin:0!important;
-  color:#fff!important;
-  border-color:currentColor!important;
-  opacity:.30!important;
+  --stepup-arrow-delay:0ms;
+  place-self:center;
+  width:33px;
+  height:33px;
+  margin:0;
+  color:#fff;
+  border-color:currentColor;
+  opacity:.30;
   transition:
-    color 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay),
-    opacity 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay)!important;
+    color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-arrow-delay),
+    opacity var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-arrow-delay);
 }
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow>.hm-ds-gallery-arrow{
-  color:var(--hm-blue)!important;
-  opacity:1!important;
+  color:var(--hm-blue);
+  opacity:1;
 }
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2){
-  border-color:var(--hm-blue)!important;
-  background-color:var(--hm-blue)!important;
+  border-color:var(--hm-blue);
+  background-color:var(--hm-blue);
 }
-html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>span,
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>h4{
-  color:#fff!important;
+  color:#fff;
 }
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>p{
-  color:rgba(255,255,255,.80)!important;
+  color:rgba(255,255,255,.80);
+}
+@media(max-width:780px){
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{display:none}
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow article{
+    width:min(320px,88vw);
+    aspect-ratio:auto;
+    min-height:250px;
+    margin-inline:auto;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow article,
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{transition:none}
 }
 
 /* 02.2 — AIMMO System 03.2 application gallery source.
@@ -561,18 +583,6 @@ html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.
 }
 
 @media(max-width:780px){
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow{
-    grid-template-columns:1fr!important;
-    gap:20px!important;
-    width:100%!important;
-  }
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{display:none!important}
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow article{
-    width:min(320px,88vw)!important;
-    aspect-ratio:auto!important;
-    min-height:250px!important;
-    margin-inline:auto!important;
-  }
   html body.nbt-stepup-page #strategy .stepup-application-gallery{
     grid-template-columns:1fr!important;
     gap:0!important;
@@ -592,10 +602,6 @@ html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.
     grid-template-columns:1fr!important;
   }
   html body.nbt-stepup-page #screens .stepup-impact-signals>article{min-height:300px!important}
-}
-@media(prefers-reduced-motion:reduce){
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow article,
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{transition:none!important}
 }
 
 /* ==========================================================================
@@ -648,26 +654,6 @@ html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.
 /* 01.1 — English labels use the page accent. */
 html body.nbt-stepup-page #reframe .stepup-question-grid .stepup-label{
   color:var(--hm-blue)!important;
-}
-
-/* 01.2 — page-only circle typography and geometry.
-   The inter-circle column is exactly 1/5 of the right content rail: 2fr / 1fr / 2fr. */
-html body.nbt-stepup-page #reframe .stepup-reframe-flow{
-  grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,2fr)!important;
-  width:100%!important;
-  max-width:none!important;
-}
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
-  font-size:28px!important;
-}
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
-  font-size:16px!important;
-}
-html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
-  place-self:center!important;
-  width:33px!important;
-  height:33px!important;
-  margin:0!important;
 }
 
 /* 02.1 — no source line in this block. */
@@ -794,13 +780,6 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
   }
 }
 @media(max-width:780px){
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow{
-    grid-template-columns:1fr!important;
-    gap:20px!important;
-  }
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
-    display:none!important;
-  }
   html body.nbt-stepup-page #screens .stepup-phone-gallery{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
     gap:28px 14px!important;
@@ -1012,31 +991,6 @@ html body.nbt-stepup-page .hm-project-reflection__copy{
    STEPUP 2026-09-19 v8 — requested local-only refinements
    ========================================================================== */
 
-/* 01.2 — page-only circle typography. Never exported to shared design-system rules. */
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article>span{
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
-  font-weight:300!important;
-}
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
-  font-family:var(--hm-font-ko)!important;
-  font-size:32px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-}
-html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
-  max-width:18ch!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:16px!important;
-  font-weight:300!important;
-  line-height:1.45!important;
-}
-/* The second circle uses the same typography; its label turns white only after the blue fill resolves for contrast. */
-html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>span{
-  color:#fff!important;
-}
-
 /* 03.1 — adaptive carousel arrows: white over dark pixels, black over light pixels.
    White strokes with difference blending react to the actual rendered background, not a fixed theme token. */
 html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-gallery-nav{
@@ -1147,11 +1101,5 @@ html body.nbt-stepup-page #outcome .stepup-en-metric-title *{
   }
   html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step{
     min-height:220px!important;
-  }
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
-    font-size:32px!important;
-  }
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
-    font-size:16px!important;
   }
 }
