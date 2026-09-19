@@ -249,7 +249,7 @@ html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .step
   color:rgba(255,255,255,.80)!important;
 }
 
-/* 05.3 — Trenbe UT / AIMMO 02.2 segmented ratio source; values changed to 20 / 80. */
+/* 04.3 — Trenbe UT / AIMMO 02.2 segmented ratio source; values changed to 20 / 80. */
 html body.nbt-stepup-page #habit .aimmo-environment-ratio{display:block!important;width:100%!important;margin:40px 0 0!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__pie{display:none!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend{display:flex!important;width:100%!important;height:160px!important;gap:0!important;align-items:stretch!important;overflow:hidden!important}
@@ -433,7 +433,7 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{
   margin:0!important;
 }
 
-/* 04.2 — exact TRENBE 04.1 card grammar, with 64px numeric impact added. */
+/* 03.2 — exact TRENBE 04.1 card grammar, with 64px numeric impact added. */
 html body.nbt-stepup-page #screens .stepup-impact-signals{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
@@ -534,7 +534,7 @@ html body.nbt-stepup-page #screens .stepup-impact-signals>article .hm-ds-icon{
   transform:none!important;
 }
 
-/* 05.2 — same metric-card visual family as 02.1, two cards only. */
+/* 04.2 — same metric-card visual family as 02.1, two cards only. */
 html body.nbt-stepup-page #habit .stepup-behavior-grid--pair{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:28px!important;
@@ -547,7 +547,7 @@ html body.nbt-stepup-page #habit .stepup-behavior-grid--pair :is(.behavior-value
   text-align:left!important;
 }
 
-/* 07.1 — 2×2 result grid, all card text left aligned. */
+/* 05.1 — 2×2 result grid, all card text left aligned. */
 html body.nbt-stepup-page #outcome .stepup-outcome-grid{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:28px!important;
@@ -675,7 +675,7 @@ html body.nbt-stepup-page #strategy .hm-subsection:first-child .hm-source{
   display:none!important;
 }
 
-/* 04.1 — local typography. */
+/* 03.1 — local typography. */
 html body.nbt-stepup-page #screens .prototype-intro{
   align-items:start!important;
 }
@@ -687,7 +687,7 @@ html body.nbt-stepup-page #screens .prototype-intro p{
   margin:0!important;
 }
 
-/* 04.1 — HIMART 04 phone-frame resource copied into this page.
+/* 03.1 — HIMART 04 phone-frame resource copied into this page.
    Only the image placement is added so StepUp assets sit inside the same frame. */
 html body.nbt-stepup-page #screens .stepup-phone-gallery{
   display:grid!important;
@@ -741,12 +741,12 @@ html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame img{
   object-position:center top!important;
 }
 
-/* 04.2 — English card labels use blue. */
+/* 03.2 — English card labels use blue. */
 html body.nbt-stepup-page #screens .stepup-impact-signals>article>span{
   color:var(--hm-blue)!important;
 }
 
-/* 05.1 — one-row 1×4 process, page-only. */
+/* 04.1 — one-row 1×4 process, page-only. */
 html body.nbt-stepup-page #habit .stepup-process--1x4{
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
@@ -768,7 +768,7 @@ html body.nbt-stepup-page #habit .stepup-process--1x4 h4{
   font-size:28px!important;
 }
 
-/* 05.2 — title-to-body spacing reduced by 50% locally. */
+/* 04.2 — title-to-body spacing reduced by 50% locally. */
 html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-card h4{
   min-height:48px!important;
 }
@@ -776,7 +776,7 @@ html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-note{
   margin-top:20px!important;
 }
 
-/* 05.3 — preserve the verified 20/80 data widths, change only the requested palette.
+/* 04.3 — preserve the verified 20/80 data widths, change only the requested palette.
    Blue = StepUp (left); New Blue = the remainder (right). */
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(1){
   --segment-color:var(--hm-blue,#00A6ED)!important;
@@ -785,7 +785,7 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
   --segment-color:var(--hm-newblue,#00B8DE)!important;
 }
 
-/* 07.1 — keep the four outcome cards as the closing evidence grid. */
+/* 05.1 — keep the four outcome cards as the closing evidence grid. */
 
 /* Mobile guards for the page-only changes. */
 @media(max-width:1100px){
@@ -830,7 +830,7 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
    STEPUP 2026-09-19 v5 — final local corrections
    ========================================================================== */
 
-/* 04.1 — HIMART 04 v18 source grammar inside the shared media carousel.
+/* 03.1 — HIMART 04 v18 source grammar inside the shared media carousel.
    Two phone screens on the left, explanatory copy on the right. */
 html body.nbt-stepup-page #screens .stepup-screens-carousel{
   --hm-ds-media-carousel-ratio:16/11!important;
@@ -847,7 +847,7 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-row{
   gap:48px!important;
   align-items:stretch!important;
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
   padding:32px 0 0!important;
   border-top:1px solid rgba(255,255,255,.14)!important;
 }
@@ -862,9 +862,11 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   display:flex!important;
   flex-direction:column!important;
   justify-content:flex-end!important;
+  align-self:stretch!important;
   gap:20px!important;
   min-width:0!important;
-  padding-bottom:2px!important;
+  margin:0!important;
+  padding:0!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-card{
   display:block!important;
@@ -956,7 +958,7 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-media-carouse
   right:24px!important;
 }
 
-/* 04.2 — impact numbers only. */
+/* 03.2 — impact numbers only. */
 html body.nbt-stepup-page #screens .stepup-impact-signals>article>.stepup-impact-number{
   font-size:80px!important;
 }
