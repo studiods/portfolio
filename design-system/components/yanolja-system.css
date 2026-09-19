@@ -1772,3 +1772,46 @@ html body.yanolja-system-page #direction .hst-product-gallery__slide.is-guest-se
     padding:12px!important
   }
 }
+
+/* 2026-09-19 — Yanolja product centering + pagination refinement v11. */
+
+/* 04.1 / 04.2 pagination — Averta Light 12px, compact no-space counter. */
+html body.yanolja-system-page #direction .hst-ds-gallery__status{
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:0!important;
+  white-space:nowrap!important
+}
+
+/* 04.2 — white 16:9 gallery. Product-family files 01–05 are re-centered at source and shown 10% larger than the prior 115% state. */
+html body.yanolja-system-page #direction .hst-product-gallery,
+html body.yanolja-system-page #direction .hst-product-gallery .hst-ds-gallery__viewport,
+html body.yanolja-system-page #direction .hst-product-gallery__slide{
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide:not(.is-guest-service)>img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:scale(1.265)!important;
+  transform-origin:center center!important
+}
+
+/* Guest Service 06–07 — show the source page at its original ratio without zoom/crop. */
+html body.yanolja-system-page #direction .hst-product-gallery__slide.is-guest-service{
+  padding:28px!important;
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide.is-guest-service>img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  background:#fff!important
+}
