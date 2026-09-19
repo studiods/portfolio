@@ -152,6 +152,8 @@
   --hm-hero-copy-max-width:1280px;
   --hm-hero-description-width:var(--hm-hero-copy-max-width);
   --hm-hero-description-width-mobile:100%;
+  /* Hero description may wrap to at most three lines = two line breaks. */
+  --hm-hero-description-max-lines:3;
 
   /* Semantic title rhythm.
      Middle title -> direct content remains 80px.
