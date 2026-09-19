@@ -6,6 +6,8 @@
   const SINGLE_COLUMN_SELECTOR = '.hm-ds-media-gallery--single-column, .aimmo-wide-gallery';
   const IMAGE_SELECTOR = ':scope > img';
   const CAROUSEL_SELECTOR = '[data-hm-ds-carousel]';
+  const PRODUCT_GALLERY_SELECTOR = '.hst-product-gallery';
+  const PRODUCT_GALLERY_IMAGE_SELECTOR = '.hst-product-gallery__slide[data-hst-slide] > img';
   const CAROUSEL_SLIDE_SELECTOR = '.hm-ds-media-carousel__slide';
   const HOLD_MS = 3000;
   const TRANSITION_MS = 720;
@@ -82,6 +84,13 @@
     const gallery = image.closest(GALLERY_SELECTOR);
     if (gallery) {
       const images = Array.from(gallery.querySelectorAll(selector)).filter((item) => item.dataset.galleryExpandBound === 'true');
+      if (images.length) return images;
+    }
+
+    const productGallery = image.closest(PRODUCT_GALLERY_SELECTOR);
+    if (productGallery) {
+      const images = Array.from(productGallery.querySelectorAll(PRODUCT_GALLERY_IMAGE_SELECTOR))
+        .filter((item) => item.dataset.galleryExpandBound === 'true');
       if (images.length) return images;
     }
     return [image];
@@ -398,6 +407,7 @@
   const init = () => {
     document.querySelectorAll(GALLERY_SELECTOR).forEach(activateGallery);
     document.querySelectorAll(CAROUSEL_SELECTOR).forEach(activateCarousel);
+    document.querySelectorAll(`${PRODUCT_GALLERY_SELECTOR} ${PRODUCT_GALLERY_IMAGE_SELECTOR}`).forEach(bindExpandableImage);
     ensureLightbox();
 
     lightbox.addEventListener('click', closeLightbox);
