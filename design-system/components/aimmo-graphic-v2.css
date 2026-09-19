@@ -74,11 +74,6 @@ html body.aimmo-graphic-page .aimmo-wide-gallery{
   margin-left:0!important;
   padding:0!important;
 }
-html body.aimmo-graphic-page .hm-subhead + .aimmo-wide-gallery,
-html body.aimmo-graphic-page .data-card-head + .aimmo-wide-gallery,
-html body.aimmo-graphic-page #brand .aimmo-brand-rule-gallery{
-  margin-top:var(--hm-subtitle-to-content,80px)!important;
-}
 html body.aimmo-graphic-page .aimmo-wide-gallery--stack{
   gap:var(--hm-ds-media-gallery-gap,0px)!important;
 }
@@ -388,12 +383,6 @@ html body.aimmo-graphic-page #direction .aimmo-impact-grid>article{
 /* AIMMO Graphic page-only gallery contract — 2026-09-18 v7. */
 html body.aimmo-graphic-page .hm-ds-media-gallery__item{
   aspect-ratio:16/9!important;
-}
-html body.aimmo-graphic-page #brand .hm-subhead + .aimmo-wide-gallery,
-html body.aimmo-graphic-page #data .data-card-head + .hm-ds-media-gallery-stack,
-html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-gallery-stack,
-html body.aimmo-graphic-page #journey .hm-subhead + .hm-ds-media-carousel{
-  margin-top:40px!important;
 }
 
 
