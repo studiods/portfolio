@@ -7,11 +7,11 @@
 .himart-team-page{background:#000;color:#fff}
 
 /* 01 — role / direction ---------------------------------------------------- */
-.himart-team-page .team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.himart-team-page .team-card{min-height:250px;padding:30px;border:1px solid rgba(255,255,255,.15);background:#050505;display:flex;flex-direction:column;justify-content:space-between}
-.himart-team-page .team-card>span{font-family:var(--hm-font-en);font-size:12px;line-height:1.2;letter-spacing:.08em;color:rgba(255,255,255,.42)}
-.himart-team-page .team-card strong{display:block;margin-top:42px;font-family:var(--hm-font-ko);font-size:24px;line-height:1.36;font-weight:600;letter-spacing:-.035em}
-.himart-team-page .team-card p{margin:14px 0 0;font-size:16px;line-height:1.62;color:rgba(255,255,255,.58)}
+.himart-team-page .team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;width:100%}
+.himart-team-page .team-card{min-width:0;min-height:250px;padding:24px 0 28px;border:0;border-top:1px solid rgba(255,255,255,.20);background:transparent;display:flex;flex-direction:column;justify-content:space-between;text-align:left}
+.himart-team-page .team-card>span{display:block;margin:0;padding:0;font-family:var(--hm-font-en);font-size:12px;line-height:1.2;letter-spacing:.08em;color:var(--hm-blue);text-align:left}
+.himart-team-page .team-card strong{display:block;margin-top:42px;color:var(--hm-blue);font-family:var(--hm-font-ko);font-size:28px;line-height:1.3;font-weight:300;font-variation-settings:"wght" 300;letter-spacing:var(--hm-track-group);text-align:left;word-break:keep-all}
+.himart-team-page .team-card p{margin:14px 0 0;max-width:38ch;font-size:16px;line-height:1.62;color:rgba(255,255,255,.58);text-align:left;word-break:keep-all}
 
 .himart-team-page .team-turning-point{padding:54px 0 0;border-top:1px solid rgba(255,255,255,.15)}
 .himart-team-page .team-turning-point__copy{max-width:980px;margin:0;font-size:clamp(30px,3.2vw,54px);line-height:1.24;letter-spacing:-.055em;font-weight:500;color:var(--hm-blue)}
@@ -51,7 +51,7 @@
   width:100%;
   min-height:220px;
   aspect-ratio:auto;
-  margin-top:0;
+  margin-top:24px;
   transform:none;
   background:transparent;
   overflow:visible;
@@ -76,7 +76,17 @@
 .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card:first-child{padding-left:0}
 .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card:last-child{padding-right:0}
 .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card{
-  border-left:1px solid var(--team-workshop-divider);
+  border-left:0;
+}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card::before{
+  content:"";
+  position:absolute;
+  top:20%;
+  left:0;
+  width:1px;
+  height:60%;
+  background:var(--team-workshop-divider);
+  pointer-events:none;
 }
 .himart-team-page .team-workshop-visual .team-workshop-card::after{display:none;content:none}
 .himart-team-page .team-workshop-visual .team-workshop-card>span{
@@ -132,7 +142,7 @@
 .himart-team-page .team-final__copy{max-width:760px;margin:28px 0 0;font-size:16px;line-height:1.85;color:rgba(255,255,255,.58)}
 
 @media(max-width:1199px){
-  .himart-team-page .team-grid{grid-template-columns:1fr}
+  .himart-team-page .team-grid{grid-template-columns:1fr;gap:24px}
   .himart-team-page .team-agenda{grid-template-columns:repeat(2,minmax(0,1fr))}
   .himart-team-page .team-agenda:not(.team-agenda--four) article:last-child{grid-column:1/-1}
 }
@@ -146,10 +156,11 @@
 
   .himart-team-page .team-workshop-visual{padding-bottom:0}
   .himart-team-page .team-workshop-visual__image{aspect-ratio:auto;padding-top:62.5%;margin-bottom:0;overflow:visible}
-  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-visual__cards{position:relative;right:auto;bottom:auto;grid-template-columns:1fr;width:100%;aspect-ratio:auto;margin-top:0;transform:none;background:transparent;overflow:visible}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-visual__cards{position:relative;right:auto;bottom:auto;grid-template-columns:1fr;width:100%;aspect-ratio:auto;margin-top:24px;transform:none;background:transparent;overflow:visible}
   .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{grid-template-columns:1fr}
-  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card{min-height:0;height:auto;padding:24px 0 28px;border:0;border-top:1px solid var(--team-workshop-divider);overflow:visible}
-  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card{border-left:0;border-top:1px solid var(--team-workshop-divider)}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card{min-height:0;height:auto;padding:24px 0 28px;border:0;overflow:visible}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card{border-left:0;border-top:0}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card::before{top:0;left:20%;width:60%;height:1px}
   .himart-team-page .team-workshop-visual--core .team-core-value__word-v2{font-size:48px}
   .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{white-space:normal}
 }
