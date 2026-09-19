@@ -304,7 +304,8 @@ html body.himart-ax-page #journey .ways-operating-stack>article>span{
 }
 html body.himart-ax-page #journey .ways-operating-stack>article h4{
   margin:18px 0 0!important;
-  max-width:12ch!important;
+  width:100%!important;
+  max-width:none!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:28px!important;
