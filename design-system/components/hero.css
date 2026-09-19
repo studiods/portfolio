@@ -107,15 +107,15 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__title{
 }
 /* Hero description is part of the canonical case-study Hero and remains visible. */
 html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
-  display:block!important;
+  display:-webkit-box!important;
   width:fit-content!important;
   max-width:var(--hm-hero-description-width)!important;
   min-height:0!important;
   height:auto!important;
-  max-height:none!important;
+  max-height:calc(1.58em * var(--hm-hero-description-max-lines,3))!important;
   margin:var(--hm-title-description-gap) 0 0!important;
   padding:0!important;
-  overflow:visible!important;
+  overflow:hidden!important;
   text-overflow:clip!important;
   color:var(--hm-text-secondary)!important;
   font-family:var(--hm-font-ko)!important;
@@ -127,9 +127,9 @@ html body.himart-page-body #live-main > .hm-ds-hero .hm-ds-hero__description{
   text-wrap:pretty!important;
   word-break:keep-all!important;
   overflow-wrap:normal!important;
-  -webkit-line-clamp:unset!important;
-  line-clamp:none!important;
-  -webkit-box-orient:initial!important;
+  -webkit-line-clamp:var(--hm-hero-description-max-lines,3)!important;
+  line-clamp:var(--hm-hero-description-max-lines,3)!important;
+  -webkit-box-orient:vertical!important;
 }
 
 /* Approved himart.html bottom rail: desktop 40px / mobile 28px. */
