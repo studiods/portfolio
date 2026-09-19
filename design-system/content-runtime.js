@@ -73,15 +73,15 @@ function data(main){
 const fn=(n,t,p)=>`<article class="flow-node hm-ds-flow-node"><span class="hm-card-no">${n}</span><h4>${t}</h4><p>${p}</p></article>`;
 const ar=()=>'<div class="flow-arrow">›</div>';
 const roles=[
-  ['HOME','원하는 곳으로<br>보내주는 허브','team-purpose'],
-  ['CATEGORY','고민의 시간을<br>줄이는 곳','aimmo-layers'],
-  ['SEARCH','모호한 니즈를<br>후보로 바꾸는 곳','trenbe-search'],
-  ['SRP / PLP','비교를<br>끝내는 곳','aimmo-sliders'],
-  ['PDP','구매 확신을<br>형성하는 곳','trenbe-product'],
-  ['CART / PAY','선택 조건을<br>정리하는 곳','trenbe-check'],
-  ['INSTALL / CARE','설치·회수를<br>확정하는 곳','ax-update'],
-  ['MYPAGE','구매 이후 관리 경험을<br>이어가는 곳','aimmo-link'],
-  ['POST-PURCHASE','다음 방문과 재구매로<br>관계를 이어가는 곳','team-update']
+  ['HOME','원하는 곳으로<br>보내주는 허브'],
+  ['CATEGORY','고민의 시간을<br>줄이는 곳'],
+  ['SEARCH','모호한 니즈를<br>후보로 바꾸는 곳'],
+  ['SRP / PLP','비교를<br>끝내는 곳'],
+  ['PDP','구매 확신을<br>형성하는 곳'],
+  ['CART / PAY','선택 조건을<br>정리하는 곳'],
+  ['INSTALL / CARE','설치·회수를<br>확정하는 곳'],
+  ['MYPAGE','구매 이후 관리 경험을<br>이어가는 곳'],
+  ['POST-PURCHASE','다음 방문과 재구매로<br>관계를 이어가는 곳']
 ];
 
 function flow(){
@@ -94,7 +94,7 @@ function flow(){
 function role(){
   const s=document.createElement('section');
   s.className='journey-role-block';
-  s.innerHTML=`<span class="narrative-subno">03.2</span><h3 class="journey-block-title">그리고 각 화면은,<br>다음 행동을 만드는 역할로 다시 정의했습니다.</h3><p class="journey-block-copy">각 접점의 목적을 ‘무엇을 보여줄 것인가’가 아니라 ‘다음에 무엇을 할 수 있어야 하는가’로 정의했습니다.</p><div class="journey-role-grid">${roles.map(x=>`<article><small>${x[0]}</small><h4>${x[1]}</h4><svg class="hm-ds-icon" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#${x[2]}"></use></svg></article>`).join('')}</div>`;
+  s.innerHTML=`<span class="narrative-subno">03.2</span><h3 class="journey-block-title">그리고 각 화면은,<br>다음 행동을 만드는 역할로 다시 정의했습니다.</h3><p class="journey-block-copy">각 접점의 목적을 ‘무엇을 보여줄 것인가’가 아니라 ‘다음에 무엇을 할 수 있어야 하는가’로 정의했습니다.</p><div class="journey-role-grid">${roles.map((x,i)=>`<article><span class="hm-role-index">${String(i+1).padStart(2,'0')}</span><small>${x[0]}</small><h4>${x[1]}</h4></article>`).join('')}</div>`;
   return s;
 }
 
@@ -297,15 +297,15 @@ const expectedTitles={
 };
 
 const productionRoles=[
-  ["HOME","홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다","team-purpose"],
-  ["CATEGORY","선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다","aimmo-layers"],
-  ["SEARCH","검색은 불확실성을<br>확신으로 바꿔줘야 한다","trenbe-search"],
-  ["SRP / PLP","검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다","aimmo-sliders"],
-  ["PDP","상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다","trenbe-product"],
-  ["CART / PAY","장바구니는 결제 직전의<br>마지막 확신을 줘야 한다","trenbe-check"],
-  ["INSTALL / CARE","설치 조율은 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다","ax-update"],
-  ["MYPAGE","구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다","aimmo-link"],
-  ["POST-PURCHASE","구매 이후 경험은 다시 찾게 되는<br>관계로 이어져야 한다","team-update"]
+  ["HOME","홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다"],
+  ["CATEGORY","선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다"],
+  ["SEARCH","검색은 불확실성을<br>확신으로 바꿔줘야 한다"],
+  ["SRP / PLP","검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다"],
+  ["PDP","상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다"],
+  ["CART / PAY","장바구니는 결제 직전의<br>마지막 확신을 줘야 한다"],
+  ["INSTALL / CARE","설치 조율은 결제 이후의 불안을<br>일정 확정으로 바꿔줘야 한다"],
+  ["MYPAGE","구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다"],
+  ["POST-PURCHASE","구매 이후 경험은 다시 찾게 되는<br>관계로 이어져야 한다"]
 ];
 
 function alignProofCopy(){
@@ -352,7 +352,7 @@ function rebuildRoleDefinition(){
   }
   const signature=productionRoles.map(x=>x.join('|')).join('||');
   if(grid.dataset.productionRoles===signature)return;
-  grid.innerHTML=productionRoles.map(([k,t,icon])=>`<article><small>${k}</small><h4>${t}</h4><svg class="hm-ds-icon" aria-hidden="true"><use href="./assets/icons/portfolio-icons.svg#${icon}"></use></svg></article>`).join('');
+  grid.innerHTML=productionRoles.map(([k,t],i)=>`<article><span class="hm-role-index">${String(i+1).padStart(2,'0')}</span><small>${k}</small><h4>${t}</h4></article>`).join('');
   grid.dataset.productionRoles=signature;
 }
 
