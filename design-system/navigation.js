@@ -23,8 +23,7 @@
   const links = [
     { label: 'Home', href: './index.html', page: 'home' },
     { label: 'About', href: './about.html', page: 'about' },
-    { label: 'Works', href: './works.html', page: 'works' },
-    { label: 'Contact', href: './index.html#contact', page: 'contact' }
+    { label: 'Works', href: './works.html', page: 'works' }
   ];
 
   const currentPage = () => {
