@@ -258,6 +258,13 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){flex:0 0 80%!important;--segment-color:var(--hm-chart-02,#007DE3)}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row i{display:none!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row span{display:block!important;margin:0!important;color:rgba(255,255,255,.92)!important;font:300 22px/1.15 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-group)!important;white-space:nowrap!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:first-child>span{color:#000!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:first-child .stepup-en-label{
+  color:inherit!important;
+  font-family:var(--hm-font-en)!important;
+  font-style:normal!important;
+  font-weight:300!important;
+}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row b{display:block!important;margin:6px 0 0!important;color:#fff!important;font:300 30px/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;text-align:left!important;font-variant-numeric:tabular-nums!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!important;width:100%!important;margin:32px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
 
@@ -579,13 +586,23 @@ html body.nbt-stepup-page #habit .stepup-behavior-grid--pair :is(.behavior-value
 /* 05.1 — 2×2 result grid, all card text left aligned. */
 html body.nbt-stepup-page #outcome .stepup-outcome-grid{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:28px!important;
+  column-gap:28px!important;
+  row-gap:28px!important;
+  width:100%!important;
+  justify-items:stretch!important;
 }
 html body.nbt-stepup-page #outcome .stepup-outcome-grid .behavior-card{
+  width:100%!important;
   min-height:340px!important;
+  padding:24px 0 22px!important;
   text-align:left!important;
 }
 html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.behavior-note){
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
   text-align:left!important;
 }
 
@@ -1079,7 +1096,7 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
   --segment-color:var(--hm-blue,#00A6ED)!important;
 }
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){
-  --segment-color:color-mix(in srgb,var(--hm-blue,#00A6ED) 30%,transparent)!important;
+  --segment-color:rgba(0,166,237,.20)!important;
 }
 
 /* 05.1 — equal-size plus signs and Averta for the full MAU label. */
