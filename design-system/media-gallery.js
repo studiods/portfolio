@@ -390,6 +390,7 @@
     const status = root.querySelector(':scope > [data-hm-ds-carousel-status]');
     const requestedHold = Number(root.dataset.hmDsCarouselHold || root.dataset.autoplay);
     const holdMs = Number.isFinite(requestedHold) && requestedHold >= 1000 ? requestedHold : HOLD_MS;
+    const autoPlayEnabled = root.dataset.hmDsCarouselAutoplay !== 'false';
     let index = Math.max(0, slides.findIndex((slide) => slide.classList.contains('is-active')));
     let timer = 0;
     let busy = false;
@@ -417,7 +418,7 @@
       updateStatus();
     };
 
-    const canAutoPlay = () => inView && !document.hidden && !reducedMotion && slides.length > 1;
+    const canAutoPlay = () => autoPlayEnabled && inView && !document.hidden && !reducedMotion && slides.length > 1;
 
     const schedule = (delay = holdMs) => {
       clearTimer();
