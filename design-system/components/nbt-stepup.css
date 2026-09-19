@@ -887,7 +887,7 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame{
   width:100%!important;
   aspect-ratio:9/16!important;
   overflow:hidden!important;
-  border:1px solid rgba(255,255,255,.72)!important;
+  border:1px solid rgba(255,255,255,.60)!important;
   border-radius:38px!important;
   background:#000!important;
 }
