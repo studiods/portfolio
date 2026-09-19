@@ -192,3 +192,58 @@
   window.addEventListener('scroll', onViewportChange, { passive: true });
   window.addEventListener('resize', onViewportChange, { passive: true });
 })();
+
+/* Career accordion — row navigation removed; arrow owns open/close. */
+(() => {
+  'use strict';
+
+  const items = Array.from(document.querySelectorAll('[data-career-item]'));
+  if (!items.length) return;
+
+  const setState = (item, open) => {
+    const toggle = item.querySelector('.career-toggle');
+    const detail = item.querySelector('.career-detail');
+    const company = item.querySelector('.career-company')?.textContent?.trim() || '경력';
+    if (!toggle || !detail) return;
+
+    item.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', `${company} 상세 이력 ${open ? '접기' : '펼치기'}`);
+    detail.setAttribute('aria-hidden', String(!open));
+  };
+
+  const closeOthers = (except) => {
+    items.forEach((item) => {
+      if (item !== except && item.classList.contains('is-open')) setState(item, false);
+    });
+  };
+
+  items.forEach((item) => {
+    const toggle = item.querySelector('.career-toggle');
+    const detailGrid = item.querySelector('.career-detail-grid');
+    if (!toggle || !detailGrid) return;
+
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const willOpen = !item.classList.contains('is-open');
+      if (willOpen) closeOthers(item);
+      setState(item, willOpen);
+    });
+
+    detailGrid.addEventListener('click', () => {
+      const selection = window.getSelection?.();
+      if (selection && String(selection).trim()) return;
+      setState(item, false);
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const openItem = items.find((item) => item.classList.contains('is-open'));
+    if (!openItem) return;
+    const toggle = openItem.querySelector('.career-toggle');
+    setState(openItem, false);
+    toggle?.focus({ preventScroll: true });
+  });
+})();
