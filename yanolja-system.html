@@ -8,7 +8,7 @@
 <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-10">
+<link rel="stylesheet" href="./design-system/components/yanolja-system.css?v=20260919-11">
 <link rel="stylesheet" href="./design-system/himart-system.css?v=20260916-6">
 <link rel="stylesheet" href="./design-system/components/media.css?v=20260915-3">
 <link rel="stylesheet" href="./design-system/components/media-gallery.css?v=20260919-4">
@@ -140,7 +140,7 @@
   </div>
   <div class="hm-wide-right-rail">
     <div class="hm-subsection hm-ds-subsection hm-reveal">
-      <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="03.1">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">시작은 여행에서 출발했습니다.<br>여행에서 만나는 자연의 색을 제품 컬러로 옮겼습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">하늘·바다·노을·산처럼 여행에서 반복해서 만나는 색을 제품군의 Primary·Secondary 컬러로 확장했습니다.</p></div></div>
+      <div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="03.1">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">시작은 야놀자의 근간인 여행에서 컨셉을 잡고 출발했습니다.<br>여행에서 마주하는 자연의 색을 제품 컬러로 확장했습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">하늘·바다·노을·산처럼 여행에서 반복해서 만나는 색을 제품군의 Primary·Secondary 컬러로 확장했습니다.</p></div></div>
       <figure class="yanolja-color-origin hm-ds-subtitle-to-content"><img src="./assets/image/yanolja/yanolja_03_01_nature.webp" alt="여행지의 산과 호수에서 확인한 자연의 색상" loading="lazy" decoding="async"></figure>
       <figure class="yanolja-color-motif">
         <img src="./assets/image/yanolja/yanolja_03_01_palette_motif.webp" alt="별빛, 바다, 주황빛 풍경, 산의 녹색을 4분할한 컬러 모티브" loading="lazy" decoding="async">
@@ -508,7 +508,7 @@
           </div>
         </div>
 
-        <div class="hm-ds-media-carousel__status hst-ds-gallery__status" data-hst-gallery-status>01 / 04</div>
+        <div class="hm-ds-media-carousel__status hst-ds-gallery__status" data-hst-gallery-status>01/04</div>
         <button class="hm-ds-gallery-nav hm-ds-gallery-nav--prev hst-ds-gallery__nav" type="button" aria-label="이전 페이지"></button>
         <button class="hm-ds-gallery-nav hm-ds-gallery-nav--next hst-ds-gallery__nav" type="button" aria-label="다음 페이지"></button>
       </div>
@@ -528,7 +528,7 @@
             <figure class="hst-product-gallery__slide is-guest-service" data-hst-slide><img src="./assets/image/yanolja/yanolja_02_07_guest-service.webp" alt="HST GROUP GUEST SERVICE 호텔 정보·Early Check-in 예약 화면" loading="lazy" decoding="async"></figure>
           </div>
         </div>
-        <div class="hm-ds-media-carousel__status hst-ds-gallery__status" data-hst-gallery-status>01 / 07</div>
+        <div class="hm-ds-media-carousel__status hst-ds-gallery__status" data-hst-gallery-status>01/07</div>
         <button class="hm-ds-gallery-nav hm-ds-gallery-nav--prev hst-ds-gallery__nav" type="button" aria-label="이전 제품 화면"></button>
         <button class="hm-ds-gallery-nav hm-ds-gallery-nav--next hst-ds-gallery__nav" type="button" aria-label="다음 제품 화면"></button>
       </div>
@@ -584,7 +584,7 @@
 
     const updateStatus = () => {
       if (!status) return;
-      status.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+      status.textContent = String(index + 1).padStart(2, '0') + '/' + String(slides.length).padStart(2, '0');
     };
 
     const syncA11y = () => {
