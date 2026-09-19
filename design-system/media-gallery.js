@@ -388,6 +388,8 @@
     const prev = root.querySelector(':scope > .hm-ds-gallery-nav--prev');
     const next = root.querySelector(':scope > .hm-ds-gallery-nav--next');
     const status = root.querySelector(':scope > [data-hm-ds-carousel-status]');
+    const requestedHold = Number(root.dataset.hmDsCarouselHold || root.dataset.autoplay);
+    const holdMs = Number.isFinite(requestedHold) && requestedHold >= 1000 ? requestedHold : HOLD_MS;
     let index = Math.max(0, slides.findIndex((slide) => slide.classList.contains('is-active')));
     let timer = 0;
     let busy = false;
@@ -417,7 +419,7 @@
 
     const canAutoPlay = () => inView && !document.hidden && !reducedMotion && slides.length > 1;
 
-    const schedule = (delay = HOLD_MS) => {
+    const schedule = (delay = holdMs) => {
       clearTimer();
       if (!canAutoPlay() || busy) return;
       timer = window.setTimeout(() => move(1), delay);
