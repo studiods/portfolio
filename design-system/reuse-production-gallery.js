@@ -535,10 +535,13 @@
     const video = document.createElement('video');
     video.src = AI_VIDEO_MEDIA[0];
     video.playsInline = true;
+    video.muted = true;
+    video.defaultMuted = true;
     video.preload = 'metadata';
     video.loop = false;
     video.controls = false;
     video.setAttribute('playsinline', '');
+    video.setAttribute('muted', '');
     video.setAttribute('data-reuse-ai-video', '');
 
     media.appendChild(video);
