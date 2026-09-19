@@ -232,7 +232,7 @@ html body.himart-page-body #live-main :is(
   -webkit-box-orient:initial!important;
 }
 
-html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
+html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.stepup-label,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
   font-family:var(--hm-font-en)!important;
   font-size:var(--hm-type-note)!important;
   font-weight:400!important;
@@ -429,7 +429,7 @@ html body.himart-page-body #live-main .data-list > .data-card:last-child{margin-
   html body.himart-page-body #live-main :is(.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.journey-block-copy,.behavior-note,.role-card p,.flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,.sentiment-keywords){
     font-size:var(--hm-type-body-mobile)!important;
   }
-  html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.hm-role-name,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
+  html body.himart-page-body #live-main :is(.hm-section-no,.hm-subno,.hm-card-no,.hm-roman-no,.hm-note,.metric-label,.proof-label,.proof-compare,.flow-label,.phone-meta span,.phone-meta b){
     font-size:var(--hm-type-note-mobile)!important;
   }
 
