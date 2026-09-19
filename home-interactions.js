@@ -125,9 +125,9 @@
   const quoteChars = $$('.hero-quote .fill-char', hero);
   const definitionChars = $$('.definition-copy .fill-char', hero);
   const definitionSourceChars = $$('.definition-source .fill-char', hero);
-  const subChars = $('.subtractive-title .fill-char', hero);
-  const subKoreanChars = $('.subtractive-korean .fill-char', hero);
-  const subIdentityChars = $('.hero-identity .fill-char', hero);
+  const subChars = $$('.subtractive-title .fill-char', hero);
+  const subKoreanChars = $$('.subtractive-korean .fill-char', hero);
+  const subIdentityChars = $$('.hero-identity .fill-char', hero);
   const quoteLineChars = quoteLines.map(line => $$('.fill-char', line));
 
   const HERO = Object.freeze({
@@ -682,7 +682,7 @@
     });
   };
 
-  const entryScrambleTargets = $('.showcase-project h3, .js-entry-scramble');
+  const entryScrambleTargets = $$('.showcase-project h3, .js-entry-scramble');
   const animateEntryScramble = target => {
     if (!target || target.dataset.scrambleDone === '1') return;
     target.dataset.scrambleDone = '1';
