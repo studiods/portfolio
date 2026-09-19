@@ -684,3 +684,56 @@ html body.trenbe-ut-page #direction .trenbe-improvement-signals>article .hm-ds-i
   html body.trenbe-ut-page #direction .trenbe-improvement-signals>article{min-height:300px!important}
 }
 
+
+
+/* TRENBE chart focus reveal — 01.2 / 02.1 */
+/* 01.2 decision-time rows: fill each horizontal bar from left to right. */
+html body.trenbe-ut-page #brand .trenbe-luxury-time-row>i::before{
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .72s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row>i::before{transform:scaleX(1)}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(1)>i::before{transition-delay:.00s}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(2)>i::before{transition-delay:.08s}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(3)>i::before{transition-delay:.16s}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(4)>i::before{transition-delay:.24s}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(5)>i::before{transition-delay:.32s}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(6)>i::before{transition-delay:.40s}
+html body.trenbe-ut-page #brand .trenbe-luxury-time-table.is-bars-focused .trenbe-luxury-time-row:nth-child(7)>i::before{transition-delay:.48s}
+
+/* 01.2 touchpoint graph: same viewport-focused horizontal fill behavior as AIMMO. */
+html body.trenbe-ut-page #brand .aimmo-impact-chart__bar{
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .82s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+}
+html body.trenbe-ut-page #brand .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__bar{transform:scaleX(1)}
+html body.trenbe-ut-page #brand .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__row:nth-child(1) .aimmo-impact-chart__bar{transition-delay:.00s}
+html body.trenbe-ut-page #brand .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__row:nth-child(2) .aimmo-impact-chart__bar{transition-delay:.14s}
+
+/* 02.1 GA age graph: grow bars upward from the baseline. */
+html body.trenbe-ut-page #data .trenbe-age-chart .trenbe-age-bar>i{
+  transform:scaleY(0);
+  transform-origin:center bottom;
+  transition:transform .78s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar>i{transform:scaleY(1)}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar:nth-child(1)>i{transition-delay:.00s}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar:nth-child(2)>i{transition-delay:.09s}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar:nth-child(3)>i{transition-delay:.18s}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar:nth-child(4)>i{transition-delay:.27s}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar:nth-child(5)>i{transition-delay:.36s}
+html body.trenbe-ut-page #data .trenbe-age-chart.is-bars-focused .trenbe-age-bar:nth-child(6)>i{transition-delay:.45s}
+
+@media(prefers-reduced-motion:reduce){
+  html body.trenbe-ut-page #brand .trenbe-luxury-time-row>i::before,
+  html body.trenbe-ut-page #brand .aimmo-impact-chart__bar,
+  html body.trenbe-ut-page #data .trenbe-age-chart .trenbe-age-bar>i{
+    transform:none!important;
+    transition:none!important;
+  }
+}
