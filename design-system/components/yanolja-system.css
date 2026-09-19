@@ -1752,3 +1752,9 @@ html body.yanolja-system-page #direction .hst-ds-gallery__status{
 }
 
 
+
+
+/* 01.4 — preserve authored semantic line breaks inside the four principle cards. */
+html body.yanolja-system-page #brand .ax-maker-flow--four .ax-maker-step h4 br{
+  display:block!important;
+}
