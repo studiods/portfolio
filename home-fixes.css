@@ -90,8 +90,8 @@
 .quote-source-only{
   margin-top:18px;
   font-family:'Averta PE',sans-serif;
-  font-weight:400;
-  font-size:11px;
+  font-weight:300;
+  font-size:16px;
   line-height:1.2;
 }
 .definition-copy{
@@ -110,7 +110,7 @@
   margin-top:18px;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   font-weight:300;
-  font-size:11px;
+  font-size:16px;
   line-height:1.2;
   letter-spacing:-.01em;
 }
@@ -309,6 +309,15 @@
   color:rgba(17,17,17,0);
 }
 
+
+/* Entry-scramble text must preserve authored spaces and inline character flow. */
+.js-entry-scramble .fill-char{
+  display:inline!important;
+  white-space:pre!important;
+  vertical-align:baseline!important;
+  line-height:inherit!important;
+}
+
 /* FROM PRINCIPLES TO IMPACT */
 .impact-section{
   position:relative;
@@ -334,8 +343,11 @@
   grid-column:2;
   width:100%;
   max-width:1120px;
+  min-width:0;
 }
 .impact-statement{
+  display:block!important;
+  width:100%!important;
   margin:0;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:100!important;
@@ -345,7 +357,7 @@
   word-break:keep-all;
   color:#111;
 }
-.impact-statement span{display:block}
+.impact-statement > .impact-line{display:block}
 .impact-copy{
   margin:80px 0 0;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
@@ -378,7 +390,9 @@
 }
 .work-shortcut-link{
   grid-column:2;
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  gap:.32em;
   width:max-content;
   max-width:100%;
   margin:0;
@@ -387,11 +401,28 @@
   font-size:64px;
   line-height:.95;
   letter-spacing:-.03em;
-  color:#111;
+  color:#fff;
   text-decoration:none;
 }
-.work-shortcut-link:hover{
+.work-shortcut-text{
+  color:#111;
+}
+.work-shortcut-arrow{
+  display:block;
+  flex:none;
+  width:1em;
+  height:1em;
+  box-sizing:border-box;
+  border-top:1px solid rgba(255,255,255,.60);
+  border-right:1px solid rgba(255,255,255,.60);
+  transform:rotate(45deg) scale(.72);
+  transform-origin:center;
+}
+.work-shortcut-link:hover .work-shortcut-text{
   opacity:.60;
+}
+.work-shortcut-link:hover .work-shortcut-arrow{
+  border-color:#fff;
 }
 .work-shortcut-link:focus-visible{
   outline:1px solid rgba(255,255,255,.70);
@@ -413,7 +444,7 @@
   .hero-state{inset:70px 10px 36px}
   .hero-quote{font-size:clamp(25px,7.08vw,28px);line-height:.97}
   .definition-copy{font-size:clamp(26px,7.1vw,40px);line-height:1.06;letter-spacing:-.03em}
-  .definition-source{margin-top:18px;font-size:11px;line-height:1.2}
+  .definition-source{margin-top:18px;font-size:16px;line-height:1.2}
   .subtractive-title{font-size:clamp(52px,14.9vw,80px);line-height:.82}
   .subtractive-korean{margin-top:20px;font-size:clamp(15px,4.2vw,20px);opacity:.7}
   .hero-identity{margin-top:100px;font-size:16px;line-height:1.2}
