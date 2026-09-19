@@ -43,14 +43,31 @@
 
   const quoteChars = [...quote.querySelectorAll('.fill-char')];
   const sourceChars = [...source.querySelectorAll('.home-entry-source-char')];
-  const states = [...quoteChars, ...sourceChars].map((char) => ({
+  const quoteStates = quoteChars.map((char) => ({
     char,
     finalChar: char.dataset.finalChar ?? char.textContent,
     width: 0,
-    lastGlyph: null
+    lastGlyph: null,
+    staggerIndex: 0
   }));
+  const sourceStates = sourceChars.map((char) => ({
+    char,
+    finalChar: char.dataset.finalChar ?? char.textContent,
+    width: 0,
+    lastGlyph: null,
+    staggerIndex: 0
+  }));
+  const states = [...quoteStates, ...sourceStates];
   if (!states.length) return;
 
+  let quoteVisibleIndex = 0;
+  quoteStates.forEach((state) => {
+    if (state.finalChar.trim().length > 0) state.staggerIndex = quoteVisibleIndex++;
+  });
+  let sourceVisibleIndex = 0;
+  sourceStates.forEach((state) => {
+    if (state.finalChar.trim().length > 0) state.staggerIndex = 5 + sourceVisibleIndex++;
+  });
   const visibleStates = states.filter(({ finalChar }) => finalChar.trim().length > 0);
   let raf = 0;
   let startedAt = 0;
@@ -119,7 +136,7 @@
     let allDone = true;
 
     visibleStates.forEach((state, index) => {
-      const local = elapsed - index * STAGGER_MS;
+      const local = elapsed - state.staggerIndex * STAGGER_MS;
       if (local < 0) {
         allDone = false;
         return;
