@@ -22,7 +22,7 @@ html body.himart-ax-page #journey .ax-maker-step li{
   transform:none!important;
 }
 html body.himart-ax-page #journey .ax-maker-step p{
-  font-size:16px!important;
+  font-size:18px!important;
   line-height:1.5!important;
 }
 html body.himart-ax-page #journey .ax-maker-step ul{
@@ -172,7 +172,7 @@ html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-i
 }
 
 /* Per-image promotional copy safe area.
-   12.5% padding on all sides equals 1/8 of each image's inline width. */
+   10% padding on all sides equals 1/10 of each image's inline width. */
 html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-copy{
   position:absolute!important;
   z-index:3!important;
@@ -184,7 +184,7 @@ html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-c
   justify-content:flex-start!important;
   width:100%!important;
   height:100%!important;
-  padding:12.5%!important;
+  padding:10%!important;
   pointer-events:none!important;
 }
 html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-copy>strong{
@@ -193,7 +193,7 @@ html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-c
   padding:0!important;
   color:#000!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:24px!important;
+  font-size:46px!important;
   font-weight:700!important;
   font-variation-settings:"wght" 700!important;
   line-height:1.25!important;
@@ -202,7 +202,7 @@ html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-c
 }
 html body.himart-ax-page #journey .ax-banner-output-carousel .ax-banner-output-copy>span{
   display:block!important;
-  margin:24px 0 0!important;
+  margin:8px 0 0!important;
   padding:0!important;
   color:rgba(0,0,0,.60)!important;
   font-family:var(--hm-font-ko)!important;
