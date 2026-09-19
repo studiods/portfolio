@@ -373,7 +373,7 @@ function armTitleGuard(title,html){
     title.dataset.v2GuardBound='1';
     if('MutationObserver' in window){
       const mo=new MutationObserver(schedule);
-      mo.observe(title,{childList:true,subtree:true,characterData:true});
+      mo.observe(title,{childList:true});
     }
   }
   [0,760,1600].forEach(ms=>setTimeout(restore,ms));
@@ -488,11 +488,27 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 else apply();
 [40,100,180,320,600,1000,1600,2400,3600,5200,7600,11000,16000].forEach(ms=>setTimeout(apply,ms));
 
-/* Keep this lock active because the legacy narrative script also has delayed DOM rewrites.
-   The observer only reacts to child/text mutations, so the inline style lock does not recurse. */
+/* Keep the bridge lock only where late legacy rewrites can actually occur.
+   The previous document-wide characterData observer reacted to every scramble glyph frame,
+   repeatedly rescanning the whole case study while the user scrolled. */
 if('MutationObserver' in window){
-  const mo=new MutationObserver(()=>apply());
-  mo.observe(document.documentElement,{childList:true,subtree:true,characterData:true});
+  const main=document.querySelector('#live-main');
+  const bridgeHost=q(main,'#data .narrative-signals .narrative-bridge');
+  if(bridgeHost){
+    let raf=0;
+    const mo=new MutationObserver(()=>{
+      if(raf)return;
+      raf=requestAnimationFrame(()=>{
+        raf=0;
+        applyBridge(main);
+      });
+    });
+    mo.observe(bridgeHost,{childList:true,subtree:true});
+    window.setTimeout(()=>{
+      mo.disconnect();
+      if(raf)cancelAnimationFrame(raf);
+    },18000);
+  }
 }
 })();
 
