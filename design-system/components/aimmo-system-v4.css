@@ -103,7 +103,7 @@ html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node{
 }
 html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node>span{
   color:var(--hm-text-tertiary)!important;
-  font:300 11px/1 var(--hm-font-en);
+  font:300 var(--hm-type-journey-circle-number)/1 var(--hm-font-en);
   font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-note);
 }
@@ -111,7 +111,7 @@ html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node h4{
   margin:clamp(12px,6cqi,18px) 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:clamp(18px,10cqi,26px)!important;
+  font-size:var(--hm-type-journey-circle-title)!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300;
   line-height:1.22!important;
@@ -122,7 +122,7 @@ html body.aimmo-system-page .aimmo-static-reuse-flow .reuse-confidence-node p{
   max-width:17ch!important;
   margin:clamp(9px,5cqi,14px) 0 0!important;
   color:var(--hm-description-color)!important;
-  font:300 clamp(11px,6cqi,14px)/1.45 var(--hm-font-ko)!important;
+  font:300 var(--hm-type-journey-circle-body)/1.45 var(--hm-font-ko)!important;
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
