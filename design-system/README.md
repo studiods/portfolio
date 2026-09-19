@@ -199,7 +199,7 @@
 
 - `hm-ds-evidence-stat`는 4열/2열 등의 수치 근거 카드 묶음에 사용한다.
 - 숫자 아래 카드 타이틀은 `--hm-type-card-title`을 사용하며 desktop 기준 `22px`이다.
-- 카드 타이틀은 authored `<br>`로 줄을 고정하지 않고 `word-break:keep-all` + `text-wrap:pretty`로 문맥에 맞게 자연스럽게 줄바꿈한다.
+- 카드 타이틀은 authored `<br>`로 줄을 고정하지 않고 `word-break:keep-all` + `text-wrap:pretty`로 단어 단위 자연 줄바꿈을 사용한다. 제목 텍스트 레일은 카드 콘텐츠 폭의 최소 2/3 이상을 사용할 수 있어야 하며, 페이지별 `ch` 단위의 좁은 `max-width`로 조기 줄바꿈을 만들지 않는다.
 - evidence card는 `min-height`나 grid stretch로 빈 하단 영역을 만들지 않는다. 컨텐츠 실제 높이(`min-height:0`, `height:auto`, `align-self:start`)만 사용한다.
 - 동일한 `hm-ds-evidence-stat`를 사용하는 다른 case/영역도 위 규칙을 그대로 상속한다.
 
