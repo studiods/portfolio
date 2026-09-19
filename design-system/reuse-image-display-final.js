@@ -150,6 +150,13 @@
 
     const clearTimer = () => { if (timer) window.clearTimeout(timer); timer = 0; };
     const updateStatus = () => { status.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`; };
+    const updateNavContrast = () => {
+      const image = slides[index]?.querySelector('img');
+      if (!image) return;
+      const apply = () => window.HM_DS_GALLERY_CONTRAST?.apply(card, image);
+      if (image.complete) requestAnimationFrame(apply);
+      else image.addEventListener('load', apply, { once:true });
+    };
     const settle = () => {
       slides.forEach((slide, slideIndex) => {
         const active = slideIndex === index;
@@ -159,6 +166,7 @@
       });
       card.classList.remove('is-reverse');
       updateStatus();
+      updateNavContrast();
     };
     const schedule = () => {
       clearTimer();
