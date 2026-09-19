@@ -208,3 +208,43 @@ html body.yanolja-system-page #brand .aimmo-collaboration-grid > article p {
     --hm-ds-icon-inset: 18px;
   }
 }
+
+/* HIMART journey role icon cards — 2026-09-19 */
+html body.himart-page-body #journey .hm-role-grid--icon-cards > .role-card{
+  position:relative!important;
+  min-height:0!important;
+  padding:24px 0 120px!important;
+  overflow:hidden!important;
+}
+html body.himart-page-body #journey .hm-role-grid--icon-cards > .role-card .hm-role-name{
+  display:block!important;
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:36px!important;
+  font-weight:100!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.himart-page-body #journey .hm-role-grid--icon-cards > .role-card h4{
+  margin:20px 0 0!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.35!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.himart-page-body #journey .hm-role-grid--icon-cards > .role-card .hm-ds-icon{
+  position:absolute!important;
+  right:0!important;
+  bottom:24px!important;
+  width:36px!important;
+  height:36px!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+}
