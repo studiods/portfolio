@@ -54,6 +54,14 @@ html body.aimmo-system-page #data .aimmo-environment-ratio__legend{display:flex;
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row{position:relative;display:flex!important;min-width:0;height:100%;flex-direction:column;align-items:flex-start!important;justify-content:flex-end!important;gap:0!important;padding:0 28px 26px!important;border:0!important;box-sizing:border-box;color:#fff!important;background:var(--segment-color);font-family:var(--hm-font-ko)!important}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row:first-child{flex:0 0 78.7%;--segment-color:var(--hm-chart-01,#00A6ED)}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row:nth-child(2){flex:0 0 21.3%;--segment-color:var(--hm-chart-02,#007DE3)}
+html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row{
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path .78s cubic-bezier(.22,1,.36,1);
+  will-change:clip-path;
+}
+html body.aimmo-system-page #data .aimmo-environment-ratio.is-bars-focused .aimmo-environment-ratio__legend-row{clip-path:inset(0 0 0 0)}
+html body.aimmo-system-page #data .aimmo-environment-ratio.is-bars-focused .aimmo-environment-ratio__legend-row:nth-child(1){transition-delay:.00s}
+html body.aimmo-system-page #data .aimmo-environment-ratio.is-bars-focused .aimmo-environment-ratio__legend-row:nth-child(2){transition-delay:.18s}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row i{display:none!important}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row span{display:block;margin:0;color:rgba(255,255,255,.92);font:300 22px/1.15 var(--hm-font-ko);letter-spacing:var(--hm-track-group);white-space:nowrap}
 html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row b{display:block;margin:6px 0 0;color:#fff;font:300 30px/1 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);text-align:left;font-variant-numeric:tabular-nums}
@@ -101,6 +109,16 @@ html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(1){--bar-color:va
 html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
 html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
 html body.aimmo-system-page .aimmo-impact-chart__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
+html body.aimmo-system-page .aimmo-impact-chart__bar{
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path .82s cubic-bezier(.22,1,.36,1);
+  will-change:clip-path;
+}
+html body.aimmo-system-page .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__bar{clip-path:inset(0 0 0 0)}
+html body.aimmo-system-page .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__row:nth-child(1) .aimmo-impact-chart__bar{transition-delay:.00s}
+html body.aimmo-system-page .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__row:nth-child(2) .aimmo-impact-chart__bar{transition-delay:.12s}
+html body.aimmo-system-page .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__row:nth-child(3) .aimmo-impact-chart__bar{transition-delay:.24s}
+html body.aimmo-system-page .aimmo-impact-chart.is-bars-focused .aimmo-impact-chart__row:nth-child(4) .aimmo-impact-chart__bar{transition-delay:.36s}
 
 /* 04.2 — condensed interview summaries: spoken Korean in blue, English category labels unchanged. */
 html body.aimmo-system-page #direction .aimmo-quote-grid article strong{
@@ -136,4 +154,9 @@ html body.aimmo-system-page #direction .aimmo-quote-grid article strong{
 @media(prefers-reduced-motion:reduce){
   html body.aimmo-system-page #data .aimmo-output-graph.is-active,
   html body.aimmo-system-page #data .aimmo-output-graph.is-leaving{animation:none!important}
+  html body.aimmo-system-page #data .aimmo-environment-ratio__legend-row,
+  html body.aimmo-system-page .aimmo-impact-chart__bar{
+    clip-path:inset(0 0 0 0)!important;
+    transition:none!important;
+  }
 }
