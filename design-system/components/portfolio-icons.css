@@ -236,7 +236,7 @@ html body.himart-page-body.himart-commerce-page #live-main #journey .hm-role-gri
   width:100%!important;
   min-width:0!important;
   max-width:none!important;
-  color:rgba(255,255,255,.70)!important;
+  color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:22px!important;
   font-weight:100!important;
@@ -249,16 +249,16 @@ html body.himart-page-body.himart-commerce-page #live-main #journey .hm-role-gri
   position:absolute!important;
   right:0!important;
   bottom:36px!important;
-  width:24px!important;
-  height:24px!important;
+  width:32px!important;
+  height:32px!important;
   margin:0!important;
   color:var(--hm-blue)!important;
 }
 
 
 /* HIMART 03.2 runtime role cards — final authority.
-   English: Averta PE Thin 36px / Korean: Pretendard Thin 22px at 70%
-   / body removed / icon 24px, 36px from bottom. */
+   English: Averta PE Thin 36px / Korean: Pretendard Thin 22px at 100%
+   / body removed / icon 32px, 36px from bottom. */
 html body.himart-page-body.himart-commerce-page #live-main #journey .journey-role-grid > article{
   position:relative!important;
   display:flex!important;
@@ -284,7 +284,7 @@ html body.himart-page-body.himart-commerce-page #live-main #journey .journey-rol
   min-height:0!important;
   width:100%!important;
   max-width:none!important;
-  color:rgba(255,255,255,.70)!important;
+  color:#fff!important;
   font-family:var(--hm-font-ko)!important;
   font-size:22px!important;
   font-weight:100!important;
@@ -304,9 +304,9 @@ html body.himart-page-body.himart-commerce-page #live-main #journey .journey-rol
   display:block!important;
   right:0!important;
   bottom:36px!important;
-  width:24px!important;
-  height:24px!important;
+  width:32px!important;
+  height:32px!important;
   margin:0!important;
   color:var(--hm-blue)!important;
-  flex:0 0 24px!important;
+  flex:0 0 32px!important;
 }
