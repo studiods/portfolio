@@ -1103,6 +1103,10 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){
   --segment-color:rgba(0,166,237,.20)!important;
 }
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2) > span,
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2) > b{
+  opacity:.70!important;
+}
 
 /* 05.1 — equal-size plus signs and Averta for the full MAU label. */
 html body.nbt-stepup-page #outcome .stepup-outcome-grid .behavior-value>span{
