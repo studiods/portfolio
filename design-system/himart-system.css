@@ -180,6 +180,19 @@ html body.himart-page-body #live-main :is(
 ) h4 br{
   display:none!important;
 }
+
+/* Generic extension for page-specific card component names (AIMMO, Yanolja, Reuse, etc.). */
+html body.himart-page-body #live-main [class*="card"] h4{
+  width:100%!important;
+  min-width:66.666%!important;
+  max-width:none!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+html body.himart-page-body #live-main [class*="card"] h4 br{
+  display:none!important;
+}
 html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.behavior-note,.stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p,.role-card p,.flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,.sentiment-keywords){
   max-width:var(--hm-description-max-chars)!important;
   color:var(--hm-description-color)!important;
