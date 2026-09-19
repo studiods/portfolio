@@ -461,3 +461,60 @@
     transition:none!important;
   }
 }
+
+
+/* Career accordion interaction refinement — 2026-09-19 v2 */
+.career-section .career-row-v2{
+  padding-right:32px!important;
+  cursor:pointer!important;
+}
+
+.career-section .career-toggle{
+  width:40px!important;
+  height:40px!important;
+  margin:-8px -8px 0 auto!important;
+  opacity:.20!important;
+}
+
+.career-section .career-row-v2:hover .career-toggle,
+.career-section .career-toggle:hover,
+.career-section .career-toggle:focus-visible,
+.career-section .career-item.is-open .career-toggle{
+  opacity:.50!important;
+}
+
+.career-section .career-detail{
+  background:rgba(255,255,255,.06)!important;
+}
+
+.career-section .career-detail-grid{
+  padding-right:32px!important;
+  padding-left:0!important;
+}
+
+@media(max-width:980px){
+  .career-section .career-row-v2{
+    padding-right:24px!important;
+  }
+  .career-section .career-toggle{
+    margin:-8px -4px 0 auto!important;
+  }
+  .career-section .career-detail-grid{
+    padding-right:24px!important;
+  }
+}
+
+@media(max-width:640px){
+  .career-section .career-row-v2{
+    padding-right:16px!important;
+  }
+  .career-section .career-toggle{
+    opacity:.20!important;
+    margin-top:-5px!important;
+    margin-right:0!important;
+  }
+  .career-section .career-detail-grid{
+    padding-right:16px!important;
+    padding-left:16px!important;
+  }
+}
