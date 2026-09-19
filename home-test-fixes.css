@@ -247,35 +247,3 @@
   .home-test .principle-card.test-timeline-card{opacity:1!important;transform:none!important}
 }
 
-/* FINAL TYPOGRAPHY CONTRACT — Design Principles ↔ From Principles to Impact.
-   Loaded after home-fixes.css, so this is the last Home-specific authority. */
-.home-test .impact-statement{
-  --impact-line-height:.99;
-  line-height:var(--impact-line-height)!important;
-}
-.home-test .impact-statement > .impact-line{
-  display:block!important;
-  margin:0!important;
-  padding:0!important;
-  line-height:var(--impact-line-height)!important;
-}
-.home-test .impact-statement > .impact-line > .fill-char,
-.home-test .impact-statement .live-scramble-glyph{
-  line-height:var(--impact-line-height)!important;
-}
-
-@media(max-width:850px){
-  .home-test .principles-intro-ko{
-    line-height:1.023!important;
-  }
-  .home-test .impact-statement{
-    --impact-line-height:1.023;
-    line-height:var(--impact-line-height)!important;
-  }
-  .home-test .impact-statement > .impact-line,
-  .home-test .impact-statement > .impact-line > .fill-char,
-  .home-test .impact-statement .live-scramble-glyph{
-    line-height:var(--impact-line-height)!important;
-  }
-}
-
