@@ -350,20 +350,26 @@ html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
   word-break:keep-all;
   transition:color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-reframe-delay);
 }
-html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
+html body.nbt-stepup-page #reframe .stepup-reframe-flow>.stepup-reframe-arrow{
   --stepup-arrow-delay:0ms;
+  display:block;
   place-self:center;
-  width:33px;
-  height:33px;
+  width:165px;
+  height:165px;
   margin:0;
+  border-top:1px solid currentColor;
+  border-right:1px solid currentColor;
   color:#fff;
-  border-color:currentColor;
   opacity:.30;
+  font-size:0;
+  line-height:0;
+  transform:rotate(45deg);
+  pointer-events:none;
   transition:
     color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-arrow-delay),
     opacity var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-arrow-delay);
 }
-html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow>.hm-ds-gallery-arrow{
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow>.stepup-reframe-arrow{
   color:var(--hm-blue);
   opacity:1;
 }
@@ -371,6 +377,7 @@ html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-r
   border-color:var(--hm-blue);
   background-color:var(--hm-blue);
 }
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>span,
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>h4{
   color:#fff;
 }
@@ -382,7 +389,7 @@ html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-r
     grid-template-columns:1fr;
     gap:20px;
   }
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{display:none}
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.stepup-reframe-arrow{display:none}
   html body.nbt-stepup-page #reframe .stepup-reframe-flow article{
     width:min(320px,88vw);
     aspect-ratio:auto;
@@ -392,7 +399,7 @@ html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-r
 }
 @media(prefers-reduced-motion:reduce){
   html body.nbt-stepup-page #reframe .stepup-reframe-flow article,
-  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{transition:none}
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.stepup-reframe-arrow{transition:none}
 }
 
 /* 02.2 — AIMMO System 03.2 application gallery source.
