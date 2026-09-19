@@ -139,6 +139,13 @@
   --hm-major-title-description-gap:12px;
   --hm-middle-title-description-gap:12px;
   --hm-title-description-max:40ch;
+
+  /* Canonical editorial-card copy measure.
+     Desktop copy fills roughly two-thirds of its card before word-unit wrapping;
+     mobile returns to the full available width. */
+  --hm-card-copy-measure:66.666%;
+  --hm-card-copy-measure-mobile:100%;
+
   --hm-gallery-gap:20px;
   /* Hero title and description share one copy rail. Descriptions wrap naturally only
      when their text exceeds this rail; authored hard line breaks are not the default. */
