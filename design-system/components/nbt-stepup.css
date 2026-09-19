@@ -148,14 +148,14 @@ html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 h4{margin-
    Reward bars: AIMMO System 02.2 source
    ========================================================================== */
 
-/* 03.1 — AIMMO Graphic 01.2 circle flow, same motion; only node count/blue accent changed. */
-html body.nbt-stepup-page #habit-model .stepup-habit-flow{
+/* 02.3 — AIMMO Graphic 01.2 circle flow, restored after moving the former 03.1 into chapter 02. */
+html body.nbt-stepup-page #strategy .stepup-habit-flow{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr) 26px minmax(0,1fr)!important;
   align-items:center!important;
   width:100%!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article{
   --aimmo-flow-duration:1300ms;
   --aimmo-flow-delay:0ms;
   display:flex!important;
@@ -174,23 +174,23 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
     border-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay),
     background-color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(2){--aimmo-flow-delay:650ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(3){--aimmo-flow-delay:1300ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(4){--aimmo-flow-delay:1950ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article:nth-of-type(5){--aimmo-flow-delay:2600ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>span,
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article:nth-of-type(1){--aimmo-flow-delay:0ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow article:nth-of-type(2){--aimmo-flow-delay:650ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow article:nth-of-type(3){--aimmo-flow-delay:1300ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow article:nth-of-type(4){--aimmo-flow-delay:1950ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow article:nth-of-type(5){--aimmo-flow-delay:2600ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>span,
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>h4{
   color:#fff!important;
   transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>span{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>span{
   font-family:var(--hm-font-en)!important;
   font-size:12px!important;
   font-weight:400!important;
   line-height:1!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>h4{
   margin:13px 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
@@ -200,7 +200,7 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
   line-height:1.22!important;
   word-break:keep-all!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>p{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>p{
   margin:9px 0 0!important;
   max-width:17ch!important;
   color:rgba(255,255,255,.60)!important;
@@ -211,7 +211,7 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow article>p{
   word-break:keep-all!important;
   transition:color var(--aimmo-flow-duration) cubic-bezier(.22,.61,.36,1) var(--aimmo-flow-delay)!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{
+html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow{
   --aimmo-arrow-delay:0ms;
   align-self:center!important;
   justify-self:center!important;
@@ -222,30 +222,30 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{
     color 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay),
     opacity 1300ms cubic-bezier(.22,.61,.36,1) var(--aimmo-arrow-delay)!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(1){--aimmo-arrow-delay:0ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(2){--aimmo-arrow-delay:650ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(3){--aimmo-arrow-delay:1300ms}
-html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(4){--aimmo-arrow-delay:1950ms}
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow>.hm-ds-gallery-arrow{
+html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(1){--aimmo-arrow-delay:0ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(2){--aimmo-arrow-delay:650ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(3){--aimmo-arrow-delay:1300ms}
+html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow:nth-of-type(4){--aimmo-arrow-delay:1950ms}
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow>.hm-ds-gallery-arrow{
   color:var(--hm-blue)!important;
   opacity:1!important;
 }
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4){
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4){
   border-color:var(--hm-blue)!important;
 }
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4)>span,
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4)>h4{
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4)>span,
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(-n+4)>h4{
   color:var(--hm-blue)!important;
 }
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5){
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5){
   border-color:var(--hm-blue)!important;
   background-color:var(--hm-blue)!important;
 }
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>span,
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>h4{
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>span,
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>h4{
   color:#fff!important;
 }
-html body.nbt-stepup-page #habit-model .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>p{
+html body.nbt-stepup-page #strategy .hm-subsection.hm-reveal.is-visible .stepup-habit-flow article:nth-of-type(5)>p{
   color:rgba(255,255,255,.80)!important;
 }
 
@@ -262,8 +262,8 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row b{display:
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!important;width:100%!important;margin:32px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
 
 @media(max-width:780px){
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow{grid-template-columns:1fr!important;gap:16px!important}
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow article{width:min(320px,88vw)!important;margin-inline:auto!important}
+  html body.nbt-stepup-page #strategy .stepup-habit-flow{grid-template-columns:1fr!important;gap:16px!important}
+  html body.nbt-stepup-page #strategy .stepup-habit-flow article{width:min(320px,88vw)!important;margin-inline:auto!important}
   html body.nbt-stepup-page #screens .stepup-context-insights{gap:56px!important}
   html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__rows{gap:14px!important}
   html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__row{grid-template-columns:88px minmax(0,1fr) 52px!important;gap:10px!important;min-height:24px!important}
@@ -277,8 +277,8 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!
   html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nth-child(n){padding:24px 0!important;border-left:0!important}
 }
 @media(prefers-reduced-motion:reduce){
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow article,
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{transition:none!important}
+  html body.nbt-stepup-page #strategy .stepup-habit-flow article,
+  html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow{transition:none!important}
   html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-reference-bars__fill{transform:scaleX(1)!important;transition:none!important}
 }
 
@@ -406,11 +406,11 @@ html body.nbt-stepup-page #strategy .stepup-application-gallery .aimmo-applicati
   z-index:0!important;
 }
 
-/* 03.1 — local-only typography. No container/font scaling. */
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
+/* 02.3 — local-only typography. No container/font scaling. */
+html body.nbt-stepup-page #strategy .stepup-habit-flow article{
   container-type:normal!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>h4{
   margin:13px 0 0!important;
   font-family:var(--hm-font-ko)!important;
   font-size:22px!important;
@@ -418,7 +418,7 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow article>h4{
   font-variation-settings:"wght" 400!important;
   line-height:1.22!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow article>p{
+html body.nbt-stepup-page #strategy .stepup-habit-flow article>p{
   margin:9px 0 0!important;
   max-width:17ch!important;
   font-family:var(--hm-font-ko)!important;
@@ -426,7 +426,7 @@ html body.nbt-stepup-page #habit-model .stepup-habit-flow article>p{
   font-weight:300!important;
   line-height:1.4!important;
 }
-html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{
+html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow{
   place-self:center!important;
   width:11px!important;
   height:11px!important;
@@ -577,12 +577,12 @@ html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.
     grid-template-columns:1fr!important;
     gap:0!important;
   }
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow{
+  html body.nbt-stepup-page #strategy .stepup-habit-flow{
     grid-template-columns:1fr!important;
     gap:16px!important;
   }
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow>.hm-ds-gallery-arrow{display:none!important}
-  html body.nbt-stepup-page #habit-model .stepup-habit-flow article{
+  html body.nbt-stepup-page #strategy .stepup-habit-flow>.hm-ds-gallery-arrow{display:none!important}
+  html body.nbt-stepup-page #strategy .stepup-habit-flow article{
     width:min(320px,88vw)!important;
     margin-inline:auto!important;
   }
