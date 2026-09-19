@@ -840,7 +840,7 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
 /* 03.1 — HIMART 04 v18 source grammar inside the shared media carousel.
    Two phone screens on the left, explanatory copy on the right. */
 html body.nbt-stepup-page #screens .stepup-screens-carousel{
-  --hm-ds-media-carousel-ratio:6/5!important;
+  --hm-ds-media-carousel-ratio:1/1!important;
   width:100%!important;
   margin-top:80px!important;
   background:#000!important;
@@ -852,14 +852,14 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-row{
   display:block!important;
   width:100%!important;
   height:auto!important;
-  padding:32px 0 24px!important;
-  border-top:1px solid rgba(255,255,255,.14)!important;
+  padding:0 0 32px!important;
+  border-top:0!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-phones{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:18px!important;
-  width:80%!important;
+  gap:32px!important;
+  width:90%!important;
   min-width:0!important;
   margin:0 auto!important;
   align-items:start!important;
@@ -868,10 +868,10 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   align-items:start!important;
-  gap:18px!important;
-  width:80%!important;
+  gap:32px!important;
+  width:90%!important;
   min-width:0!important;
-  margin:32px auto 0!important;
+  margin:24px auto 0!important;
   padding:0!important;
   box-sizing:border-box!important;
 }
@@ -930,8 +930,8 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   row-gap:5px!important;
   width:100%!important;
   margin:0!important;
-  padding:14px 0 0!important;
-  border-top:1px solid rgba(255,255,255,.10)!important;
+  padding:0!important;
+  border-top:0!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta span{
   grid-column:1!important;
@@ -1001,7 +1001,7 @@ html body.nbt-stepup-page .hm-project-reflection__copy{
   }
   html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-phones{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:12px!important;
+    gap:32px!important;
   }
   html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame{
     border-radius:24px!important;
