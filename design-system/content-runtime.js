@@ -80,7 +80,8 @@ const roles=[
   ['PDP','구매 확신을<br>형성하는 곳','trenbe-product'],
   ['CART / PAY','선택 조건을<br>정리하는 곳','trenbe-check'],
   ['INSTALL / CARE','설치·회수를<br>확정하는 곳','ax-update'],
-  ['MYPAGE / CARE','구매 이후 관계를<br>이어가는 곳','aimmo-link']
+  ['MYPAGE','구매 이후 관리 경험을<br>이어가는 곳','aimmo-link'],
+  ['POST-PURCHASE','다음 방문과 재구매로<br>관계를 이어가는 곳','team-update']
 ];
 
 function flow(){
@@ -303,7 +304,8 @@ const productionRoles=[
   ["PDP","상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다","trenbe-product"],
   ["CART / PAY","장바구니는 결제 직전의<br>마지막 확신을 줘야 한다","trenbe-check"],
   ["INSTALL / CARE","설치 조율은 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다","ax-update"],
-  ["MYPAGE / CARE","구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다","aimmo-link"]
+  ["MYPAGE","구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다","aimmo-link"],
+  ["POST-PURCHASE","구매 이후 경험은 다시 찾게 되는<br>관계로 이어져야 한다","team-update"]
 ];
 
 function alignProofCopy(){
