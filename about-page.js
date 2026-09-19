@@ -219,16 +219,28 @@
   };
 
   items.forEach((item) => {
+    const row = item.querySelector('.career-row-v2');
     const toggle = item.querySelector('.career-toggle');
     const detailGrid = item.querySelector('.career-detail-grid');
-    if (!toggle || !detailGrid) return;
+    if (!row || !toggle || !detailGrid) return;
+
+    const toggleItem = () => {
+      const willOpen = !item.classList.contains('is-open');
+      if (willOpen) closeOthers(item);
+      setState(item, willOpen);
+    };
+
+    row.addEventListener('click', (event) => {
+      const selection = window.getSelection?.();
+      if (selection && String(selection).trim()) return;
+      if (event.target.closest('.career-toggle')) return;
+      toggleItem();
+    });
 
     toggle.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
-      const willOpen = !item.classList.contains('is-open');
-      if (willOpen) closeOthers(item);
-      setState(item, willOpen);
+      toggleItem();
     });
 
     detailGrid.addEventListener('click', () => {
