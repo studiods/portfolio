@@ -60,7 +60,10 @@
   line-height:1.0374!important;
 }
 .home-test .definition-source{
-  font-size:11.55px!important;
+  font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
+  font-weight:300!important;
+  font-size:16px!important;
+  line-height:1.2!important;
 }
 
 /* SUBTRACTIVE / DESIGN: fixed two-line lockup, 10% more leading than .79. */
