@@ -12,19 +12,62 @@ html body.aimmo-system-page #brand .aimmo-team-history-summary h4 + p{margin:12p
 /* 01.2 — top and bottom circular rows. */
 html body.aimmo-system-page #brand .aimmo-static-reuse-flow{gap:40px!important}
 
-/* 02.2 — peer insight dividers + typography. */
-html body.aimmo-system-page #data .aimmo-context-insights{display:grid;grid-template-columns:1fr;gap:72px;width:100%}
-html body.aimmo-system-page #data .aimmo-context-insight{min-width:0;padding-top:24px;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
-html body.aimmo-system-page #data .aimmo-context-insight__label{display:block;margin:0;color:var(--hm-blue);font:400 12px/1.2 var(--hm-font-en);letter-spacing:var(--hm-track-note)}
+/* 02.2 — zero-gap content panels under the visual rail.
+   Shared local contract: flush-left copy, 10% white 1px dividers, 32px number-to-title gap. */
+html body.aimmo-system-page{
+  --aimmo-content-divider:rgba(255,255,255,.10);
+  --aimmo-content-number-title-gap:32px;
+}
+html body.aimmo-system-page #data .aimmo-context-insights{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0;
+  width:100%;
+}
+html body.aimmo-system-page #data .aimmo-context-insight{
+  min-width:0;
+  padding:24px 28px 40px;
+  border-top:1px solid var(--aimmo-content-divider);
+  background:transparent;
+  text-align:left;
+}
+html body.aimmo-system-page #data .aimmo-context-insight:nth-child(odd){padding-left:0}
+html body.aimmo-system-page #data .aimmo-context-insight:nth-child(even){
+  padding-right:0;
+  border-left:1px solid var(--aimmo-content-divider);
+}
+html body.aimmo-system-page #data .aimmo-context-insight__label{
+  display:block;
+  margin:0;
+  color:var(--hm-blue);
+  font:400 12px/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+  text-align:left;
+}
 html body.aimmo-system-page #data .aimmo-context-insight h4{
-  margin:18px 0 0!important;color:#fff!important;font-family:var(--hm-font-ko)!important;
-  font-size:28px!important;font-weight:100!important;font-variation-settings:"wght" 100!important;
-  line-height:1.24!important;letter-spacing:var(--hm-track-group)!important;word-break:keep-all!important
+  margin:var(--aimmo-content-number-title-gap) 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.24!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
 }
 html body.aimmo-system-page #data .aimmo-context-insight__copy{
-  margin:4px 0 0!important;max-width:58ch!important;color:var(--hm-description-color)!important;
-  font-family:var(--hm-font-ko)!important;font-size:16px!important;font-weight:300!important;
-  font-variation-settings:"wght" 300!important;line-height:1.5!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important
+  margin:4px 0 0!important;
+  max-width:58ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
 }
 
 /* DURATION / DECISION / OUTPUT — HIMART REUSE 03.1 geometry. */
@@ -136,4 +179,116 @@ html body.aimmo-system-page #direction .aimmo-quote-grid article strong{
 @media(prefers-reduced-motion:reduce){
   html body.aimmo-system-page #data .aimmo-output-graph.is-active,
   html body.aimmo-system-page #data .aimmo-output-graph.is-leaving{animation:none!important}
+}
+
+
+/* 02.3 / 03.1 — same content-panel grammar as 02.2.
+   02.4 is not authored in the current document; when restored, use this same contract. */
+html body.aimmo-system-page #data .aimmo-improvement-gallery{
+  gap:0!important;
+  row-gap:0!important;
+  column-gap:0!important;
+}
+html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card{
+  margin:0!important;
+  border-top:1px solid var(--aimmo-content-divider)!important;
+  text-align:left!important;
+}
+html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption{
+  right:0!important;
+  left:0!important;
+  max-width:none!important;
+  text-align:left!important;
+}
+html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption span{
+  margin:0 0 var(--aimmo-content-number-title-gap)!important;
+  text-align:left!important;
+}
+html body.aimmo-system-page #data .aimmo-improvement-gallery .aimmo-evidence-card figcaption strong{
+  margin:0!important;
+  text-align:left!important;
+}
+
+html body.aimmo-system-page #journey .aimmo-ownership-sync{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:0!important;
+  width:100%!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__label{
+  position:relative!important;
+  grid-column:1/-1!important;
+  top:auto!important;
+  left:auto!important;
+  transform:none!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0 0 16px!important;
+  border-bottom:1px solid var(--aimmo-content-divider)!important;
+  background:transparent!important;
+  text-align:left!important;
+}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node{
+  display:flex!important;
+  width:100%!important;
+  aspect-ratio:auto!important;
+  min-width:0!important;
+  min-height:190px!important;
+  margin:0!important;
+  padding:24px 24px 28px!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  border:0!important;
+  border-top:1px solid var(--aimmo-content-divider)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  text-align:left!important;
+  container-type:normal!important;
+}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node:first-of-type{padding-left:0!important}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node:last-of-type{padding-right:0!important}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node + .aimmo-ownership-sync__node{
+  border-left:1px solid var(--aimmo-content-divider)!important;
+}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node>span{
+  font-size:12px!important;
+  text-align:left!important;
+}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node h4{
+  margin:var(--aimmo-content-number-title-gap) 0 0!important;
+  font-size:22px!important;
+  text-align:left!important;
+}
+html body.aimmo-system-page #journey .aimmo-ownership-sync__node p{
+  margin:12px 0 0!important;
+  max-width:18ch!important;
+  font-size:12px!important;
+  text-align:left!important;
+}
+
+@media(max-width:780px){
+  html body.aimmo-system-page #data .aimmo-context-insights{
+    grid-template-columns:1fr;
+  }
+  html body.aimmo-system-page #data .aimmo-context-insight,
+  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(odd),
+  html body.aimmo-system-page #data .aimmo-context-insight:nth-child(even){
+    padding:24px 0 32px;
+    border-left:0;
+  }
+  html body.aimmo-system-page #journey .aimmo-ownership-sync{
+    grid-template-columns:1fr!important;
+  }
+  html body.aimmo-system-page #journey .aimmo-ownership-sync__node,
+  html body.aimmo-system-page #journey .aimmo-ownership-sync__node:first-of-type,
+  html body.aimmo-system-page #journey .aimmo-ownership-sync__node:last-of-type{
+    min-height:0!important;
+    padding:24px 0 28px!important;
+    border-left:0!important;
+  }
 }
