@@ -66,6 +66,7 @@
     stage.append(viewport, lightboxPrev, lightboxNext, closeButton);
     lightbox.append(stage);
     document.body.append(lightbox);
+    lightboxImage.addEventListener('load', updateLightboxNavContrast);
 
     return lightbox;
   };
@@ -93,6 +94,40 @@
     lightboxNext.hidden = hidden;
   };
 
+  const sampleEdgeLuminance = (image, side) => {
+    if (!image?.complete || !image.naturalWidth || !image.naturalHeight) return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 32;
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    if (!context) return null;
+    context.drawImage(image, 0, 0, 32, 32);
+    const x = side === 'prev' ? 0 : 26;
+    const data = context.getImageData(x, 6, 6, 20).data;
+    let sum = 0;
+    let count = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] < 32) continue;
+      sum += (0.2126 * data[i]) + (0.7152 * data[i + 1]) + (0.0722 * data[i + 2]);
+      count += 1;
+    }
+    return count ? (sum / count) : null;
+  };
+
+  const updateLightboxNavContrast = () => {
+    if (!lightbox || !lightboxImage) return;
+    try {
+      const prevLum = sampleEdgeLuminance(lightboxImage, 'prev');
+      const nextLum = sampleEdgeLuminance(lightboxImage, 'next');
+      if (prevLum == null || nextLum == null) throw new Error('no luminance sample');
+      lightbox.style.setProperty('--hm-lightbox-nav-prev-color', prevLum > 150 ? '#111' : '#fff');
+      lightbox.style.setProperty('--hm-lightbox-nav-next-color', nextLum > 150 ? '#111' : '#fff');
+    } catch {
+      lightbox.style.removeProperty('--hm-lightbox-nav-prev-color');
+      lightbox.style.removeProperty('--hm-lightbox-nav-next-color');
+    }
+  };
+
   const closeLightbox = () => {
     if (!lightbox || !lightbox.classList.contains('is-open')) return;
     if (lightboxTransitionTimer) window.clearTimeout(lightboxTransitionTimer);
@@ -109,6 +144,8 @@
     lightboxIncoming.alt = '';
     lightboxGroup = [];
     lightboxIndex = 0;
+    lightbox.style.removeProperty('--hm-lightbox-nav-prev-color');
+    lightbox.style.removeProperty('--hm-lightbox-nav-next-color');
     updateLightboxNav();
     if (lastTrigger) lastTrigger.focus({ preventScroll: true });
     lastTrigger = null;
@@ -137,6 +174,7 @@
       lightbox.classList.remove('is-reverse');
       lightboxBusy = false;
       lightboxTransitionTimer = 0;
+      window.requestAnimationFrame(updateLightboxNavContrast);
     };
 
     if (reducedMotion) {
@@ -162,6 +200,7 @@
     lightboxImage.src = image.currentSrc || image.src;
     lightboxImage.alt = image.alt || '';
     updateLightboxNav();
+    if (lightboxImage.complete) window.requestAnimationFrame(updateLightboxNavContrast);
     lightbox.classList.add('is-open');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('hm-ds-lightbox-open');
