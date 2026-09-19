@@ -74,7 +74,7 @@ const fn=(n,t,p)=>`<article class="flow-node hm-ds-flow-node"><span class="hm-ca
 const ar=()=>'<div class="flow-arrow">›</div>';
 const roles=[
   ['HOME','원하는 곳으로<br>보내주는 허브','team-purpose'],
-  ['SUBHOME / CATEGORY','고민의 시간을<br>줄이는 곳','aimmo-layers'],
+  ['CATEGORY','고민의 시간을<br>줄이는 곳','aimmo-layers'],
   ['SEARCH','모호한 니즈를<br>후보로 바꾸는 곳','trenbe-search'],
   ['SRP / PLP','비교를<br>끝내는 곳','aimmo-sliders'],
   ['PDP','구매 확신을<br>형성하는 곳','trenbe-product'],
@@ -298,7 +298,7 @@ const expectedTitles={
 
 const productionRoles=[
   ["HOME","홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다","team-purpose"],
-  ["SUBHOME / CATEGORY","선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다","aimmo-layers"],
+  ["CATEGORY","선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다","aimmo-layers"],
   ["SEARCH","검색은 불확실성을<br>확신으로 바꿔줘야 한다","trenbe-search"],
   ["SRP / PLP","검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다","aimmo-sliders"],
   ["PDP","상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다","trenbe-product"],
