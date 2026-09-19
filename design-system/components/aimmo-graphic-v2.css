@@ -23,17 +23,17 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article{
 html body.aimmo-graphic-page #brand .aimmo-business-flow article span{
   color:var(--hm-red,#D30202)!important;
   font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
-  font-weight:400!important;
+  font-size:var(--hm-type-journey-circle-number)!important;
+  font-weight:300!important;
   line-height:1!important;
 }
 html body.aimmo-graphic-page #brand .aimmo-business-flow article h4{
   margin:13px 0 0!important;
   color:var(--hm-red,#D30202)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
+  font-size:var(--hm-type-journey-circle-title)!important;
+  font-weight:var(--hm-circle-title-weight)!important;
+  font-variation-settings:"wght" var(--hm-circle-title-weight)!important;
   line-height:1.22!important;
   word-break:keep-all!important;
 }
@@ -42,7 +42,7 @@ html body.aimmo-graphic-page #brand .aimmo-business-flow article p{
   max-width:17ch!important;
   color:var(--hm-description-color)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:12px!important;
+  font-size:var(--hm-type-journey-circle-body)!important;
   font-weight:300!important;
   line-height:1.4!important;
   word-break:keep-all!important;
@@ -125,6 +125,9 @@ html body.aimmo-graphic-page #data .aimmo-company-signals>article>span{
   line-height:1.2!important;
   letter-spacing:var(--hm-track-note)!important;
   text-align:left!important;
+}
+html body.aimmo-graphic-page #data .aimmo-company-signals>article h4 br{
+  display:block!important;
 }
 html body.aimmo-graphic-page #data .aimmo-company-signals>article h4{
   margin:22px 0 0!important;
