@@ -194,18 +194,20 @@ html body.reuse-current .reuse-image-display-card__nav::before{
   left:50%;
   width:18px;
   height:18px;
-  border-top:1px solid rgba(255,255,255,.78);
-  border-right:1px solid rgba(255,255,255,.78);
+  border-top:1px solid var(--hm-reuse-gallery-nav-color,rgba(255,255,255,.78));
+  border-right:1px solid var(--hm-reuse-gallery-nav-color,rgba(255,255,255,.78));
 }
 html body.reuse-current .reuse-image-display-card__nav--prev::before{
+  --hm-reuse-gallery-nav-color:var(--hm-gallery-nav-prev-color,rgba(255,255,255,.78));
   transform:translate(-35%,-50%) rotate(-135deg);
 }
 html body.reuse-current .reuse-image-display-card__nav--next::before{
+  --hm-reuse-gallery-nav-color:var(--hm-gallery-nav-next-color,rgba(255,255,255,.78));
   transform:translate(-65%,-50%) rotate(45deg);
 }
 html body.reuse-current .reuse-image-display-card__nav:hover::before,
 html body.reuse-current .reuse-image-display-card__nav:focus-visible::before{
-  border-color:#fff;
+  opacity:1;
 }
 
 html body.reuse-current .reuse-image-display-card__status{
