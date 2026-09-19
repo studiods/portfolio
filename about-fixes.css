@@ -262,3 +262,202 @@
     transition:none!important;
   }
 }
+
+/* ==========================================================================
+   CAREER ACCORDION — 2026-09-19
+   ========================================================================== */
+
+/* Align Career label with the right-column top rule. */
+.career-section .career-list{
+  margin-top:0!important;
+  border-top:1px solid var(--line)!important;
+}
+
+.career-section .career-item{
+  position:relative;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.career-section .career-row-v2{
+  grid-template-columns:170px minmax(220px,.8fr) minmax(0,1.5fr) 40px!important;
+  column-gap:var(--gap)!important;
+  align-items:start!important;
+  padding:20px 0 22px!important;
+  border-bottom:0!important;
+  color:inherit!important;
+  cursor:default!important;
+  transition:background-color .24s ease!important;
+}
+
+.career-section .career-row-v2:hover{
+  background:rgba(255,255,255,.10)!important;
+  color:inherit!important;
+}
+
+.career-section .career-row-v2:hover .career-period,
+.career-section .career-row-v2:hover .career-role{
+  color:inherit!important;
+}
+
+.career-section .career-row-v2:hover .career-period{color:#7f7c75!important}
+.career-section .career-row-v2:hover .career-role{color:#98948d!important}
+.career-section .career-row-v2:hover .career-company{color:var(--fg)!important}
+
+.career-section .career-toggle{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:40px;
+  height:40px;
+  margin:-8px 0 0 auto;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--fg);
+  opacity:0;
+  cursor:pointer;
+  transition:opacity .22s ease;
+}
+
+.career-section .career-row-v2:hover .career-toggle,
+.career-section .career-toggle:focus-visible,
+.career-section .career-item.is-open .career-toggle{
+  opacity:.5;
+}
+
+.career-section .career-toggle::before{
+  content:"";
+  width:9px;
+  height:9px;
+  border-right:1px solid currentColor;
+  border-bottom:1px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);
+  transform-origin:center;
+  transition:transform .42s cubic-bezier(.22,1,.36,1);
+}
+
+.career-section .career-item.is-open .career-toggle::before{
+  transform:translateY(3px) rotate(-135deg);
+}
+
+.career-section .career-toggle:focus-visible{
+  outline:1px solid rgba(255,255,255,.35);
+  outline-offset:2px;
+}
+
+.career-section .career-detail{
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  overflow:hidden;
+  transition:
+    grid-template-rows .48s cubic-bezier(.22,1,.36,1),
+    opacity .28s ease;
+}
+
+.career-section .career-item.is-open .career-detail{
+  grid-template-rows:1fr;
+  opacity:1;
+}
+
+.career-section .career-detail-inner{
+  min-height:0;
+  overflow:hidden;
+}
+
+.career-section .career-detail-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:42px var(--gap);
+  margin-left:calc(170px + var(--gap));
+  padding:14px 40px 44px 0;
+  border-top:1px solid rgba(255,255,255,.07);
+  cursor:pointer;
+}
+
+.career-section .career-detail-grid>article{
+  min-width:0;
+  padding-top:22px;
+}
+
+.career-section .career-detail-grid>article>span{
+  display:block;
+  margin:0 0 12px;
+  color:rgba(255,255,255,.46);
+  font:400 11px/1.2 var(--en);
+  letter-spacing:.06em;
+}
+
+.career-section .career-detail-grid>article>h4{
+  margin:0;
+  color:var(--fg);
+  font-family:var(--kr);
+  font-size:20px;
+  font-weight:300;
+  font-variation-settings:'wght' 300;
+  line-height:1.35;
+  letter-spacing:-.025em;
+  word-break:keep-all;
+}
+
+.career-section .career-detail-grid>article>p{
+  margin:12px 0 0;
+  color:#98948d;
+  font-family:var(--kr);
+  font-size:14px;
+  font-weight:300;
+  font-variation-settings:'wght' 300;
+  line-height:1.62;
+  letter-spacing:-.018em;
+  word-break:keep-all;
+}
+
+@media(max-width:980px){
+  .career-section .career-row-v2{
+    grid-template-columns:114px minmax(0,1fr) 40px!important;
+    row-gap:8px!important;
+  }
+  .career-section .career-role{
+    grid-column:2!important;
+  }
+  .career-section .career-toggle{
+    grid-column:3!important;
+    grid-row:1 / span 2!important;
+  }
+  .career-section .career-detail-grid{
+    margin-left:calc(114px + var(--gap));
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    padding-right:0;
+  }
+}
+
+@media(max-width:640px){
+  .career-section .career-row-v2{
+    grid-template-columns:96px minmax(0,1fr) 32px!important;
+    column-gap:16px!important;
+  }
+  .career-section .career-toggle{
+    width:32px;
+    height:32px;
+    margin-top:-5px;
+  }
+  .career-section .career-detail-grid{
+    grid-template-columns:1fr;
+    gap:32px;
+    margin-left:0;
+    padding:12px 0 36px;
+  }
+  .career-section .career-detail-grid>article>h4{font-size:18px}
+  .career-section .career-detail-grid>article>p{font-size:13px}
+}
+
+@media(hover:none){
+  .career-section .career-toggle{opacity:.5}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .career-section .career-detail,
+  .career-section .career-toggle::before{
+    transition:none!important;
+  }
+}
