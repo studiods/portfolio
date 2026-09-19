@@ -254,12 +254,13 @@ Numbered middle-title descriptions are preserved in source but can be globally c
 
 ## Structural index visibility
 
-- 12px blue structural labels that begin with `01.1` or `01` keep their complete authored text in HTML. Visual output shows only the numeric hierarchy through `.hm-ds-index-label[data-index]`.
-- Authoring pattern: `<span class="hm-subno hm-ds-index-label" data-index="01.1">01.1 / RESEARCH SIGNALS</span>`. The descriptor is hidden visually, not deleted.
-- To show the descriptor again, remove the `data-index` attribute or use a future visible variant; do not delete or replace the text node.
-- Legacy small structural labels without `data-index` are clipped only within explicitly scoped blue-number roles. Ordinary body labels remain unaffected.
+- 12px blue structural labels that begin with `01.1` or `01` store and display the numeric hierarchy only.
+- Canonical authoring pattern: `<span class="hm-subno hm-ds-index-label" data-index="01.1">01.1</span>`.
+- 숫자 오른쪽에는 `·`, `/`, `-`, 공백, 영문, 한글 등 어떤 descriptor도 두지 않는다. 의미 설명은 인접한 title/body content가 담당한다.
+- Legacy small structural labels without `data-index`은 회귀 방지를 위해 숫자 영역만 보이도록 fallback clipping을 유지하지만, 신규/수정 소스에서는 반드시 숫자만 작성한다.
+- 숫자로 시작하지 않는 일반 12px blue category/source label은 이 규칙의 대상이 아니다.
 
 
 ### Structural visibility final layer
 
-Legacy case pages run content/motion scripts after their static styles load. `structural-visibility-runtime.js` is therefore loaded last on every active case page. It preserves authored descriptions and full index labels in the DOM, then enforces the presentation contract: direct numbered-subsection descriptions are removed from layout while `hm-ds-subsection-copy-hidden` is present; blue structural labels render only their numeric `data-index` value. Removing that body class restores descriptions and their authored layout.
+Legacy case pages run content/motion scripts after their static styles load. `structural-visibility-runtime.js` is therefore loaded last on every active case page. It preserves authored subsection descriptions while enforcing the presentation contract: numbered 12px blue structural labels resolve to their numeric `data-index` value only. Removing `hm-ds-subsection-copy-hidden` restores descriptions, but structural number labels remain numeric-only.
