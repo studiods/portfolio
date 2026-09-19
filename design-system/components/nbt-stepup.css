@@ -948,18 +948,18 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   margin:0!important;
   color:#fff!important;
   font-family:var(--hm-font-en)!important;
-  font-size:14px!important;
+  font-size:16px!important;
   font-weight:300!important;
   line-height:1.25!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta p{
   grid-column:2!important;
   margin:0!important;
-  color:rgba(255,255,255,.50)!important;
+  color:rgba(255,255,255,.70)!important;
   font-family:var(--hm-font-ko)!important;
   font-size:14px!important;
   font-weight:300!important;
-  line-height:1.45!important;
+  line-height:1.5!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-media-carousel__status{
   top:24px!important;
