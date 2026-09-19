@@ -1020,39 +1020,47 @@ html body.nbt-stepup-page #reframe .stepup-reframe-flow article>span{
   font-weight:300!important;
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
+  font-family:var(--hm-font-ko)!important;
   font-size:32px!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
   max-width:18ch!important;
+  font-family:var(--hm-font-ko)!important;
   font-size:16px!important;
   font-weight:300!important;
   line-height:1.45!important;
 }
-/* Filled final node preserves contrast after the blue state resolves. */
+/* The second circle uses the same typography; its label turns white only after the blue fill resolves for contrast. */
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>span{
   color:#fff!important;
 }
 
-/* 03.1 — adaptive carousel arrows: white over dark pixels, black over light pixels. */
+/* 03.1 — adaptive carousel arrows: white over dark pixels, black over light pixels.
+   White strokes with difference blending react to the actual rendered background, not a fixed theme token. */
+html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-gallery-nav{
+  background:transparent!important;
+}
 html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-gallery-nav::before{
+  --hm-gallery-nav-color:#fff;
   border-top-color:#fff!important;
   border-right-color:#fff!important;
   mix-blend-mode:difference!important;
 }
 
-/* 04.1 — copied HIMART AX 03.1 maker-card grammar, page-local, four columns. */
+/* 04.1 — HIMART AX 03.1 maker-card grammar copied page-locally; only count is four and copy is StepUp-specific. */
 html body.nbt-stepup-page #habit .stepup-return-signal-flow{
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
   gap:28px!important;
   width:100%!important;
 }
-html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step{
+html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step,
+html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step.is-current{
   position:relative!important;
   min-height:260px!important;
-  padding:24px 0 16px!important;
+  padding:24px 0 0!important;
   border-top:1px solid rgba(255,255,255,.30)!important;
   background:transparent!important;
   text-align:left!important;
@@ -1098,7 +1106,9 @@ html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step p{
 
 /* 04.2 — plus sign is the same display size as 20K. */
 html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-value>span{
+  font:inherit!important;
   font-size:1em!important;
+  font-weight:300!important;
   line-height:.88!important;
   margin-left:6px!important;
 }
@@ -1108,12 +1118,14 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
   --segment-color:var(--hm-blue,#00A6ED)!important;
 }
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){
-  --segment-color:rgba(0,166,237,.30)!important;
+  --segment-color:color-mix(in srgb,var(--hm-blue,#00A6ED) 30%,transparent)!important;
 }
 
 /* 05.1 — equal-size plus signs and Averta for the full MAU label. */
 html body.nbt-stepup-page #outcome .stepup-outcome-grid .behavior-value>span{
+  font:inherit!important;
   font-size:1em!important;
+  font-weight:300!important;
   line-height:.88!important;
   margin-left:6px!important;
 }
