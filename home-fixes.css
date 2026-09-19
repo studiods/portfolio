@@ -290,7 +290,7 @@
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:100!important;
   font-size:var(--principle-card-ko-size)!important;
-  line-height:1.1385!important;
+  line-height:.99!important;
   letter-spacing:-.03em;
   word-break:keep-all;
   color:#fff!important;
@@ -353,7 +353,7 @@
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:100!important;
   font-size:52px!important;
-  line-height:.99!important;
+  line-height:1.1385!important;
   letter-spacing:-.03em;
   word-break:keep-all;
   color:#111;
