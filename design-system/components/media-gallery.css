@@ -392,6 +392,14 @@ html body.himart-page-body .hm-ds-media-carousel__status{
   background:#fff!important;
   box-shadow:none!important;
 }
+.hm-ds-image-lightbox.is-dom .hm-ds-image-lightbox__stage{
+  width:auto!important;
+  max-width:85vw!important;
+}
+.hm-ds-image-lightbox.is-dom{
+  --hm-lightbox-nav-prev-color:#111;
+  --hm-lightbox-nav-next-color:#111;
+}
 .hm-ds-image-lightbox__dom-canvas{
   position:absolute!important;
   top:0!important;
