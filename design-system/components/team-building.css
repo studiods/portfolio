@@ -36,31 +36,84 @@
 .himart-team-page .team-workshop-visual__image{position:relative;width:100%;aspect-ratio:16/9;background:#000;overflow:visible}
 .himart-team-page .team-workshop-visual__image>img{position:absolute;z-index:0;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .himart-team-page .team-workshop-visual__image::after{display:none;content:none}
-.himart-team-page .team-workshop-visual__cards{position:relative;z-index:2;right:auto;bottom:auto;left:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-height:220px;aspect-ratio:auto;margin-top:32px;transform:none;background:transparent;overflow:visible}
-.himart-team-page .team-workshop-visual .team-workshop-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch;min-width:0;min-height:220px;height:auto;margin:0;padding:28px;border:0;background:transparent;overflow:visible;box-sizing:border-box}
+.himart-team-page{
+  --team-workshop-divider:rgba(255,255,255,.10);
+  --team-workshop-number-title-gap:32px;
+}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-visual__cards{
+  position:relative;
+  z-index:2;
+  right:auto;
+  bottom:auto;
+  left:auto;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:100%;
+  min-height:220px;
+  aspect-ratio:auto;
+  margin-top:0;
+  transform:none;
+  background:transparent;
+  overflow:visible;
+}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:flex-start;
+  min-width:0;
+  min-height:220px;
+  height:auto;
+  margin:0;
+  padding:28px;
+  border:0;
+  background:transparent;
+  overflow:visible;
+  box-sizing:border-box;
+  text-align:left;
+}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card:first-child{padding-left:0}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card:last-child{padding-right:0}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card{
+  border-left:1px solid var(--team-workshop-divider);
+}
 .himart-team-page .team-workshop-visual .team-workshop-card::after{display:none;content:none}
-.himart-team-page .team-workshop-visual .team-workshop-card>span{display:block;flex:0 0 auto;margin:0;padding:0;color:var(--hm-blue);font:400 12px/1 var(--hm-font-en);letter-spacing:var(--hm-track-note);text-align:left}
-.himart-team-page .team-workshop-card__copy{display:block;width:100%;min-width:0;margin:0;padding:0;text-align:left}
+.himart-team-page .team-workshop-visual .team-workshop-card>span{
+  display:block;
+  flex:0 0 auto;
+  width:100%;
+  margin:0;
+  padding:0;
+  color:var(--hm-blue);
+  font:400 12px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+  text-align:left;
+}
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card__copy{
+  display:block;
+  width:100%;
+  min-width:0;
+  margin:var(--team-workshop-number-title-gap) 0 0;
+  padding:0;
+  text-align:left;
+}
 .himart-team-page .team-workshop-visual .team-workshop-card h4{margin:0;padding:0;max-width:none;color:#fff;font-family:var(--hm-font-ko);font-size:24px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.28;letter-spacing:var(--hm-track-group);word-break:keep-all;text-align:left}
 .himart-team-page .team-workshop-visual .team-workshop-card p{margin:10px 0 0;padding:0;max-width:38ch;color:rgba(255,255,255,.68);font-family:var(--hm-font-ko);font-size:16px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.5;letter-spacing:var(--hm-track-body);word-break:keep-all;text-align:left}
 
-/* 02.2: two cards, no separators. */
-.himart-team-page .team-workshop-visual--people .team-workshop-card{border:0}
+/* 02.2 / 02.4: two equal columns. */
+.himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--voices) .team-workshop-visual__cards{grid-template-columns:repeat(2,minmax(0,1fr))}
 
-/* 02.3: three cards, vertical dividers only. */
+/* 02.3: three equal columns using the same divider contract. */
 .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{grid-template-columns:repeat(3,minmax(0,1fr))}
-.himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{border-left:1px solid rgba(255,255,255,.15)}
 .himart-team-page .team-strength-summary-v2{display:none}
 
-/* 02.4: workshop-voice gallery follows the same two-card contract as 02.2. */
-.himart-team-page .team-workshop-visual--voices .team-workshop-card{border:0}
-
-/* 03.1: one core-value card. */
+/* 03.1: one full-width content cell, left aligned like the workshop cards. */
 .himart-team-page .team-workshop-visual--core .team-workshop-visual__cards{grid-template-columns:1fr}
 .himart-team-page .team-workshop-visual--core .team-workshop-card>span{color:rgba(255,255,255,.62);font-size:10px}
-.himart-team-page .team-workshop-visual--core .team-workshop-card__copy{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
-.himart-team-page .team-workshop-visual--core .team-core-value__word-v2{display:block;margin:0;color:#fff;font-family:var(--hm-font-en);font-size:64px;font-weight:400;line-height:1;letter-spacing:-.03em;text-align:right;text-transform:uppercase}
-.himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{margin:8px 0 0;max-width:none;color:rgba(255,255,255,.78);font-family:var(--hm-font-ko);font-size:16px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.5;letter-spacing:var(--hm-track-body);text-align:right;white-space:nowrap}
+.himart-team-page .team-workshop-visual--core .team-workshop-card__copy{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.himart-team-page .team-workshop-visual--core .team-core-value__word-v2{display:block;margin:0;color:#fff;font-family:var(--hm-font-en);font-size:64px;font-weight:400;line-height:1;letter-spacing:-.03em;text-align:left;text-transform:uppercase}
+.himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{margin:8px 0 0;max-width:none;color:rgba(255,255,255,.78);font-family:var(--hm-font-ko);font-size:16px;font-weight:300;font-variation-settings:"wght" 300;line-height:1.5;letter-spacing:var(--hm-track-body);text-align:left;white-space:nowrap}
 .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2 br{display:none}
 
 /* 03.2 — Way of Working: open editorial rows, not cards. ------------------- */
@@ -93,11 +146,10 @@
 
   .himart-team-page .team-workshop-visual{padding-bottom:0}
   .himart-team-page .team-workshop-visual__image{aspect-ratio:auto;padding-top:62.5%;margin-bottom:0;overflow:visible}
-  .himart-team-page .team-workshop-visual__cards{position:relative;right:auto;bottom:auto;grid-template-columns:1fr;width:100%;aspect-ratio:auto;margin-top:32px;transform:none;background:transparent;overflow:visible}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-visual__cards{position:relative;right:auto;bottom:auto;grid-template-columns:1fr;width:100%;aspect-ratio:auto;margin-top:0;transform:none;background:transparent;overflow:visible}
   .himart-team-page .team-workshop-visual--strengths .team-workshop-visual__cards{grid-template-columns:1fr}
-  .himart-team-page .team-workshop-visual .team-workshop-card{min-height:240px;height:auto;padding:28px;border:0;border-bottom:1px solid rgba(255,255,255,.15);overflow:visible}
-  .himart-team-page .team-workshop-visual .team-workshop-card:last-child{border-bottom:0}
-  .himart-team-page .team-workshop-visual--strengths .team-workshop-card + .team-workshop-card{border-left:0;border-top:0}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card{min-height:0;height:auto;padding:24px 0 28px;border:0;border-top:1px solid var(--team-workshop-divider);overflow:visible}
+  .himart-team-page :is(.team-workshop-visual--people,.team-workshop-visual--strengths,.team-workshop-visual--voices,.team-workshop-visual--core) .team-workshop-card + .team-workshop-card{border-left:0;border-top:1px solid var(--team-workshop-divider)}
   .himart-team-page .team-workshop-visual--core .team-core-value__word-v2{font-size:48px}
   .himart-team-page .team-workshop-visual--core .team-core-value__copy-v2{white-space:normal}
 }
