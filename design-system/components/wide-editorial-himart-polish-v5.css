@@ -103,3 +103,19 @@ html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap > div
   align-items:flex-start!important;
   gap:16px!important;
 }
+
+
+/* HIMART 02.1 — exactly two semantic lines only.
+   Each authored line is non-wrapping so this subsection can never become 3 lines. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title,
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-title{
+  max-width:none!important;
+  white-space:normal!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title > span,
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-title > span{
+  display:block!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
