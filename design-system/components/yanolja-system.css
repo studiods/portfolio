@@ -1218,3 +1218,384 @@ html body.yanolja-system-page #direction .yanolja-lead-step:nth-child(6){
     grid-template-columns:1fr!important
   }
 }
+
+/* 2026-09-19 — Yanolja field/product gallery refinement v9. */
+
+/* 01.3 — three field images, 4s autoplay. Cards remain the shared TEAM layout. */
+html body.yanolja-system-page #brand .yanolja-field-gallery{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:16/9!important;
+  overflow:hidden!important;
+  background:#000!important
+}
+html body.yanolja-system-page #brand .yanolja-field-gallery__viewport{
+  position:absolute!important;
+  inset:0!important;
+  overflow:hidden!important
+}
+html body.yanolja-system-page #brand .yanolja-field-gallery__track{
+  display:flex!important;
+  width:100%!important;
+  height:100%!important;
+  transform:translate3d(0,0,0);
+  transition:transform .58s cubic-bezier(.22,.61,.36,1)!important;
+  will-change:transform
+}
+html body.yanolja-system-page #brand .yanolja-field-gallery__track.is-no-transition{
+  transition:none!important
+}
+html body.yanolja-system-page #brand .yanolja-field-gallery__slide{
+  position:relative!important;
+  flex:0 0 100%!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important
+}
+html body.yanolja-system-page #brand .yanolja-field-gallery__slide>img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important
+}
+
+/* 03.2 — right-side copy sits on the bottom baseline of its paired visual. */
+html body.yanolja-system-page #journey .yanolja-blue-access__research,
+html body.yanolja-system-page #journey .yanolja-vision-copy{
+  justify-content:flex-end!important;
+  padding-top:28px!important;
+  padding-bottom:0!important
+}
+
+/* 04.1 / 04.2 — shared numeric gallery pagination. */
+html body.yanolja-system-page #direction .hst-ds-gallery__status{
+  position:absolute!important;
+  z-index:9!important;
+  top:22px!important;
+  right:24px!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:rgba(0,0,0,.60)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1!important;
+  letter-spacing:.08em!important;
+  mix-blend-mode:normal!important;
+  pointer-events:none!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery .hst-ds-gallery__status{
+  color:#fff!important;
+  opacity:.86!important;
+  mix-blend-mode:difference!important
+}
+
+/* 04.2 — same 4:3 gallery contract, product UI images only. */
+html body.yanolja-system-page #direction .hst-product-gallery{
+  position:relative!important;
+  width:100%!important;
+  overflow:visible!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery .hst-ds-gallery__viewport{
+  aspect-ratio:4/3!important;
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide{
+  position:relative!important;
+  flex:0 0 100%!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:60px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst-product-gallery__slide>img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important
+}
+
+/* 04.1 p.60 — denser, hotel/front-desk oriented component inventory. */
+html body.yanolja-system-page #direction .hst60-layout{
+  position:absolute!important;
+  top:112px!important;
+  left:60px!important;
+  right:60px!important;
+  bottom:60px!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  grid-template-rows:repeat(3,minmax(0,1fr))!important;
+  column-gap:34px!important;
+  row-gap:24px!important;
+  align-items:start!important;
+  align-content:stretch!important;
+  overflow:hidden!important
+}
+html body.yanolja-system-page #direction .hst60-demo{
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important
+}
+html body.yanolja-system-page #direction .hst60-demo h5{
+  margin:0 0 10px!important;
+  padding:0 0 7px!important;
+  border-bottom:1px solid #d8d8d8!important;
+  color:#111!important;
+  font:700 var(--hst-type-section)/1.1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst60-caption{
+  margin-top:7px!important;
+  color:#8b8b8b!important;
+  font:400 var(--hst-type-micro)/1.25 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst60-badge-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:6px!important
+}
+html body.yanolja-system-page #direction .hst60-badge-row span{
+  display:inline-grid!important;
+  min-width:42px!important;
+  height:18px!important;
+  place-items:center!important;
+  padding:0 7px!important;
+  border-radius:9px!important;
+  background:#eceff3!important;
+  color:#62666d!important;
+  font:600 var(--hst-type-compact)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst60-badge-row .is-info{background:#e8f0ff!important;color:#004cb6!important}
+html body.yanolja-system-page #direction .hst60-badge-row .is-success{background:#e8f6e3!important;color:#389100!important}
+html body.yanolja-system-page #direction .hst60-badge-row .is-warning{background:#fff1dc!important;color:#b65e00!important}
+html body.yanolja-system-page #direction .hst60-badge-row .is-error{background:#fbe5e5!important;color:#b50000!important}
+
+html body.yanolja-system-page #direction .hst-room-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,1fr)!important;
+  gap:6px!important
+}
+html body.yanolja-system-page #direction .hst-room-grid i{
+  display:block!important;
+  min-height:36px!important;
+  padding:6px!important;
+  border-top:2px solid #aab0b7!important;
+  background:#f8f8f8!important;
+  font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-room-grid i.is-clean{border-top-color:#389100!important}
+html body.yanolja-system-page #direction .hst-room-grid i.is-service{border-top-color:#e47500!important}
+html body.yanolja-system-page #direction .hst-room-grid i.is-vip{border-top-color:#004cb6!important}
+html body.yanolja-system-page #direction .hst-room-grid b{
+  display:block!important;
+  color:#333!important;
+  font:700 var(--hst-type-ui)/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-room-grid span{
+  display:block!important;
+  margin-top:4px!important;
+  color:#898989!important;
+  font:400 var(--hst-type-micro)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+
+html body.yanolja-system-page #direction .hst-quick-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:6px!important
+}
+html body.yanolja-system-page #direction .hst-quick-actions i{
+  display:grid!important;
+  height:24px!important;
+  place-items:center!important;
+  border:1px solid #c6c9ce!important;
+  color:#666!important;
+  font:600 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important;
+  font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-quick-actions i.is-primary{
+  border-color:#004cb6!important;
+  background:#004cb6!important;
+  color:#fff!important
+}
+
+html body.yanolja-system-page #direction .hst-search-field{
+  display:grid!important;
+  grid-template-columns:1fr 24px!important;
+  height:26px!important;
+  align-items:center!important;
+  padding-left:8px!important;
+  border:1px solid #bfc3c8!important;
+  color:#aaa!important;
+  font:400 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-search-field b{
+  display:grid!important;
+  height:100%!important;
+  place-items:center!important;
+  border-left:1px solid #d7dade!important;
+  color:#004cb6!important;
+  font-size:12px!important
+}
+html body.yanolja-system-page #direction .hst-search-meta{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:5px!important;
+  margin-top:7px!important;
+  align-items:center!important
+}
+html body.yanolja-system-page #direction .hst-search-meta>span{
+  color:#999!important;
+  font:400 var(--hst-type-micro)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-search-meta i{
+  padding:3px 5px!important;
+  background:#f2f3f5!important;
+  color:#6e7278!important;
+  font:400 var(--hst-type-micro)/1 Arial,sans-serif!important;
+  font-style:normal!important
+}
+
+html body.yanolja-system-page #direction .hst-date-range{
+  display:grid!important;
+  grid-template-columns:1fr 20px 1fr!important;
+  gap:5px!important;
+  align-items:center!important
+}
+html body.yanolja-system-page #direction .hst-date-range>div{
+  min-height:48px!important;
+  padding:7px!important;
+  border:1px solid #d3d5d8!important
+}
+html body.yanolja-system-page #direction .hst-date-range span{
+  display:block!important;
+  color:#999!important;
+  font:400 var(--hst-type-micro)/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-date-range b{
+  display:block!important;
+  margin-top:6px!important;
+  color:#333!important;
+  font:700 11px/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-date-range small{
+  display:block!important;
+  margin-top:3px!important;
+  color:#777!important;
+  font:400 var(--hst-type-micro)/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-date-range em{
+  color:#999!important;
+  text-align:center!important;
+  font:400 10px/1 Arial,sans-serif!important;
+  font-style:normal!important
+}
+
+html body.yanolja-system-page #direction .hst-task-list{
+  display:grid!important;
+  gap:4px!important
+}
+html body.yanolja-system-page #direction .hst-task-list>div{
+  display:grid!important;
+  grid-template-columns:30px 1fr 40px!important;
+  gap:6px!important;
+  min-height:23px!important;
+  align-items:center!important;
+  border-bottom:1px solid #e4e5e7!important;
+  color:#666!important;
+  font:400 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-task-list b{color:#333!important}
+html body.yanolja-system-page #direction .hst-task-list i{
+  padding:3px 4px!important;
+  background:#e8f0ff!important;
+  color:#004cb6!important;
+  text-align:center!important;
+  font-size:var(--hst-type-micro)!important;
+  font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-task-list i.is-done{background:#e8f6e3!important;color:#389100!important}
+html body.yanolja-system-page #direction .hst-task-list i.is-wait{background:#f1f1f1!important;color:#888!important}
+
+html body.yanolja-system-page #direction .hst-payment-card{
+  padding:9px!important;
+  border:1px solid #d8dade!important;
+  background:#fafafa!important
+}
+html body.yanolja-system-page #direction .hst-payment-card>span{
+  display:block!important;
+  color:#888!important;
+  font:400 var(--hst-type-micro)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-payment-card>strong{
+  display:block!important;
+  margin-top:5px!important;
+  color:#222!important;
+  font:700 15px/1 Arial,sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-payment-card>div{
+  display:flex!important;
+  gap:4px!important;
+  margin-top:9px!important
+}
+html body.yanolja-system-page #direction .hst-payment-card i{
+  padding:4px 6px!important;
+  border:1px solid #d0d2d5!important;
+  color:#777!important;
+  font:400 var(--hst-type-micro)/1 Arial,sans-serif!important;
+  font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-payment-card i.is-selected{
+  border-color:#004cb6!important;
+  background:#004cb6!important;
+  color:#fff!important
+}
+
+html body.yanolja-system-page #direction .hst60-alerts .hst-alert{
+  min-height:29px!important;
+  margin-top:5px!important;
+  padding:6px 8px!important;
+  grid-template-columns:36px 1fr!important;
+  gap:8px!important;
+  font-size:var(--hst-type-compact)!important
+}
+html body.yanolja-system-page #direction .hst60-table-demo .hst-mini-table{
+  margin-top:0!important
+}
+html body.yanolja-system-page #direction .hst60-table-demo .hst-mini-table>div{
+  min-height:22px!important;
+  font-size:var(--hst-type-compact)!important
+}
+
+/* 04.3 — white final divider, 12px numbering, 16px body. */
+html body.yanolja-system-page #direction .yanolja-lead-step>span{
+  font-size:12px!important
+}
+html body.yanolja-system-page #direction .yanolja-lead-step p{
+  font-size:16px!important;
+  line-height:1.5!important;
+  max-width:34ch!important
+}
+html body.yanolja-system-page #direction .yanolja-lead-step:nth-child(6){
+  border-top-color:var(--hm-line-default)!important
+}
+
+@media(max-width:780px){
+  html body.yanolja-system-page #direction .hst-product-gallery__slide{
+    padding:24px!important
+  }
+  html body.yanolja-system-page #direction .hst-ds-gallery__status{
+    top:14px!important;
+    right:16px!important;
+    font-size:10px!important
+  }
+}
