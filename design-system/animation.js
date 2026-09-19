@@ -267,15 +267,28 @@
       const matteBaseOpacity = readHeroOpacity('--hm-hero-matte-base-opacity', 0.5);
       const matteMaxOpacity = Math.max(matteBaseOpacity, readHeroOpacity('--hm-hero-matte-scroll-max-opacity', 1));
 
+      const fadeDistance = Number(hero.dataset.hmFadeDistance || 420);
+      let lastProgress = -1;
+      let heroRaf = 0;
       const updateHero = () => {
-        const progress = Math.min(1, Math.max(0, window.scrollY / Number(hero.dataset.hmFadeDistance || 420)));
+        const progress = Math.min(1, Math.max(0, window.scrollY / fadeDistance));
+        if (Math.abs(progress - lastProgress) < 0.001) return;
+        lastProgress = progress;
         const eased = 1 - Math.pow(1 - progress, 3);
         hero.style.setProperty('--hm-scroll-progress', progress.toFixed(3));
         hero.style.setProperty('--hm-hero-overlay-opacity', (matteBaseOpacity + eased * (matteMaxOpacity - matteBaseOpacity)).toFixed(3));
         hero.style.setProperty('--hm-hero-copy-opacity', (1 - eased * 0.88).toFixed(3));
       };
+      const requestHeroUpdate = () => {
+        if (lastProgress === 1 && window.scrollY >= fadeDistance) return;
+        if (heroRaf) return;
+        heroRaf = requestAnimationFrame(() => {
+          heroRaf = 0;
+          updateHero();
+        });
+      };
       updateHero();
-      window.addEventListener('scroll', updateHero, { passive: true });
+      window.addEventListener('scroll', requestHeroUpdate, { passive: true });
     }
 
     const videos = [...document.querySelectorAll('[data-hm-video]')];
