@@ -88,3 +88,30 @@ html body.himart-ax-page #direction .hm-wide-right-rail > .hm-subsection + .hm-s
     transform:none!important;
   }
 }
+
+/* 03.5 — embedded AI Banner Script Generator.
+   The portfolio viewport remains 4:3; the embedded document itself scrolls. */
+html body.himart-ax-page #journey .ax-script-generator{
+  width:100%!important;
+}
+html body.himart-ax-page #journey .ax-script-generator-frame{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:4 / 3!important;
+  overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  background:#121212!important;
+}
+html body.himart-ax-page #journey .ax-script-generator-frame iframe{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:#121212!important;
+}
+html body.himart-ax-page #journey .ax-script-generator-credit{
+  margin-top:12px!important;
+  color:var(--hm-text-tertiary)!important;
+}
