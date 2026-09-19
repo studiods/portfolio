@@ -3,9 +3,11 @@
    only with a more specific state selector (Reuse confidence/proof circle states). */
 :root{
   --hm-type-circle-number:28px;
+  /* Shared numbered circle-node base scale.
+     Desktop/default state must resolve to 12 / 22 / 12 before any responsive reduction. */
   --hm-type-journey-circle-number:12px;
   --hm-type-journey-circle-title:22px;
-  --hm-type-journey-circle-body:16px;
+  --hm-type-journey-circle-body:12px;
   --hm-circle-title-weight:100;
   --hm-circle-highlight-title-weight:400;
   --hm-rule-to-content-gap:var(--hm-space-component,40px);
@@ -36,17 +38,66 @@ html body.himart-page-body #live-main :is(
 }
 
 
-/* 03.1 / JOURNEY FLOW — shared base type scale for the circular flow nodes.
-   These are the approved default desktop sizes. Responsive guards may scale them down
-   with the circle diameter, but the standard state resolves to 12 / 22 / 16. */
-html body.himart-page-body #live-main #journey .journey-flow-block .flow-node .hm-card-no{
+/* Shared numbered circle-node typography.
+   The initial/default desktop state is always 12 / 22 / 12.
+   Responsive layouts may only scale DOWN after this baseline has been satisfied. */
+html body.himart-page-body #live-main :is(
+  #journey .journey-flow-block .flow-node,
+  .reuse-confidence-node,
+  .aimmo-ownership-sync__node,
+  .aimmo-business-flow > article,
+  .stepup-habit-flow > article
+) > :is(span,.hm-card-no){
   font-size:var(--hm-type-journey-circle-number)!important;
 }
-html body.himart-page-body #live-main #journey .journey-flow-block .flow-node h4{
+html body.himart-page-body #live-main :is(
+  #journey .journey-flow-block .flow-node,
+  .reuse-confidence-node,
+  .aimmo-ownership-sync__node,
+  .aimmo-business-flow > article,
+  .stepup-habit-flow > article
+) h4{
   font-size:var(--hm-type-journey-circle-title)!important;
 }
-html body.himart-page-body #live-main #journey .journey-flow-block .flow-node p{
+html body.himart-page-body #live-main :is(
+  #journey .journey-flow-block .flow-node,
+  .reuse-confidence-node,
+  .aimmo-ownership-sync__node,
+  .aimmo-business-flow > article,
+  .stepup-habit-flow > article
+) p{
   font-size:var(--hm-type-journey-circle-body)!important;
+}
+
+/* Variable sizing starts only on narrow viewports and never exceeds the desktop baseline. */
+@media(max-width:780px){
+  html body.himart-page-body #live-main :is(
+    #journey .journey-flow-block .flow-node,
+    .reuse-confidence-node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article
+  ) > :is(span,.hm-card-no){
+    font-size:clamp(10px,2.8vw,var(--hm-type-journey-circle-number))!important;
+  }
+  html body.himart-page-body #live-main :is(
+    #journey .journey-flow-block .flow-node,
+    .reuse-confidence-node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article
+  ) h4{
+    font-size:clamp(18px,5vw,var(--hm-type-journey-circle-title))!important;
+  }
+  html body.himart-page-body #live-main :is(
+    #journey .journey-flow-block .flow-node,
+    .reuse-confidence-node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article
+  ) p{
+    font-size:clamp(10px,3vw,var(--hm-type-journey-circle-body))!important;
+  }
 }
 
 /* Reuse 02.2 confidence circles use the shared semantic state below.
