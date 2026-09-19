@@ -174,12 +174,14 @@
   right:auto;
   bottom:auto;
   left:auto;
+  display:grid;
   width:100%;
   height:auto;
   min-height:240px;
   aspect-ratio:auto;
   margin-top:24px;
   grid-template-columns:repeat(4,minmax(0,1fr));
+  align-items:stretch;
   transform:none;
 }
 .himart-team-page .team-workshop-visual--full-four .team-workshop-card{
