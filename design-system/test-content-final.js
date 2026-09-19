@@ -97,7 +97,14 @@
 
   const updateHeroFade = () => {};
 
-  const schedule = () => apply();
+  let reconcileRaf = 0;
+  const schedule = () => {
+    if (reconcileRaf) return;
+    reconcileRaf = requestAnimationFrame(() => {
+      reconcileRaf = 0;
+      apply();
+    });
+  };
   const observer = new MutationObserver(() => {
     if (!restoredFallback && main?.textContent?.includes('페이지를 불러오지 못했습니다.') && fallbackMarkup) {
       restoredFallback = true;
@@ -109,6 +116,14 @@
   apply();
   updateHeroFade();
   window.addEventListener('load', schedule, { once:true });
-  const lateApply = window.setInterval(apply, 600);
-  setTimeout(() => { apply(); observer.disconnect(); clearInterval(lateApply); }, 30000);
+
+  /* Legacy content writers finish within the existing 16s reconciliation window.
+     Use sparse checkpoints instead of scanning the whole page every 600ms for 30s. */
+  [600,1600,3600,7600,12000,16000].forEach(ms => setTimeout(schedule, ms));
+  setTimeout(() => {
+    schedule();
+    observer.disconnect();
+    if (reconcileRaf) cancelAnimationFrame(reconcileRaf);
+    reconcileRaf = 0;
+  }, 18000);
 })();
