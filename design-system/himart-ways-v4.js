@@ -26,7 +26,8 @@
       ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
       ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13'],
       ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14'],
-      ['./design-system/components/himart-ways-v15.css?v=20260914-10', 'ways-v15']
+      ['./design-system/components/himart-ways-v15.css?v=20260914-10', 'ways-v15'],
+      ['./design-system/components/himart-ways-v16.css?v=20260919-1', 'ways-v16']
     ];
 
     finalCssPromise = Promise.all(sheets.map(([href, key]) => new Promise(resolve => {
@@ -128,15 +129,7 @@
     if (!journey) return;
 
     const head = journey.querySelector(':scope > .hm-wrap > .hm-section-head');
-    if (head) {
-      let desc = head.querySelector('.hm-section-desc');
-      if (!desc) {
-        desc = document.createElement('p');
-        desc.className = 'hm-section-desc hm-ds-section__description';
-        head.appendChild(desc);
-      }
-      desc.textContent = '팀의 의견을 실제 기능·프로세스·운영 규칙으로 연결했습니다.';
-    }
+    head?.querySelectorAll('.hm-section-desc, .hm-ds-section__description').forEach(node => node.remove());
 
     const subsections = [...journey.querySelectorAll('.hm-subsection')];
     const s31 = subsections.find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith('03.1'));
@@ -197,7 +190,9 @@
 
     if (s33) {
       const title33 = s33.querySelector('.hm-subtitle');
-      if (title33) title33.innerHTML = '관리하지 않으면 다시 이전으로 돌아갑니다.<br>규칙과 가이드도 같이 만들어 배포했습니다.';
+      if (title33) title33.innerHTML = '배포만 하고 관리하지 않으면 다시 예전으로 돌아갈 확률이 높았습니다.<br>그래서 가이드와 규칙까지 함께 만들고 배포했습니다.';
+      const firstRuleTitle = s33.querySelector('.ways-operating-rule h4');
+      if (firstRuleTitle) firstRuleTitle.textContent = '[공지], [요청], [공유], [승인] 과 같은 말머리를 메시지 전송 시 무조건 사용합니다.';
     }
   };
 
