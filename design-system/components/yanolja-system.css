@@ -387,7 +387,12 @@ html body.yanolja-system-page #journey .yanolja-blue-access__swatch b{
   margin-top:14px!important;font:400 16px/1 var(--hm-font-en)!important;opacity:.72!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__research{
-  min-height:280px!important;padding:28px 0 0!important;border-top:1px solid var(--hm-line-default)!important
+  min-height:280px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  padding:28px 0!important;
+  border-top:1px solid var(--hm-line-default)!important
 }
 html body.yanolja-system-page #journey .yanolja-blue-access__research>span{
   color:var(--hm-blue)!important;font:400 12px/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important
@@ -409,11 +414,16 @@ html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-v
   min-width:0!important;padding:18px 0 20px!important;border-top:1px solid var(--hm-line-default)!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot-matrix{
-  grid-template-columns:repeat(6,27px)!important;gap:8px!important;margin-top:16px!important
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:0!important;width:100%!important;margin-top:16px!important
 }
-html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot{width:27px!important;height:27px!important}
+html body.yanolja-system-page #journey .yanolja-vision-grid--reframed .yanolja-dot{width:31px!important;height:31px!important;justify-self:center!important}
 html body.yanolja-system-page #journey .yanolja-vision-copy{
-  padding:24px 0 0!important;border-top:1px solid var(--hm-line-default)!important
+  min-height:280px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  padding:28px 0!important;
+  border-top:1px solid var(--hm-line-default)!important
 }
 html body.yanolja-system-page #journey .yanolja-vision-copy>span{
   color:var(--hm-blue)!important;font:400 12px/1.2 var(--hm-font-en)!important;letter-spacing:var(--hm-track-note)!important
@@ -472,7 +482,13 @@ html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-
 }
 html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-meter>div{
   min-height:220px!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;padding:24px 0!important;
-  border-left:0!important;border-right:0!important
+  border-left:0!important;border-right:0!important;
+  border-top:1px solid rgba(255,255,255,.20)!important;
+  border-bottom:1px solid rgba(255,255,255,.20)!important
+}
+html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-meter span{
+  font-size:12px!important;
+  line-height:1.4!important
 }
 html body.yanolja-system-page #journey .yanolja-usability-row .yanolja-contrast-meter strong{
   font-size:105px!important;font-weight:100!important;line-height:.88!important;letter-spacing:-.05em!important
@@ -567,6 +583,9 @@ html body.yanolja-system-page #direction .hst-ds-gallery__viewport{
 html body.yanolja-system-page #direction .hst-ds-gallery__track{
   display:flex!important;width:100%!important;height:100%!important;transform:translate3d(0,0,0);transition:transform .52s cubic-bezier(.22,.61,.36,1)!important;will-change:transform
 }
+html body.yanolja-system-page #direction .hst-ds-gallery__track.is-no-transition{
+  transition:none!important
+}
 html body.yanolja-system-page #direction .hst-ds-sheet{
   --hst-type-section:8px;
   --hst-type-label:7px;
@@ -625,7 +644,7 @@ html body.yanolja-system-page #direction .hst-btn.is-danger.is-disabled{backgrou
 html body.yanolja-system-page #direction .hst57-layout{
   position:absolute!important;top:116px!important;left:60px!important;right:60px!important;bottom:60px!important;
   display:grid!important;grid-template-columns:82px minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr)!important;
-  column-gap:38px!important;row-gap:24px!important;align-items:start!important;align-content:start!important;overflow:hidden!important
+  column-gap:42px!important;row-gap:28px!important;align-items:start!important;align-content:start!important;overflow:hidden!important
 }
 html body.yanolja-system-page #direction .hst57-label{
   color:#111!important;font:700 var(--hst-type-section)/1.15 Arial,var(--hm-font-ko),sans-serif!important;padding-top:3px!important
@@ -708,7 +727,7 @@ html body.yanolja-system-page #direction .hst-pagination.is-disabled{opacity:.42
 /* p.58 */
 html body.yanolja-system-page #direction .hst58-layout{
   position:absolute!important;top:116px!important;left:60px!important;right:60px!important;bottom:60px!important;
-  display:grid!important;grid-template-columns:86px minmax(0,.9fr) minmax(0,.9fr) 76px minmax(0,1.18fr)!important;column-gap:30px!important;align-items:start!important;overflow:hidden!important
+  display:grid!important;grid-template-columns:86px minmax(0,.9fr) minmax(0,.9fr) 76px minmax(0,1.18fr)!important;column-gap:34px!important;align-items:start!important;overflow:hidden!important
 }
 html body.yanolja-system-page #direction .hst58-title{
   color:#111!important;font:700 var(--hst-type-section)/1.15 Arial,var(--hm-font-ko),sans-serif!important;padding-top:3px!important
@@ -716,12 +735,12 @@ html body.yanolja-system-page #direction .hst58-title{
 html body.yanolja-system-page #direction .hst58-title.is-area{grid-column:4!important}
 html body.yanolja-system-page #direction .hst-field-column{grid-column:2!important}
 html body.yanolja-system-page #direction .hst-field-column.is-small{grid-column:3!important}
-html body.yanolja-system-page #direction .hst-textarea-column{grid-column:5!important;margin-top:18px!important}
+html body.yanolja-system-page #direction .hst-textarea-column{grid-column:5!important;margin-top:22px!important}
 html body.yanolja-system-page #direction .hst-field-state{
-  display:grid!important;grid-template-columns:54px minmax(0,1fr)!important;gap:10px!important;align-items:start!important;margin-top:7px!important;
+  display:grid!important;grid-template-columns:54px minmax(0,1fr)!important;gap:11px!important;align-items:start!important;margin-top:9px!important;
   color:#9a9a9a!important;font:400 var(--hst-type-label)/1.1 Arial,var(--hm-font-ko),sans-serif!important
 }
-html body.yanolja-system-page #direction .hst-field-column.is-small .hst-field-state{grid-template-columns:46px minmax(0,1fr)!important;margin-top:6px!important}
+html body.yanolja-system-page #direction .hst-field-column.is-small .hst-field-state{grid-template-columns:46px minmax(0,1fr)!important;margin-top:8px!important}
 html body.yanolja-system-page #direction .hst-field-state>span{padding-top:6px!important}
 html body.yanolja-system-page #direction .hst-field-control{
   position:relative!important;display:flex!important;align-items:center!important;height:20px!important;padding:0 6px!important;border:1px solid #c5c5c5!important;border-radius:1px!important;background:#fff!important;
@@ -764,7 +783,7 @@ html body.yanolja-system-page #direction .hst-field-select li{
 }
 html body.yanolja-system-page #direction .hst-field-select li.is-selected{color:#004cb6!important;font-weight:700!important;background:#f3f5fa!important}
 html body.yanolja-system-page #direction .hst-field-select li.is-disabled{color:#c9c9c9!important}
-html body.yanolja-system-page #direction .hst-textarea-column .hst-field-state{grid-template-columns:54px minmax(0,1fr)!important;margin-top:7px!important}
+html body.yanolja-system-page #direction .hst-textarea-column .hst-field-state{grid-template-columns:54px minmax(0,1fr)!important;margin-top:9px!important}
 html body.yanolja-system-page #direction .hst-textarea-control{
   position:relative!important;min-height:36px!important;padding:6px!important;border:1px solid #c5c5c5!important;background:#fff!important;color:#777!important;
   font:400 var(--hst-type-ui)/1.4 Arial,var(--hm-font-ko),sans-serif!important
@@ -782,7 +801,7 @@ html body.yanolja-system-page #direction .hst-field-state.is-counter small{margi
 html body.yanolja-system-page #direction .hst59-layout{
   position:absolute!important;top:112px!important;left:60px!important;right:60px!important;bottom:60px!important;
   display:grid!important;grid-template-columns:repeat(12,minmax(0,1fr))!important;grid-template-rows:auto minmax(0,1.02fr) minmax(0,.72fr)!important;
-  column-gap:22px!important;row-gap:28px!important;align-items:start!important;align-content:start!important;overflow:hidden!important
+  column-gap:25px!important;row-gap:32px!important;align-items:start!important;align-content:start!important;overflow:hidden!important
 }
 html body.yanolja-system-page #direction .hst-tabs-demo{grid-column:1/8!important}
 html body.yanolja-system-page #direction .hst-tabs-demo.is-small{grid-column:8/13!important}
@@ -829,7 +848,7 @@ html body.yanolja-system-page #direction .hst-days span{
 html body.yanolja-system-page #direction .hst-days span.is-selected{background:#004cb6!important;color:#fff!important}
 html body.yanolja-system-page #direction .hst-days span.is-soft{background:#f0f1f4!important}
 html body.yanolja-system-page #direction .hst-choice-demo{
-  grid-column:8/13!important;grid-row:2!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:34px!important;padding-left:18px!important
+  grid-column:8/13!important;grid-row:2!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:38px!important;padding-left:20px!important
 }
 html body.yanolja-system-page #direction .hst-choice-column h5{border:0!important;padding:0!important;margin:0 0 12px!important}
 html body.yanolja-system-page #direction .hst-choice-column>div{
@@ -886,7 +905,13 @@ html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-gr
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
 html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid>article{
-  aspect-ratio:2/1!important;
+  aspect-ratio:auto!important;
+  min-height:0!important;
+}
+html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid>article .hm-ds-icon{
+  position:static!important;
+  display:block!important;
+  margin:100px 0 0 auto!important;
 }
 
 html body.yanolja-system-page #journey .yanolja-usability-row--type{
@@ -911,4 +936,285 @@ html body.yanolja-system-page #journey .yanolja-type-legibility img{
 html body.yanolja-system-page #journey .yanolja-type-legibility::after{
   display:none!important;
   content:none!important;
+}
+
+/* 03.3 expandable evidence — uses the shared media-gallery/lightbox contract. */
+html body.yanolja-system-page #journey .yanolja-expand-gallery{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:0!important;
+  width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+html body.yanolja-system-page #journey .yanolja-expand-gallery .hm-ds-media-gallery__item{
+  width:100%!important;
+  min-height:0!important;
+  aspect-ratio:auto!important;
+  margin:0!important;
+  overflow:hidden!important;
+  background:#fff!important;
+}
+html body.yanolja-system-page #journey .yanolja-expand-gallery .hm-ds-media-gallery__item::after{
+  display:none!important;
+  content:none!important;
+}
+html body.yanolja-system-page #journey .yanolja-expand-gallery .hm-ds-media-gallery__item>img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:#fff!important;
+}
+
+/* p.60 — additional components using the same HST page frame. */
+html body.yanolja-system-page #direction .hst60-layout{
+  position:absolute!important;
+  top:116px!important;
+  left:60px!important;
+  right:60px!important;
+  bottom:60px!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,minmax(0,1fr))!important;
+  column-gap:42px!important;
+  row-gap:36px!important;
+  align-items:stretch!important;
+  overflow:hidden!important
+}
+html body.yanolja-system-page #direction .hst60-demo{
+  min-width:0!important;
+  padding:0!important
+}
+html body.yanolja-system-page #direction .hst60-demo h5{
+  margin-bottom:18px!important
+}
+html body.yanolja-system-page #direction .hst60-caption{
+  margin-top:12px!important;
+  color:#8a8a8a!important;
+  font:400 var(--hst-type-label)/1.35 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst60-badge-row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:10px!important
+}
+html body.yanolja-system-page #direction .hst60-badge-row span{
+  display:inline-grid!important;
+  min-width:48px!important;
+  height:22px!important;
+  place-items:center!important;
+  padding:0 9px!important;
+  border-radius:11px!important;
+  background:#eceff3!important;
+  color:#62666d!important;
+  font:600 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst60-badge-row .is-info{background:#e8f0ff!important;color:#004cb6!important}
+html body.yanolja-system-page #direction .hst60-badge-row .is-success{background:#e8f6e3!important;color:#389100!important}
+html body.yanolja-system-page #direction .hst60-badge-row .is-warning{background:#fff1dc!important;color:#b65e00!important}
+html body.yanolja-system-page #direction .hst60-badge-row .is-error{background:#fbe5e5!important;color:#b50000!important}
+html body.yanolja-system-page #direction .hst60-control-list{
+  display:grid!important;
+  gap:16px!important
+}
+html body.yanolja-system-page #direction .hst60-control-list>div{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  color:#777!important;
+  font:400 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-switch{
+  position:relative!important;
+  display:block!important;
+  width:36px!important;
+  height:18px!important;
+  border-radius:10px!important;
+  background:#cfd3d8!important
+}
+html body.yanolja-system-page #direction .hst-switch::after{
+  content:""!important;
+  position:absolute!important;
+  top:2px!important;
+  left:2px!important;
+  width:14px!important;
+  height:14px!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  box-shadow:0 1px 4px rgba(0,0,0,.18)!important
+}
+html body.yanolja-system-page #direction .hst-switch.is-on{background:#004cb6!important}
+html body.yanolja-system-page #direction .hst-switch.is-on::after{left:20px!important}
+html body.yanolja-system-page #direction .hst-switch.is-disabled{opacity:.42!important}
+html body.yanolja-system-page #direction .hst-progress{
+  position:relative!important;
+  height:6px!important;
+  margin:28px 0 0!important;
+  background:#e6e8eb!important
+}
+html body.yanolja-system-page #direction .hst-progress i{
+  display:block!important;
+  height:100%!important;
+  background:#004cb6!important
+}
+html body.yanolja-system-page #direction .hst-slider{
+  position:relative!important;
+  height:22px!important;
+  margin-top:32px!important
+}
+html body.yanolja-system-page #direction .hst-slider::before{
+  content:""!important;
+  position:absolute!important;
+  top:10px!important;
+  left:0!important;
+  right:0!important;
+  height:2px!important;
+  background:#d5d8dc!important
+}
+html body.yanolja-system-page #direction .hst-slider i{
+  position:absolute!important;
+  top:10px!important;
+  left:0!important;
+  width:62%!important;
+  height:2px!important;
+  background:#004cb6!important
+}
+html body.yanolja-system-page #direction .hst-slider b{
+  position:absolute!important;
+  top:4px!important;
+  left:60%!important;
+  width:14px!important;
+  height:14px!important;
+  border:2px solid #004cb6!important;
+  border-radius:50%!important;
+  background:#fff!important
+}
+html body.yanolja-system-page #direction .hst60-alerts{
+  display:block!important
+}
+html body.yanolja-system-page #direction .hst-alert{
+  display:grid!important;
+  grid-template-columns:46px 1fr!important;
+  gap:12px!important;
+  align-items:center!important;
+  min-height:36px!important;
+  margin-top:10px!important;
+  padding:9px 12px!important;
+  border-left:3px solid #004cb6!important;
+  background:#f4f7fc!important;
+  color:#666!important;
+  font:400 var(--hst-type-ui)/1.35 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-alert b{color:#004cb6!important;font-weight:700!important}
+html body.yanolja-system-page #direction .hst-alert.is-success{border-left-color:#389100!important;background:#f1f8ee!important}
+html body.yanolja-system-page #direction .hst-alert.is-success b{color:#389100!important}
+html body.yanolja-system-page #direction .hst-alert.is-error{border-left-color:#b50000!important;background:#fbefef!important}
+html body.yanolja-system-page #direction .hst-alert.is-error b{color:#b50000!important}
+html body.yanolja-system-page #direction .hst-modal-card{
+  width:88%!important;
+  margin:10px auto 0!important;
+  padding:20px!important;
+  border:1px solid #d0d3d7!important;
+  background:#fff!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.12)!important
+}
+html body.yanolja-system-page #direction .hst-modal-card>b{
+  display:block!important;
+  color:#222!important;
+  font:700 var(--hst-type-section)/1.3 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-modal-card>p{
+  margin:10px 0 20px!important;
+  color:#777!important;
+  font:400 var(--hst-type-ui)/1.5 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-modal-card>div{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important
+}
+html body.yanolja-system-page #direction .hst-modal-card i{
+  display:grid!important;
+  height:24px!important;
+  place-items:center!important;
+  border:1px solid #c6c9ce!important;
+  color:#666!important;
+  font:600 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important;
+  font-style:normal!important
+}
+html body.yanolja-system-page #direction .hst-modal-card i.is-primary{
+  border-color:#004cb6!important;
+  background:#004cb6!important;
+  color:#fff!important
+}
+html body.yanolja-system-page #direction .hst-mini-table{
+  width:100%!important;
+  margin-top:10px!important;
+  border-top:1px solid #aeb3b9!important
+}
+html body.yanolja-system-page #direction .hst-mini-table>div{
+  display:grid!important;
+  grid-template-columns:1fr .9fr .8fr!important;
+  min-height:32px!important;
+  align-items:center!important;
+  border-bottom:1px solid #e0e2e5!important;
+  color:#666!important;
+  font:400 var(--hst-type-ui)/1 Arial,var(--hm-font-ko),sans-serif!important
+}
+html body.yanolja-system-page #direction .hst-mini-table .is-head{
+  background:#f5f6f8!important;
+  color:#444!important;
+  font-weight:700!important
+}
+html body.yanolja-system-page #direction .hst-mini-table span{
+  padding:0 10px!important
+}
+html body.yanolja-system-page #direction .hst-mini-table .is-blue{color:#004cb6!important;font-weight:700!important}
+html body.yanolja-system-page #direction .hst-mini-table .is-green{color:#389100!important;font-weight:700!important}
+
+/* 04.3 six-step result flow. */
+html body.yanolja-system-page #direction .yanolja-lead-flow{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:20px 28px!important;
+  width:100%!important
+}
+html body.yanolja-system-page #direction .yanolja-lead-step{
+  min-height:220px!important;
+  padding:22px 0 24px!important;
+  background:transparent!important
+}
+html body.yanolja-system-page #direction .yanolja-lead-step strong{
+  display:block!important;
+  margin-top:24px!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.22!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important
+}
+html body.yanolja-system-page #direction .yanolja-lead-step p{
+  margin:12px 0 0!important;
+  max-width:30ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  word-break:keep-all!important
+}
+html body.yanolja-system-page #direction .yanolja-lead-step:nth-child(6){
+  border-top-color:var(--hm-blue)!important
+}
+@media(max-width:780px){
+  html body.yanolja-system-page #direction .yanolja-lead-flow{
+    grid-template-columns:1fr!important
+  }
 }
