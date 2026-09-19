@@ -321,8 +321,8 @@
 /* FROM PRINCIPLES TO IMPACT */
 .impact-section{
   position:relative;
-  padding:clamp(160px,18vh,240px) 0;
-  border-top:1px solid rgba(255,255,255,.18);
+  padding:clamp(120px,14vh,180px) 0 clamp(160px,18vh,240px);
+  border-top:0;
 }
 .impact-grid,
 .work-shortcut-grid{
@@ -365,11 +365,11 @@
   line-height:.99!important;
 }
 .impact-copy{
-  margin:40px 0 0;
+  margin:64px 0 0;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:300!important;
   font-size:22px!important;
-  line-height:1.6!important;
+  line-height:1.44!important;
   letter-spacing:-.02em;
   color:rgba(255,255,255,.70);
   word-break:keep-all;
@@ -384,7 +384,7 @@
   line-height:1.45;
   letter-spacing:0;
   color:#111;
-  opacity:.70;
+  opacity:.60;
 }
 .impact-scramble{
   filter:invert(1);
@@ -398,7 +398,7 @@
   grid-column:2;
   display:inline-flex;
   align-items:center;
-  gap:32px;
+  gap:0;
   width:max-content;
   max-width:100%;
   margin:0;
@@ -411,13 +411,15 @@
   text-decoration:none;
 }
 .work-shortcut-text{
+  margin:0!important;
   color:#111;
 }
 .work-shortcut-arrow{
   display:block;
   flex:none;
-  width:.9em;
-  height:.9em;
+  margin:0!important;
+  width:.81em;
+  height:.81em;
   box-sizing:border-box;
   border-top:1px solid rgba(255,255,255,.60);
   border-right:1px solid rgba(255,255,255,.60);
@@ -497,7 +499,7 @@
   .principle-en{white-space:normal!important;font-size:11px}
   .principle-ko{font-size:var(--principle-card-ko-size)!important;line-height:1.023!important}
 
-  .impact-section{padding:120px 0}
+  .impact-section{padding:96px 0 120px}
   .impact-grid,
   .work-shortcut-grid{grid-template-columns:1fr}
   .impact-grid>.mini-label,
@@ -505,7 +507,7 @@
   .impact-content{grid-column:1}
   .impact-statement{font-size:32px!important;line-height:1.023!important;margin:0!important;padding:0!important}
   .impact-statement>.impact-line{margin:0!important;padding:0!important;line-height:1.023!important}
-  .impact-copy{margin-top:40px;font-size:16px!important;line-height:1.7!important}
+  .impact-copy{margin-top:64px;font-size:16px!important;line-height:1.53!important}
   .impact-copy br{display:none}
   .impact-capabilities{margin-top:64px;padding-top:24px;font-size:12px;line-height:1.55}
   .work-shortcut{padding:104px 0}
