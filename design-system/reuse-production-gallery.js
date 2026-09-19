@@ -645,9 +645,15 @@
     const controller = {
       setInView(value) {
         inView = value;
-        if (!inView && !video.paused) pause();
+        if (inView && !document.hidden) {
+          if (video.paused || video.ended) play();
+        } else if (!video.paused) {
+          pause();
+        }
       },
-      resume() {},
+      resume() {
+        if (inView && (video.paused || video.ended)) play();
+      },
       pause() { if (!video.paused) pause(); }
     };
     controllers.set(gallery, controller);
@@ -659,8 +665,14 @@
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => controllers.get(entry.target)?.setInView(entry.isIntersecting));
-    }, { threshold: 0.20, rootMargin: '0px 0px -5% 0px' });
+      entries.forEach((entry) => {
+        const controller = controllers.get(entry.target);
+        if (!controller) return;
+        const isVideoPlayer = entry.target.classList.contains('reuse-production-gallery--video-player');
+        const focused = entry.isIntersecting && (!isVideoPlayer || entry.intersectionRatio >= .45);
+        controller.setInView(focused);
+      });
+    }, { threshold:[0,.20,.45,.65,1], rootMargin:'0px 0px -5% 0px' });
     controllers.forEach((_, gallery) => observer.observe(gallery));
   } else {
     controllers.forEach((controller) => controller.setInView(true));
