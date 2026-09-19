@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260919-3");
+@import url("./index.css?v=20260919-4");
 
 /*
   HIMART Shared System v3.9 — sole final-authority layer.
@@ -90,6 +90,9 @@ html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead{
   -webkit-line-clamp:var(--hm-hero-description-max-lines,3)!important;
   line-clamp:var(--hm-hero-description-max-lines,3)!important;
   -webkit-box-orient:vertical!important;
+}
+html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead br{
+  display:none!important;
 }
 
 /* Canonical type hierarchy: 64 / 52 / 32 / 22 / 16 / 12 / 10(source) */
