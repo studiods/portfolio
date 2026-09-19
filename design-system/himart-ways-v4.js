@@ -12,48 +12,8 @@
     stack has finished loading. This prevents newly injected SVGs from briefly rendering
     at the browser's default replaced-element size before their component CSS arrives.
   */
-  let finalCssPromise = null;
-  const mountFinalCss = () => {
-    if (finalCssPromise) return finalCssPromise;
-
-    const sheets = [
-      ['./design-system/components/himart-ways-title-owner.css?v=20260913-1', 'ways-title-owner'],
-      ['./design-system/components/himart-ways-v7.css?v=20260913-2340', 'ways-v7'],
-      ['./design-system/components/himart-ways-v8.css?v=20260914-1', 'ways-v8'],
-      ['./design-system/components/himart-ways-v9.css?v=20260914-2', 'ways-v9'],
-      ['./design-system/components/himart-ways-v10.css?v=20260914-3', 'ways-v10'],
-      ['./design-system/components/himart-ways-v11.css?v=20260914-4', 'ways-v11'],
-      ['./design-system/components/himart-ways-v12.css?v=20260914-5', 'ways-v12'],
-      ['./design-system/components/himart-ways-v13.css?v=20260914-6', 'ways-v13'],
-      ['./design-system/components/himart-ways-v14.css?v=20260914-7', 'ways-v14'],
-      ['./design-system/components/himart-ways-v15.css?v=20260914-10', 'ways-v15'],
-      ['./design-system/components/himart-ways-v16.css?v=20260919-1', 'ways-v16']
-    ];
-
-    finalCssPromise = Promise.all(sheets.map(([href, key]) => new Promise(resolve => {
-      const selector = `link[data-${key}]`;
-      const existing = document.querySelector(selector);
-      if (existing) {
-        if (existing.sheet) {
-          resolve();
-          return;
-        }
-        existing.addEventListener('load', resolve, {once:true});
-        existing.addEventListener('error', resolve, {once:true});
-        return;
-      }
-
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      link.setAttribute(`data-${key}`, '1');
-      link.addEventListener('load', resolve, {once:true});
-      link.addEventListener('error', resolve, {once:true});
-      document.head.appendChild(link);
-    })));
-
-    return finalCssPromise;
-  };
+  /* Page CSS is loaded statically from himart-ways.css.
+     Runtime must never append versioned style layers. */
 
   const subsectionByNo = no => [...document.querySelectorAll('#data .hm-subsection')]
     .find(section => section.querySelector('.hm-subno')?.textContent.trim().startsWith(no));
@@ -190,7 +150,7 @@
 
     if (s33) {
       const title33 = s33.querySelector('.hm-subtitle');
-      if (title33) title33.innerHTML = '배포만 하고 관리하지 않으면 다시 예전으로 돌아갈 확률이 높았습니다.<br>그래서 가이드와 규칙까지 함께 만들고 배포했습니다.';
+      if (title33) title33.innerHTML = '배포만으로는 다시 예전 방식으로 돌아가기 쉬웠습니다.<br>그래서 가이드와 운영 규칙까지 함께 만들었습니다.';
       const firstRuleTitle = s33.querySelector('.ways-operating-rule h4');
       if (firstRuleTitle) firstRuleTitle.textContent = '[공지], [요청], [공유], [승인] 과 같은 말머리를 메시지 전송 시 무조건 사용합니다.';
     }
@@ -238,9 +198,7 @@
     copy.innerHTML = '입사 직후 시작한 이 작업은 <strong>1년 넘게 이어졌습니다.</strong> 가장 어려웠던 것은 시스템보다 익숙한 방식을 유지하려는 사람들을 설득해 실제 행동을 바꾸는 일이었습니다. 좋은 도구가 있어도 더 나은 방식을 경험하지 못하면 익숙한 불편을 선택했습니다. 소모적인 순간도 있었지만, <strong>제대로 일할 환경과 기준을 만드는 것도 리드의 역할</strong>이라 판단했고 지금도 개선을 이어가고 있습니다.';
   };
 
-  const mount = async () => {
-    await mountFinalCss();
-
+  const mount = () => {
     rebuildRoleSections();
     refineJourney();
     refineDirection();
@@ -266,7 +224,6 @@
     }, 700);
   };
 
-  mountFinalCss();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once:true});
   else mount();
 })();
