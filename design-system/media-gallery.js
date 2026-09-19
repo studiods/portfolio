@@ -8,20 +8,29 @@
   const CAROUSEL_SELECTOR = '[data-hm-ds-carousel]';
   const PRODUCT_GALLERY_SELECTOR = '.hst-product-gallery';
   const PRODUCT_GALLERY_IMAGE_SELECTOR = '.hst-product-gallery__slide[data-hst-slide] > img';
+  const EXPLICIT_IMAGE_SELECTOR = '[data-hm-ds-expand-image]';
+  const DOM_GALLERY_SELECTOR = '[data-hm-ds-dom-gallery]';
+  const DOM_SLIDE_SELECTOR = '[data-hst-slide]';
   const CAROUSEL_SLIDE_SELECTOR = '.hm-ds-media-carousel__slide';
   const HOLD_MS = 3000;
   const TRANSITION_MS = 720;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   let lightbox = null;
+  let lightboxViewport = null;
   let lightboxImage = null;
   let lightboxIncoming = null;
+  let lightboxDomViewport = null;
+  let lightboxDomCanvas = null;
   let lightboxPrev = null;
   let lightboxNext = null;
   let closeButton = null;
   let lastTrigger = null;
   let lightboxGroup = [];
   let lightboxIndex = 0;
+  let lightboxMode = 'image';
+  let lightboxDomGroup = [];
+  let lightboxDomIndex = 0;
   let lightboxBusy = false;
   let lightboxTransitionTimer = 0;
 
@@ -38,8 +47,8 @@
     const stage = document.createElement('div');
     stage.className = 'hm-ds-image-lightbox__stage';
 
-    const viewport = document.createElement('div');
-    viewport.className = 'hm-ds-image-lightbox__viewport';
+    lightboxViewport = document.createElement('div');
+    lightboxViewport.className = 'hm-ds-image-lightbox__viewport';
 
     lightboxImage = document.createElement('img');
     lightboxImage.className = 'hm-ds-image-lightbox__image';
@@ -48,6 +57,14 @@
     lightboxIncoming = document.createElement('img');
     lightboxIncoming.className = 'hm-ds-image-lightbox__image hm-ds-image-lightbox__image--incoming';
     lightboxIncoming.alt = '';
+
+    lightboxDomViewport = document.createElement('div');
+    lightboxDomViewport.className = 'hm-ds-image-lightbox__dom';
+    lightboxDomViewport.hidden = true;
+
+    lightboxDomCanvas = document.createElement('div');
+    lightboxDomCanvas.className = 'hm-ds-image-lightbox__dom-canvas';
+    lightboxDomViewport.append(lightboxDomCanvas);
 
     lightboxPrev = document.createElement('button');
     lightboxPrev.className = 'hm-ds-image-lightbox__nav hm-ds-image-lightbox__nav--prev';
@@ -64,8 +81,8 @@
     closeButton.type = 'button';
     closeButton.setAttribute('aria-label', '확대 이미지 닫기');
 
-    viewport.append(lightboxImage, lightboxIncoming);
-    stage.append(viewport, lightboxPrev, lightboxNext, closeButton);
+    lightboxViewport.append(lightboxImage, lightboxIncoming);
+    stage.append(lightboxViewport, lightboxDomViewport, lightboxPrev, lightboxNext, closeButton);
     lightbox.append(stage);
     document.body.append(lightbox);
     lightboxImage.addEventListener('load', updateLightboxNavContrast);
@@ -98,7 +115,8 @@
 
   const updateLightboxNav = () => {
     if (!lightboxPrev || !lightboxNext) return;
-    const hidden = lightboxGroup.length < 2;
+    const count = lightboxMode === 'dom' ? lightboxDomGroup.length : lightboxGroup.length;
+    const hidden = count < 2;
     lightboxPrev.hidden = hidden;
     lightboxNext.hidden = hidden;
   };
@@ -142,7 +160,7 @@
     if (lightboxTransitionTimer) window.clearTimeout(lightboxTransitionTimer);
     lightboxTransitionTimer = 0;
     lightboxBusy = false;
-    lightbox.classList.remove('is-open', 'is-reverse');
+    lightbox.classList.remove('is-open', 'is-reverse', 'is-dom');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('hm-ds-lightbox-open');
     lightboxImage.classList.remove('is-exiting');
@@ -153,14 +171,84 @@
     lightboxIncoming.alt = '';
     lightboxGroup = [];
     lightboxIndex = 0;
+    lightboxDomGroup = [];
+    lightboxDomIndex = 0;
+    lightboxMode = 'image';
+    lightboxDomCanvas?.replaceChildren();
+    if (lightboxDomViewport) lightboxDomViewport.hidden = true;
+    if (lightboxViewport) lightboxViewport.hidden = false;
     lightbox.style.removeProperty('--hm-lightbox-nav-prev-color');
     lightbox.style.removeProperty('--hm-lightbox-nav-next-color');
     updateLightboxNav();
+    if (lightbox.parentNode !== document.body) document.body.append(lightbox);
     if (lastTrigger) lastTrigger.focus({ preventScroll: true });
     lastTrigger = null;
   };
 
+  const renderDomLightbox = () => {
+    if (!lightboxDomCanvas || !lightboxDomViewport) return;
+    const source = lightboxDomGroup[lightboxDomIndex];
+    if (!source) return;
+
+    const clone = source.cloneNode(true);
+    clone.removeAttribute('data-hst-slide');
+    clone.removeAttribute('aria-hidden');
+    clone.removeAttribute('role');
+    clone.removeAttribute('tabindex');
+    clone.classList.remove('hm-ds-gallery-expand-target');
+    clone.classList.add('hm-ds-dom-lightbox-clone');
+
+    const sourceWidth = Math.max(1, source.offsetWidth || source.getBoundingClientRect().width || 1200);
+    const sourceHeight = Math.max(1, source.offsetHeight || source.getBoundingClientRect().height || sourceWidth * .75);
+    const maxWidth = window.innerWidth * .85;
+    const maxHeight = Math.max(1, window.innerHeight - 96);
+    const scale = Math.min(maxWidth / sourceWidth, maxHeight / sourceHeight);
+
+    lightboxDomViewport.style.width = Math.round(sourceWidth * scale) + 'px';
+    lightboxDomViewport.style.height = Math.round(sourceHeight * scale) + 'px';
+    lightboxDomCanvas.style.width = sourceWidth + 'px';
+    lightboxDomCanvas.style.height = sourceHeight + 'px';
+    lightboxDomCanvas.style.transform = 'scale(' + scale + ')';
+    lightboxDomCanvas.replaceChildren(clone);
+  };
+
+  const openDomLightbox = (slide) => {
+    ensureLightbox();
+    const gallery = slide.closest(DOM_GALLERY_SELECTOR);
+    if (!gallery) return;
+
+    const track = gallery.querySelector('.hst-ds-gallery__track');
+    lightboxDomGroup = track
+      ? Array.from(track.children).filter((item) => item.matches(DOM_SLIDE_SELECTOR))
+      : [slide];
+    lightboxDomIndex = Math.max(0, lightboxDomGroup.indexOf(slide));
+    lightboxMode = 'dom';
+    lightboxBusy = false;
+    lastTrigger = slide;
+
+    const scope = slide.closest('#direction') || document.body;
+    if (lightbox.parentNode !== scope) scope.append(lightbox);
+
+    lightbox.classList.add('is-dom');
+    lightboxViewport.hidden = true;
+    lightboxDomViewport.hidden = false;
+    lightbox.style.setProperty('--hm-lightbox-nav-prev-color', '#111');
+    lightbox.style.setProperty('--hm-lightbox-nav-next-color', '#111');
+    renderDomLightbox();
+    updateLightboxNav();
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('hm-ds-lightbox-open');
+    closeButton.focus({ preventScroll: true });
+  };
+
   const moveLightbox = (delta) => {
+    if (lightboxMode === 'dom') {
+      if (lightboxDomGroup.length < 2) return;
+      lightboxDomIndex = (lightboxDomIndex + delta + lightboxDomGroup.length) % lightboxDomGroup.length;
+      renderDomLightbox();
+      return;
+    }
     if (lightboxBusy || lightboxGroup.length < 2) return;
     const targetIndex = (lightboxIndex + delta + lightboxGroup.length) % lightboxGroup.length;
     const target = lightboxGroup[targetIndex];
@@ -199,6 +287,12 @@
 
   const openLightbox = (image) => {
     ensureLightbox();
+    lightboxMode = 'image';
+    lightbox.classList.remove('is-dom');
+    if (lightbox.parentNode !== document.body) document.body.append(lightbox);
+    lightboxViewport.hidden = false;
+    lightboxDomViewport.hidden = true;
+    lightboxDomCanvas?.replaceChildren();
     lastTrigger = image;
     lightboxGroup = getLightboxGroup(image);
     lightboxIndex = Math.max(0, lightboxGroup.indexOf(image));
@@ -236,6 +330,36 @@
         openLightbox(image);
       }
     });
+  };
+
+  const bindExpandableDomSlide = (slide) => {
+    if (!slide || slide.dataset.galleryDomExpandBound === 'true') return;
+
+    slide.dataset.galleryDomExpandBound = 'true';
+    slide.classList.add('hm-ds-gallery-expand-target');
+    slide.setAttribute('role', 'button');
+    slide.setAttribute('tabindex', '0');
+    slide.setAttribute('aria-label', `${slide.getAttribute('aria-label') || '디자인 시스템 페이지'} 크게 보기`);
+
+    slide.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDomLightbox(slide);
+    });
+
+    slide.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openDomLightbox(slide);
+      }
+    });
+  };
+
+  const activateDomGallery = (gallery) => {
+    const track = gallery.querySelector('.hst-ds-gallery__track');
+    if (!track) return;
+    Array.from(track.children)
+      .filter((slide) => slide.matches(DOM_SLIDE_SELECTOR))
+      .forEach(bindExpandableDomSlide);
   };
 
   const activateGallery = (gallery) => {
@@ -408,6 +532,8 @@
     document.querySelectorAll(GALLERY_SELECTOR).forEach(activateGallery);
     document.querySelectorAll(CAROUSEL_SELECTOR).forEach(activateCarousel);
     document.querySelectorAll(`${PRODUCT_GALLERY_SELECTOR} ${PRODUCT_GALLERY_IMAGE_SELECTOR}`).forEach(bindExpandableImage);
+    document.querySelectorAll(EXPLICIT_IMAGE_SELECTOR).forEach(bindExpandableImage);
+    document.querySelectorAll(DOM_GALLERY_SELECTOR).forEach(activateDomGallery);
     ensureLightbox();
 
     lightbox.addEventListener('click', closeLightbox);
@@ -424,6 +550,10 @@
       event.preventDefault();
       event.stopPropagation();
       moveLightbox(1);
+    });
+
+    window.addEventListener('resize', () => {
+      if (lightbox?.classList.contains('is-open') && lightboxMode === 'dom') renderDomLightbox();
     });
 
     document.addEventListener('keydown', (event) => {
