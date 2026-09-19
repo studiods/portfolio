@@ -258,14 +258,15 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){flex:0 0 80%!important;--segment-color:var(--hm-chart-02,#007DE3)}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row i{display:none!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row span{display:block!important;margin:0!important;color:rgba(255,255,255,.92)!important;font:300 22px/1.15 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-group)!important;white-space:nowrap!important}
-html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:first-child>span{color:#000!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:first-child>span{color:#fff!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:first-child .stepup-en-label{
   color:inherit!important;
   font-family:var(--hm-font-en)!important;
   font-style:normal!important;
-  font-weight:300!important;
+  font-weight:400!important;
 }
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row b{display:block!important;margin:6px 0 0!important;color:#fff!important;font:300 30px/1 var(--hm-font-en)!important;letter-spacing:var(--hm-track-data-number)!important;text-align:left!important;font-variant-numeric:tabular-nums!important}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:first-child>b{font-weight:400!important}
 html body.nbt-stepup-page #habit .aimmo-environment-ratio__source{display:block!important;width:100%!important;margin:32px 0 0!important;padding:18px 0 0!important;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;color:var(--hm-text-tertiary)!important;font:300 10px/1.5 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-base)!important}
 
 @media(max-width:780px){
@@ -360,9 +361,10 @@ html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
 html body.nbt-stepup-page #reframe .stepup-reframe-flow>.stepup-reframe-arrow{
   --stepup-arrow-delay:0ms;
   display:block;
-  place-self:center;
-  width:165px;
-  height:165px;
+  justify-self:center;
+  align-self:center;
+  width:82.5px;
+  height:82.5px;
   margin:0;
   border-top:1px solid currentColor;
   border-right:1px solid currentColor;
