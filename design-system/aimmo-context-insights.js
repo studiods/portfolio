@@ -3,11 +3,15 @@
 
   const runtime = window.HMDSGalleryRuntime;
   const reduced = runtime?.reducedMotion ?? window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-  const referenceBars = [...document.querySelectorAll('.aimmo-system-page #data .aimmo-reference-bars')];
+  const focusCharts = [...document.querySelectorAll(
+    '.aimmo-system-page #data .aimmo-reference-bars, ' +
+    '.aimmo-system-page #data .aimmo-environment-ratio, ' +
+    '.aimmo-system-page #direction .aimmo-impact-chart'
+  )];
 
-  /* Reuse 03.1-style viewport reveal for DURATION / DECISION / OUTPUT. */
+  /* Reveal every bar-based graph when it enters the viewport. */
   if (reduced) {
-    referenceBars.forEach(chart => chart.classList.add('is-bars-focused'));
+    focusCharts.forEach(chart => chart.classList.add('is-bars-focused'));
   } else if ('IntersectionObserver' in window) {
     const barObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -16,9 +20,9 @@
         }
       });
     }, { threshold:.20, rootMargin:'0px 0px -5% 0px' });
-    referenceBars.forEach(chart => barObserver.observe(chart));
+    focusCharts.forEach(chart => barObserver.observe(chart));
   } else {
-    referenceBars.forEach(chart => chart.classList.add('is-bars-focused'));
+    focusCharts.forEach(chart => chart.classList.add('is-bars-focused'));
   }
 
   const rotator = document.querySelector('.aimmo-system-page #data .aimmo-output-rotator');
@@ -69,9 +73,13 @@
     }
 
     index = resolvedIndex;
-    requestAnimationFrame(() => {
-      nextSlide?.querySelector('.aimmo-reference-bars')?.classList.add('is-bars-focused');
-    });
+    const nextBars = nextSlide?.querySelector('.aimmo-reference-bars');
+    nextBars?.classList.remove('is-bars-focused');
+    if (reduced || autoActive) {
+      requestAnimationFrame(() => {
+        nextBars?.classList.add('is-bars-focused');
+      });
+    }
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
   };
 
@@ -116,8 +124,13 @@
 
   const setAutoActive = active => {
     autoActive = Boolean(active);
-    if (autoActive) start();
-    else stop();
+    if (autoActive) {
+      const activeBars = slides[index]?.querySelector('.aimmo-reference-bars');
+      requestAnimationFrame(() => activeBars?.classList.add('is-bars-focused'));
+      start();
+    } else {
+      stop();
+    }
   };
 
   if (runtime) {
