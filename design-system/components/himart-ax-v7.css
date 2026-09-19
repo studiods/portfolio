@@ -117,50 +117,62 @@ html body.himart-ax-page #journey .ax-script-generator-credit{
 }
 
 
-/* 03.6 — real banner output gallery.
-   Four source images (1328×800 each) form one 2×2 page.
-   Width is owned by the right content rail; intrinsic width/height attributes
-   preserve the exact source ratio so each page height is calculated automatically. */
+/* 03.6 — shared Design System gallery variant.
+   Reuses hm-ds-media-gallery + media-gallery.js exactly for gallery/lightbox behavior.
+   Local exception: four 1328×800 images touch with zero gap, with no caption or black matte. */
 html body.himart-ax-page #journey .ax-banner-output-gallery{
+  --hm-ds-media-gallery-gap:0px;
   width:100%!important;
-  display:flex!important;
-  flex-direction:column!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-gallery.hm-ds-media-gallery-stack{
   gap:40px!important;
 }
-html body.himart-ax-page #journey .ax-banner-output-page{
+html body.himart-ax-page #journey .ax-banner-output-page.hm-ds-media-gallery{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:12px!important;
-  width:100%!important;
-  margin:0!important;
-  padding:0!important;
-}
-html body.himart-ax-page #journey .ax-banner-output-page figure{
-  position:relative!important;
+  gap:0!important;
   width:100%!important;
   margin:0!important;
   padding:0!important;
   overflow:hidden!important;
-  background:#080808!important;
+  background:transparent!important;
 }
-html body.himart-ax-page #journey .ax-banner-output-page img{
-  display:block!important;
-  width:100%!important;
-  height:auto!important;
+html body.himart-ax-page #journey .ax-banner-output-page .hm-ds-media-gallery__item{
   aspect-ratio:1328 / 800!important;
-  object-fit:cover!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
 }
-html body.himart-ax-page #journey .ax-banner-output-page img.is-missing{
+html body.himart-ax-page #journey .ax-banner-output-page .hm-ds-media-gallery__item::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-page .hm-ds-media-gallery__item>figcaption{
+  display:none!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-page .hm-ds-media-gallery__item>img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+html body.himart-ax-page #journey .ax-banner-output-page .hm-ds-media-gallery__item>img.is-missing{
   opacity:0!important;
 }
 @media(max-width:780px){
-  html body.himart-ax-page #journey .ax-banner-output-gallery{
+  html body.himart-ax-page #journey .ax-banner-output-gallery.hm-ds-media-gallery-stack{
     gap:24px!important;
   }
-  html body.himart-ax-page #journey .ax-banner-output-page{
-    gap:8px!important;
+  html body.himart-ax-page #journey .ax-banner-output-page.hm-ds-media-gallery,
+  html body.himart-ax-page #journey .ax-banner-output-page.hm-ds-media-gallery--2x2{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:0!important;
   }
 }
