@@ -360,23 +360,25 @@ html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
 }
 html body.nbt-stepup-page #reframe .stepup-reframe-flow>.stepup-reframe-arrow{
   --stepup-arrow-delay:0ms;
-  display:block;
+  display:grid;
+  place-items:center;
   justify-self:center;
   align-self:center;
   width:82.5px;
   height:82.5px;
   margin:0;
-  border-top:1px solid currentColor;
-  border-right:1px solid currentColor;
   color:#fff;
   opacity:.30;
-  font-size:0;
-  line-height:0;
-  transform:rotate(45deg);
   pointer-events:none;
   transition:
     color var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-arrow-delay),
     opacity var(--stepup-reframe-duration) cubic-bezier(.22,.61,.36,1) var(--stepup-arrow-delay);
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-arrow__icon{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
 }
 html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow>.stepup-reframe-arrow{
   color:var(--hm-blue);
@@ -927,8 +929,7 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame img{
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta{
   display:grid!important;
-  grid-template-columns:34px minmax(0,1fr)!important;
-  column-gap:12px!important;
+  grid-template-columns:1fr!important;
   row-gap:5px!important;
   width:100%!important;
   margin:0!important;
@@ -937,14 +938,15 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta span{
   grid-column:1!important;
-  grid-row:1 / span 2!important;
+  grid-row:1!important;
   color:var(--hm-blue)!important;
   font-family:var(--hm-font-en)!important;
   font-size:12px!important;
   font-weight:300!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta b{
-  grid-column:2!important;
+  grid-column:1!important;
+  grid-row:2!important;
   margin:0!important;
   color:#fff!important;
   font-family:var(--hm-font-en)!important;
@@ -953,7 +955,8 @@ html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy
   line-height:1.25!important;
 }
 html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta p{
-  grid-column:2!important;
+  grid-column:1!important;
+  grid-row:3!important;
   margin:0!important;
   color:rgba(255,255,255,.70)!important;
   font-family:var(--hm-font-ko)!important;
