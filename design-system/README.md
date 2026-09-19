@@ -195,6 +195,14 @@
 - case page에서 neutral line opacity나 주요 vertical rhythm을 raw px/rgba 값으로 새로 정의하지 않는다. 공통 component와 token을 사용한다.
 
 
+## Numbered circle-node typography contract
+
+- 숫자 + 타이틀 + 본문으로 구성된 공통 원형 노드는 최초 Desktop 기준 반드시 `12px / 22px / 12px`을 충족한다.
+- 공통 token은 `--hm-type-journey-circle-number:12px`, `--hm-type-journey-circle-title:22px`, `--hm-type-journey-circle-body:12px`이다.
+- 기본 상태에서 circle/container 크기를 이유로 위 기준보다 크게 확대하지 않는다. 반응형 축소는 `780px` 이하에서만 허용하며 각 값은 기준값을 최대값으로 사용한다.
+- 동일 구조의 `.journey-flow-block .flow-node`, `.reuse-confidence-node`, `.aimmo-ownership-sync__node`, `.aimmo-business-flow > article`, `.stepup-habit-flow > article`은 이 공통 규칙을 상속한다.
+- 퍼센트 metric ring처럼 숫자 자체가 핵심 데이터인 원형과 Reuse image-order처럼 명시적으로 별도 variant가 정의된 경우에만 예외를 둔다.
+
 ## Evidence stat card contract
 
 - `hm-ds-evidence-stat`는 4열/2열 등의 수치 근거 카드 묶음에 사용한다.
