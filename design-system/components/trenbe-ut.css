@@ -137,7 +137,6 @@ html body.trenbe-ut-page #brand .aimmo-impact-chart__bar{display:flex;width:var(
 html body.trenbe-ut-page #brand .aimmo-impact-chart__bar strong{color:#fff!important;font:300 40px/1 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums;white-space:nowrap}
 html body.trenbe-ut-page #brand .aimmo-impact-chart__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
 html body.trenbe-ut-page #brand .aimmo-impact-chart__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
-.trenbe-luxury-conclusion{margin:0!important;max-width:58ch!important;color:#fff!important;font:300 var(--hm-type-body)/1.58 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
 @media(max-width:780px){
   html body.trenbe-ut-page #brand .aimmo-impact-chart__row{grid-template-columns:130px minmax(0,1fr);gap:10px}
@@ -266,13 +265,17 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article p{font-size:16px!imp
   justify-content:flex-end;
   align-items:stretch;
 }
-.trenbe-age-bar i{
+html body.trenbe-ut-page #data .trenbe-age-chart .trenbe-age-bar>i{
   display:block;
   height:calc(var(--value) * 11px);
   max-height:280px;
-  background:rgba(0,166,237,.30);
+  background:var(--hm-blue)!important;
+  opacity:.30!important;
 }
-.trenbe-age-bar.is-core i{background:var(--hm-blue)}
+html body.trenbe-ut-page #data .trenbe-age-chart .trenbe-age-bar.is-core>i{
+  background:var(--hm-blue)!important;
+  opacity:1!important;
+}
 .trenbe-age-bar b{
   position:absolute;
   bottom:calc(var(--value) * 11px + 10px);
@@ -314,7 +317,7 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article p{font-size:16px!imp
   word-break:keep-all;
 }
 .trenbe-profile-note>span,
-.trenbe-synthesis-note>span{color:var(--hm-blue);font-family:var(--hm-font-en);font-weight:400;letter-spacing:var(--hm-track-note)}
+.trenbe-synthesis-note>span{color:inherit!important;font-family:var(--hm-font-en);font-weight:400;letter-spacing:var(--hm-track-note)}
 
 /* 02.3 — field evidence gallery. Original content colors are intentionally preserved. */
 .trenbe-field-gallery{
@@ -355,7 +358,7 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article p{font-size:16px!imp
   display:block;
   max-width:30ch;
   margin:28px 0 0;
-  color:#fff;
+  color:var(--hm-blue);
   font:300 28px/1.32 var(--hm-font-ko);
   font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-group);
