@@ -617,3 +617,232 @@ html body.nbt-stepup-page #outcome .stepup-outcome-grid :is(.behavior-value,h4,.
   html body.nbt-stepup-page #reframe .stepup-reframe-flow article,
   html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{transition:none!important}
 }
+
+/* ==========================================================================
+   STEPUP 2026-09-19 v4 — page-only final corrections
+   Shared design-system files are intentionally untouched.
+   ========================================================================== */
+
+/* Canonical wide editorial chapter-start alignment copied from the other case pages:
+   left major title origin == right first medium-title divider origin. */
+@media(min-width:1600px){
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section[data-chapter] > .hm-wrap > .hm-section-head{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:start!important;
+    margin:0!important;
+    padding:0!important;
+    transform:none!important;
+    animation:none!important;
+  }
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section[data-chapter] > .hm-wrap > .hm-wide-right-rail{
+    position:relative!important;
+    grid-column:4!important;
+    grid-row:1!important;
+    align-self:start!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section[data-chapter] > .hm-wrap > .hm-wide-right-rail::before{
+    content:""!important;
+    position:absolute!important;
+    z-index:2!important;
+    top:0!important;
+    right:0!important;
+    left:0!important;
+    height:1px!important;
+    background:var(--hm-line-weak)!important;
+    pointer-events:none!important;
+  }
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section[data-chapter] > .hm-wrap > .hm-wide-right-rail > .hm-subsection:first-child{
+    margin-top:0!important;
+    border-top:0!important;
+    padding-top:var(--hm-editorial-line-to-title,var(--hm-space-component,40px))!important;
+    transform:none!important;
+    animation:none!important;
+  }
+}
+
+/* 01.1 — English labels use the page accent. */
+html body.nbt-stepup-page #reframe .stepup-question-grid .stepup-label{
+  color:var(--hm-blue)!important;
+}
+
+/* 01.2 — page-only circle typography and geometry.
+   The inter-circle column is exactly 1/5 of the right content rail: 2fr / 1fr / 2fr. */
+html body.nbt-stepup-page #reframe .stepup-reframe-flow{
+  grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,2fr)!important;
+  width:100%!important;
+  max-width:none!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
+  font-size:28px!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
+  font-size:16px!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
+  place-self:center!important;
+  width:33px!important;
+  height:33px!important;
+  margin:0!important;
+}
+
+/* 02.1 — no source line in this block. */
+html body.nbt-stepup-page #strategy .hm-subsection:first-child .hm-source{
+  display:none!important;
+}
+
+/* 04.1 — local typography. */
+html body.nbt-stepup-page #screens .prototype-intro{
+  align-items:start!important;
+}
+html body.nbt-stepup-page #screens .prototype-intro h3{
+  margin:0!important;
+  font-size:22px!important;
+}
+html body.nbt-stepup-page #screens .prototype-intro p{
+  margin:0!important;
+}
+
+/* 04.1 — HIMART 04 phone-frame resource copied into this page.
+   Only the image placement is added so StepUp assets sit inside the same frame. */
+html body.nbt-stepup-page #screens .stepup-phone-gallery{
+  display:grid!important;
+  grid-template-columns:repeat(4,1fr)!important;
+  gap:34px 22px!important;
+  width:100%!important;
+  margin-top:72px!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-card{
+  min-width:0!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame{
+  aspect-ratio:9/19.5!important;
+  position:relative!important;
+  border:1px solid rgba(255,255,255,.72)!important;
+  border-radius:38px!important;
+  background:#000000!important;
+  overflow:hidden!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame::before{
+  content:""!important;
+  position:absolute!important;
+  inset:8px!important;
+  border-radius:30px!important;
+  background:linear-gradient(180deg,rgba(0,166,237,.2),rgba(255,255,255,.04) 24%,rgba(0,184,222,.12) 52%,rgba(0,237,189,.08)),repeating-linear-gradient(180deg,rgba(255,255,255,.12) 0 6%,transparent 6% 10%)!important;
+  filter:blur(5px)!important;
+  opacity:.82!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:3!important;
+  left:50%!important;
+  top:12px!important;
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  background:#000!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  transform:translateX(-50%)!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame img{
+  position:absolute!important;
+  z-index:2!important;
+  inset:8px!important;
+  display:block!important;
+  width:calc(100% - 16px)!important;
+  height:calc(100% - 16px)!important;
+  border-radius:30px!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+}
+
+/* 04.2 — English card labels use blue. */
+html body.nbt-stepup-page #screens .stepup-impact-signals>article>span{
+  color:var(--hm-blue)!important;
+}
+
+/* 05.1 — one-row 1×4 process, page-only. */
+html body.nbt-stepup-page #habit .stepup-process--1x4{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  border-bottom:1px solid var(--hm-line-default)!important;
+}
+html body.nbt-stepup-page #habit .stepup-process--1x4 article{
+  min-height:250px!important;
+  padding:28px 22px 32px!important;
+  border-right:1px solid var(--hm-line-faint)!important;
+  border-bottom:0!important;
+}
+html body.nbt-stepup-page #habit .stepup-process--1x4 article:last-child{
+  border-right:0!important;
+}
+html body.nbt-stepup-page #habit .stepup-process--1x4 h4{
+  margin-top:34px!important;
+  font-size:28px!important;
+}
+
+/* 05.2 — title-to-body spacing reduced by 50% locally. */
+html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-card h4{
+  min-height:48px!important;
+}
+html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-note{
+  margin-top:20px!important;
+}
+
+/* 05.3 — preserve the verified 20/80 data widths, change only the requested palette.
+   Blue = StepUp (left); New Blue = the remainder (right). */
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(1){
+  --segment-color:var(--hm-blue,#00A6ED)!important;
+}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){
+  --segment-color:var(--hm-newblue,#00B8DE)!important;
+}
+
+/* 07.1 — keep the four outcome cards as the closing evidence grid. */
+
+/* Mobile guards for the page-only changes. */
+@media(max-width:1100px){
+  html body.nbt-stepup-page #screens .stepup-phone-gallery{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:780px){
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow{
+    grid-template-columns:1fr!important;
+    gap:20px!important;
+  }
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow>.hm-ds-gallery-arrow{
+    display:none!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-phone-gallery{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:28px 14px!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame{
+    border-radius:24px!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame::before,
+  html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame img{
+    border-radius:18px!important;
+  }
+  html body.nbt-stepup-page #habit .stepup-process--1x4{
+    grid-template-columns:1fr!important;
+  }
+  html body.nbt-stepup-page #habit .stepup-process--1x4 article{
+    min-height:0!important;
+    padding:24px 0!important;
+    border-right:0!important;
+    border-bottom:1px solid var(--hm-line-faint)!important;
+  }
+  html body.nbt-stepup-page #habit .stepup-process--1x4 article:last-child{
+    border-bottom:0!important;
+  }
+}
+
