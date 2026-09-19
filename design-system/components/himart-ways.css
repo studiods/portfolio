@@ -1762,7 +1762,7 @@ html body.ways-page #brand .ways-signal-grid article>strong{
   margin-top:30px!important;
   color:var(--hm-blue)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:44px!important;
+  font-size:36px!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
   line-height:1.08!important;
@@ -1963,5 +1963,27 @@ html body.ways-page #journey .ways-operating-rule h4{
   html body.ways-page #journey .ways-operating-stack>article p{
     width:var(--hm-card-copy-measure-mobile)!important;
     max-width:var(--hm-card-copy-measure-mobile)!important;
+  }
+}
+
+
+/* 02.1 / role rail — keep 26px Averta labels fully visible.
+   The previous fixed 20% rail could become narrower than DEV + its right breathing room. */
+html body.ways-page #data .ways-team-problem__head{
+  grid-template-columns:minmax(88px,20%) minmax(0,1fr)!important;
+}
+html body.ways-page #data .ways-team-problem__quotes{
+  grid-template-columns:minmax(88px,20%) repeat(3,minmax(0,1fr))!important;
+}
+html body.ways-page #data .ways-team-problem__no{
+  width:max-content!important;
+  min-width:max-content!important;
+  overflow:visible!important;
+  white-space:nowrap!important;
+}
+@media(max-width:780px){
+  html body.ways-page #data .ways-team-problem__head,
+  html body.ways-page #data .ways-team-problem__quotes{
+    grid-template-columns:1fr!important;
   }
 }
