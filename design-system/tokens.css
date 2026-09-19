@@ -151,6 +151,7 @@
      Middle title -> small/group title remains 80px.
      Small/group title -> its content is a separate 40px rule. */
   --hm-subtitle-to-content:80px;
+  --hm-subtitle-to-media-gap:40px;
   --hm-subtitle-to-smalltitle:80px;
   --hm-smalltitle-to-content:var(--hm-space-smalltitle-content);
   --hm-title-to-subsection-gap:160px;
