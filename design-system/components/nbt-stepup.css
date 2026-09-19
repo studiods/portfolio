@@ -1008,3 +1008,138 @@ html body.nbt-stepup-page .hm-project-reflection__copy{
   }
 }
 
+/* ==========================================================================
+   STEPUP 2026-09-19 v8 — requested local-only refinements
+   ========================================================================== */
+
+/* 01.2 — page-only circle typography. Never exported to shared design-system rules. */
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>span{
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
+  font-size:32px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
+html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
+  max-width:18ch!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.45!important;
+}
+/* Filled final node preserves contrast after the blue state resolves. */
+html body.nbt-stepup-page #reframe .hm-subsection.hm-reveal.is-visible .stepup-reframe-flow article:nth-of-type(2)>span{
+  color:#fff!important;
+}
+
+/* 03.1 — adaptive carousel arrows: white over dark pixels, black over light pixels. */
+html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-gallery-nav::before{
+  border-top-color:#fff!important;
+  border-right-color:#fff!important;
+  mix-blend-mode:difference!important;
+}
+
+/* 04.1 — copied HIMART AX 03.1 maker-card grammar, page-local, four columns. */
+html body.nbt-stepup-page #habit .stepup-return-signal-flow{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:28px!important;
+  width:100%!important;
+}
+html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step{
+  position:relative!important;
+  min-height:260px!important;
+  padding:24px 0 16px!important;
+  border-top:1px solid rgba(255,255,255,.30)!important;
+  background:transparent!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step>span{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+  text-align:left!important;
+}
+html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step h4{
+  margin:54px 0 0!important;
+  padding:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-subsection)!important;
+  text-align:left!important;
+  word-break:keep-all!important;
+}
+html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step p{
+  margin:14px 0 0!important;
+  padding:0!important;
+  max-width:30ch!important;
+  color:var(--hm-description-color)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
+  text-align:left!important;
+  word-break:keep-all!important;
+}
+
+/* 04.2 — plus sign is the same display size as 20K. */
+html body.nbt-stepup-page #habit .stepup-behavior-grid--pair .behavior-value>span{
+  font-size:1em!important;
+  line-height:.88!important;
+  margin-left:6px!important;
+}
+
+/* 04.3 — StepUp remains solid blue; remainder uses the same blue at 30% alpha. */
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(1){
+  --segment-color:var(--hm-blue,#00A6ED)!important;
+}
+html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(2){
+  --segment-color:rgba(0,166,237,.30)!important;
+}
+
+/* 05.1 — equal-size plus signs and Averta for the full MAU label. */
+html body.nbt-stepup-page #outcome .stepup-outcome-grid .behavior-value>span{
+  font-size:1em!important;
+  line-height:.88!important;
+  margin-left:6px!important;
+}
+html body.nbt-stepup-page #outcome .stepup-en-metric-title,
+html body.nbt-stepup-page #outcome .stepup-en-metric-title *{
+  font-family:var(--hm-font-en)!important;
+  font-weight:300!important;
+}
+
+@media(max-width:1180px) and (min-width:781px){
+  html body.nbt-stepup-page #habit .stepup-return-signal-flow{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(max-width:780px){
+  html body.nbt-stepup-page #habit .stepup-return-signal-flow{
+    grid-template-columns:1fr!important;
+    gap:24px!important;
+  }
+  html body.nbt-stepup-page #habit .stepup-return-signal-flow .ax-maker-step{
+    min-height:220px!important;
+  }
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow article>h4{
+    font-size:32px!important;
+  }
+  html body.nbt-stepup-page #reframe .stepup-reframe-flow article>p{
+    font-size:16px!important;
+  }
+}
