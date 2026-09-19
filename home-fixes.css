@@ -290,7 +290,7 @@
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:100!important;
   font-size:var(--principle-card-ko-size)!important;
-  line-height:.99!important;
+  line-height:1.1385!important;
   letter-spacing:-.03em;
   word-break:keep-all;
   color:#fff!important;
@@ -321,7 +321,7 @@
 /* FROM PRINCIPLES TO IMPACT */
 .impact-section{
   position:relative;
-  padding:clamp(120px,14vh,180px) 0 clamp(160px,18vh,240px);
+  padding:clamp(120px,14vh,180px) 0 clamp(96px,12vh,144px);
   border-top:0;
 }
 .impact-grid,
@@ -362,16 +362,16 @@
   display:block!important;
   margin:0!important;
   padding:0!important;
-  line-height:.99!important;
+  line-height:1.1385!important;
 }
 .impact-copy{
-  margin:64px 0 0;
+  margin:32px 0 0;
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:300!important;
   font-size:22px!important;
-  line-height:1.44!important;
+  line-height:1.296!important;
   letter-spacing:-.02em;
-  color:rgba(255,255,255,.70);
+  color:rgba(255,255,255,.60);
   word-break:keep-all;
 }
 .impact-capabilities{
@@ -386,13 +386,18 @@
   color:#111;
   opacity:.60;
 }
+.impact-capabilities>span{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+}
 .impact-scramble{
   filter:invert(1);
 }
 .work-shortcut{
   position:relative;
-  padding:clamp(120px,15vh,200px) 0;
-  border-top:1px solid rgba(255,255,255,.18);
+  padding:clamp(80px,10vh,120px) 0 clamp(120px,15vh,200px);
+  border-top:0;
 }
 .work-shortcut-link{
   grid-column:2;
@@ -505,12 +510,12 @@
   .impact-grid>.mini-label,
   .work-shortcut-grid>.mini-label{grid-column:1;margin-bottom:48px}
   .impact-content{grid-column:1}
-  .impact-statement{font-size:32px!important;line-height:1.023!important;margin:0!important;padding:0!important}
-  .impact-statement>.impact-line{margin:0!important;padding:0!important;line-height:1.023!important}
-  .impact-copy{margin-top:64px;font-size:16px!important;line-height:1.53!important}
+  .impact-statement{font-size:32px!important;line-height:1.17645!important;margin:0!important;padding:0!important}
+  .impact-statement>.impact-line{margin:0!important;padding:0!important;line-height:1.17645!important}
+  .impact-copy{margin-top:32px;font-size:16px!important;line-height:1.377!important}
   .impact-copy br{display:none}
   .impact-capabilities{margin-top:64px;padding-top:24px;font-size:12px;line-height:1.55}
-  .work-shortcut{padding:104px 0}
+  .work-shortcut{padding:72px 0 104px}
   .work-shortcut-link{grid-column:1;font-size:52px}
 
   .footer,.filip-footer{padding:72px 0 24px}
