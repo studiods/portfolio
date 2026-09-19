@@ -119,3 +119,77 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-tit
   word-break:keep-all!important;
   overflow-wrap:normal!important;
 }
+
+
+/* HIMART 03.2 — numbered role cards.
+   No icon reserve space: number → English role → Korean role statement.
+   Every card keeps a 4:3 frame. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+  .journey-role-grid > article,
+  .hm-role-grid--numbered-cards > .role-card
+){
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:auto!important;
+  aspect-ratio:4 / 3!important;
+  padding:24px 0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+  .journey-role-grid > article,
+  .hm-role-grid--numbered-cards > .role-card
+) > .hm-role-index{
+  display:block!important;
+  margin:0 0 16px!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:400!important;
+  line-height:1.2!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+  .journey-role-grid > article > small,
+  .hm-role-grid--numbered-cards > .role-card > .hm-role-name
+){
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en-thin)!important;
+  font-size:36px!important;
+  font-weight:300!important;
+  font-synthesis:none!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+  .journey-role-grid > article > h4,
+  .hm-role-grid--numbered-cards > .role-card > h4
+){
+  margin:20px 0 0!important;
+  min-height:0!important;
+  width:100%!important;
+  max-width:none!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  font-synthesis:none!important;
+  line-height:1.35!important;
+  letter-spacing:var(--hm-track-group)!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .journey-role-grid > article > :is(.hm-ds-icon,p,strong),
+html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .hm-role-grid--numbered-cards > .role-card > :is(.hm-ds-icon,p,strong){
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+}
