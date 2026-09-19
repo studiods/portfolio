@@ -10,6 +10,7 @@
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const reveals = new WeakSet();
     const counters = new WeakSet();
+    const autoCounters = new WeakSet();
     const charts = new WeakSet();
     const videoSequences = new WeakSet();
 
@@ -60,6 +61,151 @@
         }, { threshold: 0.5 });
         io.observe(el);
       } else run();
+    };
+
+    /*
+      Design-system automatic number focus animation.
+      - Any leaf text element whose computed font-size is >= 30px is eligible.
+      - The text must contain exactly one numeric value; surrounding units/symbols are preserved.
+      - Multi-digit values count quickly from 0 to the final value.
+      - Single-digit values cycle through 0-9 several times before settling on the final digit.
+      - Existing explicit [data-hm-counter]/[data-count] counters keep ownership.
+      - Add data-hm-number-count="off" to opt out of this global rule when needed.
+    */
+    const parseAutoNumber = el => {
+      if (!el || el.nodeType !== 1) return null;
+      if (el.matches('[data-hm-counter],[data-count],[data-hm-number-count="off"]')) return null;
+      if (el.closest('[data-hm-number-count="off"],script,style,noscript,textarea,input,select,option')) return null;
+      if (el.children.length) return null;
+
+      const raw = (el.textContent || '').trim();
+      if (!raw || !/\d/.test(raw)) return null;
+
+      const match = raw.match(/^([^0-9]*?)([+\-−]?\d[\d,]*(?:\.\d+)?)([^0-9]*)$/u);
+      if (!match) return null;
+
+      const styles = getComputedStyle(el);
+      const fontSize = Number.parseFloat(styles.fontSize);
+      if (!Number.isFinite(fontSize) || fontSize < 30) return null;
+      if (styles.display === 'none' || styles.visibility === 'hidden') return null;
+
+      let numericText = match[2];
+      let sign = '';
+      if (/^[+\-−]/u.test(numericText)) {
+        sign = numericText[0];
+        numericText = numericText.slice(1);
+      }
+
+      const plain = numericText.replace(/,/g, '');
+      const target = Number(plain);
+      if (!Number.isFinite(target)) return null;
+
+      const parts = plain.split('.');
+      const integerDigits = parts[0].length;
+      const decimals = parts[1]?.length || 0;
+      const useGrouping = numericText.includes(',');
+      const singleDigit = decimals === 0 && integerDigits === 1 && target >= 0 && target <= 9;
+
+      return {
+        raw,
+        prefix: match[1] + sign,
+        suffix: match[3],
+        target,
+        decimals,
+        integerDigits,
+        useGrouping,
+        singleDigit
+      };
+    };
+
+    const formatAutoNumber = (value, meta) => {
+      const fixed = meta.decimals > 0
+        ? Math.max(0, value).toFixed(meta.decimals)
+        : String(Math.max(0, Math.round(value)));
+
+      let [integer, fraction] = fixed.split('.');
+      if (!meta.useGrouping && meta.integerDigits > 1 && meta.target < Math.pow(10, meta.integerDigits - 1)) {
+        integer = integer.padStart(meta.integerDigits, '0');
+      }
+      if (meta.useGrouping) {
+        integer = Number(integer).toLocaleString('en-US');
+      }
+
+      return meta.prefix + integer + (fraction !== undefined ? '.' + fraction : '') + meta.suffix;
+    };
+
+    const runAutoCounter = (el, meta) => {
+      if (el.dataset.hmNumberCountDone === '1') return;
+      el.dataset.hmNumberCountDone = '1';
+
+      if (reduce || !('requestAnimationFrame' in window)) {
+        el.textContent = meta.raw;
+        return;
+      }
+
+      const duration = meta.singleDigit ? 760 : 720;
+      const start = performance.now();
+
+      const tick = now => {
+        const progress = Math.min(1, (now - start) / duration);
+
+        if (meta.singleDigit) {
+          if (progress >= 1) {
+            el.textContent = meta.raw;
+            return;
+          }
+          const cycles = 3;
+          const steps = 10 * cycles;
+          const digit = Math.floor(progress * steps) % 10;
+          el.textContent = meta.prefix + String(digit) + meta.suffix;
+        } else {
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = progress >= 1
+            ? meta.raw
+            : formatAutoNumber(meta.target * eased, meta);
+          if (progress >= 1) return;
+        }
+
+        requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const registerAutoCounter = el => {
+      if (autoCounters.has(el)) return;
+      const meta = parseAutoNumber(el);
+      if (!meta) return;
+
+      autoCounters.add(el);
+      el.dataset.hmNumberCountReady = '1';
+
+      if (reduce || !('IntersectionObserver' in window)) {
+        runAutoCounter(el, meta);
+        return;
+      }
+
+      const io = new IntersectionObserver((entries, observer) => {
+        const entry = entries[0];
+        if (!entry?.isIntersecting || entry.target.offsetParent === null) return;
+        runAutoCounter(entry.target, meta);
+        observer.disconnect();
+      }, { threshold: 0.3, rootMargin: '0px 0px -6% 0px' });
+
+      io.observe(el);
+    };
+
+    const scanAutoCounters = () => {
+      if (!document.body) return;
+      const parents = new Set();
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (!/\d/.test(node.nodeValue || '')) continue;
+        const parent = node.parentElement;
+        if (parent) parents.add(parent);
+      }
+      parents.forEach(registerAutoCounter);
     };
 
     /*
@@ -248,6 +394,7 @@
     const scan = () => {
       document.querySelectorAll(revealSelector).forEach(registerReveal);
       document.querySelectorAll('[data-hm-counter], [data-count]').forEach(registerCounter);
+      scanAutoCounters();
       document.querySelectorAll('[data-hm-chart]').forEach(registerChart);
       document.querySelectorAll('[data-hm-video]').forEach(registerVideoSequence);
     };
@@ -256,6 +403,7 @@
     // Keeping it out of this layer prevents duplicate observers and text races.
     window.__hmAnimationScan = scan;
     window.addEventListener('load', () => { scan(); setTimeout(scan, 600); }, { once: true });
+    document.fonts?.ready?.then(() => scan()).catch?.(() => {});
 
     const hero = document.querySelector('[data-hm-hero]');
     if (hero && !reduce) {
@@ -321,7 +469,7 @@
   };
 
   const boot = () => {
-    if (document.querySelector(revealSelector + ', [data-hm-counter], [data-count], [data-hm-chart], [data-hm-hero], [data-hm-video]')) {
+    if (document.body || document.querySelector(revealSelector + ', [data-hm-counter], [data-count], [data-hm-chart], [data-hm-hero], [data-hm-video]')) {
       init();
       return true;
     }
