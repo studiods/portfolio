@@ -120,6 +120,66 @@ html body.himart-page-body #live-main :is(.hm-group-title,.problem-item h4,.proo
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
+
+/* Card small-title wrapping contract.
+   Card titles must never be constrained to a narrow text measure below 2/3 of
+   the available content rail. Authored <br> is ignored so Korean/English copy
+   wraps automatically at word boundaries. */
+html body.himart-page-body #live-main :is(
+  .hm-ds-card,
+  .hm-card,
+  .data-card,
+  .role-card,
+  .behavior-card,
+  .problem-item,
+  .proof-item,
+  .signal-item,
+  .flow-node,
+  .direction-card,
+  .stepup-card,
+  .stepup-question-grid>article,
+  .stepup-experience-grid>article,
+  .stepup-process>article,
+  .ways-list>article,
+  .ways-grid>article,
+  .ways-flow>article,
+  .ways-operating-stack>article,
+  .ax-maker-step,
+  .ax-friction-card,
+  .ax-result-card
+) h4{
+  width:100%!important;
+  min-width:66.666%!important;
+  max-width:none!important;
+  text-wrap:pretty!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+html body.himart-page-body #live-main :is(
+  .hm-ds-card,
+  .hm-card,
+  .data-card,
+  .role-card,
+  .behavior-card,
+  .problem-item,
+  .proof-item,
+  .signal-item,
+  .flow-node,
+  .direction-card,
+  .stepup-card,
+  .stepup-question-grid>article,
+  .stepup-experience-grid>article,
+  .stepup-process>article,
+  .ways-list>article,
+  .ways-grid>article,
+  .ways-flow>article,
+  .ways-operating-stack>article,
+  .ax-maker-step,
+  .ax-friction-card,
+  .ax-result-card
+) h4 br{
+  display:none!important;
+}
 html body.himart-page-body #live-main :is(.hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,.behavior-note,.stepup-copy,.stepup-question-grid p,.stepup-experience-grid p,.stepup-process p,.role-card p,.flow-node p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,.sentiment-keywords){
   max-width:var(--hm-description-max-chars)!important;
   color:var(--hm-description-color)!important;
