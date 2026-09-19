@@ -124,26 +124,6 @@ html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nt
 html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 article:nth-child(even){padding-left:28px!important;border-left:1px solid var(--hm-line-faint)!important}
 html body.nbt-stepup-page :is(#habit,#iteration) .stepup-process--2x2 h4{margin-top:34px!important}
 
-html body.nbt-stepup-page .hm-project-reflection{
-  width:min(var(--hm-content-max,1280px),calc(100% - 2 * var(--hm-page-padding,64px)))!important;
-  margin:160px auto 0!important;
-  padding:32px 0 0!important;
-  border-top:1px solid var(--hm-line-default)!important;
-}
-html body.nbt-stepup-page .hm-project-reflection__title{
-  margin:0 0 28px!important;
-  color:var(--hm-text-tertiary)!important;
-  font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.nbt-stepup-page .hm-project-reflection__copy{
-  max-width:1000px!important;
-  margin:0!important;
-  color:#fff!important;
-  font:100 var(--hm-type-subsection)/1.28 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 100!important;
-}
-html body.nbt-stepup-page .hm-project-reflection__copy strong{color:var(--hm-blue)!important;font-weight:inherit!important}
 
 @media(max-width:980px){
   html body.nbt-stepup-page #screens .stepup-phone-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -843,6 +823,186 @@ html body.nbt-stepup-page #habit .aimmo-environment-ratio__legend-row:nth-child(
   }
   html body.nbt-stepup-page #habit .stepup-process--1x4 article:last-child{
     border-bottom:0!important;
+  }
+}
+
+/* ==========================================================================
+   STEPUP 2026-09-19 v5 — final local corrections
+   ========================================================================== */
+
+/* 04.1 — HIMART 04 v18 source grammar inside the shared media carousel.
+   Two phone screens on the left, explanatory copy on the right. */
+html body.nbt-stepup-page #screens .stepup-screens-carousel{
+  --hm-ds-media-carousel-ratio:16/10!important;
+  width:100%!important;
+  margin-top:80px!important;
+  background:#000!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .stepup-prototype-slide{
+  background:#000!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr)!important;
+  gap:48px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  height:100%!important;
+  padding:32px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.14)!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-phones{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:18px!important;
+  min-width:0!important;
+  align-items:start!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  gap:20px!important;
+  min-width:0!important;
+  padding-bottom:2px!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-card{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:9/19.5!important;
+  overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.72)!important;
+  border-radius:38px!important;
+  background:#000!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame::before{
+  content:""!important;
+  position:absolute!important;
+  inset:8px!important;
+  border-radius:30px!important;
+  background:linear-gradient(180deg,rgba(0,166,237,.2),rgba(255,255,255,.04) 24%,rgba(0,184,222,.12) 52%,rgba(0,237,189,.08)),repeating-linear-gradient(180deg,rgba(255,255,255,.12) 0 6%,transparent 6% 10%)!important;
+  filter:blur(5px)!important;
+  opacity:.82!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:3!important;
+  left:50%!important;
+  top:12px!important;
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  background:#000!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  transform:translateX(-50%)!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame img{
+  position:absolute!important;
+  z-index:2!important;
+  inset:8px!important;
+  display:block!important;
+  width:calc(100% - 16px)!important;
+  height:calc(100% - 16px)!important;
+  margin:0!important;
+  border-radius:30px!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta{
+  display:grid!important;
+  grid-template-columns:34px minmax(0,1fr)!important;
+  column-gap:12px!important;
+  row-gap:5px!important;
+  width:100%!important;
+  margin:0!important;
+  padding:14px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.10)!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta span{
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta b{
+  grid-column:2!important;
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.25!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-copy .phone-meta p{
+  grid-column:2!important;
+  margin:0!important;
+  color:rgba(255,255,255,.50)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:14px!important;
+  font-weight:300!important;
+  line-height:1.45!important;
+}
+html body.nbt-stepup-page #screens .stepup-screens-carousel .hm-ds-media-carousel__status{
+  top:24px!important;
+  right:24px!important;
+}
+
+/* 04.2 — impact numbers only. */
+html body.nbt-stepup-page #screens .stepup-impact-signals>article>.stepup-impact-number{
+  font-size:80px!important;
+}
+
+/* 05 — source rows use the shared .hm-source design-system role. */
+html body.nbt-stepup-page #habit .stepup-internal-source{
+  margin-top:28px!important;
+}
+
+/* Final chapter: user requested no source line at all. */
+html body.nbt-stepup-page #outcome :is(.hm-source,.aimmo-environment-ratio__source,[class*="source"]){
+  display:none!important;
+}
+
+/* Shared project-end-matter.css is the sole reflection/footer authority. */
+html body.nbt-stepup-page .hm-project-reflection,
+html body.nbt-stepup-page .hm-project-reflection__inner,
+html body.nbt-stepup-page .hm-project-reflection__title,
+html body.nbt-stepup-page .hm-project-reflection__copy{
+  box-sizing:border-box!important;
+}
+
+@media(max-width:1000px){
+  html body.nbt-stepup-page #screens .stepup-screens-carousel{
+    --hm-ds-media-carousel-ratio:4/5!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-row{
+    grid-template-columns:1fr!important;
+    gap:28px!important;
+  }
+}
+@media(max-width:780px){
+  html body.nbt-stepup-page #screens .stepup-screens-carousel{
+    --hm-ds-media-carousel-ratio:3/5!important;
+    margin-top:56px!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-screens-carousel .production-v18-phones{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame{
+    border-radius:24px!important;
+  }
+  html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame::before,
+  html body.nbt-stepup-page #screens .stepup-screens-carousel .phone-frame img{
+    border-radius:18px!important;
   }
 }
 
