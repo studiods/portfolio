@@ -381,6 +381,29 @@ html body.himart-page-body .hm-ds-media-carousel__status{
   max-height:calc(100dvh - 96px)!important;
   overflow:hidden!important;
 }
+.hm-ds-image-lightbox__viewport[hidden],
+.hm-ds-image-lightbox__dom[hidden]{
+  display:none!important;
+}
+.hm-ds-image-lightbox__dom{
+  position:relative!important;
+  flex:none!important;
+  overflow:hidden!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+.hm-ds-image-lightbox__dom-canvas{
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  transform-origin:0 0!important;
+  will-change:transform!important;
+}
+.hm-ds-image-lightbox__dom .hm-ds-dom-lightbox-clone{
+  margin:0!important;
+  cursor:default!important;
+  pointer-events:none!important;
+}
 .hm-ds-image-lightbox__image{
   position:relative!important;
   z-index:2!important;
