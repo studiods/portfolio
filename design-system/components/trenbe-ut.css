@@ -29,8 +29,7 @@ html body.trenbe-ut-page .hm-source a{color:inherit;text-decoration:underline;te
 .trenbe-research-bridge{grid-template-columns:repeat(3,minmax(0,1fr))}
 .trenbe-roadmap{grid-template-columns:repeat(3,minmax(0,1fr));gap:56px 28px}
 .trenbe-model-process{grid-template-columns:repeat(4,minmax(0,1fr));gap:52px 24px}
-.trenbe-findings{grid-template-columns:repeat(2,minmax(0,1fr));gap:52px 28px}
-.trenbe-findings article:last-child{grid-column:1/-1}
+.trenbe-findings{grid-template-columns:repeat(3,minmax(0,1fr));gap:52px 28px}
 
 .trenbe-context-grid article,
 .trenbe-profile-grid article,
@@ -128,60 +127,23 @@ html body.trenbe-ut-page #brand .aimmo-context-insight__copy{
   word-break:keep-all!important
 }
 
-/* 01.2 / 02 — external luxury-category context: South Korea touchpoints. */
-.trenbe-touchpoint-compare{
-  width:100%;
-  margin-top:32px;
-  border-top:1px solid var(--hm-line-faint);
-}
-.trenbe-touchpoint-row{
-  display:grid;
-  grid-template-columns:88px minmax(0,1fr) 48px;
-  gap:14px;
-  align-items:center;
-  min-height:56px;
-  border-bottom:1px solid var(--hm-line-faint);
-}
-.trenbe-touchpoint-row>span{
-  color:rgba(255,255,255,.72);
-  font:300 12px/1.2 var(--hm-font-en);
-  white-space:nowrap;
-}
-.trenbe-touchpoint-row>i{
-  display:block;
-  height:12px;
-  overflow:hidden;
-  border-radius:999px;
-  background:rgba(255,255,255,.10);
-}
-.trenbe-touchpoint-row>i::before{
-  content:"";
-  display:block;
-  width:var(--touchpoint-width);
-  height:100%;
-  border-radius:inherit;
-  background:rgba(255,255,255,.36);
-}
-.trenbe-touchpoint-row.is-current>i::before{background:var(--hm-blue)}
-.trenbe-touchpoint-row>b{
-  color:#fff;
-  font:300 22px/1 var(--hm-font-en);
-  text-align:right;
-  font-variant-numeric:tabular-nums;
-}
-.trenbe-touchpoint-row>b::after{
-  content:" TOUCHPOINTS";
-  display:block;
-  margin-top:6px;
-  color:rgba(255,255,255,.42);
-  font:300 8px/1 var(--hm-font-en);
-  letter-spacing:.04em;
-}
+/* 01.2 / 02 — AIMMO System 04.1 graph source, reduced to two rows. */
+html body.trenbe-ut-page #brand .aimmo-impact-chart{width:100%;padding:32px 0 0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__rows{display:grid;gap:20px}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__row{display:grid;grid-template-columns:minmax(180px,.48fr) minmax(0,2.2fr);gap:12px;align-items:center;width:100%}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__label strong{display:block;max-width:11ch;margin:0;color:#fff;font:300 22px/1.22 var(--hm-font-ko);letter-spacing:var(--hm-track-group);word-break:keep-all}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__track{position:relative;width:100%;height:80px;overflow:hidden;background:rgba(255,255,255,.07)}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__bar{display:flex;width:var(--value);height:100%;align-items:center;justify-content:flex-end;padding-right:16px;box-sizing:border-box;background:var(--bar-color,var(--hm-chart-02,#007DE3))}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__bar strong{color:#fff!important;font:300 40px/1 var(--hm-font-en);letter-spacing:var(--hm-track-data-number);font-variant-numeric:tabular-nums;white-space:nowrap}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
+html body.trenbe-ut-page #brand .aimmo-impact-chart__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
+.trenbe-luxury-conclusion{margin:0!important;max-width:58ch!important;color:#fff!important;font:300 var(--hm-type-body)/1.58 var(--hm-font-ko)!important;letter-spacing:var(--hm-track-body)!important;word-break:keep-all!important}
 
 @media(max-width:780px){
-  .trenbe-touchpoint-row{grid-template-columns:64px minmax(0,1fr) 42px;gap:10px;min-height:52px}
-  .trenbe-touchpoint-row>b{font-size:18px}
-  .trenbe-touchpoint-row>b::after{display:none}
+  html body.trenbe-ut-page #brand .aimmo-impact-chart__row{grid-template-columns:130px minmax(0,1fr);gap:10px}
+  html body.trenbe-ut-page #brand .aimmo-impact-chart__label strong{font-size:17px}
+  html body.trenbe-ut-page #brand .aimmo-impact-chart__track{height:64px}
+  html body.trenbe-ut-page #brand .aimmo-impact-chart__bar strong{font-size:30px}
 }
 
 /* 01.3 — GA / NPS / UT as a HIMART-style circular reasoning flow. */
@@ -192,8 +154,8 @@ html body.trenbe-ut-page #brand .aimmo-context-insight__copy{
   align-items:center;
   width:100%;
 }
-.trenbe-evidence-flow,
-.trenbe-segment-flow{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,1fr)}
+.trenbe-evidence-flow{grid-template-columns:minmax(0,1fr) 44px minmax(0,1fr) 44px minmax(0,1fr)}
+.trenbe-segment-flow{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
 .trenbe-decision-flow{grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr) 28px minmax(0,1fr)}
 .trenbe-evidence-node,
 .trenbe-segment-flow article,
@@ -237,7 +199,9 @@ html body.trenbe-ut-page #brand .aimmo-context-insight__copy{
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
-html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-blue)!important}
+html body.trenbe-ut-page #data .trenbe-segment-flow article>span{color:var(--hm-blue)!important;font-size:12px!important;font-weight:400!important}
+html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-blue)!important;font-size:28px!important;font-weight:300!important;font-variation-settings:"wght" 300!important}
+html body.trenbe-ut-page #data .trenbe-segment-flow article p{font-size:16px!important;font-weight:300!important}
 
 .trenbe-evidence-node p,
 .trenbe-segment-flow article p,
@@ -306,7 +270,7 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-bl
   display:block;
   height:calc(var(--value) * 11px);
   max-height:280px;
-  background:rgba(0,166,237,.25);
+  background:rgba(0,166,237,.30);
 }
 .trenbe-age-bar.is-core i{background:var(--hm-blue)}
 .trenbe-age-bar b{
@@ -342,13 +306,15 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-bl
 .trenbe-profile-note,
 .trenbe-synthesis-note{
   margin:30px 0 0;
-  padding-left:16px;
-  border-left:1px solid var(--hm-blue);
+  padding-left:0;
+  border-left:0;
   color:var(--hm-description-color);
   font:300 var(--hm-type-note)/1.6 var(--hm-font-ko);
   letter-spacing:var(--hm-track-body);
   word-break:keep-all;
 }
+.trenbe-profile-note>span,
+.trenbe-synthesis-note>span{color:var(--hm-blue);font-family:var(--hm-font-en);font-weight:400;letter-spacing:var(--hm-track-note)}
 
 /* 02.3 — field evidence gallery. Original content colors are intentionally preserved. */
 .trenbe-field-gallery{
@@ -385,14 +351,13 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-bl
 
 /* 03.1 condensed UT findings. */
 .trenbe-findings article{min-height:250px}
-.trenbe-findings h4{font-family:var(--hm-font-en)!important;font-weight:300!important;font-variation-settings:normal;letter-spacing:var(--hm-track-group)!important}
 .trenbe-findings strong{
   display:block;
   max-width:30ch;
   margin:28px 0 0;
   color:#fff;
-  font:100 var(--hm-type-group)/1.32 var(--hm-font-ko);
-  font-variation-settings:"wght" 100;
+  font:300 28px/1.32 var(--hm-font-ko);
+  font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-group);
   word-break:keep-all;
 }
@@ -468,7 +433,8 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-bl
 @media(max-width:1180px){
   .trenbe-context-grid,.trenbe-profile-grid,.trenbe-research-bridge{grid-template-columns:repeat(2,minmax(0,1fr))}
   .trenbe-model-process,.trenbe-roadmap{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .trenbe-evidence-flow,.trenbe-segment-flow{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr)}
+  .trenbe-evidence-flow{grid-template-columns:minmax(0,1fr) 30px minmax(0,1fr) 30px minmax(0,1fr)}
+  .trenbe-segment-flow{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
   .trenbe-decision-flow{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
   .trenbe-decision-flow>.trenbe-flow-arrow{display:none}
 }
@@ -476,9 +442,9 @@ html body.trenbe-ut-page #data .trenbe-segment-flow article h4{color:var(--hm-bl
 
 @media(max-width:780px){
   .trenbe-context-grid,.trenbe-profile-grid,.trenbe-conclusion-grid,.trenbe-research-bridge,.trenbe-roadmap,.trenbe-model-process,.trenbe-findings,.trenbe-field-gallery{grid-template-columns:1fr!important}
-  .trenbe-findings article:last-child,.trenbe-field-gallery figure:first-child{grid-column:auto}
+  .trenbe-field-gallery figure:first-child{grid-column:auto}
   .trenbe-evidence-flow,.trenbe-segment-flow,.trenbe-decision-flow{grid-template-columns:1fr!important;gap:16px!important}
-  .trenbe-evidence-flow>.trenbe-flow-arrow,.trenbe-segment-flow>.trenbe-flow-arrow,.trenbe-decision-flow>.trenbe-flow-arrow{display:block;transform:rotate(90deg)}
+  .trenbe-evidence-flow>.trenbe-flow-arrow,.trenbe-decision-flow>.trenbe-flow-arrow{display:block;transform:rotate(90deg)}
   .trenbe-evidence-node,.trenbe-segment-flow article,.trenbe-decision-flow article{width:min(320px,88vw);margin-inline:auto}
   .trenbe-age-chart__summary{grid-template-columns:1fr;gap:20px}
   .trenbe-age-chart__plot{gap:7px;height:260px}
