@@ -52,7 +52,7 @@
     padding-top:var(--hm-section-padding-top)!important;
   }
 
-  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > :is(#strategy,#habit,#iteration,#outcome).hm-section{
+  html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > :is(#strategy,#screens,#habit,#iteration,#outcome).hm-section{
     padding-top:var(--hm-wide-major-content-gap)!important;
   }
 

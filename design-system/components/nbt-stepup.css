@@ -61,3 +61,242 @@ html body.nbt-stepup-page #live-main .hm-meta span,html body.nbt-stepup-page #li
 @media(max-width:980px){.stepup-hero-phones{right:-14vw;opacity:.52;transform:translateY(-48%) rotate(-4deg) scale(.82)}.nbt-stepup-page .narrative-signals .behavior-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.stepup-process{grid-template-columns:repeat(3,minmax(0,1fr))}.stepup-process article:nth-child(3){border-right:0}.stepup-process article:nth-child(-n+3){border-bottom:1px solid var(--hm-line-faint)}}
 @media(max-width:780px){.stepup-hero-phones{right:-260px;opacity:.35;transform:translateY(-50%) scale(.7)}html body.nbt-stepup-page #live-main .hm-hero-bottom{bottom:28px!important}html body.nbt-stepup-page #live-main .hm-meta{grid-template-columns:1fr 1fr!important;height:auto!important}.hm-meta>div{height:auto!important;min-height:62px!important;padding:10px 10px 10px 0!important}.hm-meta>div:nth-child(2n){padding-left:10px!important}.hm-meta>div:nth-child(n+3){border-top:1px solid var(--hm-line-default)}.hm-meta b{white-space:normal!important;font-size:11px!important}.stepup-question-grid,.stepup-experience-grid{grid-template-columns:1fr;gap:48px}.nbt-stepup-page .narrative-signals .behavior-grid{grid-template-columns:1fr!important;gap:0!important}.nbt-stepup-page .behavior-card{min-height:300px!important}.nbt-stepup-page .behavior-value{font-size:68px!important}.nbt-stepup-page .pie-layout{grid-template-columns:1fr!important;gap:40px!important}.nbt-stepup-page .pie{width:min(290px,82vw)!important;margin:auto!important}.nbt-stepup-page .hm-series-row{grid-template-columns:74px minmax(0,1fr) 72px;gap:8px}.nbt-stepup-page .hm-series-legend{margin-left:82px}.stepup-loop{grid-template-columns:1fr;gap:0;padding:0}.stepup-loop article{padding:22px 0;border-bottom:1px solid var(--hm-line-faint)}.stepup-loop>i{display:none}.stepup-process{grid-template-columns:1fr}.stepup-process article{min-height:0;border-right:0;border-bottom:1px solid var(--hm-line-faint)}.stepup-process article:last-child{border-bottom:0}.stepup-final-statement{margin-top:100px}.stepup-final-statement p{font-size:clamp(28px,7.5vw,32px)!important}.stepup-footer-inner{display:grid!important;gap:24px!important}.stepup-footer-inner>div{display:grid!important;gap:4px!important}}
 @media(prefers-reduced-motion:reduce){.hm-series-track i{transition:none!important}}
+
+
+/* STEPUP 2026-09 — composition only. Typography, section rhythm and colors inherit the portfolio design-system tokens. */
+html body.nbt-stepup-page #live-main .stepup-question-grid .shift{border-top-color:var(--hm-line-default)!important}
+
+/* AIMMO 01.2 circle-flow structure, retitled for the StepUp habit loop. */
+html body.nbt-stepup-page #screens .stepup-business-flow{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  align-items:center!important;
+  gap:0!important;
+  width:100%!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow article{
+  position:relative!important;
+  display:flex!important;
+  aspect-ratio:1!important;
+  min-width:0!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:clamp(18px,2vw,30px)!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  text-align:center!important;
+  transition:border-color 1.3s cubic-bezier(.22,.61,.36,1),background-color 1.3s cubic-bezier(.22,.61,.36,1)!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow article span{
+  color:var(--hm-blue)!important;
+  font:400 var(--hm-type-note)/1 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow article h4{
+  margin:13px 0 0!important;
+  color:#fff!important;
+  font:100 clamp(16px,1.55vw,22px)/1.22 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow article p{
+  margin:9px 0 0!important;
+  max-width:15ch!important;
+  color:var(--hm-text-body)!important;
+  font:300 clamp(10px,.9vw,13px)/1.4 var(--hm-font-ko)!important;
+  word-break:keep-all!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow > i{
+  position:relative!important;
+  width:0!important;
+  z-index:1!important;
+  color:transparent!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow > i::after{
+  content:"";
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:clamp(18px,2vw,32px);
+  border-top:1px solid rgba(255,255,255,.30);
+  transform:translate(-50%,-50%);
+}
+html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5){
+  border-color:var(--hm-blue)!important;
+  background:var(--hm-blue)!important;
+}
+html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5) span,
+html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5) p{color:#fff!important}
+html body.nbt-stepup-page #screens .stepup-business-flow article:nth-of-type(5){animation:stepup-circle-focus 1.3s cubic-bezier(.22,.61,.36,1) both}
+html body.nbt-stepup-page #screens .hm-subsection:not(.is-visible) .stepup-business-flow article:nth-of-type(5){animation-play-state:paused}
+@keyframes stepup-circle-focus{from{background:transparent;border-color:rgba(255,255,255,.30)}to{background:var(--hm-blue);border-color:var(--hm-blue)}}
+
+/* Himart lower mockup module, now populated with the original StepUp product screens. */
+html body.nbt-stepup-page #screens .stepup-phone-gallery{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:32px 24px!important;
+  width:100%!important;
+  margin-top:80px!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-card{min-width:0!important}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame{
+  position:relative!important;
+  aspect-ratio:9 / 16!important;
+  overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.30)!important;
+  border-radius:clamp(18px,1.7vw,28px)!important;
+  background:#fff!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-frame img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center top!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-meta{
+  display:grid!important;
+  grid-template-columns:auto 1fr!important;
+  column-gap:10px!important;
+  row-gap:5px!important;
+  margin-top:14px!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-meta span{
+  grid-row:span 2!important;
+  color:var(--hm-blue)!important;
+  font:400 var(--hm-type-note)/1 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-meta b{
+  color:#fff!important;
+  font:400 12px/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.nbt-stepup-page #screens .stepup-phone-gallery .phone-meta p{
+  margin:0!important;
+  max-width:none!important;
+  color:var(--hm-text-body)!important;
+  font-size:12px!important;
+}
+
+/* AIMMO 02.2 reference-bar source, with StepUp values only. */
+html body.nbt-stepup-page #screens .stepup-context-insights{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:48px!important;
+  width:100%!important;
+}
+html body.nbt-stepup-page #screens .stepup-context-insights .aimmo-context-insight{
+  padding-top:24px!important;
+  border-top:1px solid var(--hm-line-default)!important;
+}
+html body.nbt-stepup-page #screens .aimmo-context-insight__label{
+  display:block!important;
+  color:var(--hm-blue)!important;
+  font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.nbt-stepup-page #screens .aimmo-context-insight h4{margin:28px 0 0!important}
+html body.nbt-stepup-page #screens .aimmo-context-insight__copy{
+  margin:14px 0 28px!important;
+  max-width:38ch!important;
+  color:var(--hm-text-body)!important;
+}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__rows{display:grid!important;gap:18px!important}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__row{
+  display:grid!important;
+  grid-template-columns:110px minmax(0,1fr) 68px!important;
+  gap:16px!important;
+  align-items:center!important;
+  min-height:28px!important;
+}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__label,
+html body.nbt-stepup-page #screens .aimmo-reference-bars__value{
+  font:300 14px/1.3 var(--hm-font-ko)!important;
+}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__value{
+  text-align:right!important;
+  color:#fff!important;
+  font-family:var(--hm-font-en)!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__track{
+  position:relative!important;
+  height:10px!important;
+  overflow:hidden!important;
+  background:var(--hm-line-faint)!important;
+}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__fill{
+  position:absolute!important;
+  inset:0 auto 0 0!important;
+  width:calc(var(--value) * 1%)!important;
+  background:var(--hm-blue)!important;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .72s cubic-bezier(.22,1,.36,1);
+}
+html body.nbt-stepup-page #screens .is-bars-focused .aimmo-reference-bars__fill{transform:scaleX(1)}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
+html body.nbt-stepup-page #screens .aimmo-reference-bars__source{
+  display:block!important;
+  margin-top:18px!important;
+  color:var(--hm-text-tertiary)!important;
+  font:400 10px/1.35 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+
+/* 05.1 working loop: compact 2 × 2 system grid. */
+html body.nbt-stepup-page #iteration .stepup-process--2x2{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+  border-bottom:0!important;
+}
+html body.nbt-stepup-page #iteration .stepup-process--2x2 article{
+  min-height:250px!important;
+  padding:28px 0 32px!important;
+  border-right:0!important;
+  border-bottom:1px solid var(--hm-line-default)!important;
+}
+html body.nbt-stepup-page #iteration .stepup-process--2x2 article:nth-child(odd){padding-right:28px!important}
+html body.nbt-stepup-page #iteration .stepup-process--2x2 article:nth-child(even){padding-left:28px!important;border-left:1px solid var(--hm-line-faint)!important}
+html body.nbt-stepup-page #iteration .stepup-process--2x2 h4{margin-top:34px!important}
+
+html body.nbt-stepup-page .hm-project-reflection{
+  width:min(var(--hm-content-max,1280px),calc(100% - 2 * var(--hm-page-padding,64px)))!important;
+  margin:160px auto 0!important;
+  padding:32px 0 0!important;
+  border-top:1px solid var(--hm-line-default)!important;
+}
+html body.nbt-stepup-page .hm-project-reflection__title{
+  margin:0 0 28px!important;
+  color:var(--hm-text-tertiary)!important;
+  font:400 var(--hm-type-note)/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.nbt-stepup-page .hm-project-reflection__copy{
+  max-width:1000px!important;
+  margin:0!important;
+  color:#fff!important;
+  font:100 var(--hm-type-subsection)/1.28 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100!important;
+}
+html body.nbt-stepup-page .hm-project-reflection__copy strong{color:var(--hm-blue)!important;font-weight:inherit!important}
+
+@media(max-width:980px){
+  html body.nbt-stepup-page #screens .stepup-phone-gallery{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.nbt-stepup-page #screens .stepup-context-insights{grid-template-columns:1fr!important}
+}
+@media(max-width:780px){
+  html body.nbt-stepup-page #screens .stepup-business-flow{grid-template-columns:1fr!important;gap:0!important}
+  html body.nbt-stepup-page #screens .stepup-business-flow article{width:min(290px,80vw)!important;margin:0 auto!important}
+  html body.nbt-stepup-page #screens .stepup-business-flow > i{display:block!important;width:100%!important;height:28px!important}
+  html body.nbt-stepup-page #screens .stepup-business-flow > i::after{width:1px!important;height:28px!important;border-top:0!important;border-left:1px solid rgba(255,255,255,.30)!important}
+  html body.nbt-stepup-page #screens .stepup-phone-gallery{gap:28px 16px!important;margin-top:56px!important}
+  html body.nbt-stepup-page #screens .aimmo-reference-bars__row{grid-template-columns:80px minmax(0,1fr) 58px!important;gap:10px!important}
+  html body.nbt-stepup-page #iteration .stepup-process--2x2{grid-template-columns:1fr!important}
+  html body.nbt-stepup-page #iteration .stepup-process--2x2 article:nth-child(n){padding:24px 0!important;border-left:0!important}
+}
