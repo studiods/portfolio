@@ -8,15 +8,15 @@
   /* ROLE DEFINITION titles intentionally remain content-specific here.
      No shared design-system wrapping rule is introduced yet. */
   const roleCards = [
-    ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다', 'team-purpose'],
-    ['CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다', 'aimmo-layers'],
-    ['SEARCH', '검색은 불확실성을<br>확신으로 바꿔줘야 한다', 'trenbe-search'],
-    ['SRP / PLP', '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다', 'aimmo-sliders'],
-    ['PDP', '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다', 'trenbe-product'],
-    ['CART / PAY', '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다', 'trenbe-check'],
-    ['INSTALL / CARE', '설치 조율은 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다', 'ax-update'],
-    ['MYPAGE', '구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다', 'aimmo-link'],
-    ['POST-PURCHASE', '구매 이후 경험은 다시 찾게 되는<br>관계로 이어져야 한다', 'team-update']
+    ['HOME', '홈은 보여주는 곳이 아닌<br>원하는 곳으로 보내주는 곳이어야 한다'],
+    ['CATEGORY', '선택한 카테고리 안에서는<br>고민의 시간을 줄여야 한다'],
+    ['SEARCH', '검색은 불확실성을<br>확신으로 바꿔줘야 한다'],
+    ['SRP / PLP', '검색 결과는 단순 상품 목록이 아니라<br>비교를 끝내는 화면이어야 한다'],
+    ['PDP', '상세페이지는 설명하는 화면이 아니라<br>결정을 끝내는 화면이어야 한다'],
+    ['CART / PAY', '장바구니는 결제 직전의<br>마지막 확신을 줘야 한다'],
+    ['INSTALL / CARE', '설치 조율은 결제 이후의 불안을<br>일정 확정으로 바꿔야 한다'],
+    ['MYPAGE', '구매 이후에도 관리받고 있다는<br>느낌을 줘야 한다'],
+    ['POST-PURCHASE', '구매 이후 경험은 다시 찾게 되는<br>관계로 이어져야 한다']
   ];
 
   const html = (el, value) => { if (el && el.innerHTML !== value) el.innerHTML = value; };
@@ -86,25 +86,17 @@
         cards = [...grid.querySelectorAll(':scope > .role-card, :scope > article')];
       }
       cards.slice(0, roleCards.length).forEach((card, i) => {
-        const [label, title, icon] = roleCards[i];
+        const [label, title] = roleCards[i];
+        card.querySelectorAll('.hm-ds-icon,p,strong').forEach(el => el.remove());
+        let index = card.querySelector('.hm-role-index');
+        if (!index) {
+          index = document.createElement('span');
+          index.className = 'hm-role-index';
+          card.prepend(index);
+        }
+        text(index, String(i + 1).padStart(2, '0'));
         text(card.querySelector('.hm-role-name, small'), label);
         html(card.querySelector('h4'), title);
-        card.querySelectorAll('p,strong').forEach(el => el.remove());
-        let svg = card.querySelector('.hm-ds-icon');
-        if (!svg) {
-          svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          svg.setAttribute('class','hm-ds-icon');
-          svg.setAttribute('aria-hidden','true');
-          const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-          svg.appendChild(use);
-          card.appendChild(svg);
-        }
-        let use = svg.querySelector('use');
-        if (!use) {
-          use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-          svg.appendChild(use);
-        }
-        use.setAttribute('href', `./assets/icons/portfolio-icons.svg#${icon}`);
       });
       cards.slice(roleCards.length).forEach(card => card.remove());
     }
