@@ -783,3 +783,49 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
     font-size:64px!important;
   }
 }
+
+
+/* HIMART chapter 01 final layout authority — 2026-09-21 */
+/* 01.2 label → title follows the same 18px rhythm as other numbered middle titles. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality>.narrative-subno{
+  margin:0 0 18px!important;
+}
+
+/* Preserve the authored two-line breaks in the four metric-card headlines.
+   The shared card contract normally suppresses <br>; these are page-owned evidence cards. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card h4 br{
+  display:initial!important;
+}
+
+/* Metric headline → supporting label/value spacing. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__value{
+  margin-top:80px!important;
+}
+
+/* 01.4 is a comparison block, not a generic DS card. Keep both columns flush to their grid edges. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-list{
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  align-items:flex-start!important;
+  justify-items:start!important;
+  text-align:left!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card>b,
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card>p{
+  display:block!important;
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  text-align:left!important;
+  align-self:flex-start!important;
+}
