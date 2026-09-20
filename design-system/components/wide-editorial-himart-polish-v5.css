@@ -829,3 +829,28 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
   text-align:left!important;
   align-self:flex-start!important;
 }
+
+/* HIMART 01.4 final visual authority — 1px blue/red rails and natural Korean word wrapping. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+  border-top:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:2!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  width:100%!important;
+  height:1px!important;
+  background:var(--hm-blue)!important;
+  opacity:1!important;
+  pointer-events:none!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card.negative::after{
+  background:var(--hm-red)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card p{
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
