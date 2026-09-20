@@ -421,7 +421,7 @@ html body.himart-commerce-page #brand .himart-appliance-flow__stage h5{
   margin-top:30px!important;
   color:var(--flow-blue)!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
+  font-size:24px!important;
   font-weight:400!important;
   font-variation-settings:"wght" 400!important;
   line-height:1.3!important;
@@ -523,22 +523,22 @@ html body.himart-commerce-page #brand .himart-appliance-flow__note .himart-appli
 
 
 /* HIMART 01.3 evidence color simplification — 2026-09-21 */
-/* Every evidence card is red except the channel-shift card, which remains the single blue exception. */
+/* All issue/evidence cards use the same red problem grammar for consistent reading. */
 html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-pause,
 html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-relation,
 html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-risk{
   --risk-color:var(--flow-red)!important;
 }
 html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-shift{
-  --risk-color:var(--flow-blue)!important;
+  --risk-color:var(--flow-red)!important;
 }
 html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-shift h6{
-  font-size:24px!important;
-  line-height:1.3!important;
+  font-size:16px!important;
+  line-height:1.38!important;
 }
 html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-shift p{
-  color:rgba(255,255,255,.70)!important;
-  font-size:14px!important;
+  color:rgba(255,255,255,.48)!important;
+  font-size:13px!important;
   line-height:1.5!important;
 }
 html body.himart-commerce-page #brand .himart-appliance-flow__legend{
