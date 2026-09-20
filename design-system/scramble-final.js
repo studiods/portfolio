@@ -54,7 +54,7 @@
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const REVEAL_SYNC_DELAY = 70;
   /* Design-system timing contract: lower cycleMs = faster glyph changes; randomCycles = number of random passes; staggerMax = maximum delay between character slots. */
-  const TIMING = Object.freeze({ cycleMs: 40, randomCycles: 6, staggerMax: 14, settleTailMs: 56 });
+  const TIMING = Object.freeze({ cycleMs: 40, randomCycles: 6, heroRandomCycles: 9, staggerMax: 14, settleTailMs: 56 });
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
   const normalizeText = value => (value || '').replace(/\s+/g, ' ').trim();
@@ -147,6 +147,10 @@
     element.innerHTML = state.originalHTML;
   };
 
+  const revealTitleLines = element => {
+    element?.querySelectorAll('.reveal-line').forEach(line => line.classList.add('is-visible'));
+  };
+
   /* Himart's canonical narrative guard may rewrite the same major title while the
      scramble is running. Rebuild only when the visible text is still identical. */
   const repairCanonicalRewrite = (element, state) => {
@@ -205,6 +209,7 @@
     const restoreFinalState = () => {
       if (!document.contains(element)) return;
       restoreAuthoredHTML(element, state);
+      revealTitleLines(element);
       element.style.visibility = state.originalVisibility || '';
       element.removeAttribute('data-hm-scramble-active');
       element.setAttribute('data-hm-scramble-complete', 'true');
@@ -248,11 +253,12 @@
     const originalText = state?.originalText ?? element.textContent ?? '';
     const chars = buildAnimatedMarkup(element, originalHTML);
     if (!chars.length) return false;
+    revealTitleLines(element);
     prepareScrambleCharacters(chars);
 
     const count = chars.length;
     const stagger = Math.max(7, Math.min(TIMING.staggerMax, 400 / Math.max(1, count)));
-    const randomPhase = TIMING.cycleMs * TIMING.randomCycles;
+    const randomPhase = TIMING.cycleMs * (kind === 'hero' ? TIMING.heroRandomCycles : TIMING.randomCycles);
     const totalDuration = randomPhase + (count - 1) * stagger + TIMING.settleTailMs;
 
     state = {
