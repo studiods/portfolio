@@ -33,63 +33,16 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
     <span class="is-shift"><i></i>채널 이동</span>
     <span class="is-risk"><i></i>이탈 위험</span>
   </div>
-  <div class="himart-appliance-flow__viewport" tabindex="0" aria-label="온라인 가전 구매 Reference Flow">
-    <div class="himart-appliance-flow__path">
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">01</span><h5>구매 필요 발생</h5><p>고장 · 교체 · 이사 · 업그레이드</p></article>
-      <div class="himart-appliance-flow__connector"></div>
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">02</span><h5>검색·탐색</h5><p>검색 · 콘텐츠 · 리뷰로 후보 발견</p></article>
-      <div class="himart-appliance-flow__connector">
-        <i class="himart-appliance-flow__risk-dot" style="--risk-color:var(--hm-yellow)"></i>
-        <aside class="himart-appliance-flow__risk is-pause">
-          <b>고민 장기화</b>
-          <h6>바로 사기보다, 조사하고 기다립니다.</h6>
-          <p><strong>39%</strong>는 첫 온라인 조사 후 구매까지 2주 이상 걸리고, 3명 중 1명 이상은 4개 이상의 사이트·소스를 확인합니다.</p>
-          <small>Criteo Consumer Electronics Pulse · 2026</small>
-        </aside>
-      </div>
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">03</span><h5>후보 비교</h5><p>가격 · 스펙 · 브랜드 · 혜택 압축</p></article>
-      <div class="himart-appliance-flow__connector">
-        <i class="himart-appliance-flow__risk-dot" style="--risk-color:var(--hm-yellow)"></i>
-        <aside class="himart-appliance-flow__risk is-pause is-level-2">
-          <b>외부 비교 이탈</b>
-          <h6>비교 과정에서 경쟁몰과 외부 콘텐츠로 빠집니다.</h6>
-          <p>전자·가전 구매자의 <strong>66%</strong>가 온라인 가격을 비교하고, <strong>57%</strong>가 리뷰를 확인합니다.</p>
-          <small>Criteo Shopper Survey · 2025 Q2</small>
-        </aside>
-      </div>
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">04</span><h5>상세 검증</h5><p>성능 · 후기 · 신뢰 · 사용성 확인</p></article>
-      <div class="himart-appliance-flow__connector">
-        <i class="himart-appliance-flow__risk-dot" style="--risk-color:var(--hm-blue)"></i>
-        <aside class="himart-appliance-flow__risk is-shift">
-          <b>매장으로 채널 이동</b>
-          <h6>고가·복잡한 제품은 실물 확인이 검증 과정이 됩니다.</h6>
-          <p>전자제품 쇼핑객의 <strong>44%</strong>가 구매 전 직접 제품을 만져보는 경험을 선호합니다. 프리미엄 대형가전에서도 매장 확인은 여전히 중요합니다.</p>
-          <small>Criteo 2024 · NIQ Home Appliances Outlook 2026</small>
-        </aside>
-      </div>
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">05</span><h5>배송·설치 확인</h5><p>지역 · 일정 · 설치비 · 회수 조건</p></article>
-      <div class="himart-appliance-flow__connector">
-        <i class="himart-appliance-flow__risk-dot" style="--risk-color:var(--hm-red)"></i>
-        <aside class="himart-appliance-flow__risk is-risk is-level-2">
-          <b>조건 불확실로 이탈</b>
-          <h6>상품 가격보다 ‘최종 조건’에서 다시 망설입니다.</h6>
-          <p>일반 이커머스에서 <strong>40%</strong>는 추가 비용, <strong>20%</strong>는 느린 배송 때문에 구매를 포기했습니다. 가전은 설치·회수 조건까지 함께 판단해야 합니다.</p>
-          <small>Baymard Cart & Checkout Research · 2026</small>
-        </aside>
-      </div>
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">06</span><h5>장바구니·결제</h5><p>총액 · 혜택 · 결제수단 최종 확정</p></article>
-      <div class="himart-appliance-flow__connector">
-        <i class="himart-appliance-flow__risk-dot" style="--risk-color:var(--hm-red)"></i>
-        <aside class="himart-appliance-flow__risk is-risk">
-          <b>결제 마찰로 이탈</b>
-          <h6>구매 의도가 높아도 마지막 단계에서 멈춥니다.</h6>
-          <p>일반 이커머스에서 강제 회원가입은 <strong>18%</strong>, 길고 복잡한 결제는 <strong>17%</strong>의 포기 이유였습니다.</p>
-          <small>Baymard Cart & Checkout Research · 2026</small>
-        </aside>
-      </div>
-      <article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">07</span><h5>구매·설치</h5><p>주문 확정 · 설치 · 회수 · 사후관리</p></article>
-    </div>
-  </div>
+  <div class="himart-appliance-flow__viewport" tabindex="0" aria-label="온라인 가전 구매 Reference Flow"><div class="himart-appliance-flow__path">
+<div class="himart-appliance-flow__row">
+<article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">01</span><h5>구매 필요 발생</h5><p>고장 · 교체 · 이사 · 업그레이드</p></article><article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">02</span><h5>검색·탐색</h5><p>검색 · 콘텐츠 · 리뷰로 후보 발견</p></article><article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">03</span><h5>후보 비교</h5><p>가격 · 스펙 · 브랜드 · 혜택 압축</p></article><article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">04</span><h5>상세 검증</h5><p>성능 · 후기 · 신뢰 · 사용성 확인</p></article><i class="himart-appliance-flow__connector himart-appliance-flow__connector--1"></i><i class="himart-appliance-flow__connector himart-appliance-flow__connector--2"></i><i class="himart-appliance-flow__connector himart-appliance-flow__connector--3"></i>
+</div><div class="himart-appliance-flow__annotation-lane">
+<aside class="himart-appliance-flow__risk is-pause himart-appliance-flow__risk--a"><b>고민 장기화</b><h6>바로 사기보다, 조사하고 기다립니다.</h6><p><strong>39%</strong>는 첫 온라인 조사 후 구매까지 2주 이상 걸리고, 3명 중 1명 이상은 4개 이상의 사이트·소스를 확인합니다.</p><small>Criteo Consumer Electronics Pulse · 2026</small></aside><aside class="himart-appliance-flow__risk is-pause is-offset himart-appliance-flow__risk--b"><b>외부 비교 이탈</b><h6>비교 과정에서 경쟁몰과 외부 콘텐츠로 빠집니다.</h6><p>전자·가전 구매자의 <strong>66%</strong>가 온라인 가격을 비교하고, <strong>57%</strong>가 리뷰를 확인합니다.</p><small>Criteo Shopper Survey · 2025 Q2</small></aside><aside class="himart-appliance-flow__risk is-shift himart-appliance-flow__risk--c"><b>매장으로 채널 이동</b><h6>고가·복잡한 제품은 실물 확인이 검증 과정이 됩니다.</h6><p>전자제품 쇼핑객의 <strong>44%</strong>가 구매 전 직접 제품을 만져보는 경험을 선호합니다.</p><small>Criteo 2024 · NIQ Home Appliances Outlook 2026</small></aside>
+</div><div class="himart-appliance-flow__row">
+<article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">05</span><h5>배송·설치 확인</h5><p>지역 · 일정 · 설치비 · 회수 조건</p></article><article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">06</span><h5>장바구니·결제</h5><p>총액 · 혜택 · 결제수단 최종 확정</p></article><article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">07</span><h5>설치·수령</h5><p>주문 확정 · 설치 · 회수 진행</p></article><article class="himart-appliance-flow__stage"><span class="himart-appliance-flow__stage-no">08</span><h5>보증·A/S·케어</h5><p>사후관리 · 재구매 · 관계 유지</p></article><i class="himart-appliance-flow__connector himart-appliance-flow__connector--1"></i><i class="himart-appliance-flow__connector himart-appliance-flow__connector--2"></i><i class="himart-appliance-flow__connector himart-appliance-flow__connector--3"></i>
+</div><div class="himart-appliance-flow__annotation-lane">
+<aside class="himart-appliance-flow__risk is-risk himart-appliance-flow__risk--d"><b>조건 불확실로 이탈</b><h6>상품 가격보다 ‘최종 조건’에서 다시 망설입니다.</h6><p>일반 이커머스에서 <strong>40%</strong>는 추가 비용, <strong>20%</strong>는 느린 배송 때문에 구매를 포기했습니다.</p><small>Baymard Cart & Checkout Research · 2026</small></aside><aside class="himart-appliance-flow__risk is-risk is-offset himart-appliance-flow__risk--e"><b>결제 마찰로 이탈</b><h6>구매 의도가 높아도 마지막 단계에서 멈춥니다.</h6><p>강제 회원가입은 <strong>18%</strong>, 길고 복잡한 결제는 <strong>17%</strong>의 포기 이유였습니다.</p><small>Baymard Cart & Checkout Research · 2026</small></aside><aside class="himart-appliance-flow__risk is-shift himart-appliance-flow__risk--f"><b>구매 뒤 관계 단절</b><h6>설치 이후 상태와 케어가 다시 분리됩니다.</h6><p>보증·A/S·케어 정보를 주문 맥락에서 이어 보여줘야 다음 구매의 신뢰 자산이 됩니다.</p><small>HIMART Care Consumer Research · 2026.07</small></aside>
+</div></div></div>
   <p class="himart-appliance-flow__note"><strong>REFERENCE JOURNEY · 하이마트 실측 퍼널이 아닙니다.</strong> Consumer Electronics / Major Appliance / General E-commerce 리서치에서 반복적으로 확인되는 탐색·비교·이탈 요인을 구매 흐름에 재구성했습니다.<span class="himart-appliance-flow__source">SOURCE · Criteo Consumer Electronics Pulse 2026 · Criteo Shopper Survey 2025 Q2 · NIQ Home Appliances Outlook 2026 · Baymard Cart & Checkout Research 2026 · Chiu et al., Computers in Human Behavior 2019</span></p>
 </div>
 <div class="brand-synthesis"><h4>결국 문제는 인지가 아니라<br>구매 전환 과정에 있었습니다.</h4><div class="synthesis-list"><div class="synthesis-col"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 경쟁사가 쉽게 복제하기 어려운 오프라인 자산이 있었습니다.</p></div><div class="synthesis-col"><b>온라인에서 끊기던 지점</b><p>인지 → 실제 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록 편의성과 연결성이 약해졌습니다.</p></div></div></div><div class="hm-source hm-ds-source-note">SOURCE · Deloitte Consulting Korea, 평생Care서비스 멤버십 설계 소비자 조사 · 2026.07</div></div>`);problem.insertAdjacentElement('afterend',reality);const brandBars=[...reality.querySelectorAll('.himart-brand-evidence .aimmo-reference-bars')];const reducedBars=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;if(reducedBars){brandBars.forEach(chart=>chart.classList.add('is-bars-focused'))}else if('IntersectionObserver' in window){const brandBarObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting&&entry.target.offsetParent!==null)entry.target.classList.add('is-bars-focused')})},{threshold:.20,rootMargin:'0px 0px -5% 0px'});brandBars.forEach(chart=>brandBarObserver.observe(chart))}else{brandBars.forEach(chart=>chart.classList.add('is-bars-focused'))}const originals=[...brandWrap.children].filter(node=>node.classList?.contains('hm-subsection')&&!node.classList.contains('narrative-block'));wrapMore(brandWrap,originals,'고객 의견과 기존 정성 분석 더 보기','QUALITATIVE RESEARCH')}
