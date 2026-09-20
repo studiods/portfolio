@@ -43,7 +43,7 @@
   /*
     REUSE 04.1 / PROTOTYPE GALLERY
     ------------------------------
-    The authored 12 phone cards become a six-page carousel, two mockups per page.
+    The first eight authored phone cards become a four-page carousel, two mockups per page.
     Each page uses 85% of the right content rail, with a fixed 32px gap between mockups.
     Copy stays paired with each mockup and moves below the device.
   */
@@ -53,7 +53,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-3';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-4';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -68,7 +68,7 @@
 
     if(!gallery || wrap.querySelector(':scope > .prototype-case-list'))return;
 
-    const cards=[...gallery.querySelectorAll(':scope > .phone-card')];
+    const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,8);
     if(!cards.length)return;
 
     const list=document.createElement('div');
@@ -103,18 +103,17 @@
         device.setAttribute('aria-label',`Reuse prototype page ${pages.length+1}, screen ${screenIndex+1}`);
 
         const screen=document.createElement('div');
-        screen.className='galaxy-ultra-screen';
+        screen.className='galaxy-ultra-screen is-scrollable';
+        device.classList.add('has-scroll-screen');
 
-        if(start===0){
-          device.classList.add('has-scroll-screen');
-          screen.classList.add('is-scrollable');
-          const image=document.createElement('img');
-          image.src=`./assets/image/himart-reuse/reuse_screens_01_0${screenIndex+1}.png`;
-          image.alt=`Reuse prototype screen 01_0${screenIndex+1}`;
-          image.loading='lazy';
-          image.decoding='async';
-          screen.appendChild(image);
-        }
+        const assetIndex=start+screenIndex+1;
+        const assetNo=String(assetIndex).padStart(2,'0');
+        const image=document.createElement('img');
+        image.src=`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`;
+        image.alt=`Reuse prototype screen 01_${assetNo}`;
+        image.loading=assetIndex<=2?'eager':'lazy';
+        image.decoding='async';
+        screen.appendChild(image);
 
         device.appendChild(screen);
 
