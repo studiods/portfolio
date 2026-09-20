@@ -27,13 +27,6 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
   <span class="himart-appliance-flow__eyebrow">01.3</span>
   <h4 class="himart-appliance-flow__title">가전 구매는 직선 퍼널보다,<br><span class="himart-appliance-flow__title-line">비교와 검증을 반복하는 긴 여정에 가까웠습니다.</span></h4>
   <p class="himart-appliance-flow__lead"><span>고가·저빈도 상품이라 검색·비교·리뷰·실물 확인을 반복하고,</span><span>배송·설치 조건이 불명확하면 구매 직전에도 이탈합니다.</span></p>
-  <div class="himart-appliance-flow__legend" aria-label="플로우 차트 범례">
-    <span><i></i>일반 구매 흐름</span>
-    <span class="is-pause"><i></i>고민·비교 지속</span>
-    <span class="is-shift"><i></i>채널 이동</span>
-    <span class="is-risk"><i></i>이탈 위험</span>
-  </div>
-
   <div class="himart-appliance-flow__viewport" tabindex="0" aria-label="온라인 가전 구매 Reference Flow">
     <div class="himart-appliance-flow__path">
 
@@ -98,6 +91,13 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
       </div>
 
     </div>
+  </div>
+
+  <div class="himart-appliance-flow__legend" aria-label="플로우 차트 범례">
+    <span><i></i>일반 구매 흐름</span>
+    <span class="is-pause"><i></i>고민·비교 지속</span>
+    <span class="is-shift"><i></i>채널 이동</span>
+    <span class="is-risk"><i></i>이탈 위험</span>
   </div>
 
   <p class="himart-appliance-flow__note"><span class="himart-appliance-flow__source">SOURCE · 하이마트 내부 리서치 자료 종합</span></p>
