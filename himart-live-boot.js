@@ -53,7 +53,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-4';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-5';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -131,6 +131,22 @@
         article.appendChild(item);
       });
 
+      const firstDevice=article.querySelector('.prototype-case-item:first-child .galaxy-ultra-mockup');
+      const lastDevice=article.querySelector('.prototype-case-item:last-child .galaxy-ultra-mockup');
+
+      const prev=document.createElement('button');
+      prev.className='prototype-case-control prototype-case-control--prev';
+      prev.type='button';
+      prev.setAttribute('aria-label','이전 목업');
+
+      const next=document.createElement('button');
+      next.className='prototype-case-control prototype-case-control--next';
+      next.type='button';
+      next.setAttribute('aria-label','다음 목업');
+
+      firstDevice?.appendChild(prev);
+      lastDevice?.appendChild(next);
+
       track.appendChild(article);
       pages.push(article);
     }
@@ -145,48 +161,71 @@
     pagination.className='prototype-case-pagination';
     pagination.setAttribute('aria-live','polite');
 
-    const controls=document.createElement('div');
-    controls.className='prototype-case-controls';
-
-    const prev=document.createElement('button');
-    prev.className='prototype-case-control prototype-case-control--prev';
-    prev.type='button';
-    prev.setAttribute('aria-label','이전 목업');
-
-    const divider=document.createElement('i');
-    divider.className='prototype-case-control-divider';
-    divider.setAttribute('aria-hidden','true');
-
-    const next=document.createElement('button');
-    next.className='prototype-case-control prototype-case-control--next';
-    next.type='button';
-    next.setAttribute('aria-label','다음 목업');
-
-    controls.append(prev,divider,next);
-    footer.append(pagination,controls);
+    footer.appendChild(pagination);
     list.appendChild(footer);
 
+    const HOLD_MS=5000;
     let index=0;
-    const update=()=>{
+    let timer=0;
+
+    const clearTimer=()=>{
+      if(timer)window.clearTimeout(timer);
+      timer=0;
+    };
+
+    const update=(instant=false)=>{
+      if(instant)track.classList.add('is-instant');
       track.style.transform=`translate3d(${index*-100}%,0,0)`;
       pages.forEach((page,pageIndex)=>page.setAttribute('aria-hidden',pageIndex===index?'false':'true'));
       pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}`;
-    };
-    const move=(delta)=>{
-      if(pages.length<2)return;
-      index=(index+delta+pages.length)%pages.length;
-      update();
+      if(instant)requestAnimationFrame(()=>track.classList.remove('is-instant'));
     };
 
-    prev.addEventListener('click',()=>move(-1));
-    next.addEventListener('click',()=>move(1));
+    const schedule=()=>{
+      clearTimer();
+      if(pages.length<2)return;
+      timer=window.setTimeout(()=>move(1),HOLD_MS);
+    };
+
+    const move=(delta)=>{
+      if(pages.length<2)return;
+      clearTimer();
+
+      const wrapsForward=delta>0 && index===pages.length-1;
+      const wrapsBackward=delta<0 && index===0;
+      index=(index+delta+pages.length)%pages.length;
+      update(wrapsForward||wrapsBackward);
+      schedule();
+    };
+
+    list.querySelectorAll('.prototype-case-control--prev').forEach(button=>{
+      button.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        move(-1);
+      });
+    });
+    list.querySelectorAll('.prototype-case-control--next').forEach(button=>{
+      button.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        move(1);
+      });
+    });
+
     list.tabIndex=0;
     list.addEventListener('keydown',(event)=>{
       if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
       else if(event.key==='ArrowRight'){event.preventDefault();move(1);}
     });
 
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden)clearTimer();
+      else schedule();
+    });
+
     update();
+    schedule();
     gallery.replaceWith(list);
   };
   mountReuseDirectionPrototype();
