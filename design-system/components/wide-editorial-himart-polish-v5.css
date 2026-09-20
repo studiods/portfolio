@@ -131,8 +131,11 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-online-gap-line{
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-reality-title>span{
+  display:block!important;
   white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
 }
 /* HIMART 01.2 — AIMMO 02 / 01 graph structure copied exactly; only content is Himart-specific.
    Four evidence graphs are stacked one per row. */
@@ -158,7 +161,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   margin:18px 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:28px!important;
+  font-size:22px!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
   line-height:1.24!important;
@@ -270,7 +273,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   }
 }
 @media(max-width:780px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-online-gap-line{
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-reality-title>span{
     white-space:normal!important;
   }
   html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{gap:56px!important}
