@@ -68,7 +68,7 @@
   }
 
   const direction=main.querySelector('#direction');
-  const preserveReuseGalleryView=direction?.querySelector('.prototype-intro.hm-subsection.hm-ds-subsection + .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content');
+  const preserveReuseGalleryView=direction?.querySelector('.himart-direction-041 .phone-gallery.hm-ds-media-grid');
   if(direction&&!preserveReuseGalleryView){direction.querySelector('.prototype-intro')?.remove();const gallery=direction.querySelector('.phone-gallery');if(gallery){const list=document.createElement('div');list.className='prototype-case-list hm-reveal';const device='<div class="prototype-case-visual"><div class="galaxy-ultra-mockup" aria-label="Galaxy S26 Ultra line frame"><div class="galaxy-ultra-screen"></div></div></div>';list.innerHTML=`<article class="prototype-case">${device}<div class="prototype-case-copy"><span class="hm-card-no">01 / HOME</span><h3>시작점을 하나로 가정하지 않고,<br>다음 행동으로 빠르게 연결하는 허브로 재정의했습니다.</h3><p>검색·카테고리·혜택과 주요 서비스를 이어 유입 맥락을 다시 탐색하지 않게 했습니다.</p><strong><b>적용한 전략</b>유입 맥락 유지 · 목적지 연결 · 관심 기반 진입</strong></div></article><article class="prototype-case">${device}<div class="prototype-case-copy"><span class="hm-card-no">02 / SRP</span><h3>검색 결과는 더 많이 보여주기보다,<br>더 빨리 좁히는 화면으로 바꿨습니다.</h3><p>검색 조건을 유지하고 핵심 필터·상품 정보로 후보를 빠르게 압축했습니다.</p><strong><b>적용한 전략</b>지속 필터 · 핵심 비교 기준 · 후보 압축</strong></div></article><article class="prototype-case">${device}<div class="prototype-case-copy"><span class="hm-card-no">03 / PDP</span><h3>상품 정보는 나열이 아니라,<br>구매 확신을 만드는 흐름으로 재정리했습니다.</h3><p>가격·혜택·배송·설치를 우선순위로 연결해 구매 직전 재확인 부담을 줄였습니다.</p><strong><b>적용한 전략</b>가격·혜택 명확화 · 배송/설치 조건 · 판단 우선순위</strong></div></article><article class="prototype-case hicheck">${device}<div class="prototype-case-copy"><span class="hm-card-no">04 / HI CHECK</span><h3>전문 정보는 생활 기준으로 번역해,<br>이해 부담을 낮췄습니다.</h3><p>용량·전기료·설치 크기 같은 수치를 생활 기준으로 풀어 이해 부담을 낮췄습니다.</p><strong><b>적용한 전략</b>전문성의 디지털화 · 생활 기준 해석 · 선택 근거</strong></div></article>`;gallery.replaceWith(list);}}
 
   const kicker=main.querySelector('.hm-kicker');if(kicker)kicker.textContent='LOTTE HIMART / COMMERCE JOURNEY / 2024—NOW';
@@ -1323,7 +1323,7 @@
       }
     });
   }
-  const preserveReuseGalleryView=direction?.querySelector('.prototype-intro.hm-subsection.hm-ds-subsection + .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content');
+  const preserveReuseGalleryView=direction?.querySelector('.himart-direction-041 .phone-gallery.hm-ds-media-grid');
   const gallery=direction?.querySelector('.phone-gallery');
   if(gallery&&!preserveReuseGalleryView&&!gallery.classList.contains('production-prototype-gallery')){
     const cards=[...gallery.querySelectorAll(':scope > .phone-card')];
