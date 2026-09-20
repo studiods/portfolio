@@ -1,0 +1,80 @@
+/* HIMART chapter 04 implementation layer.
+   04.1 owns the prototype validation story; 04.2 reserves the 16:9 gallery for
+   comparison / store-connection explorations that will receive final media later. */
+
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042){
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* 04.1 / authored design principles */
+html body.himart-commerce-page #direction .himart-direction-041 .design-rule{
+  margin-bottom:80px!important;
+}
+html body.himart-commerce-page #direction .himart-direction-041 .design-rule small{
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.himart-commerce-page #direction .himart-direction-041 > .phone-gallery{
+  margin-top:0!important;
+}
+
+/* The shared Reuse 04.1 carousel is mounted in place of the authored phone-gallery.
+   Keep chapter rhythm owned by the subsection rather than by the component's legacy top margin. */
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 > .prototype-case-list{
+  margin-top:0!important;
+}
+
+/* 04.2 / future 16:9 comparison + store-connection gallery */
+html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery{
+  --hm-ds-media-carousel-ratio:16/9;
+  width:100%!important;
+  aspect-ratio:16/9!important;
+  background:#060606!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+}
+html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery__placeholder{
+  position:absolute!important;
+  inset:0!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:flex-start!important;
+  width:100%!important;
+  height:100%!important;
+  padding:28px!important;
+  box-sizing:border-box!important;
+  background:#060606!important;
+}
+html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery__placeholder span{
+  color:rgba(255,255,255,.32)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.himart-commerce-page #direction .himart-direction-042 .hm-ds-media-carousel__status{
+  top:auto!important;
+  right:24px!important;
+  bottom:24px!important;
+}
+
+/* Keep the two new subsections inside the same wide right rail used by chapters 01–03. */
+@media(min-width:1600px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > :is(.himart-direction-041,.himart-direction-042){
+    grid-column:auto!important;
+    width:100%!important;
+  }
+}
+
+@media(max-width:780px){
+  html body.himart-commerce-page #direction .himart-direction-041 .design-rule{
+    margin-bottom:54px!important;
+  }
+  html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery__placeholder{
+    padding:20px!important;
+  }
+  html body.himart-commerce-page #direction .himart-direction-042 .hm-ds-media-carousel__status{
+    right:18px!important;
+    bottom:18px!important;
+  }
+}
