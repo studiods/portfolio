@@ -457,6 +457,7 @@
   let heroEntryActive = false;
   let heroEntryStarted = false;
   let heroEntryRaf = 0;
+  let heroEntryFinalTimer = 0;
   let heroEntryStates = [];
 
   const clearHeroEntryNode = ({ char, finalChar }) => {
@@ -472,7 +473,9 @@
   const finishHeroEntryReveal = () => {
     if (!heroEntryActive && !heroEntryStarted) return;
     if (heroEntryRaf) cancelAnimationFrame(heroEntryRaf);
+    if (heroEntryFinalTimer) clearTimeout(heroEntryFinalTimer);
     heroEntryRaf = 0;
+    heroEntryFinalTimer = 0;
     heroEntryStates.forEach(clearHeroEntryNode);
     heroEntryStates = [];
     if (sourceOnly) {
@@ -517,6 +520,10 @@
     const cycles = 3;
     const staggerMs = 17;
     const duration = cycleMs * cycles;
+    heroEntryFinalTimer = window.setTimeout(
+      finishHeroEntryReveal,
+      duration + Math.max(0, heroEntryStates.length - 1) * staggerMs + 500
+    );
 
     const frame = now => {
       if (!heroEntryActive) return;
@@ -935,13 +942,15 @@
   addEventListener('resize', scheduleMetricsRefresh, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (idleDisabled || reducedMotion) return;
     if (document.hidden) {
+      finishHeroEntryReveal();
       stopIdleCue(true);
-    } else if (heroIsAtRest()) {
-      scheduleIdleCue(IDLE_DELAY_MS);
+      return;
     }
+    if (idleDisabled || reducedMotion) return;
+    if (heroIsAtRest()) scheduleIdleCue(IDLE_DELAY_MS);
   });
+  addEventListener('pagehide', finishHeroEntryReveal, { once: true });
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {

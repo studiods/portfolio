@@ -167,7 +167,25 @@
 
   const settle = (element, immediate = false) => {
     const state = stateByElement.get(element);
-    if (!state || state.completed) return;
+    if (!state) return;
+
+    /*
+      Final-state invariant: once a title settles, the captured authored HTML is
+      the only valid DOM state. This is unconditional. A competing callback may
+      have removed our spans and left a random glyph; checking for a remaining
+      scramble artifact is therefore unsafe.
+    */
+    const restoreFinalState = () => {
+      if (!document.contains(element)) return;
+      restoreAuthoredHTML(element, state);
+      element.removeAttribute('data-hm-scramble-active');
+      element.setAttribute('data-hm-scramble-complete', 'true');
+    };
+
+    if (state.completed) {
+      restoreFinalState();
+      return;
+    }
 
     state.running = false;
     if (state.raf) cancelAnimationFrame(state.raf);
@@ -176,40 +194,14 @@
     state.finalTimer = 0;
     state.canonicalObserver?.disconnect();
     state.canonicalObserver = null;
+    activeAnimations.delete(element);
 
-    if (document.contains(element)) {
-      state.chars.forEach(char => {
-        if (!char.isConnected || !element.contains(char)) return;
-        char.textContent = char.dataset.hmFinalChar || '';
-        char.dataset.hmResolved = '1';
-      });
-
-      /*
-        Final-state invariant:
-        Any surviving scramble span or active marker means this runtime still owns
-        the visible title, so the last DOM write MUST be the captured authored HTML.
-        If another runtime intentionally replaced the entire title with different
-        authored content and no scramble artifact remains, that newer DOM wins.
-      */
-      const hasScrambleArtifact =
-        element.hasAttribute('data-hm-scramble-active') ||
-        !!element.querySelector('.hm-scramble-char');
-      const stillAuthoredText =
-        normalizeText(element.textContent) === normalizeText(state.originalText);
-
-      if (hasScrambleArtifact || stillAuthoredText) {
-        restoreAuthoredHTML(element, state);
-      }
-    }
+    restoreFinalState();
 
     const finalize = () => {
+      restoreFinalState();
       state.completed = true;
       state.running = false;
-      activeAnimations.delete(element);
-      if (document.contains(element)) {
-        element.removeAttribute('data-hm-scramble-active');
-        element.setAttribute('data-hm-scramble-complete', 'true');
-      }
       stateByElement.set(element, state);
     };
 
@@ -487,7 +479,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.20-final-state-1',
+    version:'2026.09.20-final-state-2',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });

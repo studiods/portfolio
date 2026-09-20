@@ -30,19 +30,18 @@
     page controller settles section titles.
   */
   const asciiTitle = document.querySelector('.about-ascii-title');
+  const asciiTitleOriginalHTML = asciiTitle?.innerHTML || 'ABOUT';
   const ASCII_ENTRY_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let asciiTitleRaf = 0;
   let asciiTitleChars = [];
   let asciiTitleComplete = false;
 
   const settleAsciiTitle = () => {
-    if (!asciiTitle || asciiTitleComplete) return;
+    if (!asciiTitle) return;
     if (asciiTitleRaf) cancelAnimationFrame(asciiTitleRaf);
-    asciiTitleChars.forEach((char) => {
-      char.textContent = char.dataset.finalChar || '';
-      char.style.color = '';
-      char.removeAttribute('data-scramble');
-    });
+    asciiTitleRaf = 0;
+    asciiTitle.innerHTML = asciiTitleOriginalHTML;
+    asciiTitle.classList.add('about-title-scramble-ready');
     asciiTitleComplete = true;
   };
 
@@ -52,7 +51,7 @@
     asciiTitle.classList.add('about-title-scramble-ready');
 
     if (reducedMotion) {
-      asciiTitleComplete = true;
+      settleAsciiTitle();
       return;
     }
 
@@ -98,8 +97,7 @@
       });
 
       if (complete) {
-        asciiTitleComplete = true;
-        asciiTitleRaf = 0;
+        settleAsciiTitle();
         return;
       }
       asciiTitleRaf = requestAnimationFrame(frame);
@@ -136,20 +134,20 @@
   };
 
   const titleCharacters = new Map();
+  const titleOriginalHTML = new Map();
   titleTargets.forEach((title) => {
+    titleOriginalHTML.set(title, title.innerHTML);
     const chars = splitTitleChars(title);
     titleCharacters.set(title, chars);
     chars.forEach((char) => { char.style.color = 'transparent'; });
   });
 
   const settleTitle = (title) => {
-    const chars = titleCharacters.get(title) || [];
-    chars.forEach((char) => {
-      char.textContent = char.dataset.finalChar ?? char.textContent;
-      char.removeAttribute('data-scramble');
-      char.classList.remove('is-scrambling');
-      char.style.color = '';
-    });
+    const originalHTML = titleOriginalHTML.get(title);
+    if (originalHTML != null) {
+      title.innerHTML = originalHTML;
+      title.dataset.scrambleDone = '1';
+    }
   };
 
   const animateTitle = (title) => {
