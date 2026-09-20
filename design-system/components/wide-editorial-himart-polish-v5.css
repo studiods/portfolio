@@ -112,9 +112,18 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-tit
   max-width:none!important;
   white-space:normal!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title > span,
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-title > span{
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title > span:not(.wide-roman-index),
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-title > span:not(.wide-roman-index){
   display:block!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+
+/* Runtime Roman indices are part of the headline, not a separate title row.
+   Keep I./II./… inline so the first token cannot become an orphaned line. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .data-card-head h3 > .wide-roman-index{
+  display:inline!important;
   white-space:nowrap!important;
   word-break:keep-all!important;
   overflow-wrap:normal!important;
@@ -192,4 +201,14 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .hm-rol
   display:none!important;
   margin:0!important;
   padding:0!important;
+}
+
+
+/* HIMART 02.2 traffic chart — shared graph policy is blue-first.
+   Keep the session bars and their legend swatch on the same canonical Blue token. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .traffic-v5-live .session{
+  stroke:var(--hm-chart-01,var(--hm-blue,#00A6ED))!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .chart-wrap > .chart-legend span:first-child i{
+  background:var(--hm-chart-01,var(--hm-blue,#00A6ED))!important;
 }
