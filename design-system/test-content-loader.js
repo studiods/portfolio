@@ -80,7 +80,7 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
       </div>
 
       <div class="himart-appliance-flow__annotation-lane is-bottom">
-        <aside class="himart-appliance-flow__risk is-shift himart-appliance-flow__risk--f">
+        <aside class="himart-appliance-flow__risk is-relation himart-appliance-flow__risk--f">
           <b>구매 뒤 관계 단절</b>
           <h6>설치 이후 상태와 케어가 다시 분리됩니다.</h6>
           <p>보증·A/S·케어 정보를 주문 맥락에서 이어 보여줘야 다음 구매의 신뢰 자산이 됩니다.</p>
