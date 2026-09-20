@@ -226,7 +226,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   transition:transform .72s cubic-bezier(.22,1,.36,1);
   will-change:transform;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality.is-in .himart-brand-evidence .aimmo-reference-bars__fill{
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__fill{
   transform:scaleX(1);
 }
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
@@ -287,11 +287,6 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.nar
   content:none!important;
   display:none!important;
   background:none!important;
-}
-@media(max-width:1000px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-graph{
-    grid-template-columns:1fr!important;
-  }
 }
 @media(max-width:780px){
   html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4>span{
