@@ -315,6 +315,37 @@ html body.himart-page-body #live-main .hm-subsection + .hm-subsection,
 html body.himart-page-body #live-main .hm-section > .hm-wrap > .flow-area + .hm-subsection,
 html body.himart-page-body #live-main .data-list > .data-card + .data-card{margin-top:var(--hm-subsection-gap)!important}
 html body.himart-page-body #live-main .hm-subsection.hm-ds-subsection-gap{margin-top:var(--hm-subsection-gap)!important}
+
+/* Runtime numbered-subsection sibling rhythm — 100px shared contract.
+   Adapter-generated narrative blocks use the same semantic gap as authored .hm-subsection peers. */
+html body.himart-page-body #live-main .hm-wide-right-rail >
+:is(
+  .hm-subsection,
+  .narrative-block,
+  .narrative-problem,
+  .narrative-reality,
+  .narrative-signals,
+  .narrative-touchpoint-synthesis,
+  .brand-synthesis,
+  .journey-flow-block,
+  .journey-role-block,
+  .design-rule
+)
++
+:is(
+  .hm-subsection,
+  .narrative-block,
+  .narrative-problem,
+  .narrative-reality,
+  .narrative-signals,
+  .narrative-touchpoint-synthesis,
+  .brand-synthesis,
+  .journey-flow-block,
+  .journey-role-block,
+  .design-rule
+){
+  margin-top:var(--hm-subsection-gap,100px)!important;
+}
 html body.himart-page-body #live-main :is(.hm-subhead,.data-card-head){display:block!important;grid-template-columns:none!important;gap:0!important;margin:0!important}
 html body.himart-page-body #live-main .hm-subhead .hm-subno,
 html body.himart-page-body #live-main .data-card-head > :is(.hm-card-no,.hm-roman-no){
