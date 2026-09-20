@@ -134,11 +134,13 @@
 
   const restore = (el) => {
     const state = states.get(el);
-    if (!state || !state.active) return;
+    if (!state) return;
 
     state.active = false;
     el.textContent = state.finalChar;
-    el.classList.remove('live-scramble-glyph');
+    el.classList.remove('live-scramble-glyph','is-scrambling','test-progressive-scramble');
+    el.removeAttribute('data-scramble');
+    el.removeAttribute('data-test-scramble');
     el.style.removeProperty('--live-scramble-width');
     el.style.removeProperty('--live-scramble-color');
   };
@@ -227,6 +229,8 @@
           char.dataset.scramble = glyph;
           char.classList.add('is-scrambling');
         } else {
+          char.textContent = char.dataset.finalChar || character;
+          char.removeAttribute('data-scramble');
           char.classList.remove('is-scrambling');
           char.style.color = '';
         }
