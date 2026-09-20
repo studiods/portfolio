@@ -55,7 +55,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-11';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-12';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -63,19 +63,10 @@
     const direction=document.querySelector('#live-main > #direction');
     const wrap=direction?.querySelector(':scope > .hm-wrap');
     const head=wrap?.querySelector(':scope > .hm-section-head');
-    const gallery=isHimartCommerce
-      ?wrap?.querySelector('.himart-direction-041 .phone-gallery')
-      :wrap?.querySelector(':scope > .phone-gallery, :scope > .hm-wide-right-rail > .phone-gallery');
     if(!direction||!wrap||!head)return;
-
     head.classList.add('is-visible');
 
-    if(!gallery || wrap.querySelector('.prototype-case-list'))return;
-
-    const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,8);
-    if(!cards.length)return;
-
-    const prototypeCopy=isReuse?[
+    const reuseCopy=[
       {title:'상품화 이력과 보증',body:'상품화 과정과 보증 내역을 PDP 상단에서 바로 확인해 제품 상태에 대한 신뢰를 높였습니다.'},
       {title:'상태 이력과 등급',body:'회수·상품화·판매 시점을 공개하고, 현재 상태는 직관적인 등급으로 바로 확인하게 했습니다.'},
       {title:'간편 판매 등록',body:'판매 정보를 몇 단계의 짧은 스텝으로 나눠, 입력 부담 없이 빠르게 등록하도록 설계했습니다.'},
@@ -84,7 +75,8 @@
       {title:'판매자의 사용 기록',body:'이전 사용자의 사용·관리 이야기를 직접 기록하게 해 제품을 이해할 또 하나의 신뢰 근거를 만들었습니다.'},
       {title:'상세 검수 결과',body:'검수 항목과 결과를 한눈에 보여 무엇이 좋고 부족한지 바로 판단할 수 있게 했습니다.'},
       {title:'구매와 매입 연결',body:'새 제품 구매에 기존 가전 매입을 연결해 폐기 부담은 줄이고 재판매 상품 확보 기회는 넓혔습니다.'}
-    ]:[
+    ];
+    const himartCopy=[
       {title:'다음 목적지를 여는 홈',body:'유입과 최근 행동의 맥락을 이어받아 검색·카테고리·혜택과 주요 서비스로 빠르게 연결했습니다.'},
       {title:'구매 목적을 구체화하는 서브홈',body:'품목 나열보다 사용 상황과 공간, 설치 조건을 중심으로 탐색 방향을 빠르게 구체화했습니다.'},
       {title:'니즈를 행동으로 바꾸는 검색 진입',body:'추천검색과 탐색 가이드로 막연한 요구를 실제 검색 행동으로 자연스럽게 연결했습니다.'},
@@ -95,196 +87,205 @@
       {title:'매장·설치·케어를 연결하는 PDP',body:'실물 확인과 전문 상담, 배송·설치와 케어 정보를 한 흐름으로 연결해 구매 전 불확실성을 줄였습니다.'}
     ];
 
-    const list=document.createElement('div');
-    list.className='prototype-case-list reuse-prototype-case-list hm-reveal';
-    list.dataset.reusePrototypeGallery='true';
+    const mountOne=(gallery,{kind='reuse',shellOnly=false}={})=>{
+      if(!gallery||gallery.dataset.prototypeCarouselMounted==='true')return;
+      const owner=gallery.closest('.himart-direction-041,.himart-direction-042')||wrap;
+      if(owner.querySelector(':scope > .prototype-case-list'))return;
 
-    const viewport=document.createElement('div');
-    viewport.className='prototype-case-viewport';
+      const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,8);
+      if(!cards.length)return;
+      gallery.dataset.prototypeCarouselMounted='true';
 
-    const track=document.createElement('div');
-    track.className='prototype-case-track';
+      const list=document.createElement('div');
+      list.className='prototype-case-list reuse-prototype-case-list hm-reveal';
+      list.dataset.reusePrototypeGallery='true';
+      if(shellOnly)list.classList.add('is-shell-only');
 
-    const pages=[];
-    for(let start=0;start<cards.length;start+=2){
-      const group=cards.slice(start,start+2);
-      if(!group.length)continue;
+      const viewport=document.createElement('div');
+      viewport.className='prototype-case-viewport';
+      const track=document.createElement('div');
+      track.className='prototype-case-track';
+      const copySet=kind==='reuse'?reuseCopy:himartCopy;
+      const pages=[];
 
-      const article=document.createElement('article');
-      article.className=`prototype-case${start===0?' prototype-case--first':''}`;
-      article.dataset.reusePrototypeSlide=String(pages.length);
-      article.setAttribute('aria-hidden',pages.length===0?'false':'true');
+      for(let start=0;start<cards.length;start+=2){
+        const group=cards.slice(start,start+2);
+        if(!group.length)continue;
+        const article=document.createElement('article');
+        article.className=`prototype-case${start===0?' prototype-case--first':''}`;
+        article.dataset.reusePrototypeSlide=String(pages.length);
+        article.setAttribute('aria-hidden',pages.length===0?'false':'true');
 
-      group.forEach((card,screenIndex)=>{
+        group.forEach((card,screenIndex)=>{
+          const item=document.createElement('div');
+          item.className='prototype-case-item';
 
-        const item=document.createElement('div');
-        item.className='prototype-case-item';
+          const device=document.createElement('div');
+          device.className='galaxy-ultra-mockup';
+          device.setAttribute('aria-label',`${kind==='reuse'?'Reuse':'Himart'} prototype page ${pages.length+1}, screen ${screenIndex+1}`);
 
-        const device=document.createElement('div');
-        device.className='galaxy-ultra-mockup';
-        device.setAttribute('aria-label',`${isReuse?'Reuse':'Himart'} prototype page ${pages.length+1}, screen ${screenIndex+1}`);
+          const screen=document.createElement('div');
+          screen.className='galaxy-ultra-screen';
+          device.appendChild(screen);
 
-        const screen=document.createElement('div');
-        screen.className='galaxy-ultra-screen is-scrollable';
-        device.classList.add('has-scroll-screen');
+          const assetIndex=start+screenIndex+1;
+          const assetNo=String(assetIndex).padStart(2,'0');
 
-        const assetIndex=start+screenIndex+1;
-        const assetNo=String(assetIndex).padStart(2,'0');
-        const copyData=prototypeCopy[assetIndex-1]||{title:'',body:''};
-        const image=document.createElement('img');
-        image.src=isReuse
-          ?`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`
-          :`./assets/image/himart-reuse/reuse_screens_02_${assetNo}.png`;
-        image.alt=isReuse
-          ?`Reuse prototype screen 01_${assetNo}`
-          :`Himart commerce journey prototype 02_${assetNo}`;
-        image.loading=assetIndex<=2?'eager':'lazy';
-        image.decoding='async';
-        screen.appendChild(image);
+          if(!shellOnly){
+            screen.classList.add('is-scrollable');
+            device.classList.add('has-scroll-screen');
+            const image=document.createElement('img');
+            image.src=kind==='reuse'
+              ?`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`
+              :`./assets/image/himart-reuse/reuse_screens_02_${assetNo}.png`;
+            image.alt=kind==='reuse'
+              ?`Reuse prototype screen 01_${assetNo}`
+              :`Himart commerce journey prototype 02_${assetNo}`;
+            image.loading=assetIndex<=2?'eager':'lazy';
+            image.decoding='async';
+            screen.appendChild(image);
+          }
 
-        device.appendChild(screen);
+          item.appendChild(device);
 
-        const copy=document.createElement('div');
-        copy.className='prototype-case-copy';
+          if(!shellOnly){
+            const copyData=copySet[assetIndex-1]||{title:'',body:''};
+            const copy=document.createElement('div');
+            copy.className='prototype-case-copy';
+            const copyTitle=document.createElement('h3');
+            copyTitle.textContent=copyData.title;
+            const copyDescription=document.createElement('p');
+            copyDescription.textContent=copyData.body;
+            copy.append(copyTitle,copyDescription);
+            item.appendChild(copy);
+          }
 
-        const copyTitle=document.createElement('h3');
-        copyTitle.textContent=copyData.title;
+          article.appendChild(item);
+        });
 
-        const copyDescription=document.createElement('p');
-        copyDescription.textContent=copyData.body;
+        const firstDevice=article.querySelector('.prototype-case-item:first-child .galaxy-ultra-mockup');
+        const lastDevice=article.querySelector('.prototype-case-item:last-child .galaxy-ultra-mockup');
+        const prev=document.createElement('button');
+        prev.className='prototype-case-control prototype-case-control--prev';
+        prev.type='button';
+        prev.setAttribute('aria-label','이전 목업');
+        const next=document.createElement('button');
+        next.className='prototype-case-control prototype-case-control--next';
+        next.type='button';
+        next.setAttribute('aria-label','다음 목업');
+        firstDevice?.appendChild(prev);
+        lastDevice?.appendChild(next);
 
-        copy.append(copyTitle,copyDescription);
-        item.append(device,copy);
-        article.appendChild(item);
+        track.appendChild(article);
+        pages.push(article);
+      }
+
+      const firstClone=pages[0]?.cloneNode(true);
+      const lastClone=pages[pages.length-1]?.cloneNode(true);
+      if(firstClone&&lastClone){
+        firstClone.classList.add('prototype-case--clone');
+        lastClone.classList.add('prototype-case--clone');
+        firstClone.setAttribute('aria-hidden','true');
+        lastClone.setAttribute('aria-hidden','true');
+        track.insertBefore(lastClone,track.firstChild);
+        track.appendChild(firstClone);
+      }
+
+      viewport.appendChild(track);
+      list.appendChild(viewport);
+
+      const footer=document.createElement('div');
+      footer.className='prototype-case-footer';
+      const pagination=document.createElement('span');
+      pagination.className='prototype-case-pagination';
+      pagination.setAttribute('aria-live','polite');
+      footer.appendChild(pagination);
+      list.appendChild(footer);
+
+      const HOLD_MS=6000;
+      const realCount=pages.length;
+      let index=0;
+      let virtualIndex=1;
+      let timer=0;
+      let wrapping=false;
+
+      const clearTimer=()=>{
+        if(timer)window.clearTimeout(timer);
+        timer=0;
+      };
+      const render=()=>{
+        track.style.transform=`translate3d(${virtualIndex*-100}%,0,0)`;
+        pages.forEach((page,pageIndex)=>page.setAttribute('aria-hidden',pageIndex===index?'false':'true'));
+        pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(realCount).padStart(2,'0')}`;
+      };
+      const jumpToReal=(realIndex)=>{
+        wrapping=true;
+        index=realIndex;
+        virtualIndex=realIndex+1;
+        track.classList.add('is-instant');
+        render();
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          track.classList.remove('is-instant');
+          wrapping=false;
+        }));
+      };
+      const schedule=()=>{
+        clearTimer();
+        if(realCount<2)return;
+        timer=window.setTimeout(()=>move(1),HOLD_MS);
+      };
+      const move=(delta)=>{
+        if(realCount<2||wrapping)return;
+        clearTimer();
+        index=(index+delta+realCount)%realCount;
+        virtualIndex+=delta;
+        render();
+        schedule();
+      };
+
+      track.addEventListener('transitionend',(event)=>{
+        if(event.propertyName!=='transform'||wrapping)return;
+        if(virtualIndex===realCount+1)jumpToReal(0);
+        else if(virtualIndex===0)jumpToReal(realCount-1);
+      });
+      list.querySelectorAll('.prototype-case-control--prev').forEach(button=>{
+        button.addEventListener('click',(event)=>{
+          event.preventDefault();
+          event.stopPropagation();
+          move(-1);
+        });
+      });
+      list.querySelectorAll('.prototype-case-control--next').forEach(button=>{
+        button.addEventListener('click',(event)=>{
+          event.preventDefault();
+          event.stopPropagation();
+          move(1);
+        });
+      });
+      list.tabIndex=0;
+      list.addEventListener('keydown',(event)=>{
+        if(event.key==='ArrowLeft'){event.preventDefault();move(-1)}
+        else if(event.key==='ArrowRight'){event.preventDefault();move(1)}
+      });
+      document.addEventListener('visibilitychange',()=>{
+        if(document.hidden)clearTimer();
+        else schedule();
       });
 
-      const firstDevice=article.querySelector('.prototype-case-item:first-child .galaxy-ultra-mockup');
-      const lastDevice=article.querySelector('.prototype-case-item:last-child .galaxy-ultra-mockup');
-
-      const prev=document.createElement('button');
-      prev.className='prototype-case-control prototype-case-control--prev';
-      prev.type='button';
-      prev.setAttribute('aria-label','이전 목업');
-
-      const next=document.createElement('button');
-      next.className='prototype-case-control prototype-case-control--next';
-      next.type='button';
-      next.setAttribute('aria-label','다음 목업');
-
-      firstDevice?.appendChild(prev);
-      lastDevice?.appendChild(next);
-
-      track.appendChild(article);
-      pages.push(article);
-    }
-
-    const firstClone=pages[0]?.cloneNode(true);
-    const lastClone=pages[pages.length-1]?.cloneNode(true);
-    if(firstClone&&lastClone){
-      firstClone.classList.add('prototype-case--clone');
-      lastClone.classList.add('prototype-case--clone');
-      firstClone.setAttribute('aria-hidden','true');
-      lastClone.setAttribute('aria-hidden','true');
-      track.insertBefore(lastClone,track.firstChild);
-      track.appendChild(firstClone);
-    }
-
-    viewport.appendChild(track);
-    list.appendChild(viewport);
-
-    const footer=document.createElement('div');
-    footer.className='prototype-case-footer';
-
-    const pagination=document.createElement('span');
-    pagination.className='prototype-case-pagination';
-    pagination.setAttribute('aria-live','polite');
-
-    footer.appendChild(pagination);
-    list.appendChild(footer);
-
-    const HOLD_MS=6000;
-    const realCount=pages.length;
-    let index=0;
-    let virtualIndex=1;
-    let timer=0;
-    let wrapping=false;
-
-    const clearTimer=()=>{
-      if(timer)window.clearTimeout(timer);
-      timer=0;
-    };
-
-    const render=()=>{
-      track.style.transform=`translate3d(${virtualIndex*-100}%,0,0)`;
-      pages.forEach((page,pageIndex)=>page.setAttribute('aria-hidden',pageIndex===index?'false':'true'));
-      pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(realCount).padStart(2,'0')}`;
-    };
-
-    const jumpToReal=(realIndex)=>{
-      wrapping=true;
-      index=realIndex;
-      virtualIndex=realIndex+1;
       track.classList.add('is-instant');
       render();
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
-        track.classList.remove('is-instant');
-        wrapping=false;
-      }));
-    };
-
-    const schedule=()=>{
-      clearTimer();
-      if(realCount<2)return;
-      timer=window.setTimeout(()=>move(1),HOLD_MS);
-    };
-
-    const move=(delta)=>{
-      if(realCount<2||wrapping)return;
-      clearTimer();
-
-      index=(index+delta+realCount)%realCount;
-      virtualIndex+=delta;
-      render();
+      gallery.replaceWith(list);
+      requestAnimationFrame(()=>track.classList.remove('is-instant'));
       schedule();
     };
 
-    track.addEventListener('transitionend',(event)=>{
-      if(event.propertyName!=='transform'||wrapping)return;
-      if(virtualIndex===realCount+1)jumpToReal(0);
-      else if(virtualIndex===0)jumpToReal(realCount-1);
-    });
+    if(isReuse){
+      mountOne(wrap.querySelector(':scope > .phone-gallery, :scope > .hm-wide-right-rail > .phone-gallery'),{kind:'reuse'});
+      return;
+    }
 
-    list.querySelectorAll('.prototype-case-control--prev').forEach(button=>{
-      button.addEventListener('click',(event)=>{
-        event.preventDefault();
-        event.stopPropagation();
-        move(-1);
-      });
-    });
-    list.querySelectorAll('.prototype-case-control--next').forEach(button=>{
-      button.addEventListener('click',(event)=>{
-        event.preventDefault();
-        event.stopPropagation();
-        move(1);
-      });
-    });
-
-    list.tabIndex=0;
-    list.addEventListener('keydown',(event)=>{
-      if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
-      else if(event.key==='ArrowRight'){event.preventDefault();move(1);}
-    });
-
-    document.addEventListener('visibilitychange',()=>{
-      if(document.hidden)clearTimer();
-      else schedule();
-    });
-
-    track.classList.add('is-instant');
-    render();
-    gallery.replaceWith(list);
-    requestAnimationFrame(()=>track.classList.remove('is-instant'));
-    schedule();
+    mountOne(wrap.querySelector('.himart-direction-041 .phone-gallery'),{kind:'himart'});
+    mountOne(wrap.querySelector('.himart-direction-042 .phone-gallery'),{kind:'himart',shellOnly:true});
   };
   mountReuseDirectionPrototype();
 
