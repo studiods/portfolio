@@ -55,7 +55,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-8';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-9';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -63,12 +63,12 @@
     const direction=document.querySelector('#live-main > #direction');
     const wrap=direction?.querySelector(':scope > .hm-wrap');
     const head=wrap?.querySelector(':scope > .hm-section-head');
-    const gallery=wrap?.querySelector(':scope > .phone-gallery');
+    const gallery=wrap?.querySelector(':scope > .phone-gallery, :scope > .hm-wide-right-rail > .phone-gallery');
     if(!direction||!wrap||!head)return;
 
     head.classList.add('is-visible');
 
-    if(!gallery || wrap.querySelector(':scope > .prototype-case-list'))return;
+    if(!gallery || wrap.querySelector('.prototype-case-list'))return;
 
     const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,isReuse?8:4);
     if(!cards.length)return;
