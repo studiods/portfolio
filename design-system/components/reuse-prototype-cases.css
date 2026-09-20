@@ -34,6 +34,9 @@ html body.reuse-current #direction .prototype-case-track{
   transition:transform 720ms cubic-bezier(.22,.76,.22,1)!important;
   will-change:transform;
 }
+html body.reuse-current #direction .prototype-case-track.is-instant{
+  transition:none!important;
+}
 
 html body.reuse-current #direction .prototype-case{
   display:grid!important;
@@ -64,7 +67,7 @@ html body.reuse-current #direction .galaxy-ultra-mockup{
   width:100%!important;
   max-width:none!important;
   height:auto!important;
-  aspect-ratio:1440/3120!important;
+  aspect-ratio:1440/2964!important;
   margin:0!important;
   padding:7px!important;
   border:1px solid rgba(255,255,255,.42)!important;
@@ -184,7 +187,7 @@ html body.reuse-current #direction .prototype-case-copy p{
 html body.reuse-current #direction .prototype-case-footer{
   display:flex!important;
   align-items:center!important;
-  justify-content:space-between!important;
+  justify-content:flex-end!important;
   width:85%!important;
   margin:32px 0 0!important;
   padding:0!important;
@@ -202,64 +205,65 @@ html body.reuse-current #direction .prototype-case-pagination{
   font-variant-numeric:tabular-nums!important;
 }
 
-html body.reuse-current #direction .prototype-case-controls{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  gap:20px!important;
-  margin:0!important;
-  padding:0!important;
-}
-
 html body.reuse-current #direction .prototype-case-control{
-  position:relative!important;
-  display:block!important;
-  flex:0 0 30.8px!important;
-  width:30.8px!important;
-  height:30.8px!important;
+  position:absolute!important;
+  z-index:12!important;
+  top:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  width:44px!important;
+  height:44px!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
-  background:transparent!important;
+  border-radius:5px!important;
+  background:rgba(0,0,0,.10)!important;
   color:#fff!important;
-  opacity:.50!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
   cursor:pointer!important;
+  transform:translateY(-50%)!important;
+  transition:opacity 180ms ease,visibility 180ms ease,background-color 160ms ease!important;
 }
-
+html body.reuse-current #direction .prototype-case-control--prev{
+  left:14px!important;
+}
+html body.reuse-current #direction .prototype-case-control--next{
+  right:14px!important;
+}
+html body.reuse-current #direction .prototype-case-list:hover .prototype-case-control,
+html body.reuse-current #direction .prototype-case-list:focus-within .prototype-case-control{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+html body.reuse-current #direction .prototype-case-control:active{
+  background:rgba(0,0,0,.20)!important;
+}
 html body.reuse-current #direction .prototype-case-control::before{
   content:""!important;
-  position:absolute!important;
-  top:50%!important;
-  left:50%!important;
-  width:12.1px!important;
-  height:12.1px!important;
+  display:block!important;
+  width:13px!important;
+  height:13px!important;
   box-sizing:border-box!important;
   border-top:1px solid currentColor!important;
   border-right:1px solid currentColor!important;
   transform-origin:center!important;
 }
-
 html body.reuse-current #direction .prototype-case-control--prev::before{
-  transform:translate(-35%,-50%) rotate(-135deg)!important;
+  transform:translateX(2px) rotate(-135deg)!important;
 }
 html body.reuse-current #direction .prototype-case-control--next::before{
-  transform:translate(-65%,-50%) rotate(45deg)!important;
+  transform:translateX(-2px) rotate(45deg)!important;
 }
-
-html body.reuse-current #direction .prototype-case-control-divider{
-  display:block!important;
-  flex:0 0 1px!important;
-  width:1px!important;
-  height:24px!important;
-  margin:0!important;
-  padding:0!important;
-  background:rgba(255,255,255,.25)!important;
-}
-
 html body.reuse-current #direction .prototype-case-control:focus-visible{
-  outline:1px solid rgba(255,255,255,.50)!important;
+  outline:1px solid rgba(255,255,255,.55)!important;
   outline-offset:2px!important;
+  opacity:1!important;
+  visibility:visible!important;
 }
+
 
 @media(max-width:1000px){
   html body.reuse-current #direction .prototype-case{
@@ -272,6 +276,13 @@ html body.reuse-current #direction .prototype-case-control:focus-visible{
 }
 
 @media(max-width:780px){
+  html body.reuse-current #direction .prototype-case-control{
+    width:40px!important;
+    height:40px!important;
+    opacity:.72!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+  }
   html body.reuse-current #direction .prototype-case-list{
     margin-top:54px!important;
   }
