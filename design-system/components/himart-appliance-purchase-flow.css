@@ -409,9 +409,9 @@ html body.himart-commerce-page #brand .himart-appliance-flow__stage{
   justify-self:center!important;
   padding:18px 18px 18px!important;
   box-sizing:border-box!important;
-  border-top:1px solid rgba(255,255,255,1)!important;
+  border-top:1px solid var(--flow-blue)!important;
   border-right:0!important;
-  border-bottom:1px solid rgba(255,255,255,.30)!important;
+  border-bottom:1px solid color-mix(in srgb,var(--flow-blue) 20%,transparent)!important;
   border-left:0!important;
   background:transparent!important;
 }
