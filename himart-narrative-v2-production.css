@@ -5415,7 +5415,7 @@ html body.himart-wide-test-page .proof-item strong{margin-top:0!important}
   html body.himart-wide-test-page .hm-section-title{font-size:44px!important}
   html body.himart-wide-test-page :is(.narrative-title,.hm-subtitle,.forced-redesign-title){font-size:36px!important}
   html body.himart-wide-test-page .principle-grid{grid-template-columns:1fr!important}
-  html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{font-size:36px!important}
+  html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{font-size:var(--hm-type-subsection-mobile,29px)!important}
   html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card{padding:26px 20px 24px!important}
   html body.himart-wide-test-page #data .narrative-signals .behavior-value,
   html body.himart-wide-test-page #data .narrative-signals .behavior-value b,
