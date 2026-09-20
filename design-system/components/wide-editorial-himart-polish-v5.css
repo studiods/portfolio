@@ -646,3 +646,140 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
     font-size:13px!important;
   }
 }
+
+
+/* HIMART chapter 01 compact evidence cards — 2026-09-21 */
+/* 01.1: reduce internal card height so the shared 100px subsection gap reads as 100px visually. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .narrative-title + .narrative-copy{
+  margin-top:20px!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-grid{
+  align-items:start!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item{
+  min-height:0!important;
+  height:auto!important;
+  grid-template-rows:auto auto auto!important;
+  align-self:start!important;
+  padding-top:20px!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item p{
+  margin:20px 0 0!important;
+  padding-top:0!important;
+}
+
+/* 01.2: subsection index touches the title; evidence is a compact 2×2 metric-card grid. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality>.narrative-subno{
+  margin-bottom:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:48px 24px!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card{
+  display:flex!important;
+  min-width:0!important;
+  min-height:0!important;
+  height:auto!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  margin:0!important;
+  padding:20px 0 0!important;
+  border-top:1px solid rgba(255,255,255,.20)!important;
+  background:transparent!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__index{
+  display:block!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font:400 12px/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card h4{
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:18px 0 0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+  text-align:left!important;
+  word-break:keep-all!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__value{
+  display:flex!important;
+  width:100%!important;
+  flex-direction:column!important;
+  align-items:flex-end!important;
+  margin:40px 0 0!important;
+  padding:0!important;
+  text-align:right!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__value p{
+  margin:0!important;
+  color:rgba(255,255,255,.60)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-body)!important;
+  white-space:nowrap!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__value strong{
+  display:block!important;
+  margin:10px 0 0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en-thin,var(--hm-font-en))!important;
+  font-size:84px!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+  line-height:.92!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+  font-variant-numeric:tabular-nums!important;
+  white-space:nowrap!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-source{
+  margin-top:40px!important;
+}
+
+/* Defensive removal: 01.3 has no legend in authored runtime markup, and legacy injections stay hidden. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-appliance-flow__legend{
+  display:none!important;
+}
+
+/* 01.4: both comparison columns begin on the exact same left edge. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-list,
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card,
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card b,
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card p{
+  text-align:left!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+  align-items:flex-start!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card b,
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card p{
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+@media(max-width:780px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-grid{
+    grid-template-columns:1fr!important;
+    gap:40px!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__value p{
+    white-space:normal!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-card__value strong{
+    font-size:64px!important;
+  }
+}
