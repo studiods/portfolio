@@ -1,6 +1,6 @@
 /* HIMART chapter 04 implementation layer.
-   04.1 owns the prototype validation story; 04.2 reserves the 16:9 gallery for
-   comparison / store-connection explorations that will receive final media later. */
+   04.1 owns the in-progress prototype story; 04.2 reuses the same paired mockup
+   gallery exterior as an empty shell for comparison / store-connection work. */
 
 html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042){
   width:100%!important;
@@ -84,7 +84,7 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-041
   line-height:1.42!important;
   letter-spacing:var(--hm-track-group)!important;
   text-align:center!important;
-  white-space:pre-line!important;
+  white-space:pre!important;
   word-break:keep-all!important;
   pointer-events:none!important;
 }
@@ -114,8 +114,5 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
     bottom:28px!important;
     left:16px!important;
     font-size:16px!important;
-  }
-  html body.himart-commerce-page #direction .himart-direction-041 .design-rule{
-    margin-bottom:54px!important;
   }
 }
