@@ -2,7 +2,7 @@
    Common hero, typography, spacing, motion, navigation and canvas rules are owned by the shared design system.
    The legacy production bundle is kept behind this component only to preserve the approved Himart-specific
    keyword/ring/data-chart/landing visualization while those selectors are migrated incrementally. */
-@import url("../../himart-narrative-v2-production.css?v=20260919-4");
+@import url("../../himart-narrative-v2-production.css?v=20260920-5");
 
 /* Himart-only narrative synthesis treatment moved out of himart.html. */
 html body.himart-commerce-page .narrative-touchpoint-synthesis>h4{
