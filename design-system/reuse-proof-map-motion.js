@@ -59,7 +59,7 @@
       <div class="hm-subhead">
         <span class="hm-subno">01.3</span>
         <div>
-          <h3 class="hm-subtitle hm-ds-subsection__title">하이마트만의 차별점을 ‘신뢰’로 전달해야 했습니다.</h3>
+          <h3 class="hm-subtitle hm-ds-subsection__title">고객의 불안은, 하이마트만의 차별화를 통해<br>신뢰로 바꿔야 했습니다.</h3>
           <p class="hm-subcopy hm-ds-subsection__description">검수·세척·보증·책임 기준을 한데 묶어, ‘하이마트에서 사면 믿을 수 있다’는 확신을 만들어야 했습니다.</p>
         </div>
       </div>
