@@ -31,10 +31,10 @@
        scramble/title change after the animation has already completed. */
 
     const behaviorTitles = [
-      '외부 맥락을<br>가진 유입',
-      '기획전 시작 후<br>바로 종료',
-      '결제 진입이<br>장바구니보다 많음',
-      '세션 대비<br>검색 비중'
+      '<span>외부 맥락을</span><span>가진 유입</span>',
+      '<span>기획전 시작 후</span><span>바로 종료</span>',
+      '<span>결제 진입이</span><span>장바구니보다 많음</span>',
+      '<span>세션 대비</span><span>검색 비중</span>'
     ];
     document.querySelectorAll('#data .signal-item h4, #data .behavior-card h4').forEach((el, i) => {
       if (behaviorTitles[i]) html(el, behaviorTitles[i]);
@@ -55,6 +55,12 @@
     const reframeTitle = document.querySelector('#data .data-bridge-grid article:last-child h4');
     if (reframeTitle) {
       html(reframeTitle, '<strong class="journey-title-emphasis">유입 맥락 → 탐색 → 비교 → 구매 확신 → 설치·케어</strong>로 재정의');
+    }
+
+    const direction041Title = document.querySelector('#direction .himart-direction-041 .hm-subtitle');
+    if (direction041Title) {
+      direction041Title.querySelector('.wide-title-index')?.remove();
+      direction041Title.innerHTML = direction041Title.innerHTML.replace(/^\s*(?:01?|1)\.\s*/,'');
     }
 
     const journeyCopy = document.querySelector('#journey .journey-role-block .hm-subcopy, #journey .hm-subsection .hm-subcopy');
