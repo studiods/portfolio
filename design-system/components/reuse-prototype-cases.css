@@ -1,9 +1,8 @@
-/* HIMART REUSE 04 — prototype rows.
-   Reuse-specific presentation: six full-width rows, two taller Galaxy-style line mockups + one copy panel. */
+/* HIMART REUSE 04.1 — paired prototype carousel.
+   One page shows two mockups. Desktop geometry is based on the full right-content width:
+   32.5% mockup + 10% gap + 32.5% mockup = 75% occupied width. */
 
-/* Reuse 04 was the only chapter whose pair-sync anchor did not match its actual DOM.
-   Do not show the left major title at 30% while it first enters the viewport.
-   Once .is-visible is attached, the shared sticky exit-opacity variable owns later fading. */
+/* Keep the chapter title synchronized with the first right-side block. */
 @media (min-width:1600px){
   html body.reuse-current.hm-wide-editorial-test #direction .hm-section-head.hm-reveal:not(.is-visible){
     opacity:1!important;
@@ -12,49 +11,60 @@
 }
 
 html body.reuse-current #direction .prototype-case-list{
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:112px!important;
+  display:block!important;
   width:100%!important;
-  margin-top:86px!important;
   min-width:0!important;
+  margin-top:86px!important;
+  padding:0!important;
+  overflow:visible!important;
+  outline:0!important;
+}
+
+html body.reuse-current #direction .prototype-case-viewport{
+  width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+html body.reuse-current #direction .prototype-case-track{
+  display:flex!important;
+  width:100%!important;
+  align-items:flex-start!important;
+  transform:translate3d(0,0,0);
+  transition:transform 720ms cubic-bezier(.22,.76,.22,1)!important;
+  will-change:transform;
 }
 
 html body.reuse-current #direction .prototype-case{
   display:grid!important;
-  grid-template-columns:minmax(0,3fr) minmax(280px,1fr)!important;
-  gap:48px!important;
-  align-items:stretch!important;
+  grid-template-columns:32.5% 32.5%!important;
+  column-gap:10%!important;
+  row-gap:0!important;
+  flex:0 0 100%!important;
   width:100%!important;
-  min-width:0!important;
+  min-width:100%!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
-}
-
-html body.reuse-current #direction .prototype-case-visual{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:16px!important;
   align-items:start!important;
-  justify-items:stretch!important;
-  width:100%!important;
-  height:auto!important;
-  min-width:0!important;
-  padding:0!important;
-  overflow:visible!important;
-  background:transparent!important;
-  border:0!important;
 }
 
-html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup{
+html body.reuse-current #direction .prototype-case-item{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+html body.reuse-current #direction .galaxy-ultra-mockup{
   position:relative!important;
   display:block!important;
   width:100%!important;
   max-width:none!important;
   height:auto!important;
-  aspect-ratio:9/21.5!important;
+  aspect-ratio:1440/3120!important;
   margin:0!important;
   padding:7px!important;
   border:1px solid rgba(255,255,255,.42)!important;
@@ -64,7 +74,7 @@ html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup{
   box-sizing:border-box!important;
 }
 
-html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup::before{
+html body.reuse-current #direction .galaxy-ultra-mockup::before{
   content:""!important;
   position:absolute!important;
   z-index:3!important;
@@ -78,7 +88,7 @@ html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup::
   transform:translateX(-50%)!important;
 }
 
-html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup::after{
+html body.reuse-current #direction .galaxy-ultra-mockup::after{
   content:""!important;
   position:absolute!important;
   right:-3px!important;
@@ -90,7 +100,7 @@ html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup::
   box-shadow:0 88px 0 rgba(255,255,255,.40)!important;
 }
 
-html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-screen{
+html body.reuse-current #direction .galaxy-ultra-screen{
   width:100%!important;
   height:100%!important;
   overflow:hidden!important;
@@ -99,14 +109,7 @@ html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-screen{
   background:#0D0D0D!important;
 }
 
-
-/* 04.1 first prototype — Galaxy S26 Ultra display ratio (3120 × 1440 = 19.5:9).
-   The two authored long screenshots stay at natural height inside the fixed device viewport.
-   Users can scroll each screen independently; browser scrollbars remain hidden. */
-html body.reuse-current #direction .prototype-case--first .galaxy-ultra-mockup{
-  aspect-ratio:1440/3120!important;
-}
-html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.is-scrollable{
+html body.reuse-current #direction .galaxy-ultra-screen.is-scrollable{
   overflow-x:hidden!important;
   overflow-y:auto!important;
   overscroll-behavior:contain!important;
@@ -114,12 +117,12 @@ html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.i
   scrollbar-width:none!important;
   -ms-overflow-style:none!important;
 }
-html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.is-scrollable::-webkit-scrollbar{
+html body.reuse-current #direction .galaxy-ultra-screen.is-scrollable::-webkit-scrollbar{
   width:0!important;
   height:0!important;
   display:none!important;
 }
-html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.is-scrollable img{
+html body.reuse-current #direction .galaxy-ultra-screen.is-scrollable img{
   display:block!important;
   width:100%!important;
   max-width:none!important;
@@ -130,15 +133,14 @@ html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.i
   -webkit-user-drag:none!important;
 }
 
+/* Each text block belongs to the mockup directly above it. */
 html body.reuse-current #direction .prototype-case-copy{
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:flex-end!important;
-  align-self:stretch!important;
-  height:auto!important;
-  min-height:0!important;
+  display:block!important;
+  width:100%!important;
   min-width:0!important;
+  margin:24px 0 0!important;
   padding:0!important;
+  text-align:left!important;
   border:0!important;
   background:transparent!important;
   box-shadow:none!important;
@@ -153,6 +155,7 @@ html body.reuse-current #direction .prototype-case-copy .hm-card-no{
   font-weight:300!important;
   line-height:1!important;
   letter-spacing:var(--hm-track-note)!important;
+  text-align:left!important;
 }
 
 html body.reuse-current #direction .prototype-case-copy h3{
@@ -167,97 +170,144 @@ html body.reuse-current #direction .prototype-case-copy h3{
   letter-spacing:-.035em!important;
   word-break:keep-all!important;
   overflow-wrap:normal!important;
+  text-align:left!important;
 }
 
 html body.reuse-current #direction .prototype-case-copy p{
-  margin:18px 0 0!important;
+  margin:12px 0 0!important;
   max-width:100%!important;
-  color:rgba(255,255,255,.50)!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:14px!important;
-  font-weight:300!important;
-  line-height:1.54!important;
-  letter-spacing:var(--hm-track-body)!important;
-  word-break:keep-all!important;
-}
-
-html body.reuse-current #direction .prototype-case-copy strong{
-  display:block!important;
-  margin:24px 0 0!important;
-  padding:16px 0 0!important;
-  border-top:0!important;
   color:rgba(255,255,255,.50)!important;
   font-family:var(--hm-font-en)!important;
   font-size:12px!important;
-  font-weight:400!important;
+  font-weight:300!important;
   line-height:1.45!important;
-  letter-spacing:0!important;
+  letter-spacing:var(--hm-track-note)!important;
+  word-break:keep-all!important;
+  text-align:left!important;
 }
 
-html body.reuse-current #direction .prototype-case-copy strong b{
+/* Footer aligns to the exact occupied 75% mockup width. */
+html body.reuse-current #direction .prototype-case-footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:75%!important;
+  margin:32px 0 0!important;
+  padding:0!important;
+}
+
+html body.reuse-current #direction .prototype-case-pagination{
   display:block!important;
-  margin:0 0 8px!important;
-  color:rgba(255,255,255,.70)!important;
-  font-family:inherit!important;
-  font-size:10px!important;
-  font-weight:400!important;
+  margin:0!important;
+  color:rgba(255,255,255,.60)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:12px!important;
+  font-weight:300!important;
   line-height:1!important;
-  letter-spacing:0!important;
+  letter-spacing:var(--hm-track-note)!important;
+  font-variant-numeric:tabular-nums!important;
+}
+
+html body.reuse-current #direction .prototype-case-controls{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:20px!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+html body.reuse-current #direction .prototype-case-control{
+  position:relative!important;
+  display:block!important;
+  flex:0 0 28px!important;
+  width:28px!important;
+  height:28px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#fff!important;
+  opacity:.30!important;
+  cursor:pointer!important;
+}
+
+html body.reuse-current #direction .prototype-case-control::before{
+  content:""!important;
+  position:absolute!important;
+  top:50%!important;
+  left:50%!important;
+  width:11px!important;
+  height:11px!important;
+  box-sizing:border-box!important;
+  border-top:1px solid currentColor!important;
+  border-right:1px solid currentColor!important;
+  transform-origin:center!important;
+}
+
+html body.reuse-current #direction .prototype-case-control--prev::before{
+  transform:translate(-35%,-50%) rotate(-135deg)!important;
+}
+html body.reuse-current #direction .prototype-case-control--next::before{
+  transform:translate(-65%,-50%) rotate(45deg)!important;
+}
+
+html body.reuse-current #direction .prototype-case-control-divider{
+  display:block!important;
+  flex:0 0 1px!important;
+  width:1px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  background:rgba(255,255,255,.25)!important;
+}
+
+html body.reuse-current #direction .prototype-case-control:focus-visible{
+  outline:1px solid rgba(255,255,255,.50)!important;
+  outline-offset:2px!important;
 }
 
 @media(max-width:1000px){
   html body.reuse-current #direction .prototype-case{
-    grid-template-columns:1fr!important;
-    gap:32px!important;
+    grid-template-columns:42.5% 42.5%!important;
+    column-gap:10%!important;
   }
-  html body.reuse-current #direction .prototype-case-copy{
-    justify-content:flex-start!important;
+  html body.reuse-current #direction .prototype-case-footer{
+    width:95%!important;
   }
 }
 
 @media(max-width:780px){
   html body.reuse-current #direction .prototype-case-list{
-    gap:76px!important;
     margin-top:54px!important;
   }
   html body.reuse-current #direction .prototype-case{
-    grid-template-columns:1fr!important;
-    gap:28px!important;
+    grid-template-columns:45% 45%!important;
+    column-gap:10%!important;
   }
-  html body.reuse-current #direction .prototype-case-visual{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:8px!important;
-    overflow:hidden!important;
-  }
-  html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-mockup{
+  html body.reuse-current #direction .prototype-case-footer{
     width:100%!important;
-    max-width:none!important;
-    height:auto!important;
+    margin-top:24px!important;
+  }
+  html body.reuse-current #direction .galaxy-ultra-mockup{
     padding:4px!important;
     border-radius:18px!important;
   }
-  html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-screen{
+  html body.reuse-current #direction .galaxy-ultra-screen{
     border-radius:15px!important;
   }
   html body.reuse-current #direction .prototype-case-copy{
-    height:auto!important;
-    min-height:0!important;
-    padding:0!important;
+    margin-top:24px!important;
   }
   html body.reuse-current #direction .prototype-case-copy h3{
     margin-top:14px!important;
-    font-size:22px!important;
+    font-size:20px!important;
     line-height:1.28!important;
   }
-  html body.reuse-current #direction .prototype-case-copy p{
-    margin-top:13px!important;
-    font-size:14px!important;
-    line-height:1.58!important;
-  }
-  html body.reuse-current #direction .prototype-case-copy strong{
-    margin-top:22px!important;
-    padding-top:16px!important;
-    font-size:11px!important;
-    line-height:1.5!important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.reuse-current #direction .prototype-case-track{
+    transition:none!important;
   }
 }
