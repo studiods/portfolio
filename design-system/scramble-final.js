@@ -54,7 +54,7 @@
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const REVEAL_SYNC_DELAY = 70;
   /* Design-system timing contract: lower cycleMs = faster glyph changes; randomCycles = number of random passes; staggerMax = maximum delay between character slots. */
-  const TIMING = Object.freeze({ cycleMs: 40, randomCycles: 6, heroRandomCycles: 9, staggerMax: 14, settleTailMs: 56 });
+  const TIMING = Object.freeze({ cycleMs: 40, randomCycles: 6, heroRandomCycles: 12, staggerMax: 14, settleTailMs: 56 });
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
   const normalizeText = value => (value || '').replace(/\s+/g, ' ').trim();
