@@ -1,0 +1,287 @@
+/* HIMART 01.2 — research-backed general appliance ecommerce purchase flow.
+   This is a reference journey, not a Himart measured funnel.
+   Core path = white dotted line / consideration pause = yellow /
+   channel shift = blue / abandonment risk = red. */
+
+html body.himart-commerce-page #brand .himart-appliance-flow{
+  --flow-white:#fff;
+  --flow-blue:var(--hm-blue,#00A6ED);
+  --flow-yellow:var(--hm-yellow,#F3EB01);
+  --flow-red:var(--hm-red,#FA481B);
+  width:100%;
+  min-width:0;
+  margin:112px 0 0;
+  padding:32px 0 0;
+  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__eyebrow{
+  display:block;
+  margin:0;
+  color:var(--flow-blue);
+  font:400 12px/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__title{
+  margin:18px 0 0;
+  max-width:28ch;
+  color:var(--hm-text-primary,#fff);
+  font-family:var(--hm-font-ko);
+  font-size:32px;
+  font-weight:100;
+  font-variation-settings:"wght" 100;
+  line-height:1.22;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__lead{
+  margin:16px 0 0;
+  max-width:70ch;
+  color:var(--hm-description-color,rgba(255,255,255,.5));
+  font:300 16px/1.62 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px 24px;
+  margin:32px 0 0;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend span{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:rgba(255,255,255,.46);
+  font:300 12px/1.2 var(--hm-font-ko);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend i{
+  display:block;
+  width:18px;
+  height:1px;
+  border-top:1px dashed rgba(255,255,255,.56);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend .is-pause i{border-color:var(--flow-yellow)}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend .is-shift i{border-color:var(--flow-blue)}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend .is-risk i{border-color:var(--flow-red)}
+
+html body.himart-commerce-page #brand .himart-appliance-flow__viewport{
+  position:relative;
+  width:100%;
+  margin:56px 0 0;
+  padding:0 0 360px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__viewport::-webkit-scrollbar{display:none}
+html body.himart-commerce-page #brand .himart-appliance-flow__path{
+  display:flex;
+  align-items:center;
+  width:100%;
+  min-width:1080px;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage{
+  position:relative;
+  z-index:2;
+  flex:1 1 0;
+  min-width:112px;
+  min-height:126px;
+  padding:18px 16px;
+  box-sizing:border-box;
+  border:1px solid rgba(255,255,255,.28);
+  background:#000;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity .42s ease,transform .55s cubic-bezier(.22,1,.36,1),border-color .35s ease;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__stage{
+  opacity:1;
+  transform:none;
+  transition-delay:calc(var(--flow-i,0) * 80ms);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage:hover{
+  border-color:rgba(255,255,255,.62);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage-no{
+  display:block;
+  color:var(--flow-blue);
+  font:400 12px/1 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage h5{
+  margin:34px 0 0;
+  color:#fff;
+  font:100 18px/1.32 var(--hm-font-ko);
+  font-variation-settings:"wght" 100;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage p{
+  margin:8px 0 0;
+  color:rgba(255,255,255,.42);
+  font:300 12px/1.45 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+
+html body.himart-commerce-page #brand .himart-appliance-flow__connector{
+  position:relative;
+  z-index:1;
+  flex:0 0 44px;
+  height:1px;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:1px;
+  border-top:1px dashed rgba(255,255,255,.52);
+  transition:width .52s cubic-bezier(.22,1,.36,1);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__connector::before{
+  width:100%;
+  transition-delay:calc((var(--flow-i,0) * 80ms) + 110ms);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector::after{
+  content:"";
+  position:absolute;
+  top:-2px;
+  right:-1px;
+  width:5px;
+  height:5px;
+  border-top:1px solid rgba(255,255,255,.72);
+  border-right:1px solid rgba(255,255,255,.72);
+  transform:rotate(45deg);
+  opacity:0;
+  transition:opacity .25s ease;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__connector::after{
+  opacity:1;
+  transition-delay:calc((var(--flow-i,0) * 80ms) + 420ms);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk-dot{
+  position:absolute;
+  z-index:3;
+  top:50%;
+  left:50%;
+  width:8px;
+  height:8px;
+  border:2px solid #000;
+  border-radius:50%;
+  background:var(--risk-color,var(--flow-red));
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.3);
+  transition:opacity .35s ease,transform .5s cubic-bezier(.22,1,.36,1);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__risk-dot{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+  transition-delay:calc((var(--flow-i,0) * 80ms) + 260ms);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk{
+  --risk-color:var(--flow-red);
+  position:absolute;
+  z-index:4;
+  top:32px;
+  left:50%;
+  width:230px;
+  padding:18px 18px 20px;
+  box-sizing:border-box;
+  border-top:1px solid var(--risk-color);
+  background:rgba(0,0,0,.96);
+  opacity:0;
+  transform:translate(-50%,10px);
+  transition:opacity .4s ease,transform .55s cubic-bezier(.22,1,.36,1);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:100%;
+  height:32px;
+  border-left:1px dashed var(--risk-color);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__risk{
+  opacity:1;
+  transform:translate(-50%,0);
+  transition-delay:calc((var(--flow-i,0) * 80ms) + 340ms);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-level-2{top:194px}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-level-2::before{height:194px}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-pause{--risk-color:var(--flow-yellow)}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-shift{--risk-color:var(--flow-blue)}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-risk{--risk-color:var(--flow-red)}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk b{
+  display:block;
+  margin:0;
+  color:var(--risk-color);
+  font:400 11px/1.2 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-note);
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk h6{
+  margin:12px 0 0;
+  color:#fff;
+  font:300 16px/1.38 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk p{
+  margin:8px 0 0;
+  color:rgba(255,255,255,.48);
+  font:300 13px/1.5 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk strong{
+  color:#fff;
+  font-weight:400;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk small{
+  display:block;
+  margin:12px 0 0;
+  color:rgba(255,255,255,.28);
+  font:300 10px/1.4 var(--hm-font-ko);
+}
+
+html body.himart-commerce-page #brand .himart-appliance-flow__note{
+  margin:0;
+  padding:18px 0 0;
+  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
+  color:rgba(255,255,255,.34);
+  font:300 11px/1.55 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__note strong{
+  color:rgba(255,255,255,.60);
+  font-weight:400;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__source{
+  display:block;
+  margin-top:10px;
+  color:rgba(255,255,255,.24);
+  font:300 10px/1.5 var(--hm-font-ko);
+}
+
+@media(max-width:780px){
+  html body.himart-commerce-page #brand .himart-appliance-flow{margin-top:80px}
+  html body.himart-commerce-page #brand .himart-appliance-flow__title{font-size:28px}
+  html body.himart-commerce-page #brand .himart-appliance-flow__viewport{padding-bottom:330px}
+  html body.himart-commerce-page #brand .himart-appliance-flow__path{min-width:980px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.himart-commerce-page #brand .himart-appliance-flow__stage,
+  html body.himart-commerce-page #brand .himart-appliance-flow__risk,
+  html body.himart-commerce-page #brand .himart-appliance-flow__risk-dot{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+  html body.himart-commerce-page #brand .himart-appliance-flow__risk-dot{transform:translate(-50%,-50%)!important}
+  html body.himart-commerce-page #brand .himart-appliance-flow__connector::before{width:100%!important;transition:none!important}
+  html body.himart-commerce-page #brand .himart-appliance-flow__connector::after{opacity:1!important;transition:none!important}
+}
