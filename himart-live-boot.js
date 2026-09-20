@@ -53,7 +53,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-5';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-6';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -92,7 +92,6 @@
       article.setAttribute('aria-hidden',pages.length===0?'false':'true');
 
       group.forEach((card,screenIndex)=>{
-        const title=(card.querySelector('.phone-meta b')?.textContent||'').trim();
         const caption=(card.querySelector('.phone-meta p')?.textContent||'').trim();
 
         const item=document.createElement('div');
@@ -120,13 +119,10 @@
         const copy=document.createElement('div');
         copy.className='prototype-case-copy';
 
-        const copyTitle=document.createElement('h3');
-        copyTitle.textContent=caption;
-
         const copyDescription=document.createElement('p');
-        copyDescription.textContent=title;
+        copyDescription.textContent=caption;
 
-        copy.append(copyTitle,copyDescription);
+        copy.append(copyDescription);
         item.append(device,copy);
         article.appendChild(item);
       });
@@ -151,6 +147,17 @@
       pages.push(article);
     }
 
+    const firstClone=pages[0]?.cloneNode(true);
+    const lastClone=pages[pages.length-1]?.cloneNode(true);
+    if(firstClone&&lastClone){
+      firstClone.classList.add('prototype-case--clone');
+      lastClone.classList.add('prototype-case--clone');
+      firstClone.setAttribute('aria-hidden','true');
+      lastClone.setAttribute('aria-hidden','true');
+      track.insertBefore(lastClone,track.firstChild);
+      track.appendChild(firstClone);
+    }
+
     viewport.appendChild(track);
     list.appendChild(viewport);
 
@@ -165,38 +172,56 @@
     list.appendChild(footer);
 
     const HOLD_MS=5000;
+    const realCount=pages.length;
     let index=0;
+    let virtualIndex=1;
     let timer=0;
+    let wrapping=false;
 
     const clearTimer=()=>{
       if(timer)window.clearTimeout(timer);
       timer=0;
     };
 
-    const update=(instant=false)=>{
-      if(instant)track.classList.add('is-instant');
-      track.style.transform=`translate3d(${index*-100}%,0,0)`;
+    const render=()=>{
+      track.style.transform=`translate3d(${virtualIndex*-100}%,0,0)`;
       pages.forEach((page,pageIndex)=>page.setAttribute('aria-hidden',pageIndex===index?'false':'true'));
-      pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}`;
-      if(instant)requestAnimationFrame(()=>track.classList.remove('is-instant'));
+      pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(realCount).padStart(2,'0')}`;
+    };
+
+    const jumpToReal=(realIndex)=>{
+      wrapping=true;
+      index=realIndex;
+      virtualIndex=realIndex+1;
+      track.classList.add('is-instant');
+      render();
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        track.classList.remove('is-instant');
+        wrapping=false;
+      }));
     };
 
     const schedule=()=>{
       clearTimer();
-      if(pages.length<2)return;
+      if(realCount<2)return;
       timer=window.setTimeout(()=>move(1),HOLD_MS);
     };
 
     const move=(delta)=>{
-      if(pages.length<2)return;
+      if(realCount<2||wrapping)return;
       clearTimer();
 
-      const wrapsForward=delta>0 && index===pages.length-1;
-      const wrapsBackward=delta<0 && index===0;
-      index=(index+delta+pages.length)%pages.length;
-      update(wrapsForward||wrapsBackward);
+      index=(index+delta+realCount)%realCount;
+      virtualIndex+=delta;
+      render();
       schedule();
     };
+
+    track.addEventListener('transitionend',(event)=>{
+      if(event.propertyName!=='transform'||wrapping)return;
+      if(virtualIndex===realCount+1)jumpToReal(0);
+      else if(virtualIndex===0)jumpToReal(realCount-1);
+    });
 
     list.querySelectorAll('.prototype-case-control--prev').forEach(button=>{
       button.addEventListener('click',(event)=>{
@@ -224,9 +249,11 @@
       else schedule();
     });
 
-    update();
-    schedule();
+    track.classList.add('is-instant');
+    render();
     gallery.replaceWith(list);
+    requestAnimationFrame(()=>track.classList.remove('is-instant'));
+    schedule();
   };
   mountReuseDirectionPrototype();
 
