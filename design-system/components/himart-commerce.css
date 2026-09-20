@@ -59,3 +59,21 @@ html body.himart-commerce-page :is(.keyword-grid,.voice-stack,.ring-row,.sentime
     line-height:var(--hm-leading-group)!important;
   }
 }
+
+
+/* Himart 01.4 flush-left synthesis columns — 2026-09-21 */
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card{
+  padding-right:0!important;
+  padding-left:0!important;
+  align-items:flex-start!important;
+  text-align:left!important;
+}
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card b,
+html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p{
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  text-align:left!important;
+}
