@@ -308,7 +308,7 @@
         const span = document.createElement('span');
         span.className = 'entry-scramble-char';
         span.dataset.finalChar = character;
-        span.textContent = character;
+        span.textContent = '';
         chars.push(span);
         fragment.appendChild(span);
       });
@@ -335,6 +335,16 @@
     if (!chars.length) return;
 
     element.replaceChildren(fragment);
+    chars.forEach(char => {
+      char.textContent = char.dataset.finalChar || '';
+      const width = Math.max(0, char.getBoundingClientRect().width);
+      if (width > 0) {
+        char.style.display = 'inline-block';
+        char.style.width = width + 'px';
+        char.style.minWidth = width + 'px';
+      }
+      char.textContent = '';
+    });
     const startedAt = performance.now();
     const stagger = Math.min(24, duration / Math.max(1, chars.length));
     let raf = 0;
@@ -358,9 +368,13 @@
       const elapsed = now - startedAt;
       let complete = true;
       chars.forEach((char, index) => {
-        const local = clamp(elapsed / duration - index / Math.max(1, chars.length) * 0.32, 0, 1);
+        const revealStart = index / Math.max(1, chars.length) * 0.32;
+        const local = clamp(elapsed / duration - revealStart, 0, 1);
         if (local >= 1) {
           char.textContent = char.dataset.finalChar || '';
+        } else if (elapsed / duration < revealStart) {
+          complete = false;
+          char.textContent = '';
         } else {
           complete = false;
           char.textContent = scramblePool[(Math.floor(now / 64) + index * 17) % scramblePool.length];

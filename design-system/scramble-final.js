@@ -59,7 +59,7 @@
     const span = document.createElement('span');
     span.className = 'hm-scramble-char';
     span.dataset.hmFinalChar = char;
-    span.textContent = randomGlyph();
+    span.textContent = '';
     chars.push(span);
     return span;
   };
@@ -117,6 +117,19 @@
     return chars;
   };
 
+  const prepareScrambleCharacters = chars => {
+    chars.forEach(char => {
+      char.style.display = 'inline-block';
+      char.textContent = char.dataset.hmFinalChar || '';
+      const width = Math.max(0, char.getBoundingClientRect().width);
+      if (width > 0) {
+        char.style.width = width + 'px';
+        char.style.minWidth = width + 'px';
+      }
+      char.textContent = '';
+    });
+  };
+
   const ownsAnimatedDOM = (element, state) =>
     state.chars.length > 0 && state.chars.every(char => char.isConnected && element.contains(char));
 
@@ -134,14 +147,19 @@
 
     const chars = buildAnimatedMarkup(element, state.originalHTML);
     if (!chars.length) return false;
+    prepareScrambleCharacters(chars);
     state.chars = chars;
 
     const elapsed = performance.now() - state.startedAt;
     chars.forEach((char, index) => {
       const resolveAt = state.randomPhase + index * state.stagger;
+      const revealAt = index * state.stagger;
       if (state.completed || elapsed >= resolveAt) {
         char.textContent = char.dataset.hmFinalChar || '';
         char.dataset.hmResolved = '1';
+      } else if (elapsed < revealAt) {
+        char.textContent = '';
+        char.removeAttribute('data-hm-resolved');
       } else {
         char.textContent = randomGlyph();
         char.removeAttribute('data-hm-resolved');
@@ -219,6 +237,7 @@
     const originalText = state?.originalText ?? element.textContent ?? '';
     const chars = buildAnimatedMarkup(element, originalHTML);
     if (!chars.length) return false;
+    prepareScrambleCharacters(chars);
 
     const count = chars.length;
     const stagger = Math.max(9, Math.min(kind === 'medium' ? 18 : 22, 520 / Math.max(1, count)));
@@ -288,11 +307,14 @@
           resolved += 1;
           return;
         }
-        const resolveAt = state.randomPhase + index * state.stagger;
+        const revealAt = index * state.stagger;
+        const resolveAt = state.randomPhase + revealAt;
         if (elapsed >= resolveAt) {
           char.textContent = char.dataset.hmFinalChar || '';
           char.dataset.hmResolved = '1';
           resolved += 1;
+        } else if (elapsed < revealAt) {
+          char.textContent = '';
         } else if (shouldRefreshRandom) {
           char.textContent = randomGlyph();
         }
@@ -479,7 +501,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.20-final-state-2',
+    version:'2026.09.20-final-state-3',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
