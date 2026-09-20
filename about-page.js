@@ -24,184 +24,16 @@
     .filter((el) => !labelSet.has(el) && !titleRevealLines.has(el));
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /*
-    About owns every character it animates. Keeping this entry title out of the
-    generic observer prevents another runtime from replacing its text while the
-    page controller settles section titles.
-  */
-  const asciiTitle = document.querySelector('.about-ascii-title');
-  const asciiTitleOriginalHTML = asciiTitle?.innerHTML || 'ABOUT';
-  const ASCII_ENTRY_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let asciiTitleRaf = 0;
-  let asciiTitleChars = [];
-  let asciiTitleComplete = false;
-
-  const settleAsciiTitle = () => {
-    if (!asciiTitle) return;
-    if (asciiTitleRaf) cancelAnimationFrame(asciiTitleRaf);
-    asciiTitleRaf = 0;
-    asciiTitle.innerHTML = asciiTitleOriginalHTML;
-    asciiTitle.classList.add('about-title-scramble-ready');
-    asciiTitleComplete = true;
-  };
-
-  const startAsciiTitle = () => {
-    if (!asciiTitle || asciiTitle.dataset.scrambleOwner === 'about-page') return;
-    asciiTitle.dataset.scrambleOwner = 'about-page';
-    asciiTitle.classList.add('about-title-scramble-ready');
-
-    if (reducedMotion) {
-      settleAsciiTitle();
-      return;
-    }
-
-    const finalText = asciiTitle.textContent.trim() || 'ABOUT';
-    asciiTitle.setAttribute('aria-label', finalText);
-    asciiTitle.textContent = '';
-
-    asciiTitleChars = Array.from(finalText).map((character) => {
-      const char = document.createElement('span');
-      char.className = 'about-ascii-title-char';
-      char.dataset.finalChar = character;
-      char.textContent = character;
-      char.style.display = 'inline-block';
-      asciiTitle.appendChild(char);
-      const width = Math.max(1, Math.ceil(char.getBoundingClientRect().width));
-      char.style.width = width + 'px';
-      char.style.color = 'transparent';
-      return char;
-    });
-
-    const startedAt = performance.now();
-    const staggerMs = 72;
-    const cycleMs = 86;
-    const cycles = 4;
-    const frame = (now) => {
-      let complete = true;
-      asciiTitleChars.forEach((char, index) => {
-        const elapsed = now - startedAt - index * staggerMs;
-        if (elapsed < 0) {
-          complete = false;
-          return;
-        }
-
-        const cycle = Math.floor(elapsed / cycleMs);
-        if (cycle < cycles) {
-          complete = false;
-          char.textContent = ASCII_ENTRY_POOL[(index * 19 + cycle * 11) % ASCII_ENTRY_POOL.length];
-          char.style.color = '';
-        } else {
-          char.textContent = char.dataset.finalChar || '';
-          char.style.color = '';
-        }
-      });
-
-      if (complete) {
-        settleAsciiTitle();
-        return;
-      }
-      asciiTitleRaf = requestAnimationFrame(frame);
-    };
-    asciiTitleRaf = requestAnimationFrame(frame);
-  };
-
-  startAsciiTitle();
   const reveal = (el) => el.classList.add('is-visible');
   const revealLabel = (el) => {
     el.classList.remove('section-label-pending');
     el.classList.add('section-label-visible');
   };
 
-  const splitTitleChars = (title) => {
-    title.classList.add('about-scramble-title');
-    title.querySelectorAll('.reveal-line').forEach((line) => {
-      line.classList.add('is-visible');
-      Array.from(line.childNodes).forEach((node) => {
-        if (node.nodeType !== Node.TEXT_NODE) return;
-        const fragment = document.createDocumentFragment();
-        Array.from(node.textContent).forEach((character) => {
-          const span = document.createElement('span');
-          span.className = 'about-scramble-char';
-          span.textContent = character;
-          span.dataset.finalChar = character;
-          fragment.appendChild(span);
-        });
-        node.replaceWith(fragment);
-      });
-    });
-    return Array.from(title.querySelectorAll('.about-scramble-char'))
-      .filter((char) => char.textContent.trim());
-  };
-
-  const titleCharacters = new Map();
-  const titleOriginalHTML = new Map();
-  titleTargets.forEach((title) => {
-    titleOriginalHTML.set(title, title.innerHTML);
-    const chars = splitTitleChars(title);
-    titleCharacters.set(title, chars);
-    chars.forEach((char) => { char.style.color = 'transparent'; });
-  });
-
-  const settleTitle = (title) => {
-    const originalHTML = titleOriginalHTML.get(title);
-    if (originalHTML != null) {
-      title.innerHTML = originalHTML;
-      title.dataset.scrambleDone = '1';
-    }
-  };
-
-  const animateTitle = (title) => {
-    if (!title || title.dataset.scrambleDone === '1') return;
-    title.dataset.scrambleDone = '1';
-    const chars = titleCharacters.get(title) || [];
-    const startedAt = performance.now();
-    const staggerMs = 26;
-    const cycleMs = 96;
-
-    const frame = (now) => {
-      let complete = true;
-      chars.forEach((char, index) => {
-        const elapsed = now - startedAt - index * staggerMs;
-        if (elapsed < 0) {
-          complete = false;
-          return;
-        }
-        const cycle = Math.floor(elapsed / cycleMs);
-        if (cycle < 3) {
-          complete = false;
-          char.dataset.scramble = SCRAMBLE_POOL[(index * 17 + cycle * 13) % SCRAMBLE_POOL.length];
-          char.classList.add('is-scrambling');
-        } else {
-          char.textContent = char.dataset.finalChar ?? char.textContent;
-          char.removeAttribute('data-scramble');
-          char.classList.remove('is-scrambling');
-          char.style.color = '';
-        }
-      });
-      if (!complete) requestAnimationFrame(frame);
-      else settleTitle(title);
-    };
-    requestAnimationFrame(frame);
-  };
-
   if (reducedMotion) {
     targets.forEach(reveal);
     sectionLabels.forEach(revealLabel);
-    titleTargets.forEach(settleTitle);
     return;
-  }
-
-  if ('IntersectionObserver' in window) {
-    const titleObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        animateTitle(entry.target);
-        titleObserver.unobserve(entry.target);
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
-    titleTargets.forEach((title) => titleObserver.observe(title));
-  } else {
-    titleTargets.forEach(animateTitle);
   }
 
   /*
@@ -263,16 +95,6 @@
       }
     });
   };
-
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) return;
-    settleAsciiTitle();
-    titleTargets.forEach(settleTitle);
-  });
-  window.addEventListener('pagehide', () => {
-    settleAsciiTitle();
-    titleTargets.forEach(settleTitle);
-  });
 
   prepareLabels();
 

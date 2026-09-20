@@ -289,129 +289,6 @@
     });
   };
 
-  /*
-    Works owns its own title nodes because this page intentionally does not load
-    the case-study title runtime. Every animation keeps the authored HTML as its
-    source of truth and restores it unconditionally at the end.
-  */
-  const scramblePool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const activeTitleScrambles = new Set();
-
-  const cloneScrambleNode = (node, chars) => {
-    if (node.nodeType === Node.TEXT_NODE) {
-      const fragment = document.createDocumentFragment();
-      [...(node.nodeValue || '')].forEach(character => {
-        if (/\s/.test(character) || character === '·') {
-          fragment.appendChild(document.createTextNode(character));
-          return;
-        }
-        const span = document.createElement('span');
-        span.className = 'entry-scramble-char';
-        span.dataset.finalChar = character;
-        span.textContent = '';
-        chars.push(span);
-        fragment.appendChild(span);
-      });
-      return fragment;
-    }
-    if (node.nodeType !== Node.ELEMENT_NODE) return node.cloneNode(true);
-    const clone = node.cloneNode(false);
-    node.childNodes.forEach(child => clone.appendChild(cloneScrambleNode(child, chars)));
-    return clone;
-  };
-
-  const runScramble = (element, duration = 900) => {
-    if (!element || reduced || element.dataset.scrambleReady === '1') return;
-    element.dataset.scrambleReady = '1';
-
-    const originalHTML = element.innerHTML;
-    const template = document.createElement('template');
-    template.innerHTML = originalHTML;
-    const chars = [];
-    const fragment = document.createDocumentFragment();
-    template.content.childNodes.forEach(node => {
-      fragment.appendChild(cloneScrambleNode(node, chars));
-    });
-    if (!chars.length) return;
-
-    element.replaceChildren(fragment);
-    chars.forEach(char => {
-      char.textContent = char.dataset.finalChar || '';
-      const width = Math.max(0, char.getBoundingClientRect().width);
-      if (width > 0) {
-        char.style.display = 'inline-block';
-        char.style.width = width + 'px';
-        char.style.minWidth = width + 'px';
-      }
-      char.textContent = '';
-    });
-    const startedAt = performance.now();
-    const stagger = Math.min(24, duration / Math.max(1, chars.length));
-    let raf = 0;
-    let timer = 0;
-    let settled = false;
-
-    const settle = () => {
-      if (settled) return;
-      settled = true;
-      if (raf) cancelAnimationFrame(raf);
-      if (timer) clearTimeout(timer);
-      activeTitleScrambles.delete(settle);
-      if (document.contains(element)) element.innerHTML = originalHTML;
-    };
-
-    activeTitleScrambles.add(settle);
-    timer = window.setTimeout(settle, duration + chars.length * stagger + 700);
-
-    const frame = now => {
-      if (settled) return;
-      const elapsed = now - startedAt;
-      let complete = true;
-      chars.forEach((char, index) => {
-        const revealStart = index / Math.max(1, chars.length) * 0.32;
-        const local = clamp(elapsed / duration - revealStart, 0, 1);
-        if (local >= 1) {
-          char.textContent = char.dataset.finalChar || '';
-        } else if (elapsed / duration < revealStart) {
-          complete = false;
-          char.textContent = '';
-        } else {
-          complete = false;
-          char.textContent = scramblePool[(Math.floor(now / 64) + index * 17) % scramblePool.length];
-        }
-      });
-      if (complete) {
-        settle();
-        return;
-      }
-      raf = requestAnimationFrame(frame);
-    };
-
-    raf = requestAnimationFrame(frame);
-  };
-
-  const settleAllTitleScrambles = () => {
-    [...activeTitleScrambles].forEach(settle => settle());
-  };
-
-  const runEntryScramble = () => runScramble(title, 1000);
-
-  const observeCardTitleScrambles = () => {
-    if (reduced || !('IntersectionObserver' in window)) {
-      if (!reduced) cards.forEach(card => runScramble(card.querySelector('.works-card-title'), 720));
-      return;
-    }
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const heading = entry.target.querySelector('.works-card-title');
-        if (heading) runScramble(heading, 720);
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
-    cards.forEach(card => observer.observe(card));
-  };
-
   /* Project switcher is generated from the actual Works cards. */
   const trigger = document.createElement('button');
   trigger.type = 'button';
@@ -639,7 +516,6 @@
   window.addEventListener('resize', requestUpdate);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-      settleAllTitleScrambles();
       mediaVideos.forEach(({video}) => {
         const state = focusState.get(video);
         if (state) {
@@ -651,7 +527,5 @@
       });
     } else requestUpdate();
   });
-  runEntryScramble();
-  observeCardTitleScrambles();
   updateTitle();
 })();

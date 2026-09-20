@@ -27,16 +27,21 @@
   if (window.HMDSTitleScrambleRuntime) return;
 
   const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title';
+  const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title, .about-ascii-hero .about-ascii-title, .works-hero .works-page-title';
   const majorSelector = [
     '#live-main .hm-section-head .hm-section-title',
-    '#live-main [data-hm-major-title]'
+    '#live-main [data-hm-major-title]',
+    '.about-hero-title',
+    '.thinking-section .about-statement',
+    '.leadership-section .about-statement',
+    '.interview-section .about-statement'
   ].join(',');
   const mediumSelector = [
     '#live-main .hm-subhead .hm-subtitle',
     '#live-main .data-card-head h3',
     '#live-main .prototype-intro > h3',
     '#live-main .wa-project__head .wa-project__title',
+    '.works-grid .works-card-title',
     '#live-main [data-hm-medium-title]'
   ].join(',');
 
@@ -46,6 +51,7 @@
   const revealWatchers = new WeakMap();
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const REVEAL_SYNC_DELAY = 70;
+  const TIMING = Object.freeze({ cycleMs: 44, randomCycles: 5, staggerMax: 16, settleTailMs: 64 });
 
   const randomGlyph = () => glyphs[Math.floor(Math.random() * glyphs.length)];
   const normalizeText = value => (value || '').replace(/\s+/g, ' ').trim();
@@ -240,9 +246,9 @@
     prepareScrambleCharacters(chars);
 
     const count = chars.length;
-    const stagger = Math.max(9, Math.min(kind === 'medium' ? 18 : 22, 520 / Math.max(1, count)));
-    const randomPhase = kind === 'medium' ? 190 : 250;
-    const totalDuration = randomPhase + (count - 1) * stagger + 80;
+    const stagger = Math.max(7, Math.min(TIMING.staggerMax, 400 / Math.max(1, count)));
+    const randomPhase = TIMING.cycleMs * TIMING.randomCycles;
+    const totalDuration = randomPhase + (count - 1) * stagger + TIMING.settleTailMs;
 
     state = {
       originalHTML,
@@ -297,7 +303,7 @@
       }
 
       const elapsed = now - state.startedAt;
-      const randomBucket = Math.floor(elapsed / 45);
+      const randomBucket = Math.floor(elapsed / TIMING.cycleMs);
       const shouldRefreshRandom = randomBucket !== lastRandomBucket;
       lastRandomBucket = randomBucket;
       let resolved = 0;
@@ -501,7 +507,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.20-final-state-3',
+    version:'2026.09.20-final-state-4',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
