@@ -26,9 +26,27 @@
     const lead = document.querySelector('.hm-movie-copy .hm-lead');
     text(lead, '고객 인식과 실제 이용 흐름을 확인해, 구매 여정을 다시 정의했습니다.');
 
-    /* Major chapter titles are owned by content-runtime.js and scramble-final.js.
-       Do not rewrite them here: a late reconciliation write can look like a second
-       scramble/title change after the animation has already completed. */
+    /* Chapter 01 final authority.
+       Legacy writers also touch these nodes, so reconcile them to one approved
+       state instead of letting async content layers overwrite each other. */
+    const brandTitle = document.querySelector('#brand > .hm-wrap > .hm-section-head .hm-section-title');
+    html(brandTitle, '왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.');
+
+    const realityTitle = document.querySelector('#brand .narrative-reality .brand-reality-title, #brand .narrative-reality .narrative-title');
+    html(realityTitle, '<span class="brand-reality-title__line">데이터를 보니 <span class="brand-memory-light">\'가전하면 하이마트\'</span> 는 여전했습니다.</span><span class="brand-reality-title__line">다만 구매 경험으로 이어지지는 않았습니다.</span>');
+
+    const brandMetricTitles = [
+      '가전 구매처로 가장 먼저 떠오르는 곳은<br>여전히 하이마트였습니다.',
+      '높은 인지도가 실제 서비스 경험으로<br>충분히 이어지지 않았습니다.',
+      '서비스를 선택하는 순간에는<br>제조사가 훨씬 먼저 선택됐습니다.',
+      '구매 이후 관계가 이어지지 못해<br>대부분 한 번의 거래에서 끝났습니다.'
+    ];
+    document.querySelectorAll('#brand .himart-brand-metric-card h4').forEach((el, i) => {
+      if (brandMetricTitles[i]) html(el, brandMetricTitles[i]);
+    });
+
+    const applianceLead = document.querySelector('#brand .himart-appliance-flow__lead');
+    text(applianceLead, '고가 가전 구매 흐름에서 선택이 흔들리는 지점을 확인했습니다.');
 
     const behaviorTitles = [
       '<span>외부 맥락을</span><span>가진 유입</span>',
@@ -76,7 +94,7 @@
     const transition = document.querySelector('#brand .narrative-touchpoint-synthesis, #brand .brand-synthesis');
     if (transition) {
       transition.className = 'brand-synthesis narrative-touchpoint-synthesis';
-      const transitionHTML = '<span class="narrative-subno synthesis-subno">01.4</span><h4>하이마트의 문제는 강점이 부족한 것이 아니라,<br>그 강점이 구매 판단의 순간에 연결되지 않는 것이었습니다.</h4><div class="synthesis-list"><article class="synthesis-card hm-ds-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 자산은 충분했습니다.</p></article><article class="synthesis-card hm-ds-card negative"><b>판단 순간에 연결되지 않던 강점</b><p>비교·상담·설치·케어의 강점이 온라인 탐색과 결제 과정에서<br>고객의 다음 판단으로 이어지지 않았습니다.</p></article></div>';
+      const transitionHTML = '<span class="narrative-subno synthesis-subno">01.4</span><h4>하이마트의 문제는 강점이 부족한 것이 아니라,<br>그 강점이 구매 판단의 순간에 연결되지 않는 것이었습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 자산은 충분했습니다.</p></article><article class="synthesis-card negative"><b>판단 순간에 연결되지 않던 강점</b><p>비교·상담·설치·케어의 강점이 온라인 탐색과 결제 과정에서<br>고객의 다음 판단으로 이어지지 않았습니다.</p></article></div>';
       html(transition, transitionHTML);
     }
 
