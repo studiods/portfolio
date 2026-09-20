@@ -178,10 +178,21 @@
     });
   };
 
+  const settleVisibleScramble = () => {
+    restoreAll(quoteChars, quoteFinalChars);
+    restoreAll(definitionChars, definitionFinalChars);
+    quoteWindowWasActive = false;
+    definitionWindowWasActive = false;
+  };
+
   addEventListener('scroll', requestRender, { passive: true });
   addEventListener('resize', () => {
     widths = new WeakMap();
     requestRender();
   }, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) settleVisibleScramble();
+  });
+  addEventListener('pagehide', settleVisibleScramble);
   requestRender();
 })();
