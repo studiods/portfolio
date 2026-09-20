@@ -105,13 +105,135 @@ html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap > div
 }
 
 
-/* HIMART 01.3 — keep the medium title on the same canonical scale as other subsections. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis>h4,
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .hm-subsection:has(.hm-subno[data-index="01.3"]) .hm-subtitle{
-  font-size:42px!important;
+/* HIMART 01.1 / 01.2 — brand diagnosis refinement. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem + .narrative-reality{
+  margin-top:var(--hm-subsection-gap,100px)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4{
+  margin-top:18px!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:300!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4>span{
+  display:block!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item p{
+  max-width:31ch!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-memory-light{
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-graph{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:28px!important;
+  width:100%!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-stage{
+  min-width:0!important;
+  padding-top:24px!important;
+  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-index{
+  display:block!important;
+  color:var(--hm-blue)!important;
+  font:400 12px/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-stage h4{
+  min-height:2.6em!important;
+  margin:34px 0 0!important;
+  color:#fff!important;
+  font:100 22px/1.3 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 100!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-bars{
+  display:grid!important;
+  gap:12px!important;
+  margin-top:34px!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row{
+  display:grid!important;
+  grid-template-columns:78px minmax(0,1fr) 54px!important;
+  gap:12px!important;
+  align-items:center!important;
+  color:rgba(255,255,255,.50)!important;
+  font:300 12px/1.2 var(--hm-font-ko)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row b{
+  color:rgba(255,255,255,.70)!important;
+  font:300 14px/1 var(--hm-font-en)!important;
+  text-align:right!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row.is-primary{
+  color:#fff!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row.is-primary b{
+  color:var(--hm-blue)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-track{
+  position:relative!important;
+  height:2px!important;
+  overflow:hidden!important;
+  background:rgba(255,255,255,.10)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-track i{
+  display:block!important;
+  width:var(--value)!important;
+  height:100%!important;
+  background:rgba(255,255,255,.30)!important;
+  transform:scaleX(0)!important;
+  transform-origin:left center!important;
+  transition:transform .9s cubic-bezier(.2,.8,.2,1)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row.is-primary .brand-gap-track i{
+  background:var(--hm-blue)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality.is-in .brand-gap-track i{
+  transform:scaleX(1)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-callout{
+  display:block!important;
+  margin-top:24px!important;
+  color:var(--hm-blue)!important;
+  font:300 22px/1.1 var(--hm-font-en)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-stage>p{
+  margin:28px 0 0!important;
+  max-width:31ch!important;
+  color:var(--hm-description-color)!important;
+  font:300 14px/1.55 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis>h4{
+  font-size:var(--hm-type-subsection,32px)!important;
   line-height:1.18!important;
-  font-weight:100!important;
-  letter-spacing:-.045em!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card::before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+@media(max-width:1000px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-graph{
+    grid-template-columns:1fr!important;
+  }
+}
+@media(max-width:780px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4>span{
+    white-space:normal!important;
+  }
 }
 
 /* HIMART 02.1 — exactly two semantic lines only.
