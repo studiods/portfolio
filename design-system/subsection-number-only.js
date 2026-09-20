@@ -1,6 +1,8 @@
 /* Shared case-study blue 12px numeric-label contract.
-   Any structural/small-title label that begins with 01 / 01.1 stores and renders
-   the numeric hierarchy only. Category/source labels without a leading number are untouched. */
+   Portfolio-wide rule: structural labels are numeric only.
+   Do not render number + English descriptors (e.g. "01 / TOP OF MIND").
+   Any structural/small-title label beginning with 01 / 01.1 is normalized to its
+   numeric hierarchy only. Category/source labels without a leading number are untouched. */
 (() => {
   'use strict';
 
@@ -11,6 +13,12 @@
     '.hm-card-no',
     '.hm-ds-index-label[data-index]',
     '.aimmo-context-insight__label',
+    '.brand-gap-index',
+    '.problem-item > small:first-child',
+    '.signal-item > small:first-child',
+    '.principle-item > small:first-child',
+    '.behavior-pattern-card > span:first-child',
+    '.design-rule > article > small:first-child',
     '.aimmo-evidence-card figcaption > span:first-child',
     '.aimmo-application-gallery__item figcaption > span:first-child',
     '.team-card > span:first-child',
