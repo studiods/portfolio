@@ -5204,7 +5204,7 @@ html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>
   margin:0!important;
   color:#fff!important;
   font-family:var(--hm-ko)!important;
-  font-size:42px!important;
+  font-size:var(--hm-type-subsection,32px)!important;
   line-height:1.18!important;
   font-weight:100!important;
   letter-spacing:-.045em!important;
@@ -5450,7 +5450,7 @@ html body.himart-wide-test-page .proof-item p{margin:40px 0 0!important;padding-
 
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis{display:block!important;margin-top:110px!important;padding:34px 0 0!important;border-top:1px solid rgba(255,255,255,.22)!important;background:transparent!important}
 html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis .synthesis-subno{display:block!important;margin:0 0 18px!important;color:var(--hm-blue)!important}
-html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{margin:0!important;max-width:980px!important;color:#fff!important;font-family:var(--hm-ko)!important;font-size:42px!important;font-weight:100!important;line-height:1.18!important;letter-spacing:-.045em!important}
+html body.himart-wide-test-page .brand-synthesis.narrative-touchpoint-synthesis>h4{margin:0!important;max-width:980px!important;color:#fff!important;font-family:var(--hm-ko)!important;font-size:var(--hm-type-subsection,32px)!important;font-weight:100!important;line-height:1.18!important;letter-spacing:-.045em!important}
 html body.himart-wide-test-page .synthesis-list{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important;margin-top:58px!important}
 html body.himart-wide-test-page .synthesis-card{position:relative!important;min-height:280px!important;padding:28px 24px 26px!important;border-top:2px solid var(--hm-blue)!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;background:transparent!important}
 html body.himart-wide-test-page .synthesis-card.negative{border-top-color:var(--hm-red)!important}
