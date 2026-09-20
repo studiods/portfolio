@@ -305,6 +305,7 @@
       return {span, finalChar, index};
     });
     const duration = 1000;
+    const settleEntry = () => chars.forEach(({span, finalChar}) => { span.textContent = finalChar; });
     const start = performance.now();
     const frame = now => {
       const progress = clamp((now - start) / duration, 0, 1);
@@ -314,8 +315,12 @@
         else span.textContent = pool[(Math.floor(now / 70) + index * 11) % pool.length];
       });
       if (progress < 1) requestAnimationFrame(frame);
-      else chars.forEach(({span, finalChar}) => { span.textContent = finalChar; });
+      else settleEntry();
     };
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) settleEntry();
+    }, { once:true });
+    window.addEventListener('pagehide', settleEntry, { once:true });
     requestAnimationFrame(frame);
   };
 
