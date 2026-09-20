@@ -163,7 +163,7 @@ function direction(main){
   const d=q(h,'.hm-section-desc');
   if(d)d.textContent='정의한 원칙을 화면과 인터랙션으로 옮기고, 내부 검증을 반복했습니다.';
   const a=q(s,'.design-rule article:first-child h4');
-  if(a)a.innerHTML='익숙함은 적극적으로<br>가져옵니다.';
+  if(a&&!q(s,'.himart-direction-041'))a.innerHTML='익숙함은 적극적으로<br>가져옵니다.';
   qa(s,'details.hm-more').forEach(x=>{
     if(q(x,'.prototype-case,.production-v18-row,.production-prototype-row,.phone-card,.phone-gallery')){
       const b=q(x,'.hm-more-body');
