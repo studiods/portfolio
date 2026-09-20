@@ -184,6 +184,9 @@
 - title animation은 page lifecycle당 1회만 실행한다. 스크롤로 화면을 벗어났다가 재진입해도 다시 난수화하지 않는다.
 - visibilitychange/pagehide/error/중단 상황에서는 현재 난수 문자를 모두 원래 문자로 settle한 뒤 원본 HTML을 복원한다. 랜덤 glyph가 정지 화면으로 남는 상태를 허용하지 않는다.
 - 다른 runtime이 animation 중 title DOM을 교체하면 detached scramble span은 더 이상 DOM을 쓰지 않으며, 새 authored DOM을 우선한다.
+- **Final-state invariant:** 정상 종료뿐 아니라 RAF 중단, DOM ownership 상실, 탭 비활성화, pagehide에서도 살아 있는 scramble span과 active marker를 검사하고 마지막 DOM write를 authored 원문으로 강제한다. 난수 glyph가 한 글자라도 남은 상태를 완료 상태로 인정하지 않는다.
+- 모든 scramble owner(Home/About/Works 포함)는 class/overlay 제거에 의존하지 않고, 종료 시 각 글자의 `data-final-char` 또는 캡처한 원문을 실제 `textContent/innerHTML`에 직접 다시 쓴다.
+- 공통 Himart 계열 runtime은 animation 예상 종료 시점 이후 watchdog으로 한 번 더 settle을 보장한다. 따라서 다른 observer나 reveal runtime이 frame loop를 끊어도 원문 복원으로 끝나야 한다.
 
 
 ## Line / spacing contract
