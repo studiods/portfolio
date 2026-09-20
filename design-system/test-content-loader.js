@@ -25,8 +25,8 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
 </div>
 <div class="himart-appliance-flow hm-reveal" data-himart-appliance-flow>
   <span class="himart-appliance-flow__eyebrow">01.3</span>
-  <h4 class="himart-appliance-flow__title">가전 구매는 직선 퍼널보다,<br>비교와 검증을 반복하는 긴 여정에 가까웠습니다.</h4>
-  <p class="himart-appliance-flow__lead">고가·저빈도 구매 특성상 검색·비교·리뷰·실물 확인을 오가고, 배송·설치와 최종 비용이 명확하지 않으면 구매 직전에도 이탈할 수 있습니다.</p>
+  <h4 class="himart-appliance-flow__title">가전 구매는 직선 퍼널보다,<br><span class="himart-appliance-flow__title-line">비교와 검증을 반복하는 긴 여정에 가까웠습니다.</span></h4>
+  <p class="himart-appliance-flow__lead">고가·저빈도 상품이라 검색·비교·리뷰·실물 확인을 반복하고, 배송·설치 조건이 불명확하면 구매 직전에도 이탈합니다.</p>
   <div class="himart-appliance-flow__legend" aria-label="플로우 차트 범례">
     <span><i></i>일반 구매 흐름</span>
     <span class="is-pause"><i></i>고민·비교 지속</span>
@@ -100,7 +100,7 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
     </div>
   </div>
 
-  <p class="himart-appliance-flow__note"><strong>REFERENCE JOURNEY · 하이마트 실측 퍼널이 아닙니다.</strong> Consumer Electronics / Major Appliance / General E-commerce 리서치에서 반복적으로 확인되는 탐색·비교·이탈 요인을 구매 흐름에 재구성했습니다.<span class="himart-appliance-flow__source">SOURCE · Criteo Consumer Electronics Pulse 2026 · Criteo Shopper Survey 2025 Q2 · NIQ Home Appliances Outlook 2026 · Baymard Cart & Checkout Research 2026 · Chiu et al., Computers in Human Behavior 2019</span></p>
+  <p class="himart-appliance-flow__note"><span class="himart-appliance-flow__source">SOURCE · 하이마트 내부 리서치 자료 종합</span></p>
 </div>
 <div class="brand-synthesis"><h4>결국 문제는 인지가 아니라<br>구매 전환 과정에 있었습니다.</h4><div class="synthesis-list"><div class="synthesis-col"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 경쟁사가 쉽게 복제하기 어려운 오프라인 자산이 있었습니다.</p></div><div class="synthesis-col"><b>온라인에서 끊기던 지점</b><p>인지 → 실제 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록 편의성과 연결성이 약해졌습니다.</p></div></div></div><div class="hm-source hm-ds-source-note">SOURCE · Deloitte Consulting Korea, 평생Care서비스 멤버십 설계 소비자 조사 · 2026.07</div></div>`);problem.insertAdjacentElement('afterend',reality);const brandBars=[...reality.querySelectorAll('.himart-brand-evidence .aimmo-reference-bars')];const reducedBars=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;if(reducedBars){brandBars.forEach(chart=>chart.classList.add('is-bars-focused'))}else if('IntersectionObserver' in window){const brandBarObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting&&entry.target.offsetParent!==null)entry.target.classList.add('is-bars-focused')})},{threshold:.20,rootMargin:'0px 0px -5% 0px'});brandBars.forEach(chart=>brandBarObserver.observe(chart))}else{brandBars.forEach(chart=>chart.classList.add('is-bars-focused'))}const originals=[...brandWrap.children].filter(node=>node.classList?.contains('hm-subsection')&&!node.classList.contains('narrative-block'));wrapMore(brandWrap,originals,'고객 의견과 기존 정성 분석 더 보기','QUALITATIVE RESEARCH')}
 
