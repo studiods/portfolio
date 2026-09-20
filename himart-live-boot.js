@@ -55,7 +55,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260910-2';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-1';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -86,7 +86,7 @@
       const captions=group.map(card=>(card.querySelector('.phone-meta p')?.textContent||'').trim()).filter(Boolean);
 
       const article=document.createElement('article');
-      article.className='prototype-case';
+      article.className=`prototype-case${start===0?' prototype-case--first':''}`;
 
       const visual=document.createElement('div');
       visual.className='prototype-case-visual';
@@ -96,6 +96,18 @@
         device.setAttribute('aria-label',`Reuse prototype row ${Math.floor(start/2)+1}, screen ${screenIndex+1}`);
         const screen=document.createElement('div');
         screen.className='galaxy-ultra-screen';
+
+        if(start===0){
+          device.classList.add('has-scroll-screen');
+          screen.classList.add('is-scrollable');
+          const image=document.createElement('img');
+          image.src=`./assets/image/himart-reuse/reuse_screens_01_0${screenIndex+1}.png`;
+          image.alt=`Reuse prototype screen 01_0${screenIndex+1}`;
+          image.loading='lazy';
+          image.decoding='async';
+          screen.appendChild(image);
+        }
+
         device.appendChild(screen);
         visual.appendChild(device);
       });
