@@ -165,7 +165,12 @@
   };
 
   const clearScrambleOverlay = char => {
-    if (char.classList.contains('is-scrambling')) char.classList.remove('is-scrambling');
+    const finalChar = char.dataset.finalChar;
+    if (finalChar != null) char.textContent = finalChar;
+    char.classList.remove('is-scrambling');
+    char.removeAttribute('data-scramble');
+    char.style.removeProperty('--scramble-alpha');
+    char.style.removeProperty('--scramble-rgb');
   };
 
   const visibleCharEntries = chars => {
