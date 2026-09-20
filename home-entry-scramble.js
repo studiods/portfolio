@@ -184,6 +184,13 @@
     raf = requestAnimationFrame(render);
   };
 
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !completed && !cancelled) settle();
+  });
+  window.addEventListener('pagehide', () => {
+    if (!completed && !cancelled) settle();
+  });
+
   const ready = document.fonts?.ready || Promise.resolve();
   ready.then(() => requestAnimationFrame(start)).catch(() => requestAnimationFrame(start));
 })();
