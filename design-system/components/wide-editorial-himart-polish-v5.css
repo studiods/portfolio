@@ -668,9 +668,9 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .
   padding-top:0!important;
 }
 
-/* 01.2: subsection index touches the title; evidence is a compact 2×2 metric-card grid. */
+/* 01.2: subsection index follows the shared 18px label-to-title rhythm; evidence is a compact 2×2 metric-card grid. */
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality>.narrative-subno{
-  margin-bottom:0!important;
+  margin-bottom:18px!important;
 }
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric-grid{
   display:grid!important;
@@ -718,7 +718,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-metric
   width:100%!important;
   flex-direction:column!important;
   align-items:flex-end!important;
-  margin:40px 0 0!important;
+  margin:80px 0 0!important;
   padding:0!important;
   text-align:right!important;
 }
