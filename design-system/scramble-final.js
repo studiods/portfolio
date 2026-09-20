@@ -264,6 +264,7 @@
       raf:0,
       startedAt:performance.now(),
       kind,
+      originalVisibility: state?.originalVisibility || '',
       stagger,
       randomPhase,
       totalDuration,
