@@ -33,7 +33,7 @@ function numbers(main){
 function brand(main){
   const s=q(main,'#brand'),h=q(s,':scope > .hm-wrap > .hm-section-head'),p=q(s,'.narrative-problem'),r=q(s,'.narrative-reality');
   if(!s||!h||!p||!r)return;
-  q(h,'.hm-section-title').innerHTML='구매 여정을 개선하기 전에,<br>왜 고객이 온라인에서 하이마트를<br>선택하지 않는지부터 정의했습니다.';
+  q(h,'.hm-section-title').innerHTML='왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.';
   const hd=q(h,'.hm-section-desc');
   if(hd)hd.innerHTML='고객의 인식과 실제 행동을 나눠 보고, <strong>두 결과가 함께 가리키는 단절</strong>만 문제로 남겼습니다.';
   if(q(p,'.narrative-title'))q(p,'.narrative-title').innerHTML='표면적인 데이터 분석만으로는<br>무엇을 바꿔야 할지 알 수 없었습니다.';
@@ -42,7 +42,7 @@ function brand(main){
   const pc=['하이마트를 떠올리는 방식과 매장·온라인에 기대하는 역할을 확인했습니다.','유입부터 다음 행동이 끊기는 지점까지 이용 데이터를 따라갔습니다.','고객 의견과 행동 데이터가 함께 가리킨 문제만 남겼습니다.'];
   items.forEach((x,i)=>{const z=q(x,'p');if(z&&pc[i])z.textContent=pc[i]});
   if(items[2]&&q(items[2],'h4'))q(items[2],'h4').innerHTML='두 이야기가<br>겹치는 지점만 남겼습니다.';
-  if(q(r,'.narrative-title'))q(r,'.narrative-title').innerHTML='하이마트는 잊혀진 브랜드가 아니었습니다.<br>다만 강한 전문성이 온라인 경험으로<br>이어지지 않는 것이 문제였습니다.';
+  if(q(r,'.narrative-title'))q(r,'.narrative-title').innerHTML='<span class="brand-reality-title__line">데이터를 보니 <span class="brand-memory-light">\'가전하면 하이마트\'</span> 는 여전했습니다.</span><span class="brand-reality-title__line">다만 구매 경험으로 이어지지는 않았습니다.</span>';
   if(q(r,'.narrative-copy'))q(r,'.narrative-copy').innerHTML='최초 상기·멀티 브랜드 비교·직영 서비스는 강했지만, <strong>실제 경험과 반복 관계</strong>로 이어지지 않았습니다.';
   const proof=qa(r,'.proof-item');
   const rc=['강한 브랜드 인지가 실제 온라인 경험으로 이어지지 않았습니다.','서비스 인지가 실제 이용 경험으로 넘어가는 지점에서 큰 병목이 있었습니다.','서비스 평가는 좋았지만 최종 선택은 제조사 선호가 더 강했습니다.','낮은 구매 빈도와 구매 후 접점 부족으로 반복 관계가 약했습니다.'];
@@ -50,7 +50,7 @@ function brand(main){
   const syn=q(r,'.brand-synthesis');
   if(syn){
     syn.className='brand-synthesis narrative-touchpoint-synthesis';
-    syn.innerHTML='<span class="narrative-subno synthesis-subno">01.3 / TRANSITION TOUCHPOINT</span><h4>결국 문제는 인지가 아니라 전환 접점에 있었습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 오프라인 자산이 있었습니다.</p></article><article class="synthesis-card negative"><b>온라인에서 끊기던 지점</b><p>인지 → 경험 → 구매·예약 → 설치·케어 → 반복 구매로 갈수록<br>편의성과 연결성이 약해졌습니다.</p></article></div>';
+    syn.innerHTML='<span class="narrative-subno synthesis-subno">01.4</span><h4>하이마트의 문제는 강점이 부족한 것이 아니라,<br>그 강점이 구매 판단의 순간에 연결되지 않는 것이었습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 자산은 충분했습니다.</p></article><article class="synthesis-card negative"><b>판단 순간에 연결되지 않던 강점</b><p>비교·상담·설치·케어의 강점이 온라인 탐색과 결제 과정에서<br>고객의 다음 판단으로 이어지지 않았습니다.</p></article></div>';
   }
 }
 
@@ -321,7 +321,7 @@ function alignProofCopy(){
 
 function updateRealityTitle(){
   const title=document.querySelector('#brand .narrative-reality .narrative-title');
-  if(title)title.innerHTML="'가전하면 하이마트'는 여전했습니다.<br>다만 이 상징성이 온라인 경험으로<br>이어지지 않는 것이 문제였습니다.";
+  if(title)title.innerHTML='<span class="brand-reality-title__line">데이터를 보니 <span class="brand-memory-light">\'가전하면 하이마트\'</span> 는 여전했습니다.</span><span class="brand-reality-title__line">다만 구매 경험으로 이어지지는 않았습니다.</span>';
 }
 
 function removeBodyEmphasis(){
