@@ -63,14 +63,16 @@
     const direction=document.querySelector('#live-main > #direction');
     const wrap=direction?.querySelector(':scope > .hm-wrap');
     const head=wrap?.querySelector(':scope > .hm-section-head');
-    const gallery=wrap?.querySelector(':scope > .phone-gallery, :scope > .hm-wide-right-rail > .phone-gallery');
+    const gallery=isHimartCommerce
+      ?wrap?.querySelector('.himart-direction-041 .phone-gallery')
+      :wrap?.querySelector(':scope > .phone-gallery, :scope > .hm-wide-right-rail > .phone-gallery');
     if(!direction||!wrap||!head)return;
 
     head.classList.add('is-visible');
 
     if(!gallery || wrap.querySelector('.prototype-case-list'))return;
 
-    const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,isReuse?8:4);
+    const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,8);
     if(!cards.length)return;
 
     const prototypeCopy=isReuse?[
@@ -84,9 +86,13 @@
       {title:'구매와 매입 연결',body:'새 제품 구매에 기존 가전 매입을 연결해 폐기 부담은 줄이고 재판매 상품 확보 기회는 넓혔습니다.'}
     ]:[
       {title:'다음 목적지를 여는 홈',body:'유입과 최근 행동의 맥락을 이어받아 검색·카테고리·혜택과 주요 서비스로 빠르게 연결했습니다.'},
-      {title:'후보를 빠르게 좁히는 목록',body:'검색 조건을 유지하고 가격·혜택·핵심 스펙과 설치 조건을 같은 기준으로 비교하게 했습니다.'},
+      {title:'구매 목적을 구체화하는 서브홈',body:'품목 나열보다 사용 상황과 공간, 설치 조건을 중심으로 탐색 방향을 빠르게 구체화했습니다.'},
+      {title:'니즈를 행동으로 바꾸는 검색 진입',body:'추천검색과 탐색 가이드로 막연한 요구를 실제 검색 행동으로 자연스럽게 연결했습니다.'},
+      {title:'검색 맥락을 유지하는 결과',body:'검색 조건과 필터를 유지해 사용자가 원하는 조건을 잃지 않고 후보를 좁히게 했습니다.'},
+      {title:'후보를 빠르게 좁히는 목록',body:'가격·혜택·핵심 스펙과 설치 조건을 같은 기준으로 비교해 구매 후보를 빠르게 압축했습니다.'},
+      {title:'핵심 기준을 한눈에 비교',body:'선택한 상품의 차이를 같은 기준으로 보여주고 사용자의 우선순위에 맞는 후보를 남기게 했습니다.'},
       {title:'구매 확신을 만드는 상세',body:'가격·혜택·배송·설치와 핵심 정보를 판단 순서에 맞춰 재구성해 구매 전 재확인 부담을 줄였습니다.'},
-      {title:'전문 정보를 생활 기준으로',body:'용량·전기료·설치 크기처럼 어려운 정보를 생활 기준으로 번역해 이해와 선택 부담을 낮췄습니다.'}
+      {title:'매장·설치·케어를 연결하는 PDP',body:'실물 확인과 전문 상담, 배송·설치와 케어 정보를 한 흐름으로 연결해 구매 전 불확실성을 줄였습니다.'}
     ];
 
     const list=document.createElement('div');
@@ -128,10 +134,10 @@
         const image=document.createElement('img');
         image.src=isReuse
           ?`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`
-          :`./assets/image/himart-cj/himart_cj_${assetNo}.png`;
+          :`./assets/image/himart-reuse/reuse_screens_02_${assetNo}.png`;
         image.alt=isReuse
           ?`Reuse prototype screen 01_${assetNo}`
-          :`Himart commerce journey prototype ${assetNo}`;
+          :`Himart commerce journey prototype 02_${assetNo}`;
         image.loading=assetIndex<=2?'eager':'lazy';
         image.decoding='async';
         screen.appendChild(image);
