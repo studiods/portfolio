@@ -48,12 +48,14 @@
     Copy stays paired with each mockup and moves below the device.
   */
   const mountReuseDirectionPrototype=()=>{
-    if(!document.body.classList.contains('reuse-current'))return;
+    const isReuse=document.body.classList.contains('reuse-current');
+    const isHimartCommerce=document.body.classList.contains('himart-commerce-page')&&!isReuse;
+    if(!isReuse&&!isHimartCommerce)return;
 
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-7';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-8';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -68,10 +70,10 @@
 
     if(!gallery || wrap.querySelector(':scope > .prototype-case-list'))return;
 
-    const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,8);
+    const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,isReuse?8:4);
     if(!cards.length)return;
 
-    const prototypeCopy=[
+    const prototypeCopy=isReuse?[
       {title:'상품화 이력과 보증',body:'상품화 과정과 보증 내역을 PDP 상단에서 바로 확인해 제품 상태에 대한 신뢰를 높였습니다.'},
       {title:'상태 이력과 등급',body:'회수·상품화·판매 시점을 공개하고, 현재 상태는 직관적인 등급으로 바로 확인하게 했습니다.'},
       {title:'간편 판매 등록',body:'판매 정보를 몇 단계의 짧은 스텝으로 나눠, 입력 부담 없이 빠르게 등록하도록 설계했습니다.'},
@@ -80,6 +82,11 @@
       {title:'판매자의 사용 기록',body:'이전 사용자의 사용·관리 이야기를 직접 기록하게 해 제품을 이해할 또 하나의 신뢰 근거를 만들었습니다.'},
       {title:'상세 검수 결과',body:'검수 항목과 결과를 한눈에 보여 무엇이 좋고 부족한지 바로 판단할 수 있게 했습니다.'},
       {title:'구매와 매입 연결',body:'새 제품 구매에 기존 가전 매입을 연결해 폐기 부담은 줄이고 재판매 상품 확보 기회는 넓혔습니다.'}
+    ]:[
+      {title:'다음 목적지를 여는 홈',body:'유입과 최근 행동의 맥락을 이어받아 검색·카테고리·혜택과 주요 서비스로 빠르게 연결했습니다.'},
+      {title:'후보를 빠르게 좁히는 목록',body:'검색 조건을 유지하고 가격·혜택·핵심 스펙과 설치 조건을 같은 기준으로 비교하게 했습니다.'},
+      {title:'구매 확신을 만드는 상세',body:'가격·혜택·배송·설치와 핵심 정보를 판단 순서에 맞춰 재구성해 구매 전 재확인 부담을 줄였습니다.'},
+      {title:'전문 정보를 생활 기준으로',body:'용량·전기료·설치 크기처럼 어려운 정보를 생활 기준으로 번역해 이해와 선택 부담을 낮췄습니다.'}
     ];
 
     const list=document.createElement('div');
@@ -109,7 +116,7 @@
 
         const device=document.createElement('div');
         device.className='galaxy-ultra-mockup';
-        device.setAttribute('aria-label',`Reuse prototype page ${pages.length+1}, screen ${screenIndex+1}`);
+        device.setAttribute('aria-label',`${isReuse?'Reuse':'Himart'} prototype page ${pages.length+1}, screen ${screenIndex+1}`);
 
         const screen=document.createElement('div');
         screen.className='galaxy-ultra-screen is-scrollable';
@@ -119,8 +126,12 @@
         const assetNo=String(assetIndex).padStart(2,'0');
         const copyData=prototypeCopy[assetIndex-1]||{title:'',body:''};
         const image=document.createElement('img');
-        image.src=`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`;
-        image.alt=`Reuse prototype screen 01_${assetNo}`;
+        image.src=isReuse
+          ?`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`
+          :`./assets/image/himart-cj/himart_cj_${assetNo}.png`;
+        image.alt=isReuse
+          ?`Reuse prototype screen 01_${assetNo}`
+          :`Himart commerce journey prototype ${assetNo}`;
         image.loading=assetIndex<=2?'eager':'lazy';
         image.decoding='async';
         screen.appendChild(image);
