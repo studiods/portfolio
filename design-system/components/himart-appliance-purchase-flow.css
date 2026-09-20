@@ -287,26 +287,217 @@ html body.himart-commerce-page #brand .himart-appliance-flow__source{
 }
 
 
-/* 01.2 purchase journey — 8 stages / 2 rows / separate evidence lanes */
-html body.himart-commerce-page #brand .himart-appliance-flow__viewport{overflow:visible;padding:0}
-html body.himart-commerce-page #brand .himart-appliance-flow__path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 28px;width:100%;min-width:0}
-html body.himart-commerce-page #brand .himart-appliance-flow__row{display:grid;grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 28px;position:relative}
-html body.himart-commerce-page #brand .himart-appliance-flow__row+.himart-appliance-flow__row{margin-top:88px}
-html body.himart-commerce-page #brand .himart-appliance-flow__stage{min-width:0;min-height:148px;padding:18px 16px 16px;border-top-color:var(--flow-blue);border-right-color:rgba(255,255,255,.10);border-left-color:rgba(255,255,255,.10);border-bottom-color:rgba(255,255,255,.20)}
-html body.himart-commerce-page #brand .himart-appliance-flow__stage h5{margin-top:30px}
-html body.himart-commerce-page #brand .himart-appliance-flow__connector{position:absolute;z-index:1;top:74px;width:28px;height:1px;transform:translateX(-50%)}
-html body.himart-commerce-page #brand .himart-appliance-flow__connector::before{width:100%}
-html body.himart-commerce-page #brand .himart-appliance-flow__connector::after{opacity:1}
-html body.himart-commerce-page #brand .himart-appliance-flow__connector--1{left:calc(25% - 7px)}
-html body.himart-commerce-page #brand .himart-appliance-flow__connector--2{left:calc(50% - 7px)}
-html body.himart-commerce-page #brand .himart-appliance-flow__connector--3{left:calc(75% - 7px)}
-html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane{display:grid;grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 28px;min-height:176px;padding-top:28px}
-html body.himart-commerce-page #brand .himart-appliance-flow__risk{position:relative;top:auto!important;left:auto;width:auto;min-height:112px;padding:14px 14px 16px;transform:translateY(10px);background:#000}
-html body.himart-commerce-page #brand .himart-appliance-flow__risk::before{left:50%;bottom:100%;height:28px!important}
-html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-offset{margin-top:36px}
-html body.himart-commerce-page #brand .himart-appliance-flow__risk p{font-size:12px;line-height:1.48}
-html body.himart-commerce-page #brand .himart-appliance-flow__risk small{margin-top:8px}
-html body.himart-commerce-page #brand .himart-appliance-flow__risk--a{grid-column:2}.himart-appliance-flow__risk--b{grid-column:3}.himart-appliance-flow__risk--c{grid-column:4}.himart-appliance-flow__risk--d{grid-column:1}.himart-appliance-flow__risk--e{grid-column:2}.himart-appliance-flow__risk--f{grid-column:3}
-html body.himart-commerce-page #brand .himart-appliance-flow__note{margin-top:24px}
-@media(max-width:780px){html body.himart-commerce-page #brand .himart-appliance-flow__viewport{overflow-x:auto;padding-bottom:20px}html body.himart-commerce-page #brand .himart-appliance-flow__path{min-width:960px}}
-html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__risk{transform:translateY(0)}
+/* 01.3 purchase journey — 8 stages / snake flow / evidence lanes.
+   01→02→03→04, then down to 05, then 06→07→08 moving left.
+   Arrow glyph is copied from the portfolio gallery control: 17px, 1px chevron. */
+html body.himart-commerce-page #brand .himart-appliance-flow__viewport{
+  overflow:visible!important;
+  padding:0!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__path{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane,
+html body.himart-commerce-page #brand .himart-appliance-flow__row,
+html body.himart-commerce-page #brand .himart-appliance-flow__turn{
+  width:100%!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane,
+html body.himart-commerce-page #brand .himart-appliance-flow__row{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  column-gap:44px!important;
+  position:relative!important;
+}
+
+/* Evidence lanes follow the reference composition: notes above the first row,
+   then notes below the return row. Each connector uses the note's own accent. */
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane.is-top{
+  min-height:208px!important;
+  align-items:end!important;
+  margin-bottom:40px!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane.is-bottom{
+  min-height:208px!important;
+  align-items:start!important;
+  margin-top:40px!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  width:90%!important;
+  min-height:132px!important;
+  justify-self:center!important;
+  margin:0!important;
+  padding:16px 16px 18px!important;
+  box-sizing:border-box!important;
+  border-top:1px solid var(--risk-color)!important;
+  background:#000!important;
+  transform:translateY(10px)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow.is-active .himart-appliance-flow__risk{
+  transform:translateY(0)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-pause{--risk-color:var(--flow-yellow)!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-shift{--risk-color:var(--hm-green,#00ED72)!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-relation{--risk-color:var(--flow-blue)!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-risk{--risk-color:var(--flow-red)!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__legend .is-shift i{
+  border-color:var(--hm-green,#00ED72)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane.is-top .himart-appliance-flow__risk::before{
+  display:none!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane.is-top .himart-appliance-flow__risk::after{
+  content:""!important;
+  position:absolute!important;
+  top:100%!important;
+  left:50%!important;
+  width:0!important;
+  height:40px!important;
+  border-left:1px solid var(--risk-color)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane.is-bottom .himart-appliance-flow__risk::before{
+  content:""!important;
+  position:absolute!important;
+  top:-40px!important;
+  bottom:auto!important;
+  left:50%!important;
+  width:0!important;
+  height:40px!important;
+  border-left:1px solid var(--risk-color)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__annotation-lane.is-bottom .himart-appliance-flow__risk::after{
+  display:none!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk--a{grid-column:2!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk--b{grid-column:3!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk--c{grid-column:4!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk--f{grid-column:2!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk--e{grid-column:3!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk--d{grid-column:4!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk p{
+  font-size:12px!important;
+  line-height:1.48!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__risk small{
+  display:none!important;
+}
+
+/* Stage boxes: 5% breathing room on both sides, blue top/bottom rails,
+   subtle 5% blue fill, 22px regular title. */
+html body.himart-commerce-page #brand .himart-appliance-flow__row{
+  row-gap:0!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage{
+  width:90%!important;
+  min-width:0!important;
+  min-height:156px!important;
+  justify-self:center!important;
+  padding:18px 18px 18px!important;
+  box-sizing:border-box!important;
+  border-top:1px solid var(--flow-blue)!important;
+  border-right:1px solid rgba(0,166,237,.14)!important;
+  border-bottom:1px solid var(--flow-blue)!important;
+  border-left:1px solid rgba(0,166,237,.14)!important;
+  background:rgba(0,166,237,.05)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__stage h5{
+  margin-top:30px!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
+  line-height:1.3!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+
+/* Gallery chevron copied 1:1: 17px square with 1px top/right stroke.
+   Only orientation changes per journey direction; opacity is fixed at 40%. */
+html body.himart-commerce-page #brand .himart-appliance-flow__connector{
+  position:absolute!important;
+  z-index:3!important;
+  top:50%!important;
+  width:17px!important;
+  height:17px!important;
+  margin:0!important;
+  padding:0!important;
+  color:#fff!important;
+  opacity:.40!important;
+  background:transparent!important;
+  transform:translate(-50%,-50%)!important;
+  pointer-events:none!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector::before{
+  content:""!important;
+  display:block!important;
+  width:17px!important;
+  height:17px!important;
+  box-sizing:border-box!important;
+  border-top:1px solid currentColor!important;
+  border-right:1px solid currentColor!important;
+  border-bottom:0!important;
+  border-left:0!important;
+  transform-origin:center!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector::after{
+  display:none!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector--1{left:25%!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector--2{left:50%!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__connector--3{left:75%!important}
+html body.himart-commerce-page #brand .himart-appliance-flow__row.is-forward .himart-appliance-flow__connector::before{
+  transform:translateX(-2px) rotate(45deg)!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__row.is-reverse .himart-appliance-flow__connector::before{
+  transform:translateX(2px) rotate(-135deg)!important;
+}
+
+/* 04 drops vertically to 05 on the rightmost column. */
+html body.himart-commerce-page #brand .himart-appliance-flow__turn{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  column-gap:44px!important;
+  position:relative!important;
+  height:76px!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__turn .himart-appliance-flow__connector--down{
+  position:relative!important;
+  top:50%!important;
+  left:auto!important;
+  grid-column:4!important;
+  justify-self:center!important;
+  align-self:center!important;
+  transform:none!important;
+}
+html body.himart-commerce-page #brand .himart-appliance-flow__turn .himart-appliance-flow__connector--down::before{
+  transform:rotate(135deg)!important;
+}
+
+/* Overall source remains once at the bottom; per-evidence-card source labels are intentionally removed. */
+html body.himart-commerce-page #brand .himart-appliance-flow__note{
+  margin-top:28px!important;
+}
+
+@media(max-width:900px){
+  html body.himart-commerce-page #brand .himart-appliance-flow__viewport{
+    overflow-x:auto!important;
+    padding-bottom:20px!important;
+  }
+  html body.himart-commerce-page #brand .himart-appliance-flow__path{
+    min-width:1040px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  html body.himart-commerce-page #brand .himart-appliance-flow__stage,
+  html body.himart-commerce-page #brand .himart-appliance-flow__risk{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+}
