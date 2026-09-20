@@ -168,6 +168,32 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:28px!important;
+  align-items:end!important;
+  width:100%!important;
+  margin-top:18px!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline h4{
+  margin:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline-number{
+  display:block!important;
+  min-width:150px!important;
+  margin:0!important;
+  color:var(--hm-blue)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:44px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+  font-variant-numeric:tabular-nums!important;
+  white-space:nowrap!important;
+  text-align:right!important;
+}
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight__copy{
   margin:8px 0 0!important;
   max-width:72ch!important;
@@ -267,6 +293,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
 @media(max-width:900px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline-number{
+    min-width:118px!important;
+    font-size:36px!important;
+  }
   html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
     grid-template-columns:1fr!important;
     gap:56px!important;
