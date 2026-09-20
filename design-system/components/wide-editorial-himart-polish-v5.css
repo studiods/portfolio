@@ -138,8 +138,8 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .
    Four evidence graphs are stacked one per row. */
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
   display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:64px 28px!important;
+  grid-template-columns:1fr!important;
+  gap:72px!important;
   width:100%!important;
 }
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight{
