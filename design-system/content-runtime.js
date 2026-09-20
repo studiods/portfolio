@@ -36,7 +36,7 @@ function brand(main){
   q(h,'.hm-section-title').innerHTML='왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.';
   const hd=q(h,'.hm-section-desc');
   if(hd)hd.innerHTML='고객의 인식과 실제 행동을 나눠 보고, <strong>두 결과가 함께 가리키는 단절</strong>만 문제로 남겼습니다.';
-  if(q(p,'.narrative-title'))q(p,'.narrative-title').innerHTML='표면적인 데이터 분석만으로는<br>무엇을 바꿔야 할지 알 수 없었습니다.';
+  if(q(p,'.narrative-title'))q(p,'.narrative-title').innerHTML='표면적 분석만으로 알 수 없습니다.<br>그래서 처음부터 다시 봤습니다.';
   if(q(p,'.narrative-copy'))q(p,'.narrative-copy').innerHTML='고객이 말하는 인식과 실제 행동을 따로 본 뒤, <strong>같은 방향을 가리키는 문제만</strong> 남겼습니다.';
   const items=qa(p,'.problem-item');
   const pc=['하이마트를 떠올리는 방식과 매장·온라인에 기대하는 역할을 확인했습니다.','유입부터 다음 행동이 끊기는 지점까지 이용 데이터를 따라갔습니다.','고객 의견과 행동 데이터가 함께 가리킨 문제만 남겼습니다.'];
@@ -290,7 +290,7 @@ if('MutationObserver' in window){
 'use strict';
 
 const expectedTitles={
-  brand:'구매 여정을 개선하기 전에,<br>왜 고객이 온라인에서 하이마트를<br>선택하지 않는지부터 정의했습니다.',
+  brand:'왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.',
   data:'고객의 목소리에서 드러난 문제는<br>실제 이용 패턴에서도 반복됐습니다.',
   journey:'앞선 데이터를 바탕으로,<br>구매 여정의 흐름과 각 화면의 역할을<br>다시 정의했습니다.',
   direction:'앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고, 내부 검증을 반복하고 있습니다.'
