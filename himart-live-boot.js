@@ -44,7 +44,7 @@
     REUSE 04.1 / PROTOTYPE GALLERY
     ------------------------------
     The authored 12 phone cards become a six-page carousel, two mockups per page.
-    Each page uses exactly 75% of the right content rail: 32.5% + 10% gap + 32.5%.
+    Each page uses 85% of the right content rail, with a fixed 32px gap between mockups.
     Copy stays paired with each mockup and moves below the device.
   */
   const mountReuseDirectionPrototype=()=>{
@@ -53,7 +53,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-2';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-3';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -92,7 +92,6 @@
       article.setAttribute('aria-hidden',pages.length===0?'false':'true');
 
       group.forEach((card,screenIndex)=>{
-        const number=(card.querySelector('.phone-meta span')?.textContent||'').trim();
         const title=(card.querySelector('.phone-meta b')?.textContent||'').trim();
         const caption=(card.querySelector('.phone-meta p')?.textContent||'').trim();
 
@@ -122,17 +121,13 @@
         const copy=document.createElement('div');
         copy.className='prototype-case-copy';
 
-        const copyNumber=document.createElement('span');
-        copyNumber.className='hm-card-no';
-        copyNumber.textContent=number;
-
         const copyTitle=document.createElement('h3');
         copyTitle.textContent=caption;
 
         const copyDescription=document.createElement('p');
         copyDescription.textContent=title;
 
-        copy.append(copyNumber,copyTitle,copyDescription);
+        copy.append(copyTitle,copyDescription);
         item.append(device,copy);
         article.appendChild(item);
       });
