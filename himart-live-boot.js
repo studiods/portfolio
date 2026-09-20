@@ -196,7 +196,7 @@
     footer.appendChild(pagination);
     list.appendChild(footer);
 
-    const HOLD_MS=5000;
+    const HOLD_MS=6000;
     const realCount=pages.length;
     let index=0;
     let virtualIndex=1;
