@@ -157,7 +157,7 @@
 - scramble frame은 `requestAnimationFrame` 기반으로만 갱신하고 각 실행에 generation token을 부여한다. 취소된 이전 frame은 DOM에 다시 쓸 수 없다.
 - scroll 이탈, visibility change, pagehide, 예외 종료 시 마지막 write는 반드시 원본 `innerHTML` 복원이다. `<br>`을 포함한 authored markup 전체를 복원해 난수 glyph가 잔존하지 않게 한다.
 - 외부 runtime이 animation 중 title DOM 자체를 교체한 경우 기존 scramble은 즉시 무효화하고 새 DOM을 덮어쓰지 않는다.
-- Hero는 한 번만 실행하고, section title은 viewport 재진입 시 재실행할 수 있으나 같은 element에 두 animation이 동시에 존재할 수 없다.
+- Hero·major section·medium subsection title은 page lifecycle당 한 번만 실행한다. viewport를 벗어났다가 재진입해도 이미 완료된 element를 다시 난수화하지 않으며, 같은 element에 두 animation이 동시에 존재할 수 없다.
 
 ## Global right-side navigator contract
 
