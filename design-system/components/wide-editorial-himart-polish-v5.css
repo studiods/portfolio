@@ -105,6 +105,15 @@ html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap > div
 }
 
 
+/* HIMART 01.3 — keep the medium title on the same canonical scale as other subsections. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis>h4,
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .hm-subsection:has(.hm-subno[data-index="01.3"]) .hm-subtitle{
+  font-size:42px!important;
+  line-height:1.18!important;
+  font-weight:100!important;
+  letter-spacing:-.045em!important;
+}
+
 /* HIMART 02.1 — exactly two semantic lines only.
    Each authored line is non-wrapping so this subsection can never become 3 lines. */
 html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title,
@@ -180,21 +189,11 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-car
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-conclusion{
-  margin:64px 0 0!important;
-  padding:32px 0 0!important;
-  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
-  color:rgba(255,255,255,.60)!important;
-  font:100 22px/1.5 var(--hm-font-ko)!important;
-  font-variation-settings:"wght" 100!important;
-  letter-spacing:var(--hm-track-group)!important;
-  word-break:keep-all!important;
+/* 02.2 moved synthesis bridge */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-pattern-022 .behavior-pattern-bridge{
+  margin-top:64px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-conclusion strong{
-  color:#fff!important;
-  font-weight:300!important;
-  font-variation-settings:"wght" 300!important;
-}
+
 @media(max-width:900px){
   html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-grid{
     grid-template-columns:1fr!important;
