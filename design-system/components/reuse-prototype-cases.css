@@ -37,8 +37,8 @@ html body.reuse-current #direction .prototype-case-track{
 
 html body.reuse-current #direction .prototype-case{
   display:grid!important;
-  grid-template-columns:32.5% 32.5%!important;
-  column-gap:10%!important;
+  grid-template-columns:repeat(2,calc((85% - 32px)/2))!important;
+  column-gap:32px!important;
   row-gap:0!important;
   flex:0 0 100%!important;
   width:100%!important;
@@ -146,24 +146,13 @@ html body.reuse-current #direction .prototype-case-copy{
   box-shadow:none!important;
 }
 
-html body.reuse-current #direction .prototype-case-copy .hm-card-no{
-  display:block!important;
-  margin:0!important;
-  color:var(--hm-blue)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
-  font-weight:300!important;
-  line-height:1!important;
-  letter-spacing:var(--hm-track-note)!important;
-  text-align:left!important;
-}
 
 html body.reuse-current #direction .prototype-case-copy h3{
-  margin:18px 0 0!important;
+  margin:0!important;
   max-width:100%!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
-  font-size:23px!important;
+  font-size:22px!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
   line-height:1.16!important;
@@ -174,24 +163,29 @@ html body.reuse-current #direction .prototype-case-copy h3{
 }
 
 html body.reuse-current #direction .prototype-case-copy p{
+  display:-webkit-box!important;
   margin:12px 0 0!important;
   max-width:100%!important;
+  overflow:hidden!important;
   color:rgba(255,255,255,.50)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
   font-weight:300!important;
-  line-height:1.45!important;
-  letter-spacing:var(--hm-track-note)!important;
+  line-height:1.5!important;
+  letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
   text-align:left!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+  line-clamp:2!important;
 }
 
-/* Footer aligns to the exact occupied 75% mockup width. */
+/* Footer aligns to the exact occupied 85% mockup width. */
 html body.reuse-current #direction .prototype-case-footer{
   display:flex!important;
   align-items:center!important;
   justify-content:space-between!important;
-  width:75%!important;
+  width:85%!important;
   margin:32px 0 0!important;
   padding:0!important;
 }
@@ -220,15 +214,15 @@ html body.reuse-current #direction .prototype-case-controls{
 html body.reuse-current #direction .prototype-case-control{
   position:relative!important;
   display:block!important;
-  flex:0 0 28px!important;
-  width:28px!important;
-  height:28px!important;
+  flex:0 0 30.8px!important;
+  width:30.8px!important;
+  height:30.8px!important;
   margin:0!important;
   padding:0!important;
   border:0!important;
   background:transparent!important;
   color:#fff!important;
-  opacity:.30!important;
+  opacity:.50!important;
   cursor:pointer!important;
 }
 
@@ -237,8 +231,8 @@ html body.reuse-current #direction .prototype-case-control::before{
   position:absolute!important;
   top:50%!important;
   left:50%!important;
-  width:11px!important;
-  height:11px!important;
+  width:12.1px!important;
+  height:12.1px!important;
   box-sizing:border-box!important;
   border-top:1px solid currentColor!important;
   border-right:1px solid currentColor!important;
@@ -269,8 +263,8 @@ html body.reuse-current #direction .prototype-case-control:focus-visible{
 
 @media(max-width:1000px){
   html body.reuse-current #direction .prototype-case{
-    grid-template-columns:42.5% 42.5%!important;
-    column-gap:10%!important;
+    grid-template-columns:repeat(2,calc((95% - 32px)/2))!important;
+    column-gap:32px!important;
   }
   html body.reuse-current #direction .prototype-case-footer{
     width:95%!important;
@@ -282,8 +276,8 @@ html body.reuse-current #direction .prototype-case-control:focus-visible{
     margin-top:54px!important;
   }
   html body.reuse-current #direction .prototype-case{
-    grid-template-columns:45% 45%!important;
-    column-gap:10%!important;
+    grid-template-columns:repeat(2,calc((100% - 32px)/2))!important;
+    column-gap:32px!important;
   }
   html body.reuse-current #direction .prototype-case-footer{
     width:100%!important;
@@ -300,8 +294,8 @@ html body.reuse-current #direction .prototype-case-control:focus-visible{
     margin-top:24px!important;
   }
   html body.reuse-current #direction .prototype-case-copy h3{
-    margin-top:14px!important;
-    font-size:20px!important;
+    margin-top:0!important;
+    font-size:22px!important;
     line-height:1.28!important;
   }
 }
