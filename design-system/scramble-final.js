@@ -1,5 +1,5 @@
 /*
-  HIMART / WORKS Design System — title scramble runtime v2.3.
+  HIMART / WORKS Design System — title scramble runtime v2.4.
 
   Shared contract
   - One runtime owns Hero, major-section and medium-subsection title scramble across Works case pages.
@@ -172,24 +172,44 @@
     state.running = false;
     if (state.raf) cancelAnimationFrame(state.raf);
     state.raf = 0;
+    if (state.finalTimer) window.clearTimeout(state.finalTimer);
+    state.finalTimer = 0;
+    state.canonicalObserver?.disconnect();
+    state.canonicalObserver = null;
 
-    if (ownsAnimatedDOM(element, state)) {
+    if (document.contains(element)) {
       state.chars.forEach(char => {
+        if (!char.isConnected || !element.contains(char)) return;
         char.textContent = char.dataset.hmFinalChar || '';
         char.dataset.hmResolved = '1';
       });
+
+      /*
+        Final-state invariant:
+        Any surviving scramble span or active marker means this runtime still owns
+        the visible title, so the last DOM write MUST be the captured authored HTML.
+        If another runtime intentionally replaced the entire title with different
+        authored content and no scramble artifact remains, that newer DOM wins.
+      */
+      const hasScrambleArtifact =
+        element.hasAttribute('data-hm-scramble-active') ||
+        !!element.querySelector('.hm-scramble-char');
+      const stillAuthoredText =
+        normalizeText(element.textContent) === normalizeText(state.originalText);
+
+      if (hasScrambleArtifact || stillAuthoredText) {
+        restoreAuthoredHTML(element, state);
+      }
     }
 
     const finalize = () => {
-      const preserveResolvedMarkup = !immediate && isWideMajor(element, state);
-      if (!preserveResolvedMarkup && document.contains(element) && ownsAnimatedDOM(element, state)) {
-        restoreAuthoredHTML(element, state);
-      }
       state.completed = true;
       state.running = false;
       activeAnimations.delete(element);
-      element.removeAttribute('data-hm-scramble-active');
-      element.setAttribute('data-hm-scramble-complete', 'true');
+      if (document.contains(element)) {
+        element.removeAttribute('data-hm-scramble-active');
+        element.setAttribute('data-hm-scramble-complete', 'true');
+      }
       stateByElement.set(element, state);
     };
 
@@ -225,7 +245,8 @@
       stagger,
       randomPhase,
       totalDuration,
-      canonicalObserver:null
+      canonicalObserver:null,
+      finalTimer:0
     };
     stateByElement.set(element, state);
     activeAnimations.add(element);
@@ -234,6 +255,16 @@
     element.setAttribute('data-hm-scramble-kind', kind);
     element.setAttribute('aria-label', originalText.replace(/\s+/g, ' ').trim());
     protectCanonicalMarkup(element, state);
+
+    /*
+      Watchdog: requestAnimationFrame can be interrupted by unrelated DOM/runtime
+      work. The title therefore gets one independent deadline that settles it to
+      authored content even when the animation loop never reaches its final frame.
+    */
+    state.finalTimer = window.setTimeout(() => {
+      const live = stateByElement.get(element);
+      if (live === state && state.running && !state.completed) settle(element, true);
+    }, state.totalDuration + 1200);
 
     let lastRandomBucket = -1;
 
@@ -249,11 +280,7 @@
 
       if (!ownsAnimatedDOM(element, state)) {
         if (!repairCanonicalRewrite(element, state) || !ownsAnimatedDOM(element, state)) {
-          state.running = false;
-          state.completed = true;
-          activeAnimations.delete(element);
-          state.canonicalObserver?.disconnect();
-          element.removeAttribute('data-hm-scramble-active');
+          settle(element, true);
           return;
         }
       }
@@ -316,7 +343,8 @@
       completed:reduce,
       raf:0,
       kind,
-      canonicalObserver:null
+      canonicalObserver:null,
+      finalTimer:0
     });
   };
 
@@ -459,7 +487,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.15-works-1',
+    version:'2026.09.20-final-state-1',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
