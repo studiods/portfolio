@@ -131,91 +131,154 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-graph{
+/* HIMART 01.2 — AIMMO 02 / 01 graph structure copied exactly; only content is Himart-specific.
+   Four evidence graphs are stacked one per row. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
   display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:28px!important;
+  grid-template-columns:1fr!important;
+  gap:72px!important;
   width:100%!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-stage{
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight{
   min-width:0!important;
   padding-top:24px!important;
   border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-index{
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight__label{
   display:block!important;
+  margin:0!important;
   color:var(--hm-blue)!important;
   font:400 12px/1.2 var(--hm-font-en)!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-stage h4{
-  min-height:2.6em!important;
-  margin:34px 0 0!important;
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight h4{
+  margin:18px 0 0!important;
   color:#fff!important;
-  font:100 22px/1.3 var(--hm-font-ko)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:28px!important;
+  font-weight:100!important;
   font-variation-settings:"wght" 100!important;
+  line-height:1.24!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-bars{
-  display:grid!important;
-  gap:12px!important;
-  margin-top:34px!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row{
-  display:grid!important;
-  grid-template-columns:78px minmax(0,1fr) 54px!important;
-  gap:12px!important;
-  align-items:center!important;
-  color:rgba(255,255,255,.50)!important;
-  font:300 12px/1.2 var(--hm-font-ko)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row b{
-  color:rgba(255,255,255,.70)!important;
-  font:300 14px/1 var(--hm-font-en)!important;
-  text-align:right!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row.is-primary{
-  color:#fff!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row.is-primary b{
-  color:var(--hm-blue)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-track{
-  position:relative!important;
-  height:2px!important;
-  overflow:hidden!important;
-  background:rgba(255,255,255,.10)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-track i{
-  display:block!important;
-  width:var(--value)!important;
-  height:100%!important;
-  background:rgba(255,255,255,.30)!important;
-  transform:scaleX(0)!important;
-  transform-origin:left center!important;
-  transition:transform .9s cubic-bezier(.2,.8,.2,1)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-row.is-primary .brand-gap-track i{
-  background:var(--hm-blue)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality.is-in .brand-gap-track i{
-  transform:scaleX(1)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-callout{
-  display:block!important;
-  margin-top:24px!important;
-  color:var(--hm-blue)!important;
-  font:300 22px/1.1 var(--hm-font-en)!important;
-}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-gap-stage>p{
-  margin:28px 0 0!important;
-  max-width:31ch!important;
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight__copy{
+  margin:8px 0 0!important;
+  max-width:72ch!important;
   color:var(--hm-description-color)!important;
-  font:300 14px/1.55 var(--hm-font-ko)!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:16px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.58!important;
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars{
+  width:100%!important;
+  min-width:0!important;
+  margin:32px 0 0!important;
+  padding:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__rows{
+  display:grid!important;
+  width:100%!important;
+  gap:18px!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row{
+  display:grid!important;
+  grid-template-columns:110px minmax(0,1fr) 62px!important;
+  gap:16px!important;
+  align-items:center!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:28px!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__label{
+  margin:0!important;
+  color:rgba(255,255,255,.50)!important;
+  font:300 16px/1.3 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  white-space:normal!important;
+  text-align:left!important;
+  word-break:keep-all!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__track{
+  position:relative!important;
+  width:100%!important;
+  height:10px!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  background:rgba(255,255,255,.07)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__fill{
+  display:block!important;
+  width:calc(var(--value,0) * 1%)!important;
+  height:100%!important;
+  min-width:2px!important;
+  background:var(--bar-color,var(--hm-chart-02,#007DE3))!important;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .72s cubic-bezier(.22,1,.36,1);
+  will-change:transform;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality.is-in .himart-brand-evidence .aimmo-reference-bars__fill{
+  transform:scaleX(1);
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(3) .aimmo-reference-bars__fill{transition-delay:.24s}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(4) .aimmo-reference-bars__fill{transition-delay:.36s}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__value{
+  margin:0!important;
+  color:rgba(255,255,255,.84)!important;
+  font:300 16px/1.3 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+  font-variant-numeric:tabular-nums!important;
+  white-space:nowrap!important;
+  text-align:right!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__source{
+  display:block!important;
+  width:100%!important;
+  margin:48px 0 0!important;
+  padding:18px 0 0!important;
+  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
+  color:var(--hm-text-tertiary)!important;
+  font:300 10px/1.5 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-base)!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-04,#008DDD)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-01,#00A6ED)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-03,#00B8DE)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
+@media(max-width:780px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{gap:56px!important}
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row{
+    grid-template-columns:88px minmax(0,1fr) 52px!important;
+    gap:10px!important;
+    min-height:24px!important;
+  }
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__label,
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__value{font-size:13px!important}
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__track{height:8px!important}
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__rows{gap:14px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__fill{
+    transform:scaleX(1)!important;
+    transition:none!important;
+  }
+}
+
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis>h4{
   font-size:var(--hm-type-subsection,32px)!important;
   line-height:1.18!important;
