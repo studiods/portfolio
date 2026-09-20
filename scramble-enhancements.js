@@ -229,7 +229,7 @@
           char.dataset.scramble = glyph;
           char.classList.add('is-scrambling');
         } else {
-          char.textContent = char.dataset.finalChar || character;
+          char.textContent = char.dataset.finalChar || '';
           char.removeAttribute('data-scramble');
           char.classList.remove('is-scrambling');
           char.style.color = '';
