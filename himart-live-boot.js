@@ -41,13 +41,11 @@
   mountHimartAxHeroVideo();
 
   /*
-    REUSE 04 / PROTOTYPE
-    --------------------
-    Reuse keeps its authored copy, but the old 12-card phone grid is converted into
-    six full-width rows, two taller Galaxy-style line mockups on the left and one copy
-    panel on the right. The text is derived from the current Reuse phone-card labels/
-    captions, so this structural migration does not replace the authored Reuse content
-    with Himart copy.
+    REUSE 04.1 / PROTOTYPE GALLERY
+    ------------------------------
+    The authored 12 phone cards become a six-page carousel, two mockups per page.
+    Each page uses exactly 75% of the right content rail: 32.5% + 10% gap + 32.5%.
+    Copy stays paired with each mockup and moves below the device.
   */
   const mountReuseDirectionPrototype=()=>{
     if(!document.body.classList.contains('reuse-current'))return;
@@ -55,7 +53,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-1';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-2';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -66,7 +64,6 @@
     const gallery=wrap?.querySelector(':scope > .phone-gallery');
     if(!direction||!wrap||!head)return;
 
-    /* Prevent the 04 major title from entering at the generic 30% pre-reveal opacity. */
     head.classList.add('is-visible');
 
     if(!gallery || wrap.querySelector(':scope > .prototype-case-list'))return;
@@ -76,24 +73,36 @@
 
     const list=document.createElement('div');
     list.className='prototype-case-list reuse-prototype-case-list hm-reveal';
+    list.dataset.reusePrototypeGallery='true';
 
+    const viewport=document.createElement('div');
+    viewport.className='prototype-case-viewport';
+
+    const track=document.createElement('div');
+    track.className='prototype-case-track';
+
+    const pages=[];
     for(let start=0;start<cards.length;start+=2){
       const group=cards.slice(start,start+2);
       if(!group.length)continue;
 
-      const numbers=group.map(card=>(card.querySelector('.phone-meta span')?.textContent||'').trim()).filter(Boolean);
-      const titles=group.map(card=>(card.querySelector('.phone-meta b')?.textContent||'').trim()).filter(Boolean);
-      const captions=group.map(card=>(card.querySelector('.phone-meta p')?.textContent||'').trim()).filter(Boolean);
-
       const article=document.createElement('article');
       article.className=`prototype-case${start===0?' prototype-case--first':''}`;
+      article.dataset.reusePrototypeSlide=String(pages.length);
+      article.setAttribute('aria-hidden',pages.length===0?'false':'true');
 
-      const visual=document.createElement('div');
-      visual.className='prototype-case-visual';
-      group.forEach((_,screenIndex)=>{
+      group.forEach((card,screenIndex)=>{
+        const number=(card.querySelector('.phone-meta span')?.textContent||'').trim();
+        const title=(card.querySelector('.phone-meta b')?.textContent||'').trim();
+        const caption=(card.querySelector('.phone-meta p')?.textContent||'').trim();
+
+        const item=document.createElement('div');
+        item.className='prototype-case-item';
+
         const device=document.createElement('div');
         device.className='galaxy-ultra-mockup';
-        device.setAttribute('aria-label',`Reuse prototype row ${Math.floor(start/2)+1}, screen ${screenIndex+1}`);
+        device.setAttribute('aria-label',`Reuse prototype page ${pages.length+1}, screen ${screenIndex+1}`);
+
         const screen=document.createElement('div');
         screen.className='galaxy-ultra-screen';
 
@@ -109,37 +118,81 @@
         }
 
         device.appendChild(screen);
-        visual.appendChild(device);
+
+        const copy=document.createElement('div');
+        copy.className='prototype-case-copy';
+
+        const copyNumber=document.createElement('span');
+        copyNumber.className='hm-card-no';
+        copyNumber.textContent=number;
+
+        const copyTitle=document.createElement('h3');
+        copyTitle.textContent=caption;
+
+        const copyDescription=document.createElement('p');
+        copyDescription.textContent=title;
+
+        copy.append(copyNumber,copyTitle,copyDescription);
+        item.append(device,copy);
+        article.appendChild(item);
       });
 
-      const copy=document.createElement('div');
-      copy.className='prototype-case-copy';
-
-      const number=document.createElement('span');
-      number.className='hm-card-no';
-      number.textContent=numbers.length>1 ? `${numbers[0]}–${numbers[numbers.length-1]}` : (numbers[0]||'');
-
-      const title=document.createElement('h3');
-      title.textContent=captions.join(' · ');
-
-      const description=document.createElement('p');
-      description.textContent=titles.join(' · ');
-
-      const summary=document.createElement('strong');
-      const summaryLabel=document.createElement('b');
-      summaryLabel.textContent='SCREENS';
-      summary.appendChild(summaryLabel);
-      summary.append(document.createTextNode(group.map((card,index)=>{
-        const n=numbers[index]||'';
-        const t=titles[index]||'';
-        return `${n}${n&&t?'  ':''}${t}`.trim();
-      }).filter(Boolean).join(' · ')));
-
-      copy.append(number,title,description,summary);
-      article.append(visual,copy);
-      list.appendChild(article);
+      track.appendChild(article);
+      pages.push(article);
     }
 
+    viewport.appendChild(track);
+    list.appendChild(viewport);
+
+    const footer=document.createElement('div');
+    footer.className='prototype-case-footer';
+
+    const pagination=document.createElement('span');
+    pagination.className='prototype-case-pagination';
+    pagination.setAttribute('aria-live','polite');
+
+    const controls=document.createElement('div');
+    controls.className='prototype-case-controls';
+
+    const prev=document.createElement('button');
+    prev.className='prototype-case-control prototype-case-control--prev';
+    prev.type='button';
+    prev.setAttribute('aria-label','이전 목업');
+
+    const divider=document.createElement('i');
+    divider.className='prototype-case-control-divider';
+    divider.setAttribute('aria-hidden','true');
+
+    const next=document.createElement('button');
+    next.className='prototype-case-control prototype-case-control--next';
+    next.type='button';
+    next.setAttribute('aria-label','다음 목업');
+
+    controls.append(prev,divider,next);
+    footer.append(pagination,controls);
+    list.appendChild(footer);
+
+    let index=0;
+    const update=()=>{
+      track.style.transform=`translate3d(${index*-100}%,0,0)`;
+      pages.forEach((page,pageIndex)=>page.setAttribute('aria-hidden',pageIndex===index?'false':'true'));
+      pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}`;
+    };
+    const move=(delta)=>{
+      if(pages.length<2)return;
+      index=(index+delta+pages.length)%pages.length;
+      update();
+    };
+
+    prev.addEventListener('click',()=>move(-1));
+    next.addEventListener('click',()=>move(1));
+    list.tabIndex=0;
+    list.addEventListener('keydown',(event)=>{
+      if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
+      else if(event.key==='ArrowRight'){event.preventDefault();move(1);}
+    });
+
+    update();
     gallery.replaceWith(list);
   };
   mountReuseDirectionPrototype();
