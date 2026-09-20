@@ -7,55 +7,94 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
   min-width:0!important;
 }
 
-/* 04.1 / authored design principles */
-html body.himart-commerce-page #direction .himart-direction-041 .design-rule{
-  margin-bottom:80px!important;
+/* 04.1 / AX 01.2 card grammar copied into Himart commerce.
+   The card structure and typography values are intentionally identical; only the copy differs. */
+html body.himart-commerce-page #direction .himart-direction-041 .hm-subtitle > .wide-title-index{
+  display:none!important;
 }
-html body.himart-commerce-page #direction .himart-direction-041 .design-rule small{
-  letter-spacing:var(--hm-track-note)!important;
+html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+  width:100%;
 }
-html body.himart-commerce-page #direction .himart-direction-041 > .phone-gallery{
-  margin-top:0!important;
+html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card{
+  min-height:260px;
+  padding:24px 0 0;
+  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
+}
+html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card>span{
+  display:block;
+  color:var(--hm-blue);
+  font:400 12px/1.2 var(--hm-font-en);
+  letter-spacing:var(--hm-track-note);
+}
+html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card h4{
+  margin:54px 0 0;
+  color:#fff;
+  font:100 22px/1.3 var(--hm-font-ko);
+  font-variation-settings:"wght" 100;
+  letter-spacing:var(--hm-track-group);
+  word-break:keep-all;
+}
+html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card p{
+  margin:12px 0 0;
+  max-width:28ch;
+  color:var(--hm-description-color);
+  font:300 16px/1.55 var(--hm-font-ko);
+  letter-spacing:var(--hm-track-body);
+  word-break:keep-all;
 }
 
-/* The shared Reuse 04.1 carousel is mounted in place of the authored phone-gallery.
-   Keep chapter rhythm owned by the subsection rather than by the component's legacy top margin. */
+/* Both 04.1 and 04.2 use the same Reuse 04.1 paired mockup carousel exterior. */
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 > .prototype-case-list{
-  margin-top:0!important;
+  margin-top:80px!important;
+}
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 > .prototype-case-list{
+  margin-top:40px!important;
 }
 
-/* 04.2 / future 16:9 comparison + store-connection gallery */
-html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery{
-  --hm-ds-media-carousel-ratio:16/9;
-  width:100%!important;
-  aspect-ratio:16/9!important;
-  background:#060606!important;
-  border:1px solid rgba(255,255,255,.10)!important;
+/* 04.1 is still in progress: keep the already-blurred screens covered by a 50% black veil
+   and one two-line confidentiality message, 44px above the bottom of each screen. */
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen{
+  position:relative!important;
 }
-html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery__placeholder{
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::before{
+  content:""!important;
   position:absolute!important;
+  z-index:4!important;
   inset:0!important;
-  display:flex!important;
-  align-items:flex-end!important;
-  justify-content:flex-start!important;
-  width:100%!important;
-  height:100%!important;
-  padding:28px!important;
-  box-sizing:border-box!important;
-  background:#060606!important;
+  display:block!important;
+  background:rgba(0,0,0,.50)!important;
+  pointer-events:none!important;
 }
-html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery__placeholder span{
-  color:rgba(255,255,255,.32)!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:12px!important;
-  font-weight:300!important;
-  line-height:1!important;
-  letter-spacing:var(--hm-track-note)!important;
-}
-html body.himart-commerce-page #direction .himart-direction-042 .hm-ds-media-carousel__status{
-  top:auto!important;
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::after{
+  content:"현재 진행 중인 프로젝트라\A공개가 어려운 점 양해 부탁드립니다."!important;
+  position:absolute!important;
+  z-index:5!important;
   right:24px!important;
-  bottom:24px!important;
+  bottom:44px!important;
+  left:24px!important;
+  display:block!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko),Pretendard,sans-serif!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  font-variation-settings:"wght" 300!important;
+  line-height:1.42!important;
+  letter-spacing:var(--hm-track-group)!important;
+  text-align:center!important;
+  white-space:pre-line!important;
+  word-break:keep-all!important;
+  pointer-events:none!important;
+}
+
+/* 04.2 is shell-only until its final screens are uploaded. */
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen{
+  background:#0D0D0D!important;
+}
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .prototype-case-copy{
+  display:none!important;
 }
 
 /* Keep the two new subsections inside the same wide right rail used by chapters 01–03. */
@@ -67,14 +106,16 @@ html body.himart-commerce-page #direction .himart-direction-042 .hm-ds-media-car
 }
 
 @media(max-width:780px){
+  html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-grid{
+    grid-template-columns:1fr!important;
+  }
+  html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::after{
+    right:16px!important;
+    bottom:28px!important;
+    left:16px!important;
+    font-size:16px!important;
+  }
   html body.himart-commerce-page #direction .himart-direction-041 .design-rule{
     margin-bottom:54px!important;
-  }
-  html body.himart-commerce-page #direction .himart-direction-042 .himart-strength-gallery__placeholder{
-    padding:20px!important;
-  }
-  html body.himart-commerce-page #direction .himart-direction-042 .hm-ds-media-carousel__status{
-    right:18px!important;
-    bottom:18px!important;
   }
 }
