@@ -41,10 +41,11 @@
   opacity:max(.3,var(--ascii-blackout,0))!important;
 }
 
+/*
+  The authored ABOUT label stays visible if JavaScript fails. about-page.js
+  enhances it in place, but visibility never depends on a runtime callback.
+*/
 .about-ascii-title{
-  visibility:hidden;
-}
-.about-ascii-title.about-title-scramble-ready{
   visibility:visible;
 }
 

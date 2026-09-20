@@ -24,6 +24,90 @@
     .filter((el) => !labelSet.has(el) && !titleRevealLines.has(el));
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /*
+    About owns every character it animates. Keeping this entry title out of the
+    generic observer prevents another runtime from replacing its text while the
+    page controller settles section titles.
+  */
+  const asciiTitle = document.querySelector('.about-ascii-title');
+  const ASCII_ENTRY_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let asciiTitleRaf = 0;
+  let asciiTitleChars = [];
+  let asciiTitleComplete = false;
+
+  const settleAsciiTitle = () => {
+    if (!asciiTitle || asciiTitleComplete) return;
+    if (asciiTitleRaf) cancelAnimationFrame(asciiTitleRaf);
+    asciiTitleChars.forEach((char) => {
+      char.textContent = char.dataset.finalChar || '';
+      char.style.color = '';
+      char.removeAttribute('data-scramble');
+    });
+    asciiTitleComplete = true;
+  };
+
+  const startAsciiTitle = () => {
+    if (!asciiTitle || asciiTitle.dataset.scrambleOwner === 'about-page') return;
+    asciiTitle.dataset.scrambleOwner = 'about-page';
+    asciiTitle.classList.add('about-title-scramble-ready');
+
+    if (reducedMotion) {
+      asciiTitleComplete = true;
+      return;
+    }
+
+    const finalText = asciiTitle.textContent.trim() || 'ABOUT';
+    asciiTitle.setAttribute('aria-label', finalText);
+    asciiTitle.textContent = '';
+
+    asciiTitleChars = Array.from(finalText).map((character) => {
+      const char = document.createElement('span');
+      char.className = 'about-ascii-title-char';
+      char.dataset.finalChar = character;
+      char.textContent = character;
+      char.style.display = 'inline-block';
+      asciiTitle.appendChild(char);
+      const width = Math.max(1, Math.ceil(char.getBoundingClientRect().width));
+      char.style.width = width + 'px';
+      char.style.color = 'transparent';
+      return char;
+    });
+
+    const startedAt = performance.now();
+    const staggerMs = 72;
+    const cycleMs = 86;
+    const cycles = 4;
+    const frame = (now) => {
+      let complete = true;
+      asciiTitleChars.forEach((char, index) => {
+        const elapsed = now - startedAt - index * staggerMs;
+        if (elapsed < 0) {
+          complete = false;
+          return;
+        }
+
+        const cycle = Math.floor(elapsed / cycleMs);
+        if (cycle < cycles) {
+          complete = false;
+          char.textContent = ASCII_ENTRY_POOL[(index * 19 + cycle * 11) % ASCII_ENTRY_POOL.length];
+          char.style.color = '';
+        } else {
+          char.textContent = char.dataset.finalChar || '';
+          char.style.color = '';
+        }
+      });
+
+      if (complete) {
+        asciiTitleComplete = true;
+        asciiTitleRaf = 0;
+        return;
+      }
+      asciiTitleRaf = requestAnimationFrame(frame);
+    };
+    asciiTitleRaf = requestAnimationFrame(frame);
+  };
+
+  startAsciiTitle();
   const reveal = (el) => el.classList.add('is-visible');
   const revealLabel = (el) => {
     el.classList.remove('section-label-pending');
@@ -183,9 +267,14 @@
   };
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) titleTargets.forEach(settleTitle);
+    if (!document.hidden) return;
+    settleAsciiTitle();
+    titleTargets.forEach(settleTitle);
   });
-  window.addEventListener('pagehide', () => titleTargets.forEach(settleTitle));
+  window.addEventListener('pagehide', () => {
+    settleAsciiTitle();
+    titleTargets.forEach(settleTitle);
+  });
 
   prepareLabels();
 
