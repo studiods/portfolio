@@ -195,6 +195,7 @@
 - 보조 source/divider는 `--hm-line-faint`를 사용한다.
 - 데이터 의미를 직접 표현하는 positive/negative/accent line은 Data Viz/Case component의 semantic color를 유지할 수 있으며 neutral divider 규칙으로 덮어쓰지 않는다.
 - 카드 상단 line → label 간격은 `--hm-space-20`, subsection title → content는 `--hm-subtitle-to-content`, major title → first subsection은 `--hm-title-to-subsection-gap`, sibling subsection/card 간격은 `--hm-subsection-gap`을 사용한다.
+- `--hm-subsection-gap`은 Desktop 기준 `100px`이며, authored `.hm-subsection`뿐 아니라 wide-editorial runtime이 생성하는 `.narrative-block` / `.narrative-problem` / `.narrative-reality` / `.journey-*` 등 같은 계층의 연속 중타이틀 블록에도 동일하게 적용한다. 카드 내부 `min-height`나 auto-margin으로 이 간격을 시각적으로 부풀리지 않는다.
 - case page에서 neutral line opacity나 주요 vertical rhythm을 raw px/rgba 값으로 새로 정의하지 않는다. 공통 component와 token을 사용한다.
 
 
