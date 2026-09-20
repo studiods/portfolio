@@ -99,6 +99,37 @@ html body.reuse-current #direction .prototype-case-visual .galaxy-ultra-screen{
   background:#0D0D0D!important;
 }
 
+
+/* 04.1 first prototype — Galaxy S26 Ultra display ratio (3120 × 1440 = 19.5:9).
+   The two authored long screenshots stay at natural height inside the fixed device viewport.
+   Users can scroll each screen independently; browser scrollbars remain hidden. */
+html body.reuse-current #direction .prototype-case--first .galaxy-ultra-mockup{
+  aspect-ratio:1440/3120!important;
+}
+html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.is-scrollable{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.is-scrollable::-webkit-scrollbar{
+  width:0!important;
+  height:0!important;
+  display:none!important;
+}
+html body.reuse-current #direction .prototype-case--first .galaxy-ultra-screen.is-scrollable img{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  user-select:none!important;
+  -webkit-user-drag:none!important;
+}
+
 html body.reuse-current #direction .prototype-case-copy{
   display:flex!important;
   flex-direction:column!important;
