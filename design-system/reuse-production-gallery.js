@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  const HOLD_MS = 2500;
-  const GALLERY_02_INITIAL_HOLD_MS = 5000;
+  const HOLD_MS = 6000;
+  const GALLERY_02_INITIAL_HOLD_MS = 6000;
   const VIDEO_STOP_FALLBACK_MS = 3000;
   const TRANSITION_MS = 720;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
