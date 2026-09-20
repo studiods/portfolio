@@ -1,6 +1,9 @@
 /* Structural index contract — portfolio-wide.
    Blue 12px structural numbering renders the numeric hierarchy only.
-   English descriptors belong in the title/content, not beside the structural index.\n   A final runtime layer reasserts the numeric-only presentation after legacy animation scripts inject inline font styles.
+   NEVER author or render "number + English descriptor" labels such as "01 / TOP OF MIND".
+   English descriptors belong in the title/content, never beside a structural index.
+   Canonical output is always numeric only: 01 / 02 / 03 or 01.1 / 01.2 / 01.3.
+   A final runtime layer reasserts the numeric-only presentation after legacy animation scripts inject inline font styles.
 
    Target output:
    - medium title index: 01.1
@@ -49,6 +52,12 @@ html body.himart-page-body #live-main :is(
   .hm-ds-flow__node > .hm-card-no:not([data-index]),
   .aimmo-evidence-card figcaption > span:first-child,
   .aimmo-context-insight__label,
+  .brand-gap-index,
+  .problem-item > small:first-child,
+  .signal-item > small:first-child,
+  .principle-item > small:first-child,
+  .behavior-pattern-card > span:first-child,
+  .design-rule > article > small:first-child,
   .team-card > span:first-child,
   .ways-kicker,
   .ways-team-problem__no,
