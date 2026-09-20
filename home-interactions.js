@@ -449,6 +449,107 @@
   let idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
   let idleDisabled = false;
 
+  /*
+    Home Hero has one owner: this module. The entry reveal uses the same
+    authored character nodes as the scroll timeline, then releases them before
+    the first scroll render. No synthetic user events or secondary observers.
+  */
+  let heroEntryActive = false;
+  let heroEntryStarted = false;
+  let heroEntryRaf = 0;
+  let heroEntryStates = [];
+
+  const clearHeroEntryNode = ({ char, finalChar }) => {
+    char.textContent = finalChar;
+    char.style.removeProperty('display');
+    char.style.removeProperty('width');
+    char.style.removeProperty('min-width');
+    char.style.removeProperty('max-width');
+    char.style.removeProperty('color');
+    styleCache.delete(char);
+  };
+
+  const finishHeroEntryReveal = () => {
+    if (!heroEntryActive && !heroEntryStarted) return;
+    if (heroEntryRaf) cancelAnimationFrame(heroEntryRaf);
+    heroEntryRaf = 0;
+    heroEntryStates.forEach(clearHeroEntryNode);
+    heroEntryStates = [];
+    if (sourceOnly) {
+      sourceOnly.style.removeProperty('color');
+      styleCache.delete(sourceOnly);
+    }
+    heroEntryActive = false;
+    heroEntryStarted = true;
+    lastHeroProgress = -1;
+    requestRender();
+  };
+
+  const startHeroEntryReveal = () => {
+    if (heroEntryStarted || reducedMotion || !hero || scrollY > 1) return;
+    heroEntryStarted = true;
+    heroEntryActive = true;
+
+    heroEntryStates = quoteChars
+      .map((char, index) => ({
+        char,
+        finalChar: char.dataset.finalChar ?? char.textContent,
+        index,
+        staggerIndex: -1,
+        width: 0
+      }))
+      .filter(state => state.finalChar.trim().length > 0);
+
+    heroEntryStates.forEach((state, visibleIndex) => {
+      state.staggerIndex = visibleIndex;
+      state.char.textContent = state.finalChar;
+      state.width = Math.max(0, state.char.getBoundingClientRect().width);
+      state.char.style.setProperty('display', 'inline-block', 'important');
+      state.char.style.setProperty('width', `${state.width.toFixed(3)}px`, 'important');
+      state.char.style.setProperty('min-width', `${state.width.toFixed(3)}px`, 'important');
+      state.char.style.setProperty('max-width', `${state.width.toFixed(3)}px`, 'important');
+      state.char.style.setProperty('color', 'transparent', 'important');
+    });
+    sourceOnly?.style.setProperty('color', 'transparent', 'important');
+
+    const startedAt = performance.now();
+    const cycleMs = 58;
+    const cycles = 3;
+    const staggerMs = 17;
+    const duration = cycleMs * cycles;
+
+    const frame = now => {
+      if (!heroEntryActive) return;
+      let complete = true;
+
+      heroEntryStates.forEach(state => {
+        const elapsed = now - startedAt - state.staggerIndex * staggerMs;
+        if (elapsed < 0) {
+          complete = false;
+          return;
+        }
+        if (elapsed < duration) {
+          complete = false;
+          const cycle = Math.min(cycles - 1, Math.floor(elapsed / cycleMs));
+          state.char.textContent = randomGlyph(state.index, cycle);
+          state.char.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+          return;
+        }
+        state.char.textContent = state.finalChar;
+        state.char.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+      });
+
+      if (!complete) {
+        heroEntryRaf = requestAnimationFrame(frame);
+        return;
+      }
+      sourceOnly?.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+      finishHeroEntryReveal();
+    };
+
+    heroEntryRaf = requestAnimationFrame(frame);
+  };
+
   const metrics = {
     viewportHeight: innerHeight,
     heroTop: 0,
@@ -798,7 +899,7 @@
       (y - metrics.principlesCardsTop) / metrics.principlesCardsTravel
     );
 
-    if (Math.abs(heroProgress - lastHeroProgress) >= 0.0001) {
+    if (!heroEntryActive && Math.abs(heroProgress - lastHeroProgress) >= 0.0001) {
       renderHero(heroProgress);
       lastHeroProgress = heroProgress;
     }
@@ -823,6 +924,7 @@
   scheduleIdleCue(IDLE_DELAY_MS);
 
   addEventListener('scroll', () => {
+    if (heroEntryActive && scrollY > 1) finishHeroEntryReveal();
     if (getHeroProgress() > 0.002) registerUserAction();
     requestRender();
   }, { passive: true });
@@ -842,6 +944,14 @@
   });
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(scheduleMetricsRefresh).catch(() => {});
+    document.fonts.ready.then(() => {
+      startHeroEntryReveal();
+      scheduleMetricsRefresh();
+    }).catch(() => {
+      startHeroEntryReveal();
+      scheduleMetricsRefresh();
+    });
+  } else {
+    startHeroEntryReveal();
   }
 })();

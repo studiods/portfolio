@@ -62,11 +62,10 @@
 }
 
 /*
-  HERO sequence timing is controlled by home-interactions.js. The one-time page
-  entry now owns the English quote reveal, so the scroll timeline starts at the
-  previous quoteHoldEnd point (24.5%). The negative top offset removes exactly
-  that already-played scroll runway while preserving every later phase's native
-  distance and speed: English -> Korean morph begins on the first user scroll.
+  Home Hero timing is controlled only by home-interactions.js. Its one-time
+  entry reveal settles before the scroll timeline takes over at 24.5%.
+  The negative top offset removes the already-played reveal runway while
+  preserving the native distance and speed of every later phase.
 */
 .hero-sequence{
   height:559.17vh!important;
