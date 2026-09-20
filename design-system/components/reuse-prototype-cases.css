@@ -150,24 +150,10 @@ html body.reuse-current #direction .prototype-case-copy{
 }
 
 
-html body.reuse-current #direction .prototype-case-copy h3{
-  margin:0!important;
-  max-width:100%!important;
-  color:#fff!important;
-  font-family:var(--hm-font-ko)!important;
-  font-size:22px!important;
-  font-weight:100!important;
-  font-variation-settings:"wght" 100!important;
-  line-height:1.16!important;
-  letter-spacing:-.035em!important;
-  word-break:keep-all!important;
-  overflow-wrap:normal!important;
-  text-align:left!important;
-}
 
 html body.reuse-current #direction .prototype-case-copy p{
   display:-webkit-box!important;
-  margin:12px 0 0!important;
+  margin:0!important;
   max-width:100%!important;
   overflow:hidden!important;
   color:rgba(255,255,255,.50)!important;
@@ -216,15 +202,15 @@ html body.reuse-current #direction .prototype-case-control{
   margin:0!important;
   padding:0!important;
   border:0!important;
-  border-radius:5px!important;
-  background:rgba(0,0,0,.10)!important;
-  color:#fff!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:rgba(0,0,0,.60)!important;
   opacity:0!important;
   visibility:hidden!important;
   pointer-events:none!important;
   cursor:pointer!important;
   transform:translateY(-50%)!important;
-  transition:opacity 180ms ease,visibility 180ms ease,background-color 160ms ease!important;
+  transition:opacity 180ms ease,visibility 180ms ease!important;
 }
 html body.reuse-current #direction .prototype-case-control--prev{
   left:14px!important;
@@ -237,9 +223,6 @@ html body.reuse-current #direction .prototype-case-list:focus-within .prototype-
   opacity:1!important;
   visibility:visible!important;
   pointer-events:auto!important;
-}
-html body.reuse-current #direction .prototype-case-control:active{
-  background:rgba(0,0,0,.20)!important;
 }
 html body.reuse-current #direction .prototype-case-control::before{
   content:""!important;
@@ -258,8 +241,8 @@ html body.reuse-current #direction .prototype-case-control--next::before{
   transform:translateX(-2px) rotate(45deg)!important;
 }
 html body.reuse-current #direction .prototype-case-control:focus-visible{
-  outline:1px solid rgba(255,255,255,.55)!important;
-  outline-offset:2px!important;
+  outline:0!important;
+  outline-offset:0!important;
   opacity:1!important;
   visibility:visible!important;
 }
@@ -279,7 +262,7 @@ html body.reuse-current #direction .prototype-case-control:focus-visible{
   html body.reuse-current #direction .prototype-case-control{
     width:40px!important;
     height:40px!important;
-    opacity:.72!important;
+    opacity:1!important;
     visibility:visible!important;
     pointer-events:auto!important;
   }
@@ -303,11 +286,6 @@ html body.reuse-current #direction .prototype-case-control:focus-visible{
   }
   html body.reuse-current #direction .prototype-case-copy{
     margin-top:24px!important;
-  }
-  html body.reuse-current #direction .prototype-case-copy h3{
-    margin-top:0!important;
-    font-size:22px!important;
-    line-height:1.28!important;
   }
 }
 
