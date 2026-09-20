@@ -131,12 +131,15 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
 }
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-online-gap-line{
+  white-space:nowrap!important;
+}
 /* HIMART 01.2 — AIMMO 02 / 01 graph structure copied exactly; only content is Himart-specific.
    Four evidence graphs are stacked one per row. */
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
   display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:72px!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:64px 28px!important;
   width:100%!important;
 }
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight{
@@ -260,7 +263,16 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
 html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
+@media(max-width:900px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
+    grid-template-columns:1fr!important;
+    gap:56px!important;
+  }
+}
 @media(max-width:780px){
+  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-online-gap-line{
+    white-space:normal!important;
+  }
   html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{gap:56px!important}
   html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row{
     grid-template-columns:88px minmax(0,1fr) 52px!important;
