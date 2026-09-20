@@ -58,6 +58,16 @@
     chars.forEach((char) => { char.style.color = 'transparent'; });
   });
 
+  const settleTitle = (title) => {
+    const chars = titleCharacters.get(title) || [];
+    chars.forEach((char) => {
+      char.textContent = char.dataset.finalChar ?? char.textContent;
+      char.removeAttribute('data-scramble');
+      char.classList.remove('is-scrambling');
+      char.style.color = '';
+    });
+  };
+
   const animateTitle = (title) => {
     if (!title || title.dataset.scrambleDone === '1') return;
     title.dataset.scrambleDone = '1';
@@ -80,11 +90,14 @@
           char.dataset.scramble = SCRAMBLE_POOL[(index * 17 + cycle * 13) % SCRAMBLE_POOL.length];
           char.classList.add('is-scrambling');
         } else {
+          char.textContent = char.dataset.finalChar ?? char.textContent;
+          char.removeAttribute('data-scramble');
           char.classList.remove('is-scrambling');
           char.style.color = '';
         }
       });
       if (!complete) requestAnimationFrame(frame);
+      else settleTitle(title);
     };
     requestAnimationFrame(frame);
   };
@@ -92,9 +105,7 @@
   if (reducedMotion) {
     targets.forEach(reveal);
     sectionLabels.forEach(revealLabel);
-    titleTargets.forEach((title) => {
-      (titleCharacters.get(title) || []).forEach((char) => { char.style.color = ''; });
-    });
+    titleTargets.forEach(settleTitle);
     return;
   }
 
@@ -170,6 +181,11 @@
       }
     });
   };
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) titleTargets.forEach(settleTitle);
+  });
+  window.addEventListener('pagehide', () => titleTargets.forEach(settleTitle));
 
   prepareLabels();
 
