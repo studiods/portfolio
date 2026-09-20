@@ -53,7 +53,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-6';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260920-7';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
@@ -70,6 +70,17 @@
 
     const cards=[...gallery.querySelectorAll(':scope > .phone-card')].slice(0,8);
     if(!cards.length)return;
+
+    const prototypeCopy=[
+      {title:'상품화 이력과 보증',body:'상품화 과정과 보증 내역을 PDP 상단에서 바로 확인해 제품 상태에 대한 신뢰를 높였습니다.'},
+      {title:'상태 이력과 등급',body:'회수·상품화·판매 시점을 공개하고, 현재 상태는 직관적인 등급으로 바로 확인하게 했습니다.'},
+      {title:'간편 판매 등록',body:'판매 정보를 몇 단계의 짧은 스텝으로 나눠, 입력 부담 없이 빠르게 등록하도록 설계했습니다.'},
+      {title:'예상 매입가',body:'예상 매입가를 메뉴에서 즉시 확인하게 해 가격 기준의 투명성과 신뢰를 높였습니다.'},
+      {title:'보상 금액 확인',body:'사용하던 가전의 보상 금액을 몇 번의 선택만으로 빠르게 확인할 수 있게 구성했습니다.'},
+      {title:'판매자의 사용 기록',body:'이전 사용자의 사용·관리 이야기를 직접 기록하게 해 제품을 이해할 또 하나의 신뢰 근거를 만들었습니다.'},
+      {title:'상세 검수 결과',body:'검수 항목과 결과를 한눈에 보여 무엇이 좋고 부족한지 바로 판단할 수 있게 했습니다.'},
+      {title:'구매와 매입 연결',body:'새 제품 구매에 기존 가전 매입을 연결해 폐기 부담은 줄이고 재판매 상품 확보 기회는 넓혔습니다.'}
+    ];
 
     const list=document.createElement('div');
     list.className='prototype-case-list reuse-prototype-case-list hm-reveal';
@@ -92,7 +103,6 @@
       article.setAttribute('aria-hidden',pages.length===0?'false':'true');
 
       group.forEach((card,screenIndex)=>{
-        const caption=(card.querySelector('.phone-meta p')?.textContent||'').trim();
 
         const item=document.createElement('div');
         item.className='prototype-case-item';
@@ -107,6 +117,7 @@
 
         const assetIndex=start+screenIndex+1;
         const assetNo=String(assetIndex).padStart(2,'0');
+        const copyData=prototypeCopy[assetIndex-1]||{title:'',body:''};
         const image=document.createElement('img');
         image.src=`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`;
         image.alt=`Reuse prototype screen 01_${assetNo}`;
@@ -119,10 +130,13 @@
         const copy=document.createElement('div');
         copy.className='prototype-case-copy';
 
-        const copyDescription=document.createElement('p');
-        copyDescription.textContent=caption;
+        const copyTitle=document.createElement('h3');
+        copyTitle.textContent=copyData.title;
 
-        copy.append(copyDescription);
+        const copyDescription=document.createElement('p');
+        copyDescription.textContent=copyData.body;
+
+        copy.append(copyTitle,copyDescription);
         item.append(device,copy);
         article.appendChild(item);
       });
