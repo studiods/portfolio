@@ -1,15 +1,18 @@
 /* HOME — generative ASCII night sky behind the opening hero sequence. */
-body.home-test .hero-sticky{
+body.home-test .hero-sequence{
+  position:relative;
   isolation:isolate;
-  overflow:hidden;
 }
 
 body.home-test .home-ascii-sky{
-  position:absolute;
+  position:sticky;
   z-index:0;
-  inset:0;
-  width:100%;
-  height:100%;
+  top:0;
+  display:block;
+  width:100vw;
+  height:100vh;
+  margin-left:calc(-1 * var(--pad));
+  margin-bottom:-100vh;
   overflow:hidden;
   background:#000;
   pointer-events:none;
@@ -21,16 +24,30 @@ body.home-test .home-ascii-sky__canvas{
   display:block;
   width:100%;
   height:100%;
-  opacity:.82;
+  opacity:.92;
   pointer-events:none;
 }
 
+body.home-test .hero-sticky{
+  position:relative;
+  z-index:1;
+  background:transparent!important;
+}
+
 body.home-test .hero-state{
+  position:absolute;
   z-index:2;
+}
+
+@media(max-width:850px){
+  body.home-test .home-ascii-sky{
+    width:100vw;
+    margin-left:calc(-1 * var(--pad));
+  }
 }
 
 @media(prefers-reduced-motion:reduce){
   body.home-test .home-ascii-sky__canvas{
-    opacity:.70;
+    opacity:.82;
   }
 }
