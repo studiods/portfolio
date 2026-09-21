@@ -956,3 +956,240 @@
     --hm-type-chart-value-mobile:13px;
   }
 }
+
+
+/* MOBILE PORTFOLIO SYSTEM v2.3 — non-square gallery copy below media */
+@media(max-width:780px){
+  /*
+    Mobile gallery copy contract
+    - Non-square gallery/media views keep text outside the image plane.
+    - Square gallery cards are intentionally excluded and preserve their authored overlay treatment.
+    - Navigation/status remains on the media plane.
+  */
+
+  /* REUSE 03.2 — 4:3 rolling image galleries. */
+  html body.reuse-current #live-main .reuse-image-display-card{
+    container-type:inline-size!important;
+    display:block!important;
+    height:auto!important;
+    aspect-ratio:auto!important;
+    overflow:visible!important;
+    background:transparent!important;
+  }
+  html body.reuse-current #live-main .reuse-image-display-card__viewport{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:4/3!important;
+    overflow:hidden!important;
+    background:#080808!important;
+  }
+  html body.reuse-current #live-main .reuse-image-display-card::after{
+    display:none!important;
+    content:none!important;
+  }
+  html body.reuse-current #live-main .reuse-image-display-card__copy{
+    position:relative!important;
+    z-index:auto!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:18px 0 30px!important;
+    text-align:left!important;
+    pointer-events:auto!important;
+  }
+  html body.reuse-current #live-main .reuse-image-display-card__nav{
+    top:37.5cqw!important;
+  }
+  html body.reuse-current #live-main .reuse-image-display-card__status{
+    top:16px!important;
+    right:16px!important;
+    bottom:auto!important;
+  }
+
+  /* REUSE 03.3 — 16:9 rolling production galleries. */
+  html body.reuse-current #live-main .reuse-production-gallery{
+    container-type:inline-size!important;
+    display:block!important;
+    height:auto!important;
+    aspect-ratio:auto!important;
+    overflow:visible!important;
+    background:transparent!important;
+  }
+  html body.reuse-current #live-main .reuse-production-gallery__viewport{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    overflow:hidden!important;
+    background:#080808!important;
+  }
+  html body.reuse-current #live-main .reuse-production-gallery::after{
+    display:none!important;
+    content:none!important;
+  }
+  html body.reuse-current #live-main .reuse-production-gallery__copy,
+  html body.reuse-current #live-main .reuse-production-gallery--video-player .reuse-production-gallery__copy{
+    position:relative!important;
+    z-index:auto!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:18px 0 30px!important;
+    text-align:left!important;
+    pointer-events:auto!important;
+  }
+  html body.reuse-current #live-main .reuse-production-gallery__nav,
+  html body.reuse-current #live-main .reuse-video-player__skip,
+  html body.reuse-current #live-main .reuse-video-player__toggle{
+    top:28.125cqw!important;
+  }
+  html body.reuse-current #live-main .reuse-production-gallery__status{
+    top:16px!important;
+    right:16px!important;
+    bottom:auto!important;
+  }
+
+  /* AIMMO System 02.1 / 02.3 — 16:9 evidence galleries. 03.2 square application gallery is excluded. */
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card{
+    container-type:inline-size!important;
+    display:block!important;
+    height:auto!important;
+    aspect-ratio:auto!important;
+    overflow:visible!important;
+    background:transparent!important;
+  }
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card__viewport{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    overflow:hidden!important;
+    background:#080808!important;
+  }
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card > img{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    object-fit:cover!important;
+  }
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card::after{
+    display:none!important;
+    content:none!important;
+  }
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card > figcaption{
+    position:relative!important;
+    z-index:auto!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:18px 0 30px!important;
+    background:transparent!important;
+    text-align:left!important;
+  }
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card__nav{
+    top:28.125cqw!important;
+  }
+  html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card__status{
+    top:16px!important;
+    right:16px!important;
+    bottom:auto!important;
+  }
+
+  /* AIMMO Graphic uses 16:9 media-gallery items page-wide; text, when present, belongs below media.
+     Shared square media-gallery cards on other pages are intentionally untouched. */
+  html body.aimmo-graphic-page #live-main .hm-ds-media-gallery__item{
+    display:block!important;
+    height:auto!important;
+    aspect-ratio:auto!important;
+    overflow:visible!important;
+    background:transparent!important;
+  }
+  html body.aimmo-graphic-page #live-main .hm-ds-media-gallery__item > :is(img,video){
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    object-fit:cover!important;
+  }
+  html body.aimmo-graphic-page #live-main .hm-ds-media-gallery__item::after{
+    display:none!important;
+    content:none!important;
+  }
+  html body.aimmo-graphic-page #live-main .hm-ds-media-gallery__item > figcaption{
+    position:relative!important;
+    z-index:auto!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:18px 0 30px!important;
+    background:transparent!important;
+  }
+  html body.aimmo-graphic-page #live-main .aimmo-wide-gallery--clean .hm-ds-media-gallery__item > figcaption{
+    display:none!important;
+  }
+
+  /* TEAM / YANOLJA 16:9 workshop galleries: cards/copy sit below the media on mobile. */
+  html body:is(.himart-team-page,.yanolja-system-page) #live-main .team-workshop-visual{
+    padding-bottom:0!important;
+    overflow:visible!important;
+  }
+  html body:is(.himart-team-page,.yanolja-system-page) #live-main .team-workshop-visual__image{
+    position:relative!important;
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:16/9!important;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+  html body:is(.himart-team-page,.yanolja-system-page) #live-main .team-workshop-visual__cards{
+    position:relative!important;
+    z-index:auto!important;
+    inset:auto!important;
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:18px 0 0!important;
+    padding:0!important;
+    transform:none!important;
+    background:transparent!important;
+    overflow:visible!important;
+  }
+  html body:is(.himart-team-page,.yanolja-system-page) #live-main .team-workshop-card{
+    min-height:0!important;
+    height:auto!important;
+    padding:22px 0 26px!important;
+    border-left:0!important;
+    background:transparent!important;
+  }
+
+  /* StepUp phone carousel already places copy below the phone media; keep that structure explicit. */
+  html body.nbt-stepup-page #live-main .stepup-screens-carousel .production-v18-copy{
+    position:relative!important;
+    inset:auto!important;
+    margin-top:20px!important;
+  }
+
+  /* Existing below-media galleries remain below-media and receive no overlay on mobile. */
+  html body.trenbe-ut-page #live-main .trenbe-field-gallery figcaption,
+  html body.himart-ax-page #live-main .ax-banner-reference figcaption{
+    position:relative!important;
+    inset:auto!important;
+  }
+}
