@@ -63,6 +63,161 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>h3{
 html body.reuse-current #direction .prototype-intro.hm-subsection>p{
   grid-column:1!important;
 }
+
+/* 01.1 — reuse evidence adopts the Himart 01.2 ring-card grammar. */
+html body.reuse-current #brand .reuse-voice-stack{
+  display:grid!important;
+  gap:82px!important;
+}
+html body.reuse-current #brand .reuse-voice-group{
+  padding-top:26px!important;
+  border-top:1px solid var(--hm-line-weak)!important;
+}
+html body.reuse-current #brand .reuse-voice-index{
+  display:block!important;
+  margin:0 0 18px!important;
+  padding:0!important;
+  color:var(--hm-blue)!important;
+  font:400 12px/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.reuse-current #brand .reuse-voice-group .voice-group-title{
+  max-width:940px!important;
+  margin:0 0 50px!important;
+  color:#fff!important;
+}
+html body.reuse-current #brand .reuse-ring-row{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:20px!important;
+}
+html body.reuse-current #brand .reuse-ring-row .ring-card{
+  --ring:var(--hm-blue);
+  position:relative!important;
+  aspect-ratio:1!important;
+  min-width:0!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:44px 26px 72px!important;
+  background:#000!important;
+}
+html body.reuse-current #brand .reuse-voice-group.negative .ring-card{--ring:var(--hm-red)}
+html body.reuse-current #brand .reuse-ring-row .ring-card::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-1px!important;
+  border-radius:50%!important;
+  background:conic-gradient(var(--ring) calc(var(--pct)*1%),transparent 0)!important;
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px))!important;
+  mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px))!important;
+}
+html body.reuse-current #brand .reuse-ring-row .ring-card .inner{position:relative!important;z-index:1!important}
+html body.reuse-current #brand .reuse-ring-row .ring-card h4{
+  margin:0!important;
+  color:#fff!important;
+  font-family:var(--hm-font-ko)!important;
+  font-size:22px!important;
+  font-weight:300!important;
+  line-height:1.28!important;
+  letter-spacing:var(--hm-track-group)!important;
+}
+html body.reuse-current #brand .reuse-ring-row .ring-card p{
+  margin:14px auto 0!important;
+  max-width:21ch!important;
+  color:var(--hm-description-color)!important;
+  font:300 14px/1.5 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+}
+html body.reuse-current #brand .reuse-ring-row .ring-card .pct{
+  position:absolute!important;
+  z-index:2!important;
+  left:50%!important;
+  bottom:24px!important;
+  transform:translateX(-50%)!important;
+  color:var(--ring)!important;
+  font:300 29px/1 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-data-number)!important;
+}
+html body.reuse-current #brand .reuse-voice-group .reuse-proof-source{
+  margin-top:32px!important;
+}
+
+/* 01.2 — remove every internal gradient while preserving the existing content structure. */
+html body.reuse-current #brand .reuse-uncertainty-graph,
+html body.reuse-current #brand .reuse-uncertainty-graph *,
+html body.reuse-current #brand .reuse-uncertainty-graph *::before,
+html body.reuse-current #brand .reuse-uncertainty-graph *::after{
+  background-image:none!important;
+}
+
+/* 03.1 — graph labels are full white. */
+html body.reuse-current #journey .reuse-reference-bars__label{
+  color:#fff!important;
+  opacity:1!important;
+}
+
+/* 04 — align the left chapter title with the 04.1 top rule. */
+html body.reuse-current #direction .hm-section-head + .prototype-intro.hm-subsection{
+  margin-top:0!important;
+  align-self:start!important;
+}
+
+/* 04.1 — Himart 04.1 two-card implementation grammar. */
+html body.reuse-current #direction .reuse-direction-rule{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:20px!important;
+  width:100%!important;
+  margin-top:var(--hm-subtitle-to-content,80px)!important;
+}
+html body.reuse-current #direction .reuse-direction-rule .ax-friction-card{
+  min-height:260px!important;
+  padding:24px 0 0!important;
+  border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
+}
+html body.reuse-current #direction .reuse-direction-rule .ax-friction-card>span{
+  display:block!important;
+  color:var(--hm-blue)!important;
+  font:400 12px/1.2 var(--hm-font-en)!important;
+  letter-spacing:var(--hm-track-note)!important;
+}
+html body.reuse-current #direction .reuse-direction-rule .ax-friction-card h4{
+  margin:18px 0 0!important;
+  color:var(--hm-blue)!important;
+  font:300 28px/1.28 var(--hm-font-ko)!important;
+  font-variation-settings:"wght" 300!important;
+  letter-spacing:var(--hm-track-group)!important;
+  word-break:keep-all!important;
+}
+html body.reuse-current #direction .reuse-direction-rule .ax-friction-card h4>span,
+html body.reuse-current #direction .reuse-direction-rule .ax-friction-card p>span{
+  display:block!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+html body.reuse-current #direction .reuse-direction-rule .ax-friction-card p{
+  margin:12px 0 0!important;
+  max-width:none!important;
+  color:var(--hm-description-color)!important;
+  font:300 16px/1.55 var(--hm-font-ko)!important;
+  letter-spacing:var(--hm-track-body)!important;
+  word-break:keep-all!important;
+}
+html body.reuse-current #direction .reuse-direction-rule + .phone-gallery{
+  margin-top:80px!important;
+}
+@media(max-width:1180px){
+  html body.reuse-current #brand .reuse-ring-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:780px){
+  html body.reuse-current #brand .reuse-ring-row,
+  html body.reuse-current #direction .reuse-direction-rule{grid-template-columns:1fr!important}
+}
 </style>
 <link rel="stylesheet" href="./design-system/components/structural-index-contract.css?v=20260918-1">
 </head>
@@ -90,21 +245,21 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>p{
 <nav class="hm-progress hm-ds-progress" aria-label="Case study chapters"><a href="#brand">01</a><a href="#data">02</a><a href="#journey">03</a><a href="#direction">04</a></nav>
 
 <section class="hm-section hm-ds-section hm-ds-wide-editorial-section" id="brand" data-chapter="01"><div class="hm-wrap hm-ds-wrap">
-<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">중고 거래에 대한 고객들의<br>생각을 먼저 살펴봤습니다.</h2></div></div>
+<div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">01</span><h2 class="hm-section-title hm-ds-section__title js-scramble">먼저 중고 거래에 대한 고객들의<br>생각을 살펴봤습니다.</h2></div></div>
 
 <div class="hm-subsection hm-ds-subsection hm-reveal reuse-research-block"><div class="hm-subhead"><span class="hm-subno reuse-blue-subno hm-ds-index-label" data-index="01.1">01.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">중고 거래의 가장 큰 문제는 불확실성이었습니다.<br>고객의 불안을 실제 응답 비율로 확인했습니다.</h3></div></div>
-<div class="reuse-proof-stack hm-ds-subtitle-to-smalltitle">
-<article class="reuse-proof-group"><h4 class="voice-group-title"><span class="reuse-roman">I.</span>제품의 상태 불일치와 정보 누락에 가장 불안해했습니다.</h4><div class="proof-grid reuse-proof-grid reuse-proof-red hm-ds-evidence-stat">
-<article class="proof-item"><strong>56.6<span>%</span></strong><h4>실제 상태가 다를까 걱정했습니다.</h4><p>거짓된 상품 정보와 실제 상품 상태의 차이가 가장 큰 비금전적 불안 요인이었습니다.</p></article>
-<article class="proof-item"><strong>49.1<span>%</span></strong><h4>설명과 실물이 다를 수 있다고 봤습니다.</h4><p>판매자가 설명한 내용과 실제 제품 사이의 차이를 거래 위험으로 인식했습니다.</p></article>
-<article class="proof-item"><strong>30.4<span>%</span></strong><h4>개인정보 제공도 부담이었습니다.</h4><p>계좌·주소·실명 등 개인정보 노출도 거래 장벽이었습니다.</p></article>
-<article class="proof-item"><strong>29.9<span>%</span></strong><h4>결제 후 배송까지 불안했습니다.</h4><p>배송 지연과 누락도 거래가 끝날 때까지 불안을 남겼습니다.</p></article>
+<div class="voice-stack reuse-voice-stack hm-ds-subtitle-to-smalltitle">
+<article class="voice-group negative reuse-voice-group"><span class="reuse-voice-index">01</span><h4 class="voice-group-title">제품의 상태 불일치와 정보 누락에 가장 불안해했습니다.</h4><div class="ring-row reuse-ring-row">
+<div class="ring-card" style="--pct:56.6"><div class="inner"><h4>실제 상태가 다를까 걱정했습니다.</h4><p>거짓된 상품 정보와 실제 상품 상태의 차이가 가장 큰 비금전적 불안 요인이었습니다.</p></div><span class="pct">56.6%</span></div>
+<div class="ring-card" style="--pct:49.1"><div class="inner"><h4>설명과 실물이 다를 수 있다고 봤습니다.</h4><p>판매자가 설명한 내용과 실제 제품 사이의 차이를 거래 위험으로 인식했습니다.</p></div><span class="pct">49.1%</span></div>
+<div class="ring-card" style="--pct:30.4"><div class="inner"><h4>개인정보 제공도 부담이었습니다.</h4><p>계좌·주소·실명 등 개인정보 노출도 거래 장벽이었습니다.</p></div><span class="pct">30.4%</span></div>
+<div class="ring-card" style="--pct:29.9"><div class="inner"><h4>결제 후 배송까지 불안했습니다.</h4><p>배송 지연과 누락도 거래가 끝날 때까지 불안을 남겼습니다.</p></div><span class="pct">29.9%</span></div>
 </div><div class="reuse-proof-source">SOURCE - 번개장터 ‘안전한 중고거래를 위한 이용자 인식 조사’ 2024 · 앱 이용자 총 4,912명 / 엠브레인 트렌드모니터 ‘중고거래 경험 및 플랫폼 인식 조사’ 2020 · n=1,000</div></article>
-<article class="reuse-proof-group reuse-proof-positive"><h4 class="voice-group-title"><span class="reuse-roman">II.</span>반면 제품 상태와 판매자의 신용이 구매 결정의 주요한 요인이었습니다.</h4><div class="proof-grid reuse-proof-grid hm-ds-evidence-stat">
-<article class="proof-item"><strong>68.9<span>%</span></strong><h4>제품 상태를 가장 중요하게 봤습니다.</h4><p>중고 제품을 구매할 때 실제 제품 상태가 핵심 판단 근거였습니다.</p></article>
-<article class="proof-item"><strong>37.6<span>%</span></strong><h4>판매자의 신용도도 확인했습니다.</h4><p>상품 정보만큼 누가 판매하는지 역시 구매 판단에 영향을 줬습니다.</p></article>
-<article class="proof-item"><strong>79.4<span>%</span></strong><h4>안전하다고 느낄 때 안심했습니다.</h4><p>안전결제 만족 이유 중 가장 높은 응답은 ‘사기 걱정 없이 안전하다’였습니다.</p></article>
-<article class="proof-item"><strong>81.9<span>%</span></strong><h4>전문 판매처를 확인하고 싶었습니다.</h4><p>리퍼비시 제품을 전문적으로 판매하는 매장을 방문해보고 싶다는 요구가 높았습니다.</p></article>
+<article class="voice-group reuse-voice-group"><span class="reuse-voice-index">02</span><h4 class="voice-group-title">반면 제품 상태와 판매자의 신용이 구매 결정의 주요한 요인이었습니다.</h4><div class="ring-row reuse-ring-row">
+<div class="ring-card" style="--pct:68.9"><div class="inner"><h4>제품 상태를 가장 중요하게 봤습니다.</h4><p>중고 제품을 구매할 때 실제 제품 상태가 핵심 판단 근거였습니다.</p></div><span class="pct">68.9%</span></div>
+<div class="ring-card" style="--pct:37.6"><div class="inner"><h4>판매자의 신용도도 확인했습니다.</h4><p>상품 정보만큼 누가 판매하는지 역시 구매 판단에 영향을 줬습니다.</p></div><span class="pct">37.6%</span></div>
+<div class="ring-card" style="--pct:79.4"><div class="inner"><h4>안전하다고 느낄 때 안심했습니다.</h4><p>안전결제 만족 이유 중 가장 높은 응답은 ‘사기 걱정 없이 안전하다’였습니다.</p></div><span class="pct">79.4%</span></div>
+<div class="ring-card" style="--pct:81.9"><div class="inner"><h4>전문 판매처를 확인하고 싶었습니다.</h4><p>리퍼비시 제품을 전문적으로 판매하는 매장을 방문해보고 싶다는 요구가 높았습니다.</p></div><span class="pct">81.9%</span></div>
 </div><div class="reuse-proof-source">SOURCE - 엠브레인 트렌드모니터 ‘중고거래 경험 및 플랫폼 인식 조사’ 2020 · n=1,000 / 번개장터 안전거래 인식 조사 2024 / 리퍼비시 제품 U&amp;A 조사 2023 · n=1,000</div></article>
 </div></div>
 
@@ -146,7 +301,7 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>p{
 
 <section class="hm-section hm-ds-section" id="journey" data-chapter="03"><div class="hm-wrap hm-ds-wrap">
 <div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">03</span><h2 class="hm-section-title hm-ds-section__title js-scramble">상품을 직접 볼 수 없기에,<br>사진이 가장 중요한 신뢰 정보였습니다.</h2></div></div>
-<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="03.1">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">신뢰, 편의등 구조적인 부분을 제외하면<br>가장 중요한 요소는 이미지였습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">중고 거래에서는 실제 상태를 직접 확인할 수 없기 때문에 사진이 상태·사용 흔적·손상을 판단하는 첫 번째 시각적 근거가 됩니다.</p></div></div>
+<div class="hm-subsection hm-ds-subsection hm-reveal"><div class="hm-subhead"><span class="hm-subno hm-ds-index-label" data-index="03.1">03.1</span><div><h3 class="hm-subtitle hm-ds-subsection__title">신뢰, 편의성 제외하고는<br>역시 이미지가 가장 중요한 요소였습니다.</h3><p class="hm-subcopy hm-ds-subsection__description">중고 거래에서는 실제 상태를 직접 확인할 수 없기 때문에 사진이 상태·사용 흔적·손상을 판단하는 첫 번째 시각적 근거가 됩니다.</p></div></div>
 <figure class="reuse-reference-bars hm-ds-subtitle-to-content" aria-label="중고 제품 구매 판단 요소">
   <div class="reuse-reference-bars__rows">
     <div class="reuse-reference-bars__row"><span class="reuse-reference-bars__label">판매자 신뢰</span><div class="reuse-reference-bars__track" aria-hidden="true"><span class="reuse-reference-bars__fill"></span></div><strong class="reuse-reference-bars__value">67.7%</strong></div>
@@ -179,7 +334,11 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>p{
 </div>
 </div></section>
 
-<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">화면을 넘어,<br>신뢰를 만드는 운영 기준까지 확장했습니다.</h2></div></div><div class="prototype-intro hm-subsection hm-ds-subsection hm-ds-prototype-grid hm-ds-narrative hm-reveal"><h3>신뢰 전략을 문서에서 끝내지 않고,<br>검증 가능한 화면으로 전환했습니다.</h3><p>상품 상태·검수·상품화·보증 정보를 홈·목록·PDP·결제 흐름에 연결하고, 내부 리뷰를 통해 신뢰 정보의 순서와 표현을 반복해서 조정했습니다.</p></div><div class="phone-gallery hm-ds-media-grid hm-ds-subtitle-to-content hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div></div></section>
+<section class="hm-section hm-ds-section" id="direction" data-chapter="04"><div class="hm-wrap hm-ds-wrap"><div class="hm-section-head hm-ds-section__head hm-reveal"><div><span class="hm-section-no hm-ds-section__number">04</span><h2 class="hm-section-title hm-ds-section__title js-scramble">화면을 넘어,<br>신뢰를 만드는 운영 기준까지 확장했습니다.</h2></div></div><div class="prototype-intro hm-subsection hm-ds-subsection hm-ds-prototype-grid hm-ds-narrative hm-reveal"><h3>신뢰 전략을 문서에서 끝내지 않고,<br>검증 가능한 화면으로 전환했습니다.</h3><p>상품 상태·검수·상품화·보증 정보를 홈·목록·PDP·결제 흐름에 연결하고, 내부 리뷰를 통해 신뢰 정보의 순서와 표현을 반복해서 조정했습니다.</p></div><div class="ax-friction-grid hm-ds-subtitle-to-content himart-direction-rule reuse-direction-rule">
+  <article class="ax-friction-card"><span>01</span><h4><span>이탈과 의구심이 생기는 순간마다</span><span>신뢰의 근거를 먼저 보여줬습니다.</span></h4><p><span>상태·검수·보증·클리닝 콘텐츠를 구매 여정의 필요한 지점에 배치해,</span><span>사용자가 망설이는 순간 바로 확인하고 다음 행동으로 이어지도록 설계했습니다.</span></p></article>
+  <article class="ax-friction-card"><span>02</span><h4><span>상품화 과정과 이동 경로를 투명하게 보여줘</span><span>불확실성을 확신으로 바꿨습니다.</span></h4><p><span>입고부터 검수·세척·상품화·판매·배송까지 제품이 거친 과정과 책임 주체를 공개해,</span><span>개인 거래에서 확인하기 어려웠던 정보를 구매 판단의 근거로 전환했습니다.</span></p></article>
+</div>
+<div class="phone-gallery hm-ds-media-grid hm-ds-subtitle-to-content hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div></div></section>
 </main>
 <footer class="hm-footer" id="contact"><div class="hm-wrap hm-ds-wrap"><a href="./works.html">← Works</a><div><span>NEXT HIMART CASE</span><a href="./himart.html">온라인 구매여정 다시 보기 →</a></div></div></footer>
 <script src="./design-system/reuse-proof-map-motion.js?v=20260909-3"></script>
