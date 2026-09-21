@@ -112,6 +112,29 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   display:none!important;
 }
 
+/* HIMART 04.2 — match the device viewport to the uploaded 375 × 812 screens.
+   Remove the inherited fixed device ratio so the screen image determines the
+   full mockup height. This also keeps the bottom device border from being
+   clipped by the shorter legacy 1440 × 2964 frame. */
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-mockup{
+  height:auto!important;
+  aspect-ratio:auto!important;
+  overflow:visible!important;
+}
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen{
+  height:auto!important;
+  aspect-ratio:375/812!important;
+  overflow:hidden!important;
+}
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen.is-scrollable img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:375/812!important;
+  object-fit:contain!important;
+  object-position:top center!important;
+}
+
 /* 04.1 / 04.2 paired mockup geometry.
    The strategy cards above are two equal columns with a 20px gap.
    Keep each mockup's LEFT edge on the matching 01 / 02 card rail.
