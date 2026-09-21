@@ -1044,8 +1044,8 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
   font-variation-settings:"wght" 100!important;
 }
 html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
-  color:var(--hm-blue)!important;
+  color:#fff!important;
   opacity:1!important;
-  font-weight:500!important;
-  font-variation-settings:"wght" 500!important;
+  font-weight:400!important;
+  font-variation-settings:"wght" 400!important;
 }
