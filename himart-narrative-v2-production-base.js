@@ -38,7 +38,7 @@
   const data=main.querySelector('#data');
   let asisFlow=null;
   if(data){
-    setHTML(data.querySelector('.hm-section-title'),'정성적으로 보였던 간극이 실제 이용 행동에서는<br>어떻게 나타나는지 확인했습니다.');
+    setHTML(data.querySelector('.hm-section-title'),'문제들은 실제 이용 패턴에서도 반복됐습니다.');
     const c21=cardByNo('02.1');if(c21){setHTML(c21.querySelector('h3'),'고객의 구매 여정은 홈이 아니라,<br>서로 다른 유입 맥락에서 시작되고 있었습니다.');setHTML(c21.querySelector('.desc'),'AD 52%, Direct 31%, CPS 10%, CRM 6%. 시작점이 하나가 아니므로 <span class="data-emphasis">유입 맥락을 다음 탐색까지 이어주는 것</span>이 중요했습니다.');}
     const c22=cardByNo('02.2');if(c22){setHTML(c22.querySelector('h3'),'방문이 많다는 것만으로<br>구매 의도가 높다고 볼 수는 없었습니다.');setHTML(c22.querySelector('.desc'),'4~5월 방문 규모가 컸지만 전환 효율은 2월이 가장 높았습니다. <span class="data-emphasis">볼륨과 구매 의도는 함께 봐야 했습니다.</span>');}
     const c23=cardByNo('02.3');if(c23){setText(c23.querySelector('.desc'),'PC는 6개월 모두 상품이 시작 1위, Mobile은 6개월 중 5개월 메인이 1위였습니다. 기기마다 기대하는 시작 역할이 달랐습니다.');setList('.number-panel p',['6개월 중 5개월 메인이 가장 강한 시작점이었고, 1개월은 하트TV가 1위였습니다.','6개월 모두 상품 랜딩이 1위였습니다. PC에서는 비교·구매 의도가 더 직접적이었습니다.'],c23);}
@@ -119,7 +119,7 @@
   /* 02 / quantitative behavior */
   const data=main.querySelector('#data');
   if(data){
-    setHTML(data.querySelector('.hm-section-title'),'정성적 데이터 분석과 더불어<br>정량적인 사용자 패턴 분석도 진행했습니다.');
+    setHTML(data.querySelector('.hm-section-title'),'문제들은 실제 이용 패턴에서도 반복됐습니다.');
 
     [...data.querySelectorAll('.data-card')].forEach((card,i)=>{
       prefix(card.querySelector('.data-card-head h3'),i+1);
