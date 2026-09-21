@@ -37,13 +37,7 @@ body.home-test .home-ascii-sky__canvas{
 }
 
 body.home-test .home-ascii-sky__blackout{
-  position:absolute;
-  z-index:2;
-  inset:0;
-  background:#000;
-  opacity:var(--home-sky-blackout);
-  pointer-events:none;
-  will-change:opacity;
+  display:none!important;
 }
 
 /* Existing Home content must remain above the sky without changing its own positioning contract. */
