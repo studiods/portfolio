@@ -226,8 +226,14 @@ body.contact-page-body .contact-footer a:focus-visible{
 
 @media(prefers-reduced-motion:reduce){
   body.contact-page-body.contact-motion-ready .contact-row{
+    transition:none!important;
+  }
+  body.contact-page-body.contact-motion-ready .contact-row:not(.is-contact-visible){
+    opacity:0!important;
+    transform:translate3d(0,42px,0)!important;
+  }
+  body.contact-page-body.contact-motion-ready .contact-row.is-contact-visible{
     opacity:1!important;
     transform:none!important;
-    transition:none!important;
   }
 }
