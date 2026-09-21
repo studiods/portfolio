@@ -44,23 +44,42 @@
 
 ### Desktop
 
-| Token | Observed value | 사용 |
+| Token | Canonical value | 사용 |
 |---|---:|---|
 | `type.hero` | 64px | Hero title |
-| `type.section` | 42px | 장 제목 |
-| `type.subsection` | 28px | 데이터·여정 제목 |
-| `type.group` | 22px | 카드 그룹 제목 |
+| `type.section` | 52px | 장 제목 |
+| `type.subsection` | 32px | 중타이틀 |
+| `type.group` | 22px | 카드·그룹 제목 |
 | `type.body` | 16px | 본문 |
-| `type.note` | 12px | 출처·메타 |
+| `type.note` | 12px | 인덱스·메타 |
+| `type.source` | 10px | 출처 |
 
-### Mobile
+### Mobile — Canonical
 
-- Display: `clamp(30px, 8.6vw, 35px)`
-- Section: `clamp(29px, 8vw, 33px)`
-- Subsection: `clamp(23px, 6.5vw, 26px)`
-- Group: `clamp(20px, 5.6vw, 22px)`
-- Body: `clamp(14px, 3.9vw, 16px)`
-- Small: `clamp(12px, 3.35vw, 14px)`
+모바일은 데스크톱을 단순 축소하지 않고 계층이 유지되는 범위에서 아래 토큰으로 통일한다. 모든 케이스 스터디는 `design-system/mobile-system.css`를 마지막 스타일시트로 로드해 페이지별 레거시 규칙보다 우선한다.
+
+| Token | Mobile value | 사용 |
+|---|---:|---|
+| `type.hero.mobile` | `clamp(36px, 9.2vw, 44px)` | Hero title |
+| `type.section.mobile` | `clamp(29px, 7.6vw, 34px)` | 장 제목 |
+| `type.subsection.mobile` | `clamp(24px, 6.2vw, 29px)` | 중타이틀 |
+| `type.group.mobile` | `clamp(19px, 5vw, 22px)` | 카드·그룹 제목 |
+| `type.body.mobile` | 15px | 본문 |
+| `type.note.mobile` | 11px | 인덱스·메타 |
+| `type.source.mobile` | 10px | 출처 |
+| `type.data-xl.mobile` | `clamp(48px, 14vw, 68px)` | 대표 수치 |
+| `type.data-lg.mobile` | `clamp(32px, 9.5vw, 44px)` | 그래프 주요 수치 |
+| `type.data-md.mobile` | `clamp(24px, 7.2vw, 32px)` | 그래프 보조 수치 |
+
+### Mobile Data Visualization
+
+- 원형·도넛은 `aspect-ratio:1/1`을 유지하고, 텍스트를 줄이기 위해 원 자체를 찌그러뜨리지 않는다.
+- PC에서 가로로 이어진 원형 Flow가 모바일에서 읽히지 않으면 동일 노드를 세로로 쌓고 전체를 Rounded Tablet/ Capsule outline으로 감싼다.
+- 원형 Flow의 화살표는 모바일에서 90° 회전해 진행 방향을 유지한다.
+- 단순 Pie·Ring·Ratio는 화면 폭 안에서 재배치한다.
+- 축과 라벨이 많은 SVG/Column chart는 억지로 축소하지 않고 PC plot 비율을 유지한 채 그래프 영역만 touch horizontal scroll을 허용한다.
+- Bar chart는 label / track / value 3열 구조를 유지하되 모바일 전용 label·value 크기와 track 높이를 적용한다.
+- 그래프 변경은 모두 `max-width:780px` 안에서만 적용하며 PC 버전의 크기·배치·타이포는 변경하지 않는다.
 
 ## 4. Observed Color Tokens
 
