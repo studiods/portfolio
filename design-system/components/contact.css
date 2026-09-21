@@ -106,7 +106,7 @@ body.contact-page-body .contact-row + .contact-row{
   border-top:1px solid var(--hm-line-content-divider,rgba(255,255,255,.18));
 }
 body.contact-page-body .contact-label{
-  color:rgba(255,255,255,.50);
+  color:rgba(255,255,255,.65);
   font-family:var(--hm-font-en);
   font-size:12px;
   font-weight:300;
@@ -137,7 +137,7 @@ body.contact-page-body .contact-value a:focus-visible{
 body.contact-page-body .contact-value--en,
 body.contact-page-body .contact-value--en a{
   font-family:var(--hm-font-en);
-  font-weight:300;
+  font-weight:400;
   letter-spacing:-.02em;
 }
 
