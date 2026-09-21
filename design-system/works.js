@@ -314,6 +314,10 @@
   const closeMenu = () => {
     trigger.setAttribute('aria-expanded', 'false');
     trigger.setAttribute('aria-label', '프로젝트 목록 열기');
+    if (body.classList.contains('works-title-compact')) {
+      title.setAttribute('aria-expanded', 'false');
+      title.setAttribute('aria-label', '프로젝트 목록 열기');
+    }
     menu.classList.remove('is-open');
   };
 
@@ -326,34 +330,34 @@
     menu.style.top = `${Math.round(rect.bottom + 24)}px`;
   };
 
-  trigger.addEventListener('click', () => {
+  const openMenu = () => {
+    if (!body.classList.contains('works-title-compact')) return;
+    trigger.setAttribute('aria-expanded', 'true');
+    trigger.setAttribute('aria-label', '프로젝트 목록 닫기');
+    title.setAttribute('aria-expanded', 'true');
+    title.setAttribute('aria-label', '프로젝트 목록 닫기');
+    menu.classList.add('is-open');
+    placeSwitcher();
+  };
+
+  const toggleMenu = () => {
     if (!body.classList.contains('works-title-compact')) return;
     const open = trigger.getAttribute('aria-expanded') === 'true';
     if (open) closeMenu();
-    else {
-      trigger.setAttribute('aria-expanded', 'true');
-      trigger.setAttribute('aria-label', '프로젝트 목록 닫기');
-      menu.classList.add('is-open');
-      placeSwitcher();
-    }
-  });
-
-  const goToTop = () => {
-    if (!body.classList.contains('works-title-compact')) return;
-    closeMenu();
-    window.scrollTo({top:0, behavior:reduced ? 'auto' : 'smooth'});
+    else openMenu();
   };
 
-  title.addEventListener('click', goToTop);
+  trigger.addEventListener('click', toggleMenu);
+  title.addEventListener('click', toggleMenu);
   title.addEventListener('keydown', event => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     if (!body.classList.contains('works-title-compact')) return;
     event.preventDefault();
-    goToTop();
+    toggleMenu();
   });
 
   document.addEventListener('pointerdown', event => {
-    if (!menu.contains(event.target) && event.target !== trigger) closeMenu();
+    if (!menu.contains(event.target) && event.target !== trigger && event.target !== title) closeMenu();
   });
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') closeMenu();
@@ -490,10 +494,14 @@
     if (compact) {
       title.setAttribute('role', 'button');
       title.setAttribute('tabindex', '0');
-      title.setAttribute('aria-label', 'WORKS 맨 위로 이동');
+      title.setAttribute('aria-haspopup', 'true');
+      title.setAttribute('aria-expanded', trigger.getAttribute('aria-expanded') || 'false');
+      title.setAttribute('aria-label', trigger.getAttribute('aria-expanded') === 'true' ? '프로젝트 목록 닫기' : '프로젝트 목록 열기');
     } else {
       title.removeAttribute('role');
       title.removeAttribute('tabindex');
+      title.removeAttribute('aria-haspopup');
+      title.removeAttribute('aria-expanded');
       title.removeAttribute('aria-label');
       closeMenu();
     }
