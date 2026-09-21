@@ -87,12 +87,21 @@
   /* Canonical mobile hierarchy.
      Hero must remain visually dominant; every lower title is strictly smaller. */
   --hm-type-hero-mobile:clamp(36px,9.2vw,44px);
-  --hm-type-section-mobile:clamp(28px,7.4vw,34px);
+  --hm-type-section-mobile:clamp(29px,7.6vw,34px);
   --hm-type-subsection-mobile:clamp(24px,6.2vw,29px);
-  --hm-type-group-mobile:clamp(19px,5vw,23px);
+  --hm-type-group-mobile:clamp(19px,5vw,22px);
   --hm-type-body-mobile:15px;
   --hm-type-note-mobile:11px;
   --hm-type-source-mobile:10px;
+
+  /* Mobile data-visual hierarchy: display number / chart number / chart label.
+     These are intentionally separate from editorial typography so graphs remain legible
+     without forcing desktop-sized numerals into a narrow viewport. */
+  --hm-type-data-xl-mobile:clamp(48px,14vw,68px);
+  --hm-type-data-lg-mobile:clamp(32px,9.5vw,44px);
+  --hm-type-data-md-mobile:clamp(24px,7.2vw,32px);
+  --hm-type-chart-label-mobile:12px;
+  --hm-type-chart-value-mobile:13px;
 
   /* Mobile circular journey geometry. */
   --hm-mobile-circle-size:clamp(168px,50vw,200px);
