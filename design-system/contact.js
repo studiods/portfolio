@@ -39,15 +39,31 @@
   updateTitle();
 
   const details = document.querySelector('.contact-details');
+  const contactContent = document.querySelector('.contact-content');
   const revealDelay = 2000;
   let revealTimer = 0;
   let scrambleObserver = null;
 
-  const revealDetails = () => {
-    if (!details || details.classList.contains('is-contact-visible')) return;
+  const revealAndCenterDetails = () => {
+    if (!details || !contactContent) return;
+
     details.classList.add('is-contact-visible');
     requestAnimationFrame(() => {
       revealItems.forEach(item => item.classList.add('is-contact-visible'));
+
+      const titleRange = Math.max(1, Math.min(520, hero.offsetHeight * .55));
+      const stickyCenterTarget = contactContent.offsetTop - (window.innerHeight * .5);
+      const targetY = Math.max(0, titleRange, stickyCenterTarget);
+
+      window.scrollTo({
+        top: targetY,
+        left: 0,
+        behavior: reduced ? 'auto' : 'smooth'
+      });
+
+      window.setTimeout(() => {
+        updateTitle();
+      }, reduced ? 0 : 1200);
     });
   };
 
@@ -55,7 +71,7 @@
     if (revealTimer) return;
     scrambleObserver?.disconnect();
     scrambleObserver = null;
-    revealTimer = window.setTimeout(revealDetails, revealDelay);
+    revealTimer = window.setTimeout(revealAndCenterDetails, revealDelay);
   };
 
   if (reduced) {
