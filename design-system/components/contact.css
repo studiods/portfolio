@@ -18,27 +18,9 @@ body.contact-page-body{
 }
 body.contact-page-body *{box-sizing:border-box}
 
-body.contact-page-body .contact-background{
-  position:fixed;
-  z-index:0;
-  inset:0;
-  width:100%;
-  height:100vh;
-  overflow:hidden;
-  pointer-events:none;
-  background:#000;
-}
-body.contact-page-body .contact-background__video{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center;
-}
-body.contact-page-body .contact-background__matte{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.60);
+/* CONTACT has no background media. Keep the page on a solid black canvas. */
+body.contact-page-body :is(video,audio){
+  display:none!important;
 }
 body.contact-page-body .works-page{
   position:fixed;
@@ -48,7 +30,7 @@ body.contact-page-body .works-page{
   height:100vh;
   min-height:0;
   overflow:hidden;
-  background:transparent!important;
+  background:#000!important;
 }
 
 /* CONTACT must use the same true center lock as the rest of the canonical GNB. */
