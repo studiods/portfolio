@@ -76,13 +76,13 @@
     const pattern022 = document.querySelector('#data .hm-data-pattern-022');
     html(pattern022?.querySelector('.narrative-title'), '데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 다음 행동으로의 연결에 있었습니다.');
     const patternTitles = [
-      '시작점은 하나가 아니였습니다.',
-      '고객은 적극적으로 후보를 찾고 있었습니다.',
+      '<span>시작점은 하나가</span><span>아니였습니다.</span>',
+      '<span>고객은 적극적으로 후보를</span><span>찾고 있었습니다.</span>',
       '<span>하지만 다음 화면에서</span><span>맥락이 약해졌습니다.</span>'
     ];
     pattern022?.querySelectorAll('.behavior-pattern-card h4').forEach((el, i) => {
       if (patternTitles[i]) html(el, patternTitles[i]);
-      if (i === 2) el.classList.add('behavior-pattern-card__title--two-lines');
+      el.classList.add('behavior-pattern-card__title--two-lines');
     });
 
     const bridge023 = document.querySelector('#data .hm-data-bridge-023__copy');
