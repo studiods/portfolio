@@ -41,11 +41,45 @@
   const details = document.querySelector('.contact-details');
   const contactContent = document.querySelector('.contact-content');
   const revealDelay = 2000;
+  const autoScrollDuration = 1700;
+  const hideDuration = 1050;
   let revealTimer = 0;
+  let hideTimer = 0;
   let scrambleObserver = null;
+  let autoScrollRaf = 0;
+  let autoScrolling = false;
+  let userInteracted = false;
+  let lastScrollY = window.scrollY;
 
-  const autoScrollDuration = 2200;
   const easeInCubic = progress => progress * progress * progress;
+
+  const showDetails = () => {
+    if (!details) return;
+    if (hideTimer) {
+      window.clearTimeout(hideTimer);
+      hideTimer = 0;
+    }
+    details.classList.add('is-contact-visible');
+    requestAnimationFrame(() => {
+      revealItems.forEach(item => item.classList.add('is-contact-visible'));
+    });
+  };
+
+  const hideDetails = () => {
+    if (!details) return;
+    revealItems.forEach(item => item.classList.remove('is-contact-visible'));
+    if (hideTimer) window.clearTimeout(hideTimer);
+    hideTimer = window.setTimeout(() => {
+      details.classList.remove('is-contact-visible');
+      hideTimer = 0;
+    }, hideDuration);
+  };
+
+  const stopAutoScroll = () => {
+    if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf);
+    autoScrollRaf = 0;
+    autoScrolling = false;
+  };
 
   const animateScrollTo = targetY => {
     if (reduced) {
@@ -54,6 +88,8 @@
       return;
     }
 
+    stopAutoScroll();
+    autoScrolling = true;
     const startY = window.scrollY;
     const distance = targetY - startY;
     const startedAt = performance.now();
@@ -66,37 +102,67 @@
       updateTitle();
 
       if (progress < 1) {
-        requestAnimationFrame(step);
+        autoScrollRaf = requestAnimationFrame(step);
       } else {
         window.scrollTo(0, targetY);
         updateTitle();
+        autoScrollRaf = 0;
+        autoScrolling = false;
+        lastScrollY = window.scrollY;
       }
     };
 
-    requestAnimationFrame(step);
+    autoScrollRaf = requestAnimationFrame(step);
   };
 
   const revealAndCenterDetails = () => {
-    if (!details || !contactContent) return;
+    if (!details || !contactContent || userInteracted) return;
 
-    details.classList.add('is-contact-visible');
-    requestAnimationFrame(() => {
-      revealItems.forEach(item => item.classList.add('is-contact-visible'));
+    showDetails();
 
-      const titleRange = Math.max(1, Math.min(520, hero.offsetHeight * .55));
-      const stickyCenterTarget = contactContent.offsetTop - (window.innerHeight * .5);
-      const targetY = Math.max(0, titleRange, stickyCenterTarget);
-
-      animateScrollTo(targetY);
-    });
+    const titleRange = Math.max(1, Math.min(520, hero.offsetHeight * .55));
+    const stickyCenterTarget = contactContent.offsetTop - (window.innerHeight * .5);
+    const targetY = Math.max(0, titleRange, stickyCenterTarget);
+    animateScrollTo(targetY);
   };
 
   const scheduleReveal = () => {
-    if (revealTimer) return;
+    if (revealTimer || userInteracted) return;
     scrambleObserver?.disconnect();
     scrambleObserver = null;
-    revealTimer = window.setTimeout(revealAndCenterDetails, revealDelay);
+    revealTimer = window.setTimeout(() => {
+      revealTimer = 0;
+      revealAndCenterDetails();
+    }, revealDelay);
   };
+
+  const onManualIntent = () => {
+    userInteracted = true;
+    if (revealTimer) {
+      window.clearTimeout(revealTimer);
+      revealTimer = 0;
+    }
+    stopAutoScroll();
+  };
+
+  const handleDirectionalScroll = () => {
+    const currentY = window.scrollY;
+    const delta = currentY - lastScrollY;
+
+    if (!autoScrolling && Math.abs(delta) > 1) {
+      if (delta > 0) showDetails();
+      else hideDetails();
+    }
+
+    lastScrollY = currentY;
+  };
+
+  window.addEventListener('wheel', onManualIntent, { passive:true });
+  window.addEventListener('touchstart', onManualIntent, { passive:true });
+  window.addEventListener('keydown', event => {
+    if (['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key)) onManualIntent();
+  });
+  window.addEventListener('scroll', handleDirectionalScroll, { passive:true });
 
   if (reduced) {
     scheduleReveal();
