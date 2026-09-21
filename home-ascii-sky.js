@@ -2,6 +2,7 @@
   'use strict';
 
   const root = document.querySelector('.home-ascii-sky');
+  const philosophy = document.querySelector('#philosophy');
   const canvas = root?.querySelector('.home-ascii-sky__canvas');
   const ctx = canvas?.getContext('2d', { alpha: false });
   if (!root || !canvas || !ctx) return;
@@ -24,6 +25,7 @@
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+  const smoothstep = t => { const p = clamp(t); return p * p * (3 - 2 * p); };
 
   const buildStars = () => {
     stars.length = 0;
@@ -156,6 +158,20 @@
     ctx.fillText('*', x, y);
   };
 
+  const updateExitState = () => {
+    if (!philosophy) return;
+
+    const rect = philosophy.getBoundingClientRect();
+    const start = innerHeight * 1.02;
+    const end = innerHeight * 0.58;
+    const p = clamp((start - rect.top) / Math.max(1, start - end));
+    const eased = smoothstep(p);
+
+    root.style.setProperty('--home-sky-blackout', (eased * 0.96).toFixed(3));
+    root.style.setProperty('--home-sky-opacity', (1 - smoothstep(clamp((p - 0.28) / 0.72))).toFixed(3));
+    root.style.setProperty('--home-sky-shift', `${(-innerHeight * 0.14 * eased).toFixed(1)}px`);
+  };
+
   const draw = now => {
     const t = now * 0.001;
 
@@ -186,14 +202,25 @@
 
   resize();
   draw(performance.now());
+  updateExitState();
 
   if (!reduce) {
     raf = requestAnimationFrame(frame);
   }
 
+  let scrollRaf = 0;
+  window.addEventListener('scroll', () => {
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      scrollRaf = 0;
+      updateExitState();
+    });
+  }, { passive:true });
+
   window.addEventListener('resize', () => {
     resize();
     draw(performance.now());
+    updateExitState();
   }, { passive:true });
 
   window.addEventListener('pagehide', () => {
