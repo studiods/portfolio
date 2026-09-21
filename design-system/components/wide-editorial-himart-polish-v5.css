@@ -1003,3 +1003,15 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
   margin-right:32px!important;
   width:calc(100% - 32px)!important;
 }
+
+
+/* HIMART 02.3 — final emphasis: quoted phrases stay emphasized; surrounding copy is Thin. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
+  max-width:none!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
+  font-weight:500!important;
+  font-variation-settings:"wght" 500!important;
+}
