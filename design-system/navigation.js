@@ -23,12 +23,14 @@
   const links = [
     { label: 'Home', href: './index.html', page: 'home' },
     { label: 'About', href: './about.html', page: 'about' },
-    { label: 'Works', href: './works.html', page: 'works' }
+    { label: 'Works', href: './works.html', page: 'works' },
+    { label: 'Contact', href: './contact.html', page: 'contact' }
   ];
 
   const currentPage = () => {
     const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (file === 'about.html') return 'about';
+    if (file === 'contact.html') return 'contact';
     if (file === 'index.html' || file === '') return 'home';
     return 'works';
   };
