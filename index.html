@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./home-fixes.css?v=63">
   <link rel="stylesheet" href="./home-test-fixes.css?v=21">
   <link rel="stylesheet" href="./home-dark-theme.css?v=2">
+  <link rel="stylesheet" href="./home-ascii-sky.css?v=20260922-1">
   <link rel="stylesheet" href="./design-system/navigation.css?v=20260921-6"><link rel="stylesheet" href="./design-system/mobile-system.css?v=20260921-4">
 </head>
 <body class="home-test home-dark">
@@ -30,6 +31,9 @@
 <main class="shell">
   <section class="hero-sequence" id="heroSequence">
     <div class="hero-sticky">
+      <div class="home-ascii-sky" aria-hidden="true">
+        <canvas class="home-ascii-sky__canvas"></canvas>
+      </div>
       <div class="hero-state hero-state-quote">
         <div class="hero-quote hero-load-mask js-char-fill">
           <span>THE ABILITY TO SIMPLIFY</span>
@@ -166,6 +170,7 @@
 
   <footer class="footer filip-footer footer-contact-only" id="contact"><div class="footer-grid"><div><h3>Contact</h3><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></div></div></footer>
 </main>
+<script src="./home-ascii-sky.js?v=20260922-1" defer></script>
 <script src="./home-interactions.js?v=55" defer></script>
 <script src="./home-test-patch.js?v=11" defer></script>
 <script src="./design-system/navigation.js?v=20260921-5"></script>
