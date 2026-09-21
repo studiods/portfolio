@@ -118,8 +118,28 @@
         grid042.className = 'ax-friction-grid hm-ds-subtitle-to-content himart-direction-rule';
         direction042.querySelector('.hm-subhead')?.insertAdjacentElement('afterend', grid042);
       }
-      grid042.innerHTML = '<article class="ax-friction-card"><span>01</span><h4><span>스마트 비교로 원하는 조건의 상품을</span><span>빠르게 좁힐 수 있도록 했습니다.</span></h4><p><span>가격·스펙·설치 조건을 한 화면에서 비교하고,</span><span>원하는 상품만 빠르게 남겨 반복 탐색과 이탈을 줄입니다.</span></p></article><article class="ax-friction-card"><span>02</span><h4><span>길고 어려운 상품 정보는</span><span>빠르게 이해되는 언어로 다시 풉니다.</span></h4><p><span>복잡한 스펙과 상세 정보를 생활 기준과 핵심 요약으로 바꿔,</span><span>빠르게 파악하고 구매 확신을 만들 수 있도록 구성합니다.</span></p></article>';
+      grid042.innerHTML = '<article class="ax-friction-card"><span>01</span><h4><span>스마트 비교로 원하는 조건의 상품을</span><span>빠르게 찾을 수 있도록 했습니다.</span></h4><p><span>비교 과정의 이탈을 줄이기 위해 가격·스펙·설치 조건을 한 화면에서 비교하고,</span><span>원하는 조건의 상품만 빠르게 좁힐 수 있도록 설계했습니다.</span></p></article><article class="ax-friction-card"><span>02</span><h4><span>어렵고 긴 상세 정보는</span><span>빠르게 이해되는 문법으로 다시 풀었습니다.</span></h4><p><span>복잡한 스펙과 설명을 생활 기준·핵심 요약·비교 가능한 구조로 바꿔,</span><span>사용자가 빠르게 파악하고 구매 확신을 만들도록 했습니다.</span></p></article>';
     }
+
+    const dataChapterTitle = document.querySelector('#data > .hm-wrap > .hm-section-head .hm-section-title');
+    html(dataChapterTitle, '문제들은 실제 이용 패턴에서도 반복됐습니다.');
+
+    const pattern022 = document.querySelector('#data .hm-data-pattern-022');
+    html(pattern022?.querySelector('.narrative-title'), '데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 ‘다음 행동으로의 연결’에 있었습니다.');
+    const pattern022Titles = [
+      '시작점은 하나가<br>아니였습니다.',
+      '고객은 적극적으로 후보를<br>찾고 있었습니다.',
+      '하지만 다음 화면에서 앞선<br>맥락이 약해졌습니다.'
+    ];
+    pattern022?.querySelectorAll('.behavior-pattern-card h4').forEach((el, i) => {
+      if (pattern022Titles[i]) html(el, pattern022Titles[i]);
+    });
+
+    const role032Title = document.querySelector('#journey .journey-role-block .journey-block-title, #journey [data-index="03.2"] + div .hm-subtitle, #journey .hm-subno[data-index="03.2"] + div .hm-subtitle');
+    html(role032Title, '그리고 각 화면의 역할을<br>명확하게 다시 정의했습니다.');
+
+    const directionChapterTitle = document.querySelector('#direction > .hm-wrap > .hm-section-head .hm-section-title');
+    html(directionChapterTitle, '정의한 흐름과 여정별 정의를 바탕으로<br>빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.');
 
     const behaviorTitles = [
       '<span>외부 맥락을</span><span>가진 유입</span>',
