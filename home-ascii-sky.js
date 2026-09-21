@@ -20,7 +20,7 @@
   let maxRadius = 0;
   let raf = 0;
   let lastFrame = 0;
-  let nextMeteorAt = performance.now() + 3200 + Math.random() * 3600;
+  let nextMeteorAt = performance.now() + 1800 + Math.random() * 2200;
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -28,24 +28,24 @@
   const buildStars = () => {
     stars.length = 0;
 
-    const density = width <= 780 ? 118 : 245;
+    const density = width <= 780 ? 170 : 360;
 
     for (let i = 0; i < density; i++) {
       const radiusBias = Math.pow(Math.random(), 0.66);
       const radius = radiusBias * maxRadius;
-      const brightness = rand(0.13, 0.90);
+      const brightness = rand(0.22, 0.98);
       const speedBand = Math.random();
 
       let speed;
-      if (speedBand < 0.48) speed = rand(0.0036, 0.0075);
-      else if (speedBand < 0.86) speed = rand(0.0075, 0.0135);
-      else speed = rand(0.0135, 0.022);
+      if (speedBand < 0.48) speed = rand(0.0055, 0.0100);
+      else if (speedBand < 0.86) speed = rand(0.0100, 0.0175);
+      else speed = rand(0.0175, 0.028);
 
       stars.push({
         radius,
         angle:Math.random() * TAU,
         speed,
-        size:rand(8.5, 13.5),
+        size:rand(9.5, 15.5),
         brightness,
         twinkleSpeed:rand(0.45, 1.75),
         twinklePhase:Math.random() * TAU,
@@ -128,7 +128,7 @@
       trailLength:Math.floor(rand(5,9))
     });
 
-    nextMeteorAt = now + rand(4800, 10500);
+    nextMeteorAt = now + rand(4200, 8200);
   };
 
   const drawMeteor = (meteor, now) => {
