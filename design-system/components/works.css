@@ -209,13 +209,13 @@ body.works-page-body .works-card-image{
   object-fit:cover;
 }
 
-/* Media overlay: black 40% by default; hover/focus and active playback remove the black layer. */
+/* Media overlay: black 50% by default; hover/focus and active playback remove the black layer. */
 body.works-page-body .works-card-media-link.has-visual::after{
   content:"";
   position:absolute;
   z-index:3;
   inset:0;
-  background:rgba(0,0,0,.40);
+  background:rgba(0,0,0,.50);
   pointer-events:none;
   transition:background .22s ease;
 }
