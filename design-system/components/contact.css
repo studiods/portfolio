@@ -76,7 +76,7 @@ body.contact-page-body .works-page-title{
   width:max-content!important;
   color:var(--hm-text-primary,#fff)!important;
   font-family:var(--hm-font-en)!important;
-  font-size:var(--contact-title-size,clamp(72px,9vw,160px))!important;
+  font-size:clamp(72px,9vw,160px)!important;
   font-weight:300!important;
   line-height:.8!important;
   letter-spacing:-.035em!important;
@@ -84,12 +84,7 @@ body.contact-page-body .works-page-title{
   transform:translateY(-50%)!important;
   transform-origin:left center!important;
   pointer-events:none!important;
-  will-change:font-size;
 }
-body.contact-page-body.contact-title-compact .works-page-title{
-  font-weight:400!important;
-}
-
 body.contact-page-body :is(.works-title-menu-toggle,.works-project-menu,.works-progress,.hm-global-progress){
   display:none!important;
 }
@@ -111,20 +106,14 @@ body.contact-page-body .contact-spacer{
 body.contact-page-body .contact-details{
   align-self:center;
   padding:0 var(--hm-inset-desktop) 0 0;
-  transform:translate3d(0,18vh,0);
-  visibility:hidden;
   opacity:0;
-  pointer-events:none;
-  transition:
-    opacity 900ms cubic-bezier(.55,.055,.675,.19),
-    transform 1450ms cubic-bezier(.55,.055,.675,.19);
-  will-change:opacity,transform;
-}
-body.contact-page-body .contact-details.is-contact-visible{
-  visibility:visible;
-  opacity:1;
-  transform:translate3d(0,0,0);
+  translate:0 56px;
   pointer-events:auto;
+  animation:contact-details-rise 1100ms cubic-bezier(.2,.75,.2,1) 760ms forwards;
+}
+@keyframes contact-details-rise{
+  from{opacity:0;translate:0 56px}
+  to{opacity:1;translate:0 0}
 }
 
 body.contact-page-body .contact-row{
@@ -175,28 +164,13 @@ body.contact-page-body .contact-value--en a{
   letter-spacing:-.02em;
 }
 
-/* Right-side content rises vertically without a surrounding frame. */
-body.contact-page-body.contact-motion-ready .contact-row{
-  opacity:0;
-  transform:translate3d(0,64px,0);
-  transition:
-    opacity 900ms cubic-bezier(.55,.055,.675,.19),
-    transform 1150ms cubic-bezier(.55,.055,.675,.19);
-  will-change:opacity,transform;
-}
-body.contact-page-body.contact-motion-ready .contact-row.is-contact-visible{
-  opacity:1;
-  transform:translate3d(0,0,0);
-}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(2){transition-delay:65ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(3){transition-delay:130ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(4){transition-delay:195ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(5){transition-delay:260ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(6){transition-delay:325ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(7){transition-delay:390ms}
-
 body.contact-page-body .contact-footer{
-  display:none;
+  display:flex;
+  position:fixed;
+  z-index:3;
+  left:0;
+  right:0;
+  bottom:0;
   justify-content:space-between;
   gap:24px;
   padding:48px var(--hm-inset-desktop) 60px;
@@ -242,10 +216,7 @@ body.contact-page-body .contact-footer a:focus-visible{
     right:0;
     top:50%;
     padding:0 var(--hm-inset-mobile);
-    transform:translate3d(0,calc(-50% + 18vh),0);
-  }
-  body.contact-page-body .contact-details.is-contact-visible{
-    transform:translate3d(0,-50%,0);
+    transform:translateY(-50%);
   }
   body.contact-page-body .contact-row{
     grid-template-columns:1fr;
@@ -265,15 +236,9 @@ body.contact-page-body .contact-footer a:focus-visible{
 }
 
 @media(prefers-reduced-motion:reduce){
-  body.contact-page-body.contact-motion-ready .contact-row{
-    transition:none!important;
-  }
-  body.contact-page-body.contact-motion-ready .contact-row:not(.is-contact-visible){
-    opacity:0!important;
-    transform:translate3d(0,64px,0)!important;
-  }
-  body.contact-page-body.contact-motion-ready .contact-row.is-contact-visible{
+  body.contact-page-body .contact-details{
+    animation:none!important;
     opacity:1!important;
-    transform:none!important;
+    translate:none!important;
   }
 }
