@@ -29,7 +29,46 @@ body.works-page-body .works-hero{
   position:relative;
   height:100vh;
   min-height:680px;
+  overflow:hidden;
+  isolation:isolate;
   scroll-snap-align:start;
+}
+
+body.works-page-body .works-ascii-bg{
+  --works-ascii-blackout:.30;
+  --works-ascii-opacity:1;
+  position:absolute;
+  z-index:0;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  opacity:var(--works-ascii-opacity);
+  pointer-events:none;
+  will-change:opacity;
+}
+
+body.works-page-body .works-ascii-canvas{
+  position:absolute;
+  z-index:1;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  opacity:.92;
+  transform:scale(1.015);
+  transform-origin:center;
+}
+
+body.works-page-body .works-ascii-blackout{
+  position:absolute;
+  z-index:2;
+  inset:0;
+  background:#000;
+  opacity:var(--works-ascii-blackout);
+  pointer-events:none;
+  will-change:opacity;
 }
 body.works-page-body .works-page-title{
   position:fixed;
