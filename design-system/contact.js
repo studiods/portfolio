@@ -6,7 +6,7 @@
 
   const hero = document.querySelector('.contact-hero');
   const title = document.querySelector('.contact-page-title');
-  const revealItems = [...document.querySelectorAll('.contact-intro,.contact-row')];
+  const revealItems = [...document.querySelectorAll('.contact-row')];
   if (!hero || !title) return;
 
   const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
