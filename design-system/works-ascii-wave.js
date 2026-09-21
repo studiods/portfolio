@@ -11,11 +11,11 @@
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const TAU = Math.PI * 2;
 
-  const oceanGlyphs = [' ', '·', '~', ':', '-', '=', '+', '*', '%', '#', '@'];
+  const oceanGlyphs = [' ', '·', '~', ':', '-', '=', '+', '*', '%', '#'];
   const foamGlyphs = ['~', '=', '+', '*', '#', '@'];
-  const sandGlyphs = [' ', ' ', '·', '.', '·', ':'];
+  const sandGlyphs = [' ', ' ', ' ', '·', '.', '·', ':'];
 
-  const phases = Array.from({ length: 10 }, () => Math.random() * TAU);
+  const phases = Array.from({ length: 12 }, () => Math.random() * TAU);
   const seeds = Array.from({ length: 8 }, () => 0.78 + Math.random() * 0.9);
 
   let width = 0;
@@ -38,7 +38,7 @@
     const n = Math.sin(
       x * (12.9898 + seeds[0]) +
       y * (78.233 + seeds[1]) +
-      phases[9]
+      phases[11]
     ) * 43758.5453;
     return fract(n);
   };
@@ -66,62 +66,97 @@
     ctx.font = `${Math.max(9, cellY * 0.68)}px "Averta PE", "Courier New", monospace`;
   };
 
-  // Vertical shoreline around x=75%, viewed from directly above.
-  // Tiny y-dependent bends keep the coast organic without becoming noisy.
+  // Reference-like top view: the coast sits at roughly 72–75% of the frame,
+  // with a slight diagonal and naturally broken edge.
   const shorelineX = (ny, t) => {
-    const slowTide = Math.sin(t * 0.16 + phases[0]) * 0.006;
-    const bendA = Math.sin(ny * TAU * 1.05 + phases[1]) * 0.013;
-    const bendB = Math.sin(ny * TAU * 2.7 - t * 0.055 + phases[2]) * 0.006;
-    return 0.755 + slowTide + bendA + bendB;
+    const diagonal = (ny - 0.5) * 0.034;
+    const largeBend = Math.sin(ny * TAU * 0.95 + phases[0]) * 0.012;
+    const smallBend = Math.sin(ny * TAU * 3.1 - t * 0.12 + phases[1]) * 0.006;
+    const breathing = Math.sin(t * 0.42 + phases[2]) * 0.0055;
+    return 0.725 + diagonal + largeBend + smallBend + breathing;
   };
 
-  // Wave crests travel from left to right toward the beach.
   const oceanField = (nx, ny, shoreX, t, col, row) => {
     const distanceToShore = Math.max(0, shoreX - nx);
-    const verticalDrift =
-      Math.sin(ny * TAU * 1.35 + phases[3]) * 0.085 +
-      Math.sin(ny * TAU * 3.2 - t * 0.08 + phases[4]) * 0.025;
 
-    const travelling =
-      nx * (5.1 * seeds[2]) -
-      t * 0.115 +
-      verticalDrift;
+    // Slightly faster than the previous version, but still calm.
+    const speedA = 0.215;
+    const speedB = 0.305;
+    const speedC = 0.155;
 
-    const travelling2 =
-      nx * (8.2 * seeds[3]) -
-      t * 0.165 +
-      Math.sin(ny * TAU * 2.15 + phases[5]) * 0.055;
+    const verticalWarp =
+      Math.sin(ny * TAU * 1.25 + phases[3]) * 0.080 +
+      Math.sin(ny * TAU * 3.7 - t * 0.15 + phases[4]) * 0.028;
 
-    const phaseA = fract(travelling);
-    const phaseB = fract(travelling2);
+    const phaseA = fract(
+      nx * (5.25 * seeds[2]) -
+      t * speedA +
+      verticalWarp
+    );
 
-    // Narrow, soft foam lines inside broader low-contrast swells.
-    const crestA = Math.exp(-Math.pow((phaseA - 0.5) / 0.075, 2));
-    const crestB = Math.exp(-Math.pow((phaseB - 0.5) / 0.055, 2)) * 0.42;
+    const phaseB = fract(
+      nx * (8.6 * seeds[3]) -
+      t * speedB +
+      Math.sin(ny * TAU * 2.2 + phases[5]) * 0.060
+    );
 
+    const phaseC = fract(
+      nx * (3.35 * seeds[4]) -
+      t * speedC +
+      Math.sin(ny * TAU * 1.6 + phases[6]) * 0.048
+    );
+
+    const crestA = Math.exp(-Math.pow((phaseA - 0.5) / 0.072, 2));
+    const crestB = Math.exp(-Math.pow((phaseB - 0.5) / 0.050, 2)) * 0.46;
+    const crestC = Math.exp(-Math.pow((phaseC - 0.5) / 0.095, 2)) * 0.26;
+
+    const shoreGain = 1 - clamp(distanceToShore / 0.30);
+    const deepGain = clamp(distanceToShore / 0.74, 0.22, 1);
+
+    // Broad water texture keeps the left side feeling like open sea rather than empty black.
     const swell =
       0.5 +
       0.5 * Math.sin(
-        nx * TAU * 1.9 -
-        t * 0.34 +
-        Math.sin(ny * TAU * 1.25 + phases[6]) * 0.72
+        nx * TAU * 1.65 -
+        t * 0.48 +
+        Math.sin(ny * TAU * 1.18 + phases[7]) * 0.72
       );
 
-    const shoreGain = 1 - clamp(distanceToShore / 0.28);
-    const deepGain = clamp(distanceToShore / 0.72, 0.2, 1);
-
     const seaTexture =
-      0.16 +
-      swell * 0.20 +
-      pseudo(col * 0.23 + t * 0.008, row * 0.29) * 0.08;
+      0.145 +
+      swell * 0.185 +
+      pseudo(col * 0.23 + t * 0.014, row * 0.29) * 0.085;
 
-    const foam = (crestA + crestB) * (0.38 + shoreGain * 0.62);
+    const foam =
+      (crestA + crestB + crestC) *
+      (0.32 + shoreGain * 0.68);
 
     return {
       intensity: clamp(seaTexture * deepGain + foam),
       foam: clamp(foam),
       shoreGain
     };
+  };
+
+  // A primary breaking line advances toward shore, spreads, then resets offshore.
+  // This gives a recognizable real-wave cycle instead of endless equal-speed stripes.
+  const breakerField = (distanceToShore, ny, t) => {
+    const cycle = fract(t * 0.17 + phases[8] / TAU);
+    const eased = 1 - Math.pow(1 - cycle, 1.55);
+
+    const start = 0.145;
+    const end = 0.010;
+    const center =
+      start + (end - start) * eased +
+      Math.sin(ny * TAU * 1.35 + phases[9]) * 0.010 +
+      Math.sin(ny * TAU * 4.4 - t * 0.22 + phases[10]) * 0.0045;
+
+    const widthBand = 0.018 + eased * 0.010;
+    const band = Math.exp(-Math.pow((distanceToShore - center) / widthBand, 2));
+
+    // Fade the breaker just before the cycle restarts to avoid a visible jump.
+    const life = smoothstep(clamp(cycle / 0.10)) * (1 - smoothstep(clamp((cycle - 0.84) / 0.16)));
+    return band * life;
   };
 
   const draw = now => {
@@ -139,64 +174,81 @@
         const nx = x / width;
         const coastDistance = nx - shoreX;
 
-        // BEACH — right 1/4. Sparse, quiet ASCII grain.
+        // BEACH — mostly quiet, pale-grain equivalent in monochrome ASCII.
         if (coastDistance > 0) {
           const grain = pseudo(col * 0.41 + 17.2, row * 0.37 + 9.8);
-          const wetSand = 1 - clamp(coastDistance / 0.10);
+          const wetSand = 1 - clamp(coastDistance / 0.105);
 
-          if (grain < (0.42 - wetSand * 0.08)) continue;
+          if (grain < (0.50 - wetSand * 0.09)) continue;
 
           const index = Math.min(
             sandGlyphs.length - 1,
             Math.floor(grain * sandGlyphs.length)
           );
-          const alpha = clamp(0.055 + grain * 0.15 + wetSand * 0.07, 0.05, 0.27);
+
+          const alpha = clamp(
+            0.045 + grain * 0.13 + wetSand * 0.06,
+            0.045,
+            0.23
+          );
 
           ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
           ctx.fillText(sandGlyphs[index], x, y);
           continue;
         }
 
-        // OCEAN — left 3/4.
+        // OCEAN — left side, with several offshore swells plus a main breaking wave.
         const ocean = oceanField(nx, ny, shoreX, t, col, row);
         const distanceToShore = Math.max(0, shoreX - nx);
+        const breaker = breakerField(distanceToShore, ny, t);
 
-        // Thin shoreline foam gently breathes in/out while the offshore crests advance right.
+        // Persistent shoreline wash, moving slightly in and out.
         const tide =
-          0.010 +
-          0.005 * (
+          0.009 +
+          0.008 * (
             0.5 +
-            0.5 * Math.sin(t * 0.42 + ny * TAU * 1.2 + phases[7])
+            0.5 * Math.sin(t * 0.72 + ny * TAU * 1.18 + phases[2])
           );
 
         const shoreFoam = Math.exp(
-          -Math.pow((distanceToShore - tide) / 0.011, 2)
+          -Math.pow((distanceToShore - tide) / 0.010, 2)
         );
 
-        const foamStrength = clamp(Math.max(ocean.foam, shoreFoam));
-        const intensity = clamp(ocean.intensity + shoreFoam * 0.88);
+        // Breaker becomes brighter and more fragmented near the shoreline.
+        const breakNoise = 0.78 + pseudo(col * 0.63 + t * 0.07, row * 0.47) * 0.35;
+        const breakerFoam = breaker * breakNoise * (0.68 + ocean.shoreGain * 0.42);
 
-        if (intensity < 0.115) continue;
+        const foamStrength = clamp(
+          Math.max(ocean.foam, shoreFoam, breakerFoam)
+        );
+
+        const intensity = clamp(
+          ocean.intensity +
+          shoreFoam * 0.88 +
+          breakerFoam * 0.90
+        );
+
+        if (intensity < 0.108) continue;
 
         let glyph;
         let alpha;
 
-        if (foamStrength > 0.36) {
+        if (foamStrength > 0.32) {
           const foamIndex = Math.min(
             foamGlyphs.length - 1,
             Math.floor(clamp(foamStrength) * foamGlyphs.length)
           );
           glyph = foamGlyphs[foamIndex];
-          alpha = clamp(0.30 + foamStrength * 0.58, 0.30, 0.90);
+          alpha = clamp(0.30 + foamStrength * 0.60, 0.30, 0.92);
         } else {
-          const flicker = pseudo(col * 0.31 + Math.floor(t * 0.85), row * 0.23);
-          const shaped = clamp(intensity * 0.88 + flicker * 0.055);
+          const flicker = pseudo(col * 0.31 + Math.floor(t * 1.15), row * 0.23);
+          const shaped = clamp(intensity * 0.90 + flicker * 0.052);
           const index = Math.min(
             oceanGlyphs.length - 1,
             Math.floor(shaped * (oceanGlyphs.length - 1))
           );
           glyph = oceanGlyphs[index];
-          alpha = clamp(0.07 + shaped * 0.48, 0.07, 0.58);
+          alpha = clamp(0.065 + shaped * 0.47, 0.065, 0.58);
         }
 
         ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
@@ -216,8 +268,6 @@
   const updateScrollState = () => {
     const y = Math.max(0, window.scrollY || window.pageYOffset || 0);
 
-    // Keep the About-like 30% veil. As soon as scrolling begins,
-    // the scene darkens quickly and then disappears.
     const darkenProgress = clamp(y / 120);
     const fadeProgress = clamp((y - 18) / 210);
 
