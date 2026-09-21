@@ -114,9 +114,9 @@ body.contact-page-body .contact-row{
   grid-template-columns:90px minmax(0,1fr);
   column-gap:24px;
   align-items:start;
-  height:84px;
+  height:42px;
   margin-left:0;
-  padding:14px 0;
+  padding:7px 0;
   border-top:0;
   text-align:left;
   opacity:0;
@@ -131,7 +131,7 @@ body.contact-page-body .contact-row.is-contact-row-visible{
   transform:translate3d(0,0,0);
 }
 body.contact-page-body .contact-row + .contact-row{
-  border-top:1px solid var(--hm-line-content-divider,rgba(255,255,255,.18));
+  border-top:0;
 }
 body.contact-page-body .contact-label{
   display:block;
