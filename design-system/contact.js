@@ -19,17 +19,9 @@
     const progress = reduced ? (window.scrollY > 32 ? 1 : 0) : clamp(window.scrollY / range, 0, 1);
     const startSize = clamp(window.innerWidth * .09, 72, 160);
     const endSize = 32;
-    const startTop = window.innerHeight * .5;
-    const endTop = window.innerWidth <= 780 ? 24 : 32;
     const size = startSize + (endSize - startSize) * progress;
-    const top = startTop + (endTop - startTop) * progress;
-    const translate = -50 * (1 - progress);
-    const leading = .8 + (.2 * progress);
 
     title.style.setProperty('--contact-title-size', size.toFixed(2) + 'px');
-    title.style.setProperty('--contact-title-top', top.toFixed(2) + 'px');
-    title.style.setProperty('--contact-title-translate', translate.toFixed(2) + '%');
-    title.style.setProperty('--contact-title-leading', leading.toFixed(3));
     body.classList.toggle('contact-title-compact', progress >= .985);
   };
 
