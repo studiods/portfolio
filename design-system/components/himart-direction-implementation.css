@@ -30,7 +30,7 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
   letter-spacing:var(--hm-track-note);
 }
 html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card h4{
-  margin:24px 0 0;
+  margin:18px 0 0;
   color:var(--hm-blue);
   font:300 28px/1.28 var(--hm-font-ko);
   font-variation-settings:"wght" 300;
