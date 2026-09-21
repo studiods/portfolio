@@ -4,7 +4,7 @@ body.home-test{
 
 /* HOME — fixed generative ASCII sky. It never owns Home content layout. */
 body.home-test .home-ascii-sky{
-  --home-sky-blackout:0;
+  --home-sky-blackout:.50;
   --home-sky-opacity:1;
   --home-sky-shift:0px;
   position:fixed;
