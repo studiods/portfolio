@@ -54,18 +54,18 @@
     html(dataTitle, '문제들은 실제 이용 패턴에서도 반복됐습니다.');
 
     const data021Title = document.querySelector('#data .hm-data-metrics-021 .hm-data-021-title');
-    html(data021Title, '<span>숫자는 더 단순하게 말했습니다.</span><span>유입보다 다음 행동으로 이어지는 힘이 약했습니다.</span>');
+    html(data021Title, '<span>숫자를 보면 더 단순했습니다.</span><span>유입보다 다음 행동으로 이어지는 연결고리가 약했습니다.</span>');
 
     const dataMetricTitles = [
-      '유입의 상당수가 홈이 아닌,<br>외부 맥락을 가진 채 시작됐습니다.',
+      '유입의 상당수가 홈이 아닌,<br>다른 곳에서 시작됐습니다.',
       '기획전 유입의 절반 이상이<br>상품 탐색으로 이어지지 못했습니다.',
       '장바구니보다 주문·결제 진입이<br>약 3.1배 더 많이 발생했습니다.',
-      '검색 비중은 1년 새 약 2.9배 늘어,<br>후보 탐색의 핵심 행동이 됐습니다.'
+      '특이하게도 검색 비중은 1년 새 약 2.9배 늘어,<br>후보 탐색의 핵심 행동이 됐습니다.'
     ];
     const dataMetricLabels = [
       '2026 H1 · AD · CPS · CRM 유입 비중',
       '기획전 시작 후 즉시 종료',
-      '2026.01 MO · 75,808 / 24,237',
+      '주문·결제/장바구니',
       '2025 H1 3.26% → 2026 H1 9.34%'
     ];
     document.querySelectorAll('#data .himart-data-metric-card').forEach((card, i) => {
@@ -76,16 +76,16 @@
     const pattern022 = document.querySelector('#data .hm-data-pattern-022');
     html(pattern022?.querySelector('.narrative-title'), '데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 ‘다음 행동으로의 연결’에 있었습니다.');
     const patternTitles = [
-      '시작점은 하나가<br>아니였습니다.',
-      '고객은 적극적으로 후보를<br>찾고 있었습니다.',
-      '하지만 다음 화면에서 앞선<br>맥락이 약해졌습니다.'
+      '시작점은 하나가 아니였습니다.',
+      '고객은 적극적으로 후보를 찾고 있었습니다.',
+      '하지만 다음 화면에서<br>맥락이 약해졌습니다.'
     ];
     pattern022?.querySelectorAll('.behavior-pattern-card h4').forEach((el, i) => {
       if (patternTitles[i]) html(el, patternTitles[i]);
     });
 
     const bridge023 = document.querySelector('#data .hm-data-bridge-023__copy');
-    html(bridge023, '‘온라인몰이 떠오르지 않는다’는 인식과 ‘들어와도 다음 단계로 이어지지 않는다’는 행동이 겹쳤습니다.<br>그래서 목표를 화면 개편이 아니라, ‘구매 여정 안에 하이마트의 명확한 포지션을 만드는 것’으로 다시 정의했습니다.');
+    html(bridge023, '<span class="hm-data-bridge-quote">‘온라인몰이 떠오르지 않는다’</span>는 인식과 <span class="hm-data-bridge-quote">‘들어와도 다음 단계로 이어지지 않는다’</span>는 행동이 겹쳤습니다. 그래서 목표를 화면 개편이 아니라, <span class="hm-data-bridge-quote">‘구매 여정 안에 하이마트의 명확한 포지션을 만드는 것’</span>으로 다시 정의했습니다.');
 
     /* Chapter 03 final authority. */
     const roleTitle = document.querySelector('#journey .journey-role-block .journey-block-title, #journey [data-index="03.2"] + div .hm-subtitle, #journey .hm-subno[data-index="03.2"] ~ div .hm-subtitle');
