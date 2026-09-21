@@ -1,4 +1,6 @@
 window.WORK_ARCHIVE_MENU=[
+ {company:'HIMART 2025-',items:[
+  {title:'AI AGENT HAVI CHARACTER',id:'himart-havi-character'}]},
  {company:'LOTTE HIMART',items:[
   {title:'하이마트 온라인 전체 구매여정',href:'./himart.html'},
   {title:'중고 가전 리커머스',href:'./himart-reuse.html'},
@@ -46,6 +48,8 @@ window.WORK_ARCHIVE_MENU=[
 ];
 
 window.WORK_ARCHIVE_DATA=[
+ {company:'HIMART',period:'2025-',projects:[
+  {id:'himart-havi-character',title:'AI AGENT HAVI CHARACTER',sortPage:0,images:['./assets/image/himat-havi/himart_havi_01.png','./assets/image/himat-havi/himart_havi_02.png','./assets/image/himat-havi/himart_havi_03.png','./assets/image/himat-havi/himart_havi_04.png','./assets/image/himat-havi/himart_havi_05.png','./assets/image/himat-havi/himart_havi_06.png','./assets/image/himat-havi/himart_havi_07.png','./assets/image/himat-havi/himart_havi_08.png'],desc:'하이마트 AI 에이전트 HAVI의 역할을 고객이 직관적으로 이해할 수 있도록, 서비스와 함께 움직이는 캐릭터를 설계했습니다.\n구매 기록·장바구니·실시간 탐색 맥락을 읽어 개인화된 선택을 제안하고, 구매 전후 필요한 정보와 케어까지 먼저 안내하는 ‘맞춤형 가전 전문 컨설턴트’의 성격을 시각화했습니다.\n단순한 마스코트가 아니라 초개인화 컨설팅·능동적 쇼핑 내비게이션·라이프스타일 큐레이션을 연결하는 AI 에이전트의 얼굴로 정의했습니다.'}]},
  {company:'AIMMO',period:'2022-2024',projects:[
   {id:'aimmo-internal-branding',title:'INTERNAL BRANDING & OFFICIAL SITE RENEWAL',pages:[28,29,30,31,32,33],imagePage:28,desc:'신규로 제작된 그래픽 모티브를 바탕으로 내부 구성원들에게 브랜드 이미지를 각인시키고 소속감을 높일 수 있는 인터널 브랜딩 요소를 제작. 웰컴킷, 공용 문서 포멧, 행사용 배너 및 브로셔/굿즈 등 작은 것 부터 시작하여 브랜드 이미지가 달라졌다는 것을 알리면서 좋은 반응을 얻었고 이후 홈페이지와 CES 부스 디자인까지 많은 부분에 까지 적용하면서 다소 경직된 AI B2B 회사의 분위기를 바꿔갈 수 있도록 진행\n\n기존 사이트가 서비스와 제품의 특성을 제대로 반영하지 못하고 단순한 정보나열에 그쳐 고객사들로 부터 신뢰를 얻기 힘든 상황. 협업 부서 및 영업팀과의 미팅/인터뷰를 통해 제품의 특성과 주요 비지니스 포인트를 파악하여 카테고리화 후 정보의 우선 순위에 따라 화면을 재배치하여 리디자인 진행. 이후 CES 2023, 유럽 전시회 등에서 좋은 반응을 이끌어 냄'}]},
  {company:'TRENBE',period:'2021-2022',projects:[
