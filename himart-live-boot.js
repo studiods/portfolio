@@ -87,7 +87,7 @@
       {title:'매장·설치·케어를 연결하는 PDP',body:'실물 확인과 전문 상담, 배송·설치와 케어 정보를 한 흐름으로 연결해 구매 전 불확실성을 줄였습니다.'}
     ];
 
-    const mountOne=(gallery,{kind='reuse',shellOnly=false}={})=>{
+    const mountOne=(gallery,{kind='reuse',assetGroup='01',shellOnly=false}={})=>{
       if(!gallery||gallery.dataset.prototypeCarouselMounted==='true')return;
       const owner=gallery.closest('.himart-direction-041,.himart-direction-042')||wrap;
       if(owner.querySelector(':scope > .prototype-case-list'))return;
@@ -137,10 +137,10 @@
             const image=document.createElement('img');
             image.src=kind==='reuse'
               ?`./assets/image/himart-reuse/reuse_screens_01_${assetNo}.png`
-              :`./assets/image/himart-reuse/reuse_screens_02_${assetNo}.png`;
+              :`./assets/image/himart-cj/himart_cj_${assetGroup}_${assetNo}.png`;
             image.alt=kind==='reuse'
               ?`Reuse prototype screen 01_${assetNo}`
-              :`Himart commerce journey prototype 02_${assetNo}`;
+              :`Himart commerce journey prototype ${assetGroup}_${assetNo}`;
             image.loading=assetIndex<=2?'eager':'lazy';
             image.decoding='async';
             screen.appendChild(image);
@@ -284,8 +284,8 @@
       return;
     }
 
-    mountOne(wrap.querySelector('.himart-direction-041 .phone-gallery'),{kind:'himart'});
-    mountOne(wrap.querySelector('.himart-direction-042 .phone-gallery'),{kind:'himart',shellOnly:true});
+    mountOne(wrap.querySelector('.himart-direction-041 .phone-gallery'),{kind:'himart',assetGroup:'01'});
+    mountOne(wrap.querySelector('.himart-direction-042 .phone-gallery'),{kind:'himart',assetGroup:'02'});
   };
   mountReuseDirectionPrototype();
 
