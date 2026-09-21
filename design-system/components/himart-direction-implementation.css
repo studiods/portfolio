@@ -112,24 +112,33 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   display:none!important;
 }
 
-/* HIMART 04.2 — match the device viewport to the uploaded 375 × 812 screens.
-   Remove the inherited fixed device ratio so the screen image determines the
-   full mockup height. This also keeps the bottom device border from being
-   clipped by the shorter legacy 1440 × 2964 frame. */
+/* HIMART 04.2 — exact 375 × 812 device geometry.
+   The shared prototype component uses 1440 × 2964, so 04.2 must override the
+   OUTER mockup ratio itself, not only the inner screen. The image fills the
+   complete device box and the bottom frame stays inside that box. */
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .prototype-case-viewport{
+  padding-bottom:2px!important;
+  box-sizing:border-box!important;
+}
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-mockup{
   height:auto!important;
-  aspect-ratio:auto!important;
+  aspect-ratio:375/812!important;
+  padding:0!important;
   overflow:visible!important;
+  box-sizing:border-box!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen{
-  height:auto!important;
-  aspect-ratio:375/812!important;
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:auto!important;
   overflow:hidden!important;
+  box-sizing:border-box!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen.is-scrollable img{
   display:block!important;
   width:100%!important;
-  height:auto!important;
+  height:100%!important;
+  max-width:none!important;
   aspect-ratio:375/812!important;
   object-fit:contain!important;
   object-position:top center!important;
