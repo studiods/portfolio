@@ -119,7 +119,7 @@
         grid042.className = 'ax-friction-grid hm-ds-subtitle-to-content himart-direction-rule';
         direction042.querySelector('.hm-subhead')?.insertAdjacentElement('afterend', grid042);
       }
-      grid042.innerHTML = '<article class="ax-friction-card"><span>01</span><h4><span>스마트 비교로 원하는 조건의 상품을</span><span>빠르게 찾을 수 있도록 했습니다.</span></h4><p><span>비교 과정의 이탈을 줄이기 위해 가격·스펙·설치 조건을 한 화면에서 비교하고,</span><span>원하는 조건의 상품만 빠르게 좁힐 수 있도록 설계했습니다.</span></p></article><article class="ax-friction-card"><span>02</span><h4><span>어렵고 긴 상세 정보는</span><span>빠르게 이해되는 문법으로 다시 풀었습니다.</span></h4><p><span>복잡한 스펙과 설명을 생활 기준·핵심 요약·비교 가능한 구조로 바꿔,</span><span>사용자가 빠르게 파악하고 구매 확신을 만들도록 했습니다.</span></p></article>';
+      grid042.innerHTML = '<article class="ax-friction-card"><span>01</span><h4><span>스마트 비교로 원하는 조건의 상품을</span><span>빠르게 찾을 수 있도록 했습니다.</span></h4><p><span>가격·스펙·설치 조건을 한 화면에서 비교해,</span><span>원하는 상품을 빠르게 좁히도록 설계했습니다.</span></p></article><article class="ax-friction-card"><span>02</span><h4><span>어렵고 긴 상세 정보는</span><span>빠르게 이해되는 문법으로 다시 풀었습니다.</span></h4><p><span>복잡한 스펙과 설명을 생활 기준으로 정리해,</span><span>빠르게 이해하고 구매 확신을 만들도록 했습니다.</span></p></article>';
     }
 
 
