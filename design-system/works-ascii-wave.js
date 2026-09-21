@@ -71,8 +71,8 @@
   const shorelineX = (ny, t) => {
     const diagonal = (ny - 0.5) * 0.034;
     const largeBend = Math.sin(ny * TAU * 0.95 + phases[0]) * 0.012;
-    const smallBend = Math.sin(ny * TAU * 3.1 - t * 0.12 + phases[1]) * 0.006;
-    const breathing = Math.sin(t * 0.42 + phases[2]) * 0.0055;
+    const smallBend = Math.sin(ny * TAU * 3.1 - t * 0.18 + phases[1]) * 0.006;
+    const breathing = Math.sin(t * 0.58 + phases[2]) * 0.0065;
     return 0.725 + diagonal + largeBend + smallBend + breathing;
   };
 
@@ -80,13 +80,13 @@
     const distanceToShore = Math.max(0, shoreX - nx);
 
     // Slightly faster than the previous version, but still calm.
-    const speedA = 0.215;
-    const speedB = 0.305;
-    const speedC = 0.155;
+    const speedA = 0.31;
+    const speedB = 0.43;
+    const speedC = 0.22;
 
     const verticalWarp =
       Math.sin(ny * TAU * 1.25 + phases[3]) * 0.080 +
-      Math.sin(ny * TAU * 3.7 - t * 0.15 + phases[4]) * 0.028;
+      Math.sin(ny * TAU * 3.7 - t * 0.22 + phases[4]) * 0.028;
 
     const phaseA = fract(
       nx * (5.25 * seeds[2]) -
@@ -107,8 +107,8 @@
     );
 
     const crestA = Math.exp(-Math.pow((phaseA - 0.5) / 0.072, 2));
-    const crestB = Math.exp(-Math.pow((phaseB - 0.5) / 0.050, 2)) * 0.46;
-    const crestC = Math.exp(-Math.pow((phaseC - 0.5) / 0.095, 2)) * 0.26;
+    const crestB = Math.exp(-Math.pow((phaseB - 0.5) / 0.050, 2)) * 0.34;
+    const crestC = Math.exp(-Math.pow((phaseC - 0.5) / 0.095, 2)) * 0.18;
 
     const shoreGain = 1 - clamp(distanceToShore / 0.30);
     const deepGain = clamp(distanceToShore / 0.74, 0.22, 1);
@@ -118,14 +118,14 @@
       0.5 +
       0.5 * Math.sin(
         nx * TAU * 1.65 -
-        t * 0.48 +
+        t * 0.64 +
         Math.sin(ny * TAU * 1.18 + phases[7]) * 0.72
       );
 
     const seaTexture =
-      0.145 +
-      swell * 0.185 +
-      pseudo(col * 0.23 + t * 0.014, row * 0.29) * 0.085;
+      0.125 +
+      swell * 0.165 +
+      pseudo(col * 0.23 + t * 0.020, row * 0.29) * 0.085;
 
     const foam =
       (crestA + crestB + crestC) *
@@ -141,7 +141,7 @@
   // A primary breaking line advances toward shore, spreads, then resets offshore.
   // This gives a recognizable real-wave cycle instead of endless equal-speed stripes.
   const breakerField = (distanceToShore, ny, t) => {
-    const cycle = fract(t * 0.17 + phases[8] / TAU);
+    const cycle = fract(t * 0.255 + phases[8] / TAU);
     const eased = 1 - Math.pow(1 - cycle, 1.55);
 
     const start = 0.145;
@@ -149,9 +149,9 @@
     const center =
       start + (end - start) * eased +
       Math.sin(ny * TAU * 1.35 + phases[9]) * 0.010 +
-      Math.sin(ny * TAU * 4.4 - t * 0.22 + phases[10]) * 0.0045;
+      Math.sin(ny * TAU * 4.4 - t * 0.32 + phases[10]) * 0.0045;
 
-    const widthBand = 0.018 + eased * 0.010;
+    const widthBand = 0.016 + eased * 0.014;
     const band = Math.exp(-Math.pow((distanceToShore - center) / widthBand, 2));
 
     // Fade the breaker just before the cycle restarts to avoid a visible jump.
@@ -207,7 +207,7 @@
           0.009 +
           0.008 * (
             0.5 +
-            0.5 * Math.sin(t * 0.72 + ny * TAU * 1.18 + phases[2])
+            0.5 * Math.sin(t * 1.05 + ny * TAU * 1.18 + phases[2])
           );
 
         const shoreFoam = Math.exp(
@@ -215,7 +215,7 @@
         );
 
         // Breaker becomes brighter and more fragmented near the shoreline.
-        const breakNoise = 0.78 + pseudo(col * 0.63 + t * 0.07, row * 0.47) * 0.35;
+        const breakNoise = 0.78 + pseudo(col * 0.63 + t * 0.11, row * 0.47) * 0.35;
         const breakerFoam = breaker * breakNoise * (0.68 + ocean.shoreGain * 0.42);
 
         const foamStrength = clamp(
@@ -225,7 +225,7 @@
         const intensity = clamp(
           ocean.intensity +
           shoreFoam * 0.88 +
-          breakerFoam * 0.90
+          breakerFoam * 1.08
         );
 
         if (intensity < 0.108) continue;
@@ -241,7 +241,7 @@
           glyph = foamGlyphs[foamIndex];
           alpha = clamp(0.30 + foamStrength * 0.60, 0.30, 0.92);
         } else {
-          const flicker = pseudo(col * 0.31 + Math.floor(t * 1.15), row * 0.23);
+          const flicker = pseudo(col * 0.31 + Math.floor(t * 1.65), row * 0.23);
           const shaped = clamp(intensity * 0.90 + flicker * 0.052);
           const index = Math.min(
             oceanGlyphs.length - 1,
