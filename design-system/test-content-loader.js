@@ -86,7 +86,7 @@ const reality=elFromHTML(`<div class="narrative-block hm-reveal narrative-realit
         </aside>
         <aside class="himart-appliance-flow__risk is-risk himart-appliance-flow__risk--d">
           <b>조건 불확실로 이탈</b>
-          <h6>상품 가격보다 ‘최종 조건’에서 다시 망설였습니다.</h6>
+          <h6>상품 가격보다 최종 조건에서 다시 망설였습니다.</h6>
           <p>일반 이커머스에서 <strong>40%</strong>는 추가 비용, <strong>20%</strong>는 느린 배송 때문에 구매를 포기한 것으로 확인됐습니다.</p>
         </aside>
       </div>
@@ -107,10 +107,10 @@ const signal=elFromHTML(`<div class="narrative-block hm-reveal narrative-signals
 </div><div class="hm-source hm-ds-source-note himart-brand-metric-source himart-data-metric-source">SOURCE · 하이마트 온라인 이용 패턴 분석 v31 / 쇼핑몰 이용 현황 Mobile·PC 2026.01—06 / 온라인 백데이터 퍼널·검색</div></div>`);
 dataHead.insertAdjacentElement('afterend',signal);
 
-const pattern=elFromHTML(`<div class="narrative-block hm-reveal behavior-pattern hm-data-pattern-022"><span class="narrative-subno">02.2</span><h3 class="narrative-title">데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 ‘다음 행동으로의 연결’에 있었습니다.</h3><div class="behavior-pattern-grid hm-ds-subtitle-to-content"><article class="behavior-pattern-card"><span>01</span><h4>시작점은 하나가 아니였습니다.</h4><p>광고·직접 유입·가격비교·CRM처럼 서로 다른 목적과 맥락을 가진 상태로 쇼핑을 시작했습니다.</p></article><article class="behavior-pattern-card"><span>02</span><h4>고객은 적극적으로 후보를 찾고 있었습니다.</h4><p>검색과 목적지형 기능을 활용해 필요한 상품과 조건을 스스로 좁히며 구매 후보를 만들고 있었습니다.</p></article><article class="behavior-pattern-card"><span>03</span><h4 class="behavior-pattern-card__title--two-lines"><span>하지만 다음 화면에서</span><span>맥락이 약해졌습니다.</span></h4><p>기획전 이후 이탈과 PDP 이후 행동 약화처럼, 관심과 판단 기준이 다음 행동까지 이어지지 않는 구간이 반복됐습니다.</p></article></div></div>`);
+const pattern=elFromHTML(`<div class="narrative-block hm-reveal behavior-pattern hm-data-pattern-022"><span class="narrative-subno">02.2</span><h3 class="narrative-title">데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 다음 행동으로의 연결에 있었습니다.</h3><div class="behavior-pattern-grid hm-ds-subtitle-to-content"><article class="behavior-pattern-card"><span>01</span><h4>시작점은 하나가 아니였습니다.</h4><p>광고·직접 유입·가격비교·CRM처럼 서로 다른 목적과 맥락을 가진 상태로 쇼핑을 시작했습니다.</p></article><article class="behavior-pattern-card"><span>02</span><h4>고객은 적극적으로 후보를 찾고 있었습니다.</h4><p>검색과 목적지형 기능을 활용해 필요한 상품과 조건을 스스로 좁히며 구매 후보를 만들고 있었습니다.</p></article><article class="behavior-pattern-card"><span>03</span><h4 class="behavior-pattern-card__title--two-lines"><span>하지만 다음 화면에서</span><span>맥락이 약해졌습니다.</span></h4><p>기획전 이후 이탈과 PDP 이후 행동 약화처럼, 관심과 판단 기준이 다음 행동까지 이어지지 않는 구간이 반복됐습니다.</p></article></div></div>`);
 signal.insertAdjacentElement('afterend',pattern);
 
-const bridge=elFromHTML(`<div class="narrative-block hm-reveal hm-data-bridge-023"><span class="narrative-subno">02.3</span><p class="hm-data-bridge-023__copy"><span class="hm-data-bridge-quote">‘온라인몰이 떠오르지 않는다’</span>는 인식과 <span class="hm-data-bridge-quote">‘들어와도 다음 단계로 이어지지 않는다’</span>는 행동이 겹쳤습니다. 그래서 목표를 화면 개편이 아니라, <span class="hm-data-bridge-quote">‘구매 여정 안에 하이마트의 명확한 포지션을 만드는 것’</span>으로 다시 정의했습니다.</p></div>`);
+const bridge=elFromHTML(`<div class="narrative-block hm-reveal hm-data-bridge-023"><span class="narrative-subno">02.3</span><p class="hm-data-bridge-023__copy"><span class="hm-data-bridge-quote">온라인몰이 떠오르지 않는다</span>는 인식과 <span class="hm-data-bridge-quote">들어와도 다음 단계로 이어지지 않는다</span>는 행동이 겹쳤습니다. 그래서 목표를 화면 개편이 아니라, <span class="hm-data-bridge-quote">구매 여정 안에 하이마트의 명확한 포지션을 만드는 것</span>으로 다시 정의했습니다.</p></div>`);
 pattern.insertAdjacentElement('afterend',bridge);
 
 const dataNodes=[...dataWrap.children].filter(node=>node!==dataHead&&node!==signal&&node!==pattern&&node!==bridge&&!node.classList.contains('narrative-block')&&!node.classList.contains('hm-section-head'));wrapMore(dataWrap,dataNodes,'이용 데이터와 경로 분석 자세히 보기','QUANTITATIVE ANALYSIS')}
