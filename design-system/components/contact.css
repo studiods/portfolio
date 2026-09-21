@@ -30,7 +30,7 @@ body.contact-page-body .works-hero{
 body.contact-page-body .works-page-title{
   position:fixed!important;
   z-index:2147483647!important;
-  top:var(--contact-title-top,50vh)!important;
+  top:50vh!important;
   left:var(--hm-inset-desktop)!important;
   margin:0!important;
   padding:0!important;
@@ -39,13 +39,13 @@ body.contact-page-body .works-page-title{
   font-family:var(--hm-font-en)!important;
   font-size:var(--contact-title-size,clamp(72px,9vw,160px))!important;
   font-weight:300!important;
-  line-height:var(--contact-title-leading,.8)!important;
+  line-height:.8!important;
   letter-spacing:-.035em!important;
   white-space:nowrap!important;
-  transform:translateY(var(--contact-title-translate,-50%))!important;
+  transform:translateY(-50%)!important;
   transform-origin:left center!important;
   pointer-events:none!important;
-  will-change:top,font-size,transform;
+  will-change:font-size;
 }
 
 body.contact-page-body :is(.works-title-menu-toggle,.works-project-menu,.works-progress,.hm-global-progress){
@@ -57,14 +57,12 @@ body.contact-page-body .contact-content{
   grid-template-columns:var(--contact-left-column) var(--contact-right-column);
   width:100%;
   min-height:100vh;
-  border-top:1px solid var(--hm-line-faint,rgba(255,255,255,.14));
 }
 body.contact-page-body .contact-spacer{
   min-width:0;
 }
 body.contact-page-body .contact-details{
   padding:120px var(--hm-inset-desktop) 140px 0;
-  border-left:1px solid var(--hm-line-faint,rgba(255,255,255,.14));
 }
 
 body.contact-page-body .contact-intro{
@@ -100,6 +98,9 @@ body.contact-page-body .contact-row{
   gap:32px;
   margin-left:clamp(40px,5vw,96px);
   padding:26px 0 30px;
+  border-top:0;
+}
+body.contact-page-body .contact-row + .contact-row{
   border-top:1px solid var(--hm-line-content-divider,rgba(255,255,255,.18));
 }
 body.contact-page-body .contact-label{
@@ -123,13 +124,12 @@ body.contact-page-body .contact-value a{
 }
 body.contact-page-body .contact-value a{
   display:inline;
-  border-bottom:1px solid rgba(255,255,255,.28);
-  transition:border-color 180ms ease,color 180ms ease;
+  border-bottom:0;
+  transition:color 180ms ease;
 }
 body.contact-page-body .contact-value a:hover,
 body.contact-page-body .contact-value a:focus-visible{
   color:var(--hm-blue,#00A6ED);
-  border-bottom-color:var(--hm-blue,#00A6ED);
   outline:0;
 }
 body.contact-page-body .contact-value--en,
@@ -138,11 +138,11 @@ body.contact-page-body .contact-value--en a{
   letter-spacing:-.02em;
 }
 
-/* Right-side content rises in from the lower-right once the Contact title compacts. */
+/* Right-side content rises vertically without a surrounding frame. */
 body.contact-page-body.contact-motion-ready .contact-intro,
 body.contact-page-body.contact-motion-ready .contact-row{
   opacity:0;
-  transform:translate3d(44px,42px,0);
+  transform:translate3d(0,42px,0);
   transition:
     opacity 520ms cubic-bezier(.2,.8,.2,1),
     transform 720ms cubic-bezier(.2,.8,.2,1);
