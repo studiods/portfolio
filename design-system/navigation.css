@@ -157,3 +157,51 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-co
     transition:none!important;
   }
 }
+
+
+/* MOBILE GALLERY SCROLL PASS-THROUGH — 2026-09-21 */
+/*
+  Root cause: several gallery/viewer surfaces are clipped with overflow:hidden and some
+  page-specific gallery CSS also used overscroll-behavior:none. On touch devices that
+  can make the gallery become the gesture owner, so a vertical swipe starting over the
+  media area does not reliably chain to document scrolling.
+
+  Vertical pan therefore belongs to the page on every portfolio gallery. Horizontal
+  carousel/drag interactions remain handled by their existing pointer logic.
+*/
+@media (max-width:900px), (pointer:coarse){
+  :where(
+    .hm-ds-media-gallery,
+    .hm-ds-media-grid,
+    .hm-ds-media-carousel,
+    .hm-ds-media-carousel__viewport,
+    .phone-gallery,
+    .team-workshop-gallery,
+    .aimmo-application-gallery,
+    .aimmo-evidence-gallery,
+    .aimmo-improvement-gallery,
+    .ax-banner-output-carousel,
+    .stepup-screens-carousel,
+    .reuse-production-gallery,
+    .reuse-production-gallery__viewport,
+    .reuse-image-display-card,
+    .reuse-image-display-card__viewport,
+    .prototype-case-list,
+    .prototype-case-viewport,
+    .prototype-case-track,
+    .prototype-case,
+    .prototype-case-item,
+    .galaxy-ultra-mockup,
+    .galaxy-ultra-screen,
+    .hst-ds-gallery,
+    .hst-ds-gallery__viewport,
+    .hst-product-gallery,
+    .yanolja-field-gallery,
+    .yanolja-field-gallery__viewport,
+    .yanolja-expand-gallery,
+    .trenbe-ut-gallery-stack
+  ){
+    touch-action:pan-y pinch-zoom!important;
+    overscroll-behavior-y:auto!important;
+  }
+}
