@@ -106,14 +106,7 @@ body.contact-page-body .contact-spacer{
 body.contact-page-body .contact-details{
   align-self:center;
   padding:0 var(--hm-inset-desktop) 0 0;
-  opacity:0;
-  translate:0 56px;
   pointer-events:auto;
-  animation:contact-details-rise 1100ms cubic-bezier(.2,.75,.2,1) 760ms forwards;
-}
-@keyframes contact-details-rise{
-  from{opacity:0;translate:0 56px}
-  to{opacity:1;translate:0 0}
 }
 
 body.contact-page-body .contact-row{
@@ -126,6 +119,16 @@ body.contact-page-body .contact-row{
   padding:14px 0;
   border-top:0;
   text-align:left;
+  opacity:0;
+  transform:translate3d(0,42px,0);
+  transition:
+    opacity 720ms cubic-bezier(.2,.75,.2,1),
+    transform 900ms cubic-bezier(.2,.75,.2,1);
+  will-change:opacity,transform;
+}
+body.contact-page-body .contact-row.is-contact-row-visible{
+  opacity:1;
+  transform:translate3d(0,0,0);
 }
 body.contact-page-body .contact-row + .contact-row{
   border-top:1px solid var(--hm-line-content-divider,rgba(255,255,255,.18));
@@ -247,9 +250,9 @@ body.contact-page-body .contact-footer a:focus-visible{
 }
 
 @media(prefers-reduced-motion:reduce){
-  body.contact-page-body .contact-details{
-    animation:none!important;
+  body.contact-page-body .contact-row{
     opacity:1!important;
-    translate:none!important;
+    transform:none!important;
+    transition:none!important;
   }
 }
