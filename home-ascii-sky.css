@@ -1,24 +1,14 @@
-/* HOME — generative ASCII night sky behind the opening sticky hero. */
-body.home-test .hero-sticky{
-  position:sticky!important;
-  top:0!important;
-  z-index:1;
-  height:100vh!important;
-  isolation:isolate;
-  overflow:hidden!important;
-  background:#000!important;
-}
-
+/* HOME — fixed generative ASCII sky. It never owns Home content layout. */
 body.home-test .home-ascii-sky{
   --home-sky-blackout:0;
   --home-sky-opacity:1;
   --home-sky-shift:0px;
-  position:absolute;
+  position:fixed;
   z-index:0;
   inset:0;
   display:block;
-  width:100%;
-  height:100%;
+  width:100vw;
+  height:100vh;
   overflow:hidden;
   background:#000;
   opacity:var(--home-sky-opacity);
@@ -49,8 +39,16 @@ body.home-test .home-ascii-sky__blackout{
   will-change:opacity;
 }
 
-body.home-test .hero-state{
-  z-index:3!important;
+/* Existing Home content must remain above the sky without changing its own positioning contract. */
+body.home-test .shell{
+  position:relative;
+  z-index:1;
+  background:transparent!important;
+}
+
+body.home-test .hero-sequence,
+body.home-test .hero-sticky{
+  background:transparent!important;
 }
 
 @media(prefers-reduced-motion:reduce){
