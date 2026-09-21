@@ -14,7 +14,7 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pad=n=>String(n).padStart(2,'0');
   const pad3=n=>String(n).padStart(3,'0');
-  const firstPage=project=>Math.min(...((project?.pages||[]).map(Number).filter(Number.isFinite).length?(project.pages||[]).map(Number).filter(Number.isFinite):[9999]));
+  const firstPage=project=>Number.isFinite(Number(project?.sortPage))?Number(project.sortPage):Math.min(...((project?.pages||[]).map(Number).filter(Number.isFinite).length?(project.pages||[]).map(Number).filter(Number.isFinite):[9999]));
 
   /* The source portfolio is authored newest -> oldest. Company and project order are
      locked to source-page order so the archive cannot drift when data is edited. */
@@ -99,20 +99,40 @@
       globalIndex+=1;
       const displayIndex=pad(globalIndex);
       const pages=Array.isArray(project.pages)?[...project.pages].sort((a,b)=>a-b):[];
-      pages.forEach((page,pageIndex)=>{
-        slides.push({
-          page,
-          company:group.company,
-          period:group.period,
-          projectId:project.id,
-          projectTitle:project.title,
-          projectIndex,
-          displayIndex,
-          caption:pageCaption(project,page),
-          note:pageNote(project,pageIndex),
-          coreValue:project.id==='trenbe-core-value'
+      const images=Array.isArray(project.images)?project.images.filter(Boolean):[];
+      if(images.length){
+        images.forEach((src,imageIndex)=>{
+          slides.push({
+            page:`image-${pad(imageIndex+1)}`,
+            src,
+            company:group.company,
+            period:group.period,
+            projectId:project.id,
+            projectTitle:project.title,
+            projectIndex,
+            displayIndex,
+            caption:String(project.desc||'').replace(/\r/g,'').trim(),
+            note:pageNote(project,imageIndex),
+            coreValue:false
+          });
         });
-      });
+      }else{
+        pages.forEach((page,pageIndex)=>{
+          slides.push({
+            page,
+            src:sourcePath(page),
+            company:group.company,
+            period:group.period,
+            projectId:project.id,
+            projectTitle:project.title,
+            projectIndex,
+            displayIndex,
+            caption:pageCaption(project,page),
+            note:pageNote(project,pageIndex),
+            coreValue:project.id==='trenbe-core-value'
+          });
+        });
+      }
     });
     if(slides.length)companies.push({companyIndex,company:group.company,period:group.period,slides});
   });
@@ -122,7 +142,7 @@
     const slides=company.slides.map((item,slideIndex)=>{
       const loading=firstRenderedImage?'eager':'lazy';
       firstRenderedImage=false;
-      return `<article class="reuse-production-gallery__slide${slideIndex===0?' is-active':''}" aria-hidden="${slideIndex===0?'false':'true'}" data-wa-project-id="${esc(item.projectId)}" data-wa-source-page="${item.page}"><div class="reuse-production-gallery__media"><img src="${sourcePath(item.page)}" alt="${esc(item.projectTitle)} 원본 포트폴리오 P.${item.page}" loading="${loading}" decoding="async" draggable="false"></div></article>`;
+      return `<article class="reuse-production-gallery__slide${slideIndex===0?' is-active':''}" aria-hidden="${slideIndex===0?'false':'true'}" data-wa-project-id="${esc(item.projectId)}" data-wa-source-page="${esc(item.page)}"><div class="reuse-production-gallery__media"><img src="${esc(item.src||sourcePath(item.page))}" alt="${esc(item.projectTitle)} ${slideIndex+1} 이미지" loading="${loading}" decoding="async" draggable="false"></div></article>`;
     }).join('');
     const anchors=[...new Set(company.slides.map(item=>item.projectId))].map(id=>`<span class="wa-project-anchor" id="${esc(id)}" aria-hidden="true"></span>`).join('');
     return `<article class="wa-company" data-wa-company data-wa-company-index="${companyListIndex}">
