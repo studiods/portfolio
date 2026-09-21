@@ -271,7 +271,7 @@
     const darkenProgress = clamp(y / 120);
     const fadeProgress = clamp((y - 18) / 210);
 
-    const blackout = 0.30 + easeOut(darkenProgress) * 0.70;
+    const blackout = 0.50 + easeOut(darkenProgress) * 0.50;
     const opacity = 1 - smoothstep(fadeProgress);
 
     layer.style.setProperty('--works-ascii-blackout', blackout.toFixed(3));
