@@ -22,6 +22,7 @@
   let raf = 0;
   let lastFrame = 0;
   let nextMeteorAt = performance.now() + 1800 + Math.random() * 2200;
+  let matteAlpha = 0.50;
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -167,7 +168,7 @@
     const p = clamp((start - rect.top) / Math.max(1, start - end));
     const eased = smoothstep(p);
 
-    root.style.setProperty('--home-sky-blackout', (0.50 + eased * 0.50).toFixed(3));
+    matteAlpha = 0.50 + eased * 0.50;
     root.style.setProperty('--home-sky-opacity', (1 - smoothstep(clamp((p - 0.28) / 0.72))).toFixed(3));
     root.style.setProperty('--home-sky-shift', `${(-innerHeight * 0.14 * eased).toFixed(1)}px`);
   };
@@ -190,6 +191,11 @@
       }
       drawMeteor(meteor,now);
     }
+
+    // The matte is composited directly into the canvas so the 50% darkening
+    // is guaranteed regardless of DOM stacking, browser compositing, or cache.
+    ctx.fillStyle = `rgba(0,0,0,${clamp(matteAlpha).toFixed(3)})`;
+    ctx.fillRect(0,0,width,height);
   };
 
   const frame = now => {
