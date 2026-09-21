@@ -312,3 +312,31 @@ html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .
     transition:none!important;
   }
 }
+
+
+/* REUSE 04.1 — align paired mockups to the two strategy-card left rails. */
+@media(min-width:781px){
+  /*
+    The strategy cards directly above use two equal columns with a 20px gap.
+    Keep the existing prototype device width, but move each prototype item's left edge
+    onto the corresponding 01 / 02 card rail. Copy remains inside each item, so its
+    left edge follows the same rail automatically.
+  */
+  html body.himart-page-body.reuse-current #direction .prototype-case{
+    grid-template-columns:
+      calc((85% - 32px) / 2)
+      calc((85% - 32px) / 2)!important;
+    column-gap:calc(7.5% + 26px)!important;
+    justify-content:start!important;
+  }
+  html body.himart-page-body.reuse-current #direction .prototype-case-item{
+    width:100%!important;
+    justify-self:start!important;
+  }
+  html body.himart-page-body.reuse-current #direction .prototype-case-copy{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    text-align:left!important;
+  }
+}
