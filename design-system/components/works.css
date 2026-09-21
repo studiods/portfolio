@@ -5,8 +5,8 @@ body.works-page-body{
   --works-media-column:60vw;
   --works-title-media-gap:8vw;
   --works-title-content-width:calc(var(--works-title-column) - var(--works-title-media-gap) - var(--hm-inset-desktop));
-  --works-project-rule-width:calc(var(--works-title-column) * .25);
-  --works-project-rule-gap:44px;
+  --works-project-rule-width:calc(var(--works-title-column) / 6);
+  --works-project-rule-gap:56px;
   --works-footer-gap:400px;
   margin:0;
   overflow-x:hidden;
@@ -135,8 +135,8 @@ body.works-page-body .works-card{
   - the gap between copy content and media is 2/10 of the full left area = 8vw;
   - while entering, copy top stays aligned with the corresponding media top;
   - once its center reaches the viewport center, the copy stops there while media keeps scrolling;
-  - the rule above the title is 1/4 of the 8/20 title column, white 30%;
-  - the rule-to-title gap is 44px;
+  - the rule above the title is 1/6 of the full left title column, white 30%;
+  - the rule-to-title gap is 56px;
   - works.js owns only scroll-linked positioning and outgoing handoff opacity.
 */
 body.works-page-body .works-card-copy{
@@ -182,6 +182,7 @@ body.works-page-body .works-card-company{
   max-width:var(--works-title-content-width);
   margin:var(--hm-space-20) 0 0;
   color:var(--hm-text-secondary);
+  opacity:.60;
   font-family:var(--hm-font-en);
   font-size:12px;
   font-weight:400;
@@ -402,7 +403,7 @@ body.works-page-body .works-footer a{
 
 @media(max-width:780px){
   body.works-page-body{
-    --works-project-rule-width:25%;
+    --works-project-rule-width:16.6667%;
     scroll-snap-type:none;
   }
   body.works-page-body .works-hero{min-height:580px}
