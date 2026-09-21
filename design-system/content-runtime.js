@@ -341,7 +341,7 @@ function rebuildRoleDefinition(){
   const label=block.querySelector('.narrative-subno');
   if(label)label.textContent='03.2';
   const title=block.querySelector('.journey-block-title');
-  if(title)title.innerHTML='그리고 각 화면의 역할을<br>다시 정의했습니다.';
+  if(title)title.innerHTML='그리고 각 화면의 역할을<br>명확하게 다시 정의했습니다.';
   const copy=block.querySelector('.journey-block-copy');
   if(copy)copy.textContent='홈부터 결제까지 화면을 개별 산출물로 보지 않고, 앞 단계에서 받은 맥락을 다음 판단으로 넘기는 역할로 정의했습니다. 이 정의가 이후 프로토타입의 정보 우선순위와 인터랙션을 결정하는 기준이 됐습니다.';
   let grid=block.querySelector('.journey-role-grid');
