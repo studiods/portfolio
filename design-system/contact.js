@@ -44,6 +44,38 @@
   let revealTimer = 0;
   let scrambleObserver = null;
 
+  const autoScrollDuration = 2200;
+  const easeInCubic = progress => progress * progress * progress;
+
+  const animateScrollTo = targetY => {
+    if (reduced) {
+      window.scrollTo(0, targetY);
+      updateTitle();
+      return;
+    }
+
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const startedAt = performance.now();
+
+    const step = now => {
+      const elapsed = now - startedAt;
+      const progress = clamp(elapsed / autoScrollDuration, 0, 1);
+      const eased = easeInCubic(progress);
+      window.scrollTo(0, startY + (distance * eased));
+      updateTitle();
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        window.scrollTo(0, targetY);
+        updateTitle();
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
   const revealAndCenterDetails = () => {
     if (!details || !contactContent) return;
 
@@ -55,15 +87,7 @@
       const stickyCenterTarget = contactContent.offsetTop - (window.innerHeight * .5);
       const targetY = Math.max(0, titleRange, stickyCenterTarget);
 
-      window.scrollTo({
-        top: targetY,
-        left: 0,
-        behavior: reduced ? 'auto' : 'smooth'
-      });
-
-      window.setTimeout(() => {
-        updateTitle();
-      }, reduced ? 0 : 1200);
+      animateScrollTo(targetY);
     });
   };
 
