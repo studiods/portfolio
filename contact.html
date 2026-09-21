@@ -16,7 +16,7 @@
 </head>
 <body class="works-page-body contact-page-body">
 <div class="contact-background" aria-hidden="true">
-  <video class="contact-background__video" autoplay muted loop playsinline preload="auto">
+  <video class="contact-background__video" autoplay muted playsinline preload="auto" data-contact-video-sequence="./assets/movies/contact.mp4|./assets/movies/work_archive_01.mp4">
     <source src="./assets/movies/contact.mp4" type="video/mp4">
   </video>
   <div class="contact-background__matte"></div>
@@ -67,5 +67,22 @@
 
 <script src="./design-system/navigation.js?v=20260921-5"></script>
 <script src="./design-system/scramble-final.js?v=20260920-11"></script>
+<script>
+(() => {
+  const video = document.querySelector('.contact-background__video[data-contact-video-sequence]');
+  if (!video) return;
+  const sequence = (video.dataset.contactVideoSequence || '').split('|').filter(Boolean);
+  if (sequence.length < 2) return;
+
+  let index = 0;
+  video.addEventListener('ended', () => {
+    index = (index + 1) % sequence.length;
+    video.src = sequence[index];
+    video.load();
+    const playback = video.play();
+    if (playback && typeof playback.catch === 'function') playback.catch(() => {});
+  });
+})();
+</script>
 </body>
 </html>
