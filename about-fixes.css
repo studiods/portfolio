@@ -624,3 +624,34 @@
     right:4px!important;
   }
 }
+
+
+/* About desktop master grid — 2026-09-22
+   Left label axis = 1/4 of viewport.
+   Right content = 3/4 of the remaining 3/4 = 56.25vw.
+   The final 18.75vw stays as deliberate right-side breathing room. */
+@media(min-width:981px){
+  .about-hero-v2,
+  .about-section{
+    grid-template-columns:
+      calc(25vw - var(--pad))
+      minmax(0,56.25vw)
+      minmax(0,1fr)!important;
+    column-gap:0!important;
+  }
+
+  .about-hero-v2 > .about-section-label,
+  .about-section > .about-section-label{
+    grid-column:1!important;
+    min-width:0;
+  }
+
+  .about-hero-main,
+  .about-hero-bottom,
+  .about-section-body,
+  .leadership-section .leadership-body{
+    grid-column:2!important;
+    width:100%;
+    min-width:0;
+  }
+}
