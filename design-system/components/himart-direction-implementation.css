@@ -61,12 +61,12 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   margin-top:40px!important;
 }
 
-/* 04.1 / 04.2 confidentiality matte.
-   Both paired mockup sections use the same 70% black veil. */
+/* 04.1 confidentiality matte only.
+   04.2 must show its uploaded screens without any black veil. */
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .galaxy-ultra-screen{
   position:relative!important;
 }
-html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .galaxy-ultra-screen::before{
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::before{
   content:""!important;
   position:absolute!important;
   z-index:4!important;
@@ -74,6 +74,13 @@ html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction
   display:block!important;
   background:rgba(0,0,0,.70)!important;
   pointer-events:none!important;
+}
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen::before,
+html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen::after{
+  content:none!important;
+  display:none!important;
+  background:transparent!important;
+  opacity:0!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::after{
   content:"현재 진행 중인 프로젝트라\A공개가 어려운 점 양해 부탁드립니다."!important;
