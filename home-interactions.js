@@ -328,9 +328,13 @@
   const renderHero = (p) => {
     if (!hero || !quoteState || !definition || !subState) return;
 
+    const stableP = Math.abs(p - HERO.quoteHoldEnd) < 0.008
+      ? HERO.quoteHoldEnd
+      : p;
+
     renderThreeCycleReveal(
       quoteChars,
-      phaseProgress(p, HERO.quoteFillStart, HERO.quoteFillEnd),
+      phaseProgress(stableP, HERO.quoteFillStart, HERO.quoteFillEnd),
       '17,17,17',
       0.05
     );
@@ -339,12 +343,12 @@
       (HERO.quoteFillEnd - HERO.quoteFillStart) * 0.62;
     setWhole(
       sourceOnly ? [sourceOnly] : [],
-      phaseProgress(p, quoteSourceStart, HERO.quoteFillEnd)
+      phaseProgress(stableP, quoteSourceStart, HERO.quoteFillEnd)
     );
 
-    const quoteMorph = phaseProgress(p, HERO.quoteHoldEnd, HERO.quoteMorphEnd);
+    const quoteMorph = phaseProgress(stableP, HERO.quoteHoldEnd, HERO.quoteMorphEnd);
     const definitionErase = phaseProgress(
-      p,
+      stableP,
       HERO.definitionHoldEnd,
       HERO.definitionEraseEnd
     );
@@ -376,20 +380,20 @@
       quoteMorph <= 0.001 || definitionErase >= 0.999 ? 'true' : 'false'
     );
 
-    const subReveal = phaseProgress(p, HERO.subRevealStart, HERO.subRevealEnd);
+    const subReveal = phaseProgress(stableP, HERO.subRevealStart, HERO.subRevealEnd);
     setStyle(subState, 'opacity', subReveal > 0 ? '1' : '0');
     setStyle(subState, 'transform', 'none');
     setStyle(subState, 'clipPath', 'none');
     renderScrambleReveal(subChars, subReveal);
     renderThreeCycleReveal(
       subKoreanChars,
-      phaseProgress(p, HERO.subFillEnd, HERO.subCaptionFillEnd),
+      phaseProgress(stableP, HERO.subFillEnd, HERO.subCaptionFillEnd),
       '17,17,17',
       0
     );
     renderThreeCycleReveal(
       subIdentityChars,
-      phaseProgress(p, 0.955, HERO.subHoldEnd),
+      phaseProgress(stableP, 0.955, HERO.subHoldEnd),
       '17,17,17',
       0,
       0.70,
@@ -461,6 +465,7 @@
   let heroEntryStates = [];
 
   const clearHeroEntryNode = ({ char, finalChar }) => {
+    clearScrambleOverlay(char);
     char.textContent = finalChar;
     char.style.removeProperty('display');
     char.style.removeProperty('width');
@@ -477,6 +482,13 @@
     heroEntryRaf = 0;
     heroEntryFinalTimer = 0;
     heroEntryStates.forEach(clearHeroEntryNode);
+    quoteChars.forEach(char => {
+      clearScrambleOverlay(char);
+      const finalChar = char.dataset.finalChar;
+      if (finalChar != null) char.textContent = finalChar;
+      char.style.removeProperty('color');
+      styleCache.delete(char);
+    });
     heroEntryStates = [];
     if (sourceOnly) {
       sourceOnly.style.removeProperty('color');
