@@ -5,8 +5,8 @@ html:has(body.contact-page-body){
   overscroll-behavior:none;
 }
 body.contact-page-body{
-  --contact-left-column:40vw;
-  --contact-right-column:60vw;
+  --contact-left-column:66.666vw;
+  --contact-right-column:33.334vw;
   margin:0;
   width:100%;
   height:100vh;
@@ -118,12 +118,12 @@ body.contact-page-body .contact-details{
 
 body.contact-page-body .contact-row{
   display:grid;
-  grid-template-columns:minmax(120px,1fr) minmax(0,3fr);
-  gap:32px;
-  align-items:center;
+  grid-template-columns:max-content minmax(0,1fr);
+  column-gap:24px;
+  align-items:start;
   height:84px;
-  margin-left:clamp(40px,5vw,96px);
-  padding:0;
+  margin-left:0;
+  padding:14px 0;
   border-top:0;
 }
 body.contact-page-body .contact-row + .contact-row{
