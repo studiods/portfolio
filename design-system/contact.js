@@ -38,17 +38,8 @@
   window.addEventListener('resize', requestUpdate);
   updateTitle();
 
-  const contactContent = document.querySelector('.contact-content');
-  let revealStarted = false;
-
-  const revealOnScroll = () => {
-    if (revealStarted || !contactContent || window.scrollY <= 0) return;
-    const rect = contactContent.getBoundingClientRect();
-    if (rect.top > window.innerHeight * .90) return;
-
-    revealStarted = true;
+  const revealDelay = 1000;
+  window.setTimeout(() => {
     revealItems.forEach(item => item.classList.add('is-contact-visible'));
-  };
-
-  window.addEventListener('scroll', revealOnScroll, { passive: true });
+  }, revealDelay);
 })();
