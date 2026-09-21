@@ -155,22 +155,22 @@ body.contact-page-body .contact-value--en a{
 /* Right-side content rises vertically without a surrounding frame. */
 body.contact-page-body.contact-motion-ready .contact-row{
   opacity:0;
-  transform:translate3d(0,42px,0);
+  transform:translate3d(0,64px,0);
   transition:
-    opacity 1500ms cubic-bezier(.55,.055,.675,.19),
-    transform 1800ms cubic-bezier(.55,.055,.675,.19);
+    opacity 900ms cubic-bezier(.55,.055,.675,.19),
+    transform 1150ms cubic-bezier(.55,.055,.675,.19);
   will-change:opacity,transform;
 }
 body.contact-page-body.contact-motion-ready .contact-row.is-contact-visible{
   opacity:1;
   transform:translate3d(0,0,0);
 }
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(2){transition-delay:90ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(3){transition-delay:180ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(4){transition-delay:270ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(5){transition-delay:360ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(6){transition-delay:450ms}
-body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(7){transition-delay:540ms}
+body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(2){transition-delay:65ms}
+body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(3){transition-delay:130ms}
+body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(4){transition-delay:195ms}
+body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(5){transition-delay:260ms}
+body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(6){transition-delay:325ms}
+body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(7){transition-delay:390ms}
 
 body.contact-page-body .contact-footer{
   display:flex;
@@ -241,7 +241,7 @@ body.contact-page-body .contact-footer a:focus-visible{
   }
   body.contact-page-body.contact-motion-ready .contact-row:not(.is-contact-visible){
     opacity:0!important;
-    transform:translate3d(0,42px,0)!important;
+    transform:translate3d(0,64px,0)!important;
   }
   body.contact-page-body.contact-motion-ready .contact-row.is-contact-visible{
     opacity:1!important;
