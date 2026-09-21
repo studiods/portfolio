@@ -63,7 +63,9 @@ html body.reuse-current :is(
   .reuse-production-gallery__viewport
 ){
   overflow:hidden!important;
-  overscroll-behavior:none;
+  overscroll-behavior-x:none;
+  overscroll-behavior-y:auto;
+  touch-action:pan-y pinch-zoom;
   scrollbar-width:none;
 }
 html body.reuse-current :is(
