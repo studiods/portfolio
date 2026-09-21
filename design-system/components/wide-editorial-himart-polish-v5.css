@@ -996,3 +996,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
     font-size:64px!important;
   }
 }
+
+
+/* HIMART 01.4 — requested right breathing room per comparison card. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+  margin-right:32px!important;
+  width:calc(100% - 32px)!important;
+}
