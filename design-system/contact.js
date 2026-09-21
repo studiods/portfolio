@@ -38,8 +38,37 @@
   window.addEventListener('resize', requestUpdate);
   updateTitle();
 
-  const revealDelay = 1000;
-  window.setTimeout(() => {
-    revealItems.forEach(item => item.classList.add('is-contact-visible'));
-  }, revealDelay);
+  const details = document.querySelector('.contact-details');
+  const revealDelay = 2000;
+  let revealTimer = 0;
+  let scrambleObserver = null;
+
+  const revealDetails = () => {
+    if (!details || details.classList.contains('is-contact-visible')) return;
+    details.classList.add('is-contact-visible');
+    requestAnimationFrame(() => {
+      revealItems.forEach(item => item.classList.add('is-contact-visible'));
+    });
+  };
+
+  const scheduleReveal = () => {
+    if (revealTimer) return;
+    scrambleObserver?.disconnect();
+    scrambleObserver = null;
+    revealTimer = window.setTimeout(revealDetails, revealDelay);
+  };
+
+  if (reduced) {
+    scheduleReveal();
+  } else if (title.getAttribute('data-hm-scramble-complete') === 'true') {
+    scheduleReveal();
+  } else if ('MutationObserver' in window) {
+    scrambleObserver = new MutationObserver(() => {
+      if (title.getAttribute('data-hm-scramble-complete') === 'true') scheduleReveal();
+    });
+    scrambleObserver.observe(title, {
+      attributes:true,
+      attributeFilter:['data-hm-scramble-complete']
+    });
+  }
 })();
