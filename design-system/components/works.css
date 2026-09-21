@@ -29,8 +29,8 @@ body.works-page-body .works-hero{
   position:relative;
   height:100vh;
   min-height:680px;
-  overflow:hidden;
-  isolation:isolate;
+  overflow:visible;
+  isolation:auto;
   scroll-snap-align:start;
 }
 
