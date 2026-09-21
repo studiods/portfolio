@@ -61,18 +61,18 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   margin-top:40px!important;
 }
 
-/* 04.1 is still in progress: keep the already-blurred screens covered by a 50% black veil
-   and one two-line confidentiality message, 44px above the bottom of each screen. */
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen{
+/* 04.1 / 04.2 confidentiality matte.
+   Both paired mockup sections use the same 70% black veil. */
+html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .galaxy-ultra-screen{
   position:relative!important;
 }
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::before{
+html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .galaxy-ultra-screen::before{
   content:""!important;
   position:absolute!important;
   z-index:4!important;
   inset:0!important;
   display:block!important;
-  background:rgba(0,0,0,.50)!important;
+  background:rgba(0,0,0,.70)!important;
   pointer-events:none!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::after{
@@ -103,6 +103,57 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .prototype-case-copy{
   display:none!important;
+}
+
+/* 04.1 / 04.2 paired mockup geometry.
+   The strategy cards above are two equal columns with a 20px gap.
+   Keep each mockup's LEFT edge on the matching 01 / 02 card rail.
+   Copy remains inside each mockup item, so it follows the same rail.
+   Pagination ends exactly on the RIGHT edge of the second mockup. */
+@media(min-width:1001px){
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case{
+    grid-template-columns:repeat(2,calc((85% - 32px)/2))!important;
+    column-gap:calc(7.5% + 26px)!important;
+    justify-content:start!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-item{
+    width:100%!important;
+    justify-self:start!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-copy{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    text-align:left!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-footer{
+    width:calc(92.5% - 6px)!important;
+    justify-content:flex-end!important;
+    text-align:right!important;
+  }
+}
+
+@media(min-width:781px) and (max-width:1000px){
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case{
+    grid-template-columns:repeat(2,calc((95% - 32px)/2))!important;
+    column-gap:calc(2.5% + 26px)!important;
+    justify-content:start!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-item{
+    width:100%!important;
+    justify-self:start!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-copy{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    text-align:left!important;
+  }
+  html body.himart-page-body.himart-commerce-page #live-main #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-footer{
+    width:calc(97.5% - 6px)!important;
+    justify-content:flex-end!important;
+    text-align:right!important;
+  }
 }
 
 /* Keep the two new subsections inside the same wide right rail used by chapters 01–03. */
