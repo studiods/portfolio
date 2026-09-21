@@ -1,9 +1,18 @@
 /* CONTACT — Works visual language without project switcher or media stream. */
+html:has(body.contact-page-body){
+  height:100%;
+  overflow:hidden!important;
+  overscroll-behavior:none;
+}
 body.contact-page-body{
   --contact-left-column:40vw;
   --contact-right-column:60vw;
   margin:0;
-  min-height:100%;
+  width:100%;
+  height:100vh;
+  min-height:100vh;
+  overflow:hidden!important;
+  overscroll-behavior:none;
   background:var(--hm-bg-page,#000);
   color:var(--hm-text-primary,#fff);
 }
@@ -32,10 +41,14 @@ body.contact-page-body .contact-background__matte{
   background:rgba(0,0,0,.80);
 }
 body.contact-page-body .works-page{
-  position:relative;
+  position:fixed;
   z-index:1;
+  inset:0;
+  width:100%;
+  height:100vh;
+  min-height:0;
+  overflow:hidden;
   background:transparent!important;
-  min-height:100vh;
 }
 
 /* CONTACT must use the same true center lock as the rest of the canonical GNB. */
@@ -47,9 +60,11 @@ html body.contact-page-body>.top .top-center{
 }
 
 body.contact-page-body .works-hero{
-  position:relative;
+  position:absolute;
+  inset:0;
   height:100vh;
-  min-height:680px;
+  min-height:0;
+  pointer-events:none;
 }
 body.contact-page-body .works-page-title{
   position:fixed!important;
@@ -80,27 +95,35 @@ body.contact-page-body :is(.works-title-menu-toggle,.works-project-menu,.works-p
 }
 
 body.contact-page-body .contact-content{
+  position:fixed;
+  inset:0;
   display:grid;
   grid-template-columns:var(--contact-left-column) var(--contact-right-column);
   width:100%;
-  min-height:160vh;
+  height:100vh;
+  min-height:0;
+  overflow:hidden;
+  pointer-events:none;
 }
 body.contact-page-body .contact-spacer{
   min-width:0;
 }
 body.contact-page-body .contact-details{
-  position:sticky;
-  top:50vh;
-  align-self:start;
+  align-self:center;
   padding:0 var(--hm-inset-desktop) 0 0;
-  transform:translateY(-50%);
+  transform:translate3d(0,18vh,0);
   visibility:hidden;
   opacity:0;
   pointer-events:none;
+  transition:
+    opacity 900ms cubic-bezier(.55,.055,.675,.19),
+    transform 1450ms cubic-bezier(.55,.055,.675,.19);
+  will-change:opacity,transform;
 }
 body.contact-page-body .contact-details.is-contact-visible{
   visibility:visible;
   opacity:1;
+  transform:translate3d(0,0,0);
   pointer-events:auto;
 }
 
@@ -173,7 +196,7 @@ body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(6){transiti
 body.contact-page-body.contact-motion-ready .contact-row:nth-of-type(7){transition-delay:390ms}
 
 body.contact-page-body .contact-footer{
-  display:flex;
+  display:none;
   justify-content:space-between;
   gap:24px;
   padding:48px var(--hm-inset-desktop) 60px;
@@ -200,23 +223,29 @@ body.contact-page-body .contact-footer a:focus-visible{
     --contact-right-column:1fr;
   }
   body.contact-page-body .works-hero{
-    min-height:580px;
+    min-height:0;
   }
   body.contact-page-body .works-page-title{
     left:var(--hm-inset-mobile)!important;
   }
   body.contact-page-body .contact-content{
     grid-template-columns:1fr;
+    height:100vh;
     min-height:0;
   }
   body.contact-page-body .contact-spacer{
     display:none;
   }
   body.contact-page-body .contact-details{
-    position:static;
-    top:auto;
-    padding:80px var(--hm-inset-mobile) 90px;
-    transform:none;
+    position:absolute;
+    left:0;
+    right:0;
+    top:50%;
+    padding:0 var(--hm-inset-mobile);
+    transform:translate3d(0,calc(-50% + 18vh),0);
+  }
+  body.contact-page-body .contact-details.is-contact-visible{
+    transform:translate3d(0,-50%,0);
   }
   body.contact-page-body .contact-row{
     grid-template-columns:1fr;
