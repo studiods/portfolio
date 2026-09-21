@@ -30,7 +30,7 @@
   const slowEnd = (start, end, factor) =>
     Math.min(1, start + (end - start) * factor);
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*+-_=/?.,:;()[]{}<>|~';
   const randomGlyph = (index, step) =>
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
 

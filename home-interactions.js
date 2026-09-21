@@ -144,7 +144,7 @@
     subHoldEnd: 1
   });
 
-  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const SCRAMBLE_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*+-_=/?.,:;()[]{}<>|~';
   const rememberFinalChars = chars => chars.forEach(char => {
     char.dataset.finalChar = char.textContent;
   });

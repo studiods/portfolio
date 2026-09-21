@@ -132,7 +132,7 @@ body.contact-page-body .contact-value a{
   color:var(--hm-text-primary,#fff);
   text-align:left;
   font-family:var(--hm-font-ko);
-  font-size:20px;
+  font-size:16px;
   font-weight:300;
   line-height:1.4;
   letter-spacing:-.025em;
@@ -222,7 +222,7 @@ body.contact-page-body .contact-footer a:focus-visible{
   }
   body.contact-page-body .contact-value,
   body.contact-page-body .contact-value a{
-    font-size:20px;
+    font-size:16px;
     overflow-wrap:anywhere;
   }
   body.contact-page-body .contact-footer{

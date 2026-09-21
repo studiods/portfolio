@@ -26,7 +26,7 @@
 
   if (window.HMDSTitleScrambleRuntime) return;
 
-  const glyphs = '가나다라마바사아자차카타파하ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*+-_=/?.,:;()[]{}<>|~';
   const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title, .about-ascii-hero .about-ascii-title, .works-hero .works-page-title, .reuse-hero-title';
   const majorSelector = [
     '#live-main .hm-section-head .hm-section-title',

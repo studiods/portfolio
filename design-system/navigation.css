@@ -205,3 +205,13 @@ html body.reuse-current .reuse-confidence-node.is-flow-trust-resetting .reuse-co
     overscroll-behavior-y:auto!important;
   }
 }
+
+
+/* PRIMARY PAGE MOBILE SWIPE GESTURE OWNERSHIP — 2026-09-22 */
+@media (max-width:779px){
+  body.home-test,
+  body.about-page-body,
+  body.works-page-body{
+    touch-action:pan-y!important;
+  }
+}
