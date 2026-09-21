@@ -154,6 +154,9 @@ body.contact-page-body .contact-value a{
   text-decoration:none;
   word-break:keep-all;
 }
+body.contact-page-body .contact-value{
+  align-self:center;
+}
 body.contact-page-body .contact-value a{
   display:inline;
   border-bottom:0;
