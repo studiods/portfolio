@@ -24,7 +24,7 @@
   let startPoint = null;
 
   const currentPageIndex = () => {
-    const pathname = window.location.pathname.replace(/\\/+$/, '');
+    const pathname = window.location.pathname.replace(/\/+$/, '');
     const filename = pathname.split('/').pop() || 'index.html';
 
     if (!filename || filename === 'portfolio') return 0;
