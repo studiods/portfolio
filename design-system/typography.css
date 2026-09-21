@@ -24,10 +24,11 @@ html body.himart-page-body{font-family:var(--hm-font-ko);font-weight:300;letter-
 .hm-ds-number--normal,[data-hm-number="normal"]{letter-spacing:normal!important}
 
 @media(max-width:780px){
-  .hm-ds-hero__title,.hm-title{font-size:clamp(38px,10vw,58px)}
-  .hm-section-title,.hm-ds-section__title{font-size:clamp(34px,9vw,42px)}
-  .hm-subtitle,.hm-ds-subsection__title{font-size:clamp(28px,7.5vw,32px)}
-  .hm-ds-group{font-size:clamp(22px,6vw,24px)}
-  .hm-ds-body,.hm-section-desc,.hm-subcopy{font-size:clamp(14px,3.9vw,16px)}
-  .hm-ds-note{font-size:clamp(11px,3vw,12px)}
+  .hm-ds-hero__title,.hm-title{font-size:var(--hm-type-hero-mobile)}
+  .hm-section-title,.hm-ds-section__title{font-size:var(--hm-type-section-mobile)}
+  .hm-subtitle,.hm-ds-subsection__title{font-size:var(--hm-type-subsection-mobile)}
+  .hm-ds-group{font-size:var(--hm-type-group-mobile)}
+  .hm-ds-body,.hm-section-desc,.hm-subcopy{font-size:var(--hm-type-body-mobile)}
+  .hm-ds-note{font-size:var(--hm-type-note-mobile)}
+  .hm-ds-source-note{font-size:var(--hm-type-source-mobile)}
 }
