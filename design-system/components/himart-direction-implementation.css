@@ -9,42 +9,42 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
 
 /* 04.1 / AX 01.2 card grammar copied into Himart commerce.
    The card structure and typography values are intentionally identical; only the copy differs. */
-html body.himart-commerce-page #direction .himart-direction-041 .hm-subtitle > .wide-title-index{
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .hm-subtitle > .wide-title-index{
   display:none!important;
 }
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-grid{
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:20px;
   width:100%;
 }
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card{
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card{
   min-height:260px;
   padding:24px 0 0;
   border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
 }
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card>span{
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card>span{
   display:block;
   color:var(--hm-blue);
   font:400 12px/1.2 var(--hm-font-en);
   letter-spacing:var(--hm-track-note);
 }
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card h4{
-  margin:54px 0 0;
-  color:#fff;
-  font:100 22px/1.3 var(--hm-font-ko);
-  font-variation-settings:"wght" 100;
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card h4{
+  margin:24px 0 0;
+  color:var(--hm-blue);
+  font:300 28px/1.28 var(--hm-font-ko);
+  font-variation-settings:"wght" 300;
   letter-spacing:var(--hm-track-group);
   word-break:keep-all;
 }
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card h4>span,
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card p>span{
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card h4>span,
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card p>span{
   display:block;
   white-space:nowrap;
   word-break:keep-all;
   overflow-wrap:normal;
 }
-html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-card p{
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card p{
   margin:12px 0 0;
   max-width:none;
   color:var(--hm-description-color);
@@ -114,7 +114,7 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
 }
 
 @media(max-width:780px){
-  html body.himart-commerce-page #direction .himart-direction-041 .ax-friction-grid{
+  html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-grid{
     grid-template-columns:1fr!important;
   }
 }
