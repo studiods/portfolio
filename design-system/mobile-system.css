@@ -1055,6 +1055,13 @@
     right:16px!important;
     bottom:auto!important;
   }
+  html body.reuse-current #live-main .reuse-production-gallery--video-player .reuse-video-player__veil{
+    top:0!important;
+    right:0!important;
+    bottom:auto!important;
+    left:0!important;
+    height:56.25cqw!important;
+  }
 
   /* AIMMO System 02.1 / 02.3 — 16:9 evidence galleries. 03.2 square application gallery is excluded. */
   html body.aimmo-system-page #live-main :is(.aimmo-evidence-gallery,.aimmo-improvement-gallery) .aimmo-evidence-card{
