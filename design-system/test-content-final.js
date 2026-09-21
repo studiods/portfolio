@@ -78,10 +78,11 @@
     const patternTitles = [
       '시작점은 하나가 아니였습니다.',
       '고객은 적극적으로 후보를 찾고 있었습니다.',
-      '하지만 다음 화면에서<br>맥락이 약해졌습니다.'
+      '<span>하지만 다음 화면에서</span><span>맥락이 약해졌습니다.</span>'
     ];
     pattern022?.querySelectorAll('.behavior-pattern-card h4').forEach((el, i) => {
       if (patternTitles[i]) html(el, patternTitles[i]);
+      if (i === 2) el.classList.add('behavior-pattern-card__title--two-lines');
     });
 
     const bridge023 = document.querySelector('#data .hm-data-bridge-023__copy');
