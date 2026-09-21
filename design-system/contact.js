@@ -38,21 +38,17 @@
   window.addEventListener('resize', requestUpdate);
   updateTitle();
 
-  if (reduced || !('IntersectionObserver' in window)) {
+  const contactContent = document.querySelector('.contact-content');
+  let revealStarted = false;
+
+  const revealOnScroll = () => {
+    if (revealStarted || !contactContent || window.scrollY <= 0) return;
+    const rect = contactContent.getBoundingClientRect();
+    if (rect.top > window.innerHeight * .90) return;
+
+    revealStarted = true;
     revealItems.forEach(item => item.classList.add('is-contact-visible'));
-    return;
-  }
+  };
 
-  const observer = new IntersectionObserver((entries, currentObserver) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-contact-visible');
-      currentObserver.unobserve(entry.target);
-    });
-  }, {
-    threshold: .14,
-    rootMargin: '0px 0px -8% 0px'
-  });
-
-  revealItems.forEach(item => observer.observe(item));
+  window.addEventListener('scroll', revealOnScroll, { passive: true });
 })();
