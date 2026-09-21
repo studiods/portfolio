@@ -38,7 +38,7 @@
     '.reuse-section-title'
   ].join(',');
   const mediumSelector = [
-    '#live-main .hm-subhead .hm-subtitle',
+    '#live-main .hm-subhead h3',
     '#live-main .data-card-head h3',
     '#live-main .prototype-intro > h3',
     '#live-main .wa-project__head .wa-project__title',
@@ -421,10 +421,22 @@
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
           const element = entry.target;
+          const kind = element.dataset.hmScrambleKind || 'major';
+          const owner = revealOwner(element, kind);
+
+          /* Numbered subsection titles must begin only when the same scroll reveal
+             owner is actually visible. This prevents an off/hidden animation from
+             finishing before the user sees the 01.1 / 01.2 / 02.1 title. */
+          if (
+            kind === 'medium' &&
+            owner?.classList.contains('hm-reveal') &&
+            !owner.classList.contains('is-visible')
+          ) return;
+
           observer.unobserve(element);
-          startScramble(element, element.dataset.hmScrambleKind || 'major');
+          startScramble(element, kind);
         });
-      }, { threshold:.22, rootMargin:'0px 0px -8% 0px' })
+      }, { threshold:.18, rootMargin:'0px 0px -6% 0px' })
     : null;
 
   const register = (element, kind) => {
@@ -436,10 +448,13 @@
     if (reduce) return;
 
     const owner = revealOwner(element, kind);
-    if (registerRevealSynchronized(element, kind, owner)) return;
+    const revealSynchronized = registerRevealSynchronized(element, kind, owner);
 
-    if (observer) observer.observe(element);
-    else startScramble(element, kind);
+    if (observer) {
+      observer.observe(element);
+      return;
+    }
+    if (!revealSynchronized) startScramble(element, kind);
   };
 
   const scan = () => {
@@ -522,7 +537,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.20-final-state-4',
+    version:'2026.09.22-medium-scroll-1',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
