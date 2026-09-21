@@ -358,7 +358,7 @@ html body.reuse-current .sentiment-conclusion p{margin-top:var(--hm-title-descri
 html body.reuse-current .reuse-uncertainty-graph{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:0!important;
+  gap:32px!important;
   width:100%!important;
   margin-top:var(--hm-subtitle-to-content)!important;
   background:transparent!important;
@@ -367,11 +367,11 @@ html body.reuse-current .reuse-uncertainty-panel{
   position:relative!important;
   display:flex!important;
   flex-direction:column!important;
-  justify-content:space-between!important;
+  justify-content:flex-start!important;
   min-width:0!important;
   min-height:280px!important;
   margin:0!important;
-  padding:var(--hm-space-28) var(--hm-space-32) var(--hm-space-32)!important;
+  padding:var(--hm-space-28) 0 var(--hm-space-32)!important;
   border:0!important;
   border-top:1px solid var(--hm-blue)!important;
   background:transparent!important;
@@ -424,10 +424,10 @@ html body.reuse-current .reuse-uncertainty-panel p{
   gap:0!important;
   width:100%!important;
   max-width:none!important;
-  margin:auto 0 0!important;
+  margin:50px 0 0!important;
   text-align:left!important;
   color:var(--hm-blue)!important;
-  font:300 var(--hm-type-comparison)/var(--hm-leading-group) var(--hm-font-ko)!important;
+  font:300 28px/var(--hm-leading-group) var(--hm-font-ko)!important;
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
@@ -448,7 +448,7 @@ html body.reuse-current .reuse-uncertainty-panel.is-anxiety p{
     padding:var(--hm-space-24) 0 var(--hm-space-24)!important;
   }
   html body.reuse-current .reuse-uncertainty-panel + .reuse-uncertainty-panel{
-    margin-top:var(--hm-space-32)!important;
+    margin-top:0!important;
     border-left:0!important;
   }
   html body.reuse-current .reuse-uncertainty-panel__label{
