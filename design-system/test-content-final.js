@@ -154,6 +154,7 @@
     /* 02 data provenance cleanup: remove the retired H1 funnel source block itself,
        including the divider owned by that source element. */
     document.querySelectorAll('#data .hm-source, #data .hm-ds-source-note, #data [data-hm-source-note]').forEach((el) => {
+      if (el.classList.contains('himart-data-metric-source')) return;
       const value = (el.textContent || '').replace(/\s+/g, ' ').trim();
       if (
         value.includes('하이마트 온라인 이용 패턴 분석 v31') ||
