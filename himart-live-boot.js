@@ -126,6 +126,27 @@
 
           const screen=document.createElement('div');
           screen.className='galaxy-ultra-screen';
+
+          /* HIMART 04.2 geometry lock.
+             This runtime inline lock intentionally wins over the dynamically
+             injected shared prototype stylesheet. The uploaded 04.2 screens
+             are 375 × 812 and the outer device must use that exact ratio. */
+          const isHimart042=kind==='himart'&&assetGroup==='02';
+          if(isHimart042){
+            device.classList.add('himart-042-device');
+            device.style.setProperty('height','auto','important');
+            device.style.setProperty('aspect-ratio','375 / 812','important');
+            device.style.setProperty('padding','0','important');
+            device.style.setProperty('overflow','visible','important');
+            device.style.setProperty('box-sizing','border-box','important');
+
+            screen.classList.add('himart-042-screen');
+            screen.style.setProperty('width','100%','important');
+            screen.style.setProperty('height','100%','important');
+            screen.style.setProperty('aspect-ratio','auto','important');
+            screen.style.setProperty('overflow','hidden','important');
+            screen.style.setProperty('box-sizing','border-box','important');
+          }
           device.appendChild(screen);
 
           const assetIndex=start+screenIndex+1;
@@ -143,6 +164,14 @@
               :`Himart commerce journey prototype ${assetGroup}_${assetNo}`;
             image.loading=assetIndex<=2?'eager':'lazy';
             image.decoding='async';
+            if(isHimart042){
+              image.style.setProperty('display','block','important');
+              image.style.setProperty('width','100%','important');
+              image.style.setProperty('height','100%','important');
+              image.style.setProperty('aspect-ratio','375 / 812','important');
+              image.style.setProperty('object-fit','contain','important');
+              image.style.setProperty('object-position','top center','important');
+            }
             screen.appendChild(image);
           }
 
