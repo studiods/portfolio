@@ -268,10 +268,10 @@
   const updateScrollState = () => {
     const y = Math.max(0, window.scrollY || window.pageYOffset || 0);
 
-    const darkenProgress = clamp(y / 120);
+    const darkenProgress = clamp(y / 144);
     const fadeProgress = clamp((y - 18) / 210);
 
-    const blackout = 0.50 + easeOut(darkenProgress) * 0.50;
+    const blackout = 0.70 + easeOut(darkenProgress) * 0.30;
     const opacity = 1 - smoothstep(fadeProgress);
 
     layer.style.setProperty('--works-ascii-blackout', blackout.toFixed(3));
