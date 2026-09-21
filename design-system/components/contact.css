@@ -113,7 +113,7 @@ body.contact-page-body .contact-row{
   display:grid;
   grid-template-columns:90px minmax(0,1fr);
   column-gap:24px;
-  align-items:start;
+  align-items:center;
   height:42px;
   margin-left:0;
   padding:7px 0;
@@ -136,7 +136,7 @@ body.contact-page-body .contact-row + .contact-row{
 body.contact-page-body .contact-label{
   display:block;
   width:90px;
-  padding-top:4px;
+  padding-top:0;
   color:rgba(255,255,255,.80);
   font-family:var(--hm-font-en);
   font-size:12px;
