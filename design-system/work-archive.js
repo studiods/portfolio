@@ -10,6 +10,7 @@
   if(!stream||!menu)return;
 
   const TRANSITION_MS=720;
+  const AUTOPLAY_MS=5000;
   const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pad=n=>String(n).padStart(2,'0');
@@ -232,6 +233,8 @@
     let index=0;
     let busy=false;
     let pointerStart=null;
+    let autoplayTimer=0;
+    let autoplayActive=false;
 
     companyData.slides.forEach((item,slideIndex)=>{
       if(!targetMap.has(item.projectId))targetMap.set(item.projectId,{companyEl,slideIndex});
@@ -284,6 +287,22 @@
       updateCopy();
     };
 
+    const stopAutoplay=()=>{
+      if(!autoplayTimer)return;
+      clearTimeout(autoplayTimer);
+      autoplayTimer=0;
+    };
+
+    const scheduleAutoplay=()=>{
+      stopAutoplay();
+      if(!autoplayActive||reducedMotion||slides.length<2)return;
+      autoplayTimer=window.setTimeout(()=>{
+        autoplayTimer=0;
+        if(!autoplayActive||busy)return scheduleAutoplay();
+        move(1);
+      },AUTOPLAY_MS);
+    };
+
     const transitionTo=(targetIndex,direction=1,animate=true)=>{
       if(busy||slides.length<2||targetIndex===index){
         if(targetIndex===index)updateCopy();
@@ -306,7 +325,7 @@
       incoming.classList.add('is-next');
       incoming.setAttribute('aria-hidden','false');
       setGalleryHeight(gallery,incomingImage);
-      const complete=()=>{index=targetIndex;busy=false;settle();};
+      const complete=()=>{index=targetIndex;busy=false;settle();scheduleAutoplay();};
       if(reducedMotion||!animate){complete();return;}
       void incoming.offsetWidth;
       current.classList.add('is-exiting');
@@ -320,11 +339,11 @@
       transitionTo(target,delta<0?-1:1,true);
     };
 
-    prev?.addEventListener('click',event=>{event.stopPropagation();move(-1);});
-    next?.addEventListener('click',event=>{event.stopPropagation();move(1);});
+    prev?.addEventListener('click',event=>{event.stopPropagation();stopAutoplay();move(-1);});
+    next?.addEventListener('click',event=>{event.stopPropagation();stopAutoplay();move(1);});
     gallery.addEventListener('keydown',event=>{
-      if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}
-      else if(event.key==='ArrowRight'){event.preventDefault();move(1);}
+      if(event.key==='ArrowLeft'){event.preventDefault();stopAutoplay();move(-1);}
+      else if(event.key==='ArrowRight'){event.preventDefault();stopAutoplay();move(1);}
     });
     gallery.addEventListener('pointerdown',event=>{
       if(event.target.closest('button'))return;
@@ -335,21 +354,33 @@
       const dx=event.clientX-pointerStart.x;
       const dy=event.clientY-pointerStart.y;
       pointerStart=null;
-      if(Math.abs(dx)>=45&&Math.abs(dx)>Math.abs(dy)*1.15)move(dx<0?1:-1);
+      if(Math.abs(dx)>=45&&Math.abs(dx)>Math.abs(dy)*1.15){stopAutoplay();move(dx<0?1:-1);}
     });
     gallery.addEventListener('pointercancel',()=>{pointerStart=null;});
 
     const controller={
       sync:()=>{setGalleryHeight(gallery,activeImage());applyContrast();},
-      goTo:target=>transitionTo(target,target<index?-1:1,false),
+      goTo:target=>{stopAutoplay();transitionTo(target,target<index?-1:1,false);scheduleAutoplay();},
       getProjectId:()=>companyData.slides[index]?.projectId
     };
+
+    const galleryRuntime=window.HMDSGalleryRuntime;
+    if(galleryRuntime?.register){
+      galleryRuntime.register(gallery,active=>{
+        autoplayActive=active;
+        if(active)scheduleAutoplay();
+        else stopAutoplay();
+      });
+    }else if(!reducedMotion){
+      autoplayActive=true;
+      scheduleAutoplay();
+    }
     companyEl.__waController=controller;
     controllers.push(controller);
     settle();
   });
 
-  /* Manual-only gallery. No timer, autoplay, interval or observer advances slides. */
+  /* Galleries auto-advance every 5 seconds only while meaningfully visible; manual controls reset the timer. */
   let resizeFrame=0;
   window.addEventListener('resize',()=>{
     if(resizeFrame)cancelAnimationFrame(resizeFrame);
