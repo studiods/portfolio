@@ -1,0 +1,200 @@
+/* CONTACT — Works visual language without project switcher or media stream. */
+body.contact-page-body{
+  --contact-left-column:40vw;
+  --contact-right-column:60vw;
+  margin:0;
+  min-height:100%;
+  background:var(--hm-bg-page,#000);
+  color:var(--hm-text-primary,#fff);
+}
+body.contact-page-body *{box-sizing:border-box}
+
+body.contact-page-body .works-page{
+  min-height:100vh;
+  background:var(--hm-bg-page,#000);
+}
+body.contact-page-body .works-hero{
+  position:relative;
+  height:100vh;
+  min-height:680px;
+}
+body.contact-page-body .works-page-title{
+  position:absolute!important;
+  z-index:2!important;
+  top:50%!important;
+  left:var(--hm-inset-desktop)!important;
+  margin:0!important;
+  width:max-content!important;
+  color:var(--hm-text-primary,#fff)!important;
+  font-family:var(--hm-font-en)!important;
+  font-size:clamp(72px,9vw,160px)!important;
+  font-weight:300!important;
+  line-height:.8!important;
+  letter-spacing:-.035em!important;
+  white-space:nowrap!important;
+  transform:translateY(-50%)!important;
+  pointer-events:none!important;
+}
+
+body.contact-page-body :is(.works-title-menu-toggle,.works-project-menu,.works-progress,.hm-global-progress){
+  display:none!important;
+}
+
+body.contact-page-body .contact-content{
+  display:grid;
+  grid-template-columns:var(--contact-left-column) var(--contact-right-column);
+  width:100%;
+  min-height:100vh;
+  border-top:1px solid var(--hm-line-faint,rgba(255,255,255,.14));
+}
+body.contact-page-body .contact-intro{
+  padding:120px 8vw 140px var(--hm-inset-desktop);
+}
+body.contact-page-body .contact-kicker{
+  display:block;
+  margin:0 0 34px;
+  color:var(--hm-blue,#00A6ED);
+  font-family:var(--hm-font-en);
+  font-size:12px;
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:.08em;
+}
+body.contact-page-body .contact-intro h2{
+  margin:0;
+  max-width:12ch;
+  color:var(--hm-text-primary,#fff);
+  font-family:var(--hm-font-ko);
+  font-size:clamp(40px,4.4vw,72px);
+  font-weight:200;
+  font-variation-settings:"wght" 200;
+  line-height:1.16;
+  letter-spacing:-.055em;
+  word-break:keep-all;
+}
+body.contact-page-body .contact-intro p{
+  margin:36px 0 0;
+  max-width:34ch;
+  color:var(--hm-text-body,rgba(255,255,255,.6));
+  font-family:var(--hm-font-ko);
+  font-size:16px;
+  font-weight:300;
+  line-height:1.65;
+  letter-spacing:-.02em;
+  word-break:keep-all;
+}
+
+body.contact-page-body .contact-details{
+  padding:120px var(--hm-inset-desktop) 140px 0;
+  border-left:1px solid var(--hm-line-faint,rgba(255,255,255,.14));
+}
+body.contact-page-body .contact-row{
+  display:grid;
+  grid-template-columns:minmax(120px,1fr) minmax(0,3fr);
+  gap:32px;
+  margin-left:clamp(40px,5vw,96px);
+  padding:26px 0 30px;
+  border-top:1px solid var(--hm-line-content-divider,rgba(255,255,255,.18));
+}
+body.contact-page-body .contact-row:first-child{border-top-color:var(--hm-blue,#00A6ED)}
+body.contact-page-body .contact-label{
+  color:var(--hm-text-muted,rgba(255,255,255,.42));
+  font-family:var(--hm-font-en);
+  font-size:12px;
+  font-weight:300;
+  line-height:1.4;
+  letter-spacing:.07em;
+}
+body.contact-page-body .contact-value,
+body.contact-page-body .contact-value a{
+  color:var(--hm-text-primary,#fff);
+  font-family:var(--hm-font-ko);
+  font-size:clamp(20px,1.65vw,28px);
+  font-weight:300;
+  line-height:1.4;
+  letter-spacing:-.025em;
+  text-decoration:none;
+  word-break:keep-all;
+}
+body.contact-page-body .contact-value a{
+  display:inline;
+  border-bottom:1px solid rgba(255,255,255,.28);
+  transition:border-color 180ms ease,color 180ms ease;
+}
+body.contact-page-body .contact-value a:hover,
+body.contact-page-body .contact-value a:focus-visible{
+  color:var(--hm-blue,#00A6ED);
+  border-bottom-color:var(--hm-blue,#00A6ED);
+  outline:0;
+}
+body.contact-page-body .contact-value--en,
+body.contact-page-body .contact-value--en a{
+  font-family:var(--hm-font-en);
+  letter-spacing:-.02em;
+}
+
+body.contact-page-body .contact-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:24px;
+  padding:48px var(--hm-inset-desktop) 60px;
+  border-top:1px solid var(--hm-line-faint,rgba(255,255,255,.14));
+  color:var(--hm-text-muted,rgba(255,255,255,.42));
+  font-family:var(--hm-font-en);
+  font-size:12px;
+  font-weight:300;
+  line-height:1.5;
+  letter-spacing:.04em;
+}
+body.contact-page-body .contact-footer a{
+  color:inherit;
+  text-decoration:none;
+}
+body.contact-page-body .contact-footer a:hover,
+body.contact-page-body .contact-footer a:focus-visible{
+  color:var(--hm-text-primary,#fff);
+}
+
+@media(max-width:780px){
+  body.contact-page-body{
+    --contact-left-column:1fr;
+    --contact-right-column:1fr;
+  }
+  body.contact-page-body .works-hero{
+    min-height:580px;
+  }
+  body.contact-page-body .works-page-title{
+    left:var(--hm-inset-mobile)!important;
+    font-size:clamp(64px,20vw,104px)!important;
+  }
+  body.contact-page-body .contact-content{
+    grid-template-columns:1fr;
+    min-height:0;
+  }
+  body.contact-page-body .contact-intro{
+    padding:80px var(--hm-inset-mobile) 90px;
+  }
+  body.contact-page-body .contact-intro h2{
+    max-width:10ch;
+    font-size:clamp(40px,11vw,56px);
+  }
+  body.contact-page-body .contact-details{
+    padding:0 var(--hm-inset-mobile) 90px;
+    border-left:0;
+  }
+  body.contact-page-body .contact-row{
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-left:0;
+    padding:22px 0 26px;
+  }
+  body.contact-page-body .contact-value,
+  body.contact-page-body .contact-value a{
+    font-size:22px;
+    overflow-wrap:anywhere;
+  }
+  body.contact-page-body .contact-footer{
+    flex-direction:column;
+    padding:40px var(--hm-inset-mobile) 48px;
+  }
+}
