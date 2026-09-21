@@ -147,7 +147,7 @@ function journey(main){
   const d=q(h,'.hm-section-desc');
   if(d)d.textContent='먼저 고객의 판단 흐름을 만들고, 그 흐름 안에서 각 화면이 맡아야 할 역할을 다시 정의했습니다.';
 
-  qa(w,':scope > .journey-flow-block,:scope > .journey-role-block,:scope > details.journey-more,:scope > .journey-principle-block,:scope > .principle-grid,:scope > .hm-subsection,:scope > .flow-area').forEach(rm);
+  qa(w,':scope > .journey-flow-block,:scope > .journey-role-block,:scope > details.journey-more,:scope > .hm-subsection,:scope > .flow-area').forEach(rm);
   qa(w,'details.hm-more').forEach(x=>{/ROLE DEFINITION|여정별 역할/.test(x.textContent||'')&&rm(x)});
 
   const f=flow(),r=role(),m=more(signalCopy,redesignCopy);
