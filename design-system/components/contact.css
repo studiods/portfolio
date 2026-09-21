@@ -9,9 +9,33 @@ body.contact-page-body{
 }
 body.contact-page-body *{box-sizing:border-box}
 
+body.contact-page-body .contact-background{
+  position:fixed;
+  z-index:0;
+  inset:0;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  pointer-events:none;
+  background:#000;
+}
+body.contact-page-body .contact-background__video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+body.contact-page-body .contact-background__matte{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.60);
+}
 body.contact-page-body .works-page{
+  position:relative;
+  z-index:1;
+  background:transparent!important;
   min-height:100vh;
-  background:var(--hm-bg-page,#000);
 }
 
 /* CONTACT must use the same true center lock as the rest of the canonical GNB. */
