@@ -8,7 +8,7 @@
   <link rel="preload" href="./fonts/Averta-PE-Thin.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="./fonts/Averta-PE-Regular.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="./fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./design-system/index.css?v=20260921-2">
+  <link rel="stylesheet" href="./design-system/index.css?v=20260921-3">
   <link rel="stylesheet" href="./design-system/components/works-aimmo.css?v=20260915-1">
   <link rel="stylesheet" href="./design-system/components/works-archive.css?v=20260912-1">
   <link rel="stylesheet" href="./design-system/navigation.css?v=20260921-6">
@@ -17,7 +17,13 @@
 <body class="works-page-body">
 <nav class="top" aria-label="Global navigation"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./contact.html">Contact</a></div></nav>
 <main class="works-page">
-<header class="works-hero"><h1 class="works-page-title">WORKS</h1></header>
+<header class="works-hero">
+  <div class="works-ascii-bg" aria-hidden="true">
+    <canvas class="works-ascii-canvas"></canvas>
+    <div class="works-ascii-blackout"></div>
+  </div>
+  <h1 class="works-page-title">WORKS</h1>
+</header>
 <nav class="works-progress" aria-label="Project chapters"><a href="#works-project-1" class="is-active">01</a><a href="#works-project-5">02</a><a href="#works-project-8c">03</a><a href="#works-project-10">04</a><a href="#works-project-11">05</a></nav>
 <section class="works-grid" aria-label="주요 프로젝트">
 <article id="works-project-1" class="works-card"><div class="works-card-copy"><a class="works-card-title-link" href="./himart.html"><h2 class="works-card-title">하이마트 온라인 전체 구매 여정을<br>처음부터 재설계했습니다.</h2></a><p class="works-card-company">LOTTE HIMART 2025 -</p></div><a class="works-card-media-link has-visual" href="./himart.html" aria-label="하이마트 온라인 전체 구매 여정을 처음부터 재설계했습니다. 프로젝트 보기"><div class="works-card-media has-video"><video class="works-card-video" muted loop playsinline preload="metadata" aria-hidden="true"><source src="./assets/movies/himart_02.mp4" type="video/mp4"></video></div></a></article>
@@ -35,6 +41,7 @@
 <footer class="works-footer" id="contact"><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></footer>
 </main>
 <script src="./design-system/navigation.js?v=20260921-5"></script><script src="./design-system/gallery-runtime.js?v=20260915-2"></script><script src="./design-system/himart-workshop-slideshow.js?v=20260916-1"></script><script src="./design-system/works.js?v=20260920-4"></script><script src="./design-system/works-interaction-polish.js?v=20260910-1"></script><script src="./design-system/works-quarter-anchor.js?v=20260910-4"></script>
+<script src="./design-system/works-ascii-wave.js?v=20260921-1"></script>
 <script src="./design-system/animation.js?v=20260920-2"></script>
 <script src="./design-system/scramble-final.js?v=20260920-11"></script>
 </body></html>
