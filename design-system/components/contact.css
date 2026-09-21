@@ -71,6 +71,9 @@ body.contact-page-body .works-page-title{
   pointer-events:none!important;
   will-change:font-size;
 }
+body.contact-page-body.contact-title-compact .works-page-title{
+  font-weight:400!important;
+}
 
 body.contact-page-body :is(.works-title-menu-toggle,.works-project-menu,.works-progress,.hm-global-progress){
   display:none!important;
@@ -91,6 +94,14 @@ body.contact-page-body .contact-details{
   align-self:start;
   padding:0 var(--hm-inset-desktop) 0 0;
   transform:translateY(-50%);
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+}
+body.contact-page-body .contact-details.is-contact-visible{
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
 }
 
 body.contact-page-body .contact-row{
