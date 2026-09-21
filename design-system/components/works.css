@@ -35,7 +35,7 @@ body.works-page-body .works-hero{
 }
 
 body.works-page-body .works-ascii-bg{
-  --works-ascii-blackout:.50;
+  --works-ascii-blackout:.70;
   --works-ascii-opacity:1;
   position:absolute;
   z-index:0;
