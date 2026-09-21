@@ -74,7 +74,7 @@
     });
 
     const pattern022 = document.querySelector('#data .hm-data-pattern-022');
-    html(pattern022?.querySelector('.narrative-title'), '데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 ‘다음 행동으로의 연결’에 있었습니다.');
+    html(pattern022?.querySelector('.narrative-title'), '데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 다음 행동으로의 연결에 있었습니다.');
     const patternTitles = [
       '시작점은 하나가 아니였습니다.',
       '고객은 적극적으로 후보를 찾고 있었습니다.',
@@ -86,7 +86,7 @@
     });
 
     const bridge023 = document.querySelector('#data .hm-data-bridge-023__copy');
-    html(bridge023, '<span class="hm-data-bridge-quote">‘온라인몰이 떠오르지 않는다’</span>는 인식과 <span class="hm-data-bridge-quote">‘들어와도 다음 단계로 이어지지 않는다’</span>는 행동이 겹쳤습니다. 그래서 목표를 화면 개편이 아니라, <span class="hm-data-bridge-quote">‘구매 여정 안에 하이마트의 명확한 포지션을 만드는 것’</span>으로 다시 정의했습니다.');
+    html(bridge023, '<span class="hm-data-bridge-quote">온라인몰이 떠오르지 않는다</span>는 인식과 <span class="hm-data-bridge-quote">들어와도 다음 단계로 이어지지 않는다</span>는 행동이 겹쳤습니다. 그래서 목표를 화면 개편이 아니라, <span class="hm-data-bridge-quote">구매 여정 안에 하이마트의 명확한 포지션을 만드는 것</span>으로 다시 정의했습니다.');
 
     /* Chapter 03 final authority. */
     const roleTitle = document.querySelector('#journey .journey-role-block .journey-block-title, #journey [data-index="03.2"] + div .hm-subtitle, #journey .hm-subno[data-index="03.2"] ~ div .hm-subtitle');

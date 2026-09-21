@@ -1036,16 +1036,18 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-car
   overflow-wrap:normal!important;
 }
 
-/* 02.3: Thin narrative is full white; quoted emphasis keeps the blue accent. */
+/* 02.3 final contrast:
+   the surrounding thin/light copy is 70%; emphasized phrases stay full white.
+   Do not put opacity on the parent because it would dim the emphasized spans too. */
 html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
-  color:#fff!important;
+  color:rgba(255,255,255,.70)!important;
   opacity:1!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
 }
 html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
   color:#fff!important;
-  opacity:.70!important;
+  opacity:1!important;
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
 }
