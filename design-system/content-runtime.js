@@ -50,17 +50,17 @@ function brand(main){
   const syn=q(r,'.brand-synthesis');
   if(syn){
     syn.className='brand-synthesis narrative-touchpoint-synthesis';
-    syn.innerHTML='<span class="narrative-subno synthesis-subno">01.4</span><h4>하이마트의 문제는 강점이 부족한 것이 아니라,<br>그 강점이 구매 판단의 순간에 연결되지 않는 것이었습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>멀티 브랜드 비교·상담, 전국 매장, 전문 인력,<br>설치·A/S 신뢰처럼 복제하기 어려운 자산은 충분했습니다.</p></article><article class="synthesis-card negative"><b>판단 순간에 연결되지 않던 강점</b><p>비교·상담·설치·케어의 강점이 온라인 탐색과 결제 과정에서<br>고객의 다음 판단으로 이어지지 않았습니다.</p></article></div>';
+    syn.innerHTML='<span class="narrative-subno synthesis-subno">01.4</span><h4>정리해보면, 하이마트는 충분히 인지되고 있었습니다.<br>하지만 긴 구매 여정에서 그 강점은 판단의 순간까지 이어지지 않았습니다.</h4><div class="synthesis-list"><article class="synthesis-card positive"><b>이미 가지고 있던 강점</b><p>높은 브랜드 인지도와 멀티 브랜드 비교·상담, 전국 매장, 전문 인력, 설치·A/S 신뢰처럼 복제하기 어려운 자산은 충분했습니다.</p></article><article class="synthesis-card negative"><b>판단 순간에 연결되지 않던 강점</b><p>비교·상담·설치·케어의 강점이 온라인 탐색과 결제 과정에서 고객의 다음 판단으로 자연스럽게 이어지지 않았습니다.</p></article></div>';
   }
 }
 
 function data(main){
   const s=q(main,'#data'),h=q(s,':scope > .hm-wrap > .hm-section-head'),g=q(s,'.narrative-signals');
   if(!s||!h||!g)return;
-  q(h,'.hm-section-title').innerHTML='고객의 목소리에서 드러난 문제는<br>실제 이용 패턴에서도 반복됐습니다.';
+  q(h,'.hm-section-title').innerHTML='문제들은 실제 이용 패턴에서도 반복됐습니다.';
   const d=q(h,'.hm-section-desc');
   if(d)d.innerHTML='유입부터 구매까지 실제 행동을 따라가며, <strong>같은 단절이 반복되는지</strong> 확인했습니다.';
-  if(q(g,'.narrative-title'))q(g,'.narrative-title').innerHTML='고객은 찾아왔지만<br>그 다음으로 연결되지 못했습니다.';
+  if(q(g,'.narrative-title'))q(g,'.narrative-title').innerHTML='<span>숫자는 더 단순하게 말했습니다.</span><span>유입보다 다음 행동으로 이어지는 힘이 약했습니다.</span>';
   let grid=q(g,'.behavior-grid,.signal-grid');
   if(grid){
     grid.className='behavior-grid';
@@ -94,7 +94,7 @@ function flow(){
 function role(){
   const s=document.createElement('section');
   s.className='journey-role-block';
-  s.innerHTML=`<span class="narrative-subno">03.2</span><h3 class="journey-block-title">그리고 각 화면은,<br>다음 행동을 만드는 역할로 다시 정의했습니다.</h3><p class="journey-block-copy">각 접점의 목적을 ‘무엇을 보여줄 것인가’가 아니라 ‘다음에 무엇을 할 수 있어야 하는가’로 정의했습니다.</p><div class="journey-role-grid">${roles.map((x,i)=>`<article><span class="hm-role-index">${String(i+1).padStart(2,'0')}</span><small>${x[0]}</small><h4>${x[1]}</h4></article>`).join('')}</div>`;
+  s.innerHTML=`<span class="narrative-subno">03.2</span><h3 class="journey-block-title">그리고 각 화면의 역할을<br>명확하게 다시 정의했습니다.</h3><p class="journey-block-copy">각 접점의 목적을 ‘무엇을 보여줄 것인가’가 아니라 ‘다음에 무엇을 할 수 있어야 하는가’로 정의했습니다.</p><div class="journey-role-grid">${roles.map((x,i)=>`<article><span class="hm-role-index">${String(i+1).padStart(2,'0')}</span><small>${x[0]}</small><h4>${x[1]}</h4></article>`).join('')}</div>`;
   return s;
 }
 
@@ -159,7 +159,7 @@ function journey(main){
 function direction(main){
   const s=q(main,'#direction'),h=q(s,':scope > .hm-wrap > .hm-section-head');
   if(!s||!h)return;
-  q(h,'.hm-section-title').innerHTML='앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고, 내부 검증을 반복하고 있습니다.';
+  q(h,'.hm-section-title').innerHTML='정의한 흐름과 여정별 정의를 바탕으로<br>빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.';
   const d=q(h,'.hm-section-desc');
   if(d)d.textContent='정의한 원칙을 화면과 인터랙션으로 옮기고, 내부 검증을 반복했습니다.';
   const a=q(s,'.design-rule article:first-child h4');
@@ -291,9 +291,9 @@ if('MutationObserver' in window){
 
 const expectedTitles={
   brand:'왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.',
-  data:'고객의 목소리에서 드러난 문제는<br>실제 이용 패턴에서도 반복됐습니다.',
+  data:'문제들은 실제 이용 패턴에서도 반복됐습니다.',
   journey:'앞선 데이터를 바탕으로,<br>구매 여정의 흐름과 각 화면의 역할을<br>다시 정의했습니다.',
-  direction:'앞서 정의한 UX 전략을 바탕으로<br>빠르게 프로토타입을 만들고, 내부 검증을 반복하고 있습니다.'
+  direction:'정의한 흐름과 여정별 정의를 바탕으로<br>빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.'
 };
 
 const productionRoles=[
