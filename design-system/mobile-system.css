@@ -937,3 +937,22 @@
     word-break:keep-all!important;
   }
 }
+
+
+/* MOBILE PORTFOLIO SYSTEM v2.2 — self-contained mobile token bridge */
+@media(max-width:780px){
+  :root{
+    --hm-type-hero-mobile:clamp(36px,9.2vw,44px);
+    --hm-type-section-mobile:clamp(29px,7.6vw,34px);
+    --hm-type-subsection-mobile:clamp(24px,6.2vw,29px);
+    --hm-type-group-mobile:clamp(19px,5vw,22px);
+    --hm-type-body-mobile:15px;
+    --hm-type-note-mobile:11px;
+    --hm-type-source-mobile:10px;
+    --hm-type-data-xl-mobile:clamp(48px,14vw,68px);
+    --hm-type-data-lg-mobile:clamp(32px,9.5vw,44px);
+    --hm-type-data-md-mobile:clamp(24px,7.2vw,32px);
+    --hm-type-chart-label-mobile:12px;
+    --hm-type-chart-value-mobile:13px;
+  }
+}
