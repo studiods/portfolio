@@ -37,8 +37,56 @@
 </section>
 <footer class="works-footer" id="contact"><p><a href="mailto:subtraction.design@gmail.com">subtraction.design@gmail.com</a><br>SEOUL, KOREA<br>© 2026</p></footer>
 </main>
-<script src="./design-system/navigation.js?v=20260921-5"></script><script src="./design-system/mobile-page-swipe.js?v=20260922-1"></script><script src="./design-system/gallery-runtime.js?v=20260915-2"></script><script src="./design-system/himart-workshop-slideshow.js?v=20260916-1"></script><script src="./design-system/works.js?v=20260922-5"></script><script src="./design-system/works-interaction-polish.js?v=20260910-1"></script><script src="./design-system/works-quarter-anchor.js?v=20260910-4"></script>
+<script src="./design-system/navigation.js?v=20260921-5"></script><script src="./design-system/mobile-page-swipe.js?v=20260922-1"></script><script src="./design-system/gallery-runtime.js?v=20260915-2"></script><script src="./design-system/himart-workshop-slideshow.js?v=20260916-1"></script><script src="./design-system/works.js?v=20260922-6"></script><script src="./design-system/works-interaction-polish.js?v=20260910-1"></script><script src="./design-system/works-quarter-anchor.js?v=20260910-4"></script>
 <!-- Works ASCII background runtime disabled -->
+<script>
+(() => {
+  'use strict';
+
+  const body = document.body;
+  const title = document.querySelector('.works-page-title');
+  if (!body?.classList.contains('works-page-body') || !title) return;
+
+  const placeMenu = (trigger, menu) => {
+    const rect = title.getBoundingClientRect();
+    const triggerHeight = trigger?.getBoundingClientRect().height || 24;
+    if (trigger) {
+      trigger.style.left = `${Math.round(rect.right + 24)}px`;
+      trigger.style.top = `${Math.round(rect.top + (rect.height - triggerHeight) / 2)}px`;
+    }
+    menu.style.left = `${Math.round(rect.left)}px`;
+    menu.style.top = `${Math.round(rect.bottom + 24)}px`;
+  };
+
+  const toggleTitleMenu = event => {
+    if (!body.classList.contains('works-title-compact')) return;
+
+    const origin = event.target instanceof Element
+      ? event.target.closest('.works-page-title')
+      : null;
+    if (origin !== title) return;
+
+    const trigger = document.querySelector('.works-title-menu-toggle');
+    const menu = document.querySelector('.works-project-menu');
+    if (!trigger || !menu) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const open = menu.classList.contains('is-open');
+    trigger.setAttribute('aria-expanded', open ? 'false' : 'true');
+    trigger.setAttribute('aria-label', open ? '프로젝트 목록 열기' : '프로젝트 목록 닫기');
+    title.setAttribute('aria-expanded', open ? 'false' : 'true');
+    title.setAttribute('aria-label', open ? '프로젝트 목록 열기' : '프로젝트 목록 닫기');
+    menu.classList.toggle('is-open', !open);
+
+    if (!open) placeMenu(trigger, menu);
+  };
+
+  // Capture phase intentionally owns compact WORKS clicks before any older scroll-to-top handler.
+  document.addEventListener('click', toggleTitleMenu, true);
+})();
+</script>
 <script src="./design-system/animation.js?v=20260920-2"></script>
 <script src="./design-system/scramble-final.js?v=20260922-1"></script>
 </body></html>
