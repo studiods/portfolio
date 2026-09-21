@@ -167,7 +167,7 @@
     const p = clamp((start - rect.top) / Math.max(1, start - end));
     const eased = smoothstep(p);
 
-    root.style.setProperty('--home-sky-blackout', (eased * 0.96).toFixed(3));
+    root.style.setProperty('--home-sky-blackout', (0.50 + eased * 0.50).toFixed(3));
     root.style.setProperty('--home-sky-opacity', (1 - smoothstep(clamp((p - 0.28) / 0.72))).toFixed(3));
     root.style.setProperty('--home-sky-shift', `${(-innerHeight * 0.14 * eased).toFixed(1)}px`);
   };
