@@ -1,0 +1,36 @@
+/* HOME — generative ASCII night sky behind the opening hero sequence. */
+body.home-test .hero-sticky{
+  isolation:isolate;
+  overflow:hidden;
+}
+
+body.home-test .home-ascii-sky{
+  position:absolute;
+  z-index:0;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  pointer-events:none;
+}
+
+body.home-test .home-ascii-sky__canvas{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  opacity:.82;
+  pointer-events:none;
+}
+
+body.home-test .hero-state{
+  z-index:2;
+}
+
+@media(prefers-reduced-motion:reduce){
+  body.home-test .home-ascii-sky__canvas{
+    opacity:.70;
+  }
+}
