@@ -1015,3 +1015,37 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
   font-weight:500!important;
   font-variation-settings:"wght" 500!important;
 }
+
+
+/* HIMART 02.2 / 02.3 final readability lock — 2026-09-21 */
+/* 02.2 card 03 was becoming three lines because the generic h4 rule only used
+   word-break:keep-all and did not preserve the authored semantic line as one unit. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card h4.behavior-pattern-card__title--two-lines{
+  width:100%!important;
+  max-width:none!important;
+  white-space:normal!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card h4.behavior-pattern-card__title--two-lines>span{
+  display:block!important;
+  width:max-content!important;
+  max-width:100%!important;
+  white-space:nowrap!important;
+  word-break:keep-all!important;
+  overflow-wrap:normal!important;
+}
+
+/* 02.3: Thin narrative is full white; quoted emphasis keeps the blue accent. */
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
+  color:#fff!important;
+  opacity:1!important;
+  font-weight:100!important;
+  font-variation-settings:"wght" 100!important;
+}
+html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
+  color:var(--hm-blue)!important;
+  opacity:1!important;
+  font-weight:500!important;
+  font-variation-settings:"wght" 500!important;
+}
