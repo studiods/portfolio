@@ -48,6 +48,79 @@
     const applianceLead = document.querySelector('#brand .himart-appliance-flow__lead');
     text(applianceLead, '고가 가전 구매 흐름에서 선택이 흔들리는 지점을 확인했습니다.');
 
+
+    /* Chapter 02 final authority. */
+    const dataTitle = document.querySelector('#data > .hm-wrap > .hm-section-head .hm-section-title');
+    html(dataTitle, '문제들은 실제 이용 패턴에서도 반복됐습니다.');
+
+    const data021Title = document.querySelector('#data .hm-data-metrics-021 .hm-data-021-title');
+    html(data021Title, '<span>숫자는 더 단순하게 말했습니다.</span><span>유입보다 다음 행동으로 이어지는 힘이 약했습니다.</span>');
+
+    const dataMetricTitles = [
+      '유입의 상당수가 외부 맥락을<br>가진 상태에서 시작됐습니다.',
+      '기획전 유입의 절반 이상이<br>다음 탐색 없이 끝났습니다.',
+      '장바구니보다 결제 진입이<br>3배 이상 많이 발생했습니다.',
+      '검색은 보조 기능보다<br>적극적인 후보 탐색에 가까웠습니다.'
+    ];
+    const dataMetricLabels = [
+      'AD · CPS · CRM 유입 비중',
+      '기획전 시작 후 바로 종료',
+      '2026.01 모바일 · 결제/장바구니',
+      '세션 대비 검색 비중'
+    ];
+    document.querySelectorAll('#data .himart-data-metric-card').forEach((card, i) => {
+      if (dataMetricTitles[i]) html(card.querySelector('h4'), dataMetricTitles[i]);
+      if (dataMetricLabels[i]) text(card.querySelector('.himart-brand-metric-card__value p'), dataMetricLabels[i]);
+    });
+
+    const pattern022 = document.querySelector('#data .hm-data-pattern-022');
+    html(pattern022?.querySelector('.narrative-title'), '데이터와 이탈 요인을 다 같이 놓고 보니<br>문제는 유입이 아니라 ‘다음 행동으로의 연결’에 있었습니다.');
+    const patternTitles = [
+      '시작점은 하나가<br>아니였습니다.',
+      '고객은 적극적으로 후보를<br>찾고 있었습니다.',
+      '하지만 다음 화면에서 앞선<br>맥락이 약해졌습니다.'
+    ];
+    pattern022?.querySelectorAll('.behavior-pattern-card h4').forEach((el, i) => {
+      if (patternTitles[i]) html(el, patternTitles[i]);
+    });
+
+    const bridge023 = document.querySelector('#data .hm-data-bridge-023__copy');
+    text(bridge023, '‘온라인몰이 잘 떠오르지 않는다’는 인식과 ‘들어와도 다음 단계로 이어지지 않는다’는 행동이 겹쳤습니다. 그래서 목표를 ‘화면을 새로 만든다’가 아니라 ‘고객의 구매 여정 안에 명확한 포지션을 만든다’로 다시 정의했습니다.');
+
+    /* Chapter 03 final authority. */
+    const roleTitle = document.querySelector('#journey .journey-role-block .journey-block-title, #journey [data-index="03.2"] + div .hm-subtitle, #journey .hm-subno[data-index="03.2"] ~ div .hm-subtitle');
+    html(roleTitle, '그리고 각 화면의 역할을<br>명확하게 다시 정의했습니다.');
+
+    /* Chapter 04 final authority. */
+    const directionTitle = document.querySelector('#direction > .hm-wrap > .hm-section-head .hm-section-title');
+    html(directionTitle, '정의한 흐름과 여정별 정의를 바탕으로<br>빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.');
+
+    const direction041 = document.querySelector('#direction .himart-direction-041');
+    const direction042 = document.querySelector('#direction .himart-direction-042');
+    const title041 = direction041?.querySelector('.hm-subtitle');
+    const title042 = direction042?.querySelector('.hm-subtitle');
+    title041?.querySelector('.wide-title-index')?.remove();
+    title042?.querySelector('.wide-title-index')?.remove();
+    if (title041) html(title041, '전략 분석에서만 끝내지 않고,<br>실제 검증과 테스트를 반복하고 있습니다.');
+    if (title042) {
+      title042.innerHTML = title042.innerHTML.replace(/^\s*2\.\s*/,'');
+    }
+
+    const cards041 = direction041?.querySelectorAll('.ax-friction-card');
+    if (cards041?.[0]) {
+      html(cards041[0].querySelector('h4'), '<span>검증된 UX패턴은 적극 차용하여</span><span>익숙함을 느낄 수 있도록 했습니다.</span>');
+    }
+
+    if (direction042) {
+      let grid042 = direction042.querySelector('.ax-friction-grid');
+      if (!grid042) {
+        grid042 = document.createElement('div');
+        grid042.className = 'ax-friction-grid hm-ds-subtitle-to-content himart-direction-rule';
+        direction042.querySelector('.hm-subhead')?.insertAdjacentElement('afterend', grid042);
+      }
+      grid042.innerHTML = '<article class="ax-friction-card"><span>01</span><h4><span>스마트 비교로 원하는 조건의 상품을</span><span>빠르게 좁힐 수 있도록 했습니다.</span></h4><p><span>가격·스펙·설치 조건을 한 화면에서 비교하고,</span><span>원하는 상품만 빠르게 남겨 반복 탐색과 이탈을 줄입니다.</span></p></article><article class="ax-friction-card"><span>02</span><h4><span>길고 어려운 상품 정보는</span><span>빠르게 이해되는 언어로 다시 풉니다.</span></h4><p><span>복잡한 스펙과 상세 정보를 생활 기준과 핵심 요약으로 바꿔,</span><span>빠르게 파악하고 구매 확신을 만들 수 있도록 구성합니다.</span></p></article>';
+    }
+
     const behaviorTitles = [
       '<span>외부 맥락을</span><span>가진 유입</span>',
       '<span>기획전 시작 후</span><span>바로 종료</span>',
