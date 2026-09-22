@@ -365,10 +365,17 @@ body.hm-ds-lightbox-open{
 
 /* Adaptive gallery controls + navigable lightbox — shared contract v3.
    Difference blending keeps arrows/page status legible on light and dark imagery. */
-html body.himart-page-body .hm-ds-media-carousel .hm-ds-gallery-nav::before{
-  border-top-color:#fff!important;
-  border-right-color:#fff!important;
-  mix-blend-mode:difference!important;
+html body.himart-page-body .hm-ds-media-carousel .hm-ds-gallery-nav--prev::before{
+  border-top-color:var(--hm-gallery-nav-prev-color,#fff)!important;
+  border-right-color:var(--hm-gallery-nav-prev-color,#fff)!important;
+  mix-blend-mode:normal!important;
+  transition:border-color 160ms ease!important;
+}
+html body.himart-page-body .hm-ds-media-carousel .hm-ds-gallery-nav--next::before{
+  border-top-color:var(--hm-gallery-nav-next-color,#fff)!important;
+  border-right-color:var(--hm-gallery-nav-next-color,#fff)!important;
+  mix-blend-mode:normal!important;
+  transition:border-color 160ms ease!important;
 }
 html body.himart-page-body .hm-ds-media-carousel__status{
   color:#fff!important;
