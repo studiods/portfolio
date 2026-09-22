@@ -70,3 +70,13 @@ A file may be removed only when all conditions are true:
 - The replacement page has passed the deployed-page check.
 - It is not the only recoverable copy of a source asset.
 - The removal is committed separately from the visual refactor.
+
+
+## 2026-09-22 two-pass preview validation
+
+- Added `design-system/pages/himart-static-preview.js` as a page-owned runtime. It reveals authored nodes, starts native video playback, and reuses only the shared navigation/scramble behaviours; it does not write or reconcile case-study content.
+- Added `design-system/pages/himart-static.css` as the full compiled preview stylesheet, then created `design-system/pages/himart-static-pruned.css` as a conservative selector-pruned candidate.
+- Candidate size: 478,469 bytes -> 319,805 bytes (33.2% reduction). Local imports: 0. Core page selectors retained: hero, section, subsection, data card, flow, gallery, and footer.
+- The preview HTML now references only the pruned candidate CSS and the page-owned preview JS. It has one main, one body, one stylesheet entry, and one preview-script entry.
+- Second-pass source checks found and removed one unmatched closing brace in the generated candidate. The candidate now has balanced braces, no local asset-path issues, no old Himart test classes, and no legacy content-writer references.
+- This remains a working-branch preview only. `himart.html` and the operating `main` page were not changed. Deletion and production cutover remain blocked until deployed visual, console, and resource checks pass.
