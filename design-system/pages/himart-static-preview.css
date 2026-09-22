@@ -1,0 +1,29 @@
+/*
+  Himart static-preview entry stylesheet.
+  This preserves the current visual CSS order while the page moves away from
+  content-writing runtime files. The imports are transitional: they provide one
+  page-owned entry now and will be folded into a final stylesheet only after
+  the static preview is accepted.
+*/
+@import url("../components/himart-commerce.css?v=20260921-1");
+@import url("../himart-system.css?v=20260921-1");
+@import url("../navigation.css?v=20260921-6");
+@import url("../components/subsection-copy-visibility.css?v=20260918-2");
+@import url("../components/structural-index-contract.css?v=20260920-3");
+@import url("../components/hero.css?v=20260915-1");
+@import url("../components/wide-editorial-test.css?v=20260908-10-himart");
+@import url("../components/wide-editorial-himart-test.css?v=20260921-5");
+@import url("../components/semantic-circle-typography.css?v=20260919-6");
+@import url("../components/editorial-layout-contract.css?v=20260912-12");
+@import url("../components/himart-fluid-content.css?v=20260910-5");
+@import url("../components/himart-fluid-responsive-guard.css?v=20260919-2");
+@import url("../components/major-section-rhythm.css?v=20260912-6");
+@import url("../components/gallery-rhythm.css?v=20260912-2");
+@import url("../components/project-end-matter.css?v=20260912-9");
+@import url("../components/himart-direction-implementation.css?v=20260922-3");
+@import url("../components/wide-editorial-himart-polish-v5.css?v=20260922-4");
+@import url("../components/himart-appliance-purchase-flow.css?v=20260921-4");
+@import url("../mobile-system.css?v=20260921-4");
+
+/* Preview-only safety: the static document must never be hidden by old boot flags. */
+body.himart-static-preview #live-main{opacity:1!important;visibility:visible!important}
