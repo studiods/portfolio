@@ -80,9 +80,15 @@
     addSharedScript('./design-system/scramble-final.js?v=20260922-2');
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start, { once: true });
-  } else {
+  let started = false;
+  const startOnce = () => {
+    if (started) return;
+    started = true;
     start();
-  }
+  };
+
+  // The script is loaded at the end of the page, so initialize immediately.
+  // Keep the DOMContentLoaded fallback for deferred or cached execution paths.
+  startOnce();
+  document.addEventListener('DOMContentLoaded', startOnce, { once: true });
 })();
