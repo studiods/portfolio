@@ -173,9 +173,51 @@
     menu.classList.toggle('is-open',open);
     menu.setAttribute('aria-hidden',open?'false':'true');
   };
-  trigger?.addEventListener('click',()=>setMenuOpen(trigger.getAttribute('aria-expanded')!=='true'));
+  trigger?.addEventListener('click',()=>{
+    if(!document.body.classList.contains('wa-title-compact'))return;
+    setMenuOpen(trigger.getAttribute('aria-expanded')!=='true');
+  });
   document.addEventListener('pointerdown',event=>{if(menuShell&&!menuShell.contains(event.target))setMenuOpen(false);});
   document.addEventListener('keydown',event=>{if(event.key==='Escape')setMenuOpen(false);});
+
+  /* WORKS title handoff parity:
+     use the archive switcher label as the single visible title, then drive it
+     with the same scroll math as works.html from hero scale to compact top-left. */
+  const hero=document.querySelector('.wa-hero');
+  const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
+  const updateArchiveTitle=()=>{
+    if(!hero||!trigger||!menuShell)return;
+    const range=Math.max(1,Math.min(520,hero.offsetHeight*.55));
+    const p=reducedMotion?(window.scrollY>32?1:0):clamp(window.scrollY/range,0,1);
+    const startSize=clamp(window.innerWidth*.09,72,160);
+    const endSize=32;
+    const startTop=window.innerHeight*.5;
+    const endTop=window.innerWidth<=780?24:32;
+    const size=startSize+(endSize-startSize)*p;
+    const top=startTop+(endTop-startTop)*p;
+    const translate=-50*(1-p);
+
+    menuShell.style.setProperty('--wa-title-size',`${size.toFixed(2)}px`);
+    menuShell.style.setProperty('--wa-title-top',`${top.toFixed(2)}px`);
+    menuShell.style.setProperty('--wa-title-translate',`${translate.toFixed(2)}%`);
+
+    const compact=p>=.985;
+    document.body.classList.toggle('wa-title-compact',compact);
+    trigger.tabIndex=compact?0:-1;
+    if(!compact)setMenuOpen(false);
+  };
+
+  let titleFrame=0;
+  const requestArchiveTitleUpdate=()=>{
+    if(titleFrame)return;
+    titleFrame=requestAnimationFrame(()=>{
+      titleFrame=0;
+      updateArchiveTitle();
+    });
+  };
+  window.addEventListener('scroll',requestArchiveTitleUpdate,{passive:true});
+  window.addEventListener('resize',requestArchiveTitleUpdate,{passive:true});
+  updateArchiveTitle();
 
   const menuLinks=[...document.querySelectorAll('[data-wa-menu-project]')];
   const setActiveProject=id=>menuLinks.forEach(link=>link.classList.toggle('is-active',link.dataset.waMenuProject===id));

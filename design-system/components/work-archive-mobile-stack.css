@@ -47,3 +47,17 @@
     color:rgba(255,255,255,.70)!important;
   }
 }
+
+
+/* Mobile gallery arrows — center against the gallery image height, not the
+   stacked title/copy rhythm below it. Desktop navigation remains unchanged. */
+@media(max-width:780px){
+  html body.work-archive-page .wa-company .reuse-production-gallery__nav{
+    top:50%!important;
+    height:80px!important;
+    transform:translateY(-50%)!important;
+  }
+  html body.work-archive-page .wa-company .reuse-production-gallery__nav::before{
+    top:50%!important;
+  }
+}
