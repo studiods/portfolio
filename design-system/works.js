@@ -25,8 +25,8 @@
   /*
     WORKS media runtime:
     - videos do not autoplay on page load;
-    - the media center may sit anywhere inside the viewport 35%–65% band and remain focused;
-    - leaving that ±15vh focus band pauses immediately at the current frame;
+    - the media center may sit anywhere inside the viewport 25%–75% band and remain focused;
+    - leaving that ±25vh focus band pauses immediately at the current frame;
     - reverse scroll resumes from the paused frame when the media re-enters the band;
     - only the closest eligible project plays;
     - sequential clips use two stacked players only for seamless handoff;
@@ -247,7 +247,7 @@
     }
 
     const viewportCenter = window.innerHeight * .5;
-    const focusTolerance = window.innerHeight * .15;
+    const focusTolerance = window.innerHeight * .25;
     let focusedVideo = null;
     let focusedDistance = Infinity;
 
@@ -306,7 +306,7 @@
     const destination = card.querySelector('.works-card-title-link, .works-card-media-link');
     const item = document.createElement('a');
     item.href = destination?.getAttribute('href') || '#';
-    item.textContent = heading ? heading.textContent.trim() : card.textContent.trim();
+    item.textContent = heading ? heading.innerText.replace(/\s+/g, ' ').trim() : card.textContent.replace(/\s+/g, ' ').trim();
     menu.appendChild(item);
   });
   body.append(trigger, menu);

@@ -7,7 +7,7 @@ body.works-page-body{
   --works-title-content-width:calc(var(--works-title-column) - var(--works-title-media-gap) - var(--hm-inset-desktop));
   --works-project-rule-width:calc(var(--works-title-column) / 6);
   --works-project-rule-gap:56px;
-  --works-footer-gap:400px;
+  --works-footer-gap:200px;
   margin:0;
   overflow-x:hidden;
   overflow-y:auto;
@@ -182,7 +182,7 @@ body.works-page-body .works-card-company{
   max-width:var(--works-title-content-width);
   margin:var(--hm-space-20) 0 0;
   color:var(--hm-text-secondary);
-  opacity:.60;
+  opacity:.70;
   font-family:var(--hm-font-en);
   font-size:12px;
   font-weight:400;
@@ -375,7 +375,7 @@ body.works-page-body .works-project-menu a+a{
 body.works-page-body .works-project-menu a:hover,
 body.works-page-body .works-project-menu a:focus-visible{color:var(--hm-text-primary)}
 
-/* Footer: preserve 400px of black breathing room after the final project. */
+/* Footer: preserve 200px of black breathing room after the final project. */
 body.works-page-body .works-footer{
   margin:var(--works-footer-gap) 0 0;
   padding:var(--hm-space-74) var(--hm-inset-desktop);

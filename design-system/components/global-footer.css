@@ -1,0 +1,83 @@
+/* Shared footer for top-level portfolio pages only.
+   Applied to Home / About / Works / Contact; project detail pages intentionally opt out. */
+
+.portfolio-footer{
+  display:block!important;
+  padding-top:48px!important;
+  padding-bottom:60px!important;
+  border-top:0!important;
+  background:#000!important;
+  color:rgba(255,255,255,.70)!important;
+  text-transform:none!important;
+}
+
+.portfolio-footer .portfolio-footer__inner{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  align-items:end;
+  column-gap:32px;
+  width:100%;
+  padding-top:16px;
+  border-top:1px solid rgba(255,255,255,.18);
+}
+
+.portfolio-footer .portfolio-footer__left,
+.portfolio-footer .portfolio-footer__right,
+.portfolio-footer .portfolio-footer__left p,
+.portfolio-footer .portfolio-footer__right p,
+.portfolio-footer .portfolio-footer__left a,
+.portfolio-footer .portfolio-footer__right a{
+  margin:0;
+  color:rgba(255,255,255,.70)!important;
+  font-family:"Averta PE",Arial,sans-serif!important;
+  font-size:13px!important;
+  font-weight:300!important;
+  line-height:1.65!important;
+  letter-spacing:.01em!important;
+  text-decoration:none!important;
+  text-transform:none!important;
+}
+
+.portfolio-footer .portfolio-footer__right{
+  text-align:right;
+}
+
+.portfolio-footer .portfolio-footer__right a{
+  transition:color .18s ease;
+}
+
+.portfolio-footer .portfolio-footer__right a:hover,
+.portfolio-footer .portfolio-footer__right a:focus-visible{
+  color:#fff!important;
+  outline:0;
+}
+
+/* WORKS owns only the requested 200px separation from the final content. */
+body.works-page-body .works-footer.portfolio-footer{
+  margin-top:200px!important;
+}
+
+/* CONTACT remains viewport-fixed; only its inner layout/content is standardized. */
+body.contact-page-body .contact-footer.portfolio-footer{
+  display:block!important;
+}
+
+@media(max-width:780px){
+  .portfolio-footer{
+    padding-top:40px!important;
+    padding-bottom:48px!important;
+  }
+  .portfolio-footer .portfolio-footer__inner{
+    grid-template-columns:1fr;
+    row-gap:24px;
+  }
+  .portfolio-footer .portfolio-footer__right{
+    text-align:right;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .portfolio-footer .portfolio-footer__right a{
+    transition:none;
+  }
+}
