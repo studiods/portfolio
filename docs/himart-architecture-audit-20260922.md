@@ -93,3 +93,13 @@ A file may be removed only when all conditions are true:
 - Candidate source checks passed: one `main`, one `body`, one stylesheet, one preview runtime, no legacy content-writer references, no old test body classes.
 - Candidate and the deployed static preview contain the same 71 headings and the same normalized authored content; only the test title differs.
 - The candidate is not connected to the operating page. Production cutover remains the only confirmation-required step.
+
+
+## Production cutover record
+
+- User-approved cutover completed on 2026-09-22.
+- Created `backup/pre-cutover-20260922` from the exact latest `main` state immediately before changing `himart.html`.
+- `main` now changes only `himart.html` relative to that backup: 20 direct stylesheet entries were replaced by `design-system/pages/himart-static-pruned.css`, legacy content-writer scripts were removed, and `design-system/pages/himart-static-preview.js` became the page-owned runtime.
+- The deployed custom-domain HTML response now contains the new single stylesheet and preview runtime, with no legacy content-writer references. HTML, CSS, JS, and video resource HEAD checks returned 200.
+- The previously deployed isolated preview passed desktop DOM, video, scroll-reveal, image, overflow, and console checks. A subsequent browser run against the operating URL was inconclusive because the browser frame timed out while the shell response and source checks confirmed the new version; do not treat that browser timeout as a visual pass.
+- Rollback target: `backup/pre-cutover-20260922`. No deletion of legacy files has been performed.
