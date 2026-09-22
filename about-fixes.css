@@ -628,14 +628,14 @@
 
 /* About desktop master grid — 2026-09-22
    Left label axis = 1/4 of viewport.
-   Right content = 3/4 of the remaining 3/4 = 56.25vw.
-   The final 18.75vw stays as deliberate right-side breathing room. */
+   Right content = 4/5 of the remaining 3/4 = 60vw.
+   The final 15vw stays as deliberate right-side breathing room. */
 @media(min-width:981px){
   .about-hero-v2,
   .about-section{
     grid-template-columns:
       calc(25vw - var(--pad))
-      minmax(0,56.25vw)
+      minmax(0,60vw)
       minmax(0,1fr)!important;
     column-gap:0!important;
   }
@@ -809,4 +809,9 @@ body.about-page-body .about-footer{
 /* About footer is owned only by the shared portfolio footer component. */
 .about-footer.portfolio-footer{
   background:#000000!important;
+}
+
+/* Resume → footer spacing for About only. */
+.about-footer.portfolio-footer{
+  margin-top:200px!important;
 }
