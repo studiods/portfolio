@@ -41,9 +41,41 @@
     });
   };
 
+  const prepareHeroFade = () => {
+    const hero = document.querySelector('[data-hm-hero]');
+    const overlay = hero?.querySelector('.hm-ds-hero__overlay');
+    if (!hero || !overlay) return;
+
+    const root = document.documentElement;
+    const styles = getComputedStyle(root);
+    const base = Number.parseFloat(styles.getPropertyValue('--hm-hero-matte-base-opacity')) || 0.4;
+    const max = Number.parseFloat(styles.getPropertyValue('--hm-hero-matte-scroll-max-opacity')) || 1;
+    const distance = Math.max(1, Number.parseFloat(hero.dataset.hmFadeDistance) || 420);
+    let raf = 0;
+
+    const apply = () => {
+      raf = 0;
+      const progress = Math.min(1, Math.max(0, (window.scrollY || 0) / distance));
+      // Darken quickly at the start, then ease into the final matte.
+      const eased = 1 - Math.pow(1 - progress, 2);
+      const opacity = base + (max - base) * eased;
+      root.style.setProperty('--hm-hero-overlay-opacity', opacity.toFixed(3));
+    };
+
+    const schedule = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(apply);
+    };
+
+    apply();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule, { passive: true });
+  };
+
   const start = () => {
     reveal();
     prepareVideo();
+    prepareHeroFade();
     addSharedScript('./design-system/navigation.js?v=20260921-5');
     addSharedScript('./design-system/scramble-final.js?v=20260922-2');
   };
