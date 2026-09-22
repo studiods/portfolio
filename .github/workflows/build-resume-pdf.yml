@@ -1,0 +1,55 @@
+name: Build Resume PDF
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "assets/docs/resume.html"
+      - ".github/workflows/build-resume-pdf.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Render resume PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$CHROME" ]; then
+            echo "No Chrome/Chromium binary found on runner." >&2
+            exit 1
+          fi
+          mkdir -p assets/docs
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-gpu \
+            --allow-file-access-from-files \
+            --no-pdf-header-footer \
+            --print-to-pdf="\${GITHUB_WORKSPACE}/assets/docs/Shin_DongSik_Resume_2026.pdf" \
+            "file://\${GITHUB_WORKSPACE}/assets/docs/resume.html"
+          test -s assets/docs/Shin_DongSik_Resume_2026.pdf
+          file assets/docs/Shin_DongSik_Resume_2026.pdf
+
+      - name: Commit generated PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/docs/Shin_DongSik_Resume_2026.pdf
+          if git diff --cached --quiet; then
+            echo "Resume PDF is already up to date."
+            exit 0
+          fi
+          git commit -m "Build downloadable resume PDF"
+          git push
