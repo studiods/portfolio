@@ -447,6 +447,14 @@
 
     if (reduce) return;
 
+    if (
+      kind === 'hero' &&
+      element.matches('.work-archive-page .wa-switcher__toggle')
+    ) {
+      requestAnimationFrame(() => startScramble(element, kind));
+      return;
+    }
+
     const owner = revealOwner(element, kind);
     const revealSynchronized = registerRevealSynchronized(element, kind, owner);
 
@@ -537,7 +545,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.22-work-archive-hero-1',
+    version:'2026.09.22-work-archive-hero-2',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
