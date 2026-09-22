@@ -1,7 +1,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css');
 
 :root{
-  --bg:#050505;
+  --bg:#000000;
   --fg:#f4f2ed;
   --muted:#a5a29a;
   --soft:#8a877f;
@@ -287,29 +287,6 @@ a{color:inherit;text-decoration:none}
 }
 .career-row-v2:hover .career-period,
 .career-row-v2:hover .career-role{color:#565656}
-
-.about-footer{
-  background:var(--bg);
-  padding-top:72px;
-  padding-bottom:34px;
-}
-.about-footer-inner{
-  border-top:1px solid var(--line);
-  padding-top:16px;
-}
-.about-footer h3{
-  margin:0 0 18px;
-  font:400 13px/1.2 var(--en);
-  color:var(--soft);
-  text-transform:lowercase !important;
-}
-.about-footer h3::first-letter{text-transform:uppercase !important}
-.about-footer p,
-.about-footer a{
-  margin:0;
-  font:400 13px/1.8 var(--en);
-  color:var(--fg);
-}
 
 .reveal-wrap{display:block;overflow:hidden}
 .reveal-line{
