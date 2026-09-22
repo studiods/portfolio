@@ -1,4 +1,4 @@
-Warning: truncated output (original token count: 236486)
+Warning: truncated output (original token count: 236612)
 Total output lines: 21516
 
 /* Himart static stylesheet — self-contained local CSS dependencies. */
@@ -28,9 +28,9 @@ Total output lines: 21516
 @media(max-width:850px){.top{grid-template-columns:1fr 1fr}.top-center{display:none}.hero,.intro-block,.ai-strip,.archive,.case-hero,.case-section{grid-template-columns:1fr}.hero-side,.intro-copy,.philosophy,.ai-big,.ai-desc,.case-title,.case-kicker{grid-column:1}.hero{align-content:end}.philosophy{grid-template-columns:1fr;margin-top:25px}.work-grid{grid-template-columns:1fr}.project,.project:nth-child(n){grid-column:1;margin-top:0}.archive-row{grid-template-columns:70px 1fr 28px}.archive-row .muted:nth-of-type(2){display:none}.footer-grid{grid-template-columns:1fr}.case-meta{grid-template-columns:1fr 1fr}.timeline-row{grid-template-columns:80px 1fr}.timeline-row .desc{grid-column:2}.hero-bottom{flex-direction:column}.hero-line{font-size:clamp(54px,16vw,100px)}}
 
 /* --- typography.css --- */
-@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:swap}
-@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:swap}
-@font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
+@font-face{font-family:'Averta PE';src:url('../../fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:swap}
+@font-face{font-family:'Averta PE';src:url('../../fonts/Averta-PE-Regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Averta PE';src:url('../../fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
 
 /* English is always drawn with Averta as soon as the preloaded face is ready; swap avoids FOIT. */
 html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
@@ -286,7 +286,7 @@ body.himart-page-body{--hm-bg:#000000;--hm-white:#fff;--hm-copy:rgba(255,255,255
 .direction-list{display:grid;gap:0}.direction-card{display:grid;grid-template-columns:minmax(330px,.82fr) minmax(0,1.18fr);grid-template-rows:auto auto;column-gap:72px;row-gap:14px;align-items:start;min-height:220px;padding:38px 8px 40px;border:0;border-top:1px solid var(--hm-line);border-bottom:1px solid var(--hm-line);background:transparent}.direction-card+.direction-card{border-top:0}.direction-card .hm-card-no{grid-column:1;grid-row:1;font-size:13px;color:var(--hm-blue);padding:0;font-weight:600}.direction-card h4{grid-column:1;grid-row:2;margin:0;font-family:var(--hm-ko);font-weight:400;font-size:29px;line-height:1.26;letter-spacing:-.035em}.direction-card p{grid-column:2;grid-row:1/3;margin:0;color:rgba(255,255,255,.70);font-family:var(--hm-ko);font-weight:300;font-size:17px;line-height:1.58;align-self:center}
 .data-list{display:grid;gap:0}.data-card{min-height:0;padding:64px 0 80px;border:0;border-top:1px solid var(--hm-line);background:transparent;display:flex;flex-direction:column}.data-card:first-child{border-top:0;padding-top:0}.data-card:nth-child(3){display:none!important}.data-card-head{display:block;margin-bottom:50px}.data-card .hm-card-no{display:block;font-size:12px;color:var(--hm-blue);padding:0;margin:0 0 18px}.data-card h3{margin:0;max-width:1040px;font-family:var(--hm-ko);font-weight:100;font-size:clamp(34px,3vw,48px);line-height:1.2;letter-spacing:-.045em}.data-card .desc{margin:20px 0 0;max-width:980px;color:rgba(255,255,255,.70);font-family:var(--hm-ko);font-weight:300;font-size:17px;line-height:1.52}.data-viz{width:100%;min-height:320px;display:flex;align-items:flex-end;margin-top:50px}.hm-source{margin-top:28px;padding-top:14px;border-top:1px solid var(--hm-line);font-size:10px;line-height:1.5;color:var(--hm-dim)}
 .pie-layout{display:grid;grid-template-columns:360px 1fr;gap:64px;align-items:center;width:100%}.pie{width:360px;aspect-ratio:1;border-radius:50%;background:conic-gradient(var(--hm-blue) 0 52%,var(--hm-newblue) 52% 83%,var(--hm-green) 83% 93%,var(--hm-yellow) 93% 99%,rgba(255,255,255,.22) 99% 100%);position:relative}.pie::after{content:"";position:absolute;inset:29%;border-radius:50%;background:var(--hm-bg)}.pie-center{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:0;color:#fff}.pie-center small{display:none!important}.pie-center::before{content:"68%";font-family:var(--hm-en);font-weight:300;font-size:61px;line-height:1;letter-spacing:-.03em}.pie-center::after{content:"AD · CPS · CRM";margin-top:12px;font-family:var(--hm-en);font-weight:300;font-size:11px;letter-spacing:.05em;color:var(--hm-dim)}.legend{display:grid;gap:16px}.legend-row{display:grid;grid-template-columns:12px 1fr auto;gap:12px;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.07);font-family:var(--hm-ko);font-weight:300;font-size:16px;color:rgba(255,255,255,.70)}.legend-row i{width:9px;height:9px;border-radius:50%;background:var(--c)}.legend-row b{font-family:var(--hm-en);font-weight:300;color:#fff;font-size:19px}
-.chart-wrap{width:100%}.chart-svg{display:none!important}.chart-wrap::before{content:"";display:block;width:100%;aspect-ratio:1160/330;background:url('./himart-traffic-v5.svg') center/contain no-repeat}.chart-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px;font-family:var(--hm-ko);font-weight:300;font-size:13px;color:rgba(255,255,255,.70)}.chart-legend span{display:inline-flex;align-items:center;gap:9px;justify-content:flex-start}.chart-legend i{width:22px;height:2px;background:var(--c)}.chart-legend span:first-child{font-size:0}.chart-legend span:first-child::after{content:"세션";font-size:13px}.chart-legend span:nth-child(4){display:none!important}
+.chart-wrap{width:100%}.chart-svg{display:none!important}.chart-wrap::before{content:"";display:block;width:100%;aspect-ratio:1160/330;background:url('../../himart-traffic-v5.svg') center/contain no-repeat}.chart-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:22px;font-family:var(--hm-ko);font-weight:300;font-size:13px;color:rgba(255,255,255,.70)}.chart-legend span{display:inline-flex;align-items:center;gap:9px;justify-content:flex-start}.chart-legend i{width:22px;height:2px;background:var(--c)}.chart-legend span:first-child{font-size:0}.chart-legend span:first-child::after{content:"세션";font-size:13px}.chart-legend span:nth-child(4){display:none!important}
 .number-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;width:100%}.number-panel{min-height:300px;padding:30px;border:1px solid var(--hm-line);border-top:2px solid var(--hm-blue);display:flex;flex-direction:column}.number-panel:nth-child(2){border-top-color:var(--hm-newblue)}.number-panel strong{font-family:var(--hm-en);font-weight:300;font-size:clamp(92px,9vw,144px);line-height:.9;letter-spacing:-.04em}.number-panel h4{margin:30px 0 0;font-family:var(--hm-ko);font-weight:500;font-size:24px;line-height:1.35}.number-panel p{margin:auto 0 0;color:rgba(255,255,255,.70);font-family:var(--hm-ko);font-weight:300;font-size:16px;line-height:1.6}
 .search-slope{display:grid;grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr);gap:0;align-items:center;width:100%}.search-slope>div:not(.arrow-head){min-height:260px;display:flex;flex-direction:column;justify-content:center}.search-slope>div:first-child{align-items:flex-start}.search-slope>div:last-child{align-items:flex-end;text-align:right}.search-slope strong{font-family:var(--hm-en);font-weight:300;font-size:clamp(72px,7vw,112px);line-height:.95}.search-slope span{display:block;margin-top:16px;color:rgba(255,255,255,.70);font-family:var(--hm-ko);font-weight:300;font-size:15px}.arrow-head{position:relative;width:80px;height:80px;font-size:0;color:transparent}.arrow-head::before{content:"";position:absolute;left:50%;top:50%;width:22px;height:22px;border-top:1px solid #fff;border-right:1px solid #fff;transform:translate(-62%,-50%) rotate(45deg)}
 .hbars{display:grid;gap:18px;width:100%}.hbar{display:grid;grid-template-columns:140px 1fr 80px;gap:16px;align-items:center}.hbar span{font-family:var(--hm-ko);font-weight:300;font-size:15px;color:rgba(255,255,255,.70)}.hbar b{font-family:var(--hm-en);font-weight:300;font-size:20px;text-align:right}.track{height:10px;background:rgba(255,255,255,.08)}.fill{height:100%;background:var(--c)}
@@ -390,7 +390,7 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
 
 /* Traffic graph: true full-width plot with legend forced underneath, left-aligned */
 .data-viz.chart-wrap{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;align-items:stretch!important;width:100%!important;min-height:0!important;overflow:visible!important;margin-top:50px!important}
-.data-viz.chart-wrap::before{content:""!important;display:block!important;grid-column:1!important;grid-row:1!important;width:100%!important;max-width:none!important;margin:0!important;aspect-ratio:1280/330!important;background:url('./himart-traffic-v6.svg') center/100% 100% no-repeat!important}
+.data-viz.chart-wrap::before{content:""!important;display:block!important;grid-column:1!important;grid-row:1!important;width:100%!important;max-width:none!important;margin:0!important;aspect-ratio:1280/330!important;background:url('../../himart-traffic-v6.svg') center/100% 100% no-repeat!important}
 .data-viz.chart-wrap>.chart-legend{grid-column:1!important;grid-row:2!important;display:flex!important;width:100%!important;justify-content:flex-start!important;align-items:center!important;gap:30px!important;margin:20px 0 0!important;padding:0!important;position:static!important;transform:none!important}
 .data-viz.chart-wrap>.chart-legend span{display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;gap:9px!important;white-space:nowrap!important}
 .data-viz.chart-wrap>.chart-legend span:nth-child(4){display:none!important}
@@ -512,7 +512,7 @@ body.himart-page-body{--hm-hero:82px;--hm-section:58px;--hm-subsection:42px}
   .legend-row b{font-size:16px!important}
 
   .data-viz.chart-wrap{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto auto!important;width:100%!important;margin-top:34px!important}
-  .data-viz.chart-wrap::before{display:block!important;width:100%!important;aspect-ratio:390/300!important;margin:0!important;background:url('./himart-traffic-mobile.svg') center/100% 100% no-repeat!important}
+  .data-viz.chart-wrap::before{display:block!important;width:100%!important;aspect-ratio:390/300!important;margin:0!important;background:url('../../himart-traffic-mobile.svg') center/100% 100% no-repeat!important}
   .data-viz.chart-wrap>.chart-legend{display:grid!important;grid-template-columns:repeat(3,max-content)!important;justify-content:start!important;align-items:center!important;gap:10px 18px!important;margin:14px 0 0!important;padding:0!important;font-size:11px!important}
   .data-viz.chart-wrap>.chart-legend span{gap:7px!important}
   .data-viz.chart-wrap>.chart-legend i{width:18px!important}
@@ -5442,8 +5442,7 @@ html body .proof-item strong{margin-top:0!important}
 /* Narrative V2 final overrides · 2026-08-31 */
 :root{--hm-body-60:rgba(255,255,255,.60)}
 html body.himart-narrative-test:not(.narrative-v2-final-ready) #live-main{opacity:0!important;visibility:hidden!important}
-html body.himart-narrative-test.narrative-v2-final-rea…116486 tokens truncated…;
-  --hm-gallery-nav-arrow-size-mobile:14px;
+html body.himart-narrative-tes…116612 tokens truncated…y-nav-arrow-size-mobile:14px;
   --hm-gallery-nav-arrow-edge-mobile:21px;
 
   /* Graph-only palette and application order.
@@ -5597,11 +5596,11 @@ html body.himart-narrative-test.narrative-v2-final-rea…116486 tokens truncated
 
 /* inlined: design-system/typography.css */
 /* HIMART Design System v1.2 — canonical typography foundation */
-@font-face{font-family:"Pretendard";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
-@font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
-@font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"Averta PE ExtraLight";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:200;font-style:normal;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("../../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Averta PE ExtraLight";src:url("../../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:200;font-style:normal;font-display:swap}
 
 /* Base tracking is 10% tighter than the previous authored values. */
 html body.himart-page-body{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:var(--hm-track-base)}
