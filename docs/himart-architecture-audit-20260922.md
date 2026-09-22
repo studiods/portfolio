@@ -103,3 +103,11 @@ A file may be removed only when all conditions are true:
 - The deployed custom-domain HTML response now contains the new single stylesheet and preview runtime, with no legacy content-writer references. HTML, CSS, JS, and video resource HEAD checks returned 200.
 - The previously deployed isolated preview passed desktop DOM, video, scroll-reveal, image, overflow, and console checks. A subsequent browser run against the operating URL was inconclusive because the browser frame timed out while the shell response and source checks confirmed the new version; do not treat that browser timeout as a visual pass.
 - Rollback target: `backup/pre-cutover-20260922`. No deletion of legacy files has been performed.
+
+
+## Cache-separated live verification
+
+- The normal custom-domain URL can temporarily serve a cached pre-cutover HTML document because GitHub Pages returns a 600-second cache lifetime. This explains the screenshot showing the old unstyled structure immediately after cutover; it is not the current `main` source.
+- Loading the same live page with a commit-specific cache separator produced the new document: one pruned stylesheet, one page-owned runtime, black body background, sticky hero, four sections, 21 reveal targets, no missing images, no horizontal overflow, and page-origin console errors absent.
+- The video endpoint supports byte-range responses (HTTP 206), and the runtime requests the expected `himart_02.mp4` asset. The browser sample had not completed video decode yet, but no media error was reported.
+- No further HTML workaround was added. The correct user-side verification is a hard refresh after the Pages cache expires; the rollback branch remains available if the current source itself fails.
