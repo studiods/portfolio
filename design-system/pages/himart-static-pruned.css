@@ -4850,7 +4850,6 @@ html body :is(
 
 :root{--hm-body-60:rgba(255,255,255,.60)}
 html body.himart-narrative-test:not(.narrative-v2-final-ready) #live-main{opacity:0!important;visibility:hidden!important}
-}
 
 
 
