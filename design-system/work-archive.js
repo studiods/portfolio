@@ -152,7 +152,7 @@
         <div class="wa-project__meta"><span class="wa-project__index" data-wa-head-index>${first.displayIndex} · ${esc(first.company)}</span><span class="wa-project__period" data-wa-head-period>${esc(first.period)}</span></div>
         <h3 class="wa-project__title" data-wa-head-title>${esc(first.projectTitle)}</h3>
       </header>
-      <div class="reuse-production-gallery hm-reveal${first.coreValue?' is-core-value':''}" tabindex="0" aria-label="${esc(company.company)} 원본 포트폴리오 갤러리" data-wa-gallery>
+      <div class="reuse-production-gallery hm-reveal${first.coreValue?' is-core-value':''}${String(first.page).startsWith('image-')?' is-custom-image-gallery':''}${first.caption?' has-caption':''}" tabindex="0" aria-label="${esc(company.company)} 원본 포트폴리오 갤러리" data-wa-gallery>
         <div class="reuse-production-gallery__viewport">${slides}</div>
         <div class="wa-gallery-overlay" data-wa-gallery-copy><div class="wa-gallery-overlay__body"><p data-wa-caption></p><em class="wa-gallery-note" data-wa-note></em></div></div>
         <button class="reuse-production-gallery__nav reuse-production-gallery__nav--prev" type="button" data-reuse-gallery-prev aria-label="이전 이미지"></button>
@@ -196,10 +196,12 @@
     const size=startSize+(endSize-startSize)*p;
     const top=startTop+(endTop-startTop)*p;
     const translate=-50*(1-p);
+    const periodOpacity=clamp(1-(p*2.5),0,1);
 
     menuShell.style.setProperty('--wa-title-size',`${size.toFixed(2)}px`);
     menuShell.style.setProperty('--wa-title-top',`${top.toFixed(2)}px`);
     menuShell.style.setProperty('--wa-title-translate',`${translate.toFixed(2)}%`);
+    menuShell.style.setProperty('--wa-period-opacity',periodOpacity.toFixed(3));
 
     const compact=p>=.985;
     document.body.classList.toggle('wa-title-compact',compact);
@@ -312,6 +314,7 @@
       if(caption){caption.textContent=item.caption||'';caption.hidden=!item.caption;}
       if(note){note.textContent=item.note||'';note.hidden=!item.note;}
       if(status)status.textContent=`${pad(index+1)} / ${pad(slides.length)}`;
+      gallery.classList.toggle('has-caption',Boolean(item.caption));
       gallery.classList.toggle('is-core-value',item.coreValue);
       setActiveProject(item.projectId);
       applyContrast();

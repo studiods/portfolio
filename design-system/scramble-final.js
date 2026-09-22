@@ -27,7 +27,7 @@
   if (window.HMDSTitleScrambleRuntime) return;
 
   const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*+-_=/?.,:;()[]{}<>|~';
-  const heroSelector = ':is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title, .about-ascii-hero .about-ascii-title, .works-hero .works-page-title, .reuse-hero-title';
+  const heroSelector = '.work-archive-page .wa-switcher__toggle, :is(.hm-hero,.hm-movie-hero,.ways-hero) .hm-title, .about-ascii-hero .about-ascii-title, .works-hero .works-page-title, .reuse-hero-title';
   const majorSelector = [
     '#live-main .hm-section-head .hm-section-title',
     '#live-main [data-hm-major-title]',
@@ -537,7 +537,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.22-medium-scroll-1',
+    version:'2026.09.22-work-archive-hero-1',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });

@@ -10,6 +10,15 @@
       if(!gallery||!overlay)return;
 
       if(mq.matches){
+        if(gallery.classList.contains('is-custom-image-gallery')){
+          if(overlay.parentElement!==gallery){
+            const prev=gallery.querySelector('[data-reuse-gallery-prev]');
+            if(prev)gallery.insertBefore(overlay,prev);
+            else gallery.appendChild(overlay);
+          }
+          overlay.classList.remove('is-mobile-stacked');
+          return;
+        }
         if(overlay.parentElement===gallery){
           gallery.insertAdjacentElement('afterend',overlay);
         }

@@ -95,6 +95,20 @@ html body.work-archive-page .wa-gallery-note{display:block;margin:10px 0 0;color
 html body.work-archive-page .wa-gallery-note[hidden],
 html body.work-archive-page .wa-gallery-overlay__body p[hidden]{display:none!important}
 
+/* First custom-image gallery copy guard.
+   Keep authored overlay copy visible inside the image plane on initial render. */
+html body.work-archive-page .reuse-production-gallery.is-custom-image-gallery.has-caption .wa-gallery-overlay{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+html body.work-archive-page .reuse-production-gallery.is-custom-image-gallery.has-caption .wa-gallery-overlay__body,
+html body.work-archive-page .reuse-production-gallery.is-custom-image-gallery.has-caption .wa-gallery-overlay__body p:not([hidden]){
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
 /* Full-height 10% hit areas; visible arrow heads remain exactly 32px from media edges. */
 html body.work-archive-page .wa-company .reuse-production-gallery__nav{z-index:8!important;top:0!important;width:10%!important;height:100%!important;margin:0!important;padding:0!important;transform:none!important;background:transparent!important}
 html body.work-archive-page .wa-company .reuse-production-gallery__nav--prev{left:0!important;color:var(--wa-prev-color,#000)!important}
