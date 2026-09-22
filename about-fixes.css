@@ -655,3 +655,111 @@
     min-width:0;
   }
 }
+
+
+/* ==========================================================================
+   ABOUT RESUME DOWNLOAD — 2026-09-22
+   Compact utility row using the same left-label / right-content grammar.
+   ========================================================================== */
+.resume-section{
+  padding-top:0!important;
+  padding-bottom:0!important;
+}
+.resume-section>.about-section-label{
+  padding-top:25px!important;
+}
+.resume-section .about-section-body{
+  grid-column:2;
+  border-top:1px solid rgba(244,242,237,.20);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.resume-download-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  column-gap:var(--gap);
+  width:100%;
+  min-width:0;
+  padding:24px 0 26px;
+  color:var(--fg);
+  text-decoration:none;
+}
+.resume-download-copy{
+  display:flex;
+  align-items:baseline;
+  gap:clamp(18px,2vw,34px);
+  min-width:0;
+}
+.resume-download-copy>strong{
+  flex:0 1 auto;
+  min-width:0;
+  color:var(--fg);
+  font-family:var(--en);
+  font-size:22px;
+  font-weight:300;
+  line-height:1.25;
+  letter-spacing:-.015em;
+}
+.resume-download-copy>span{
+  flex:1 1 auto;
+  min-width:0;
+  color:#98948d;
+  font-family:var(--kr);
+  font-size:14px;
+  font-weight:300;
+  font-variation-settings:'wght' 300;
+  line-height:1.5;
+  letter-spacing:-.018em;
+  word-break:keep-all;
+}
+.resume-download-meta{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  white-space:nowrap;
+  color:rgba(244,242,237,.58);
+  font-family:var(--en);
+  font-size:11px;
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:.055em;
+}
+.resume-download-meta>span:last-child{
+  color:rgba(244,242,237,.90);
+  transition:transform .25s ease,opacity .25s ease;
+}
+.resume-download-row:hover .resume-download-meta>span:last-child{
+  transform:translate3d(3px,3px,0);
+}
+.resume-download-row:focus-visible{
+  outline:1px solid rgba(255,255,255,.35);
+  outline-offset:6px;
+}
+
+@media(max-width:980px){
+  .resume-section .about-section-body{
+    grid-column:auto;
+  }
+  .resume-section>.about-section-label{
+    padding-top:0!important;
+  }
+  .resume-download-row{
+    grid-template-columns:1fr;
+    row-gap:18px;
+  }
+  .resume-download-copy{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:8px;
+  }
+  .resume-download-meta{
+    justify-content:space-between;
+    width:100%;
+  }
+}
+
+@media(max-width:640px){
+  .resume-download-copy>strong{font-size:18px}
+  .resume-download-copy>span{font-size:13px}
+  .resume-download-meta{font-size:10px}
+}
