@@ -51,7 +51,7 @@
 
     /* Chapter 02 final authority. */
     const dataTitle = document.querySelector('#data > .hm-wrap > .hm-section-head .hm-section-title');
-    html(dataTitle, '문제들은 실제 이용 패턴에서도 반복됐습니다.');
+    html(dataTitle, '그리고 실제로 고객들이 서비스를 어떻게 이용하고 있는지도 살펴봤습니다.');
 
     const data021Title = document.querySelector('#data .hm-data-metrics-021 .hm-data-021-title');
     html(data021Title, '<span>숫자를 보면 더 단순했습니다.</span><span>유입보다 다음 행동으로 이어지는 연결고리가 약했습니다.</span>');

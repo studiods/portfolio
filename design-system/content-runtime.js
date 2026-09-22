@@ -57,7 +57,7 @@ function brand(main){
 function data(main){
   const s=q(main,'#data'),h=q(s,':scope > .hm-wrap > .hm-section-head'),g=q(s,'.narrative-signals');
   if(!s||!h||!g)return;
-  q(h,'.hm-section-title').innerHTML='문제들은 실제 이용 패턴에서도 반복됐습니다.';
+  q(h,'.hm-section-title').innerHTML='그리고 실제로 고객들이 서비스를 어떻게 이용하고 있는지도 살펴봤습니다.';
   const d=q(h,'.hm-section-desc');
   if(d)d.innerHTML='유입부터 구매까지 실제 행동을 따라가며, <strong>같은 단절이 반복되는지</strong> 확인했습니다.';
   if(q(g,'.narrative-title'))q(g,'.narrative-title').innerHTML='<span>숫자는 더 단순하게 말했습니다.</span><span>유입보다 다음 행동으로 이어지는 힘이 약했습니다.</span>';
@@ -291,7 +291,7 @@ if('MutationObserver' in window){
 
 const expectedTitles={
   brand:'왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.',
-  data:'문제들은 실제 이용 패턴에서도 반복됐습니다.',
+  data:'그리고 실제로 고객들이 서비스를 어떻게 이용하고 있는지도 살펴봤습니다.',
   journey:'앞선 데이터를 바탕으로,<br>구매 여정의 흐름과 각 화면의 역할을<br>다시 정의했습니다.',
   direction:'정의한 흐름과 여정별 정의를 바탕으로<br>빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.'
 };
