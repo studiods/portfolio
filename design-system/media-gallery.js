@@ -375,6 +375,72 @@
     items.forEach((item) => bindExpandableImage(item.querySelector(IMAGE_SELECTOR)));
   };
 
+  const getRenderedImageLuminance = (image, xRatio) => {
+    if (!image?.complete || !image.naturalWidth || !image.naturalHeight) return null;
+
+    const renderedWidth = image.clientWidth || image.getBoundingClientRect().width;
+    const renderedHeight = image.clientHeight || image.getBoundingClientRect().height;
+    if (!renderedWidth || !renderedHeight) return null;
+
+    const sourceWidth = image.naturalWidth;
+    const sourceHeight = image.naturalHeight;
+    const coverScale = Math.max(renderedWidth / sourceWidth, renderedHeight / sourceHeight);
+    const visibleSourceWidth = renderedWidth / coverScale;
+    const visibleSourceHeight = renderedHeight / coverScale;
+    const cropX = (sourceWidth - visibleSourceWidth) / 2;
+    const cropY = (sourceHeight - visibleSourceHeight) / 2;
+
+    const sampleSize = Math.max(12, Math.min(72, Math.round(Math.min(visibleSourceWidth, visibleSourceHeight) * .08)));
+    const centerX = cropX + visibleSourceWidth * xRatio;
+    const centerY = cropY + visibleSourceHeight * .5;
+    const sx = Math.max(0, Math.min(sourceWidth - sampleSize, centerX - sampleSize / 2));
+    const sy = Math.max(0, Math.min(sourceHeight - sampleSize, centerY - sampleSize / 2));
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 24;
+    canvas.height = 24;
+    const context = canvas.getContext('2d', { willReadFrequently:true });
+    if (!context) return null;
+
+    context.drawImage(image, sx, sy, sampleSize, sampleSize, 0, 0, 24, 24);
+    const data = context.getImageData(0, 0, 24, 24).data;
+    let sum = 0;
+    let count = 0;
+
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] < 32) continue;
+      sum += (0.2126 * data[i]) + (0.7152 * data[i + 1]) + (0.0722 * data[i + 2]);
+      count += 1;
+    }
+    return count ? sum / count : null;
+  };
+
+  const updateCarouselNavContrast = (root, slide) => {
+    if (!root || !slide) return;
+    const image = slide.querySelector(':scope > img');
+    if (!image) {
+      root.style.removeProperty('--hm-gallery-nav-prev-color');
+      root.style.removeProperty('--hm-gallery-nav-next-color');
+      return;
+    }
+
+    const apply = () => {
+      try {
+        const prevLum = getRenderedImageLuminance(image, .035);
+        const nextLum = getRenderedImageLuminance(image, .965);
+        if (prevLum == null || nextLum == null) throw new Error('no luminance sample');
+        root.style.setProperty('--hm-gallery-nav-prev-color', prevLum > 154 ? '#111' : '#fff');
+        root.style.setProperty('--hm-gallery-nav-next-color', nextLum > 154 ? '#111' : '#fff');
+      } catch {
+        root.style.removeProperty('--hm-gallery-nav-prev-color');
+        root.style.removeProperty('--hm-gallery-nav-next-color');
+      }
+    };
+
+    if (image.complete && image.naturalWidth) apply();
+    else image.addEventListener('load', apply, { once:true });
+  };
+
   const activateCarousel = (root) => {
     if (!root || root.dataset.hmDsCarouselMounted === 'true') return;
 
@@ -416,6 +482,7 @@
       });
       root.classList.remove('is-reverse');
       updateStatus();
+      updateCarouselNavContrast(root, slides[index]);
     };
 
     const canAutoPlay = () => autoPlayEnabled && inView && !document.hidden && !reducedMotion && slides.length > 1;
