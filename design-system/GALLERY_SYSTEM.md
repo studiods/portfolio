@@ -38,3 +38,19 @@
 - REUSE production/image galleries — 기존부터 동일한 offscreen pause / resume 정책을 사용하며, 영상도 offscreen에서 pause합니다.
 
 새 자동 갤러리를 추가할 때 페이지별 `IntersectionObserver`나 `visibilitychange`를 새로 만들지 말고 `HMDSGalleryRuntime.register(root, callback)`을 사용합니다.
+
+
+## Fullscreen lightbox contract
+
+모든 활성 case-study 페이지의 이미지 갤러리뷰는 `design-system/media-gallery.js`의 공통 fullscreen lightbox를 사용합니다.
+
+- 갤러리 이미지 클릭 또는 키보드 Enter/Space로 fullscreen lightbox를 엽니다.
+- Desktop 이미지는 최대 85vw, 세로는 viewport - 96px 안에서 원본 비율을 유지하며 `object-fit: contain`으로 표시합니다.
+- Mobile은 최대 78vw, 세로는 viewport - 48px을 사용합니다.
+- 동일 갤러리의 이미지가 여러 장이면 좌/우 10% hit area와 방향키로 순환 탐색합니다.
+- ESC, 우측 상단 X, 이미지 바깥 backdrop 클릭으로 닫습니다.
+- 확대된 이미지 자체를 클릭해서는 닫히지 않습니다.
+- 닫으면 원래 클릭했던 이미지로 focus를 복원하고 body scroll lock을 해제합니다.
+- 동적으로 생성되는 gallery image도 MutationObserver를 통해 동일 규칙을 적용합니다.
+- 명시적 예외는 `data-gallery-no-expand="true"`로 선언합니다.
+- 현재 예외: `aimmo-system.html`의 02.3 improvement gallery. 이 영역은 카드별 autoplay/수동 탐색만 유지하고 fullscreen lightbox를 사용하지 않습니다.

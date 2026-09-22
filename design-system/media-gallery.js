@@ -11,12 +11,39 @@
   const EXPLICIT_IMAGE_SELECTOR = '[data-hm-ds-expand-image]';
   const DOM_GALLERY_SELECTOR = '[data-hm-ds-dom-gallery]';
   const DOM_SLIDE_SELECTOR = '[data-hst-slide]';
+  const GENERIC_GALLERY_ROOT_SELECTOR = [
+    '.hm-ds-media-gallery',
+    '.hm-ds-media-grid',
+    '.hm-ds-media-mosaic',
+    '.aimmo-application-gallery',
+    '.aimmo-evidence-gallery',
+    '.aimmo-context-gallery',
+    '.aimmo-improvement-grid',
+    '.aimmo-improvement-gallery',
+    '.aimmo-family-gallery',
+    '.aimmo-story-gallery',
+    '.aimmo-visual-slots',
+    '.team-workshop-gallery',
+    '.reuse-production-gallery',
+    '.reuse-image-display-grid',
+    '.reuse-image-display-card',
+    '.trenbe-field-gallery',
+    '.trenbe-ut-gallery-stack',
+    '.yanolja-field-gallery',
+    '.hst-ds-gallery',
+    '.hst-product-gallery',
+    '.phone-gallery',
+    '[data-hm-ds-carousel]',
+    '[data-wa-gallery]'
+  ].join(', ');
+  const EXPAND_EXCLUSION_SELECTOR = '[data-gallery-no-expand="true"]';
   const CAROUSEL_SLIDE_SELECTOR = '.hm-ds-media-carousel__slide';
   const HOLD_MS = 3000;
   const TRANSITION_MS = 720;
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
   let lightbox = null;
+  let lightboxStage = null;
   let lightboxViewport = null;
   let lightboxImage = null;
   let lightboxIncoming = null;
@@ -44,8 +71,8 @@
     lightbox.setAttribute('aria-hidden', 'true');
     lightbox.setAttribute('aria-label', '이미지 확대 보기');
 
-    const stage = document.createElement('div');
-    stage.className = 'hm-ds-image-lightbox__stage';
+    lightboxStage = document.createElement('div');
+    lightboxStage.className = 'hm-ds-image-lightbox__stage';
 
     lightboxViewport = document.createElement('div');
     lightboxViewport.className = 'hm-ds-image-lightbox__viewport';
@@ -82,8 +109,8 @@
     closeButton.setAttribute('aria-label', '확대 이미지 닫기');
 
     lightboxViewport.append(lightboxImage, lightboxIncoming);
-    stage.append(lightboxViewport, lightboxDomViewport, lightboxPrev, lightboxNext, closeButton);
-    lightbox.append(stage);
+    lightboxStage.append(lightboxViewport, lightboxDomViewport, lightboxPrev, lightboxNext, closeButton);
+    lightbox.append(lightboxStage);
     document.body.append(lightbox);
     lightboxImage.addEventListener('load', updateLightboxNavContrast);
 
@@ -110,6 +137,27 @@
         .filter((item) => item.dataset.galleryExpandBound === 'true');
       if (images.length) return images;
     }
+    const genericRoot = image.closest?.(GENERIC_GALLERY_ROOT_SELECTOR);
+    if (genericRoot) {
+      const sourceNodes = Array.from(genericRoot.querySelectorAll('[data-gallery-src]'))
+        .filter((node) => !node.closest(EXPAND_EXCLUSION_SELECTOR));
+
+      if (sourceNodes.length) {
+        const sourceItems = sourceNodes
+          .map((node) => node.querySelector('img') || {
+            src: node.dataset.gallerySrc || '',
+            currentSrc: '',
+            alt: node.getAttribute('aria-label') || ''
+          })
+          .filter((item) => item.src || item.currentSrc);
+        if (sourceItems.length) return sourceItems;
+      }
+
+      const images = Array.from(genericRoot.querySelectorAll('img'))
+        .filter((item) => item.dataset.galleryExpandBound === 'true' && !item.closest(EXPAND_EXCLUSION_SELECTOR));
+      if (images.length) return images;
+    }
+
     return [image];
   };
 
@@ -312,6 +360,8 @@
 
   const bindExpandableImage = (image) => {
     if (!image || image.dataset.galleryExpandBound === 'true') return;
+    if (image.closest(EXPAND_EXCLUSION_SELECTOR)) return;
+    if (image.closest(DOM_GALLERY_SELECTOR)) return;
 
     image.dataset.galleryExpandBound = 'true';
     image.classList.add('hm-ds-gallery-expand-target');
@@ -373,6 +423,27 @@
 
     gallery.classList.add(isSingleImage ? 'is-single-expand' : 'is-item-expand');
     items.forEach((item) => bindExpandableImage(item.querySelector(IMAGE_SELECTOR)));
+  };
+
+  const activateGenericGalleryRoot = (root) => {
+    if (!root || root.closest(EXPAND_EXCLUSION_SELECTOR)) return;
+    root.querySelectorAll('img').forEach(bindExpandableImage);
+  };
+
+  const scanGenericGalleryNode = (node) => {
+    if (!(node instanceof Element)) return;
+
+    if (node.matches(GENERIC_GALLERY_ROOT_SELECTOR)) activateGenericGalleryRoot(node);
+
+    if (node.matches('img')) {
+      const root = node.closest(GENERIC_GALLERY_ROOT_SELECTOR);
+      if (root) bindExpandableImage(node);
+    }
+
+    node.querySelectorAll?.(GENERIC_GALLERY_ROOT_SELECTOR).forEach(activateGenericGalleryRoot);
+    node.querySelectorAll?.('img').forEach((image) => {
+      if (image.closest(GENERIC_GALLERY_ROOT_SELECTOR)) bindExpandableImage(image);
+    });
   };
 
   const getRenderedImageLuminance = (image, xRatio) => {
@@ -600,13 +671,24 @@
 
   const init = () => {
     document.querySelectorAll(GALLERY_SELECTOR).forEach(activateGallery);
+    document.querySelectorAll(GENERIC_GALLERY_ROOT_SELECTOR).forEach(activateGenericGalleryRoot);
     document.querySelectorAll(CAROUSEL_SELECTOR).forEach(activateCarousel);
     document.querySelectorAll(`${PRODUCT_GALLERY_SELECTOR} ${PRODUCT_GALLERY_IMAGE_SELECTOR}`).forEach(bindExpandableImage);
     document.querySelectorAll(EXPLICIT_IMAGE_SELECTOR).forEach(bindExpandableImage);
     document.querySelectorAll(DOM_GALLERY_SELECTOR).forEach(activateDomGallery);
     ensureLightbox();
 
-    lightbox.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (event) => {
+      const target = event.target;
+      if (
+        target === lightbox ||
+        target === lightboxStage ||
+        target === lightboxViewport ||
+        target === lightboxDomViewport
+      ) {
+        closeLightbox();
+      }
+    });
     closeButton.addEventListener('click', (event) => {
       event.stopPropagation();
       closeLightbox();
@@ -621,6 +703,13 @@
       event.stopPropagation();
       moveLightbox(1);
     });
+
+    const galleryMutationObserver = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach(scanGenericGalleryNode);
+      });
+    });
+    galleryMutationObserver.observe(document.body, { childList:true, subtree:true });
 
     window.addEventListener('resize', () => {
       if (lightbox?.classList.contains('is-open') && lightboxMode === 'dom') renderDomLightbox();
