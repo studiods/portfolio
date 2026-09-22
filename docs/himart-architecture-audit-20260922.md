@@ -83,3 +83,13 @@ A file may be removed only when all conditions are true:
 - An isolated test copy was also added to `main` as `himart-static-pruned-preview.html` plus `design-system/pages/himart-static-pruned.css`; this does not alter `himart.html`.
 - Deployed desktop verification passed: HTTP 200 for HTML/CSS/JS, one main with four authored sections, hero and content DOM present, video readyState 4 and playing, no missing images, scroll reveal activated, no horizontal overflow, and no page-origin console errors. The only captured error was a browser-extension metadata message outside the page.
 - Mobile viewport verification and final production cutover remain blocked until a separate mobile pass is completed. The candidate remains isolated; `himart.html` and the operating page were not changed.
+
+
+## Latest-main cutover candidate
+
+- Created a separate candidate branch from the current `main`: `refactor/himart-cutover-candidate-20260922`.
+- Built `himart-cutover-candidate.html` from the latest `main/himart.html`; the operating `himart.html` remains untouched.
+- Candidate entry points are reduced to one page stylesheet and one page-owned runtime. The shared navigation/scramble files are loaded by that runtime rather than directly by the HTML.
+- Candidate source checks passed: one `main`, one `body`, one stylesheet, one preview runtime, no legacy content-writer references, no old test body classes.
+- Candidate and the deployed static preview contain the same 71 headings and the same normalized authored content; only the test title differs.
+- The candidate is not connected to the operating page. Production cutover remains the only confirmation-required step.
