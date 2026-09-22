@@ -55,6 +55,24 @@
 - sequence video의 기본 preload는 `metadata`이며 실제 viewport에 보일 때만 `auto`로 올리고 재생한다.
 
 
+## HARD CONTENT LOCK — 사용자 승인 없는 카피 변경 금지
+
+이 규칙은 포트폴리오의 모든 시각·레이아웃 규칙보다 우선하는 **최상위 콘텐츠 무결성 규칙**이다.
+
+- 현재 production 페이지와 production runtime의 사용자 노출 텍스트는 기본적으로 **LOCKED** 상태다.
+- 사용자가 현재 요청에서 명시적으로 `문구 변경`, `텍스트 수정`, `카피 수정`, `내용 축약/확장`, `번역`, `내러티브 재작성` 등을 지시하지 않았다면 기존 문구를 단 한 글자도 바꾸지 않는다.
+- 레이아웃, CSS, 반응형, 모바일, 이미지, 영상, 갤러리, 그래프, 애니메이션, 접근성, 성능, 캐시, 파일 이동·이름 변경 요청은 **텍스트 수정 권한을 포함하지 않는다.**
+- 사용자가 특정 문장·섹션만 수정하라고 했으면 그 범위만 변경한다. 인접 문구를 “더 자연스럽게”, “더 포트폴리오답게”, “더 명확하게” 임의 정리하지 않는다.
+- 사용자가 정확한 문구를 제공한 경우 맞춤법·띄어쓰기·문장부호·영문 대소문자·숫자·용어·오탈자처럼 보이는 표현까지 **원문 그대로 보존**한다. 교정은 별도 요청이 있을 때만 한다.
+- 줄바꿈도 콘텐츠의 일부로 취급한다. 승인된 `<br>`을 디자인 편의상 임의 추가·삭제하지 않는다.
+- 이미지나 화면을 AI가 해석해 새로운 캡션·설명·성과·원인·의도를 만들어 넣지 않는다. 사용자가 “더미 카피 작성”, “리서치해 보강”, “내러티브 작성”처럼 명시적으로 콘텐츠 생성을 위임한 경우에만 허용한다.
+- 텍스트 길이가 레이아웃과 충돌하면 **레이아웃·폭·타입 스케일·wrap 규칙을 먼저 수정**한다. 길이를 맞추기 위해 카피를 줄이거나 바꾸지 않는다.
+- runtime/fallback/registry가 HTML 원문과 다른 카피를 주입해서는 안 된다. 동일 콘텐츠를 여러 소스가 소유한다면 승인된 canonical copy와 문자 단위로 동일해야 한다.
+- 정량 수치, SOURCE, 회사명, 기간, 역할, 프로젝트 성과는 사용자가 제공했거나 검증된 소스가 있을 때만 추가·변경한다.
+- 승인된 카피 변경 커밋에는 **`[copy-approved]`**를 붙인다. 이 마커는 현재 사용자 요청이 실제로 카피 변경을 명시적으로 허용한 경우에만 사용할 수 있으며 에이전트가 편의를 위해 스스로 붙이는 것을 금지한다.
+- 카피 변경이 아닌 작업은 완료 전에 반드시 `node scripts/content-lock.mjs --check` 또는 GitHub Actions Content Lock 검사를 통과해야 한다.
+- 상세 운영 계약은 `design-system/CONTENT_GOVERNANCE.md`를 따른다.
+
 ## Text integrity / wrapping contract
 
 - Hero description은 Desktop/Mobile 모두 **최대 2줄**이다. 3줄 이상으로 보이면 CSS로 숨기지 않고 원문 copy 자체를 축약한다.
@@ -64,7 +82,7 @@
 - Hero/section/subsection/card/flow 등 모든 prose는 authored text 전체를 표시한다. `text-overflow:ellipsis`, 숫자형 `line-clamp`, JS substring/slice 기반 말줄임을 금지한다.
 - `scramble-final.js`는 타이틀 scramble만 담당하며 본문 텍스트를 변경하거나 자르지 않는다.
 - media/chart/frame의 `overflow:hidden`과 navigation label의 `white-space:nowrap`은 시각 구조용이며 prose truncation으로 사용하지 않는다.
-- 신규 case에서 텍스트 길이를 맞추기 위해 DOM text를 자르지 않고, design-system width/wrap token과 authored copy를 조정한다.
+- 신규 case에서 텍스트 길이를 맞추기 위해 DOM text를 자르거나 authored copy를 임의 조정하지 않는다. 먼저 design-system width/wrap/type token과 레이아웃을 조정하며, copy 변경은 사용자가 명시적으로 요청한 경우에만 허용한다.
 
 ## Numbered editorial list contract
 
