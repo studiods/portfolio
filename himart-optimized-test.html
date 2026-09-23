@@ -153,7 +153,9 @@
 <script src="./design-system/scramble-final.js?v=20260922-2"></script>
 <script src="./design-system/navigation.js?v=20260921-5"></script>
 
-<script src="./design-system/himart-wide-editorial-adapter.js?v=20260916-1"></script>
+<script id="hm-adapter-after-final">
+(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/himart-wide-editorial-adapter.js?v=20260916-1';s.dataset.hmAdapterOwner='content-finalized';document.body.appendChild(s)};document.addEventListener('himart:content-finalized',load,{once:true});window.setTimeout(load,21000)})();
+</script>
 <script src="./design-system/himart-inertia-scroll.js?v=20260913-1"></script>
 <style id="hm-structural-visibility-final-style">
 body.hm-ds-subsection-copy-hidden #live-main .narrative-block > .narrative-copy,
