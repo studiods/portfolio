@@ -184,10 +184,6 @@ test("captures the fully revealed static Himart candidate", async ({ page }) => 
     console.log(`Static candidate hidden reveal targets (${name}): ${JSON.stringify(candidate.state.hiddenRevealTargets)}`);
     console.log(`Static candidate display-none reveal targets (${name}): ${JSON.stringify(candidate.state.displayNoneRevealTargets)}`);
     console.log(`Candidate section geometry (${name}): ${JSON.stringify(candidate.state.sections)}`);
-    console.log(`Candidate direction metrics (${name}): ${JSON.stringify(candidate.state.directionMetrics)}`);
-    console.log(`Live direction metrics (${name}): ${JSON.stringify(live.state.directionMetrics)}`);
-    console.log(`Candidate flow metrics (${name}): ${JSON.stringify(candidate.state.flowMetrics)}`);
-    console.log(`Live flow metrics (${name}): ${JSON.stringify(live.state.flowMetrics)}`);
     console.log(`Live section geometry (${name}): ${JSON.stringify(live.state.sections)}`);
     expect(candidate.runtimeErrors).toEqual([]);
     expect(candidate.failedResponses).toEqual([]);
