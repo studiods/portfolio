@@ -58,7 +58,7 @@
   }
 
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal{
-    opacity:.3!important;
+    opacity:.88!important;
   }
   html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
     opacity:.88!important;
