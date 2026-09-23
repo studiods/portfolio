@@ -204,33 +204,14 @@
 
   const updateHeroFade = () => {};
 
-  let reconcileRaf = 0;
-  const schedule = () => {
-    if (reconcileRaf) return;
-    reconcileRaf = requestAnimationFrame(() => {
-      reconcileRaf = 0;
-      apply();
-    });
+  const finalize = () => {
+    apply();
+    updateHeroFade();
+    document.dispatchEvent(new CustomEvent('himart:content-finalized'));
   };
-  const observer = new MutationObserver(() => {
-    if (!restoredFallback && main?.textContent?.includes('페이지를 불러오지 못했습니다.') && fallbackMarkup) {
-      restoredFallback = true;
-      main.innerHTML = fallbackMarkup;
-    }
-    schedule();
-  });
-  observer.observe(main, { childList:true, subtree:true });
-  apply();
-  updateHeroFade();
-  window.addEventListener('load', schedule, { once:true });
 
-  /* Legacy content writers finish within the existing 16s reconciliation window.
-     Use sparse checkpoints instead of scanning the whole page every 600ms for 30s. */
-  [600,1600,3600,7600,12000,16000].forEach(ms => setTimeout(schedule, ms));
-  setTimeout(() => {
-    schedule();
-    observer.disconnect();
-    if (reconcileRaf) cancelAnimationFrame(reconcileRaf);
-    reconcileRaf = 0;
-  }, 18000);
+  /* The candidate runs after the loader signals completion, so no page-wide
+     observer or delayed reconciliation loop is required. */
+  finalize();
+  window.addEventListener('load', finalize, { once:true });
 })();
