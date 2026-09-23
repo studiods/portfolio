@@ -140,6 +140,11 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
           ariaHidden: element.getAttribute("aria-hidden"),
           slide: element.getAttribute("data-reuse-prototype-slide"),
         })) : [],
+        cards: root ? [...root.querySelectorAll(".ax-friction-card")].map(card => ({
+          ...read(card),
+          h4: read(card.querySelector("h4")),
+          p: read(card.querySelector("p")),
+        })) : [],
       };
     }),
     sections: sectionIds.map(id => {
