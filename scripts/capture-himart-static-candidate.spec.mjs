@@ -85,6 +85,12 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
         height: sectionRect ? Math.round(sectionRect.height) : null,
         headTop: headRect ? Math.round(headRect.top + window.scrollY) : null,
         railTop: railRect ? Math.round(railRect.top + window.scrollY) : null,
+        railChildren: rail ? [...rail.children].map(node => ({
+          tag: node.tagName,
+          className: node.className,
+          top: Math.round(node.getBoundingClientRect().top + window.scrollY),
+          height: Math.round(node.getBoundingClientRect().height),
+        })) : [],
       };
     }),
   }), sectionIds);
@@ -170,6 +176,8 @@ test("captures the fully revealed static Himart candidate", async ({ page }) => 
 
     console.log(`Static candidate hidden reveal targets (${name}): ${JSON.stringify(candidate.state.hiddenRevealTargets)}`);
     console.log(`Static candidate display-none reveal targets (${name}): ${JSON.stringify(candidate.state.displayNoneRevealTargets)}`);
+    console.log(`Candidate section geometry (${name}): ${JSON.stringify(candidate.state.sections)}`);
+    console.log(`Live section geometry (${name}): ${JSON.stringify(live.state.sections)}`);
     expect(candidate.runtimeErrors).toEqual([]);
     expect(candidate.failedResponses).toEqual([]);
     expect(candidate.state.hiddenRevealTargets).toEqual([]);
