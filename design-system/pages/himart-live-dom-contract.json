@@ -1,0 +1,36 @@
+{
+  "source": "https://shindongsik.com/himart.html",
+  "capturedAt": "2026-09-23",
+  "purpose": "Reference contract for moving Himart content from runtime writers into authored HTML without changing the live page narrative or rail structure.",
+  "sections": [
+    {
+      "id": "brand",
+      "title": "왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.",
+      "htmlHash": "518b5cc7",
+      "textHash": "09c423fc"
+    },
+    {
+      "id": "data",
+      "title": "그리고 실제로 고객들이 서비스를 어떻게 이용하고 있는지도 살펴봤습니다.",
+      "htmlHash": "0157ade5",
+      "textHash": "ba9e63b2"
+    },
+    {
+      "id": "journey",
+      "title": "앞선 데이터를 바탕으로, 구매 여정의 흐름과 각 화면의 역할을 다시 정의했습니다.",
+      "htmlHash": "606b8c75",
+      "textHash": "994f5e72"
+    },
+    {
+      "id": "direction",
+      "title": "정의한 흐름과 여정별 정의를 바탕으로 빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.",
+      "htmlHash": "b75db606",
+      "textHash": "cdc2cd33"
+    }
+  ],
+  "invariants": [
+    "Each chapter has one .hm-section-head followed by one .hm-wide-right-rail.",
+    "The authored static migration must preserve the four chapter titles exactly.",
+    "Runtime code may handle interaction and reveal states only; it must not rewrite chapter content."
+  ]
+}
