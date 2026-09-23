@@ -6,6 +6,7 @@ on:
       - work/himart-optimized-rebuild-20260922
     paths:
       - "himart-optimized-test.html"
+      - "himart.html"
       - "design-system/pages/himart-live-dom-contract.json"
       - "scripts/verify-himart-static-candidate.mjs"
       - "scripts/capture-himart-static-candidate.spec.mjs"
@@ -30,6 +31,10 @@ jobs:
             himart-optimized-test.html \
             design-system/pages/himart-live-dom-contract.json \
             artifacts/himart-static-contract-result.json
+          node scripts/verify-himart-static-candidate.mjs \
+            himart.html \
+            design-system/pages/himart-live-dom-contract.json \
+            artifacts/himart-production-contract-result.json
 
       - name: Capture desktop and mobile renders
         shell: bash
