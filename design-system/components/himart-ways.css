@@ -1989,3 +1989,22 @@ html body.ways-page #data .ways-team-problem__no{
     grid-template-columns:1fr!important;
   }
 }
+
+/* Progressive reveal fallback for this static case study.
+   Keep authored content visible if the reveal runtime fails; animate only after
+   the shared design-system observer marks a unit as visible. */
+html body.ways-page .hm-reveal{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+}
+html body.ways-page .hm-reveal.is-visible:not(.hm-section-head){
+  animation:hm-ways-progressive-reveal .72s cubic-bezier(.22,.78,.22,1) both;
+}
+@keyframes hm-ways-progressive-reveal{
+  from{opacity:0;transform:translate3d(0,22px,0)}
+  to{opacity:1;transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  html body.ways-page .hm-reveal{animation:none!important}
+}
