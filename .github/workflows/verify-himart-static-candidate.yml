@@ -8,6 +8,7 @@ on:
       - "himart-optimized-test.html"
       - "design-system/pages/himart-live-dom-contract.json"
       - "scripts/verify-himart-static-candidate.mjs"
+      - "scripts/capture-himart-static-candidate.spec.mjs"
       - ".github/workflows/verify-himart-static-candidate.yml"
   workflow_dispatch:
 
@@ -35,9 +36,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts
-          npx --yes playwright@1.55.0 install --with-deps chromium
-          npx --yes playwright@1.55.0 screenshot --device="Desktop Chrome" --full-page "file://${GITHUB_WORKSPACE}/himart-optimized-test.html" artifacts/himart-desktop.png
-          npx --yes playwright@1.55.0 screenshot --viewport-size="390,844" --full-page "file://${GITHUB_WORKSPACE}/himart-optimized-test.html" artifacts/himart-mobile.png
+          npx --yes @playwright/test@1.55.0 install --with-deps chromium
+          npx --yes @playwright/test@1.55.0 test scripts/capture-himart-static-candidate.spec.mjs
 
       - name: Upload render evidence
         uses: actions/upload-artifact@v4
