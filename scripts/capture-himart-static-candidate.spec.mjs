@@ -54,8 +54,14 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
     titles: [...document.querySelectorAll(".hm-section-title")].map(node => node.textContent.trim()),
     hiddenRevealTargets: [...document.querySelectorAll(".hm-reveal, .title-rise-target")].filter(node => {
       const style = getComputedStyle(node);
-      return style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.01;
+      return style.visibility === "hidden" || Number(style.opacity) < 0.01;
     }).map(node => ({
+      tag: node.tagName,
+      id: node.id || null,
+      className: node.className,
+      text: node.textContent.trim().slice(0, 100),
+    })),
+    displayNoneRevealTargets: [...document.querySelectorAll(".hm-reveal, .title-rise-target")].filter(node => getComputedStyle(node).display === "none").map(node => ({
       tag: node.tagName,
       id: node.id || null,
       className: node.className,
@@ -152,6 +158,7 @@ test("captures the fully revealed static Himart candidate", async ({ page }) => 
     const live = await capturePage(page, { name: `live-${name}`, url: liveUrl, viewport, waitForRuntime: 20000 });
 
     console.log(`Static candidate hidden reveal targets (${name}): ${JSON.stringify(candidate.state.hiddenRevealTargets)}`);
+    console.log(`Static candidate display-none reveal targets (${name}): ${JSON.stringify(candidate.state.displayNoneRevealTargets)}`);
     expect(candidate.runtimeErrors).toEqual([]);
     expect(candidate.failedResponses).toEqual([]);
     expect(candidate.state.hiddenRevealTargets).toEqual([]);
