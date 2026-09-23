@@ -398,11 +398,64 @@
       document.querySelectorAll('[data-hm-chart]').forEach(registerChart);
       document.querySelectorAll('[data-hm-video]').forEach(registerVideoSequence);
     };
+
+    /*
+      Shared sticky chapter-title exit motion.
+      A sticky major title fades rapidly while its owning section pushes it
+      above the viewport. This is shared by every page using the canonical
+      .hm-section-head/.hm-section structure.
+    */
+    const initMajorTitleExit = () => {
+      if (reduce || !('requestAnimationFrame' in window)) return;
+      if (document.documentElement.dataset.hmMajorTitleExitBound === '1') return;
+      document.documentElement.dataset.hmMajorTitleExitBound = '1';
+
+      if (!document.getElementById('hm-major-title-exit-style')) {
+        const style = document.createElement('style');
+        style.id = 'hm-major-title-exit-style';
+        style.textContent = `
+          .hm-section-head.hm-reveal.is-major-title-exiting{
+            opacity:0!important;
+            transform:translate3d(0,-56px,0)!important;
+            transition:opacity .18s ease-out,transform .24s cubic-bezier(.22,1,.36,1)!important;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
+      let raf = 0;
+      const update = () => {
+        document.querySelectorAll('.hm-section-head.hm-reveal').forEach(head => {
+          const section = head.closest('.hm-section');
+          if (!section) return;
+          const computed = getComputedStyle(head);
+          if (computed.position !== 'sticky') {
+            head.classList.remove('is-major-title-exiting');
+            return;
+          }
+          const sectionRect = section.getBoundingClientRect();
+          const headRect = head.getBoundingClientRect();
+          const stickyTop = Number.parseFloat(computed.top) || 0;
+          const exitThreshold = Math.max(12, Math.min(72, headRect.height * 0.45));
+          const isExiting = sectionRect.bottom <= stickyTop + headRect.height + exitThreshold;
+          head.classList.toggle('is-major-title-exiting', isExiting);
+        });
+      };
+      const requestUpdate = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => { raf = 0; update(); });
+      };
+      window.addEventListener('scroll', requestUpdate, {passive:true});
+      window.addEventListener('resize', requestUpdate, {passive:true});
+      requestUpdate();
+    };
+
     scan();
+    initMajorTitleExit();
     // Scramble animation is owned by design-system/scramble-final.js.
     // Keeping it out of this layer prevents duplicate observers and text races.
     window.__hmAnimationScan = scan;
-    window.addEventListener('load', () => { scan(); setTimeout(scan, 600); }, { once: true });
+    window.addEventListener('load', () => { scan(); initMajorTitleExit(); setTimeout(scan, 600); }, { once: true });
     document.fonts?.ready?.then(() => scan()).catch?.(() => {});
 
     const hero = document.querySelector('[data-hm-hero]');
