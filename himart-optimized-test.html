@@ -163,8 +163,9 @@ body.hm-ds-subsection-copy-hidden #live-main .journey-role-block > .journey-bloc
 body.hm-ds-subsection-copy-hidden #live-main .narrative-block,
 body.hm-ds-subsection-copy-hidden #live-main .journey-role-block{margin-bottom:0!important;padding-bottom:0!important}
 </style>
-<script src="./design-system/components/structural-visibility-runtime.js?v=20260918-4"></script>
-<script defer src="./design-system/subsection-number-only.js?v=20260920-4"></script>
+<script id="hm-structure-after-layout">
+(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/pages/himart-optimized-structure.js?v=20260923-1';s.dataset.hmStructureOwner='layout-ready';document.body.appendChild(s)};document.addEventListener('himart:layout-ready',load,{once:true});window.setTimeout(load,22000)})();
+</script>
 <script src="./design-system/media-gallery.js?v=20260922-2"></script>
 </body>
 </html>
