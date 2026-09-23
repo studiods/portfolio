@@ -105,6 +105,43 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
       };
       return { block: read(block), group: read(group), row: read(row), cluster: read(cluster), node: read(node) };
     })(),
+    directionMetrics: ["04.1", "04.2"].map(key => {
+      const root = document.querySelector(`[data-himart-direction-section="${key}"]`);
+      const read = element => {
+        if (!element) return null;
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return {
+          className: element.className,
+          rect: {
+            top: Math.round(rect.top + window.scrollY),
+            left: Math.round(rect.left),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+          },
+          display: style.display,
+          position: style.position,
+          visibility: style.visibility,
+          opacity: style.opacity,
+          padding: style.padding,
+          margin: style.margin,
+          gap: style.gap,
+          overflow: style.overflow,
+          inlineStyle: element.getAttribute("style"),
+        };
+      };
+      return {
+        key,
+        root: read(root),
+        directChildren: root ? [...root.children].map(read) : [],
+        grids: root ? [...root.querySelectorAll(".ax-friction-grid, .prototype-case-list, .prototype-case-viewport, .prototype-case-track")].map(read) : [],
+        cases: root ? [...root.querySelectorAll(".prototype-case")].map(element => ({
+          ...read(element),
+          ariaHidden: element.getAttribute("aria-hidden"),
+          slide: element.getAttribute("data-reuse-prototype-slide"),
+        })) : [],
+      };
+    }),
     sections: sectionIds.map(id => {
       const section = document.getElementById(id);
       const head = section?.querySelector(":scope .hm-section-head");
@@ -221,6 +258,8 @@ test("captures the fully revealed static Himart candidate", async ({ page }) => 
     console.log(`Static candidate hidden reveal targets (${name}): ${JSON.stringify(candidate.state.hiddenRevealTargets)}`);
     console.log(`Static candidate display-none reveal targets (${name}): ${JSON.stringify(candidate.state.displayNoneRevealTargets)}`);
     console.log(`Candidate section geometry (${name}): ${JSON.stringify(candidate.state.sections)}`);
+    console.log(`Candidate direction metrics (${name}): ${JSON.stringify(candidate.state.directionMetrics)}`);
+    console.log(`Live direction metrics (${name}): ${JSON.stringify(live.state.directionMetrics)}`);
     console.log(`Candidate flow metrics (${name}): ${JSON.stringify(candidate.state.flowMetrics)}`);
     console.log(`Live flow metrics (${name}): ${JSON.stringify(live.state.flowMetrics)}`);
     console.log(`Live section geometry (${name}): ${JSON.stringify(live.state.sections)}`);
