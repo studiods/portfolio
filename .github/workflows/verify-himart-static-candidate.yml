@@ -39,7 +39,7 @@ jobs:
           mkdir -p artifacts
           npx --yes playwright@1.55.0 install --with-deps chromium
           npx --yes playwright@1.55.0 screenshot --device="Desktop Chrome" --full-page "file://${GITHUB_WORKSPACE}/himart-optimized-test.html" artifacts/himart-desktop.png
-          npx --yes playwright@1.55.0 screenshot --device="iPhone 13" --full-page "file://${GITHUB_WORKSPACE}/himart-optimized-test.html" artifacts/himart-mobile.png
+          npx --yes playwright@1.55.0 screenshot --browser=chromium --device="iPhone 13" --full-page "file://${GITHUB_WORKSPACE}/himart-optimized-test.html" artifacts/himart-mobile.png
 
       - name: Upload render evidence
         uses: actions/upload-artifact@v4
