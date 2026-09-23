@@ -301,6 +301,67 @@
     };
 
     /*
+      Shared Himart percentage ring animation.
+      Markup and geometry remain in page/design-system CSS; this layer only prepares and draws
+      each .v15-ring-arc when the ring enters the viewport.
+    */
+    const ringCharts = new WeakSet();
+    const ringObserver = !reduce && 'IntersectionObserver' in window
+      ? new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            playRing(entry.target);
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.24, rootMargin: '0px 0px -8% 0px' })
+      : null;
+
+    const playRing = ring => {
+      if (!ring || ring.dataset.v15RingPlayed === '1') return;
+      ring.dataset.v15RingPlayed = '1';
+      const arc = ring.querySelector('.v15-ring-arc');
+      if (!arc) return;
+
+      const pct = Math.max(0, Math.min(100, Number.parseFloat(ring.dataset.v15Pct) || 0));
+      const finalAngle = pct * 3.6;
+      if (reduce || !('requestAnimationFrame' in window)) {
+        arc.style.setProperty('--v15-ring-angle', `${finalAngle}deg`);
+        return;
+      }
+
+      const start = performance.now();
+      const duration = 1200;
+      const frame = now => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        arc.style.setProperty('--v15-ring-angle', `${finalAngle * eased}deg`);
+        if (t < 1) requestAnimationFrame(frame);
+        else arc.style.setProperty('--v15-ring-angle', `${finalAngle}deg`);
+      };
+      requestAnimationFrame(frame);
+    };
+
+    const registerRingChart = ring => {
+      if (ringCharts.has(ring)) return;
+      ringCharts.add(ring);
+      ring.querySelectorAll('.v14-ring-svg,.v15-ring-svg,.v15-ring-arc').forEach(el => el.remove());
+
+      const rawPct = Number.parseFloat(ring.style.getPropertyValue('--pct'));
+      const pct = Math.max(0, Math.min(100, Number.isFinite(rawPct) ? rawPct : 0));
+      ring.dataset.v15Pct = String(pct);
+      ring.dataset.v15RingPlayed = '0';
+
+      const arc = document.createElement('span');
+      arc.className = 'v15-ring-arc';
+      arc.setAttribute('aria-hidden', 'true');
+      arc.style.setProperty('--v15-ring-angle', '0deg');
+      ring.appendChild(arc);
+
+      if (reduce || !ringObserver) playRing(ring);
+      else ringObserver.observe(ring);
+    };
+
+    /*
       Generic sequence fallback:
       - native `ended` is the only playlist-advance signal;
       - no opacity animation, fade-to-black class or artificial end hold is used;
@@ -396,6 +457,7 @@
       document.querySelectorAll('[data-hm-counter], [data-count]').forEach(registerCounter);
       scanAutoCounters();
       document.querySelectorAll('[data-hm-chart]').forEach(registerChart);
+      document.querySelectorAll('#brand .ring-card[data-v15-pct], #brand .ring-card[style*="--pct"]').forEach(registerRingChart);
       document.querySelectorAll('.v9-chart-motion').forEach(el => {
         if (el.dataset.hmV9ChartBound === '1') return;
         el.dataset.hmV9ChartBound = '1';
