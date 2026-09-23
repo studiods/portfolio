@@ -41,7 +41,7 @@
 <link rel="stylesheet" href="./design-system/mobile-system.css?v=20260921-4">
 <link rel="stylesheet" href="./design-system/components/media-gallery.css?v=20260922-2">
 </head>
-<body class="himart-page-body hm-wide-editorial-test hm-wide-himart-test hm-wide-booting himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-movie-page himart-commerce-page hm-ds-subsection-copy-hidden">
+<body class="himart-page-body hm-wide-editorial-test hm-wide-himart-test hm-wide-booting himart-test-page himart-wide-test-page himart-prod-v16 himart-v18-loading himart-narrative-loading himart-movie-page himart-commerce-page hm-ds-subsection-copy-hidden hm-optimized-candidate">
 <main id="live-main">
 <header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero data-hm-fade-distance="420">
 <video class="hm-movie-video hm-ds-hero__video" data-hm-video autoplay muted loop playsinline preload="auto"><source src="./assets/movies/himart_02.mp4" type="video/mp4"></video>
@@ -147,14 +147,14 @@
 <script src="./design-system/animation.js?v=20260920-2"></script>
 <script src="./design-system/test-content-loader.js?v=20260922-7"></script>
 <script id="hm-final-after-loader">
-(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/test-content-final.js?v=20260922-5';s.dataset.hmFinalOwner='loader-complete';document.body.appendChild(s)};document.addEventListener('himart:narrative-ready',load,{once:true});window.setTimeout(load,20000)})();
+(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/test-content-final.js?v=20260923-6';s.dataset.hmFinalOwner='loader-complete';document.body.appendChild(s)};if(document.documentElement.dataset.hmNarrativeReady==='1')load();else document.addEventListener('himart:narrative-ready',load,{once:true})})();
 </script>
 <script src="./design-system/himart-appliance-purchase-flow.js?v=20260920-1"></script>
 <script src="./design-system/scramble-final.js?v=20260922-2"></script>
 <script src="./design-system/navigation.js?v=20260921-5"></script>
 
 <script id="hm-adapter-after-final">
-(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/himart-wide-editorial-adapter.js?v=20260916-1';s.dataset.hmAdapterOwner='content-finalized';document.body.appendChild(s)};document.addEventListener('himart:content-finalized',load,{once:true});window.setTimeout(load,21000)})();
+(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/himart-wide-editorial-adapter.js?v=20260923-2';s.dataset.hmAdapterOwner='content-finalized';document.body.appendChild(s)};if(document.documentElement.dataset.hmContentFinalized==='1')load();else document.addEventListener('himart:content-finalized',load,{once:true})})();
 </script>
 <script src="./design-system/himart-inertia-scroll.js?v=20260913-1"></script>
 <style id="hm-structural-visibility-final-style">
@@ -164,7 +164,7 @@ body.hm-ds-subsection-copy-hidden #live-main .narrative-block,
 body.hm-ds-subsection-copy-hidden #live-main .journey-role-block{margin-bottom:0!important;padding-bottom:0!important}
 </style>
 <script id="hm-structure-after-layout">
-(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/pages/himart-optimized-structure.js?v=20260923-1';s.dataset.hmStructureOwner='layout-ready';document.body.appendChild(s)};document.addEventListener('himart:layout-ready',load,{once:true});window.setTimeout(load,22000)})();
+(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/pages/himart-optimized-structure.js?v=20260923-2';s.dataset.hmStructureOwner='layout-ready';document.body.appendChild(s)};if(document.documentElement.dataset.hmLayoutReady==='1')load();else document.addEventListener('himart:layout-ready',load,{once:true})})();
 </script>
 <script src="./design-system/media-gallery.js?v=20260922-2"></script>
 </body>
