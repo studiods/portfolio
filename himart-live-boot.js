@@ -55,7 +55,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260921-14';
+      link.href='./design-system/components/reuse-prototype-cases.css?v=20260923-2';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
