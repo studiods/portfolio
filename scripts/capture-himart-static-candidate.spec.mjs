@@ -16,10 +16,13 @@ const titles = [
   "정의한 흐름과 여정별 정의를 바탕으로 빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.",
 ];
 
+// The production page needs time to complete its legacy content runtime before capture.
+test.setTimeout(180_000);
+
 async function revealEntirePage(page) {
   const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
   const viewportHeight = await page.evaluate(() => window.innerHeight);
-  const steps = Math.max(12, Math.ceil(pageHeight / Math.max(viewportHeight, 1)));
+  const steps = Math.min(80, Math.max(12, Math.ceil(pageHeight / Math.max(viewportHeight, 1))));
 
   for (let step = 0; step <= steps; step += 1) {
     await page.evaluate(({ step, steps, pageHeight }) => window.scrollTo(0, Math.round((pageHeight * step) / steps)), { step, steps, pageHeight });
