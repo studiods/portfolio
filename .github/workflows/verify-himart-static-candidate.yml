@@ -1,0 +1,60 @@
+name: Verify Himart Static Candidate
+
+on:
+  push:
+    branches:
+      - work/himart-optimized-rebuild-20260922
+    paths:
+      - "himart-optimized-test.html"
+      - "himart.html"
+      - "design-system/pages/himart-live-dom-contract.json"
+      - "scripts/verify-himart-static-candidate.mjs"
+      - "scripts/capture-himart-static-candidate.spec.mjs"
+      - ".github/workflows/verify-himart-static-candidate.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check static-content contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/verify-himart-static-candidate.mjs \
+            himart-optimized-test.html \
+            design-system/pages/himart-live-dom-contract.json \
+            artifacts/himart-static-contract-result.json
+
+          if git diff --name-only HEAD^ HEAD | grep -Fxq "himart.html"; then
+            node scripts/verify-himart-static-candidate.mjs \
+              himart.html \
+              design-system/pages/himart-live-dom-contract.json \
+              artifacts/himart-production-contract-result.json
+          else
+            echo "Skipping production contract: himart.html is unchanged in this commit."
+          fi
+
+      - name: Capture desktop and mobile renders
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          npm install --no-save --ignore-scripts @playwright/test@1.55.0
+          npx playwright install --with-deps chromium
+          npx playwright test scripts/capture-himart-static-candidate.spec.mjs
+
+      - name: Upload render evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: himart-static-candidate-renders
+          path: artifacts/
+          if-no-files-found: error
