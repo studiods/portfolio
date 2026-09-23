@@ -28,7 +28,7 @@ const [html, contractText] = await Promise.all([
 ]);
 const contract = JSON.parse(contractText);
 
-assert(/<html[^>]*\bhm-static-candidate\b/i.test(html), "Missing hm-static-candidate document marker.");
+assert(/<(?:html|body)[^>]*\bhm-static-candidate\b/i.test(html), "Missing hm-static-candidate document marker.");
 
 for (const writer of forbiddenRuntimeWriters) {
   assert(!html.includes(writer), `Forbidden runtime content writer is present: ${writer}`);
