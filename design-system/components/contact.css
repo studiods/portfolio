@@ -147,8 +147,11 @@ body.contact-page-body .contact-value--en a{
 
 body.contact-page-body .contact-footer{
   display:flex;
-  position:relative;
-  z-index:3;
+  position:fixed;
+  z-index:100;
+  left:0;
+  right:0;
+  bottom:0;
   justify-content:space-between;
   gap:24px;
   padding:48px var(--hm-inset-desktop) 60px;
