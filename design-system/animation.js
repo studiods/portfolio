@@ -401,9 +401,10 @@
 
     /*
       Shared sticky chapter-title exit motion.
-      A sticky major title fades rapidly while its owning section pushes it
-      above the viewport. This is shared by every page using the canonical
-      .hm-section-head/.hm-section structure.
+      After a chapter title has pinned, hide it immediately when its section
+      boundary starts pushing it above the sticky anchor. Reverse scrolling
+      restores the title as soon as the section boundary releases it.
+      Shared by every page using the canonical .hm-section structure.
     */
     const initMajorTitleExit = () => {
       if (reduce || !('requestAnimationFrame' in window)) return;
@@ -414,10 +415,9 @@
         const style = document.createElement('style');
         style.id = 'hm-major-title-exit-style';
         style.textContent = `
-          .hm-section-head.hm-reveal.is-major-title-exiting{
+          .hm-section-head.is-major-title-exiting{
             opacity:0!important;
-            transform:translate3d(0,-56px,0)!important;
-            transition:opacity .18s ease-out,transform .24s cubic-bezier(.22,1,.36,1)!important;
+            transition:none!important;
           }
         `;
         document.head.appendChild(style);
@@ -425,20 +425,32 @@
 
       let raf = 0;
       const update = () => {
-        document.querySelectorAll('.hm-section-head.hm-reveal').forEach(head => {
+        document.querySelectorAll('.hm-section-head').forEach(head => {
           const section = head.closest('.hm-section');
           if (!section) return;
           const computed = getComputedStyle(head);
           if (computed.position !== 'sticky') {
+            head.dataset.hmMajorTitlePinned = '0';
             head.classList.remove('is-major-title-exiting');
             return;
           }
+
           const sectionRect = section.getBoundingClientRect();
           const headRect = head.getBoundingClientRect();
           const stickyTop = Number.parseFloat(computed.top) || 0;
-          const exitThreshold = Math.max(12, Math.min(72, headRect.height * 0.45));
-          const isExiting = sectionRect.bottom <= stickyTop + headRect.height + exitThreshold;
+          const pushBoundary = stickyTop + headRect.height;
+
+          if (headRect.top <= stickyTop + 1 && sectionRect.bottom > pushBoundary) {
+            head.dataset.hmMajorTitlePinned = '1';
+          }
+
+          const hasPinned = head.dataset.hmMajorTitlePinned === '1';
+          const isExiting = hasPinned && sectionRect.bottom <= pushBoundary + 1;
           head.classList.toggle('is-major-title-exiting', isExiting);
+
+          if (!isExiting && sectionRect.top >= stickyTop) {
+            head.dataset.hmMajorTitlePinned = '0';
+          }
         });
       };
       const requestUpdate = () => {
