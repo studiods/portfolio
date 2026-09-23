@@ -95,6 +95,12 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
           gridTemplateColumns: style.gridTemplateColumns,
           flexBasis: style.flexBasis,
           padding: style.padding,
+          inlineStyle: element.getAttribute("style"),
+          customProperties: {
+            hmHjNodeSize: style.getPropertyValue("--hm-hj-node-size").trim(),
+            hmJourneyGap: style.getPropertyValue("--hm-journey-gap").trim(),
+            hmJourneyNodePad: style.getPropertyValue("--hm-journey-node-pad").trim(),
+          },
         };
       };
       return { block: read(block), group: read(group), row: read(row), cluster: read(cluster), node: read(node) };
