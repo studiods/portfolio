@@ -6,7 +6,8 @@ on:
       - work/himart-optimized-rebuild-20260922
     paths:
       - "himart-optimized-test.html"
-      - "design-system/**"
+      - "design-system/pages/himart-live-dom-contract.json"
+      - "scripts/verify-himart-static-candidate.mjs"
       - ".github/workflows/verify-himart-static-candidate.yml"
   workflow_dispatch:
 
@@ -24,13 +25,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -f himart-optimized-test.html
-          grep -Fq 'hm-static-candidate' himart-optimized-test.html
-          ! grep -Eq 'content-runtime\.js|test-content-loader\.js|himart-narrative-v2-production-base\.js|test-content-final\.js|himart-wide-editorial-adapter\.js' himart-optimized-test.html
-          grep -Fq '왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.' himart-optimized-test.html
-          grep -Fq '그리고 실제로 고객들이 서비스를 어떻게 이용하고 있는지도 살펴봤습니다.' himart-optimized-test.html
-          grep -Fq '앞선 데이터를 바탕으로, 구매 여정의 흐름과 각 화면의 역할을 다시 정의했습니다.' himart-optimized-test.html
-          grep -Fq '정의한 흐름과 여정별 정의를 바탕으로 빠르게 프로토타입을 만들고, 검증을 반복하고 있습니다.' himart-optimized-test.html
+          node scripts/verify-himart-static-candidate.mjs \
+            himart-optimized-test.html \
+            design-system/pages/himart-live-dom-contract.json \
+            artifacts/himart-static-contract-result.json
 
       - name: Capture desktop and mobile renders
         shell: bash
