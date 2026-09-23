@@ -82,7 +82,7 @@ body.contact-page-body .contact-row{
   grid-template-columns:90px minmax(0,1fr);
   column-gap:24px;
   align-items:center;
-  height:42px;
+  height:37.8px;
   margin-left:0;
   padding:7px 0;
   border-top:0;
@@ -201,7 +201,7 @@ body.contact-page-body .contact-footer a:focus-visible{
   body.contact-page-body .contact-row{
     grid-template-columns:1fr;
     gap:12px;
-    height:84px;
+    height:75.6px;
     margin-left:0;
     padding:0;
   }
