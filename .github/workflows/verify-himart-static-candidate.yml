@@ -36,8 +36,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p artifacts
-          npx --yes @playwright/test@1.55.0 install --with-deps chromium
-          npx --yes @playwright/test@1.55.0 test scripts/capture-himart-static-candidate.spec.mjs
+          npm install --no-save --ignore-scripts @playwright/test@1.55.0
+          npx playwright install --with-deps chromium
+          npx playwright test scripts/capture-himart-static-candidate.spec.mjs
 
       - name: Upload render evidence
         uses: actions/upload-artifact@v4
