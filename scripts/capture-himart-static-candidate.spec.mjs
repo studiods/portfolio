@@ -145,6 +145,24 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
           h4: read(card.querySelector("h4")),
           p: read(card.querySelector("p")),
         })) : [],
+        activeCase: root ? (() => {
+          const active = root.querySelector(".prototype-case[aria-hidden=\"false\"]");
+          return active ? {
+            rect: read(active),
+            mockups: [...active.querySelectorAll(".galaxy-ultra-mockup")].map(mockup => ({
+              ...read(mockup),
+              image: (() => {
+                const image = mockup.querySelector("img");
+                return image ? {
+                  complete: image.complete,
+                  naturalWidth: image.naturalWidth,
+                  naturalHeight: image.naturalHeight,
+                  currentSrc: image.currentSrc,
+                } : null;
+              })(),
+            })),
+          } : null;
+        })() : null,
       };
     }),
     sections: sectionIds.map(id => {
