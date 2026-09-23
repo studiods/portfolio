@@ -16,19 +16,19 @@ html{
   overflow-x:clip;
 }
 
-html body.himart-page-body.hm-wide-editorial-test{
+html body.himart-page-body.hm-wide-editorial{
   max-width:100%;
   overflow-x:clip!important;
 }
 
-html body.himart-page-body.hm-wide-editorial-test > .top{
+html body.himart-page-body.hm-wide-editorial > .top{
   box-sizing:border-box!important;
   width:100%!important;
   max-width:100%!important;
 }
 
 @media(min-width:1600px){
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section::before{
     inset:0!important;
     width:auto!important;

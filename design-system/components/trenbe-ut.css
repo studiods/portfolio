@@ -416,11 +416,11 @@ html body.trenbe-ut-page #data .trenbe-age-chart .trenbe-age-bar.is-core>i{
 
 /* Wide chapter alignment mirrors the current HIMART authored rail. */
 @media(min-width:1600px){
-  html body.trenbe-ut-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
+  html body.trenbe-ut-page.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
     grid-column:2!important;
     grid-row:1!important;
   }
-  html body.trenbe-ut-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{
+  html body.trenbe-ut-page.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{
     grid-column:4!important;
     grid-row:1!important;
     align-self:start!important;
@@ -430,7 +430,7 @@ html body.trenbe-ut-page #data .trenbe-age-chart .trenbe-age-bar.is-core>i{
     margin:0!important;
     padding:0!important;
   }
-  html body.trenbe-ut-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{margin-top:0!important}
+  html body.trenbe-ut-page.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{margin-top:0!important}
 }
 
 @media(max-width:1180px){

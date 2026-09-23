@@ -59,7 +59,7 @@ html body.reuse-current #direction .prototype-intro.hm-subsection>p{
 /* Wide editorial: major title on the left and the 04.1 medium-title unit on the right
    occupy the same first authored row, matching chapters 01–03. */
 @media(min-width:1600px){
-  html body.reuse-current.hm-wide-editorial-test
+  html body.reuse-current.hm-wide-editorial
   #live-main>#direction.hm-section>.hm-wrap>.prototype-intro.hm-subsection{
     grid-column:4!important;
     grid-row:1!important;

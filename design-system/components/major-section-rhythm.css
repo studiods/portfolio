@@ -122,7 +122,7 @@ html body.himart-page-body #live-main :is(
 
 /* Wide editorial is parallel, not stacked. */
 @media (min-width:1600px){
-  html body.himart-page-body.hm-wide-editorial-test #live-main > .hm-section[data-chapter]
+  html body.himart-page-body.hm-wide-editorial #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head{
     margin:0!important;
   }

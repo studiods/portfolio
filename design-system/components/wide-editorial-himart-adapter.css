@@ -1,0 +1,109 @@
+/*
+  HIMART Wide Editorial — Himart adapter v5
+  Applies the current wide-editorial structure to runtime/generated Himart-family DOM.
+
+  v5 contract change:
+  - outer shells may reset chapter-start margin/padding;
+  - canonical titled units (.hm-subsection / .data-card) NEVER lose their own
+    divider-to-title padding. The final value is owned by editorial-layout-contract.css.
+*/
+
+@media (min-width:1600px){
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
+    grid-column:2!important;
+    grid-row:1!important;
+    align-self:start!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{
+    grid-column:4!important;
+    grid-row:1!important;
+    align-self:start!important;
+    min-width:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    container-type:inline-size!important;
+    container-name:hm-wide-right-rail;
+  }
+
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
+    margin-top:0!important;
+  }
+
+  /* Runtime narrative blocks are layout shells, not canonical line+title components. */
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data).hm-section .hm-wide-right-rail > .narrative-block:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data).hm-section .hm-wide-right-rail > .narrative-block:first-child > .narrative-subno{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child > article{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* Raw-DOM fallbacks.
+     IMPORTANT: no padding reset is allowed on .hm-subsection or .data-card themselves. */
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child{
+    margin-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #brand.hm-section .hm-wide-right-rail > .hm-subsection:first-child > .hm-subhead{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child{
+    margin-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #data.hm-section .hm-wide-right-rail > .data-list:first-child > .data-card:first-child > .data-card-head{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #journey.hm-section .hm-wide-right-rail > .flow-area:first-child,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #journey.hm-section .hm-wide-right-rail > .flow-area:first-child > .flow-groups,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > .prototype-intro:first-child{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  /* Magnetic reveal remains for ordinary right-rail units. The shared final contract
+     removes positional reveal from the chapter-start pair only. */
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal{
+    opacity:.88!important;
+    transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
+    transition:none!important;
+    will-change:opacity,transform;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal.is-visible,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal.is-in{
+    animation:hm-wide-magnetic-rise .76s cubic-bezier(.22,.78,.22,1) both!important;
+  }
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > .hm-reveal .hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
+
+@media (min-width:1600px) and (prefers-reduced-motion:reduce){
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main .hm-wide-right-rail > .hm-reveal{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}

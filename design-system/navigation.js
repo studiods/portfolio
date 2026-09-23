@@ -250,7 +250,7 @@
 
 /*
   TEST-ONLY wide editorial sticky-title exit treatment.
-  Guarded by .hm-wide-editorial-test so production Himart / Reuse pages are untouched.
+  Guarded by .hm-wide-editorial so production Himart / Reuse pages are untouched.
   CSS sticky owns all movement; this runtime only derives opacity from the amount
   the browser has already pushed the current title above its 14vh sticky anchor.
 */
@@ -258,7 +258,7 @@
   'use strict';
 
   const mountWideEditorialExit = () => {
-    if (!document.body.classList.contains('hm-wide-editorial-test')) return;
+    if (!document.body.classList.contains('hm-wide-editorial')) return;
     if (window.__hmWideEditorialExitMounted) return;
     window.__hmWideEditorialExitMounted = true;
 

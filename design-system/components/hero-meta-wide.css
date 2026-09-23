@@ -17,7 +17,7 @@
   the single owner of wide Hero copy + metadata horizontal alignment.
 */
 
-html body.himart-page-body.hm-wide-editorial-test{
+html body.himart-page-body.hm-wide-editorial{
   --hm-detail-editorial-span:1600px;
   --hm-detail-editorial-edge-min:64px;
 }
@@ -29,7 +29,7 @@ html body.himart-page-body.hm-wide-editorial-test{
     Because the canonical inner wrapper itself stays centered, left:50% + translateX(-50%)
     produces the exact same centered editorial rail as the metadata footer below.
   */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__copy,.hm-movie-copy){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__copy,.hm-movie-copy){
     left:50%!important;
     right:auto!important;
     width:min(
@@ -42,13 +42,13 @@ html body.himart-page-body.hm-wide-editorial-test{
     box-sizing:border-box!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__title,.hm-title){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__title,.hm-title){
     margin-left:0!important;
     margin-right:auto!important;
     text-align:left!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__bottom,.hm-hero-bottom){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(.hm-ds-hero,.hm-movie-hero) :is(.hm-ds-hero__bottom,.hm-hero-bottom){
     left:50%!important;
     right:auto!important;
     width:min(

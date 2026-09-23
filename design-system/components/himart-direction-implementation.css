@@ -227,7 +227,7 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
 
 /* Keep the two new subsections inside the same wide right rail used by chapters 01–03. */
 @media(min-width:1600px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > :is(.himart-direction-041,.himart-direction-042){
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > :is(.himart-direction-041,.himart-direction-042){
     grid-column:auto!important;
     width:100%!important;
   }

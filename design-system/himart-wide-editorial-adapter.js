@@ -31,8 +31,8 @@
   'use strict';
 
   const isTargetPage = () =>
-    document.body?.classList.contains('hm-wide-editorial-test') &&
-    document.body?.classList.contains('hm-wide-himart-test');
+    document.body?.classList.contains('hm-wide-editorial') &&
+    document.body?.classList.contains('hm-wide-himart-adapter');
 
   const releaseBootLock = () => {
     if (!document.body) return;

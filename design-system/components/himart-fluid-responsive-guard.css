@@ -9,7 +9,7 @@
      making all journey circles collapse to unreadable sizes.
 
    Contract
-   - Applies only to himart.html (.himart-commerce-page.hm-wide-himart-test).
+   - Applies only to himart.html (.himart-commerce-page.hm-wide-himart-adapter).
    - REUSE is explicitly excluded.
    - Desktop/wide geometry remains owned by himart-fluid-content.css.
    - At <=1024px the flow becomes one readable vertical sequence.
@@ -19,7 +19,7 @@
 
 @media (max-width:1024px){
   /* The flow is a reading sequence, not a miniature desktop diagram. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   :is(.flow-row,.journey-flow-row){
     display:flex!important;
@@ -37,10 +37,10 @@
 
   /* Runtime group shells are desktop-only geometry. On narrow screens they become
      transparent wrappers so their padding/width can never squeeze the circles. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .wide-flow-cluster,
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .wide-flow-cluster-inner{
     display:contents!important;
@@ -56,7 +56,7 @@
   }
 
   /* Keep the grouping meaning as a small caption, but remove the capsule geometry. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .wide-flow-cluster-label{
     position:static!important;
@@ -74,14 +74,14 @@
   }
 
   /* Old absolute grouping capsules are also desktop-only. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey .journey-flow-block .journey-row-group{
     display:none!important;
   }
 
   /* One readable diameter for every node. `min(100%,292px)` guarantees that the node
      can shrink on very small phones but never becomes a tiny flex remainder. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-node{
     flex:0 0 auto!important;
@@ -101,14 +101,14 @@
 
   /* Restore the approved mobile type floor. Container-based desktop type can otherwise
      resolve against a collapsed intermediate wrapper before this final layout settles. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-node .hm-card-no{
     margin:0 0 12px!important;
     font-size:clamp(10px,3.2vw,var(--hm-type-journey-circle-number,12px))!important;
     line-height:1.2!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-node h4{
     margin:0!important;
@@ -116,7 +116,7 @@
     font-size:clamp(18px,5.2vw,var(--hm-type-journey-circle-title,22px))!important;
     line-height:1.22!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-node p{
     margin:12px 0 0!important;
@@ -126,7 +126,7 @@
   }
 
   /* Arrows become vertical connectors between readable circles. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-arrow{
     position:relative!important;
@@ -139,7 +139,7 @@
     transform:none!important;
     align-self:center!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection)
   .flow-arrow::before{
     left:50%!important;
@@ -150,9 +150,9 @@
   }
 
   /* Two authored rows remain separate sequences but use a consistent vertical rhythm. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey .journey-flow-block .journey-flow-row + .journey-flow-row,
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey .journey-flow-block .flow-group + .flow-group{
     margin-top:44px!important;
   }

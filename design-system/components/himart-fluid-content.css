@@ -3,7 +3,7 @@
    Himart-only responsive containment and journey geometry.
 
    Ownership
-   - Applies only to himart.html runtime (.himart-commerce-page.hm-wide-himart-test).
+   - Applies only to himart.html runtime (.himart-commerce-page.hm-wide-himart-adapter).
    - REUSE is explicitly excluded and continues to use its page-specific component CSS.
    - All Himart journey circles use ONE shared diameter derived from the actual content rail.
    - Runtime grouping capsules may wrap 2/3/4 nodes, but grouping can never change node size.
@@ -18,7 +18,7 @@
    authority for desktop/adaptive content geometry. */
 
 /* ---------- 1. HIMART CONTENT CONTAINMENT ---------- */
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #live-main :is(
   .hm-wide-right-rail,
   .narrative-block,
@@ -50,17 +50,17 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   box-sizing:border-box!important;
 }
 
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #live-main :is(.hm-wide-right-rail,.data-viz,.flow-area,.flow-groups,.journey-stage-flow,.journey-more-inner){
   width:100%!important;
 }
 
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #live-main :is(img,video,svg,canvas){
   max-width:100%;
 }
 
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #journey :is(.flow-label,.wide-flow-cluster-label,.group-label){
   max-width:100%!important;
   white-space:normal!important;
@@ -70,7 +70,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 }
 
 /* ---------- 2. JOURNEY: ONE DIAMETER + ONE CAPSULE INSET ---------- */
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #journey{
   --hm-hj-gap:clamp(6px,.72vw,10px);
   --hm-hj-arrow:clamp(14px,1.35vw,20px);
@@ -81,7 +81,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 /* The actual content rail is the only sizing reference. Four equal circles, three arrows,
    six sequence gaps and one capsule shell must fit inside that rail. The capsule itself
    is NOT given a calculated width below; its real DOM contents determine its width. */
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #journey .hm-wide-right-rail{
   container-type:inline-size!important;
   container-name:hm-himart-journey!important;
@@ -92,7 +92,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 }
 
 /* Legacy fixed line lengths such as 552/852/1152px are never allowed to establish width. */
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-group{
   --line-left:0px!important;
   --line-width:100%!important;
@@ -100,7 +100,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   min-width:0!important;
   max-width:100%!important;
 }
-html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
 #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-group::before{
   left:0!important;
   width:100%!important;
@@ -110,7 +110,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 /* Desktop/tablet-wide geometry. The narrow contract starts at 1024px and is intentionally
    kept in the separate responsive guard so two layout grammars never compete. */
 @media (min-width:1025px){
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) :is(.flow-row,.journey-flow-row){
     display:flex!important;
     flex-direction:row!important;
@@ -125,7 +125,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   }
 
   /* One immutable node diameter everywhere: FLOW, SIGNALS, REDESIGN, grouped or direct. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node{
     flex:0 0 var(--hm-hj-node-size)!important;
     width:var(--hm-hj-node-size)!important;
@@ -150,7 +150,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   /* Every arrow has one immutable width. Explicit margin/padding reset is important:
      historical journey bundles used several arrow widths/gaps and those values must not
      silently enlarge the real capsule contents. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow{
     position:relative!important;
     flex:0 0 var(--hm-hj-arrow)!important;
@@ -162,7 +162,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     padding:0!important;
     box-sizing:border-box!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-arrow::before{
     width:clamp(10px,1.05vw,16px)!important;
     height:clamp(10px,1.05vw,16px)!important;
@@ -177,7 +177,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
      The shell now sizes itself from the ACTUAL .wide-flow-cluster-inner max-content width.
      content-box makes the four padding values true geometric insets. Therefore 2-, 3- and
      4-node capsules all get the exact same visual distance from circle tangent to shell. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster{
     position:relative!important;
     display:inline-flex!important;
@@ -199,7 +199,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     overflow:visible!important;
   }
 
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster-inner{
     display:flex!important;
     flex:0 0 auto!important;
@@ -220,7 +220,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   }
 
   /* The label only masks the top border. It never participates in shell sizing. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .wide-flow-cluster-label{
     position:absolute!important;
     top:0!important;
@@ -236,19 +236,19 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
 
   /* If a legacy absolute journey-row-group survives a runtime pass while a canonical
      cluster exists in the same row, never draw a second competing tablet shell. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey .journey-flow-block :is(.flow-row,.journey-flow-row):has(> .wide-flow-cluster) > .journey-row-group{
     display:none!important;
   }
 
   /* Typography follows each circle's own inline size. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node .hm-card-no{
     margin:0 0 clamp(7px,4.8cqi,14px)!important;
     font-size:clamp(9px,5cqi,12px)!important;
     line-height:1.2!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node h4{
     margin:0!important;
     max-width:100%!important;
@@ -257,7 +257,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     word-break:keep-all!important;
     overflow-wrap:normal!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-himart-adapter:not(.reuse-current)
   #journey :is(.journey-flow-block,.journey-signal-subsection,.journey-redesign-subsection) .flow-node p{
     margin:clamp(7px,5cqi,14px) 0 0!important;
     max-width:86%!important;
@@ -273,7 +273,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
   /* The divider itself shares the left 03 title baseline. FAMILIARITY starts the
      canonical 40px below the divider; alignment must never be achieved by deleting
      the title inset. */
-  html body.himart-page-body.himart-commerce-page.hm-wide-editorial-test.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-editorial.hm-wide-himart-adapter:not(.reuse-current)
   #live-main > #journey.hm-section > .hm-wrap > .hm-wide-right-rail > .principle-grid:first-child{
     margin-top:0!important;
     padding-top:0!important;
@@ -281,7 +281,7 @@ html body.himart-page-body.himart-commerce-page.hm-wide-himart-test:not(.reuse-c
     min-width:0!important;
     max-width:100%!important;
   }
-  html body.himart-page-body.himart-commerce-page.hm-wide-editorial-test.hm-wide-himart-test:not(.reuse-current)
+  html body.himart-page-body.himart-commerce-page.hm-wide-editorial.hm-wide-himart-adapter:not(.reuse-current)
   #live-main > #journey.hm-section > .hm-wrap > .hm-wide-right-rail > .principle-grid:first-child > .principle-item{
     margin-top:0!important;
     border-top:1px solid var(--hm-line-weak)!important;

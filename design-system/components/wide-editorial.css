@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v12
+  HIMART Wide Editorial Layout v12
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -19,7 +19,7 @@
 */
 
 @media (min-width:1600px){
-  html body.himart-page-body.hm-wide-editorial-test{
+  html body.himart-page-body.hm-wide-editorial{
     --hm-wide-title-collision-gap:0px;
     --hm-wide-major-content-gap:200px;
     --hm-wide-left-min:400px;
@@ -33,7 +33,7 @@
   }
 
   /* Full-bleed black section plane + centered editorial rails. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section{
     position:relative!important;
     isolation:isolate!important;
     width:100%!important;
@@ -56,7 +56,7 @@
     background:#000!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section::before{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section::before{
     content:"";
     position:absolute;
     z-index:-1;
@@ -72,26 +72,26 @@
     02–04 keep only the requested 200px major-chapter gap.
     No additional internal top inset is allowed after that boundary.
   */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section{
+  html body.himart-page-body.hm-wide-editorial #live-main > #brand.hm-section{
     padding-top:var(--hm-section-padding-top)!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#data,#journey,#direction).hm-section{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#data,#journey,#direction).hm-section{
     padding-top:var(--hm-wide-major-content-gap)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap{
     display:contents!important;
     background:transparent!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > *{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > *{
     grid-column:4!important;
     min-width:0!important;
     width:100%!important;
   }
 
   /* Sticky major-title rail: all authored top spacing is removed for 01–04. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{
     grid-column:2!important;
     position:sticky!important;
     top:14vh!important;
@@ -105,24 +105,24 @@
     will-change:opacity,transform;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head{
+  html body.himart-page-body.hm-wide-editorial #live-main > #brand.hm-section > .hm-wrap > .hm-section-head{
     grid-row:1 / span 2!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head{
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section > .hm-wrap > .hm-section-head{
     grid-row:1 / span 1!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head{
+  html body.himart-page-body.hm-wide-editorial #live-main > #journey.hm-section > .hm-wrap > .hm-section-head{
     grid-row:1 / span 4!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head{
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head{
     grid-row:1 / span 5!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
     width:100%!important;
     max-width:440px!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-desc{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-desc{
     max-width:32ch!important;
   }
 
@@ -132,34 +132,34 @@
     same row as the major title is reset to margin-top:0. Component-owned divider
     padding is restored by the final medium-title contract below.
   */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
+  html body.himart-page-body.hm-wide-editorial #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list,
+  html body.himart-page-body.hm-wide-editorial #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
     margin-top:0!important;
     align-self:start!important;
   }
 
   /* Remove component-level top padding/margins from first non-subsection content units. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card:first-child,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section .data-list > .data-card:first-child,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
     margin-top:0!important;
     padding-top:0!important;
   }
 
   /* The title/header content itself has no extra inset; the parent subsection owns it. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card:first-child > .data-card-head,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area > .flow-groups,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area .flow-group:first-child,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area .flow-label{
+  html body.himart-page-body.hm-wide-editorial #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead,
+  html body.himart-page-body.hm-wide-editorial #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection > .hm-subhead,
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section .data-list > .data-card:first-child > .data-card-head,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area > .flow-groups,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area .flow-group:first-child,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area .flow-label{
     margin-top:0!important;
     padding-top:0!important;
   }
 
   /* 03 continues with the canonical subsection rhythm only AFTER its first aligned block. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap + .hm-wrap > .hm-subsection:first-child{
+  html body.himart-page-body.hm-wide-editorial #live-main > #journey.hm-section > .hm-wrap + .hm-wrap > .hm-subsection:first-child{
     margin-top:var(--hm-subsection-gap)!important;
   }
 
@@ -168,23 +168,23 @@
     This block deliberately comes after every historical zero-padding alignment reset.
     REUSE 01.x / 03.x / 04.x and 02.x data cards therefore cannot lose the line.
   */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > :is(#brand,#journey,#direction).hm-section > .hm-wrap > .hm-subsection.hm-ds-subsection{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-space-component,40px)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section > .hm-wrap > .data-list > .data-card{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-space-component,40px)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child{
     margin-top:0!important;
     border-top:1px solid var(--hm-line-weak)!important;
@@ -192,7 +192,7 @@
   }
 
   /* Adapter-grouped HIMART: runtime medium blocks use several class names. */
-  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  html body.himart-page-body.hm-wide-editorial.hm-wide-himart-adapter
   #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :is(
     .hm-subsection,
     .narrative-problem,
@@ -208,7 +208,7 @@
     padding-top:var(--hm-space-component,40px)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  html body.himart-page-body.hm-wide-editorial.hm-wide-himart-adapter
   #live-main > #data.hm-section .hm-wide-right-rail > .data-list > .data-card{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-space-component,40px)!important;
@@ -220,28 +220,28 @@
     then settle onto the layout baseline. Nested reveal nodes are neutralized
     so one subsection moves as a single authored unit rather than in fragments.
   */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
+  html body.himart-page-body.hm-wide-editorial #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section .data-list > .data-card.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
     opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
     transition:none!important;
     will-change:opacity,transform;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-list > .data-card.hm-reveal.is-visible,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal.is-visible{
+  html body.himart-page-body.hm-wide-editorial #live-main > #brand.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section .data-list > .data-card.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-subsection.hm-reveal.is-visible,
+  html body.himart-page-body.hm-wide-editorial #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal.is-visible{
     animation:hm-wide-magnetic-rise .76s cubic-bezier(.22,.78,.22,1) both!important;
   }
 
   /* Child motion is absorbed into the subsection-level magnetic unit. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#journey,#direction).hm-section .hm-subsection.hm-reveal .hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test #live-main > #data.hm-section .data-card.hm-reveal .hm-reveal{
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#journey,#direction).hm-section .hm-subsection.hm-reveal .hm-reveal,
+  html body.himart-page-body.hm-wide-editorial #live-main > #data.hm-section .data-card.hm-reveal .hm-reveal{
     opacity:1!important;
     transform:none!important;
     transition:none!important;
@@ -249,12 +249,12 @@
   }
 
   /* Standalone reveal blocks keep the canonical design-system motion. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target:not(.hm-section-head){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target:not(.hm-section-head){
     opacity:0!important;
     transform:translate3d(0,40px,0)!important;
     transition:opacity .58s ease-out,transform .82s cubic-bezier(.22,1,.36,1)!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target.is-visible:not(.hm-section-head){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .wide-rise-target.is-visible:not(.hm-section-head){
     opacity:1!important;
     transform:none!important;
   }
@@ -262,17 +262,17 @@
   /* Major title uses the same 56px entry distance as the first right-hand content. */
   /* Match the standard editorial reveal: titles remain readable before entry and
      settle to full opacity only when their reveal owner becomes visible. */
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal:not(.is-major-title-exiting){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal:not(.is-major-title-exiting){
     opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
     transition:opacity .24s ease-out,transform .88s cubic-bezier(.22,1,.36,1)!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal:is(.is-visible,.is-in):not(.is-major-title-exiting){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal:is(.is-visible,.is-in):not(.is-major-title-exiting){
     opacity:1!important;
     transform:none!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > * :is(
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > * :is(
     .reuse-proof-stack,
     .reuse-proof-grid,
     .reuse-uncertainty-graph,
@@ -299,14 +299,14 @@
 }
 
 /* Test page footer navigation: previous / next links stay fully white on black. */
-html body.himart-page-body.hm-wide-editorial-test .hm-footer a{
+html body.himart-page-body.hm-wide-editorial .hm-footer a{
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
   opacity:1!important;
 }
 
 @media (min-width:1600px) and (prefers-reduced-motion:reduce){
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section :is(.hm-reveal,.wide-rise-target){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section :is(.hm-reveal,.wide-rise-target){
     opacity:1!important;
     transform:none!important;
     transition:none!important;

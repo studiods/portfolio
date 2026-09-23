@@ -7,19 +7,19 @@
   /* Medium-title divider rhythm: the divider stays on the chapter start line,
      while the actual label/title starts at the canonical 40px component inset.
      These selectors intentionally outrank the earlier wide first-child zero-inset locks. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-block,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .narrative-block,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .journey-flow-block,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .hm-wide-right-rail > .journey-role-block{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-block,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #data.hm-section .hm-wide-right-rail > .narrative-block,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #journey.hm-section .hm-wide-right-rail > .journey-flow-block,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #journey.hm-section .hm-wide-right-rail > .journey-role-block{
     padding-top:var(--hm-space-component)!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-block:first-child,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #data.hm-section .hm-wide-right-rail > .narrative-block:first-child{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-block:first-child,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #data.hm-section .hm-wide-right-rail > .narrative-block:first-child{
     padding-top:var(--hm-space-component)!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-touchpoint-synthesis{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #brand.hm-section .hm-wide-right-rail > .narrative-touchpoint-synthesis{
     padding-top:var(--hm-space-component)!important;
   }
 
@@ -27,7 +27,7 @@
     CHAPTER-START BASELINE CONTRACT
     --------------------------------
     Root cause of the visible misalignment was asymmetric reveal geometry:
-    wide-editorial-test.css moved the left major title down by 56px, while this polish
+    wide-editorial.css moved the left major title down by 56px, while this polish
     layer had already cancelled that translation on the first right-rail block.
     During scroll-in the two authored baselines were therefore 56px apart even though
     their grid row / margin origin was identical.
@@ -37,12 +37,12 @@
     Opacity is synchronized at section level by himart-wide-editorial-adapter.js, so
     independent IntersectionObserver timing can no longer create a visual phase offset.
   */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{
     margin-top:0!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head.hm-reveal,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head.hm-reveal,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child.hm-reveal{
     transform:none!important;
     animation:none!important;
     will-change:opacity!important;
@@ -50,27 +50,27 @@
 
   /* Generic reveal classes may be applied independently by animation.js, but they are
      intentionally ignored for the chapter-start pair. One section class owns both. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
     transform:none!important;
     animation:none!important;
     transition:none!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head.hm-reveal{
     opacity:.88!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible) .hm-wide-right-rail > :first-child.hm-reveal{
     opacity:.88!important;
   }
 
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head.hm-reveal{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head.hm-reveal{
     opacity:var(--hm-wide-title-exit-opacity,1)!important;
     transform:none!important;
     animation:none!important;
     transition:opacity .4s ease!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible .hm-wide-right-rail > :first-child.hm-reveal{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible .hm-wide-right-rail > :first-child.hm-reveal{
     opacity:1!important;
     transform:none!important;
     animation:none!important;
@@ -78,13 +78,13 @@
   }
 
   /* STANDARD UX / HIMART DIFFERENCE use article-level top rules. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child > article,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule > article{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule:first-child > article,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > .design-rule > article{
     padding-top:var(--hm-space-component)!important;
   }
 
   /* 03.2 ROLE DEFINITION is intentionally page-specific for now, not a shared DS rule. */
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > #journey.hm-section .journey-role-grid h4{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #journey.hm-section .journey-role-grid h4{
     white-space:normal!important;
     word-break:keep-all!important;
     overflow-wrap:normal!important;
@@ -93,11 +93,11 @@
 }
 
 /* Current Himart wide-test footer only: remove the upper divider and tighten label → case link. */
-html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap{
+html body.hm-wide-editorial.hm-wide-himart-adapter .hm-footer > .hm-wrap{
   border-top:0!important;
   padding-top:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap > div{
+html body.hm-wide-editorial.hm-wide-himart-adapter .hm-footer > .hm-wrap > div{
   display:flex!important;
   flex-direction:column!important;
   align-items:flex-start!important;
@@ -106,10 +106,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test .hm-footer > .hm-wrap > div
 
 
 /* HIMART 01.1 / 01.2 — brand diagnosis refinement. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem + .narrative-reality{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem + .narrative-reality{
   margin-top:var(--hm-subsection-gap,100px)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-item h4{
   margin-top:18px!important;
   color:var(--hm-blue)!important;
   font-family:var(--hm-font-ko)!important;
@@ -118,20 +118,20 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .
   line-height:1.28!important;
   letter-spacing:var(--hm-track-group)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4>span{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-item h4>span{
   display:block!important;
   white-space:nowrap!important;
   word-break:keep-all!important;
   overflow-wrap:normal!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-item p{
   max-width:31ch!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-memory-light{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-reality .brand-memory-light{
   font-weight:300!important;
   font-variation-settings:"wght" 300!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-reality-title>span{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-reality .brand-reality-title>span{
   display:block!important;
   white-space:nowrap!important;
   word-break:keep-all!important;
@@ -139,25 +139,25 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .
 }
 /* HIMART 01.2 — AIMMO 02 / 01 graph structure copied exactly; only content is Himart-specific.
    Four evidence graphs are stacked one per row. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence{
   display:grid!important;
   grid-template-columns:1fr!important;
   gap:72px!important;
   width:100%!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-context-insight{
   min-width:0!important;
   padding-top:24px!important;
   border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight__label{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-context-insight__label{
   display:block!important;
   margin:0!important;
   color:var(--hm-blue)!important;
   font:400 12px/1.2 var(--hm-font-en)!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-context-insight h4{
   margin:18px 0 0!important;
   color:#fff!important;
   font-family:var(--hm-font-ko)!important;
@@ -168,7 +168,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence__headline{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) auto!important;
   gap:28px!important;
@@ -176,10 +176,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   width:100%!important;
   margin-top:18px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence__headline h4{
   margin:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline-number{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence__headline-number{
   display:block!important;
   min-width:150px!important;
   margin:0!important;
@@ -194,7 +194,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   white-space:nowrap!important;
   text-align:right!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-context-insight__copy{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-context-insight__copy{
   margin:8px 0 0!important;
   max-width:72ch!important;
   color:var(--hm-description-color)!important;
@@ -206,20 +206,20 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars{
   width:100%!important;
   min-width:0!important;
   margin:32px 0 0!important;
   padding:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__rows{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__rows{
   display:grid!important;
   width:100%!important;
   gap:18px!important;
   margin:0!important;
   padding:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__row{
   display:grid!important;
   grid-template-columns:110px minmax(0,1fr) 62px!important;
   gap:16px!important;
@@ -230,7 +230,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   margin:0!important;
   padding:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__label{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__label{
   margin:0!important;
   color:rgba(255,255,255,.50)!important;
   font:300 16px/1.3 var(--hm-font-ko)!important;
@@ -239,7 +239,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   text-align:left!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__track{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__track{
   position:relative!important;
   width:100%!important;
   height:10px!important;
@@ -247,7 +247,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   overflow:hidden!important;
   background:rgba(255,255,255,.07)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__fill{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__fill{
   display:block!important;
   width:calc(var(--value,0) * 1%)!important;
   height:100%!important;
@@ -258,14 +258,14 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   transition:transform .72s cubic-bezier(.22,1,.36,1);
   will-change:transform;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__fill{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars.is-bars-focused .aimmo-reference-bars__fill{
   transform:scaleX(1);
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(3) .aimmo-reference-bars__fill{transition-delay:.24s}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(4) .aimmo-reference-bars__fill{transition-delay:.36s}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__value{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(1) .aimmo-reference-bars__fill{transition-delay:.00s}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(2) .aimmo-reference-bars__fill{transition-delay:.12s}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(3) .aimmo-reference-bars__fill{transition-delay:.24s}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__row:nth-child(4) .aimmo-reference-bars__fill{transition-delay:.36s}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__value{
   margin:0!important;
   color:rgba(255,255,255,.84)!important;
   font:300 16px/1.3 var(--hm-font-en)!important;
@@ -274,7 +274,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   white-space:nowrap!important;
   text-align:right!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__source{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__source{
   display:block!important;
   width:100%!important;
   margin:48px 0 0!important;
@@ -284,70 +284,70 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-eviden
   font:300 10px/1.5 var(--hm-font-ko)!important;
   letter-spacing:var(--hm-track-base)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-04,#008DDD)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-01,#00A6ED)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-03,#00B8DE)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-04,#008DDD)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-01,#00A6ED)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars--duration .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-03,#00B8DE)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(1){--bar-color:var(--hm-chart-01,#00A6ED)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(2){--bar-color:var(--hm-chart-02,#007DE3)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(3){--bar-color:var(--hm-chart-03,#00B8DE)}
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence :is(.aimmo-reference-bars--decision,.aimmo-reference-bars--output) .aimmo-reference-bars__row:nth-child(4){--bar-color:var(--hm-chart-04,#008DDD)}
 @media(max-width:900px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence__headline-number{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence__headline-number{
     min-width:118px!important;
     font-size:36px!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence{
     grid-template-columns:1fr!important;
     gap:56px!important;
   }
 }
 @media(max-width:780px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality .brand-reality-title>span{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-reality .brand-reality-title>span{
     white-space:normal!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence{gap:56px!important}
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__row{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence{gap:56px!important}
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__row{
     grid-template-columns:88px minmax(0,1fr) 52px!important;
     gap:10px!important;
     min-height:24px!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__label,
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__value{font-size:13px!important}
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__track{height:8px!important}
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__rows{gap:14px!important}
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__label,
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__value{font-size:13px!important}
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__track{height:8px!important}
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__rows{gap:14px!important}
 }
 @media(prefers-reduced-motion:reduce){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-brand-evidence .aimmo-reference-bars__fill{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-brand-evidence .aimmo-reference-bars__fill{
     transform:scaleX(1)!important;
     transition:none!important;
   }
 }
 
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis>h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .brand-synthesis.narrative-touchpoint-synthesis>h4{
   font-size:var(--hm-type-subsection,32px)!important;
   line-height:1.18!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card::before{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .brand-synthesis.narrative-touchpoint-synthesis .synthesis-card::before{
   content:none!important;
   display:none!important;
   background:none!important;
 }
 @media(max-width:780px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item h4>span{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-item h4>span{
     white-space:normal!important;
   }
 }
 
 /* HIMART 02.1 — exactly two semantic lines only.
    Each authored line is non-wrapping so this subsection can never become 3 lines. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title,
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-title{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-021-title,
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-card-021-title{
   max-width:none!important;
   white-space:normal!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-021-title > span:not(.wide-roman-index),
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-title > span:not(.wide-roman-index){
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-021-title > span:not(.wide-roman-index),
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-card-021-title > span:not(.wide-roman-index){
   display:block!important;
   white-space:nowrap!important;
   word-break:keep-all!important;
@@ -356,7 +356,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-card-021-tit
 
 /* Runtime Roman indices are part of the headline, not a separate title row.
    Keep I./II./… inline so the first token cannot become an orphaned line. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .data-card-head h3 > .wide-roman-index{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .data-card-head h3 > .wide-roman-index{
   display:inline!important;
   white-space:nowrap!important;
   word-break:keep-all!important;
@@ -365,8 +365,8 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .data-card-head h3 > 
 
 
 /* 02.1 signal-card headlines are always exactly two authored lines. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .signal-item h4 > span,
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-card h4 > span{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .signal-item h4 > span,
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-card h4 > span{
   display:block!important;
   white-space:nowrap!important;
   word-break:keep-all!important;
@@ -374,17 +374,17 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-card h4 > s
 }
 
 /* HIMART 02.2 — bridge the headline signals into one behavioral interpretation. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-pattern-022{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-pattern-022{
   width:100%!important;
   min-width:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-grid{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-grid{
   display:grid!important;
   grid-template-columns:repeat(3,minmax(0,1fr))!important;
   gap:20px!important;
   width:100%!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card{
   display:flex!important;
   flex-direction:column!important;
   min-width:0!important;
@@ -392,13 +392,13 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-car
   padding:24px 0 0!important;
   border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card>span{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card>span{
   display:block!important;
   color:var(--hm-blue)!important;
   font:400 12px/1.2 var(--hm-font-en)!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card h4{
   margin:24px 0 0!important;
   color:var(--hm-blue)!important;
   font:300 28px/1.28 var(--hm-font-ko)!important;
@@ -406,7 +406,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-car
   letter-spacing:var(--hm-track-group)!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card p{
   margin:12px 0 0!important;
   max-width:31ch!important;
   color:var(--hm-description-color)!important;
@@ -415,15 +415,15 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-car
   word-break:keep-all!important;
 }
 /* 02.2 moved synthesis bridge */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-pattern-022 .behavior-pattern-bridge{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-pattern-022 .behavior-pattern-bridge{
   margin-top:64px!important;
 }
 
 @media(max-width:900px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-grid{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-grid{
     grid-template-columns:1fr!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card{
     min-height:0!important;
     padding-bottom:28px!important;
   }
@@ -433,7 +433,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-pattern-022 
 /* HIMART 03.2 — numbered role cards.
    No icon reserve space: number → English role → Korean role statement.
    Every card keeps a 4:3 frame. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #journey :is(
   .journey-role-grid > article,
   .hm-role-grid--numbered-cards > .role-card
 ){
@@ -449,7 +449,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
   box-sizing:border-box!important;
   overflow:hidden!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #journey :is(
   .journey-role-grid > article,
   .hm-role-grid--numbered-cards > .role-card
 ) > .hm-role-index{
@@ -462,7 +462,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
   line-height:1.2!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #journey :is(
   .journey-role-grid > article > small,
   .hm-role-grid--numbered-cards > .role-card > .hm-role-name
 ){
@@ -476,7 +476,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
   line-height:1!important;
   letter-spacing:var(--hm-track-group)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #journey :is(
   .journey-role-grid > article > h4,
   .hm-role-grid--numbered-cards > .role-card > h4
 ){
@@ -496,8 +496,8 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey :is(
   word-break:keep-all!important;
   overflow-wrap:normal!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .journey-role-grid > article > :is(.hm-ds-icon,p,strong),
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .hm-role-grid--numbered-cards > .role-card > :is(.hm-ds-icon,p,strong){
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #journey .journey-role-grid > article > :is(.hm-ds-icon,p,strong),
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #journey .hm-role-grid--numbered-cards > .role-card > :is(.hm-ds-icon,p,strong){
   display:none!important;
   margin:0!important;
   padding:0!important;
@@ -506,10 +506,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #journey .hm-rol
 
 /* HIMART 02.2 traffic chart — shared graph policy is blue-first.
    Keep the session bars and their legend swatch on the same canonical Blue token. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .traffic-v5-live .session{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .traffic-v5-live .session{
   stroke:var(--hm-chart-01,var(--hm-blue,#00A6ED))!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .chart-wrap > .chart-legend span:first-child i{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .chart-wrap > .chart-legend span:first-child i{
   background:var(--hm-chart-01,var(--hm-blue,#00A6ED))!important;
 }
 
@@ -518,7 +518,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .chart-wrap > .chart-
    The HTML is intentionally the same structure as himart-reuse.html 04.1.
    These final-authority rules prevent the legacy Himart prototype bundle from
    converting that shared media grid back into the retired split-card layout. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection{
   position:relative!important;
   display:grid!important;
   grid-template-columns:minmax(0,1fr)!important;
@@ -530,11 +530,11 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prot
   border-top:1px solid var(--hm-line-faint)!important;
   padding-top:var(--hm-space-component,40px)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection::before{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection::before{
   content:none!important;
   display:none!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection>h3{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection>h3{
   grid-column:1!important;
   grid-row:1!important;
   width:100%!important;
@@ -545,14 +545,14 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prot
   overflow-wrap:normal!important;
   text-wrap:nowrap!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection>p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection>p{
   grid-column:1!important;
   grid-row:2!important;
   margin:var(--hm-title-description-gap,20px) 0 0!important;
   max-width:var(--hm-description-max-chars,40ch)!important;
 }
 
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content{
   display:grid!important;
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
   gap:var(--hm-gallery-gap,20px)!important;
@@ -560,7 +560,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
   min-width:0!important;
   margin-top:var(--hm-subtitle-to-media-gap,40px)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid>.phone-card.hm-ds-media-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid>.phone-card.hm-ds-media-card{
   display:block!important;
   grid-template-columns:none!important;
   gap:0!important;
@@ -569,7 +569,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
   padding:16px 0 0!important;
   border-top:1px solid var(--hm-line-strong)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-frame{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-frame{
   position:relative!important;
   display:block!important;
   width:100%!important;
@@ -580,12 +580,12 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
   border-radius:0!important;
   background:var(--hm-bg-card)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-frame::before,
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-frame::after{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-frame::before,
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-frame::after{
   content:none!important;
   display:none!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta{
   display:grid!important;
   grid-template-columns:auto 1fr!important;
   gap:8px 12px!important;
@@ -597,20 +597,20 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
   border:0!important;
   align-items:start!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>span{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>span{
   grid-column:1!important;
   margin:0!important;
   color:var(--hm-blue)!important;
   font:400 12px/1.2 var(--hm-font-en)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>b{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>b{
   grid-column:2!important;
   display:block!important;
   margin:0!important;
   color:var(--hm-text-primary)!important;
   font:400 12px/1.3 var(--hm-font-en)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>p{
   grid-column:2!important;
   display:block!important;
   max-width:none!important;
@@ -618,31 +618,31 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
   color:var(--hm-text-body)!important;
   font:300 14px/1.45 var(--hm-font-ko)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>p::before{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>p::before{
   content:none!important;
   display:none!important;
 }
 
 @media(max-width:1024px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content{
     grid-template-columns:repeat(3,minmax(0,1fr))!important;
   }
 }
 @media(max-width:780px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection>h3{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .prototype-intro.hm-subsection.hm-ds-subsection>h3{
     white-space:normal!important;
     text-wrap:pretty!important;
   }
 }
 @media(max-width:700px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid.hm-ds-subtitle-to-content{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
     gap:var(--hm-gallery-gap,20px)!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta{
     gap:8px!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>p{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #live-main #direction .phone-gallery.hm-ds-media-grid .phone-meta>p{
     font-size:13px!important;
   }
 }
@@ -650,36 +650,36 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #live-main #direction .phon
 
 /* HIMART chapter 01 compact evidence cards — 2026-09-21 */
 /* 01.1: reduce internal card height so the shared 100px subsection gap reads as 100px visually. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .narrative-title + .narrative-copy{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .narrative-title + .narrative-copy{
   margin-top:20px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-grid{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-grid{
   align-items:start!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-item{
   min-height:0!important;
   height:auto!important;
   grid-template-rows:auto auto auto!important;
   align-self:start!important;
   padding-top:20px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-problem .problem-item p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-problem .problem-item p{
   margin:20px 0 0!important;
   padding-top:0!important;
 }
 
 /* 01.2: subsection index follows the shared 18px label-to-title rhythm; evidence is a compact 2×2 metric-card grid. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality>.narrative-subno{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-reality>.narrative-subno{
   margin-bottom:18px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-grid{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-grid{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:48px 24px!important;
   width:100%!important;
   margin-top:var(--hm-subtitle-to-content,80px)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card{
   display:flex!important;
   min-width:0!important;
   min-height:0!important;
@@ -691,14 +691,14 @@ html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-b
   border-top:1px solid rgba(255,255,255,.20)!important;
   background:transparent!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__index{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__index{
   display:block!important;
   margin:0!important;
   color:var(--hm-blue)!important;
   font:400 12px/1.2 var(--hm-font-en)!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card h4{
   width:100%!important;
   min-width:0!important;
   max-width:none!important;
@@ -713,7 +713,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-b
   text-align:left!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__value{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__value{
   display:flex!important;
   width:100%!important;
   flex-direction:column!important;
@@ -722,7 +722,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-b
   padding:0!important;
   text-align:right!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__value p{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__value p{
   margin:0!important;
   color:rgba(255,255,255,.60)!important;
   font-family:var(--hm-font-ko)!important;
@@ -732,7 +732,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-b
   letter-spacing:var(--hm-track-body)!important;
   white-space:nowrap!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__value strong{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__value strong{
   display:block!important;
   margin:10px 0 0!important;
   color:var(--hm-blue)!important;
@@ -745,41 +745,41 @@ html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-b
   font-variant-numeric:tabular-nums!important;
   white-space:nowrap!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-source{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-source{
   margin-top:40px!important;
 }
 
 /* Defensive removal: 01.3 has no legend in authored runtime markup, and legacy injections stay hidden. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .himart-appliance-flow__legend{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .himart-appliance-flow__legend{
   display:none!important;
 }
 
 /* 01.4: both comparison columns begin on the exact same left edge. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-list,
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card,
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card b,
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-list,
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card,
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card b,
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card p{
   text-align:left!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card{
   align-items:flex-start!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card b,
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card b,
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card p{
   width:100%!important;
   margin-left:0!important;
   margin-right:0!important;
 }
 
 @media(max-width:780px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-grid{
+  html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-grid{
     grid-template-columns:1fr!important;
     gap:40px!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__value p{
+  html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__value p{
     white-space:normal!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__value strong{
+  html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__value strong{
     font-size:64px!important;
   }
 }
@@ -787,29 +787,29 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
 
 /* HIMART chapter 01 final layout authority — 2026-09-21 */
 /* 01.2 label → title follows the same 18px rhythm as other numbered middle titles. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-reality>.narrative-subno{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-reality>.narrative-subno{
   margin:0 0 18px!important;
 }
 
 /* Preserve the authored two-line breaks in the four metric-card headlines.
    The shared card contract normally suppresses <br>; these are page-owned evidence cards. */
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card h4 br{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card h4 br{
   display:initial!important;
 }
 
 /* Metric headline → supporting label/value spacing. */
-html body.hm-wide-editorial-test.hm-wide-himart-test :is(#brand,#data) .himart-brand-metric-card__value{
+html body.hm-wide-editorial.hm-wide-himart-adapter :is(#brand,#data) .himart-brand-metric-card__value{
   margin-top:80px!important;
 }
 
 /* 01.4 is a comparison block, not a generic DS card. Keep both columns flush to their grid edges. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-list{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-list{
   margin-left:0!important;
   margin-right:0!important;
   padding-left:0!important;
   padding-right:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card{
   margin-left:0!important;
   margin-right:0!important;
   padding-left:0!important;
@@ -818,8 +818,8 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
   justify-items:start!important;
   text-align:left!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card>b,
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card>p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card>b,
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card>p{
   display:block!important;
   width:100%!important;
   margin-left:0!important;
@@ -831,10 +831,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
 }
 
 /* HIMART 01.4 final visual authority — 1px blue/red rails and natural Korean word wrapping. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card{
   border-top:0!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card::after{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card::after{
   content:""!important;
   position:absolute!important;
   z-index:2!important;
@@ -847,23 +847,23 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoin
   opacity:1!important;
   pointer-events:none!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card.negative::after{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card.negative::after{
   background:var(--hm-red)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card p{
   word-break:keep-all!important;
   overflow-wrap:normal!important;
 }
 
 /* HIMART 02.3 — team turning-point statement parity.
    Exact size/color rhythm copied from himart-team 01.2. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023{
   width:100%!important;
   min-width:0!important;
   padding:54px 0 0!important;
   border-top:1px solid rgba(255,255,255,.15)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__copy{
   max-width:980px!important;
   margin:0!important;
   color:var(--hm-blue)!important;
@@ -878,17 +878,17 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
 }
 
 /* HIMART 02.1 — exact visual mirror of 01.2 metric-card grammar. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-metrics-021>.narrative-subno{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-metrics-021>.narrative-subno{
   margin:0 0 18px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-grid{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-grid{
   display:grid!important;
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
   gap:48px 24px!important;
   width:100%!important;
   margin-top:var(--hm-subtitle-to-content,80px)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card{
   display:flex!important;
   min-width:0!important;
   min-height:0!important;
@@ -900,14 +900,14 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-c
   border-top:1px solid rgba(255,255,255,.20)!important;
   background:transparent!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card .himart-brand-metric-card__index{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card .himart-brand-metric-card__index{
   display:block!important;
   margin:0!important;
   color:var(--hm-blue)!important;
   font:400 12px/1.2 var(--hm-font-en)!important;
   letter-spacing:var(--hm-track-note)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card h4{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card h4{
   width:100%!important;
   min-width:0!important;
   max-width:none!important;
@@ -922,10 +922,10 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-c
   text-align:left!important;
   word-break:keep-all!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card h4 br{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card h4 br{
   display:initial!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card .himart-brand-metric-card__value{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card .himart-brand-metric-card__value{
   display:flex!important;
   width:100%!important;
   flex-direction:column!important;
@@ -934,7 +934,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-c
   padding:0!important;
   text-align:right!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card .himart-brand-metric-card__value p{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card .himart-brand-metric-card__value p{
   margin:0!important;
   color:rgba(255,255,255,.60)!important;
   font-family:var(--hm-font-ko)!important;
@@ -944,7 +944,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-c
   letter-spacing:var(--hm-track-body)!important;
   white-space:nowrap!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card .himart-brand-metric-card__value strong{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card .himart-brand-metric-card__value strong{
   display:block!important;
   margin:10px 0 0!important;
   color:var(--hm-blue)!important;
@@ -957,20 +957,20 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-c
   font-variant-numeric:tabular-nums!important;
   white-space:nowrap!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-source{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-source{
   margin-top:40px!important;
 }
 
 /* HIMART 02.3 — copy himart-team 01.2 turning-point type exactly. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023{
   width:100%!important;
   margin-top:var(--hm-subsection-gap,100px)!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023>.narrative-subno{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023>.narrative-subno{
   display:block!important;
   margin:0 0 18px!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__copy{
   max-width:980px!important;
   margin:0!important;
   color:var(--hm-blue)!important;
@@ -985,33 +985,33 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
 }
 
 @media(max-width:900px){
-  html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-grid{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-grid{
     grid-template-columns:1fr!important;
     gap:40px!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card .himart-brand-metric-card__value p{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card .himart-brand-metric-card__value p{
     white-space:normal!important;
   }
-  html body.hm-wide-editorial-test.hm-wide-himart-test #data .himart-data-metric-card .himart-brand-metric-card__value strong{
+  html body.hm-wide-editorial.hm-wide-himart-adapter #data .himart-data-metric-card .himart-brand-metric-card__value strong{
     font-size:64px!important;
   }
 }
 
 
 /* HIMART 01.4 — requested right breathing room per comparison card. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #brand .narrative-touchpoint-synthesis .synthesis-card{
+html body.hm-wide-editorial.hm-wide-himart-adapter #brand .narrative-touchpoint-synthesis .synthesis-card{
   margin-right:32px!important;
   width:calc(100% - 32px)!important;
 }
 
 
 /* HIMART 02.3 — final emphasis: quoted phrases stay emphasized; surrounding copy is Thin. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__copy{
   max-width:none!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
   font-weight:500!important;
   font-variation-settings:"wght" 500!important;
 }
@@ -1020,14 +1020,14 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
 /* HIMART 02.2 / 02.3 final readability lock — 2026-09-21 */
 /* 02.2 card 03 was becoming three lines because the generic h4 rule only used
    word-break:keep-all and did not preserve the authored semantic line as one unit. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card h4.behavior-pattern-card__title--two-lines{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card h4.behavior-pattern-card__title--two-lines{
   width:100%!important;
   max-width:none!important;
   white-space:normal!important;
   word-break:keep-all!important;
   overflow-wrap:normal!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-card h4.behavior-pattern-card__title--two-lines>span{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .behavior-pattern-card h4.behavior-pattern-card__title--two-lines>span{
   display:block!important;
   width:max-content!important;
   max-width:100%!important;
@@ -1039,13 +1039,13 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .behavior-pattern-car
 /* 02.3 final contrast:
    the surrounding thin/light copy is 80%; emphasized phrases stay full white.
    Do not put opacity on the parent because it would dim the emphasized spans too. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__copy{
   color:rgba(255,255,255,.80)!important;
   opacity:1!important;
   font-weight:100!important;
   font-variation-settings:"wght" 100!important;
 }
-html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__copy .hm-data-bridge-quote{
   color:#fff!important;
   opacity:1!important;
   font-weight:300!important;
@@ -1053,7 +1053,7 @@ html body.hm-wide-editorial-test.hm-wide-himart-test #data .hm-data-bridge-023__
 }
 
 /* Shared sticky chapter-title exit state: fade to 0 while pushed upward. */
-html body.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head.hm-reveal.is-major-title-exiting{
+html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head.hm-reveal.is-major-title-exiting{
   opacity:0!important;
   transform:translate3d(0,-56px,0)!important;
   transition:opacity .18s ease-out,transform .24s cubic-bezier(.22,1,.36,1)!important;

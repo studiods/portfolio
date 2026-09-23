@@ -61,7 +61,7 @@
 
   const isWideMajor = (element, state) =>
     state?.kind === 'major' &&
-    document.body?.classList.contains('hm-wide-editorial-test') &&
+    document.body?.classList.contains('hm-wide-editorial') &&
     !!element.closest('.hm-section-head');
 
   const createScrambleCharacter = (char, chars) => {

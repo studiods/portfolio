@@ -322,7 +322,7 @@
     geometry and keeps both transform-free, so the divider/top line cannot drift.
   */
   const mountReuseWidePairSync=()=>{
-    if(!document.body.classList.contains('reuse-current') || !document.body.classList.contains('hm-wide-editorial-test'))return;
+    if(!document.body.classList.contains('reuse-current') || !document.body.classList.contains('hm-wide-editorial'))return;
     if(window.__hmReuseWidePairSyncMounted)return;
     window.__hmReuseWidePairSyncMounted=true;
 

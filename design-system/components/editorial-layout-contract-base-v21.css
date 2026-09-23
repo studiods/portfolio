@@ -22,7 +22,7 @@
   /* ------------------------------------------------------------
      Shared rail baseline
      ------------------------------------------------------------ */
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   > .hm-wrap > .hm-section-head{
     margin:0!important;
@@ -30,7 +30,7 @@
     align-self:start!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   > .hm-wrap > .hm-wide-right-rail{
     margin:0!important;
@@ -39,7 +39,7 @@
   }
 
   /* The first authored unit never adds an extra chapter-start margin. */
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   > .hm-wrap > .hm-wide-right-rail > :first-child{
     margin-top:0!important;
@@ -49,7 +49,7 @@
      Canonical medium-title units — adapter-grouped pages
      HIMART runtime + STEPUP
      ------------------------------------------------------------ */
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   > .hm-wrap > .hm-wide-right-rail > :is(
     .hm-subsection,
@@ -66,21 +66,21 @@
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   > .hm-wrap > .hm-wide-right-rail > .data-list > .data-card{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test
+  html body.himart-page-body.hm-wide-editorial
   #live-main > :is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   > .hm-wrap > .hm-wide-right-rail > .data-list:first-child > .data-card:first-child{
     margin-top:0!important;
   }
 
   /* Runtime HIMART medium blocks that are not always authored as hm-subsection. */
-  html body.himart-page-body.hm-wide-editorial-test.hm-wide-himart-test
+  html body.himart-page-body.hm-wide-editorial.hm-wide-himart-adapter
   #live-main > :is(#brand,#data,#journey,#direction).hm-section
   .hm-wide-right-rail > :is(
     .narrative-problem,
@@ -101,36 +101,36 @@
      REUSE — direct DOM path (no right-rail adapter)
      Every actual medium title receives the same line + 40px rule.
      ------------------------------------------------------------ */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > :is(#brand,#journey,#direction).hm-section
   > .hm-wrap > .hm-subsection.hm-ds-subsection{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section > .hm-wrap > .data-list > .data-card{
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
   /* Exact chapter-start relationships. The line itself is the right-rail baseline. */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection{
     margin-top:0!important;
     border-top:1px solid var(--hm-line-weak)!important;
     padding-top:var(--hm-editorial-line-to-title)!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list{
     margin-top:0!important;
     padding-top:0!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child{
     margin-top:0!important;
     border-top:1px solid var(--hm-line-weak)!important;
@@ -139,7 +139,7 @@
 
   /* Direction starts with a flow visual rather than a medium title: align it but do
      not invent a divider. The following 04.x hm-subsections still receive the rule. */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area{
     margin-top:0!important;
     padding-top:0!important;
@@ -159,23 +159,23 @@
      left title and the first right-side block become one visual event. Natural scrolling
      provides the vertical motion; only opacity changes. Sticky behavior remains intact.
   */
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > :is(#brand,#data,#journey,#direction).hm-section
   > .hm-wrap > .hm-section-head.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #brand.hm-section > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #journey.hm-section > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
     transform:none!important;
     animation:none!important;
     will-change:opacity!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > :is(#brand,#data,#journey,#direction).hm-section:not(.is-wide-chapter-pair-visible)
   > .hm-wrap > .hm-section-head.hm-reveal{
     opacity:.3!important;
@@ -184,13 +184,13 @@
     transition:none!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #brand.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #journey.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #direction.hm-section:not(.is-wide-chapter-pair-visible) > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
     opacity:.88!important;
     transform:none!important;
@@ -198,7 +198,7 @@
     transition:none!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > :is(#brand,#data,#journey,#direction).hm-section.is-wide-chapter-pair-visible
   > .hm-wrap > .hm-section-head.hm-reveal{
     opacity:var(--hm-wide-title-exit-opacity,1)!important;
@@ -207,13 +207,13 @@
     transition:opacity .4s ease!important;
   }
 
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #brand.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #data.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .data-list > .data-card:first-child.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #journey.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .hm-subsection.hm-reveal,
-  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  html body.himart-page-body.hm-wide-editorial.reuse-current
   #live-main > #direction.hm-section.is-wide-chapter-pair-visible > .hm-wrap > .hm-section-head + .flow-area.hm-reveal{
     opacity:1!important;
     transform:none!important;
@@ -222,7 +222,7 @@
   }
 
   /* STEPUP uses a right-rail adapter and every numbered medium block is hm-subsection. */
-  html body.himart-page-body.hm-wide-editorial-test.nbt-stepup-page
+  html body.himart-page-body.hm-wide-editorial.nbt-stepup-page
   #live-main > :is(#reframe,#strategy,#habit,#iteration,#outcome).hm-section
   .hm-wide-right-rail > .hm-subsection{
     border-top:1px solid var(--hm-line-weak)!important;

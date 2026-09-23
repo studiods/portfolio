@@ -127,9 +127,9 @@ html body.aimmo-graphic-page :is(.hm-subno,.hm-card-no){color:var(--aimmo-violet
 .aimmo-final-statement small{display:block;margin-top:32px;color:var(--hm-text-tertiary);font:300 10px/1.4 var(--hm-font-en);letter-spacing:.08em}
 
 @media(min-width:1600px){
-  html body.aimmo-graphic-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{grid-column:2!important;grid-row:1!important}
-  html body.aimmo-graphic-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{grid-column:4!important;grid-row:1!important;align-self:start!important;min-width:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important}
-  html body.aimmo-graphic-page.hm-wide-editorial-test.hm-wide-himart-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{margin-top:0!important}
+  html body.aimmo-graphic-page.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head{grid-column:2!important;grid-row:1!important}
+  html body.aimmo-graphic-page.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-wide-right-rail{grid-column:4!important;grid-row:1!important;align-self:start!important;min-width:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important}
+  html body.aimmo-graphic-page.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-wide-right-rail > :first-child{margin-top:0!important}
 }
 @media(max-width:1180px){
   .aimmo-business-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}

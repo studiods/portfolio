@@ -225,7 +225,7 @@ html body.reuse-current #direction .reuse-direction-standard > .hm-subhead{
 @media(min-width:1600px){
   /* The first 04.1 divider starts on the exact same authored top line as the left
      chapter rail; no legacy prototype-intro margin is allowed to push it down. */
-  html body.reuse-current.hm-wide-editorial-test
+  html body.reuse-current.hm-wide-editorial
   #live-main > #direction.hm-section > .hm-wrap > .hm-section-head + .reuse-direction-standard{
     margin-top:0!important;
     align-self:start!important;

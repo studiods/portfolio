@@ -5906,9 +5906,9 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
 }
 
 
-/* source: design-system/components/wide-editorial-test.css */
+/* source: design-system/components/wide-editorial.css */
 /*
-  HIMART Wide Editorial Layout — TEST ONLY v12
+  HIMART Wide Editorial Layout v12
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -6222,9 +6222,9 @@ html body.himart-page-body.himart-static-preview .hm-footer a{
 }
 
 
-/* source: design-system/components/wide-editorial-himart-test.css */
+/* source: design-system/components/wide-editorial-himart-adapter.css */
 /*
-  HIMART Wide Editorial — HIMART adapter TEST ONLY v5
+  HIMART Wide Editorial — Himart adapter v5
   Applies the current wide-editorial structure to runtime/generated Himart-family DOM.
 
   v5 contract change:
@@ -8356,7 +8356,7 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
     CHAPTER-START BASELINE CONTRACT
     --------------------------------
     Root cause of the visible misalignment was asymmetric reveal geometry:
-    wide-editorial-test.css moved the left major title down by 56px, while this polish
+    wide-editorial.css moved the left major title down by 56px, while this polish
     layer had already cancelled that translation on the first right-rail block.
     During scroll-in the two authored baselines were therefore 56px apart even though
     their grid row / margin origin was identical.

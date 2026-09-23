@@ -4,7 +4,7 @@
 
 /* Keep the chapter title synchronized with the first right-side block. */
 @media (min-width:1600px){
-  html body.himart-page-body:is(.reuse-current,.himart-commerce-page).hm-wide-editorial-test #direction .hm-section-head.hm-reveal:not(.is-visible){
+  html body.himart-page-body:is(.reuse-current,.himart-commerce-page).hm-wide-editorial #direction .hm-section-head.hm-reveal:not(.is-visible){
     opacity:1!important;
     transform:none!important;
   }

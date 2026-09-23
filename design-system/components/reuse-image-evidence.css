@@ -3,7 +3,7 @@
    Reuse 03.1 horizontal bars are owned exclusively by reuse-chart.css.
 */
 
-html body.himart-page-body.hm-wide-editorial-test.reuse-current
+html body.himart-page-body.hm-wide-editorial.reuse-current
 #live-main > #journey.hm-section > .hm-wrap > .hm-subsection.hm-ds-subsection{
   border-top:1px solid var(--hm-line-weak)!important;
   padding-top:var(--hm-space-component,40px)!important;
