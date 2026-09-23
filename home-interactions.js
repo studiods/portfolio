@@ -408,7 +408,7 @@
   };
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const PATCH_OWNS_LOWER_TIMELINES = document.body.classList.contains('home-test');
+  const PATCH_OWNS_LOWER_TIMELINES = document.body.classList.contains('home-page');
 
   const IDLE_DELAY_MS = 3000;
   const IDLE_UNIT_MS = 1000;

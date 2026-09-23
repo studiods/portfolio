@@ -5906,7 +5906,7 @@ html body.himart-page-body #live-main > .hm-ds-hero.hm-ds-hero--scroll-cover ~ .
 }
 
 
-/* source: design-system/components/wide-editorial.css */
+/* source: design-system/components/editorial-layout.css */
 /*
   HIMART Wide Editorial Layout v12
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
@@ -6222,7 +6222,7 @@ html body.himart-page-body.himart-static-preview .hm-footer a{
 }
 
 
-/* source: design-system/components/wide-editorial-himart-adapter.css */
+/* source: design-system/components/himart-editorial-layout.css */
 /*
   HIMART Wide Editorial — Himart adapter v5
   Applies the current wide-editorial structure to runtime/generated Himart-family DOM.
@@ -8326,7 +8326,7 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
 }
 
 
-/* source: design-system/components/wide-editorial-himart-polish-v5.css */
+/* source: design-system/components/himart-editorial-tuning.css */
 /* HIMART Wide Editorial polish — TEST ONLY v5.4
    Keeps the REUSE wide contract intact while correcting Himart-specific rhythm.
    Canonical medium-title divider spacing consumes --hm-space-component from tokens.css.
@@ -10790,10 +10790,10 @@ html body.himart-commerce-page #brand .himart-appliance-flow__risk.is-shift p{
   }
 
   /* Home has deliberately oversized kinetic typography; only supporting copy is normalized. */
-  body.home-test :is(.impact-copy,.subtractive-korean,.hero-identity){
+  body.home-page :is(.impact-copy,.subtractive-korean,.hero-identity){
     font-size:var(--hm-type-body-mobile,15px)!important;
   }
-  body.home-test :is(.mini-label,.principle-en){
+  body.home-page :is(.mini-label,.principle-en){
     font-size:var(--hm-type-note-mobile,11px)!important;
   }
 }

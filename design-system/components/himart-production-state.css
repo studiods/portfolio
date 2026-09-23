@@ -1,0 +1,74 @@
+/* Centralized from the Himart production document. */
+body.himart-production-page #journey .journey-redesign-subsection .forced-redesign-title::before{content:"2. 끊어진 지점을 기준으로, 각 단계가\A다음 행동을 이어주도록 다시 연결했습니다."!important;}
+
+/* Centralized from the Himart production document. */
+.himart-production-page .title-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
+      .himart-production-page .title-rise-target.is-title-rise-in{opacity:1;transform:translateY(0)}
+      .himart-production-page .flow-node{border-top-color:rgba(255,255,255,.20)!important}
+      .himart-production-page .flow-group.flow-label-motion::before{transform:scaleX(0)!important;transform-origin:left center!important;transition:transform .9s cubic-bezier(.2,.8,.2,1) .12s!important;will-change:transform}
+      .himart-production-page .flow-group.flow-label-motion.is-flow-label-in::before{transform:scaleX(1)!important}
+      @media (prefers-reduced-motion:reduce){
+        .himart-production-page .title-rise-target{opacity:1!important;transform:none!important;transition:none!important}
+        .himart-production-page .flow-group.flow-label-motion::before{transform:scaleX(1)!important;transition:none!important}
+      }
+
+/* Centralized from the Himart production document. */
+/* The static candidate is a post-animation DOM snapshot: never leave reveal targets hidden. */
+.hm-static-presentation .hm-reveal,
+.hm-static-presentation .title-rise-target {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+}
+.hm-static-presentation .flow-group.flow-label-motion::before {
+  transform: scaleX(1) !important;
+}
+
+/* The static candidate mirrors the production 04 direction rhythm after reveal. */
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) {
+  padding-top: 20px !important;
+}
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) .ax-friction-grid {
+  margin-top: 40px !important;
+}
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) .ax-friction-card {
+  min-height: 0 !important;
+  padding-top: 12px !important;
+}
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) > .prototype-case-list {
+  margin-top: 52px !important;
+}
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) .prototype-case-copy {
+  margin-top: 36px !important;
+}
+
+/* 04.2 production uses the shared image-ratio mockup; remove the candidate-only shell ratio. */
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
+  aspect-ratio: auto !important;
+  padding: 7px !important;
+  overflow: visible !important;
+}
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen.is-scrollable img {
+  height: auto !important;
+  aspect-ratio: auto !important;
+  object-fit: initial !important;
+  object-position: initial !important;
+}
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .prototype-case-viewport {
+  padding-bottom: 0 !important;
+}
+@media (max-width: 780px) {
+  html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
+    aspect-ratio: auto !important;
+    padding: 4px !important;
+  }
+}
+
+/* Centralized from the Himart production document. */
+text{font-family:Arial,sans-serif;fill:rgba(255,255,255,.46);font-size:12px}.grid{stroke:rgba(255,255,255,.12);stroke-width:1}.session{stroke:#F3EB01;stroke-width:2}.purchase{fill:none;stroke:#00A6ED;stroke-width:.75;stroke-linecap:round;stroke-linejoin:round}.cvr{fill:none;stroke:#00EDBD;stroke-width:.75;stroke-linecap:round;stroke-linejoin:round}.p-dot{fill:#00B8DE}.c-dot{fill:#00EDBD}.right-blue{fill:#00A6ED}.right-green{fill:#00EDBD}
+
+/* Centralized from the Himart production document. */
+body.hm-ds-subsection-copy-hidden #live-main .narrative-block > .narrative-copy,
+body.hm-ds-subsection-copy-hidden #live-main .journey-role-block > .journey-block-copy{display:none!important;margin:0!important;padding:0!important}
+body.hm-ds-subsection-copy-hidden #live-main .narrative-block,
+body.hm-ds-subsection-copy-hidden #live-main .journey-role-block{margin-bottom:0!important;padding-bottom:0!important}

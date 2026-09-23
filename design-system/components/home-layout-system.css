@@ -1,31 +1,31 @@
-/* Shared home overrides used by the production and test home. */
-.home-test:not(.home-test-ready) .hero-quote{visibility:hidden}
+/* Shared home layout and motion overrides. */
+.home-page:not(.home-motion-ready) .hero-quote{visibility:hidden}
 
-.home-test .principle-ko .fill-char.test-space,
-.home-test .showcase-project h3 .fill-char.test-space{
+.home-page .principle-ko .fill-char.preserved-space,
+.home-page .showcase-project h3 .fill-char.preserved-space{
   white-space:pre!important;
 }
 
 /* One animation vocabulary: hidden -> three A-Z / 0-9 states -> authored glyph. */
-.home-test .test-managed-char.is-scrambling::after{display:none!important}
-.home-test .test-managed-char.test-progressive-pending{color:transparent!important}
-.home-test .test-managed-char.test-progressive-scramble{
+.home-page .managed-character.is-scrambling::after{display:none!important}
+.home-page .managed-character.motion-pending{color:transparent!important}
+.home-page .managed-character.motion-scrambling{
   position:relative;
   color:transparent!important;
 }
-.home-test .test-managed-char.test-progressive-scramble::before{
-  content:attr(data-test-scramble);
+.home-page .managed-character.motion-scrambling::before{
+  content:attr(data-scramble-glyph);
   position:absolute;
   inset:0 auto auto 0;
-  color:rgba(var(--test-rgb,17,17,17),var(--test-scramble-alpha,1));
+  color:rgba(var(--scramble-rgb,17,17,17),var(--scramble-alpha,1));
   font:inherit;
   line-height:inherit;
   letter-spacing:inherit;
   white-space:pre;
   pointer-events:none;
 }
-.home-test .test-managed-char.test-progressive-resolved{
-  color:rgba(var(--test-rgb,17,17,17),var(--test-final-alpha,1))!important;
+.home-page .managed-character.motion-resolved{
+  color:rgba(var(--scramble-rgb,17,17,17),var(--final-alpha,1))!important;
 }
 
 /*
@@ -34,7 +34,7 @@
   exact authored baseline. Freeze only its original advance width to prevent
   neighboring letters from shifting while different glyph widths cycle.
 */
-.home-test .hero-quote .fill-char.idle-inline-scramble{
+.home-page .hero-quote .fill-char.idle-inline-scramble{
   display:inline-block!important;
   width:var(--idle-char-width)!important;
   min-width:var(--idle-char-width)!important;
@@ -48,18 +48,18 @@
   padding:0!important;
   overflow:visible!important;
 }
-.home-test .hero-quote .fill-char.idle-inline-scramble::before,
-.home-test .hero-quote .fill-char.idle-inline-scramble::after{
+.home-page .hero-quote .fill-char.idle-inline-scramble::before,
+.home-page .hero-quote .fill-char.idle-inline-scramble::after{
   content:none!important;
   display:none!important;
 }
 
 /* HERO: keep current font size; reduce current line-height by 5%. */
-.home-test .definition-copy{
+.home-page .definition-copy{
   font-size:calc(clamp(43px,6.15vw,106px) - 3px - 3pt)!important;
   line-height:1.0374!important;
 }
-.home-test .definition-source{
+.home-page .definition-source{
   font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;
   font-weight:300!important;
   font-size:16px!important;
@@ -67,39 +67,39 @@
 }
 
 /* SUBTRACTIVE / DESIGN: fixed two-line lockup, 10% more leading than .79. */
-.home-test .subtractive-title{
+.home-page .subtractive-title{
   line-height:.869!important;
 }
-.home-test .subtractive-title>span{
+.home-page .subtractive-title>span{
   display:block!important;
 }
 
 /* DESIGN PRINCIPLES */
-.home-test .principles-section{
+.home-page .principles-section{
   --principles-lock-top:12vh;
   --principles-edge-space:clamp(108px,12vh,168px);
   --principles-bottom-space:clamp(54px,6vh,84px);
   padding-top:var(--principles-edge-space)!important;
   padding-bottom:var(--principles-bottom-space)!important;
 }
-.home-test .principles-persistent-label{top:var(--principles-lock-top)!important}
-.home-test .principles-head{
+.home-page .principles-persistent-label{top:var(--principles-lock-top)!important}
+.home-page .principles-head{
   top:var(--principles-lock-top)!important;
   padding-top:0!important;
 }
 
 /* LESS rows never travel vertically: only glyph states change in-place. */
-.home-test .principles-intro,
-.home-test .principles-intro-row,
-.home-test .principles-intro-en,
-.home-test .principles-intro-ko{
+.home-page .principles-intro,
+.home-page .principles-intro-row,
+.home-page .principles-intro-en,
+.home-page .principles-intro-ko{
   transform:none!important;
   translate:none!important;
   transition:none!important;
   animation:none!important;
 }
 
-.home-test .principles-intro-ko{
+.home-page .principles-intro-ko{
   font-size:.9em!important;
   line-height:.99!important;
 }
@@ -109,14 +109,14 @@
   distance on English reveal, English hold, Korean morph and Korean hold before
   the page is allowed to continue into the cards.
 */
-.home-test .principles-intro-stage{height:185vh!important}
+.home-page .principles-intro-stage{height:185vh!important}
 /* Final Korean intro -> first principle copy: 200px -> 100px. */
-.home-test .principles-after-intro{height:100px!important}
-.home-test .principles-cards-stage{
+.home-page .principles-after-intro{height:100px!important}
+.home-page .principles-cards-stage{
   margin-top:0!important;
   height:250vh!important;
 }
-.home-test .principles-grid{
+.home-page .principles-grid{
   top:var(--principles-lock-top)!important;
   align-content:start!important;
   box-sizing:border-box!important;
@@ -127,11 +127,11 @@
 
 /* Numbers are removed from HTML; copy owns the full second column. */
 @media(min-width:851px){
-  .home-test .principle-card{
+  .home-page .principle-card{
     grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)!important;
     column-gap:var(--gap)!important;
   }
-  .home-test .principle-card-inner{
+  .home-page .principle-card-inner{
     grid-column:2!important;
     display:block!important;
     position:relative!important;
@@ -139,52 +139,52 @@
     margin:0!important;
     padding:0!important;
   }
-  .home-test .principle-copy{
+  .home-page .principle-copy{
     display:block!important;
     width:100%!important;
     margin:0!important;
     padding:0!important;
   }
 }
-.home-test .principle-no{display:none!important}
+.home-page .principle-no{display:none!important}
 
-.home-test .principle-ko{
+.home-page .principle-ko{
   font-size:calc(var(--principles-ko-size) * .486)!important;
   line-height:1.188!important;
 }
 
 /* Korean copy -> English caption: 18px -> 16.2px (additional 10% reduction). */
-.home-test .principle-copy-stage{margin-bottom:16.2px!important}
-.home-test .principle-en{margin-top:0!important}
+.home-page .principle-copy-stage{margin-bottom:16.2px!important}
+.home-page .principle-en{margin-top:0!important}
 
-.home-test .principle-card.test-timeline-card{
-  opacity:var(--test-card-opacity,0)!important;
+.home-page .principle-card.timeline-card{
+  opacity:var(--timeline-card-opacity,0)!important;
   transform:none!important;
 }
-.home-test .principle-en .fill-char{
-  color:rgba(255,255,255,var(--test-en-alpha,.05))!important;
+.home-page .principle-en .fill-char{
+  color:rgba(255,255,255,var(--en-alpha,.05))!important;
 }
 
 /* WORKS: each word is atomic; wrapping can happen only between words. */
-.home-test .showcase-project h3{
+.home-page .showcase-project h3{
   white-space:normal!important;
   word-break:normal!important;
   overflow-wrap:normal!important;
   line-break:auto!important;
 }
-.home-test .showcase-project h3 .work-word{
+.home-page .showcase-project h3 .work-word{
   display:inline-block!important;
   white-space:nowrap!important;
 }
 
 @media(max-width:850px){
-  .home-test .definition-copy{
+  .home-page .definition-copy{
     font-size:calc(clamp(30px,8.4vw,58px) - 3px - 3pt)!important;
     line-height:1.083!important;
   }
 
   /* Mobile source value is .82; add the same 10% leading increase. */
-  .home-test .subtractive-title{
+  .home-page .subtractive-title{
     line-height:.902!important;
   }
 
@@ -193,7 +193,7 @@
     lower than the label. The content top scales gently with device width so
     the first LESS line and subsequent card copy never collide with the label.
   */
-  .home-test .principles-section{
+  .home-page .principles-section{
     --principles-label-top:70px;
     --principles-content-top:clamp(118px,30vw,132px);
     --principles-edge-space:clamp(84px,20vw,120px);
@@ -201,22 +201,22 @@
     padding-top:var(--principles-edge-space)!important;
     padding-bottom:var(--principles-bottom-space)!important;
   }
-  .home-test .principles-persistent-label{
+  .home-page .principles-persistent-label{
     top:var(--principles-label-top)!important;
   }
-  .home-test .principles-head,
-  .home-test .principles-grid{
+  .home-page .principles-head,
+  .home-page .principles-grid{
     top:var(--principles-content-top)!important;
   }
-  .home-test .principles-head{padding-top:0!important}
-  .home-test .principles-intro-stage{height:180vh!important}
-  .home-test .principles-cards-stage{height:245vh!important}
-  .home-test .principles-grid{
+  .home-page .principles-head{padding-top:0!important}
+  .home-page .principles-intro-stage{height:180vh!important}
+  .home-page .principles-cards-stage{height:245vh!important}
+  .home-page .principles-grid{
     min-height:64vh!important;
     padding-top:0!important;
     gap:54px!important;
   }
-  .home-test .principle-card-inner{
+  .home-page .principle-card-inner{
     position:relative!important;
     grid-column:1 / -1!important;
     display:block!important;
@@ -224,7 +224,7 @@
     margin:0!important;
     padding:0!important;
   }
-  .home-test .principle-copy{
+  .home-page .principle-copy{
     display:block!important;
     width:100%!important;
     margin:0!important;
@@ -232,18 +232,18 @@
   }
 
   /* Responsive mobile card copy: exact 1.3x increase from the previous clamp. */
-  .home-test .principle-ko{
+  .home-page .principle-ko{
     font-size:clamp(22.1px,6.24vw,27.3px)!important;
     line-height:1.22!important;
   }
-  .home-test .principle-copy-stage{margin-bottom:16.2px!important}
+  .home-page .principle-copy-stage{margin-bottom:16.2px!important}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .home-test .test-managed-char.test-progressive-pending,
-  .home-test .test-managed-char.test-progressive-scramble,
-  .home-test .test-managed-char.test-progressive-resolved{color:inherit!important}
-  .home-test .test-managed-char.test-progressive-scramble::before{display:none!important}
-  .home-test .principle-card.test-timeline-card{opacity:1!important;transform:none!important}
+  .home-page .managed-character.motion-pending,
+  .home-page .managed-character.motion-scrambling,
+  .home-page .managed-character.motion-resolved{color:inherit!important}
+  .home-page .managed-character.motion-scrambling::before{display:none!important}
+  .home-page .principle-card.timeline-card{opacity:1!important;transform:none!important}
 }
 

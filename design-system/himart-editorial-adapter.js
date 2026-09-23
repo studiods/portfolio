@@ -1,10 +1,10 @@
 /*
-  HIMART Wide Editorial adapter — TEST ONLY v8.2
+  HIMART Editorial adapter v8.2
   Waits until himart.html finishes its narrative runtime rewrite, then groups all
   chapter content after .hm-section-head into one right rail. This keeps the visual
-  contract identical to the current REUSE wide test while avoiding brittle grid-row spans.
+  contract identical to the current Reuse editorial layout while avoiding brittle grid-row spans.
 
-  v5 also owns the test-only boot lock. The fetched Himart document stays hidden until
+  v5 also owns the production boot lock. The fetched Himart document stays hidden until
   the runtime rewrite and rail grouping have completed, preventing raw-content / unstyled FOUC.
   Major-title line breaks remain exactly as authored by the current Himart runtime.
 

@@ -21,8 +21,8 @@
   style.textContent = `
     .fill-char.is-scrambling::before,
     .fill-char.is-scrambling::after,
-    .test-managed-char.test-progressive-scramble::before,
-    .test-managed-char.test-progressive-scramble::after,
+    .managed-character.motion-scrambling::before,
+    .managed-character.motion-scrambling::after,
     .about-scramble-char.is-scrambling::before,
     .about-scramble-char.is-scrambling::after,
     .entry-scramble-char.is-scrambling::before,
@@ -51,7 +51,7 @@
       color:var(--live-scramble-color)!important;
     }
 
-    html body.home-test .live-scramble-glyph.test-managed-char.test-progressive-scramble,
+    html body.home-page .live-scramble-glyph.managed-character.motion-scrambling,
     html body .live-scramble-glyph.about-scramble-char.is-scrambling,
     html body .live-scramble-glyph.entry-scramble-char.is-scrambling,
     html body .live-scramble-glyph.fill-char.is-scrambling{
@@ -65,7 +65,7 @@
 
   const isScrambling = (el) =>
     el.classList.contains('is-scrambling') ||
-    el.classList.contains('test-progressive-scramble');
+    el.classList.contains('motion-scrambling');
 
   const ensureState = (el) => {
     let state = states.get(el);
@@ -83,13 +83,13 @@
   const scrambleColor = (el, attr) => {
     const computed = getComputedStyle(el);
     const rgb = (
-      attr === 'data-test-scramble'
-        ? computed.getPropertyValue('--test-rgb')
+      attr === 'data-scramble-glyph'
+        ? computed.getPropertyValue('--scramble-rgb')
         : computed.getPropertyValue('--scramble-rgb')
     ).trim();
     const alpha = (
-      attr === 'data-test-scramble'
-        ? computed.getPropertyValue('--test-scramble-alpha')
+      attr === 'data-scramble-glyph'
+        ? computed.getPropertyValue('--scramble-alpha')
         : computed.getPropertyValue('--scramble-alpha')
     ).trim();
 
@@ -138,9 +138,9 @@
 
     state.active = false;
     el.textContent = state.finalChar;
-    el.classList.remove('live-scramble-glyph','is-scrambling','test-progressive-scramble');
+    el.classList.remove('live-scramble-glyph','is-scrambling','motion-scrambling');
     el.removeAttribute('data-scramble');
-    el.removeAttribute('data-test-scramble');
+    el.removeAttribute('data-scramble-glyph');
     el.style.removeProperty('--live-scramble-width');
     el.style.removeProperty('--live-scramble-color');
   };
@@ -152,8 +152,8 @@
       return;
     }
 
-    const dataAttr = attr === 'data-test-scramble' || el.hasAttribute('data-test-scramble')
-      ? 'data-test-scramble'
+    const dataAttr = attr === 'data-scramble-glyph' || el.hasAttribute('data-scramble-glyph')
+      ? 'data-scramble-glyph'
       : 'data-scramble';
     const glyph = el.getAttribute(dataAttr);
     if (glyph && /^[A-Z0-9]$/i.test(glyph)) activate(el, glyph.toUpperCase(), dataAttr);
@@ -168,7 +168,7 @@
         const attr = mutation.attributeName;
         if (
           attr === 'data-scramble' ||
-          attr === 'data-test-scramble' ||
+          attr === 'data-scramble-glyph' ||
           attr === 'class'
         ) {
           syncElement(el, attr);
@@ -180,7 +180,7 @@
   observer.observe(document.documentElement, {
     subtree: true,
     attributes: true,
-    attributeFilter: ['data-scramble', 'data-test-scramble', 'class']
+    attributeFilter: ['data-scramble', 'data-scramble-glyph', 'class']
   });
 
   /* Entry titles keep the existing one-second timing; rendering is live-node. */

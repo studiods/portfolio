@@ -53,9 +53,9 @@
   const cardEnglishChars = cards.map(card => [...card.querySelectorAll('.principle-en .fill-char')]);
 
   document.querySelectorAll('.principle-ko .fill-char, .showcase-project h3 .fill-char').forEach(char => {
-    if (char.textContent === ' ') char.classList.add('test-space');
+    if (char.textContent === ' ') char.classList.add('preserved-space');
   });
-  cards.forEach(card => card.classList.add('test-timeline-card'));
+  cards.forEach(card => card.classList.add('timeline-card'));
 
   const authored = new WeakMap();
   [
@@ -83,44 +83,44 @@
     chars.forEach(char => {
       char.textContent = finalCharFor(char);
       char.classList.remove(
-        'test-managed-char',
-        'test-progressive-pending',
-        'test-progressive-scramble',
-        'test-progressive-resolved'
+        'managed-character',
+        'motion-pending',
+        'motion-scrambling',
+        'motion-resolved'
       );
-      delete char.dataset.testScramble;
-      char.style.removeProperty('--test-rgb');
-      char.style.removeProperty('--test-final-alpha');
-      char.style.removeProperty('--test-scramble-alpha');
+      delete char.dataset.scrambleGlyph;
+      char.style.removeProperty('--scramble-rgb');
+      char.style.removeProperty('--final-alpha');
+      char.style.removeProperty('--scramble-alpha');
     });
   };
 
   const paintState = (char, state, rgb, glyph = '', alpha = 1, finalAlpha = 1) => {
     const finalChar = finalCharFor(char);
-    char.classList.add('test-managed-char');
+    char.classList.add('managed-character');
     char.classList.remove(
-      'test-progressive-pending',
-      'test-progressive-scramble',
-      'test-progressive-resolved'
+      'motion-pending',
+      'motion-scrambling',
+      'motion-resolved'
     );
-    char.style.setProperty('--test-rgb', rgb);
-    char.style.setProperty('--test-final-alpha', String(finalAlpha));
+    char.style.setProperty('--scramble-rgb', rgb);
+    char.style.setProperty('--final-alpha', String(finalAlpha));
 
     if (state === 'pending') {
       char.textContent = finalChar;
-      char.classList.add('test-progressive-pending');
-      delete char.dataset.testScramble;
-      char.style.removeProperty('--test-scramble-alpha');
+      char.classList.add('motion-pending');
+      delete char.dataset.scrambleGlyph;
+      char.style.removeProperty('--scramble-alpha');
     } else if (state === 'scramble') {
       char.textContent = finalChar;
-      char.classList.add('test-progressive-scramble');
-      char.dataset.testScramble = glyph;
-      char.style.setProperty('--test-scramble-alpha', String(alpha));
+      char.classList.add('motion-scrambling');
+      char.dataset.scrambleGlyph = glyph;
+      char.style.setProperty('--scramble-alpha', String(alpha));
     } else {
       char.textContent = finalChar;
-      char.classList.add('test-progressive-resolved');
-      delete char.dataset.testScramble;
-      char.style.removeProperty('--test-scramble-alpha');
+      char.classList.add('motion-resolved');
+      delete char.dataset.scrambleGlyph;
+      char.style.removeProperty('--scramble-alpha');
     }
   };
 
@@ -254,7 +254,7 @@
   const setEnglishAlpha = (index, progress) => {
     const alpha = 0.05 + (0.70 - 0.05) * clamp(progress);
     (cardEnglishChars[index] || []).forEach(char => {
-      char.style.setProperty('--test-en-alpha', alpha.toFixed(3));
+      char.style.setProperty('--en-alpha', alpha.toFixed(3));
     });
   };
 
@@ -315,7 +315,7 @@
         phase.enStart,
         phase.enEnd
       );
-      card.style.setProperty('--test-card-opacity', enterProgress.toFixed(4));
+      card.style.setProperty('--timeline-card-opacity', enterProgress.toFixed(4));
       paintProgressiveReveal(cardKoreanChars[index], titleProgress, '255,255,255', {
         span: 2.4,
         cycles: 3
@@ -339,7 +339,7 @@
   addEventListener('resize', requestUpdate, { passive: true });
 
   update();
-  body?.classList.add('home-test-ready');
+  body?.classList.add('home-motion-ready');
 
   if (document.fonts?.ready) {
     document.fonts.ready.then(() => requestAnimationFrame(requestUpdate)).catch(() => {});

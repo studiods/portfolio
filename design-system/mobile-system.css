@@ -812,10 +812,10 @@
   }
 
   /* Home has deliberately oversized kinetic typography; only supporting copy is normalized. */
-  body.home-test :is(.impact-copy,.subtractive-korean,.hero-identity){
+  body.home-page :is(.impact-copy,.subtractive-korean,.hero-identity){
     font-size:var(--hm-type-body-mobile,15px)!important;
   }
-  body.home-test :is(.mini-label,.principle-en){
+  body.home-page :is(.mini-label,.principle-en){
     font-size:var(--hm-type-note-mobile,11px)!important;
   }
 }

@@ -4,7 +4,7 @@
 
   const isTarget = () =>
     document.body?.classList.contains('nbt-stepup-page') &&
-    document.body?.classList.contains('hm-wide-stepup-test');
+    document.body?.classList.contains('hm-stepup-editorial');
 
   /* Hero copy normalization runs immediately when this deferred script executes,
      before DOMContentLoaded and before scramble-final captures its authored source. */

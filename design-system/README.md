@@ -3,10 +3,10 @@
 ## 적용 범위
 
 - Himart 기준 운영 페이지: `himart.html`
-- Himart 검증 페이지: `himart-system-test.html`
+- 과거 Himart 검증 경로: `himart-system-test.html` (현재 `himart.html`로 리다이렉트)
 - Portfolio Works 페이지: `works.html`
 - 폰트 에셋은 `fonts/`의 Averta PE 3종과 Pretendard Variable을 로컬 로드한다.
-- 새 스타일을 page-local inline CSS나 임시 override 파일로 추가하지 않는다.
+- 새 스타일은 page-local inline CSS나 실험용 override 파일로 추가하지 않는다. Himart의 운영 상태·정적 레이아웃 규칙은 `components/himart-production-state.css`가 소유한다.
 - 페이지 전용 규칙이 필요한 경우에도 반드시 `design-system/components/`의 해당 컴포넌트가 소유한다.
 
 ## 로딩 순서
@@ -42,7 +42,7 @@
 - Desktop Hero title은 `--hm-type-hero:64px`을 단일 기준으로 사용하며 page-local 크기 override를 만들지 않는다.
 - Himart/ReUse movie Hero의 canonical DOM은 `hm-ds-hero hm-ds-hero--scroll-cover` → `hm-ds-hero__inner` → `hm-ds-hero__copy` + `hm-ds-hero__bottom` → `hm-ds-hero__meta` 순서로 통일한다.
 - `components/hero.css`가 Hero의 position/height/copy center/bottom rail/meta typography를 단독 소유하며, `final-tuning.css`나 case page에서 Hero selector를 다시 정의하지 않는다.
-- Legacy `himart-narrative-v2-production.css`의 `.himart-wide-test-page`/`.hm-hero-bottom` 규칙은 이전 호환성용이며 canonical `hm-ds-*` Hero selector가 항상 우선한다.
+- Legacy `himart-narrative-v2-production.css`의 과거 호환 규칙은 이전 레이아웃용이며 canonical `hm-ds-*` Hero selector가 항상 우선한다.
 - Himart와 ReUse는 동일한 `himart-system.css` cache version을 사용해 서로 다른 cached import tree가 적용되지 않게 한다.
 - `hm-ds-hero__bottom`은 approved `himart.html`의 Hero 하단 위치를 기준으로 desktop `40px`, mobile `28px` bottom inset을 사용한다.
 - Hero meta는 `hm-ds-hero__meta`가 단일 소유한다. Desktop은 각 항목의 실제 텍스트 폭(`max-content`)을 우선하고 남은 공간을 `space-between`으로 가변 배분해 ROLE/FOCUS/SCOPE/TEAM 값이 한 줄을 유지한다. 최소 column gap은 `--hm-meta-column-gap:24px`, 기본 높이는 `74px`이다. Mobile 2×2에서는 가독성을 위해 줄바꿈을 허용한다.

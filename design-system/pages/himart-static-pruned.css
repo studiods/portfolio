@@ -4702,8 +4702,8 @@ html body.himart-prod-v18 #direction .production-v18-copy .phone-meta{
   }}
 
 
-html body.himart-narrative-test:not(.narrative-v2-ready) #live-main{opacity:0!important;visibility:hidden!important}
-html body.himart-narrative-test.narrative-v2-ready #live-main{opacity:1!important;visibility:visible!important}
+html body.himart-narrative-ready:not(.narrative-v2-ready) #live-main{opacity:0!important;visibility:hidden!important}
+html body.himart-narrative-ready.narrative-v2-ready #live-main{opacity:1!important;visibility:visible!important}
 
 
 html body .hm-section-title,
@@ -4849,7 +4849,7 @@ html body :is(
 
 
 :root{--hm-body-60:rgba(255,255,255,.60)}
-html body.himart-narrative-test:not(.narrative-v2-final-ready) #live-main{opacity:0!important;visibility:hidden!important}
+html body.himart-narrative-ready:not(.narrative-v2-final-ready) #live-main{opacity:0!important;visibility:hidden!important}
 
 
 

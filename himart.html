@@ -2,7 +2,7 @@
 <html lang="ko" data-inertia-scroll="true" style="scroll-behavior: auto;">
 <head>
 <!-- Google tag (gtag.js) -->
-<style id="hm-critical-first-paint">html,body{margin:0!important;min-height:100%!important;background:#000!important;color-scheme:dark}#top{background:#000!important}.hm-ds-hero__video{background:#000!important}body.himart-narrative-loading #live-main,body.hm-wide-booting #live-main{opacity:0!important;visibility:hidden!important}body.hm-wide-himart-adapter:not(.hm-journey-geometry-ready) #journey .journey-flow-block{opacity:0!important;visibility:hidden!important}</style>
+<style id="hm-critical-first-paint">html,body{margin:0!important;min-height:100%!important;background:#000!important;color-scheme:dark}#top{background:#000!important}.hm-ds-hero__video{background:#000!important}body.himart-narrative-loading #live-main,body.hm-editorial-booting #live-main{opacity:0!important;visibility:hidden!important}body.hm-wide-himart-adapter:not(.hm-journey-geometry-ready) #journey .journey-flow-block{opacity:0!important;visibility:hidden!important}</style>
 <link rel="preload" href="./assets/movies/himart_02.mp4" as="video" type="video/mp4">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -18,8 +18,8 @@
 <link rel="stylesheet" href="./design-system/components/structural-index-contract.css?v=20260920-3">
 
 <link rel="stylesheet" href="./design-system/components/hero.css?v=20260915-1">
-<link rel="stylesheet" href="./design-system/components/wide-editorial.css?v=20260923-title-exit-1">
-<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-adapter.css?v=20260923-6">
+<link rel="stylesheet" href="./design-system/components/editorial-layout.css?v=20260923-title-exit-1">
+<link rel="stylesheet" href="./design-system/components/himart-editorial-layout.css?v=20260923-6">
 <link rel="stylesheet" href="./design-system/components/semantic-circle-typography.css?v=20260919-6">
 <link rel="stylesheet" href="./design-system/components/editorial-layout-contract.css?v=20260912-12">
 <link rel="stylesheet" href="./design-system/components/himart-fluid-content.css?v=20260910-5">
@@ -28,73 +28,13 @@
 <link rel="stylesheet" href="./design-system/components/gallery-rhythm.css?v=20260912-2">
 <link rel="stylesheet" href="./design-system/components/project-end-matter.css?v=20260912-9">
 <link rel="stylesheet" href="./design-system/components/himart-direction-implementation.css?v=20260923-5">
-<link rel="stylesheet" href="./design-system/components/wide-editorial-himart-polish-v5.css?v=20260923-5">
+<link rel="stylesheet" href="./design-system/components/himart-editorial-tuning.css?v=20260923-5">
 <link rel="stylesheet" href="./design-system/components/himart-appliance-purchase-flow.css?v=20260921-4">
 <link rel="stylesheet" href="./design-system/mobile-system.css?v=20260921-4">
 <link rel="stylesheet" href="./design-system/components/media-gallery.css?v=20260922-2">
-<style>body.himart-wide-test-page #journey .journey-redesign-subsection .forced-redesign-title::before{content:"2. 끊어진 지점을 기준으로, 각 단계가\A다음 행동을 이어주도록 다시 연결했습니다."!important;}</style><link rel="stylesheet" href="./design-system/components/reuse-prototype-cases.css?v=20260923-3" data-reuse-prototype-cases="1"><style id="himart-test-title-motion-style">
-      .himart-test-page .title-rise-target{opacity:0;transform:translateY(28px);transition:opacity .62s ease,transform .82s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
-      .himart-test-page .title-rise-target.is-title-rise-in{opacity:1;transform:translateY(0)}
-      .himart-test-page .flow-node{border-top-color:rgba(255,255,255,.20)!important}
-      .himart-test-page .flow-group.flow-label-motion::before{transform:scaleX(0)!important;transform-origin:left center!important;transition:transform .9s cubic-bezier(.2,.8,.2,1) .12s!important;will-change:transform}
-      .himart-test-page .flow-group.flow-label-motion.is-flow-label-in::before{transform:scaleX(1)!important}
-      @media (prefers-reduced-motion:reduce){
-        .himart-test-page .title-rise-target{opacity:1!important;transform:none!important;transition:none!important}
-        .himart-test-page .flow-group.flow-label-motion::before{transform:scaleX(1)!important;transition:none!important}
-      }
-    </style><style id="hm-static-candidate-visibility">
-/* The static candidate is a post-animation DOM snapshot: never leave reveal targets hidden. */
-.hm-static-candidate .hm-reveal,
-.hm-static-candidate .title-rise-target {
-  opacity: 1 !important;
-  transform: none !important;
-  visibility: visible !important;
-}
-.hm-static-candidate .flow-group.flow-label-motion::before {
-  transform: scaleX(1) !important;
-}
-
-/* The static candidate mirrors the production 04 direction rhythm after reveal. */
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) {
-  padding-top: 20px !important;
-}
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) .ax-friction-grid {
-  margin-top: 40px !important;
-}
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) .ax-friction-card {
-  min-height: 0 !important;
-  padding-top: 12px !important;
-}
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) > .prototype-case-list {
-  margin-top: 52px !important;
-}
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > :is(.himart-direction-041, .himart-direction-042) .prototype-case-copy {
-  margin-top: 36px !important;
-}
-
-/* 04.2 production uses the shared image-ratio mockup; remove the candidate-only shell ratio. */
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
-  aspect-ratio: auto !important;
-  padding: 7px !important;
-  overflow: visible !important;
-}
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen.is-scrollable img {
-  height: auto !important;
-  aspect-ratio: auto !important;
-  object-fit: initial !important;
-  object-position: initial !important;
-}
-html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .prototype-case-viewport {
-  padding-bottom: 0 !important;
-}
-@media (max-width: 780px) {
-  html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
-    aspect-ratio: auto !important;
-    padding: 4px !important;
-  }
-}
-</style></head>
-<body class="himart-page-body hm-wide-editorial hm-wide-himart-adapter himart-test-page himart-wide-test-page himart-prod-v16 himart-movie-page himart-commerce-page hm-ds-subsection-copy-hidden portfolio-progress-page himart-v12 himart-v13 himart-v14 himart-v15 himart-prod-v18 himart-narrative-test himart-narrative-ready narrative-v2-final-ready journey-title-canonical himart-v18-ready hm-journey-geometry-ready hm-static-candidate"><nav class="top" aria-label="Global navigation"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./contact.html">Contact</a></div></nav>
+<link rel="stylesheet" href="./design-system/components/reuse-prototype-cases.css?v=20260923-3" data-reuse-prototype-cases="1"><link rel="stylesheet" href="./design-system/components/himart-production-state.css?v=20260924-1">
+</head>
+<body class="himart-page-body hm-wide-editorial hm-wide-himart-adapter himart-production-page himart-prod-v16 himart-movie-page himart-commerce-page hm-ds-subsection-copy-hidden portfolio-progress-page himart-v12 himart-v13 himart-v14 himart-v15 himart-prod-v18 himart-narrative-ready narrative-v2-final-ready journey-title-canonical himart-v18-ready hm-journey-geometry-ready hm-static-presentation"><nav class="top" aria-label="Global navigation"><div class="top-center"><a href="./index.html">Home</a><a href="./about.html">About</a><a href="./works.html" aria-current="page">Works</a><a href="./contact.html">Contact</a></div></nav>
 <main id="live-main">
 <header class="hm-hero hm-movie-hero hm-ds-hero hm-ds-hero--scroll-cover" id="top" data-hm-hero="" data-hm-fade-distance="420" style="--hm-scroll-progress: 0.000; --hm-hero-overlay-opacity: 0.400; --hm-hero-copy-opacity: 1.000;">
 <video class="hm-movie-video hm-ds-hero__video" data-hm-video="" autoplay="" muted="" loop="" playsinline="" preload="auto"><source src="./assets/movies/himart_02.mp4" type="video/mp4"></video>
@@ -224,7 +164,7 @@ html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .
           </div></div></article>
 
 <article class="data-card hm-reveal"><div class="data-card-head" data-numbered-title-group-mounted="1"><span class="hm-card-no hm-ds-index-label" data-index="02.2" data-hm-ds-index-owned="true" style="font-size: 0px !important; white-space: nowrap !important;" data-numbered-group-scramble-played="1">02.2</span><div><h3 data-title-rise-mounted="1" class="title-rise-target" data-hm-scramble-kind="medium" style="visibility: hidden;"><span class="wide-roman-index">II.</span> 방문이 많다는 것만으로<br>구매 의도가 높다고 볼 수는 없었습니다.</h3><p class="desc" data-hm-ds-visibility-owned="description" style="display: none !important; margin: 0px !important; padding: 0px !important;">4~5월 방문 규모가 컸지만 전환 효율은 2월이 가장 높았습니다. <span class="data-emphasis">볼륨과 구매 의도는 함께 봐야 했습니다.</span></p></div></div><div class="data-viz chart-wrap wide-unified-traffic v9-chart-motion chart-motion">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 330" class="chart-svg traffic-v5-live v9-traffic-svg" role="img" aria-label="2026년 1월부터 6월까지 세션, 구매건수, 구매전환율" data-v9-prepared="1" data-prepared="1"><style>text{font-family:Arial,sans-serif;fill:rgba(255,255,255,.46);font-size:12px}.grid{stroke:rgba(255,255,255,.12);stroke-width:1}.session{stroke:#F3EB01;stroke-width:2}.purchase{fill:none;stroke:#00A6ED;stroke-width:.75;stroke-linecap:round;stroke-linejoin:round}.cvr{fill:none;stroke:#00EDBD;stroke-width:.75;stroke-linecap:round;stroke-linejoin:round}.p-dot{fill:#00B8DE}.c-dot{fill:#00EDBD}.right-blue{fill:#00A6ED}.right-green{fill:#00EDBD}</style><text x="0" y="22">SESSIONS</text><text x="0" y="58">6M</text><text x="0" y="158">3M</text><text x="0" y="258">0</text><line class="grid" x1="90" y1="50" x2="1070" y2="50"></line><line class="grid" x1="90" y1="150" x2="1070" y2="150"></line><line class="grid" x1="90" y1="250" x2="1070" y2="250"></line><text class="right-blue" x="1088" y="64">42K</text><text class="right-blue" x="1088" y="158">39K</text><text class="right-blue" x="1088" y="252">36K</text><text class="right-green" x="1088" y="88">1.2%</text><text class="right-green" x="1088" y="180">0.9%</text><text class="right-green" x="1088" y="272">0.6%</text><line class="session" x1="145" y1="95" x2="145" y2="250" style="stroke-dasharray: 155; stroke-dashoffset: 155; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1);"></line><line class="session" x1="325" y1="132" x2="325" y2="250" style="stroke-dasharray: 118; stroke-dashoffset: 118; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 70ms;"></line><line class="session" x1="505" y1="102" x2="505" y2="250" style="stroke-dasharray: 148; stroke-dashoffset: 148; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 140ms;"></line><line class="session" x1="685" y1="61" x2="685" y2="250" style="stroke-dasharray: 189; stroke-dashoffset: 189; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 210ms;"></line><line class="session" x1="865" y1="64" x2="865" y2="250" style="stroke-dasharray: 186; stroke-dashoffset: 186; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 280ms;"></line><line class="session" x1="1045" y1="97" x2="1045" y2="250" style="stroke-dasharray: 153; stroke-dashoffset: 153; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 350ms;"></line><polyline class="purchase" points="145,78 325,182 505,184 685,183 865,132 1045,117" style="stroke-dasharray: 935.608; stroke-dashoffset: 935.608; transition: stroke-dashoffset 820ms cubic-bezier(0.2, 0.8, 0.2, 1) 620ms;"></polyline><circle class="p-dot" cx="145" cy="78" r="3" style="opacity: 0; transition: opacity 180ms 1320ms;"></circle><circle class="p-dot" cx="325" cy="182" r="3" style="opacity: 0; transition: opacity 180ms 1365ms;"></circle><circle class="p-dot" cx="505" cy="184" r="3" style="opacity: 0; transition: opacity 180ms 1410ms;"></circle><circle class="p-dot" cx="685" cy="183" r="3" style="opacity: 0; transition: opacity 180ms 1455ms;"></circle><circle class="p-dot" cx="865" cy="132" r="3" style="opacity: 0; transition: opacity 180ms 1500ms;"></circle><circle class="p-dot" cx="1045" cy="117" r="3" style="opacity: 0; transition: opacity 180ms 1545ms;"></circle><polyline class="cvr" points="145,170 325,85 505,185 685,240 865,226 1045,174" style="stroke-dasharray: 961.092; stroke-dashoffset: 961.092; transition: stroke-dashoffset 820ms cubic-bezier(0.2, 0.8, 0.2, 1) 1500ms;"></polyline><circle class="c-dot" cx="145" cy="170" r="2.5" style="opacity: 0; transition: opacity 180ms 2200ms;"></circle><circle class="c-dot" cx="325" cy="85" r="2.5" style="opacity: 0; transition: opacity 180ms 2245ms;"></circle><circle class="c-dot" cx="505" cy="185" r="2.5" style="opacity: 0; transition: opacity 180ms 2290ms;"></circle><circle class="c-dot" cx="685" cy="240" r="2.5" style="opacity: 0; transition: opacity 180ms 2335ms;"></circle><circle class="c-dot" cx="865" cy="226" r="2.5" style="opacity: 0; transition: opacity 180ms 2380ms;"></circle><circle class="c-dot" cx="1045" cy="174" r="2.5" style="opacity: 0; transition: opacity 180ms 2425ms;"></circle><text x="133" y="300">1월</text><text x="313" y="300">2월</text><text x="493" y="300">3월</text><text x="673" y="300">4월</text><text x="853" y="300">5월</text><text x="1033" y="300">6월</text></svg><div class="wide-traffic-legend" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 330" class="chart-svg traffic-v5-live v9-traffic-svg" role="img" aria-label="2026년 1월부터 6월까지 세션, 구매건수, 구매전환율" data-v9-prepared="1" data-prepared="1"><text x="0" y="22">SESSIONS</text><text x="0" y="58">6M</text><text x="0" y="158">3M</text><text x="0" y="258">0</text><line class="grid" x1="90" y1="50" x2="1070" y2="50"></line><line class="grid" x1="90" y1="150" x2="1070" y2="150"></line><line class="grid" x1="90" y1="250" x2="1070" y2="250"></line><text class="right-blue" x="1088" y="64">42K</text><text class="right-blue" x="1088" y="158">39K</text><text class="right-blue" x="1088" y="252">36K</text><text class="right-green" x="1088" y="88">1.2%</text><text class="right-green" x="1088" y="180">0.9%</text><text class="right-green" x="1088" y="272">0.6%</text><line class="session" x1="145" y1="95" x2="145" y2="250" style="stroke-dasharray: 155; stroke-dashoffset: 155; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1);"></line><line class="session" x1="325" y1="132" x2="325" y2="250" style="stroke-dasharray: 118; stroke-dashoffset: 118; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 70ms;"></line><line class="session" x1="505" y1="102" x2="505" y2="250" style="stroke-dasharray: 148; stroke-dashoffset: 148; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 140ms;"></line><line class="session" x1="685" y1="61" x2="685" y2="250" style="stroke-dasharray: 189; stroke-dashoffset: 189; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 210ms;"></line><line class="session" x1="865" y1="64" x2="865" y2="250" style="stroke-dasharray: 186; stroke-dashoffset: 186; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 280ms;"></line><line class="session" x1="1045" y1="97" x2="1045" y2="250" style="stroke-dasharray: 153; stroke-dashoffset: 153; transition: stroke-dashoffset 460ms cubic-bezier(0.2, 0.8, 0.2, 1) 350ms;"></line><polyline class="purchase" points="145,78 325,182 505,184 685,183 865,132 1045,117" style="stroke-dasharray: 935.608; stroke-dashoffset: 935.608; transition: stroke-dashoffset 820ms cubic-bezier(0.2, 0.8, 0.2, 1) 620ms;"></polyline><circle class="p-dot" cx="145" cy="78" r="3" style="opacity: 0; transition: opacity 180ms 1320ms;"></circle><circle class="p-dot" cx="325" cy="182" r="3" style="opacity: 0; transition: opacity 180ms 1365ms;"></circle><circle class="p-dot" cx="505" cy="184" r="3" style="opacity: 0; transition: opacity 180ms 1410ms;"></circle><circle class="p-dot" cx="685" cy="183" r="3" style="opacity: 0; transition: opacity 180ms 1455ms;"></circle><circle class="p-dot" cx="865" cy="132" r="3" style="opacity: 0; transition: opacity 180ms 1500ms;"></circle><circle class="p-dot" cx="1045" cy="117" r="3" style="opacity: 0; transition: opacity 180ms 1545ms;"></circle><polyline class="cvr" points="145,170 325,85 505,185 685,240 865,226 1045,174" style="stroke-dasharray: 961.092; stroke-dashoffset: 961.092; transition: stroke-dashoffset 820ms cubic-bezier(0.2, 0.8, 0.2, 1) 1500ms;"></polyline><circle class="c-dot" cx="145" cy="170" r="2.5" style="opacity: 0; transition: opacity 180ms 2200ms;"></circle><circle class="c-dot" cx="325" cy="85" r="2.5" style="opacity: 0; transition: opacity 180ms 2245ms;"></circle><circle class="c-dot" cx="505" cy="185" r="2.5" style="opacity: 0; transition: opacity 180ms 2290ms;"></circle><circle class="c-dot" cx="685" cy="240" r="2.5" style="opacity: 0; transition: opacity 180ms 2335ms;"></circle><circle class="c-dot" cx="865" cy="226" r="2.5" style="opacity: 0; transition: opacity 180ms 2380ms;"></circle><circle class="c-dot" cx="1045" cy="174" r="2.5" style="opacity: 0; transition: opacity 180ms 2425ms;"></circle><text x="133" y="300">1월</text><text x="313" y="300">2월</text><text x="493" y="300">3월</text><text x="673" y="300">4월</text><text x="853" y="300">5월</text><text x="1033" y="300">6월</text></svg><div class="wide-traffic-legend" aria-hidden="true">
         <span><i style="--c:var(--hm-yellow)"></i>세션</span>
         <span><i style="--c:var(--hm-newblue)"></i>구매건수</span>
         <span><i style="--c:var(--hm-green)"></i>구매전환율</span>
@@ -349,12 +289,7 @@ html body.hm-static-candidate.himart-page-body.himart-commerce-page #direction .
       </div>
       <div class="hm-project-footer__bottom-space" aria-hidden="true"></div></footer>
 
-<style id="hm-structural-visibility-final-style">
-body.hm-ds-subsection-copy-hidden #live-main .narrative-block > .narrative-copy,
-body.hm-ds-subsection-copy-hidden #live-main .journey-role-block > .journey-block-copy{display:none!important;margin:0!important;padding:0!important}
-body.hm-ds-subsection-copy-hidden #live-main .narrative-block,
-body.hm-ds-subsection-copy-hidden #live-main .journey-role-block{margin-bottom:0!important;padding-bottom:0!important}
-</style>
+
 <nav class="hm-global-progress" aria-label="Page sections"><a href="#brand" aria-label="1번째 주요 영역">01</a><a href="#data" aria-label="2번째 주요 영역">02</a><a href="#journey" aria-label="3번째 주요 영역">03</a><a href="#direction" aria-label="4번째 주요 영역">04</a></nav><div class="hm-ds-image-lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="이미지 확대 보기"><div class="hm-ds-image-lightbox__stage"><div class="hm-ds-image-lightbox__viewport"><img class="hm-ds-image-lightbox__image" alt=""><img class="hm-ds-image-lightbox__image hm-ds-image-lightbox__image--incoming" alt=""></div><div class="hm-ds-image-lightbox__dom" hidden=""><div class="hm-ds-image-lightbox__dom-canvas"></div></div><button class="hm-ds-image-lightbox__nav hm-ds-image-lightbox__nav--prev" type="button" aria-label="이전 확대 이미지"></button><button class="hm-ds-image-lightbox__nav hm-ds-image-lightbox__nav--next" type="button" aria-label="다음 확대 이미지"></button><button class="hm-ds-image-lightbox__close" type="button" aria-label="확대 이미지 닫기"></button></div></div><script src="./design-system/animation.js?v=20260923-3-v15-ring-motion"></script>
 
 <script src="./design-system/himart-appliance-purchase-flow.js?v=20260920-1"></script>

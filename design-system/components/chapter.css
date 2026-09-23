@@ -1,11 +1,11 @@
 /* HIMART Design System — Chapter component
    Canonical title rules replace legacy title locks in the test page. */
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
   display:grid !important;
   grid-template-columns:minmax(0,1fr) minmax(260px,.72fr) !important;
   align-items:start !important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
   display:block !important;
   position:static !important;
   width:auto !important;
@@ -24,30 +24,30 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#d
   writing-mode:horizontal-tb !important;
 }
 @media (max-width:1024px){
-  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
+  html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
     grid-template-columns:minmax(0,1fr) !important;
     gap:20px !important;
   }
-  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
     font-size:var(--hm-type-section-mobile) !important;
     line-height:1.2 !important;
   }
 }
 @media (max-width:700px){
-  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
     font-size:var(--hm-type-section-mobile) !important;
   }
 }
 
 @media (max-width:780px){
-  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
+  html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
     font-size:var(--hm-type-section-mobile) !important;
     line-height:1.18 !important;
   }
 }
 
 /* Reuse chapter labels override the legacy wide-page label hide. */
-html body.reuse-current.himart-wide-test-page #live-main :is(
+html body.reuse-current.himart-production-page #live-main :is(
   .hm-subhead > .hm-subno,
   .data-card-head > .hm-card-no
 ){
@@ -177,7 +177,7 @@ body.himart-page-body .hm-meta b{
 
 
 /* Shared description hierarchy: white text at 60% opacity. */
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(
   .hm-lead,
   .hm-section-desc,
   .hm-subcopy,
@@ -188,31 +188,31 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
 }
 
 /* Final shared canvas + intermediate-title lock (design-system token: 32px). */
-html body:is(.himart-wide-test-page,.himart-movie-page){
+html body:is(.himart-production-page,.himart-movie-page){
   background:#000 !important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main,
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main > .hm-section,
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main > section.hm-section,
-html body:is(.himart-wide-test-page,.himart-movie-page) #brand,
-html body:is(.himart-wide-test-page,.himart-movie-page) #data,
-html body:is(.himart-wide-test-page,.himart-movie-page) #journey,
-html body:is(.himart-wide-test-page,.himart-movie-page) #direction{
+html body:is(.himart-production-page,.himart-movie-page) #live-main,
+html body:is(.himart-production-page,.himart-movie-page) #live-main > .hm-section,
+html body:is(.himart-production-page,.himart-movie-page) #live-main > section.hm-section,
+html body:is(.himart-production-page,.himart-movie-page) #brand,
+html body:is(.himart-production-page,.himart-movie-page) #data,
+html body:is(.himart-production-page,.himart-movie-page) #journey,
+html body:is(.himart-production-page,.himart-movie-page) #direction{
   background:#000 !important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhead,.data-card-head){
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(.hm-subhead,.data-card-head){
   display:block !important;
   width:100% !important;
   max-width:none !important;
   min-width:0 !important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhead > div,.data-card-head > div){
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(.hm-subhead > div,.data-card-head > div){
   display:block !important;
   width:100% !important;
   max-width:none !important;
   min-width:0 !important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(
   .hm-subhead .hm-subtitle,
   .hm-subhead .forced-redesign-title,
   .narrative-title,
@@ -233,7 +233,7 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
   white-space:normal !important;
   writing-mode:horizontal-tb !important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhead .hm-subcopy,.hm-subhead .hm-subtitle + p){
+html body:is(.himart-production-page,.himart-movie-page) #live-main :is(.hm-subhead .hm-subcopy,.hm-subhead .hm-subtitle + p){
   display:block !important;
   width:100% !important;
   max-width:100% !important;
@@ -241,7 +241,7 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhe
   letter-spacing:var(--hm-track-body) !important;
 }
 @media (max-width:780px){
-  html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(
+  html body:is(.himart-production-page,.himart-movie-page) #live-main :is(
     .hm-subhead .hm-subtitle,
     .hm-subhead .forced-redesign-title,
     .narrative-title,
@@ -253,17 +253,17 @@ html body:is(.himart-wide-test-page,.himart-movie-page) #live-main :is(.hm-subhe
 
 
 /* Final specificity lock: Roman index and small title share one baseline. */
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-head{
+html body:is(.himart-production-page,.himart-movie-page) #live-main .data-card-head{
   display:flex!important;
   align-items:baseline!important;
   gap:0!important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-head > div{
+html body:is(.himart-production-page,.himart-movie-page) #live-main .data-card-head > div{
   display:inline!important;
   width:auto!important;
   max-width:none!important;
 }
-html body:is(.himart-wide-test-page,.himart-movie-page) #live-main .data-card-head .hm-roman-no{
+html body:is(.himart-production-page,.himart-movie-page) #live-main .data-card-head .hm-roman-no{
   display:inline-block!important;
   width:auto!important;
   margin:0 18px 0 0!important;

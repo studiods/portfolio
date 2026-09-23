@@ -11,11 +11,11 @@
   - Major chapter rhythm is 200px and is applied to the whole incoming chapter.
   - Inside each chapter, both rails begin at the exact same authored top line: no top margin is allowed on the left major-title head or the first right-rail content unit.
   - Every medium-title unit owns a 1px weak divider + 40px divider-to-title inset.
-  - As CSS sticky containment pushes the title upward, a test-only runtime variable progressively dims it.
+  - As CSS sticky containment pushes the title upward, a runtime variable progressively dims it.
   - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
   - Hero, navigation, footer typography, color and component internals remain owned by the canonical design system.
-  - Existing DOM order is preserved. The test only removes the visual box of .hm-wrap with display:contents at wide sizes.
+  - Existing DOM order is preserved. The layout removes the visual box of .hm-wrap with display:contents at wide sizes.
 */
 
 @media (min-width:1600px){
@@ -298,7 +298,7 @@
   }
 }
 
-/* Test page footer navigation: previous / next links stay fully white on black. */
+/* Production page footer navigation: previous / next links stay fully white on black. */
 html body.himart-page-body.hm-wide-editorial .hm-footer a{
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;

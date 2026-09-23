@@ -1,4 +1,4 @@
-/* HIMART Wide Editorial polish — TEST ONLY v5.4
+/* HIMART Wide Editorial polish — PRODUCTION SYSTEM v5.4
    Keeps the REUSE wide contract intact while correcting Himart-specific rhythm.
    Canonical medium-title divider spacing consumes --hm-space-component from tokens.css.
 */
@@ -92,7 +92,7 @@
   }
 }
 
-/* Current Himart wide-test footer only: remove the upper divider and tighten label → case link. */
+/* Himart production footer: remove the upper divider and tighten label → case link. */
 html body.hm-wide-editorial.hm-wide-himart-adapter .hm-footer > .hm-wrap{
   border-top:0!important;
   padding-top:0!important;
