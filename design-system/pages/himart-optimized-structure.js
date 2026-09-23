@@ -34,7 +34,7 @@
   const indexNodes = () =>
     [...root.querySelectorAll('.hm-ds-index-label, .hm-subno, .hm-card-no, .hm-section-no, .narrative-subno, .synthesis-subno')]
       .filter(node => {
-        const match = (node.textContent || '').trim().match(/^(\\d{1,2}(?:\\.\\d{1,2})?)(?=\\s*(?:\\/|·|$))/);
+        const match = (node.textContent || '').trim().match(/^(\d{1,2}(?:\.\d{1,2})?)(?=\s*(?:\/|·|$))/);
         if (!match) return false;
         node.dataset.index ||= match[1];
         node.classList.add('hm-ds-index-label');
@@ -53,7 +53,7 @@
   const normalizeNumbers = () => {
     root.querySelectorAll(numberSelector).forEach(node => {
       const value = (node.dataset.index || node.textContent || '').trim();
-      const match = value.match(/^(\\d{2}(?:\\.\\d+)?)(?![\\d.])/);
+      const match = value.match(/^(\d{2}(?:\.\d+)?)(?![\d.])/);
       if (match && node.textContent !== match[1]) node.textContent = match[1];
     });
   };
