@@ -286,3 +286,11 @@ Numbered middle-title descriptions are preserved in source but can be globally c
 ### Structural visibility final layer
 
 Legacy case pages run content/motion scripts after their static styles load. `structural-visibility-runtime.js` is therefore loaded last on every active case page. It preserves authored subsection descriptions while enforcing the presentation contract: numbered 12px blue structural labels resolve to their numeric `data-index` value only. Removing `hm-ds-subsection-copy-hidden` restores descriptions, but structural number labels remain numeric-only.
+
+
+## Major title exit motion contract
+
+- Sticky major section titles remain readable while the section is active. When the owning section boundary pushes a title upward out of view, the shared `design-system/animation.js` runtime applies `.is-major-title-exiting` to the sticky `.hm-section-head.hm-reveal`.
+- Exit timing is shared across all pages using the canonical section structure: opacity reaches `0` in `180ms ease-out`; the title moves upward by `56px` in `240ms cubic-bezier(.22,1,.36,1)`.
+- Page-specific entry and visible-state rules must exclude `.is-major-title-exiting`, so they cannot restore full opacity or cancel the upward exit transform. Do not lock an exiting sticky title to `opacity:1` or `transform:none`.
+- Pages without a sticky major title keep their existing reveal behavior. The shared runtime respects reduced-motion preferences.
