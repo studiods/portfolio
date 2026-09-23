@@ -34,10 +34,17 @@
     document.body?.classList.contains('hm-wide-editorial-test') &&
     document.body?.classList.contains('hm-wide-himart-test');
 
+  const isOptimizedCandidate = () =>
+    document.body?.classList.contains('hm-optimized-candidate');
+
   const releaseBootLock = () => {
     if (!document.body) return;
     document.body.classList.remove('hm-wide-booting');
     document.getElementById('hm-wide-boot-lock')?.remove();
+  };
+
+  const notifyLayoutReady = () => {
+    document.dispatchEvent(new CustomEvent('himart:layout-ready'));
   };
 
   const unlockJourneyGeometry = () => {
@@ -107,7 +114,12 @@
         return;
       }
 
-      /* Keep the malformed flow out of first paint; retry after late font/runtime work. */
+      /* The optimized candidate has a fixed pipeline: do not retain a retry loop after
+         its one-time layout pass. The live legacy path keeps its compatibility retry. */
+      if (isOptimizedCandidate()) {
+        unlockJourneyGeometry();
+        return;
+      }
       window.setTimeout(() => prepareJourneyForReveal(0), 250);
     });
   };
@@ -339,6 +351,8 @@
       removeLegacyJourneyRollbackAssets();
       enforceCanonicalJourneyFlow();
       prepareJourneyForReveal();
+      document.documentElement.dataset.hmLayoutReady = '1';
+      document.dispatchEvent(new CustomEvent('himart:layout-ready'));
       releaseBootLock();
     }));
   };
@@ -347,6 +361,13 @@
 
   const start = () => {
     if (!isTargetPage()) return;
+
+    /* The candidate is injected only after content finalization. Its readiness is
+       therefore explicit, so it needs neither a global observer nor timeout fallbacks. */
+    if (isOptimizedCandidate()) {
+      requestAnimationFrame(() => requestAnimationFrame(mount));
+      return;
+    }
 
     installLegacyJourneyRollbackGuard();
 
