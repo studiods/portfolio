@@ -205,6 +205,7 @@
   const finalize = () => {
     apply();
     updateHeroFade();
+    document.documentElement.dataset.hmContentFinalized = '1';
     document.dispatchEvent(new CustomEvent('himart:content-finalized'));
   };
 
