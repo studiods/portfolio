@@ -1,18 +1,10 @@
 /* CONTACT — Works visual language without project switcher or media stream. */
-html:has(body.contact-page-body){
-  height:100%;
-  overflow:hidden!important;
-  overscroll-behavior:none;
-}
 body.contact-page-body{
   --contact-left-column:50vw;
   --contact-right-column:50vw;
   margin:0;
   width:100%;
-  height:100vh;
   min-height:100vh;
-  overflow:hidden!important;
-  overscroll-behavior:none;
   background:var(--hm-bg-page,#000);
   color:var(--hm-text-primary,#fff);
 }
@@ -23,13 +15,10 @@ body.contact-page-body :is(video,audio){
   display:none!important;
 }
 body.contact-page-body .works-page{
-  position:fixed;
+  position:relative;
   z-index:1;
-  inset:0;
   width:100%;
-  height:100vh;
-  min-height:0;
-  overflow:hidden;
+  min-height:100vh;
   background:#000!important;
 }
 
@@ -49,7 +38,7 @@ body.contact-page-body .works-hero{
   pointer-events:none;
 }
 body.contact-page-body .works-page-title{
-  position:fixed!important;
+  position:absolute!important;
   z-index:2147483647!important;
   top:50vh!important;
   left:var(--hm-inset-desktop)!important;
@@ -72,14 +61,11 @@ body.contact-page-body :is(.works-title-menu-toggle,.works-project-menu,.works-p
 }
 
 body.contact-page-body .contact-content{
-  position:fixed;
-  inset:0;
+  position:relative;
   display:grid;
   grid-template-columns:var(--contact-left-column) var(--contact-right-column);
   width:100%;
-  height:100vh;
-  min-height:0;
-  overflow:hidden;
+  min-height:100vh;
   pointer-events:none;
 }
 body.contact-page-body .contact-spacer{
@@ -161,11 +147,8 @@ body.contact-page-body .contact-value--en a{
 
 body.contact-page-body .contact-footer{
   display:flex;
-  position:fixed;
+  position:relative;
   z-index:3;
-  left:0;
-  right:0;
-  bottom:0;
   justify-content:space-between;
   gap:24px;
   padding:48px var(--hm-inset-desktop) 60px;
@@ -199,8 +182,7 @@ body.contact-page-body .contact-footer a:focus-visible{
   }
   body.contact-page-body .contact-content{
     grid-template-columns:1fr;
-    height:100vh;
-    min-height:0;
+    min-height:100vh;
   }
   body.contact-page-body .contact-spacer{
     display:none;
