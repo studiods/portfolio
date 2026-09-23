@@ -5,6 +5,12 @@
 html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042){
   width:100%!important;
   min-width:0!important;
+  /* Chapter 04 compact rhythm: halve the inherited structural spacing.
+     Shared defaults are 40px subsection top padding and 80px title→content. */
+  padding-top:20px!important;
+}
+html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .hm-subhead + .ax-friction-grid{
+  margin-top:40px!important;
 }
 
 /* 04.1 / AX 01.2 card grammar copied into Himart commerce.
@@ -19,8 +25,8 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
   width:100%;
 }
 html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card{
-  min-height:260px;
-  padding:24px 0 0;
+  min-height:130px;
+  padding:12px 0 0;
   border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak));
 }
 html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .ax-friction-card>span{
