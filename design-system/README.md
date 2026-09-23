@@ -34,7 +34,7 @@
 | Data Viz | `components/data-viz.css` + `animation.js` | Ring, split ratio, segmented ratio, traffic SVG, horizontal bars와 단일 chart reveal |
 | Works | `components/works.css` + `works.js` | WORKS 타이틀 상태, 8/20·12/20 프로젝트 레이아웃, 미디어 오버레이, focused video playback, centered title handoff, 프로젝트 메뉴 |
 | Responsive | `responsive.css` | 공통 breakpoint 레이아웃만 담당 |
-| Motion | `animation.js` | Himart reveal, counter, hero scroll variable, data-viz draw, viewport video control, single-video sequence |
+| Motion | `animation.js` | Shared reveal, counter, hero scroll variable, data-viz draw, viewport video control, video sequence, and sticky chapter-title exit |
 | Progress | `components/progress.css` + `navigation.js` | WORKS/상세 페이지 우측 주요 영역 번호, focus 상태, HOME/ABOUT/CONTACT 제외 |
 
 ## HIMART Hero component contract
@@ -294,3 +294,13 @@ Legacy case pages run content/motion scripts after their static styles load. `st
 - Exit timing is shared across all pages using the canonical section structure: opacity reaches `0` in `180ms ease-out`; the title moves upward by `56px` in `240ms cubic-bezier(.22,1,.36,1)`.
 - Page-specific entry and visible-state rules must exclude `.is-major-title-exiting`, so they cannot restore full opacity or cancel the upward exit transform. Do not lock an exiting sticky title to `opacity:1` or `transform:none`.
 - Pages without a sticky major title keep their existing reveal behavior. The shared runtime respects reduced-motion preferences.
+
+
+## Sticky chapter-title exit
+
+- Applies to every `.hm-section` whose chapter heading uses sticky positioning.
+- The heading remains fully visible while pinned within its section.
+- As the section boundary begins pushing the pinned heading above its sticky anchor, set the heading opacity directly to 0%. Do not interpolate the opacity or add a separate transform.
+- On reverse scroll, restore opacity as soon as the section boundary releases the heading.
+- The shared runtime is owned by `design-system/animation.js`; pages must use the same rule instead of page-specific exit timing.
+- Reduced-motion preferences disable scroll-driven motion.
