@@ -92,7 +92,7 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
   audit.sectionScreenshots = [];
   for (const id of sectionIds) {
     await page.evaluate(sectionId => document.getElementById(sectionId)?.scrollIntoView({ block: "start", behavior: "auto" }), id);
-    await page.waitForTimeout(350);
+    // Allow the candidate's title-rise transition to finish before comparing the visible frame.\n    await page.waitForTimeout(1200);
     const screenshotName = `himart-${name}-${id}.png`;
     await page.screenshot({ path: join(artifactDir, screenshotName), fullPage: false });
     audit.sectionScreenshots.push(screenshotName);
