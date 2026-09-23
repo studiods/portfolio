@@ -1,11 +1,12 @@
 import { expect, test } from "@playwright/test";
-import { mkdir, readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const artifactDir = resolve(root, process.env.HIMART_ARTIFACT_DIR ?? "artifacts");
+const liveUrl = "https://shindongsik.com/himart.html";
 let server;
 let pageUrl;
 const titles = [
@@ -26,6 +27,70 @@ async function revealEntirePage(page) {
   }
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(250);
+}
+
+async function capturePage(page, { name, url, viewport, waitForRuntime }) {
+  const audit = { name, url, viewport, runtimeErrors: [], failedResponses: [] };
+  const recordPageError = error => audit.runtimeErrors.push(error.message);
+  const recordConsoleError = message => {
+    if (message.type() === "error") audit.runtimeErrors.push(message.text());
+  };
+  const recordFailedResponse = response => {
+    if (response.status() >= 400) audit.failedResponses.push(`${response.status()} ${response.url()}`);
+  };
+
+  page.on("pageerror", recordPageError);
+  page.on("console", recordConsoleError);
+  page.on("response", recordFailedResponse);
+  await page.setViewportSize(viewport);
+  await page.goto(url, { waitUntil: "load" });
+  await page.waitForTimeout(waitForRuntime);
+  await revealEntirePage(page);
+  audit.state = await page.evaluate(sectionIds => ({
+    pageHeight: document.documentElement.scrollHeight,
+    titles: [...document.querySelectorAll(".hm-section-title")].map(node => node.textContent.trim()),
+    sections: sectionIds.map(id => {
+      const section = document.getElementById(id);
+      const head = section?.querySelector(":scope .hm-section-head");
+      const rail = section?.querySelector(":scope .hm-wide-right-rail");
+      const sectionRect = section?.getBoundingClientRect();
+      const headRect = head?.getBoundingClientRect();
+      const railRect = rail?.getBoundingClientRect();
+      return {
+        id,
+        exists: Boolean(section),
+        title: head?.querySelector(".hm-section-title")?.textContent.trim() ?? null,
+        headCount: section ? section.querySelectorAll(":scope .hm-section-head").length : 0,
+        railCount: section ? section.querySelectorAll(":scope .hm-wide-right-rail").length : 0,
+        top: sectionRect ? Math.round(sectionRect.top + window.scrollY) : null,
+        height: sectionRect ? Math.round(sectionRect.height) : null,
+        headTop: headRect ? Math.round(headRect.top + window.scrollY) : null,
+        railTop: railRect ? Math.round(railRect.top + window.scrollY) : null,
+      };
+    }),
+  }), ["brand", "data", "journey", "direction"]);
+  await page.screenshot({ path: join(artifactDir, `himart-${name}.png`), fullPage: true });
+  page.off("pageerror", recordPageError);
+  page.off("console", recordConsoleError);
+  page.off("response", recordFailedResponse);
+  return audit;
+}
+
+function layoutComparison(candidate, live) {
+  const ratio = (value, total) => value === null ? null : Number((value / total).toFixed(4));
+  return candidate.state.sections.map((section, index) => {
+    const reference = live.state.sections[index];
+    return {
+      id: section.id,
+      titleMatches: section.title === reference.title,
+      headCountMatches: section.headCount === reference.headCount,
+      railCountMatches: section.railCount === reference.railCount,
+      candidateTopRatio: ratio(section.top, candidate.state.pageHeight),
+      liveTopRatio: ratio(reference.top, live.state.pageHeight),
+      candidateHeightRatio: ratio(section.height, candidate.state.pageHeight),
+      liveHeightRatio: ratio(reference.height, live.state.pageHeight),
+    };
+  });
 }
 
 test.beforeAll(async () => {
@@ -67,28 +132,21 @@ test.afterAll(async () => {
 });
 
 test("captures the fully revealed static Himart candidate", async ({ page }) => {
-  const runtimeErrors = [];
-  const failedResponses = [];
-  page.on("pageerror", error => runtimeErrors.push(error.message));
-  page.on("console", message => {
-    if (message.type() === "error") runtimeErrors.push(message.text());
-  });
-  page.on("response", response => {
-    if (response.status() >= 400) failedResponses.push(`${response.status()} ${response.url()}`);
-  });
-
   await mkdir(artifactDir, { recursive: true });
+  const comparison = [];
 
   for (const [name, viewport] of [["desktop", { width: 1302, height: 900 }], ["mobile", { width: 390, height: 844 }]]) {
-    await page.setViewportSize(viewport);
-    await page.goto(pageUrl, { waitUntil: "load" });
-    await page.waitForTimeout(350);
-    await revealEntirePage(page);
+    const candidate = await capturePage(page, { name: `candidate-${name}`, url: pageUrl, viewport, waitForRuntime: 350 });
+    const live = await capturePage(page, { name: `live-${name}`, url: liveUrl, viewport, waitForRuntime: 20000 });
 
-    await expect(page.locator(".hm-section-title").allTextContents()).resolves.toEqual(expect.arrayContaining(titles));
-    await page.screenshot({ path: join(artifactDir, `himart-${name}.png`), fullPage: true });
+    expect(candidate.runtimeErrors).toEqual([]);
+    expect(candidate.failedResponses).toEqual([]);
+    expect(candidate.state.titles).toEqual(expect.arrayContaining(titles));
+    expect(live.state.titles).toEqual(expect.arrayContaining(titles));
+    expect(candidate.state.sections.map(section => section.exists)).toEqual([true, true, true, true]);
+    expect(live.state.sections.map(section => section.exists)).toEqual([true, true, true, true]);
+    comparison.push({ viewport: name, candidate, live, sections: layoutComparison(candidate, live) });
   }
 
-  expect(runtimeErrors).toEqual([]);
-  expect(failedResponses).toEqual([]);
+  await writeFile(join(artifactDir, "himart-live-candidate-comparison.json"), `${JSON.stringify(comparison, null, 2)}\n`);
 });
