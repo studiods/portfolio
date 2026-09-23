@@ -52,6 +52,10 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
   audit.state = await page.evaluate(sectionIds => ({
     pageHeight: document.documentElement.scrollHeight,
     titles: [...document.querySelectorAll(".hm-section-title")].map(node => node.textContent.trim()),
+    hiddenRevealCount: [...document.querySelectorAll(".hm-reveal, .title-rise-target")].filter(node => {
+      const style = getComputedStyle(node);
+      return style.display === "none" || style.visibility === "hidden" || Number(style.opacity) < 0.01;
+    }).length,
     sections: sectionIds.map(id => {
       const section = document.getElementById(id);
       const head = section?.querySelector(":scope .hm-section-head");
@@ -144,6 +148,7 @@ test("captures the fully revealed static Himart candidate", async ({ page }) => 
 
     expect(candidate.runtimeErrors).toEqual([]);
     expect(candidate.failedResponses).toEqual([]);
+    expect(candidate.state.hiddenRevealCount).toBe(0);
     expect(candidate.state.titles).toEqual(expect.arrayContaining(titles));
     expect(live.state.titles).toEqual(expect.arrayContaining(titles));
     expect(candidate.state.sections.map(section => section.exists)).toEqual([true, true, true, true]);
