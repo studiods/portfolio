@@ -146,7 +146,9 @@
 <!-- compatibility content writer removed in optimized candidate; latest content is owned by test-content-loader + test-content-final -->
 <script src="./design-system/animation.js?v=20260920-2"></script>
 <script src="./design-system/test-content-loader.js?v=20260922-7"></script>
-<script src="./design-system/test-content-final.js?v=20260922-5"></script>
+<script id="hm-final-after-loader">
+(()=>{'use strict';let loaded=false;const load=()=>{if(loaded)return;loaded=true;const s=document.createElement('script');s.src='./design-system/test-content-final.js?v=20260922-5';s.dataset.hmFinalOwner='loader-complete';document.body.appendChild(s)};document.addEventListener('himart:narrative-ready',load,{once:true});window.setTimeout(load,20000)})();
+</script>
 <script src="./design-system/himart-appliance-purchase-flow.js?v=20260920-1"></script>
 <script src="./design-system/scramble-final.js?v=20260922-2"></script>
 <script src="./design-system/navigation.js?v=20260921-5"></script>
