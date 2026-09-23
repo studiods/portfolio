@@ -53,12 +53,17 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
   word-break:keep-all;
 }
 
-/* Both 04.1 and 04.2 use the same Reuse 04.1 paired mockup carousel exterior. */
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 > .prototype-case-list{
-  margin-top:80px!important;
+/* Both 04.1 and 04.2 use the same Reuse 04.1 paired mockup carousel exterior.
+   Keep one explicit 40px gap between the strategy/title block and the mockup.
+   Remove inherited list/viewport/track spacing so no second gap is added. */
+html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list{
+  margin:40px 0 0!important;
+  padding:0!important;
 }
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 > .prototype-case-list{
-  margin-top:40px!important;
+html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-viewport,
+html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-track{
+  margin:0!important;
+  padding:0!important;
 }
 
 /* 04.1 confidentiality matte only.
@@ -112,36 +117,51 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   display:none!important;
 }
 
-/* HIMART 04.2 — exact 375 × 812 device geometry.
-   The shared prototype component uses 1440 × 2964, so 04.2 must override the
-   OUTER mockup ratio itself, not only the inner screen. The image fills the
-   complete device box and the bottom frame stays inside that box. */
+/* HIMART 04.2 — image-driven device geometry.
+   Do not force the uploaded screens into a fixed 375 × 812 box. The intrinsic
+   image ratio now determines the screen/device height, so the top and bottom
+   cannot be clipped. Re-assert the same exterior frame used by 04.1. */
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .prototype-case-viewport{
-  padding-bottom:2px!important;
+  padding:0!important;
   box-sizing:border-box!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-mockup{
   height:auto!important;
-  aspect-ratio:375/812!important;
-  padding:0!important;
+  aspect-ratio:auto!important;
+  padding:7px!important;
+  border:1px solid rgba(255,255,255,.42)!important;
+  border-radius:34px!important;
+  background:#0D0D0D!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
   overflow:visible!important;
   box-sizing:border-box!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen{
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
   aspect-ratio:auto!important;
   overflow:hidden!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-radius:28px!important;
   box-sizing:border-box!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen.is-scrollable img{
   display:block!important;
   width:100%!important;
-  height:100%!important;
+  height:auto!important;
   max-width:none!important;
-  aspect-ratio:375/812!important;
+  aspect-ratio:auto!important;
   object-fit:contain!important;
   object-position:top center!important;
+}
+@media(max-width:780px){
+  html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-mockup{
+    padding:4px!important;
+    border-radius:18px!important;
+  }
+  html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen{
+    border-radius:15px!important;
+  }
 }
 
 /* 04.1 / 04.2 paired mockup geometry.
