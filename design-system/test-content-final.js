@@ -2,8 +2,6 @@
    Single reconciliation pass; layout and animation remain in CSS/animation.js. */
 (() => {
   const main = document.getElementById('live-main');
-  const fallbackMarkup = main?.innerHTML || '';
-  let restoredFallback = false;
   
   /* ROLE DEFINITION titles intentionally remain content-specific here.
      No shared design-system wrapping rule is introduced yet. */
