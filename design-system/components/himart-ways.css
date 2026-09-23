@@ -548,10 +548,12 @@ html body.ways-page .ways-hm-flow--legacy .flow-arrow::before{
 /* HIMART WAYS v4 — R&R / operating-model narrative refinement.
    Page-specific composition only. Shared typography/tokens remain design-system owned. */
 
-/* 01.2 synthesis: same blue line, softer 10% gradient. */
+/* 01.2 synthesis: plain, flush-left summary without decorative rule or gradient. */
 html body.ways-page .ways-synthesis{
-  border-top:1px solid var(--hm-blue)!important;
-  background:linear-gradient(to bottom,rgba(0,166,237,.10) 0,rgba(0,166,237,0) 100px)!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  border-top:0!important;
+  background:none!important;
 }
 
 /* 01.3 — compact legacy flow. Shared flow type is already defined globally; this layer only
