@@ -54,10 +54,10 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
 }
 
 /* Both 04.1 and 04.2 use the same Reuse 04.1 paired mockup carousel exterior.
-   Keep one explicit 40px gap between the strategy/title block and the mockup.
+   Keep one explicit 24px gap between the strategy/title block and the mockup.
    Remove inherited list/viewport/track spacing so no second gap is added. */
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list{
-  margin:40px 0 0!important;
+  margin:24px 0 0!important;
   padding:0!important;
 }
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-viewport,
