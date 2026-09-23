@@ -40,7 +40,7 @@
     document.getElementById('hm-wide-boot-lock')?.remove();
   };
 
-  const unlockJourneyGeometry = () => {
+  const notifyLayoutReady = () => {\n    document.dispatchEvent(new CustomEvent('himart:layout-ready'));\n  };\n\n  const unlockJourneyGeometry = () => {
     document.body?.classList.add('hm-journey-geometry-ready');
   };
 
