@@ -63,8 +63,12 @@ html body.himart-commerce-page #direction :is(.himart-direction-041,.himart-dire
    Keep a deliberate 40px gap between the strategy text/cards and the mockup.
    Remove inherited viewport/track spacing so no second gap is added. */
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list{
-  margin:40px 0 0!important;
+  margin:52px 0 0!important;
   padding:0!important;
+}
+/* Keep the requested 36px separation from each mockup bottom to its title. */
+html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .prototype-case-copy{
+  margin-top:36px!important;
 }
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-viewport,
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) > .prototype-case-list .prototype-case-track{

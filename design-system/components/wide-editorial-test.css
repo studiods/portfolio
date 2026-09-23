@@ -260,13 +260,15 @@
   }
 
   /* Major title uses the same 56px entry distance as the first right-hand content. */
+  /* Match the standard editorial reveal: titles remain readable before entry and
+     settle to full opacity only when their reveal owner becomes visible. */
   html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal{
-    opacity:.3!important;
+    opacity:.88!important;
     transform:translate3d(0,var(--hm-wide-rise-distance),0)!important;
     transition:opacity .24s ease-out,transform .88s cubic-bezier(.22,1,.36,1)!important;
   }
-  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal.is-visible{
-    opacity:var(--hm-wide-title-exit-opacity,1)!important;
+  html body.himart-page-body.hm-wide-editorial-test #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head.hm-reveal:is(.is-visible,.is-in){
+    opacity:1!important;
     transform:none!important;
   }
 
