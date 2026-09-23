@@ -313,6 +313,19 @@ html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .
   }
 }
 
+/* REUSE 04.1 compact rhythm parity with HIMART 04.1 / 04.2.
+   Runtime replaces .phone-gallery with .prototype-case-list, so zero the
+   shared carousel margin here as final authority. */
+html body.himart-page-body.reuse-current #direction .prototype-case-list{
+  margin:0!important;
+  padding:0!important;
+}
+html body.himart-page-body.reuse-current #direction .prototype-case-viewport,
+html body.himart-page-body.reuse-current #direction .prototype-case-track{
+  margin:0!important;
+  padding:0!important;
+}
+
 
 /* REUSE 04.1 — align paired mockups to the two strategy-card left rails. */
 @media(min-width:781px){
