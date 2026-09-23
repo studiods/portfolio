@@ -1,11 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { mkdir } from "node:fs/promises";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { mkdir, readFile } from "node:fs/promises";
+import { createServer } from "node:http";
+import { dirname, extname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const pageUrl = pathToFileURL(resolve(root, "himart-optimized-test.html")).href;
 const artifactDir = resolve(root, process.env.HIMART_ARTIFACT_DIR ?? "artifacts");
+let server;
+let pageUrl;
 const titles = [
   "왜 고객들이 하이마트를 선택하지 않는지부터 확인했습니다.",
   "그리고 실제로 고객들이 서비스를 어떻게 이용하고 있는지도 살펴봤습니다.",
@@ -25,6 +27,44 @@ async function revealEntirePage(page) {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(250);
 }
+
+test.beforeAll(async () => {
+  server = createServer(async (request, response) => {
+    const pathname = decodeURIComponent(new URL(request.url, "http://127.0.0.1").pathname);
+    const filePath = resolve(root, `.${pathname === "/" ? "/himart-optimized-test.html" : pathname}`);
+
+    if (filePath !== root && !filePath.startsWith(`${root}/`)) {
+      response.writeHead(403).end();
+      return;
+    }
+
+    try {
+      const body = await readFile(filePath);
+      const contentType = {
+        ".css": "text/css",
+        ".html": "text/html",
+        ".js": "text/javascript",
+        ".json": "application/json",
+        ".mp4": "video/mp4",
+        ".otf": "font/otf",
+        ".png": "image/png",
+        ".webp": "image/webp",
+        ".woff2": "font/woff2",
+      }[extname(filePath)] ?? "application/octet-stream";
+      response.writeHead(200, { "Content-Type": contentType }).end(body);
+    } catch {
+      response.writeHead(404).end();
+    }
+  });
+
+  await new Promise(resolveServer => server.listen(0, "127.0.0.1", resolveServer));
+  const { port } = server.address();
+  pageUrl = `http://127.0.0.1:${port}/himart-optimized-test.html`;
+});
+
+test.afterAll(async () => {
+  await new Promise(resolveServer => server.close(resolveServer));
+});
 
 test("captures the fully revealed static Himart candidate", async ({ page }) => {
   const runtimeErrors = [];
