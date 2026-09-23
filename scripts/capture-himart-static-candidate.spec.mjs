@@ -68,6 +68,37 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
       className: node.className,
       text: node.textContent.trim().slice(0, 100),
     })),
+    flowMetrics: (() => {
+      const block = document.querySelector("#journey .journey-flow-block");
+      const row = block?.querySelector(".flow-row");
+      const group = block?.querySelector(".flow-group");
+      const cluster = block?.querySelector(".wide-flow-cluster-inner");
+      const node = block?.querySelector(".flow-node");
+      const read = element => {
+        if (!element) return null;
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return {
+          className: element.className,
+          rect: {
+            top: Math.round(rect.top + window.scrollY),
+            left: Math.round(rect.left),
+            width: Math.round(rect.width),
+            height: Math.round(rect.height),
+          },
+          display: style.display,
+          width: style.width,
+          maxWidth: style.maxWidth,
+          height: style.height,
+          maxHeight: style.maxHeight,
+          gap: style.gap,
+          gridTemplateColumns: style.gridTemplateColumns,
+          flexBasis: style.flexBasis,
+          padding: style.padding,
+        };
+      };
+      return { block: read(block), group: read(group), row: read(row), cluster: read(cluster), node: read(node) };
+    })(),
     sections: sectionIds.map(id => {
       const section = document.getElementById(id);
       const head = section?.querySelector(":scope .hm-section-head");
