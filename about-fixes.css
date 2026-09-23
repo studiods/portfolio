@@ -527,7 +527,7 @@
   column-gap:var(--gap)!important;
   align-items:center!important;
   min-height:84px!important;
-  padding:0 56px 0 0!important;
+  padding:0!important;
 }
 
 .career-section .career-left{
@@ -571,6 +571,7 @@
 .career-section .career-summary{
   color:#a8a59e;
   word-break:keep-all;
+  padding-right:56px;
 }
 
 .career-section .career-toggle{
