@@ -181,7 +181,7 @@ html body.himart-ax-page #journey .ax-banner-output-carousel .hm-ds-gallery-nav:
 
 /* 03.6 notice — follows the existing portfolio NOTICE note grammar. */
 html body.himart-ax-page #journey .ax-banner-output-notice{
-  margin:30px 0 0!important;
+  margin:20px 0 0!important;
   padding:0!important;
   color:var(--hm-description-color)!important;
   font:300 var(--hm-type-note)/1.6 var(--hm-font-ko)!important;
