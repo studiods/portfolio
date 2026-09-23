@@ -1,6 +1,7 @@
-/* HIMART Editorial Wide Alignment Contract v2.0
+/* HIMART Editorial Wide Alignment Contract v2.1
    One geometric authority for every >=1600px editorial case-study page.
-   The first chapter divider is owned by the right rail itself, never by the first content block. */
+   Chapter-start left/right rails must share one grid-row baseline. Any first right-side
+   block is transform-free so its divider can never drift vertically from the chapter line. */
 :root{--hm-editorial-line-to-title:var(--hm-space-component,40px)}
 @media(min-width:1600px){
   html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-section-head{
@@ -8,6 +9,30 @@
   }
   html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail{
     position:relative!important;grid-row:1!important;align-self:start!important;min-width:0!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important
+  }
+
+  /* Direct-DOM chapter-start pair contract.
+     Reuse does not use .hm-wide-right-rail, so the first authored block must explicitly
+     occupy the same row as the sticky major title. This is structure-based rather than
+     tied to a historical .flow-area, allowing 04.1 prototype-intro and future first
+     subsection types to keep their divider locked to the chapter baseline. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main>:is(#brand,#data,#journey,#direction).hm-section>.hm-wrap>.hm-section-head,
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main>:is(#brand,#data,#journey,#direction).hm-section>.hm-wrap>.hm-section-head + :is(.hm-subsection,.data-list,.flow-area){
+    grid-row:1!important;
+    align-self:start!important;
+    margin-top:0!important;
+    transform:none!important;
+    animation:none!important;
+  }
+
+  /* The first direct-DOM medium block owns its existing divider, but never an offset.
+     The line sits exactly on the shared chapter-start row; only line→title padding
+     remains component-specific. */
+  html body.himart-page-body.hm-wide-editorial-test.reuse-current
+  #live-main>:is(#brand,#journey,#direction).hm-section>.hm-wrap>.hm-section-head + .hm-subsection{
+    border-top:1px solid var(--hm-line-weak)!important;
   }
   html body.himart-page-body.hm-wide-editorial-test #live-main>:is(#brand,#data,#journey,#direction,#reframe,#strategy,#habit,#iteration,#outcome).hm-section>.hm-wrap>.hm-wide-right-rail::before{
     content:""!important;position:absolute!important;z-index:2!important;top:0!important;right:0!important;left:0!important;height:1px!important;background:var(--hm-line-weak)!important;pointer-events:none!important
