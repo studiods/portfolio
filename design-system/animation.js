@@ -396,6 +396,30 @@
       document.querySelectorAll('[data-hm-counter], [data-count]').forEach(registerCounter);
       scanAutoCounters();
       document.querySelectorAll('[data-hm-chart]').forEach(registerChart);
+      document.querySelectorAll('.v9-chart-motion').forEach(el => {
+        if (el.dataset.hmV9ChartBound === '1') return;
+        el.dataset.hmV9ChartBound = '1';
+
+        const activateV9Chart = () => {
+          el.classList.add('is-v9-chart-active');
+          const svg = el.matches('.traffic-v5-live')
+            ? el
+            : el.querySelector('.traffic-v5-live');
+          if (svg) activateTraffic(svg);
+        };
+
+        if (reduce || !('IntersectionObserver' in window)) {
+          activateV9Chart();
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries, currentObserver) => {
+          if (!entries.some(entry => entry.isIntersecting)) return;
+          activateV9Chart();
+          currentObserver.disconnect();
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        observer.observe(el);
+      });
       document.querySelectorAll('[data-hm-video]').forEach(registerVideoSequence);
     };
 
