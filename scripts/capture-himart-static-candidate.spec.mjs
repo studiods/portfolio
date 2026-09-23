@@ -91,6 +91,13 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
           top: Math.round(node.getBoundingClientRect().top + window.scrollY),
           height: Math.round(node.getBoundingClientRect().height),
         })) : [],
+        flowNodes: id === "journey" ? [...section.querySelectorAll(".journey-flow-block .flow-node")].map(node => ({
+          className: node.className,
+          display: getComputedStyle(node).display,
+          top: Math.round(node.getBoundingClientRect().top + window.scrollY),
+          height: Math.round(node.getBoundingClientRect().height),
+          width: Math.round(node.getBoundingClientRect().width),
+        })) : [],
       };
     }),
   }), sectionIds);
