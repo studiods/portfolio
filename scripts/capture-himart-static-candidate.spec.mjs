@@ -68,103 +68,6 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
       className: node.className,
       text: node.textContent.trim().slice(0, 100),
     })),
-    flowMetrics: (() => {
-      const block = document.querySelector("#journey .journey-flow-block");
-      const row = block?.querySelector(".flow-row");
-      const group = block?.querySelector(".flow-group");
-      const cluster = block?.querySelector(".wide-flow-cluster-inner");
-      const node = block?.querySelector(".flow-node");
-      const read = element => {
-        if (!element) return null;
-        const rect = element.getBoundingClientRect();
-        const style = getComputedStyle(element);
-        return {
-          className: element.className,
-          rect: {
-            top: Math.round(rect.top + window.scrollY),
-            left: Math.round(rect.left),
-            width: Math.round(rect.width),
-            height: Math.round(rect.height),
-          },
-          display: style.display,
-          width: style.width,
-          maxWidth: style.maxWidth,
-          height: style.height,
-          maxHeight: style.maxHeight,
-          gap: style.gap,
-          gridTemplateColumns: style.gridTemplateColumns,
-          flexBasis: style.flexBasis,
-          padding: style.padding,
-          inlineStyle: element.getAttribute("style"),
-          customProperties: {
-            hmHjNodeSize: style.getPropertyValue("--hm-hj-node-size").trim(),
-            hmJourneyGap: style.getPropertyValue("--hm-journey-gap").trim(),
-            hmJourneyNodePad: style.getPropertyValue("--hm-journey-node-pad").trim(),
-          },
-        };
-      };
-      return { block: read(block), group: read(group), row: read(row), cluster: read(cluster), node: read(node) };
-    })(),
-    directionMetrics: ["04.1", "04.2"].map(key => {
-      const root = document.querySelector(`[data-himart-direction-section="${key}"]`);
-      const read = element => {
-        if (!element) return null;
-        const rect = element.getBoundingClientRect();
-        const style = getComputedStyle(element);
-        return {
-          className: element.className,
-          rect: {
-            top: Math.round(rect.top + window.scrollY),
-            left: Math.round(rect.left),
-            width: Math.round(rect.width),
-            height: Math.round(rect.height),
-          },
-          display: style.display,
-          position: style.position,
-          visibility: style.visibility,
-          opacity: style.opacity,
-          padding: style.padding,
-          margin: style.margin,
-          gap: style.gap,
-          overflow: style.overflow,
-          inlineStyle: element.getAttribute("style"),
-        };
-      };
-      return {
-        key,
-        root: read(root),
-        directChildren: root ? [...root.children].map(read) : [],
-        grids: root ? [...root.querySelectorAll(".ax-friction-grid, .prototype-case-list, .prototype-case-viewport, .prototype-case-track")].map(read) : [],
-        cases: root ? [...root.querySelectorAll(".prototype-case")].map(element => ({
-          ...read(element),
-          ariaHidden: element.getAttribute("aria-hidden"),
-          slide: element.getAttribute("data-reuse-prototype-slide"),
-        })) : [],
-        cards: root ? [...root.querySelectorAll(".ax-friction-card")].map(card => ({
-          ...read(card),
-          h4: read(card.querySelector("h4")),
-          p: read(card.querySelector("p")),
-        })) : [],
-        activeCase: root ? (() => {
-          const active = root.querySelector(".prototype-case[aria-hidden=\"false\"]");
-          return active ? {
-            rect: read(active),
-            mockups: [...active.querySelectorAll(".galaxy-ultra-mockup")].map(mockup => ({
-              ...read(mockup),
-              image: (() => {
-                const image = mockup.querySelector("img");
-                return image ? {
-                  complete: image.complete,
-                  naturalWidth: image.naturalWidth,
-                  naturalHeight: image.naturalHeight,
-                  currentSrc: image.currentSrc,
-                } : null;
-              })(),
-            })),
-          } : null;
-        })() : null,
-      };
-    }),
     sections: sectionIds.map(id => {
       const section = document.getElementById(id);
       const head = section?.querySelector(":scope .hm-section-head");
@@ -293,6 +196,8 @@ test("captures the fully revealed static Himart candidate", async ({ page }) => 
     expect(live.state.titles).toEqual(expect.arrayContaining(titles));
     expect(candidate.state.sections.map(section => section.exists)).toEqual([true, true, true, true]);
     expect(live.state.sections.map(section => section.exists)).toEqual([true, true, true, true]);
+    const sectionGeometry = state => state.sections.map(({ id, top, height, headTop, railTop }) => ({ id, top, height, headTop, railTop }));
+    expect(sectionGeometry(candidate.state)).toEqual(sectionGeometry(live.state));
     comparison.push({ viewport: name, candidate, live, sections: layoutComparison(candidate, live) });
   }
 
