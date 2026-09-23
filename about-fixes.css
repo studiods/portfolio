@@ -523,7 +523,7 @@
 .career-section .career-row-v2{
   position:relative!important;
   display:grid!important;
-  grid-template-columns:minmax(336px,1.08fr) minmax(0,1.32fr)!important;
+  grid-template-columns:minmax(280px,.9fr) minmax(0,1.5fr)!important;
   column-gap:var(--gap)!important;
   align-items:center!important;
   min-height:84px!important;
