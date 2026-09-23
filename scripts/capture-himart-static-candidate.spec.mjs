@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const artifactDir = resolve(root, process.env.HIMART_ARTIFACT_DIR ?? "artifacts");
 const liveUrl = "https://shindongsik.com/himart.html";
+const sectionIds = ["brand", "data", "journey", "direction"];
 let server;
 let pageUrl;
 const titles = [
@@ -86,8 +87,18 @@ async function capturePage(page, { name, url, viewport, waitForRuntime }) {
         railTop: railRect ? Math.round(railRect.top + window.scrollY) : null,
       };
     }),
-  }), ["brand", "data", "journey", "direction"]);
+  }), sectionIds);
   await page.screenshot({ path: join(artifactDir, `himart-${name}.png`), fullPage: true });
+  audit.sectionScreenshots = [];
+  for (const id of sectionIds) {
+    await page.evaluate(sectionId => document.getElementById(sectionId)?.scrollIntoView({ block: "start", behavior: "auto" }), id);
+    await page.waitForTimeout(350);
+    const screenshotName = `himart-${name}-${id}.png`;
+    await page.screenshot({ path: join(artifactDir, screenshotName), fullPage: false });
+    audit.sectionScreenshots.push(screenshotName);
+  }
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(250);
   page.off("pageerror", recordPageError);
   page.off("console", recordConsoleError);
   page.off("response", recordFailedResponse);
