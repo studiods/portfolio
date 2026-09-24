@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=1180">
 <title>SHIN DONG SIK — UX &amp; Product Design Lead</title>
 <style>
-@page{size:A4;margin:0}
+@page{size:A4;margin:42.333mm 21.167mm}
 :root{--type-small:10px;--type-body:14px;--type-title:16px;--type-company:20px;--weight-light:300;--weight-medium:500;--major-gap:112px;--side-space:96px;--exp-gap:28px;--project-rule-space:28px}
 *{box-sizing:border-box}
 @font-face{font-family:"Pretendard";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
@@ -245,6 +245,30 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
     background:#fff;
     box-shadow:0 12px 40px rgba(0,0,0,.10)
   }
+}
+@media print{
+  html,body{
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+    box-shadow:none!important
+  }
+  .page{
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important
+  }
+  .header{padding:0 0 40mm!important}
+  .page:first-of-type{margin-bottom:var(--major-gap)!important}
+  .page:last-of-type{padding-bottom:0!important}
+  .project,.info-block{break-inside:avoid-page;page-break-inside:avoid}
 }
 </style>
 </head>
