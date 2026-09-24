@@ -10,6 +10,11 @@ const SPECIAL=[
   'himart-narrative-v2-production-base.js',
   'himart-narrative-v2-production-runtime.js'
 ];
+const SCRIPT_PATH_ALIASES=new Map([
+  ['about-page.js','design-system/pages/about/about-page.js'],
+  ['design-system/himart-ways-v4.js','design-system/pages/himart-ways/ways-runtime.js']
+]);
+const canonicalScriptPath=file=>SCRIPT_PATH_ALIASES.get(file)||file;
 
 const git=(args,allowFail=false)=>{
   try{return execFileSync('git',args,{encoding:'utf8',stdio:['ignore','pipe',allowFail?'ignore':'pipe']});}
@@ -62,7 +67,7 @@ function snapshot(ref){
     const content=show(ref,file);
     if(!content)continue;
     const values=jsText(content);
-    if(values.length)result[file]=values;
+    if(values.length)result[canonicalScriptPath(file)]=values;
   }
   return result;
 }

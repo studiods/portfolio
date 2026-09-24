@@ -40,7 +40,7 @@
 텍스트가 길어 깨질 경우 container/grid/gap → type scale/line-height/tracking → wrapping → breakpoint 순으로 해결한다. 그래도 copy 수정이 필요하면 먼저 사용자 승인을 받는다.
 
 ## Runtime single-source rule
-page-authored text를 source of truth로 둔다. runtime은 이동·복원할 수 있지만 다른 문장으로 치환하지 않는다. fallback이 필요하면 canonical copy와 문자 단위로 동일하게 유지한다.
+page-authored text를 source of truth로 둔다. runtime은 이동·복원할 수 있지만 다른 문장으로 치환하지 않는다. fallback이 필요하면 canonical copy와 문자 단위로 동일하게 유지한다. 같은 책임의 후속 수정은 새 버전 파일을 만들지 않고 기존 기준 runtime을 수정한다. 텍스트를 포함한 runtime 파일을 이동할 때는 이동 자체가 copy 변경 승인이 되지 않으며, scripts/content-lock.mjs에 이전 경로와 새 경로를 같은 snapshot identity로 연결해 실제 문구가 유지되는지 검사한다.
 
 ## 승인 커밋
 승인된 copy 변경 커밋에만 `[copy-approved]`를 사용한다. 사용자가 해당 요청에서 카피 변경을 명시적으로 허용하지 않았다면 에이전트가 이 마커를 붙이는 행위를 금지한다.
