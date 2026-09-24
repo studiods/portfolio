@@ -8,7 +8,7 @@
     style.id = 'reuse-02-1-arrow-rule';
     style.textContent = `
       html body.reuse-current .reuse-proof-map__arrow{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:28px!important;width:100%!important;height:64px!important;min-height:64px!important;flex:0 0 64px!important;align-items:center!important;justify-items:center!important}
-      html body.reuse-current .reuse-proof-map__arrow-item{position:relative!important;display:block!important;width:56px!important;height:24px!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='24' viewBox='0 0 56 24'%3E%3Cpath d='M3 2 L28 22 L53 2' fill='none' stroke='%23FFFFFF' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E") center/56px 24px no-repeat!important}
+      html body.reuse-current .reuse-proof-map__arrow-item{position:relative!important;display:block!important;width:44.8px!important;height:19.2px!important;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='24' viewBox='0 0 56 24'%3E%3Cpath d='M3 2 L28 22 L53 2' fill='none' stroke='%23FFFFFF' stroke-opacity='.30' stroke-width='1' stroke-linecap='square' stroke-linejoin='miter'/%3E%3C/svg%3E") center/44.8px 19.2px no-repeat!important}
       html body.reuse-current .reuse-proof-map__arrow-item::before,html body.reuse-current .reuse-proof-map__arrow-item::after{content:none!important;display:none!important}
       @media(max-width:980px) and (min-width:781px){html body.reuse-current .reuse-proof-map__arrow{gap:20px!important}}
       @media(max-width:780px){html body.reuse-current .reuse-proof-map__arrow{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important;height:56px!important;min-height:56px!important;flex-basis:56px!important}}
@@ -31,7 +31,7 @@
 
     const section03_1 = findSection('03.1');
     const title03_1 = section03_1?.querySelector('.hm-subtitle');
-    if (title03_1) title03_1.innerHTML = '신뢰, 편의성 제외하고는<br>이미지가 가장 중요한 요소였습니다.';
+    if (title03_1) title03_1.innerHTML = '당연하겠지만 신뢰와 편의성을 제외하면,<br>이미지가 가장 중요한 요소였습니다.';
 
     const section03_2 = findSection('03.2');
     const title03_2 = section03_2?.querySelector('.hm-subtitle');
