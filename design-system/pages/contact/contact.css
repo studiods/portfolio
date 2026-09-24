@@ -43,7 +43,7 @@ body.contact-page-body .works-page{
   z-index:1;
   width:100%;
   min-height:100vh;
-  background:transparent!important;
+  background:transparent;
 }
 
 /* CONTACT must use the same true center lock as the rest of the canonical GNB. */
