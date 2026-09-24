@@ -77,3 +77,80 @@ html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p
   padding-right:0!important;
   text-align:left!important;
 }
+
+
+/* HIMART 01 qualitative color/alignment authority — 2026-09-24 */
+/* Negative voice graph: semantic negative data stays red, overriding the global
+   multi-series blue palette only inside this Himart qualitative comparison. */
+html body.himart-page-body.himart-commerce-page #live-main #brand .voice-group.negative .ring-row .ring-card{
+  --ring:var(--hm-red)!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .voice-group.negative .ring-card :is(h4,.pct){
+  color:var(--hm-red)!important;
+}
+
+/* 01.3 sentiment split: left is positive blue, right is negative red. */
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-graph .sentiment-block{
+  border-top-color:var(--hm-blue)!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-graph .sentiment-block.negative{
+  border-top-color:var(--hm-red)!important;
+}
+
+/* 01.3 feedback summary: no gradient or boxed inset. Align text flush with each
+   semantic rail and let rail color own title/body color. */
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  column-gap:20px!important;
+  border:0!important;
+  background:transparent!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-card{
+  min-height:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:24px 0 0!important;
+  border:0!important;
+  border-top:1px solid var(--hm-blue)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  text-align:left!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-card.negative{
+  border-top-color:var(--hm-red)!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-card::before,
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-card::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-card :is(h5,p){
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+  color:var(--hm-blue)!important;
+  text-align:left!important;
+}
+html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-card.negative :is(h5,p){
+  color:var(--hm-red)!important;
+}
+
+/* 01.4 principle-card titles use the primary Himart blue. */
+html body.himart-page-body.himart-commerce-page #live-main #brand .direction-list .direction-card h4{
+  color:var(--hm-blue)!important;
+}
+
+@media(max-width:780px){
+  html body.himart-page-body.himart-commerce-page #live-main #brand .sentiment-conclusion .conclusion-grid{
+    grid-template-columns:1fr!important;
+    row-gap:32px!important;
+  }
+}
