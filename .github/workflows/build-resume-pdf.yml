@@ -35,10 +35,10 @@ jobs:
             --disable-gpu \
             --allow-file-access-from-files \
             --no-pdf-header-footer \
-            --print-to-pdf="${GITHUB_WORKSPACE}/assets/docs/Shin_DongSik_Resume_2026.pdf" \
+            --print-to-pdf="${GITHUB_WORKSPACE}/assets/docs/신동식_UX & Product Design Lead.pdf" \
             "file://${GITHUB_WORKSPACE}/assets/docs/resume.html"
-          test -s assets/docs/Shin_DongSik_Resume_2026.pdf
-          file assets/docs/Shin_DongSik_Resume_2026.pdf
+          test -s "assets/docs/신동식_UX & Product Design Lead.pdf"
+          file "assets/docs/신동식_UX & Product Design Lead.pdf"
 
       - name: Commit generated PDF
         shell: bash
@@ -46,7 +46,8 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/docs/Shin_DongSik_Resume_2026.pdf
+          git rm -f --ignore-unmatch assets/docs/Shin_DongSik_Resume_2026.pdf
+          git add "assets/docs/신동식_UX & Product Design Lead.pdf"
           if git diff --cached --quiet; then
             echo "Resume PDF is already up to date."
             exit 0
