@@ -144,3 +144,61 @@
 - 브라우저 검증: 새 캐시 URL himart-system-test.html?cache=full-review-20260906-5에서 히어로 실행 횟수 1회, 실행 중 active=true, 종료 후 원문 복원 확인. 01~04를 순차 스크롤해 각 타이틀의 실행 횟수 1회 이상 확인.
 - 정적 검증: 배포된 animation.js, scramble-final.js 모두 node --check 통과. 애플리케이션 콘솔 오류 없음(브라우저 확장 메타데이터 오류는 페이지 코드와 무관).
 - 운영 himart.html은 SHA 2e911968b521662e3a4493891b570cceaca8715a로 유지되며 변경하지 않았다.
+
+
+## 디자인 시스템 소스 소유권 및 파일 구조 정리 (2026-09-24)
+
+- 최신 main 기준 200개 HTML/CSS/JS 소스를 조사하고 19개 HTML의 직접 참조, CSS @import 및 transitive consumer를 추적했다.
+- 한 페이지만 사용하는 40여 개 stylesheet를 design-system/pages/<slug>/로 이동했다. 공통으로 소비되는 스타일은 design-system/components/에 남기고 HTML link 순서와 query/cache suffix를 보존했다.
+- Himart Ways의 components/himart-ways.css는 이미 v2~v16 레이어를 통합한 canonical stylesheet였다. 미참조 중복 v2, v3, v5, v7~v15 및 himart-ways-title-owner.css를 제거했다.
+- components/himart-ways-v4.css는 Ways 페이지가 아니라 Yanolja System에서만 참조되어 pages/yanolja-system/operating-model.css로 옮겼다.
+- components/himart-ax.css 공유 기반은 유지했다. Himart AX HTML에서 연속으로 로드되던 페이지 전용 v2~v7 CSS 6개는 원래 순서 그대로 이어붙여 pages/himart-ax/himart-ax.css 한 파일로 통합하고 기존 6개 참조를 하나로 대체했다.
+- About/Ways의 텍스트 포함 런타임을 페이지 폴더로 이동하고 Content Lock에 명시적 경로 별칭을 추가했다.
+- AIMMO System/Graphic 등 여러 활성 레이어가 쌓인 페이지는 각 페이지 폴더로 이동하되 HTML 선언 순서를 보존했다. computed/시각 회귀를 검증할 수 없는 레이어는 이번에 합치거나 재배치하지 않았다.
+- HTML의 사용자 노출 문구, 이미지, 영상은 변경하지 않았다. 상대 @import가 있는 Himart CSS는 새 디렉터리 깊이에 맞춰 import 경로만 보정했다.
+
+### 이동 경로 기록
+
+| 기존 경로 | 기준 경로 |
+|---|---|
+| `design-system/components/aimmo-graphic-v2.css` | `design-system/pages/aimmo-graphic/aimmo-graphic-v2.css` |
+| `design-system/components/aimmo-graphic-blue.css` | `design-system/pages/aimmo-graphic/aimmo-graphic-blue.css` |
+| `design-system/components/aimmo-graphic.css` | `design-system/pages/aimmo-graphic/aimmo-graphic.css` |
+| `design-system/components/aimmo-system-v8.css` | `design-system/pages/aimmo-system/aimmo-system-v8.css` |
+| `design-system/components/aimmo-reference-bars-exact.css` | `design-system/pages/aimmo-system/aimmo-reference-bars-exact.css` |
+| `design-system/components/aimmo-system-final.css` | `design-system/pages/aimmo-system/aimmo-system-final.css` |
+| `design-system/components/aimmo-system-v7.css` | `design-system/pages/aimmo-system/aimmo-system-v7.css` |
+| `design-system/components/aimmo-ownership-journey.css` | `design-system/pages/aimmo-system/aimmo-ownership-journey.css` |
+| `design-system/components/aimmo-system-v6.css` | `design-system/pages/aimmo-system/aimmo-system-v6.css` |
+| `design-system/components/aimmo-system-v5.css` | `design-system/pages/aimmo-system/aimmo-system-v5.css` |
+| `design-system/components/aimmo-system-v4.css` | `design-system/pages/aimmo-system/aimmo-system-v4.css` |
+| `design-system/components/aimmo-system-v2.css` | `design-system/pages/aimmo-system/aimmo-system-v2.css` |
+| `design-system/components/aimmo-system.css` | `design-system/pages/aimmo-system/aimmo-system.css` |
+| `design-system/components/contact.css` | `design-system/pages/contact/contact.css` |
+| `design-system/components/reuse-gallery-interaction.css` | `design-system/pages/himart-reuse/reuse-gallery-interaction.css` |
+| `design-system/components/reuse-image-display-grid.css` | `design-system/pages/himart-reuse/reuse-image-display-grid.css` |
+| `design-system/components/reuse-reference-bars.css` | `design-system/pages/himart-reuse/reuse-reference-bars.css` |
+| `design-system/components/reuse-proof-motion.css` | `design-system/pages/himart-reuse/reuse-proof-motion.css` |
+| `design-system/components/himart-team-gallery.css` | `design-system/pages/himart-team/himart-team-gallery.css` |
+| `design-system/components/himart-production-state.css` | `design-system/pages/himart/himart-production-state.css` |
+| `design-system/components/reuse-prototype-cases.css` | `design-system/pages/himart/reuse-prototype-cases.css` |
+| `design-system/components/himart-appliance-purchase-flow.css` | `design-system/pages/himart/himart-appliance-purchase-flow.css` |
+| `design-system/components/himart-direction-implementation.css` | `design-system/pages/himart/himart-direction-implementation.css` |
+| `design-system/components/himart-fluid-responsive-guard.css` | `design-system/pages/himart/himart-fluid-responsive-guard.css` |
+| `design-system/components/himart-fluid-content.css` | `design-system/pages/himart/himart-fluid-content.css` |
+| `design-system/components/himart-commerce.css` | `design-system/pages/himart/himart-commerce.css` |
+| `design-system/components/home-layout-system.css` | `design-system/pages/home/home-layout-system.css` |
+| `design-system/components/nbt-stepup.css` | `design-system/pages/nbt-stepup/nbt-stepup.css` |
+| `design-system/components/stepup-editorial-layout.css` | `design-system/pages/nbt-stepup/stepup-editorial-layout.css` |
+| `design-system/components/trenbe-ut.css` | `design-system/pages/trenbe-ut/trenbe-ut.css` |
+| `design-system/components/work-archive-mobile-stack.css` | `design-system/pages/work-archive/work-archive-mobile-stack.css` |
+| `design-system/components/work-archive-trenbe.css` | `design-system/pages/work-archive/work-archive-trenbe.css` |
+| `design-system/components/work-archive-menu-adaptive.css` | `design-system/pages/work-archive/work-archive-menu-adaptive.css` |
+| `design-system/components/work-archive.css` | `design-system/pages/work-archive/work-archive.css` |
+| `design-system/components/works-archive.css` | `design-system/pages/works/works-archive.css` |
+| `design-system/components/works-aimmo.css` | `design-system/pages/works/works-aimmo.css` |
+| `design-system/components/yanolja-system.css` | `design-system/pages/yanolja-system/yanolja-system.css` |
+| `design-system/components/yanolja-system-base.css` | `design-system/pages/yanolja-system/yanolja-system-base.css` |
+| `design-system/pages/case-framework-guide.css` | `design-system/pages/himart-case-framework-guide/case-framework-guide.css` |
+| `design-system/components/himart-ways-v4.css` | `design-system/pages/yanolja-system/operating-model.css` |
+| `design-system/components/himart-ways.css` | `design-system/pages/himart-ways/himart-ways.css` |
