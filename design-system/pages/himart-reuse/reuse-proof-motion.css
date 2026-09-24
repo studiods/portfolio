@@ -47,17 +47,23 @@ html body.reuse-current #data .reuse-proof-map__arrow::before{
 html body.reuse-current #data .reuse-proof-map__arrow > .reuse-proof-map__arrow-item{
   display:block!important;
   visibility:visible!important;
+  width:44.8px!important;
+  height:19.2px!important;
 }
 @media(max-width:980px) and (min-width:781px){
   html body.reuse-current #data .reuse-proof-map__arrow{gap:20px!important}
 }
 
-/* 02.2 / 03.2 circle typography: title 22px, supporting copy 12px. */
+/* 02.2 / 03.2 circle typography.
+   Titles stay 22px. 02.2 supporting copy is 14px; 03.2 keeps the existing 12px scale. */
 html body.reuse-current #data .reuse-confidence-flow .reuse-confidence-node h4,
 html body.reuse-current #journey .reuse-image-order-flow .reuse-confidence-node h4{
   font-size:22px!important;
 }
-html body.reuse-current #data .reuse-confidence-flow .reuse-confidence-node p,
+html body.reuse-current #data .reuse-confidence-flow .reuse-confidence-node p{
+  font-size:14px!important;
+  line-height:1.45!important;
+}
 html body.reuse-current #journey .reuse-image-order-flow .reuse-confidence-node p{
   font-size:12px!important;
   line-height:1.45!important;
