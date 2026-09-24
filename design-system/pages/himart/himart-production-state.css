@@ -43,23 +43,28 @@ html body.hm-static-presentation.himart-page-body.himart-commerce-page #directio
 }
 
 /* 04.2 production keeps one canonical mockup height.
-   Do not let individual source-image ratios resize the device. */
+   Do not let individual source-image ratios resize the device. Long screens
+   crop at the bottom while the exterior bottom rule remains visible. */
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
   aspect-ratio: 1440 / 2964 !important;
   padding: 7px !important;
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen,
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen.is-scrollable {
   height: 100% !important;
+  max-height: 100% !important;
   overflow: hidden !important;
   overscroll-behavior: none !important;
+  touch-action: auto !important;
 }
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen.is-scrollable img {
+  display: block !important;
   width: 100% !important;
+  max-width: none !important;
   height: auto !important;
   aspect-ratio: auto !important;
-  object-fit: contain !important;
+  object-fit: initial !important;
   object-position: top center !important;
   transform: none !important;
 }
