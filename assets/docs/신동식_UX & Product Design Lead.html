@@ -6,59 +6,203 @@
 <title>SHIN DONG SIK — UX &amp; Product Design Lead</title>
 <style>
 @page{size:A4;margin:0}
+:root{--body-copy:9.55px;--major-gap:100px;--side-space:80px}
 *{box-sizing:border-box}
 @font-face{font-family:"Pretendard";src:url("../../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Regular.otf") format("opentype");font-style:normal;font-weight:500;font-display:swap}
 html,body{margin:0;padding:0;background:#fff;color:#111}
 body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.page{width:210mm;height:297mm;padding:15mm 16mm 14mm 16mm;position:relative;overflow:hidden;background:#fff}
-.page+.page{page-break-before:always}
-.header{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;padding-bottom:33mm}
-.name{font-family:"Averta PE",sans-serif;font-size:33.35px;font-weight:300;letter-spacing:-.045em;line-height:.95}
-.role{margin-top:5mm;font-family:"Averta PE",sans-serif;font-size:8.8px;font-weight:500;letter-spacing:.055em;color:#4e4e4e}
-.meta{font-family:"Averta PE","Pretendard",sans-serif;font-size:7.8px;line-height:1.72;text-align:right;color:#666;letter-spacing:0}
-.continued-header{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:8mm}
-.continued-name{font-family:"Averta PE",sans-serif;font-size:17px;font-weight:300;letter-spacing:-.035em}
-.continued-role{font-family:"Averta PE",sans-serif;font-size:7.2px;font-weight:500;letter-spacing:.045em;color:#777}
-.section{display:grid;grid-template-columns:20% 80%;column-gap:7mm;margin:0}
-.label{font-family:"Averta PE",sans-serif;font-size:8.2px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:#666;padding-top:1.2mm}
-.body{border-top:.45pt solid #222;padding-top:4mm;min-width:0}
-.profile{font-size:9.55px;font-weight:300;line-height:1.68;letter-spacing:-.027em;color:#333;word-break:keep-all}
+.page{
+  width:100%;
+  height:auto;
+  margin:0;
+  padding:0 var(--side-space);
+  position:relative;
+  overflow:visible;
+  background:#fff
+}
+.page+.page{page-break-before:auto}
+.page:first-of-type{margin-bottom:var(--major-gap)}
+.page:last-of-type{padding-bottom:80px}
+.header{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:end;
+  padding:80px 0 33mm
+}
+.name{
+  font-family:"Averta PE",sans-serif;
+  font-size:33.35px;
+  font-weight:300;
+  letter-spacing:-.045em;
+  line-height:.95
+}
+.role{
+  margin-top:5mm;
+  font-family:"Averta PE",sans-serif;
+  font-size:8.8px;
+  font-weight:500;
+  letter-spacing:.055em;
+  color:#4e4e4e
+}
+.meta{
+  font-family:"Averta PE","Pretendard",sans-serif;
+  font-size:7.8px;
+  line-height:1.72;
+  text-align:right;
+  color:#666;
+  letter-spacing:0
+}
+.continued-header,.footer{display:none!important}
+.section{display:block;margin:0}
+.label{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0 0 12px;
+  border-bottom:1px solid #222;
+  font-family:"Averta PE",sans-serif;
+  font-size:8.2px;
+  font-weight:500;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:#666
+}
+.label--continued{display:none}
+.body{
+  min-width:0;
+  border:0;
+  padding:32px 0 0
+}
+body>.page.experience:nth-of-type(n+3) .body{padding-top:0}
+.profile{
+  font-size:var(--body-copy);
+  font-weight:300;
+  line-height:1.68;
+  letter-spacing:-.027em;
+  color:#333;
+  word-break:keep-all
+}
 .profile p{margin:0 0 3.2mm}
 .profile p:first-child{font-weight:500;color:#111}
-.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:4.2mm;margin-top:5.2mm}
+.principles{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4.2mm;
+  margin-top:5.2mm
+}
 .principle{border-top:.35pt solid #c9c9c9;padding-top:2.2mm}
-.principle b{font-family:"Averta PE",sans-serif;font-size:8.4px;font-weight:500;letter-spacing:.06em}
-.principle p{margin:1.2mm 0 0;font-size:7.8px;font-weight:300;line-height:1.52;color:#5c5c5c;letter-spacing:-.023em;word-break:keep-all}
-.profile-outro{font-size:8.4px;line-height:1.62;color:#4f4f4f;margin:5mm 0 0;letter-spacing:-.025em;word-break:keep-all}.profile-cta{font-size:9px;font-weight:500;color:#111;margin-top:4mm}
-.exp-list{border-top:.45pt solid #222}
-.exp{display:grid;grid-template-columns:25% 75%;column-gap:5mm;padding:3.6mm 0 4mm;border-bottom:.35pt solid #d2d2d2;align-items:start}
+.principle b{
+  font-family:"Averta PE",sans-serif;
+  font-size:8.4px;
+  font-weight:500;
+  letter-spacing:.06em
+}
+.principle p,
+.profile-outro,
+.project li,
+.info-block p{
+  font-size:var(--body-copy);
+  font-weight:300;
+  line-height:1.6;
+  letter-spacing:-.025em;
+  word-break:keep-all
+}
+.principle p{margin:1.2mm 0 0;color:#5c5c5c}
+.profile-outro{color:#4f4f4f;margin:5mm 0 0}
+.profile-cta{font-weight:500;color:#111;margin-top:4mm}
+.exp-list{border-top:0}
+.exp{
+  display:grid;
+  grid-template-columns:25% 75%;
+  column-gap:5mm;
+  padding:0 0 36px;
+  border-bottom:.35pt solid #d2d2d2;
+  align-items:start
+}
+.exp+.exp{margin-top:var(--major-gap)}
+body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-gap)}
 .exp-company{padding-right:2mm}
-.company{font-size:10.7px;font-weight:500;line-height:1.3;letter-spacing:-.035em;word-break:keep-all}
-.role-ko{font-size:7.4px;font-weight:300;line-height:1.45;color:#666;margin-top:1.3mm;letter-spacing:-.02em;word-break:keep-all}
+.company{
+  font-size:10.7px;
+  font-weight:500;
+  line-height:1.3;
+  letter-spacing:-.035em;
+  word-break:keep-all
+}
+.role-ko{
+  font-size:8.2px;
+  font-weight:300;
+  line-height:1.5;
+  color:#666;
+  margin-top:1.3mm;
+  letter-spacing:-.02em;
+  word-break:keep-all
+}
 .years{white-space:nowrap}
 .exp-work{min-width:0}
-.project+.project{margin-top:3.3mm;padding-top:3mm;border-top:.3pt solid #e0e0e0}
-.project-head{display:flex;justify-content:space-between;gap:4mm;align-items:baseline;margin-bottom:1.5mm}
-.project-head h3{margin:0;font-size:8.6px;font-weight:500;line-height:1.38;letter-spacing:-.026em;word-break:keep-all}
-.project-head span{font-family:"Averta PE",sans-serif;font-size:6.7px;color:#888;white-space:nowrap}
+.project+.project{
+  margin-top:3.3mm;
+  padding-top:3mm;
+  border-top:.3pt solid #e0e0e0
+}
+.project-head{
+  display:flex;
+  justify-content:space-between;
+  gap:4mm;
+  align-items:baseline;
+  margin-bottom:1.5mm
+}
+.project-head h3{
+  margin:0;
+  font-size:10px;
+  font-weight:500;
+  line-height:1.38;
+  letter-spacing:-.026em;
+  word-break:keep-all
+}
+.project-head span{
+  font-family:"Averta PE",sans-serif;
+  font-size:7.6px;
+  color:#888;
+  white-space:nowrap
+}
 .project ul{list-style:none;padding:0;margin:0}
-.project li{position:relative;padding-left:8px;margin:0 0 .8mm;font-size:7.35px;font-weight:300;line-height:1.4;letter-spacing:-.022em;color:#4a4a4a;word-break:keep-all}
+.project li{
+  position:relative;
+  padding-left:10px;
+  margin:0 0 1.2mm;
+  color:#4a4a4a
+}
 .project li:before{content:"·";position:absolute;left:0;color:#777}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:7mm 9mm}
+.major-gap{height:var(--major-gap)}
+.info-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:var(--major-gap) 9mm
+}
 .info-block{border-top:.45pt solid #222;padding-top:3mm}
-.mini-label{font-family:"Averta PE","Pretendard",sans-serif;font-size:8px;font-weight:500;letter-spacing:.08em;color:#666;margin-bottom:2.4mm}
+.mini-label{
+  font-family:"Averta PE","Pretendard",sans-serif;
+  font-size:8px;
+  font-weight:500;
+  letter-spacing:.08em;
+  color:#666;
+  margin-bottom:2.4mm
+}
 .edu-title{font-size:10px;font-weight:500;letter-spacing:-.03em}
-.info-block p{font-size:8px;font-weight:300;line-height:1.55;color:#555;letter-spacing:-.02em;margin:1mm 0 0;word-break:keep-all}
-.footer{position:absolute;left:16mm;right:16mm;bottom:7mm;display:flex;justify-content:space-between;align-items:center;border-top:.35pt solid #d0d0d0;padding-top:2mm;font-family:"Averta PE",sans-serif;font-size:6.7px;color:#999;letter-spacing:.04em}
-.page.experience .body{padding-top:0;border-top:0}
-.page.experience .exp-list{border-top:.45pt solid #222}
+.info-block p{color:#555;margin:1mm 0 0}
 
 @media screen{
-  html,body{background:#ececec}
-  body{padding:32px 0 64px}
-  .page{margin:0 auto 28px;box-shadow:0 8px 30px rgba(0,0,0,.10)}
+  html{background:#ececec}
+  body{
+    width:min(1180px,100%);
+    margin:0 auto;
+    background:#fff;
+    box-shadow:0 12px 40px rgba(0,0,0,.10)
+  }
 }
 </style>
 </head>
@@ -71,7 +215,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
       <div class="name">SHIN DONG SIK</div>
       <div class="role">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
     </div>
-    <div class="meta">경력 21년 2개월<br>+82 10-3086-5709<br>subtraction.design@gmail.com<br>shindongsik.com</div>
+    <div class="meta">+82 10-3086-5709<br>subtraction.design@gmail.com<br>shindongsik.com</div>
   </header>
   <div class="section">
     <div class="label">Profile</div>
@@ -160,7 +304,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
     <div class="continued-role">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
   </header>
   <div class="section">
-    <div class="label">Experience / Continued</div>
+    <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
 <article class="exp">
   <div class="exp-company">
@@ -285,7 +429,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
     <div class="continued-role">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
   </header>
   <div class="section">
-    <div class="label">Experience / Continued</div>
+    <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
 <article class="exp">
   <div class="exp-company">
@@ -403,7 +547,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
     <div class="continued-role">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
   </header>
   <div class="section">
-    <div class="label">Experience / Continued</div>
+    <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
 <article class="exp">
   <div class="exp-company">
@@ -486,7 +630,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
     <div class="continued-role">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
   </header>
   <div class="section">
-    <div class="label">Experience / Continued</div>
+    <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
 <article class="exp">
   <div class="exp-company">
@@ -515,7 +659,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
     </div>
     <ul><li>국가 재난관리 시스템, KHNP 해외인사관리, KDN 경영목표관리 페이지 UX·GUI 제작</li><li>복잡한 업무 절차와 데이터 구조를 메뉴·대시보드·입력·조회 화면으로 정리</li><li>Yahoo! PAN Media Player, MOCIE Messenger, Combi Suit 인터페이스 제작</li><li>기획·개발 부서 요구사항과 기술 제약 조율, 초기 설계부터 납품 검수까지 참여.</li></ul>
   </section></div>
-</article></div><div style="height:7mm"></div>
+</article></div><div class="major-gap" aria-hidden="true"></div>
 <div class="info-grid">
   <div class="info-block">
     <div class="mini-label">Education</div>
