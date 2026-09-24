@@ -57,9 +57,11 @@ body.works-page-body .works-footer.portfolio-footer{
   margin-top:200px!important;
 }
 
-/* CONTACT remains viewport-fixed; only its inner layout/content is standardized. */
+/* CONTACT remains viewport-fixed; keep the background transparent so the
+   page-level movie and its 70% black veil continue through the footer area. */
 body.contact-page-body .contact-footer.portfolio-footer{
   display:block!important;
+  background:transparent!important;
 }
 
 @media(max-width:780px){
