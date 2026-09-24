@@ -4,10 +4,11 @@
 :root{
   --hm-type-circle-number:28px;
   /* Shared numbered circle-node base scale.
-     Desktop/default state must resolve to 12 / 22 / 12 before any responsive reduction. */
+     Desktop/default state must resolve to 12 / 24 / 14 before any responsive reduction.
+     Only narrow viewports may scale down from this baseline. */
   --hm-type-journey-circle-number:12px;
-  --hm-type-journey-circle-title:22px;
-  --hm-type-journey-circle-body:12px;
+  --hm-type-journey-circle-title:24px;
+  --hm-type-journey-circle-body:14px;
   --hm-circle-title-weight:100;
   --hm-circle-highlight-title-weight:400;
   --hm-rule-to-content-gap:var(--hm-space-component,40px);
@@ -39,10 +40,10 @@ html body.himart-page-body #live-main :is(
 
 
 /* Shared numbered circle-node typography.
-   The initial/default desktop state is always 12 / 22 / 12.
+   The initial/default desktop state is always 12 / 24 / 14.
    Responsive layouts may only scale DOWN after this baseline has been satisfied. */
 html body.himart-page-body #live-main :is(
-  #journey .journey-flow-block .flow-node,
+  #journey .flow-node,
   .reuse-confidence-node,
   .aimmo-ownership-sync__node,
   .aimmo-business-flow > article,
@@ -51,7 +52,7 @@ html body.himart-page-body #live-main :is(
   font-size:var(--hm-type-journey-circle-number)!important;
 }
 html body.himart-page-body #live-main :is(
-  #journey .journey-flow-block .flow-node,
+  #journey .flow-node,
   .reuse-confidence-node,
   .aimmo-ownership-sync__node,
   .aimmo-business-flow > article,
@@ -60,7 +61,7 @@ html body.himart-page-body #live-main :is(
   font-size:var(--hm-type-journey-circle-title)!important;
 }
 html body.himart-page-body #live-main :is(
-  #journey .journey-flow-block .flow-node,
+  #journey .flow-node,
   .reuse-confidence-node,
   .aimmo-ownership-sync__node,
   .aimmo-business-flow > article,
@@ -72,7 +73,7 @@ html body.himart-page-body #live-main :is(
 /* Variable sizing starts only on narrow viewports and never exceeds the desktop baseline. */
 @media(max-width:780px){
   html body.himart-page-body #live-main :is(
-    #journey .journey-flow-block .flow-node,
+    #journey .flow-node,
     .reuse-confidence-node,
     .aimmo-ownership-sync__node,
     .aimmo-business-flow > article,
@@ -81,7 +82,7 @@ html body.himart-page-body #live-main :is(
     font-size:clamp(10px,2.8vw,var(--hm-type-journey-circle-number))!important;
   }
   html body.himart-page-body #live-main :is(
-    #journey .journey-flow-block .flow-node,
+    #journey .flow-node,
     .reuse-confidence-node,
     .aimmo-ownership-sync__node,
     .aimmo-business-flow > article,
@@ -90,7 +91,7 @@ html body.himart-page-body #live-main :is(
     font-size:clamp(18px,5vw,var(--hm-type-journey-circle-title))!important;
   }
   html body.himart-page-body #live-main :is(
-    #journey .journey-flow-block .flow-node,
+    #journey .flow-node,
     .reuse-confidence-node,
     .aimmo-ownership-sync__node,
     .aimmo-business-flow > article,
