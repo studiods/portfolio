@@ -6,7 +6,7 @@
 <title>SHIN DONG SIK — UX &amp; Product Design Lead</title>
 <style>
 @page{size:A4;margin:42.333mm 21.167mm}
-:root{--type-small:10px;--type-body:14px;--type-title:16px;--type-company:20px;--weight-light:300;--weight-medium:500;--major-gap:112px;--company-gap:64px;--side-space:96px;--exp-gap:28px;--project-rule-space:28px}
+:root{--type-small:10px;--type-body:14px;--type-title:16px;--type-company:20px;--weight-light:300;--weight-medium:500;--major-gap:112px;--company-gap:112px;--side-space:96px;--exp-gap:28px;--project-rule-space:28px}
 *{box-sizing:border-box}
 @font-face{font-family:"Pretendard";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
@@ -58,6 +58,8 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
   letter-spacing:0
 }
 .continued-header,.footer{display:none!important}
+.screen-only{display:block}
+.print-only{display:none}
 .section{display:block;margin:0}
 .label{
   display:block;
@@ -247,6 +249,9 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   }
 }
 @media print{
+  :root{--company-gap:64px}
+  .screen-only{display:none!important}
+  .print-only{display:block!important}
   html,body{
     width:auto!important;
     min-width:0!important;
@@ -286,6 +291,21 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="section">
     <div class="label">Profile</div>
     <div class="body">
+<div class="screen-only">
+<div class="profile">
+  <p>성장하기 위해 끊임없이 노력하는 디자이너, 신동식입니다.</p>
+  <p>저는 Mobile에서부터 AI data, 가전 전문 쇼핑몰에 에 이르기까지 다양한 환경과 서비스를 통해 디자이너로서의 풍부한 경험과 UX 전문 지식을 쌓아왔습니다. 이를 바탕으로 때로는 팀원들의 역량과 경험을 성장시키는 가이더로, 때로는 확고하고 명확한 리더십을 통해 팀의 목표와 일하는 문화를 만들어가는 수장으로서의 역할을 수행해 왔습니다. 최근에는 사용자 경험의 처음과 끝을 아우를 수 있는 체계적인 브랜드 경험을 전달하기 위해 BX와 UX를 총괄하는 리더로서 성장해 나가고 있으며 데이터 수집, 사용자 모델 제작, 사용성 테스트 등 데이터를 수집하고 만드는 과정을 생성형 AI를 통해 제작하는 방법도 학습하며 개인과 팀의 역량 강화를 위해 노력하고 있습니다.</p>
+  <p>경력을 쌓아오면서 가지게 된 세 가지 원칙이 있습니다.</p>
+</div>
+<div class="principles">
+  <div class="principle"><b>WHY</b><p>항상 '왜'라는 질문을 던집니다. 왜 이 프로젝트를 해야 하는지, 왜 사용자들이 이 서비스를 이용해야 하는지 등 근본적인 이유를 팀과 함께 먼저 고민합니다. 그리고 모두가 같은 수준으로 이해할 때까지 소통하고 노력합니다.</p></div>
+  <div class="principle"><b>NO</b><p>기존 정의의 부정에서부터 시작합니다. 누구나 생각할 수 있는 일반적인 접근법은 피하고 목적과 환경, 조건 등을 다각도로 고민하여 최적화된 방법을 찾기 위해 노력합니다. 같은 시선으로 바라봐서는 차이를 만들어 낼 수 없기에 여기에 많은 시간을 할애합니다.</p></div>
+  <div class="principle"><b>DATA</b><p>그때는 맞았지만 지금은 틀릴 수 있습니다. 쌓아온 많은 경험이 현재의 조건에서는 정답이 아닐 수 있기에 참고는 하되 확보된 정성적, 정량적 데이터를 우선하여 문제 해결을 하려고 노력합니다. 만약 데이터가 없다면 데이터를 만들기 위해 노력합니다.</p></div>
+</div>
+<p class="profile-outro">하지만 이 원칙들만을 고집하지 않습니다. 상황과 조건에 맞춰 유동적으로 역할을 변경해 가며 주어진 목표를 달성하기 위해 최대한 노력합니다. 경험이 쌓일수록 끊임없이 학습하고 적응하며, 스스로의 역할을 찾고 만들어가는 것이 점점 더 중요해진다고 생각합니다.</p>
+<p class="profile-outro profile-cta">더 많은 이야기들,<br>같이 한 번 나눠보시죠.</p>
+</div>
+<div class="print-only">
 <div class="profile">
   <p>끊임없이 성장하려는 디자이너, 신동식입니다.</p>
   <p>Mobile부터 AI data, 가전 전문 쇼핑몰까지 다양한 환경에서 UX 경험과 전문성을 쌓았습니다. 팀원의 역량을 키우는 가이더이자 목표와 일하는 문화를 만드는 리더로 일해왔습니다. 최근에는 BX·UX를 아우르는 브랜드 경험을 총괄하며 데이터 수집·사용자 모델·사용성 테스트와 생성형 AI 기반 제작을 업무에 적용해 개인과 팀의 역량을 강화하고 있습니다.</p>
@@ -296,7 +316,9 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="principle"><b>NO</b><p>기존 정의를 의심합니다. 일반적 접근을 피하고 목적·환경·조건을 검토해 최적안을 찾습니다. 같은 시선으로 차이를 만들 수 없기에 시간을 씁니다.</p></div>
   <div class="principle"><b>DATA</b><p>과거의 정답이 지금도 맞다고 보지 않습니다. 경험은 참고하고 정성·정량 데이터를 우선하며, 없으면 직접 만들어 해결합니다.</p></div>
 </div>
-<p class="profile-outro">원칙만 고집하지 않고 상황에 맞춰 역할을 바꾸며 목표를 달성합니다. 경험이 쌓일수록 학습·적응하고 스스로 역할을 만드는 일이 중요하다고 생각합니다.</p><p class="profile-outro profile-cta">더 많은 이야기들,<br>같이 한 번 나눠보시죠.</p></div>
+<p class="profile-outro">원칙만 고집하지 않고 상황에 맞춰 역할을 바꾸며 목표를 달성합니다. 경험이 쌓일수록 학습·적응하고 스스로 역할을 만드는 일이 중요하다고 생각합니다.</p>
+<p class="profile-outro profile-cta">더 많은 이야기들,<br>같이 한 번 나눠보시죠.</p>
+</div></div>
   </div>
   <div class="footer"><span>SHIN DONG SIK · RESUME 2026</span><span>01 / 06</span></div>
 </section>
@@ -310,6 +332,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="section">
     <div class="label">Experience</div>
     <div class="body"><div class="exp-list">
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">롯데하이마트(himart)</div>
@@ -317,53 +340,42 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2025 - 재직중</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>홈·구매여정 개편 총괄</h3>
+      <h3>온라인 커머스 UX 전략·구매여정 개편</h3>
       <span>2025.10 - 2026.08</span>
     </div>
-    <ul><li>홈부터 마이페이지까지 구매여정 문제 정의·UX 방향 수립</li><li>GA 퍼널 분석으로 단계별 이탈 요인과 개선 우선순위 설정</li><li>1·2차 홈, 서브홈·SRP, PDP 콘텐츠 가이드와 상품 모듈·카드 디자인 총괄</li><li>생성형 AI·바이브 코딩으로 사례 분석, 요구사항 구체화, 인터랙션 목업 제작</li><li>PO·개발·온사이트·데이터와 범위·일정·정책 조율, 디자인 리뷰·개발 QA 총괄</li></ul>
+    <ul><li>홈·검색·SRP/PDP·마이페이지까지 전체 구매여정의 문제를 정의하고, GA 퍼널 분석 기반으로 개선 우선순위와 UX 방향 수립</li><li>PO·개발·온사이트·데이터와 정책·범위·일정을 조율하고 디자인 리뷰·개발 QA까지 품질 전반 총괄</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>리유즈(안심 중고) UX·UI 총괄</h3>
+      <h3>신규 서비스 UX 리드 — 리유즈·구독</h3>
       <span>2025.06 - 2026.02</span>
     </div>
-    <ul><li>중고 가전의 검수·상태·배송·설치·보증 불안 요인 조사·문제 정의</li><li>상품화 과정·서비스 정책을 사용자 정보 구조로 전환, 리스트·상세 UX·UI 총괄</li><li>중고 모바일 상품 5단계 상태 등급 체계와 등급별 리스트·상세 표현 설계</li><li>촬영 스튜디오 세팅, 제품 촬영 기준·컷 디렉팅, 상품화 촬영·편집·AI 영상 제작</li><li>AI로 중고 서비스 사례 조사·문제 구조화, 예시 이미지·설명 콘텐츠·인터랙션 검증</li><li>개발 단계 정책·예외 케이스 점검, QA, 운영 의견 반영·후속 개선 팔로우업</li></ul>
+    <ul><li>중고 가전의 상태·배송·설치·보증 불안과 구독의 가격·계약·해지 이해 장벽을 조사해 정보 구조와 핵심 여정 재설계</li><li>리유즈 5단계 상태 등급, 리스트·상세 UX, 구독 탐색~결제·설치·계약 관리 흐름과 UI 품질 총괄</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>구독 UX 기획·설계·UI 총괄</h3>
-      <span>2025.06 - 2026.01</span>
-    </div>
-    <ul><li>가격·계약·해지·소유권·설치·케어 조건의 고객 이해 장벽 조사·문제 정의</li><li>탐색부터 신청·결제·설치·계약 관리까지 구독 여정과 정보 구조 설계</li><li>월 납부금·혜택·계약 조건 비교용 콘텐츠 원칙과 화면별 정보 우선순위 수립</li><li>사업·PO·개발과 정책·예외 조건 조율, 디자이너 리뷰·UI 품질 총괄</li><li>운영 의견을 반영한 결제수단 추가·신청 프로세스 개선</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>AI 프로모션 이미지 제작 체계</h3>
+      <h3>AI·AX 기반 디자인 생산체계 구축</h3>
       <span>2026.05 - 2026.07</span>
     </div>
-    <ul><li>MD가 쓰는 AI 배너·썸네일·프로모션 이미지 제작 도구 기획</li><li>상품군·구도·배경·비율·톤앤매너 옵션과 프롬프트 규칙 정의, 바이브 코딩 제작 디렉팅</li><li>사용 피드백 기반 기능·템플릿 고도화·옵션 확장</li><li>전사 프로모션 타이틀 이미지·페이지·배너 제작·총괄</li><li>AI 결과물의 브랜드 적합성·품질 관리 검수 기준 정의</li></ul>
+    <ul><li>MD가 직접 활용하는 AI 배너·썸네일 제작 도구를 기획하고 옵션·프롬프트·브랜드 검수 기준 정의</li><li>생성형 AI와 바이브 코딩을 사례 조사·요구사항 구체화·목업·인터랙션 검증에 적용해 디자인 생산 방식 확장</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>운영 디자인·기능 개선</h3>
+      <h3>팀빌딩·업무 프로세스·일하는 방식 개선</h3>
       <span>2025.04 - 2026.08</span>
     </div>
-    <ul><li>구독 결제수단, Flux 기능, 홈·상품·프로모션 운영 개선 총괄</li><li>요청 목적·사업 영향도 기반 우선순위 설정, UX 구조 검토·디자인 디렉팅</li><li>AI 기반 타사 사례 리서치와 설계·기획 초안 구체화</li><li>개발 반영 후 정책·화면 예외 케이스 점검·후속 업데이트</li></ul>
+    <ul><li>팀 핵심가치와 UX 문제 해결 원칙, 리뷰·회고·1:1·목표 설정 체계를 정립해 화면 제작 중심에서 문제 해결 중심 조직으로 전환</li><li>쪽지·메일·PPT 중심의 분산 요청을 Teams·Planner 기반 접수·일정·담당·산출물 관리로 전환하고 PO·UX·개발 협업 기준 정리</li></ul>
   </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>UX디자인팀 팀빌딩·온라인 협업</h3>
-      <span>2025.09 - 2025.10</span>
-    </div>
-    <ul><li>팀 핵심가치, UX 문제 해결 원칙, 리뷰·회고·1:1·목표 설정 체계 정의</li><li>화면 제작 중심에서 문제 발견·분석·대안 제안 중심으로 역할·팀 문화 확장</li><li>쪽지·메일·PPT 기반 분산 요청과 반복 재작업 진단, 협업 프로세스 개선</li><li>Teams·Planner Plan 1 기반 업무 접수와 일정·담당·산출물 관리 도입</li><li>PO·UX·개발·온사이트의 회의·리뷰·산출물 관리 기준 정리</li></ul>
-  </section></div>
+  </div>
 </article></div></div>
   </div>
   <div class="footer"><span>SHIN DONG SIK · RESUME 2026</span><span>02 / 06</span></div>
@@ -378,6 +390,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="section">
     <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">에이모(AIMMO)</div>
@@ -385,62 +398,44 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2022 - 2024</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>B2B SaaS UX 강화 전략</h3>
+      <h3>B2B SaaS 제품 UX 전략·고도화 총괄</h3>
       <span>2022.03 - 2024.06</span>
     </div>
-    <ul><li>요구사항 분석·정의와 목표 수립 단계부터 디자이너와 협업</li><li>세부 기획·설계가 목표에 맞도록 디자이너와 소통·가이드</li><li>기능 고도화 개선안·UX 선정을 위해 CS 데이터(설문·FGI 등) 수집·분석</li><li>SaaS·엔터프라이즈·라벨러스·스튜디오 개선·운영의 UX 설계/구현 코칭</li></ul>
+    <ul><li>SaaS·엔터프라이즈·라벨러스·스튜디오 등 주요 제품의 UX 방향 수립과 설계·구현 과정에서 디자이너 코칭</li><li>CS·설문·FGI를 수집·분석해 개선안과 우선순위를 구체화하고 제품 고도화에 반영</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>ADS 디자인 시스템</h3>
+      <h3>ADS 디자인 시스템·운영 효율화</h3>
       <span>2022.03 - 2022.12</span>
     </div>
-    <ul><li>디자이너 인터뷰로 기존 디자인 문제와 리소스 현황 파악·분석</li><li>분석 자료 기반 필요한 시스템 정의, 로드맵 작성·제작</li><li>토큰·라이브러리화로 팀·협업부서 업무/소통 비용 35% 이상 감소(설문)</li></ul>
+    <ul><li>디자이너 인터뷰로 문제와 리소스를 진단하고 시스템 범위·로드맵·토큰·라이브러리 체계 구축</li><li>디자인 시스템 도입 후 팀·협업부서 업무/소통 비용 35% 이상 감소(설문 결과)</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>디자인팀 핵심가치·업무 방식</h3>
-      <span>2022.03 - 2022.04</span>
+      <h3>사용자 데이터·팀 운영 체계 구축</h3>
+      <span>2022.03 - 2024.06</span>
     </div>
-    <ul><li>사내 워크샵으로 필요한 요소와 디자이너의 목표·비전·방향성 정의</li><li>모든 프로젝트·디자인 결과물의 최우선 고려 사항으로 선정</li><li>리뷰·회고·연간 목표 설정 등 팀 업무를 해당 가치 기준으로 운영</li></ul>
+    <ul><li>실 사용자 설문·FGI와 데이터 카테고리화를 통해 정성 정보를 상황·인원별 정량 데이터로 확장</li><li>팀 핵심가치와 일하는 방식, 리뷰·회고·연간 목표의 운영 기준 정의</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>사용자 데이터 수집·생성·분류</h3>
-      <span>2023.12 - 2024.06</span>
-    </div>
-    <ul><li>정성 데이터 확보를 위해 사용자 대상 설문·FGI 진행</li><li>사용자 요구사항과 선결 과제 우선순위 확보 등에 활용</li><li>카테고리화해 상황·인원별 정량 데이터로 활용</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>CES 2023/2024 프로그램·디자인 총괄</h3>
-      <span>2022.12 - 2024.01</span>
-    </div>
-    <ul><li>행사 디자인 컨셉·프로그램 설계를 비지니스 파트와 협업</li><li>부스 위치별 동선 분석과 정보 우선순위 기반 노출 설계</li><li>굿즈·배너·포스터·영상 등 행사 디자인 결과물 디렉팅·검수</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>브랜드 대표 그래픽 정의·제작</h3>
-      <span>2022.12 - 2023.05</span>
-    </div>
-    <ul><li>로고 심볼 기반 에이모 핵심가치·키워드에 맞는 그래픽 컨셉 도출</li><li>에이모 고유 특징 표현과 모듈화로 통일·시스템화</li><li>브랜드 그래픽을 대내외 홍보·마켓팅·인터널 브랜딩 공통 요소로 활용</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>에이모 Official Site 2~3차</h3>
+      <h3>브랜드·대외 경험 디자인 총괄</h3>
       <span>2022.04 - 2024.01</span>
     </div>
-    <ul><li>회사 비전·목표·방향과 사업부 요구사항을 인터뷰·리서치로 수집</li><li>자료 중요도에 따른 노출 우선순위와 톤앤매너 전략 수립</li><li>디자인 컨셉·스타일 정의와 결과물 제작 가이드 수립</li></ul>
-  </section></div>
+    <ul><li>CES 2023/2024 프로그램·부스 정보 구조와 디자인 결과물, 브랜드 대표 그래픽, Official Site 2~3차 제작 총괄</li><li>사업 목표와 브랜드 핵심가치를 그래픽·웹·오프라인 경험으로 연결하는 공통 가이드 수립</li></ul>
+  </section>
+  </div>
 </article>
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">트렌비</div>
@@ -448,61 +443,33 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2021 - 2022</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>신규 서비스 UX·제품 고도화 총괄</h3>
+      <h3>신규 서비스·제품 UX 고도화 총괄</h3>
       <span>2021.03 - 2022.02</span>
     </div>
-    <ul><li>중고거래·가격비교·리뷰 UX 개선의 설계·제작 총괄</li><li>제품 기획·설계·UX디자인 전 과정에 참여, 디자이너·PO와 협업</li><li>개발·기획 등 협업 부서 간 원활한 소통 중재</li></ul>
+    <ul><li>중고거래·가격비교·리뷰 등 핵심 서비스의 UX 설계와 제품 고도화를 총괄하고 PO·개발과 협업</li><li>CS·UT·설문을 통해 문제를 구체화하고 사용자 여정·페르소나·타겟 세분화 기반 UX 전략 수립</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>UX 개선사항 수집·실행</h3>
-      <span>2021.03 - 2022.02</span>
-    </div>
-    <ul><li>CS 개선사항을 PO·PD와 문제·해결 방안으로 구체화</li><li>사용자 요구·이용 패턴 파악을 위한 UT·설문조사</li><li>사용자 여정 지도·페르소나로 UX 설계 대상 구체화</li><li>연령·성별 타겟 세분화 기반 UX 전략 수립·실행</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>디자인 시스템</h3>
+      <h3>디자인 시스템 구축</h3>
       <span>2021.11 - 2022.02</span>
     </div>
-    <ul><li>디자인 과정·리소스 파악과 디자이너 인터뷰로 문제점 분석</li><li>분석 자료 기반 필요한 시스템 정의, 로드맵 작성·제작</li><li>개발팀 협업으로 코드·라이브러리화해 실제 제품 반영</li><li>일관된 사용자 경험과 효율적 협업이 가능한 시스템 구축</li></ul>
+    <ul><li>디자인 과정과 리소스를 진단해 시스템 로드맵을 수립하고 개발팀과 코드·라이브러리화해 제품에 반영</li><li>일관된 사용자 경험과 효율적인 디자인·개발 협업 체계 구축</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>사용자 모델(persona)</h3>
-      <span>2021.06 - 2021.08</span>
+      <h3>BX·브랜드·조직 운영 기준 정립</h3>
+      <span>2021.01 - 2021.06</span>
     </div>
-    <ul><li>부서별 상이한 사용자 기준을 통일하기 위해 진행</li><li>UT로 insight 도출, 사용자 모델 정의용 기본 정보 수집</li><li>FGI·NPS를 통한 정량 데이터 수집</li><li>customer journey map 제작</li></ul>
+    <ul><li>BX 스타일 가이드와 테크기업 이미지를 강화하는 부분 리브랜딩 진행</li><li>디자인 조직의 핵심가치와 일하는 방식을 정의해 제품·브랜드 디자인의 공통 판단 기준으로 활용</li></ul>
   </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>BX 스타일 가이드</h3>
-      <span>2021.03 - 2021.04</span>
-    </div>
-    <ul><li>배너·광고·SNS 제작용 가이드라인 업데이트</li><li>컬러·배경·톤앤매너 기준을 디자이너와 정의</li><li>기존 고급·심플함을 유지하며 패턴·색상 변화로 차별화</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>트렌비 부분 rebranding</h3>
-      <span>2021.03 - 2021.06</span>
-    </div>
-    <ul><li>기술 기반 테크기업 이미지를 강화하는 리브랜딩</li><li>인공지능·트렌봇 등 AI 기술력을 대내외 전달하도록 설계</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>디자인 조직 핵심가치·업무 방식</h3>
-      <span>2021.01 - 2021.03</span>
-    </div>
-    <ul><li>디자인 목표·방식의 답을 정의해 모든 디자인의 구심점으로 활용</li></ul>
-  </section></div>
+  </div>
 </article></div></div>
   </div>
   <div class="footer"><span>SHIN DONG SIK · RESUME 2026</span><span>03 / 06</span></div>
@@ -517,6 +484,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="section">
     <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">야놀자Tech(R&amp;D)</div>
@@ -524,30 +492,26 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2020</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>HST PMS·RS·CM B2B 디자인</h3>
-      <span>2020.08 - 2020.11</span>
-    </div>
-    <ul><li>PMS·RS·CM 등 실사용 제품의 UX 설계·디자인</li><li>매니저 인터뷰로 제품 요구사항·사용 환경 자료 수집·설계 반영</li><li>공통 브랜딩을 유지하며 제품별 컬러·레이아웃으로 일관성·차별화</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>디자인 시스템</h3>
-      <span>2020.08 - 2020.11</span>
-    </div>
-    <ul><li>HST 그룹 제품용 디자인 시스템 제작</li><li>제품 특성·사용자 리서치·분석으로 개선점 도출</li><li>사업 목표·발전 방향 sync 기반 제품 반영 정보 수집</li><li>PO·디자이너·개발자 인터뷰로 디자인·UI/UX 요구사항 수집</li><li>디자인 시스템 컨셉과 세부 시스템 제작</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>Design team Building</h3>
+      <h3>B2B 제품 UX·디자인 시스템</h3>
       <span>2020.07 - 2020.11</span>
     </div>
-    <ul><li>팀원별 역량·제품 이해도 파악</li><li>조직 요구사항 분석과 디자인팀 역량 강화 로드맵 수립</li><li>디자인팀 문화·업무 방식 개선</li></ul>
-  </section></div>
+    <ul><li>PMS·RS·CM 등 현장 매니저용 제품의 요구사항·사용 환경을 조사하고 전체 UX와 제품별 정보 구조 설계</li><li>PO·디자이너·개발자 인터뷰를 기반으로 HST 그룹 공통 디자인 시스템과 제품별 차별화 규칙 구축</li></ul>
+  </section>
+  <div class="project-divider" aria-hidden="true"></div>
+
+  <section class="project">
+    <div class="project-head">
+      <h3>디자인팀 빌딩·역량 강화</h3>
+      <span>2020.07 - 2020.11</span>
+    </div>
+    <ul><li>팀원별 역량·제품 이해도와 조직 요구를 진단하고 디자인팀 역량 강화 로드맵 수립</li><li>디자인팀 문화와 업무 방식 개선</li></ul>
+  </section>
+  </div>
 </article>
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">엔비티(NBT)</div>
@@ -555,46 +519,35 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2017 - 2020</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>서비스별 UX 전략·디자인·브랜딩 총괄</h3>
+      <h3>멀티프로덕트 UX·브랜딩 총괄</h3>
       <span>2018.04 - 2020.02</span>
     </div>
-    <ul><li>캐시슬라이드·스텝업·더퀴즈 라이브·에디슨 UX 전략·디자인 총괄</li><li>서비스별 개선점·고도화 전략을 디자이너와 협업</li><li>브랜드 가이드 기반 서비스별 특징 표현 가이드</li><li>콘텐츠·광고 디자인 초기부터 UT·데이터 기반 디자인(with 마켓팅)</li></ul>
+    <ul><li>캐시슬라이드·스텝업·더퀴즈 라이브·에디슨 등 전 제품의 UX 전략·디자인·브랜딩 방향 총괄</li><li>서비스 개선·고도화 과정에서 담당 디자이너와 협업하고 UT·데이터 기반 디자인을 운영</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>스텝업 UX 설계·디자인</h3>
+      <h3>스텝업 — 습관 형성 경험 설계</h3>
       <span>2017.08 - 2017.11</span>
     </div>
-    <ul><li>초기 기획부터 PO와 서비스 방향·목표 설정</li><li>습관 형성 도구 컨셉과 디자인 컨셉·톤앤매너 선정</li><li>GUI·인터렉션·에니메이션으로 차별화</li><li>첫 달 DAU 2만 돌파 후 60만까지 확대, 메인 서비스 운영</li></ul>
+    <ul><li>초기 기획부터 PO와 서비스 방향·목표를 설정하고 GUI·인터랙션·애니메이션까지 경험 전반 설계</li><li>첫 달 DAU 2만 돌파 후 60만까지 확대되며 메인 서비스로 성장</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>더퀴즈 라이브 디자인·디렉팅</h3>
-      <span>2019.01 - 2020.02</span>
+      <h3>신규 비즈니스·서비스 확장</h3>
+      <span>2018.05 - 2020.02</span>
     </div>
-    <ul><li>방송·소품·모바일·컨텐츠 등 라이브 커머스 디자인 기획·제작 총괄</li><li>MD·PD와 상품 소싱부터 소구점·방송 운영 방향 협의</li><li>상품 특성에 맞는 메인 디자인 컨셉과 전달 방법을 디자이너와 논의</li><li>제품 촬영·이미지·배너·상세 페이지 리소스 제작·디렉팅</li><li>디자인 리소스·제품 촬영 가이드와 운영 시스템 구축</li></ul>
+    <ul><li>더퀴즈 라이브의 상품 소싱~방송 운영·촬영·상세페이지까지 라이브커머스 디자인 운영 체계 구축</li><li>캐시피드 브랜딩·UX와 캐시슬라이드 부가 기능 고도화를 통해 서비스 포트폴리오 확장</li></ul>
   </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>캐시피드(숏폼) UX·브랜딩</h3>
-      <span>2019.08 - 2019.12</span>
-    </div>
-    <ul><li>초기 UX 전략에 따른 화면 설계·wireframe 구현</li><li>브랜드 컨셉과 로고·컬러·슬로건 제작</li><li>디자이너와 UX 고도화·사용성 강화</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>캐시슬라이드 UX 고도화·확장</h3>
-      <span>2018.05 - 2019.10</span>
-    </div>
-    <ul><li>캐시슬라이드 UX 고도화·부가 기능 설계·디자인</li><li>잠금해제·1석2조·퍼즐·타임픽 UX 설계·디자인</li><li>서비스 기능 연동·UX 간소화 통일을 위한 가이드 정의·교육</li></ul>
-  </section></div>
+  </div>
 </article>
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">중앙일보</div>
@@ -602,37 +555,24 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2016 - 2017</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>중앙일보 신규 모바일앱</h3>
-      <span>2016.12 - 2017.05</span>
+      <h3>뉴스 제품 UX 혁신</h3>
+      <span>2016.05 - 2017.05</span>
     </div>
-    <ul><li>가볍게 소비하는 차별화 뉴스앱 제작</li><li>스낵 컨텐츠용 카드형 UX와 운세·날씨 컨텐츠 공동 기획</li><li>UX 설계/기획·인터렉션(100%), 개발 리소스 제작·검수(100%)</li></ul>
+    <ul><li>신규 모바일앱의 카드형 뉴스 UX와 운세·날씨 등 콘텐츠 경험을 설계하고 인터랙션·개발 리소스까지 제작</li><li>기사 본문·요약 정보 구조와 모바일 댓글 UX를 개선하고 CS·사용자 피드백을 반영해 사용성 강화</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>기사페이지 UI 개선(Mobile·PC)</h3>
-      <span>2016.05 - 2016.10</span>
-    </div>
-    <ul><li>기사 콘텐츠 집중도 향상을 위한 UI 개선</li><li>CS 기반 본문·요약 분리와 색상 중요도 구분 기획/설계(50%)</li><li>GUI 디자인·개발 리소스 제작(100%)</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>모바일웹 댓글 개선</h3>
-      <span>2016.10 - 2017.02</span>
-    </div>
-    <ul><li>댓글 작성 UI 지속적 CS를 반영한 개선</li><li>메신저 대화 UI 기반 작성 정책·상세 UX 가이드 설계(90%)</li><li>GUI 제작·개발 리소스 검수(100%)</li><li>익숙한 UI 적용 후 긍정 사용자 피드백 70% 이상 증가</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>중앙일보 디지털 캐릭터</h3>
+      <h3>디지털 브랜드 경험 확장</h3>
       <span>2016.08 - 2017.03</span>
     </div>
-    <ul><li>홍보·SNS 등 디지털 컨텐츠용 캐릭터 제작</li><li>캐릭터 아이디어·컨셉·회의·스케줄 등 총괄</li><li>캐릭터 본안·변형안 제작 후 디지털화(100%)</li></ul>
-  </section></div>
+    <ul><li>홍보·SNS용 디지털 캐릭터의 아이디어·컨셉·일정·본안·변형안 제작 전 과정 총괄</li></ul>
+  </section>
+  </div>
 </article></div></div>
   </div>
   <div class="footer"><span>SHIN DONG SIK · RESUME 2026</span><span>04 / 06</span></div>
@@ -647,6 +587,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="section">
     <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">쿠팡</div>
@@ -654,46 +595,35 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2013 - 2016</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>여행/레저 Mobile &amp; PC UX 개편</h3>
+      <h3>여행/레저 UX 전면 개편</h3>
       <span>2013.12 - 2014.05</span>
     </div>
-    <ul><li>사업 확대에 맞춰 목적별 빠른 검색·탐색 중심 Mobile &amp; PC UX 개편</li><li>리서치 데이터 기반 사용자 모델·여정 지도 제작(60%)</li><li>여행/레저 홈·검색·상세 UX 설계·디자인(90%)</li><li>UT·AB Test로 정성·정량 데이터 수집, 개선 반영(70%)</li></ul>
+    <ul><li>사용자 모델·여정 지도를 기반으로 홈·검색·상세의 빠른 탐색 경험을 설계하고 UT·AB Test로 개선</li><li>정성·정량 데이터를 제품 의사결정과 후속 개선에 연결</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>정기배송(Subscribe &amp; save) 2차 개편</h3>
+      <h3>정기배송 서비스 2차 개편</h3>
       <span>2015.08 - 2015.12</span>
     </div>
-    <ul><li>정기배송 고객 증대·고정 이용자 확보를 위한 2차 개편</li><li>고객 요구 수집을 위해 마트·커뮤니티·카페 온·오프라인 필드 리서치(100%)</li><li>정책·홍보·광고 변경 필요성 판단 후 정책 수립·개편 참여(70%)</li><li>묶음배송·배송일 지정 정책에 따른 UX 설계·기획·디자인(100%)</li></ul>
+    <ul><li>마트·커뮤니티·카페 등 온·오프라인 필드리서치로 고객 요구를 수집하고 정책·홍보·UX 개편까지 참여</li><li>묶음배송·배송일 지정 등 핵심 정책을 실제 이용 흐름과 화면 설계로 구체화</li></ul>
   </section>
   <div class="project-divider" aria-hidden="true"></div>
+
   <section class="project">
     <div class="project-head">
-      <h3>오픈마켓 PLP/PDP UX 개선</h3>
-      <span>2014.05 - 2015.03</span>
+      <h3>오픈마켓 전환·UI 체계화</h3>
+      <span>2014.05 - 2015.12</span>
     </div>
-    <ul><li>오픈마켓 전환에 따른 제품 상세 UX 개선</li><li>다수 상품 동시 노출 UI를 개별 노출로 변경하는 UX 설계(100%)</li><li>상세·검색 결과 등 페이지 UI 디자인(100%)</li></ul>
+    <ul><li>PLP/PDP 구조를 오픈마켓 방식으로 재설계하고 검색·상세·Seller 입점 경험까지 확장</li><li>공통 GUI 요소를 UI Elements로 정리해 제품 내 재사용 기반 마련</li></ul>
   </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>Coupang UI Elements</h3>
-      <span>2015.08 - 2015.12</span>
-    </div>
-    <ul><li>GUI 리소스 수집·분석 후 공통 요소를 UI Elements로 제작</li><li>리소스 수집·디자인 제작(100%)</li></ul>
-  </section>
-  <div class="project-divider" aria-hidden="true"></div>
-  <section class="project">
-    <div class="project-head">
-      <h3>Seller 입점페이지</h3>
-      <span>2015.09 - 2015.11</span>
-    </div>
-    <ul><li>오픈마켓 전환에 따라 판매자용 입점페이지 기능 추가</li><li>요구사항 수집·분석 후 초기 UX 설계(50%)</li><li>메인·상세 페이지 GUI 디자인(100%)</li></ul>
-  </section></div>
+  </div>
 </article>
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">바이널엑스(vinylx)</div>
@@ -701,14 +631,17 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2009 - 2013</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
       <h3>대기업 디지털 서비스·디바이스 PM·PL</h3>
       
     </div>
-    <ul><li>SKT Gesture TV·Mobile T world·Cloud Desk·Smart CEO·PICK·Smart Cart·Group Portal 참여</li><li>LG Smart TV 2014·Samsung SSD·ChatON·SK Wyverns App·SKT June Player UX·GUI 설계</li><li>고객 요구 분석, IA·화면 구조·컨셉, 일정·리소스 관리·산출물 검수 총괄</li><li>프로젝트·디바이스 환경별 인터랙션·비주얼 방향 설정, 디자이너 가이드</li><li>개발 단계 화면·상태·해상도 품질 검수와 고객 커뮤니케이션</li></ul>
-  </section></div>
+    <ul><li>SKT·LG·Samsung 등 중대형 프로젝트에서 요구 분석, IA·화면 구조, 디자인 컨셉, 일정·리소스·산출물 관리 수행</li><li>프로젝트·디바이스 환경별 인터랙션·비주얼 방향을 정하고 디자이너 가이드, 개발 품질 검수, 고객 커뮤니케이션까지 총괄</li></ul>
+  </section>
+  </div>
 </article>
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">MO2 Communication</div>
@@ -716,13 +649,15 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2008 - 2009</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>모바일·단말기 UX·GUI 제작</h3>
+      <h3>모바일·임베디드 UX·GUI 제작</h3>
       
     </div>
-    <ul><li>LG Phone Line Map·KTFT TT1 Widget·Meritech PMP Icon 등 모바일·임베디드 UI 제작</li><li>M&amp;soft GINI Flash Contents·LG CAN-U Diotek Wine Dictionary 등 콘텐츠 UX·GUI 제작</li><li>Commax Homepad GUI·HI Corp. 3D Phone GUI 등 디바이스별 인터페이스 디자인</li><li>화면 구조·아이콘·위젯·Flash·3D 리소스 제작·개발 품질 검수</li></ul>
-  </section></div>
+    <ul><li>LG·KTFT·M&amp;soft·Commax 등 모바일·PMP·Homepad 프로젝트의 화면 구조·아이콘·위젯·Flash·3D GUI 제작</li><li>디바이스별 인터페이스 설계와 개발 적용 단계 품질 검수 수행</li></ul>
+  </section>
+  </div>
 </article></div></div>
   </div>
   <div class="footer"><span>SHIN DONG SIK · RESUME 2026</span><span>05 / 06</span></div>
@@ -737,6 +672,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   <div class="section">
     <div class="label label--continued" aria-hidden="true"></div>
     <div class="body"><div class="exp-list">
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">이노이즈인터랙티브</div>
@@ -744,14 +680,17 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2007 - 2008</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>삼성·SKT·NATE 모바일·단말기 UX·GUI</h3>
+      <h3>모바일·단말기 UX·GUI 설계</h3>
       
     </div>
-    <ul><li>SKT Touch Application–NATE Intro·RSS Reader·T Contents Box 모바일 UX·GUI 제작</li><li>Samsung Car Navigation N2·YEPP S3·S5·Venus II 세탁기 사용 시나리오·조작 체계 설계</li><li>SKT Email Client Service 화면 흐름·아이콘·상태·애니메이션 리소스 제작</li><li>하드웨어·해상도 제약 반영 디자인과 개발 단계 예외 화면 검수</li></ul>
-  </section></div>
+    <ul><li>SKT·NATE·Samsung의 모바일 서비스·내비게이션·MP3·가전 UI와 조작 체계 설계</li><li>하드웨어·해상도 제약을 반영한 화면·아이콘·상태·애니메이션 리소스 제작과 개발 QA 수행</li></ul>
+  </section>
+  </div>
 </article>
+
 <article class="exp">
   <div class="exp-company">
     <div class="company">울타리</div>
@@ -759,24 +698,26 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div class="years">2005 - 2006</div>
   </div>
   <div class="exp-work">
+
   <section class="project">
     <div class="project-head">
-      <h3>국가주도·기업 시스템 UX 디자인</h3>
+      <h3>공공·기업 시스템 UX 디자인</h3>
       
     </div>
-    <ul><li>국가 재난관리·KHNP 해외인사관리·KDN 경영목표관리 UX·GUI 제작</li><li>복잡한 업무 절차·데이터를 메뉴·대시보드·입력·조회 화면으로 정리</li><li>Yahoo! PAN Media Player·MOCIE Messenger·Combi Suit 인터페이스 제작</li><li>기획·개발 요구사항과 기술 제약 조율, 초기 설계부터 납품 검수 참여</li></ul>
-  </section></div>
+    <ul><li>국가 재난관리·KHNP 해외인사관리·KDN 경영목표관리 등 복잡한 업무 절차와 데이터를 메뉴·대시보드·입력·조회 화면으로 구조화</li><li>기획·개발 요구와 기술 제약을 조율하며 초기 설계부터 납품 검수까지 참여</li></ul>
+  </section>
+  </div>
 </article></div><div class="major-gap" aria-hidden="true"></div>
 <div class="info-grid">
   <div class="info-block">
     <div class="mini-label">Education</div>
     <div class="edu-title">인제대학교</div>
     <p>1998.03 - 2005.06 졸업 멀티미디어 디자인학과</p>
-    <p>멀티미디어·편집·영상·브랜드 디자인</p>
+    <p>멀티미디어 디자인, 편집 디자인, 영상 디자인, 브랜드 디자인</p>
   </div>
   <div class="info-block">
     <div class="mini-label">AI 활용 경험</div>
-    <p>UX 리서치·분석, 목업·인터렉션·이미지·영상 제작, 업무 자동화 활용</p>
+    <p>UX 리서치·분석, 목업 · 인터렉션 · 이미지 · 영상 제작 및 업무 자동화에 활용</p>
   </div>
   <div class="info-block">
     <div class="mini-label">Skills</div>
