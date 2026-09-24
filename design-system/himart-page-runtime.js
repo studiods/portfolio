@@ -183,7 +183,7 @@
     if(!document.querySelector('link[data-reuse-prototype-cases]')){
       const link=document.createElement('link');
       link.rel='stylesheet';
-      link.href='./design-system/components/reuse-prototype-cases.css?v=20260923-4';
+      link.href='./design-system/pages/himart/reuse-prototype-cases.css?v=20260924-1';
       link.dataset.reusePrototypeCases='1';
       document.head.appendChild(link);
     }
