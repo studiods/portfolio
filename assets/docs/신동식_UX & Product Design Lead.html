@@ -6,12 +6,13 @@
 <title>SHIN DONG SIK — UX &amp; Product Design Lead</title>
 <style>
 @page{size:A4;margin:0}
-:root{--type-small:10px;--type-body:14px;--type-title:16px;--type-company:20px;--major-gap:112px;--side-space:96px;--exp-gap:28px;--project-rule-space:28px}
+:root{--type-small:10px;--type-body:14px;--type-title:16px;--type-company:20px;--weight-light:300;--weight-medium:500;--major-gap:112px;--side-space:96px;--exp-gap:28px;--project-rule-space:28px}
 *{box-sizing:border-box}
 @font-face{font-family:"Pretendard";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
 @font-face{font-family:"Averta PE Light";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Regular.otf") format("opentype");font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:"Averta PE Medium";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Regular.otf") format("opentype");font-style:normal;font-weight:500;font-display:swap}
 html,body{margin:0;padding:0;background:#fff;color:#111}
 body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .page{
@@ -34,9 +35,9 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
   padding:96px 0 40mm
 }
 .name{
-  font-family:"Averta PE Light","Averta PE",sans-serif;
+  font-family:"Averta PE Medium","Averta PE",sans-serif;
   font-size:33.35px;
-  font-weight:300;
+  font-weight:var(--weight-medium);
   letter-spacing:-.045em;
   line-height:.95
 }
@@ -66,7 +67,7 @@ body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-
   border-bottom:1px solid #222;
   font-family:"Averta PE",sans-serif;
   font-size:var(--type-small);
-  font-weight:500;
+  font-weight:var(--weight-medium);
   letter-spacing:.09em;
   text-transform:uppercase;
   color:#666
@@ -82,14 +83,14 @@ body>.page.experience:nth-of-type(2) .exp:first-child{border-top:0}
 body>.page.experience:nth-of-type(n+3) .body{padding-top:0}
 .profile{
   font-size:var(--type-body);
-  font-weight:300;
+  font-weight:var(--weight-light);
   line-height:1.68;
   letter-spacing:-.027em;
   color:#333;
   word-break:keep-all
 }
 .profile p{margin:0 0 3.2mm}
-.profile p:first-child{font-weight:500;color:#111}
+.profile p:first-child{font-weight:var(--weight-light);color:#111}
 .principles{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -98,9 +99,9 @@ body>.page.experience:nth-of-type(n+3) .body{padding-top:0}
 }
 .principle{border-top:.35pt solid #c9c9c9;padding-top:2.2mm}
 .principle b{
-  font-family:"Averta PE",sans-serif;
+  font-family:"Averta PE Medium","Averta PE",sans-serif;
   font-size:var(--type-small);
-  font-weight:500;
+  font-weight:var(--weight-medium);
   letter-spacing:.06em
 }
 .principle p,
@@ -108,14 +109,14 @@ body>.page.experience:nth-of-type(n+3) .body{padding-top:0}
 .project li,
 .info-block p{
   font-size:var(--type-body);
-  font-weight:300;
+  font-weight:var(--weight-light);
   line-height:1.6;
   letter-spacing:-.025em;
   word-break:keep-all
 }
 .principle p{margin:1.2mm 0 0;color:#5c5c5c}
 .profile-outro{color:#4f4f4f;margin:5mm 0 0}
-.profile-cta{font-size:var(--type-body);font-weight:500;color:#111;margin-top:4mm}
+.profile-cta{font-size:var(--type-body);font-weight:var(--weight-light);color:#111;margin-top:4mm}
 .exp-list{border-top:0}
 .exp{
   display:grid;
@@ -133,14 +134,14 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
 .exp-company{grid-column:1;grid-row:1;padding-right:12px}
 .company{
   font-size:var(--type-company);
-  font-weight:500;
+  font-weight:var(--weight-medium);
   line-height:1.3;
   letter-spacing:-.035em;
   word-break:keep-all
 }
 .role-ko{
   font-size:var(--type-body);
-  font-weight:300;
+  font-weight:var(--weight-light);
   line-height:1.5;
   color:#666;
   margin-top:1.3mm;
@@ -152,7 +153,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
   margin-top:4px;
   font-family:"Averta PE",sans-serif;
   font-size:var(--type-small);
-  font-weight:300;
+  font-weight:var(--weight-light);
   line-height:1.45;
   color:#888;
   letter-spacing:0;
@@ -187,7 +188,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
   min-width:0;
   margin:0;
   font-size:var(--type-title);
-  font-weight:500;
+  font-weight:var(--weight-medium);
   line-height:1.42;
   letter-spacing:-.026em;
   word-break:keep-all;
@@ -199,6 +200,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
   max-width:100%;
   font-family:"Averta PE",sans-serif;
   font-size:var(--type-small);
+  font-weight:var(--weight-light);
   line-height:1.4;
   color:#888;
   white-space:nowrap
@@ -219,14 +221,14 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
 }
 .info-block{border-top:.45pt solid #222;padding-top:3mm}
 .mini-label{
-  font-family:"Averta PE","Pretendard",sans-serif;
+  font-family:"Averta PE Medium","Pretendard",sans-serif;
   font-size:var(--type-small);
-  font-weight:500;
+  font-weight:var(--weight-medium);
   letter-spacing:.08em;
   color:#666;
   margin-bottom:2.4mm
 }
-.edu-title{font-size:var(--type-title);font-weight:500;letter-spacing:-.03em}
+.edu-title{font-size:var(--type-title);font-weight:var(--weight-medium);letter-spacing:-.03em}
 .info-block p{color:#555;margin:1mm 0 0}
 
 @media screen{
