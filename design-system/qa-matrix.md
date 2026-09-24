@@ -1,6 +1,6 @@
 # HIMART 시스템 테스트 QA 매트릭스
 
-기준: `himart-system-test.html`  
+기준: `himart.html`  
 운영 보호: `himart.html`은 최종 승인 전 수정하지 않음
 
 ## 정적 연결 점검

@@ -1,6 +1,6 @@
 # HIMART Design System v1.0 — Observed Baseline
 
-기준 화면: `himart-system-test.html`  
+기준 화면: `himart.html`  
 기준 조합: `himart.html` + `himart-narrative-v2-production.css` + `himart-narrative-v2-production-runtime.js`  
 작성 원칙: 현재 화면을 먼저 보존하고, 통합은 관측값 검증 후 진행한다. 원본 `himart.html`에는 적용하지 않는다.
 
@@ -180,7 +180,7 @@
 ## 8. Migration Rules
 
 1. `himart.html`은 원본 기준으로 보존한다.
-2. `himart-system-test.html`에서만 새 시스템을 검증한다.
+2. `himart.html`에서만 새 시스템을 검증한다.
 3. 정적 콘텐츠와 런타임 교체 콘텐츠를 먼저 하나로 확정한다.
 4. 관측 토큰과 통합 토큰을 별도 표기로 유지한다.
 5. `!important`를 새로 추가하지 않는다.

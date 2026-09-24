@@ -3,7 +3,7 @@
 ## 적용 범위
 
 - Himart 기준 운영 페이지: `himart.html`
-- 과거 Himart 검증 경로: `himart-system-test.html` (현재 `himart.html`로 리다이렉트)
+- 현행 Himart 기준 화면: `himart.html`
 - Portfolio Works 페이지: `works.html`
 - 폰트 에셋은 `fonts/`의 Averta PE 3종과 Pretendard Variable을 로컬 로드한다.
 - 새 스타일은 page-local inline CSS나 실험용 override 파일로 추가하지 않는다. Himart의 운영 상태·정적 레이아웃 규칙은 `components/himart-production-state.css`가 소유한다.

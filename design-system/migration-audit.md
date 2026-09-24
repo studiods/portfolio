@@ -1,7 +1,7 @@
 # Himart Design System Migration Audit
 
 기준 페이지: `himart.html`
-테스트 페이지: `himart-system-test.html`
+과거 테스트 페이지: `himart-system-test.html` (현재 검증 기준은 `himart.html`)
 
 ## 현재 연결 구조
 
