@@ -82,11 +82,10 @@ body.home-dark #project-vinyl .placeholder{
   background-position:center;
   background-size:cover;
 }
-body.home-dark #project-nbt .placeholder{background-image:url('./assets/image/stepup.webp')}
-body.home-dark #project-trenbe .placeholder{background-image:url('./assets/image/trenbe.webp')}
-body.home-dark #project-yanolja .placeholder{background-image:url('./assets/image/yanolja.webp')}
-body.home-dark #project-coupang .placeholder{background-image:url('./assets/image/coupang.webp')}
-body.home-dark #project-vinyl .placeholder{background-image:url('./assets/image/vinyl.webp')}
+body.home-dark #project-nbt .placeholder{background-image:url('./assets/image/nbt-stepup/nbt_stepup_01_01.png')}
+body.home-dark #project-trenbe .placeholder{background-image:url('./assets/image/trenbe-ut/trenbe_01_01.png')}
+body.home-dark #project-yanolja .placeholder{background-image:url('./assets/image/yanolja/yanolja_01_01.png')}
+body.home-dark #project-coupang .placeholder{background-image:url('./assets/image/work-archive/archive-coupang-p100.webp')}
 body.home-dark #project-nbt .placeholder::before,
 body.home-dark #project-nbt .placeholder::after,
 body.home-dark #project-trenbe .placeholder::before,
