@@ -1,6 +1,134 @@
 (() => {
   'use strict';
 
+  /*
+    Shared prototype-carousel interaction for authored/static case pages.
+    Existing CSS owns geometry; this runtime owns only navigation state.
+    - 5s autoplay while the carousel is meaningfully visible.
+    - Prev/next buttons and keyboard arrows share the same move() path.
+    - Clone slides provide continuous wrap without a visible snap.
+  */
+  const bindExistingPrototypeCarousel=(list)=>{
+    if(!list || list.dataset.prototypeInteractionBound==='true')return;
+    const track=list.querySelector('.prototype-case-track');
+    const pages=track ? [...track.children].filter(node=>
+      node.classList.contains('prototype-case') &&
+      !node.classList.contains('prototype-case--clone')
+    ) : [];
+    const pagination=list.querySelector('.prototype-case-pagination');
+    if(!track || !pages.length)return;
+
+    list.dataset.prototypeInteractionBound='true';
+
+    const realCount=pages.length;
+    const HOLD_MS=5000;
+    let index=0;
+    let virtualIndex=realCount>1 ? 1 : 0;
+    let timer=0;
+    let wrapping=false;
+    let inView=false;
+
+    const clearTimer=()=>{
+      if(timer)window.clearTimeout(timer);
+      timer=0;
+    };
+    const render=()=>{
+      track.style.transform=`translate3d(${virtualIndex*-100}%,0,0)`;
+      pages.forEach((page,pageIndex)=>
+        page.setAttribute('aria-hidden',pageIndex===index?'false':'true')
+      );
+      track.querySelectorAll(':scope > .prototype-case--clone').forEach(clone=>
+        clone.setAttribute('aria-hidden','true')
+      );
+      if(pagination){
+        pagination.textContent=`${String(index+1).padStart(2,'0')} / ${String(realCount).padStart(2,'0')}`;
+      }
+    };
+    const schedule=()=>{
+      clearTimer();
+      if(realCount<2 || !inView || document.hidden)return;
+      timer=window.setTimeout(()=>move(1),HOLD_MS);
+    };
+    const jumpToReal=(realIndex)=>{
+      wrapping=true;
+      index=realIndex;
+      virtualIndex=realIndex+1;
+      track.classList.add('is-instant');
+      render();
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        track.classList.remove('is-instant');
+        wrapping=false;
+        schedule();
+      }));
+    };
+    const move=(delta)=>{
+      if(realCount<2 || wrapping)return;
+      clearTimer();
+      index=(index+delta+realCount)%realCount;
+      virtualIndex+=delta;
+      render();
+      schedule();
+    };
+
+    track.addEventListener('transitionend',(event)=>{
+      if(event.propertyName!=='transform' || wrapping)return;
+      if(virtualIndex===realCount+1)jumpToReal(0);
+      else if(virtualIndex===0)jumpToReal(realCount-1);
+    });
+
+    list.querySelectorAll('.prototype-case-control--prev').forEach(button=>{
+      button.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        move(-1);
+      });
+    });
+    list.querySelectorAll('.prototype-case-control--next').forEach(button=>{
+      button.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        move(1);
+      });
+    });
+    list.addEventListener('keydown',(event)=>{
+      if(event.key==='ArrowLeft'){event.preventDefault();move(-1)}
+      else if(event.key==='ArrowRight'){event.preventDefault();move(1)}
+    });
+
+    if('IntersectionObserver' in window){
+      const io=new IntersectionObserver(entries=>{
+        const entry=entries[0];
+        inView=Boolean(entry?.isIntersecting && entry.intersectionRatio>=0.12);
+        if(inView)schedule();
+        else clearTimer();
+      },{threshold:[0,.12,.25]});
+      io.observe(list);
+    }else{
+      inView=true;
+    }
+
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden)clearTimer();
+      else schedule();
+    });
+
+    track.classList.add('is-instant');
+    render();
+    requestAnimationFrame(()=>track.classList.remove('is-instant'));
+    schedule();
+  };
+
+  /* himart.html is now authored as a static presentation snapshot. Do not run
+     legacy DOM builders on it; bind only the already-authored 04.1 / 04.2 galleries. */
+  if(
+    document.body.classList.contains('himart-commerce-page') &&
+    document.body.classList.contains('hm-static-presentation')
+  ){
+    document.querySelectorAll('#direction [data-reuse-prototype-gallery]')
+      .forEach(bindExistingPrototypeCarousel);
+    return;
+  }
+
   /* REUSE: remove an accidental literal "\\n" text node that can be promoted
      from the document head into the top-left of the rendered body by the HTML parser. */
   if(document.body.classList.contains('reuse-current')){
@@ -127,9 +255,9 @@
           const screen=document.createElement('div');
           screen.className='galaxy-ultra-screen';
 
-          /* HIMART 04.2 uses image-driven geometry.
+          /* HIMART 04.2 uses the shared fixed-height device shell.
              Keep only semantic hooks here; CSS owns the exterior frame and
-             the intrinsic image ratio owns the device height. */
+             crops long screens from the bottom while preserving the top. */
           const isHimart042=kind==='himart'&&assetGroup==='02';
           if(isHimart042){
             device.classList.add('himart-042-device');
@@ -152,14 +280,6 @@
               :`Himart commerce journey prototype ${assetGroup}_${assetNo}`;
             image.loading=assetIndex<=2?'eager':'lazy';
             image.decoding='async';
-            if(isHimart042){
-              image.style.setProperty('display','block','important');
-              image.style.setProperty('width','100%','important');
-              image.style.setProperty('height','auto','important');
-              image.style.setProperty('aspect-ratio','auto','important');
-              image.style.setProperty('object-fit','contain','important');
-              image.style.setProperty('object-position','top center','important');
-            }
             screen.appendChild(image);
           }
 
@@ -219,7 +339,7 @@
       footer.appendChild(pagination);
       list.appendChild(footer);
 
-      const HOLD_MS=6000;
+      const HOLD_MS=5000;
       const realCount=pages.length;
       let index=0;
       let virtualIndex=1;
