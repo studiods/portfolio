@@ -32,6 +32,28 @@
 
 기존 파일이 여러 장의 스타일 레이어로 이미 연결된 경우에는 파일명만 보고 삭제·통합·순서 변경하지 않는다. HTML 참조와 전체 import 경로를 먼저 추적하고, 원래 cascade 순서를 보존한다. 통합은 computed style과 실제 화면 회귀를 검증할 수 있을 때만 진행한다.
 
+### 파일 이동·이름 변경 후 참조 무결성 검사 — 필수 게이트
+
+최적화·폴더 재배치·파일명 변경을 수행한 경우, HTML의 `<link>`·`<script>` 경로만 수정하고 작업을 끝내지 않는다. **삭제 또는 이동된 이전 경로가 저장소 어디에도 남아 있지 않은지 전역 검색으로 확인한 뒤에만 작업을 완료한다.**
+
+반드시 확인할 참조 범위:
+
+1. HTML의 `href`, `src`, preload 및 module 참조
+2. CSS의 `@import`, `url(...)`, font/image/video asset 상대경로
+3. JS의 `link.href`, `script.src`, `import()`, dynamic import, `fetch()`, Worker/asset URL, 런타임 stylesheet/script 주입
+4. 문자열 템플릿으로 조합되는 경로와 fallback/registry 경로
+5. 다른 페이지 또는 공통 runtime이 해당 파일을 간접적으로 소비하는 경로
+
+검증 절차:
+
+- 이동 전 경로 문자열을 저장소 전체에서 검색해 **0건**인지 확인한다.
+- 이동 후 새 경로가 실제 파일과 일치하고, 모든 consumer가 그 경로를 사용하고 있는지 확인한다.
+- 동적으로 생성되는 DOM/컴포넌트는 정적 HTML만 보지 말고 해당 runtime이 주입하는 CSS·JS까지 확인한다.
+- 대표 페이지를 PC/Mobile에서 최소 1회 렌더링해 레이아웃·이미지·캐러셀·애니메이션 회귀를 확인한다.
+- 이 검증을 통과하지 못하면 기존 파일 삭제나 이동을 완료 상태로 간주하지 않는다.
+
+2026-09-24 회귀 사례: `reuse-prototype-cases.css`를 `design-system/components/`에서 `design-system/pages/himart/`로 이동하면서 HTML 참조는 갱신됐지만 `himart-page-runtime.js`의 동적 `link.href`가 이전 경로를 계속 참조해 `himart-reuse.html` 04.1 목업 스타일이 깨졌다. 이후 동일 유형의 최적화에서는 위 참조 무결성 검사를 필수로 수행한다.
+
 ### 페이지별 소유 파일
 
 아래 CSS·JS 파일은 HTML에서 실제 참조되는 페이지 전용 소스다. 같은 페이지의 여러 링크가 있을 때 실제 적용 순서는 HTML의 선언 순서가 기준이다. 페이지별 CSS를 수정하기 전에 아래 파일과 HTML 순서를 함께 확인한다.
