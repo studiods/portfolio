@@ -13,3 +13,21 @@
   .hm-ds-reveal{opacity:1;transform:none;transition:none}
   .hm-ds-stagger>*{transition-delay:0ms}
 }
+
+/* Shared major-section title exit motion for sticky chapter rails. */
+:root{
+  --hm-motion-major-title-exit:opacity 180ms ease-out,transform 240ms cubic-bezier(.22,1,.36,1);
+  --hm-motion-major-title-exit-offset:-56px;
+}
+html body .hm-section-head.is-major-title-exiting{
+  opacity:0!important;
+  transform:translate3d(0,var(--hm-motion-major-title-exit-offset),0)!important;
+  transition:var(--hm-motion-major-title-exit)!important;
+  pointer-events:none;
+}
+@media (prefers-reduced-motion:reduce){
+  html body .hm-section-head.is-major-title-exiting{
+    transition:none!important;
+    transform:none!important;
+  }
+}
