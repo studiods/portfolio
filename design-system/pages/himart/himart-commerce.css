@@ -85,7 +85,7 @@ html body.himart-commerce-page .narrative-touchpoint-synthesis .synthesis-card p
 html body.himart-page-body.himart-commerce-page #live-main #brand .voice-group.negative .ring-row .ring-card{
   --ring:var(--hm-red)!important;
 }
-html body.himart-page-body.himart-commerce-page #live-main #brand .voice-group.negative .ring-card :is(h4,.pct){
+html body.himart-page-body.himart-commerce-page #live-main #brand .voice-group.negative .ring-card .pct{
   color:var(--hm-red)!important;
 }
 
