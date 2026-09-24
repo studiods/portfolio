@@ -343,8 +343,19 @@ html body.hm-wide-editorial.hm-wide-himart-adapter #brand .brand-synthesis.narra
    Each authored line is non-wrapping so this subsection can never become 3 lines. */
 html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-021-title,
 html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-card-021-title{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
   max-width:none!important;
+  writing-mode:horizontal-tb!important;
+  text-orientation:mixed!important;
   white-space:normal!important;
+}
+html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-more .data-card-head>div{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  writing-mode:horizontal-tb!important;
 }
 html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-021-title > span:not(.wide-roman-index),
 html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-card-021-title > span:not(.wide-roman-index){
