@@ -17,8 +17,8 @@
   Canonical selectors
   - Hero: .hm-title inside a Works hero
   - Major: .hm-section-title inside .hm-section-head
-  - Medium: .hm-subtitle inside .hm-subhead, data-card headings, prototype headings,
-            and Work Archive project headings
+  - Medium: .hm-subtitle inside .hm-subhead, narrative/journey/data-card headings,
+            prototype headings and Work Archive project headings
   - Future components may opt in with [data-hm-major-title] / [data-hm-medium-title].
 */
 (() => {
@@ -41,6 +41,10 @@
     '#live-main .hm-subhead h3',
     '#live-main .data-card-head h3',
     '#live-main .prototype-intro > h3',
+    '#live-main .narrative-title',
+    '#live-main .journey-block-title',
+    '#live-main .data-bridge-title',
+    '#live-main .forced-redesign-title',
     '#live-main .wa-project__head .wa-project__title',
     '.works-grid .works-card-title',
     '#live-main [data-hm-medium-title]',
@@ -386,7 +390,7 @@
   const revealOwner = (element, kind) => {
     if (kind === 'major') return element.closest('.hm-section-head');
     if (kind === 'medium') {
-      return element.closest('.hm-subsection, .data-card, .prototype-intro, .wa-project__head, [data-hm-medium-owner]');
+      return element.closest('.hm-subsection, .data-card, .prototype-intro, .narrative-block, .journey-role-block, .wa-project__head, [data-hm-medium-owner]');
     }
     return null;
   };
