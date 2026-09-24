@@ -294,7 +294,7 @@
     display:block!important;
     margin:0 0 7cqi!important;
     font-family:var(--hm-font-en)!important;
-    font-size:clamp(9px,6.5cqi,var(--hm-type-note-mobile))!important;
+    font-size:clamp(9px,6.5cqi,var(--hm-type-journey-circle-number))!important;
     line-height:1.15!important;
     letter-spacing:var(--hm-track-note)!important;
   }
@@ -306,7 +306,7 @@
   ){
     margin:0!important;
     font-family:var(--hm-font-ko)!important;
-    font-size:clamp(14px,12.5cqi,var(--hm-type-group-mobile))!important;
+    font-size:clamp(14px,12.5cqi,var(--hm-type-journey-circle-title))!important;
     font-weight:100!important;
     line-height:1.22!important;
     letter-spacing:var(--hm-track-group)!important;
@@ -322,7 +322,7 @@
     max-width:100%!important;
     margin:6cqi 0 0!important;
     font-family:var(--hm-font-ko)!important;
-    font-size:clamp(10px,7.5cqi,var(--hm-type-body-mobile))!important;
+    font-size:clamp(10px,7.5cqi,var(--hm-type-journey-circle-body))!important;
     font-weight:300!important;
     line-height:1.42!important;
     letter-spacing:var(--hm-track-body)!important;
