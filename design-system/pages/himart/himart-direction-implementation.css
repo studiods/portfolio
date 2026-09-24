@@ -129,8 +129,8 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
 
 /* HIMART 04.2 — fixed-height paired mockups.
    Use the shared phone-shell ratio as one canonical height instead of letting
-   each uploaded image determine device height. Long images stay top-aligned and
-   are clipped at the bottom; the screen itself never scrolls. */
+   each uploaded image determine device height. Long images stay top-aligned,
+   never scroll inside the device, and are clipped only at the bottom. */
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .prototype-case-viewport{
   padding:0!important;
   box-sizing:border-box!important;
@@ -143,17 +143,18 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   border-radius:34px!important;
   background:#0D0D0D!important;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
-  overflow:visible!important;
+  overflow:hidden!important;
   box-sizing:border-box!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen,
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen.is-scrollable{
   width:100%!important;
   height:100%!important;
+  max-height:100%!important;
   aspect-ratio:auto!important;
   overflow:hidden!important;
   overscroll-behavior:none!important;
-  touch-action:pan-y!important;
+  touch-action:auto!important;
   border:1px solid rgba(255,255,255,.10)!important;
   border-radius:28px!important;
   box-sizing:border-box!important;
@@ -163,9 +164,10 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   width:100%!important;
   height:auto!important;
   max-width:none!important;
+  min-height:0!important;
   margin:0!important;
   aspect-ratio:auto!important;
-  object-fit:contain!important;
+  object-fit:initial!important;
   object-position:top center!important;
   transform:none!important;
 }
