@@ -1,12 +1,14 @@
 /* Shared footer for top-level portfolio pages only.
-   Applied to Home / About / Works / Contact; project detail pages intentionally opt out. */
+   Applied to Home / About / Works / Contact; project detail pages intentionally opt out.
+   Background ownership belongs to the page canvas/media layer, so the footer itself
+   stays transparent and does not create page-specific background exceptions. */
 
 .portfolio-footer{
   display:block!important;
   padding-top:48px!important;
   padding-bottom:60px!important;
   border-top:0!important;
-  background:#000!important;
+  background:transparent;
   color:rgba(255,255,255,.70)!important;
   text-transform:none!important;
 }
@@ -55,13 +57,6 @@
 /* WORKS owns only the requested 200px separation from the final content. */
 body.works-page-body .works-footer.portfolio-footer{
   margin-top:200px!important;
-}
-
-/* CONTACT remains viewport-fixed; keep the background transparent so the
-   page-level movie and its 70% black veil continue through the footer area. */
-body.contact-page-body .contact-footer.portfolio-footer{
-  display:block!important;
-  background:transparent!important;
 }
 
 @media(max-width:780px){
