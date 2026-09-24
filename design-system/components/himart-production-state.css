@@ -42,24 +42,33 @@ html body.hm-static-presentation.himart-page-body.himart-commerce-page #directio
   margin-top: 36px !important;
 }
 
-/* 04.2 production uses the shared image-ratio mockup; remove the candidate-only shell ratio. */
+/* 04.2 production keeps one canonical mockup height.
+   Do not let individual source-image ratios resize the device. */
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
-  aspect-ratio: auto !important;
+  aspect-ratio: 1440 / 2964 !important;
   padding: 7px !important;
   overflow: visible !important;
 }
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen,
+html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen.is-scrollable {
+  height: 100% !important;
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-screen.is-scrollable img {
+  width: 100% !important;
   height: auto !important;
   aspect-ratio: auto !important;
-  object-fit: initial !important;
-  object-position: initial !important;
+  object-fit: contain !important;
+  object-position: top center !important;
+  transform: none !important;
 }
 html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .prototype-case-viewport {
   padding-bottom: 0 !important;
 }
 @media (max-width: 780px) {
   html body.hm-static-presentation.himart-page-body.himart-commerce-page #direction .hm-wide-right-rail > .himart-direction-042 .galaxy-ultra-mockup {
-    aspect-ratio: auto !important;
+    aspect-ratio: 1440 / 2964 !important;
     padding: 4px !important;
   }
 }
