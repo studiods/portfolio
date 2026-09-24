@@ -6,8 +6,55 @@
 - 현행 Himart 기준 화면: `himart.html`
 - Portfolio Works 페이지: `works.html`
 - 폰트 에셋은 `fonts/`의 Averta PE 3종과 Pretendard Variable을 로컬 로드한다.
-- 새 스타일은 page-local inline CSS나 실험용 override 파일로 추가하지 않는다. Himart의 운영 상태·정적 레이아웃 규칙은 `components/himart-production-state.css`가 소유한다.
-- 페이지 전용 규칙이 필요한 경우에도 반드시 `design-system/components/`의 해당 컴포넌트가 소유한다.
+- page-local inline CSS와 실험용 override 파일을 새로 만들지 않는다. Himart 운영 상태·정적 레이아웃 규칙은 `design-system/pages/himart/himart-production-state.css`가 소유한다.
+- `design-system/components/`는 여러 페이지가 함께 쓰는 규칙만 소유하고, 페이지 전용 CSS·JS는 `design-system/pages/<slug>/` 아래에서 관리한다.
+
+## 필수 규칙: 기존 소스 우선 수정
+
+동일한 기능이나 스타일을 고칠 때는 먼저 현재 기준 파일을 추적하고, 그 **기존 파일을 수정**한다. 같은 책임을 위한 새 버전·수정·최종·테스트 파일을 추가하는 방식은 사용하지 않는다.
+
+수정 전에 다음을 확인한다.
+
+1. 대상 HTML의 stylesheet/script 참조와 실제 선언 순서
+2. CSS의 `@import`, cascade 순서, selector 소유권
+3. JS의 동적 import·script 주입과 콘텐츠/모션 책임
+4. 해당 파일을 함께 사용하는 다른 페이지
+
+소유권 기준:
+
+- 공통 reveal·counter·scroll·video 등 애니메이션 로직: `design-system/animation.js`
+- 공통 모션 CSS와 reduced-motion 규칙: `design-system/motion.css`
+- 여러 페이지에서 재사용하는 스타일: `design-system/components/`
+- 페이지에만 적용되는 스타일과 기존 런타임: `design-system/pages/<slug>/` 안의 기존 파일
+- 페이지의 authored copy와 정적 구조: 해당 페이지 HTML
+
+새 코드 파일은 독립적인 새 책임을 기존 파일에 넣을 수 없거나, 새 페이지의 첫 소스가 필요하거나, 도구/빌드/테스트가 요구할 때만 만든다. 이 예외는 구현 전에 책임을 분리해야 하는 이유를 PR에 기록한다. 일반 수정의 버전 이력은 Git 커밋과 PR에서 관리하고 파일명 suffix로 쌓지 않는다.
+
+기존 파일이 여러 장의 스타일 레이어로 이미 연결된 경우에는 파일명만 보고 삭제·통합·순서 변경하지 않는다. HTML 참조와 전체 import 경로를 먼저 추적하고, 원래 cascade 순서를 보존한다. 통합은 computed style과 실제 화면 회귀를 검증할 수 있을 때만 진행한다.
+
+### 페이지별 소유 파일
+
+아래 CSS·JS 파일은 HTML에서 실제 참조되는 페이지 전용 소스다. 같은 페이지의 여러 링크가 있을 때 실제 적용 순서는 HTML의 선언 순서가 기준이다. 페이지별 CSS를 수정하기 전에 아래 파일과 HTML 순서를 함께 확인한다.
+
+| 페이지 | 페이지 전용 소스 |
+|---|---|
+| `aimmo-graphic` | `aimmo-graphic-v2.css`, `aimmo-graphic-blue.css`, `aimmo-graphic.css` |
+| `aimmo-system` | `aimmo-system-v8.css`, `aimmo-reference-bars-exact.css`, `aimmo-system-final.css`, `aimmo-system-v7.css`, `aimmo-ownership-journey.css`, `aimmo-system-v6.css`, `aimmo-system-v5.css`, `aimmo-system-v4.css`, `aimmo-system-v2.css`, `aimmo-system.css` |
+| `contact` | `contact.css` |
+| `himart-reuse` | `reuse-gallery-interaction.css`, `reuse-image-display-grid.css`, `reuse-reference-bars.css`, `reuse-proof-motion.css` |
+| `himart-team` | `himart-team-gallery.css` |
+| `himart` | `himart-production-state.css`, `reuse-prototype-cases.css`, `himart-appliance-purchase-flow.css`, `himart-direction-implementation.css`, `himart-fluid-responsive-guard.css`, `himart-fluid-content.css`, `himart-commerce.css` |
+| `home` | `home-layout-system.css` |
+| `nbt-stepup` | `nbt-stepup.css`, `stepup-editorial-layout.css` |
+| `trenbe-ut` | `trenbe-ut.css` |
+| `work-archive` | `work-archive-mobile-stack.css`, `work-archive-trenbe.css`, `work-archive-menu-adaptive.css`, `work-archive.css` |
+| `works` | `works-archive.css`, `works-aimmo.css` |
+| `yanolja-system` | `yanolja-system.css`, `yanolja-system-base.css`, `operating-model.css` |
+| `himart-case-framework-guide` | `case-framework-guide.css` |
+| `about` | `about-page.css`, `about-fixes.css`, `about-page.js` |
+| `himart-ax` | `himart-ax.css` (기존 v2~v7 순서 통합) |
+
+공통 규칙으로 재사용되는 `design-system/components/himart-ax.css`는 Himart AX와 Yanolja System이 함께 사용하는 기반이라 `components/`에 유지한다.
 
 ## 로딩 순서
 
@@ -16,7 +63,7 @@
 3. `spacing.css`
 4. `layout.css`
 5. `motion.css`
-6. `components/*.css`
+6. 실제 참조 순서를 유지한 `components/*.css`와 `pages/<slug>/*.css`
 7. `compatibility.css`
 8. `responsive.css`
 9. 필요한 design-system runtime
@@ -143,9 +190,9 @@
 ## 변경 규칙
 
 - 토큰 변경은 해당 foundation 파일에서만 한다.
-- 컴포넌트 변경은 해당 컴포넌트 파일에서만 한다.
+- 공통 컴포넌트 변경은 그 컴포넌트의 기존 파일에서만 한다. 페이지 전용 변경은 `pages/<slug>/`의 기존 기준 파일을 수정한다.
 - 반응형 타이포그래피는 Hero/Chapter 소유 파일에서 수정한다.
-- Himart 애니메이션 수정은 `animation.js`에서만 한다.
+- 공통 애니메이션 로직은 `animation.js`, 공통 모션 스타일은 `motion.css`에서 수정한다. Himart 전용 모션은 실제 해당 페이지의 기존 기준 파일을 먼저 추적한다.
 - Works 페이지의 인터랙션은 `design-system/works.js`에서만 관리하며 `works.html` 내부 script/style override는 허용하지 않는다.
 - 모든 변경은 실제 대상 페이지와 연관 페이지에서 회귀 확인한다.
 
