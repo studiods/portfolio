@@ -1052,9 +1052,3 @@ html body.hm-wide-editorial.hm-wide-himart-adapter #data .hm-data-bridge-023__co
   font-variation-settings:"wght" 300!important;
 }
 
-/* Shared sticky chapter-title exit state: fade to 0 while pushed upward. */
-html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > :is(#brand,#data,#journey,#direction).hm-section > .hm-wrap > .hm-section-head.hm-reveal.is-major-title-exiting{
-  opacity:0!important;
-  transform:translate3d(0,-56px,0)!important;
-  transition:opacity .18s ease-out,transform .24s cubic-bezier(.22,1,.36,1)!important;
-}
