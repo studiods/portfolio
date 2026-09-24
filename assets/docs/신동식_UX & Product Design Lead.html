@@ -2,16 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=1180">
 <title>SHIN DONG SIK — UX &amp; Product Design Lead</title>
 <style>
 @page{size:A4;margin:0}
 :root{--type-small:10px;--type-body:14px;--type-title:16px;--type-company:20px;--major-gap:112px;--side-space:96px;--exp-gap:28px;--project-rule-space:28px}
 *{box-sizing:border-box}
-@font-face{font-family:"Pretendard";src:url("../../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
-@font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
-@font-face{font-family:"Averta PE Light";src:url("../../fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
-@font-face{font-family:"Averta PE";src:url("../../fonts/Averta-PE-Regular.otf") format("opentype");font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
+@font-face{font-family:"Averta PE Light";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Thin.otf") format("opentype");font-style:normal;font-weight:300;font-display:swap}
+@font-face{font-family:"Averta PE";src:url("https://raw.githubusercontent.com/studiods/portfolio/main/fonts/Averta-PE-Regular.otf") format("opentype");font-style:normal;font-weight:500;font-display:swap}
 html,body{margin:0;padding:0;background:#fff;color:#111}
 body{font-family:"Pretendard",sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .page{
@@ -230,9 +230,15 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--major-g
 .info-block p{color:#555;margin:1mm 0 0}
 
 @media screen{
-  html{background:#ececec}
+  html{
+    min-width:1180px;
+    overflow-x:auto;
+    background:#ececec
+  }
   body{
-    width:min(1180px,100%);
+    width:1180px;
+    min-width:1180px;
+    max-width:1180px;
     margin:0 auto;
     background:#fff;
     box-shadow:0 12px 40px rgba(0,0,0,.10)
