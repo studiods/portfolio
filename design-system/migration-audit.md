@@ -156,6 +156,8 @@
 - About/Ways의 텍스트 포함 런타임을 페이지 폴더로 이동하고 Content Lock에 명시적 경로 별칭을 추가했다.
 - AIMMO System/Graphic 등 여러 활성 레이어가 쌓인 페이지는 각 페이지 폴더로 이동하되 HTML 선언 순서를 보존했다. computed/시각 회귀를 검증할 수 없는 레이어는 이번에 합치거나 재배치하지 않았다.
 - HTML의 사용자 노출 문구, 이미지, 영상은 변경하지 않았다. 상대 @import가 있는 Himart CSS는 새 디렉터리 깊이에 맞춰 import 경로만 보정했다.
+- **추가 최적화 게이트:** 파일 이동·이름 변경 직후에는 이전 경로 문자열을 저장소 전체에서 검색해 0건인지 확인한다. HTML `href/src`뿐 아니라 CSS `@import/url()`, JS `link.href`·`script.src`·`import()`·`fetch()`·런타임 스타일/스크립트 주입까지 검사한다.
+- 2026-09-24 실제 회귀에서 `reuse-prototype-cases.css` 이동 후 `himart-page-runtime.js`의 동적 stylesheet 경로가 누락되어 `himart-reuse.html` 04.1 목업이 깨졌다. 따라서 이후 소스 구조 최적화의 완료 조건에 **동적 참조 무결성 + 대표 페이지 렌더 회귀 확인**을 포함한다.
 
 ### 이동 경로 기록
 
