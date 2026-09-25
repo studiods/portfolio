@@ -184,35 +184,6 @@ html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .
   line-clamp:2!important;
 }
 
-/* HIMART 04.1 restricted prototype note.
-   Only the explanatory block below each 04.1 mockup switches to a white surface.
-   The mockup/device itself is unchanged. */
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .prototype-case-copy{
-  padding:24px 20px 22px!important;
-  background:#fff!important;
-  color:#000!important;
-  box-sizing:border-box!important;
-}
-
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .prototype-case-copy::before{
-  content:"RESTRICTED";
-  display:block!important;
-  margin:0 0 18px!important;
-  color:#000!important;
-  font-family:var(--hm-font-en)!important;
-  font-size:18px!important;
-  font-weight:600!important;
-  line-height:1.2!important;
-  letter-spacing:0!important;
-  text-align:center!important;
-}
-
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .prototype-case-copy h3,
-html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .prototype-case-copy p{
-  color:#000!important;
-  -webkit-text-fill-color:#000!important;
-}
-
 /* Footer aligns to the exact occupied 85% mockup width. */
 html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .prototype-case-footer{
   display:flex!important;
