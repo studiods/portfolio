@@ -342,6 +342,78 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   }
   .major-gap{height:var(--major-gap)!important}
   .info-grid{gap:24px 32px!important}
+
+  /* PDF layout correction: section title above rule, then full-width content */
+  .section{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important
+  }
+  .section>.label:not(.label--continued){
+    width:100%!important;
+    padding:0 0 12px!important;
+    border-bottom:1px solid #222!important
+  }
+  .section>.body{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    border-top:0!important;
+    padding-top:32px!important
+  }
+  .page.experience .body{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    padding-top:0!important;
+    border-top:0!important
+  }
+
+  /* Experience: company left / work right */
+  .page.experience .exp{
+    grid-template-columns:minmax(0,1fr) minmax(0,3fr)!important;
+    column-gap:var(--exp-gap)!important;
+    width:100%!important;
+    max-width:100%!important
+  }
+  .exp-company,
+  .project,
+  .project-head,
+  .project-head h3,
+  .project li,
+  .principle{
+    min-width:0!important;
+    max-width:100%!important
+  }
+  .project-head{
+    grid-template-columns:minmax(0,1fr) max-content!important;
+    gap:12px!important;
+    padding-right:0!important
+  }
+  .project-head h3,
+  .project li,
+  .principle p{
+    overflow-wrap:anywhere
+  }
+
+  /* One strong rule only at Profile / first company of continuation pages */
+  .page.experience .exp-list{
+    border-top:0!important
+  }
+  .page.experience .label--continued + .body .exp-list{
+    border-top:1px solid #222!important
+  }
+  .page.experience .exp-list>.exp:first-child{
+    border-top:0!important
+  }
+
+  /* Strength cards use the same rule-to-title spacing as company rows */
+  .strengths{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important
+  }
+  .strengths .principle{
+    padding-top:20px!important
+  }
 }
 </style>
 </head>
