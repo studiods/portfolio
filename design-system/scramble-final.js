@@ -400,6 +400,30 @@
     return splitMajorTitleIntoTwoLines(element.textContent || '');
   };
 
+  const decorateMajorTitleCommas = line => {
+    if (!line || line.dataset.hmCommaBreakReady === '1') return;
+    const text = normalizeText(line.textContent || '');
+    if (!/[,，]/u.test(text)) {
+      line.dataset.hmCommaBreakReady = '1';
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    text.split(/([,，])/u).forEach(part => {
+      if (!part) return;
+      if (/^[,，]$/u.test(part)) {
+        const comma = document.createElement('span');
+        comma.className = 'hm-section-title-comma';
+        comma.textContent = part;
+        fragment.appendChild(comma);
+      } else {
+        fragment.appendChild(document.createTextNode(part));
+      }
+    });
+    line.replaceChildren(fragment);
+    line.dataset.hmCommaBreakReady = '1';
+  };
+
   const normalizeMajorTitleWrapping = (element, kind) => {
     if (!element || kind !== 'major') return;
     if (element.hasAttribute('data-hm-scramble-active')) return;
@@ -408,20 +432,30 @@
     const existingLines = [...element.children]
       .filter(child => child.classList?.contains('hm-section-title-line'));
 
-    /* Keep animated/restored line wrappers intact. Rebuild only authored/plain markup.
-       Every major title therefore owns exactly two semantic phrases, while CSS decides
-       whether they flow inline (wide/mobile) or as two fixed rows (stacked 781–1599). */
+    /* Every major title owns two semantic phrases for the stacked layout.
+       Wide mode ignores that semantic split as a hard break; only commas force a
+       newline there. Literal spaces between line wrappers preserve natural flow. */
     if (existingLines.length !== 2 || element.querySelector('br')) {
       const fragment = document.createDocumentFragment();
-      lines.slice(0, 2).forEach(lineText => {
+      lines.slice(0, 2).forEach((lineText, index) => {
+        if (index > 0) fragment.appendChild(document.createTextNode(' '));
         const line = document.createElement('span');
         line.className = 'hm-section-title-line';
         line.textContent = lineText;
         fragment.appendChild(line);
       });
-      if (fragment.childNodes.length === 2) element.replaceChildren(fragment);
+      if (fragment.querySelectorAll?.('.hm-section-title-line').length === 2) {
+        element.replaceChildren(fragment);
+      }
     }
 
+    [...element.children]
+      .filter(child => child.classList?.contains('hm-section-title-line'))
+      .forEach(decorateMajorTitleCommas);
+
+    /* Font size is owned only by the design system. Remove stale inline values
+       left by older narrative/runtime layers so 42px remains authoritative. */
+    element.style.removeProperty('font-size');
     element.style.setProperty('white-space', 'normal', 'important');
     element.style.setProperty('word-break', 'keep-all', 'important');
     element.style.setProperty('overflow-wrap', 'normal', 'important');
@@ -610,7 +644,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.25-two-line-major-title-1',
+    version:'2026.09.25-major-42-comma-break-2',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
