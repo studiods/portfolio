@@ -32,14 +32,17 @@
     --hm-wide-rise-overshoot:-7px;
   }
 
-  /* Optional 25:75 editorial test variant.
-     Keeps the 100px maximum rail gap, transfers 65px from the title rail
-     to the content rail, and lowers only the major chapter title scale. */
-  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--25-75{
-    --hm-wide-left-min:375px;
-    --hm-wide-left-max:375px;
-    --hm-wide-right-max:1125px;
-    --hm-type-section:44px;
+  /* Optional Reuse editorial test variant.
+     Keeps the wide editorial canvas at 1600px:
+     360px title rail + 80px rail gap + 1160px content rail.
+     Only the major chapter title scale is reduced to 42px. */
+  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
+    --hm-wide-left-min:360px;
+    --hm-wide-left-max:360px;
+    --hm-wide-column-gap-min:80px;
+    --hm-wide-column-gap-max:80px;
+    --hm-wide-right-max:1160px;
+    --hm-type-section:42px;
   }
 
   /* Full-bleed black section plane + centered editorial rails. */
