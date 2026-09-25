@@ -62,7 +62,7 @@
 
   /* Desktop type hierarchy: hero / major / middle / group / body / note / source */
   --hm-type-hero:64px;
-  --hm-type-section:52px;
+  --hm-type-section:42px;
   --hm-type-subsection:32px;
   --hm-type-group:22px;
   --hm-type-card-title:22px;
