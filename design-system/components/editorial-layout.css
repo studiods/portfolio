@@ -1,5 +1,5 @@
 /*
-  HIMART Wide Editorial Layout v12
+  HIMART Wide Editorial Layout v13
   Purpose: validate the index.html WORKS interaction pattern inside a case study:
   a sticky major-title rail on the left while evidence/content scrolls on the right.
 
@@ -12,73 +12,32 @@
   - Inside each chapter, both rails begin at the exact same authored top line: no top margin is allowed on the left major-title head or the first right-rail content unit.
   - Every medium-title unit owns a 1px weak divider + 40px divider-to-title inset.
   - As CSS sticky containment pushes the title upward, a runtime variable progressively dims it.
-  - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1600px canvas.
+  - Every major section paints black edge-to-edge; the editorial rails remain centered inside a max 1760px canvas.
   - Magnetic reveal is applied at subsection / medium-title unit level, not to nested child components.
   - Hero, navigation, footer typography, color and component internals remain owned by the canonical design system.
   - Existing DOM order is preserved. The layout removes the visual box of .hm-wrap with display:contents at wide sizes.
 */
 
-/* Reuse test typography contract:
-   desktop/tablet major chapter titles stay 42px in both stacked and split layouts.
-   Mobile keeps the canonical mobile title scale. */
-html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
-  --hm-type-section:42px;
-}
-
-/* Reuse stacked layout (781–1599):
-   exact 80px page insets, matching the wide editorial minimum edge,
-   one full-width chapter-title column, and exactly two authored title lines.
-   The line wrappers prevent Korean words from splitting. */
-@media (min-width:781px) and (max-width:1599px){
-  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
-    --hm-container-wide:calc(100% - 160px);
-    --hm-type-section-mobile:42px;
-  }
-
-  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test
-  #live-main > :is(#brand,#data,#journey,#direction).hm-section
-  > .hm-wrap > .hm-section-head > div{
-    grid-column:1 / -1;
-    min-width:0;
-    width:100%;
-  }
-
-  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test
-  .hm-section-title .hm-section-title-line{
-    display:block;
-    white-space:nowrap;
-  }
-
-  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test
-  .hm-section-title .hm-section-title-break{
-    display:none;
-  }
-}
+/* Shared WORKS detail-page contract.
+   Reuse validated the final geometry; this component now owns the same
+   desktop/tablet editorial behavior for every .hm-wide-editorial case page. */
 
 @media (min-width:1600px){
   html body.himart-page-body.hm-wide-editorial{
     --hm-wide-title-collision-gap:0px;
     --hm-wide-major-content-gap:200px;
-    --hm-wide-left-min:400px;
-    --hm-wide-left-max:440px;
-    --hm-wide-column-gap-min:80px;
-    --hm-wide-column-gap-max:100px;
-    --hm-wide-right-max:1060px;
-    --hm-wide-edge-min:64px;
-    --hm-wide-rise-distance:56px;
-    --hm-wide-rise-overshoot:-7px;
-  }
-
-  /* Optional Reuse editorial test variant.
-     The editorial canvas is capped at 1760px and centered in the viewport.
-     Outer viewport space is never smaller than 80px, the rail gap stays 80px,
-     and the remaining title/content rails keep the approved 23:77 split.
-     Major chapter titles use the shared Reuse 42px desktop/tablet scale. */
-  html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
     --hm-wide-edge-track:max(80px,calc((100vw - 1760px)/2));
     --hm-wide-left-track:minmax(0,23fr);
     --hm-wide-gap-track:80px;
     --hm-wide-right-track:minmax(0,77fr);
+    --hm-wide-left-min:400px;
+    --hm-wide-left-max:440px;
+    --hm-wide-column-gap-min:80px;
+    --hm-wide-column-gap-max:80px;
+    --hm-wide-right-max:1170px;
+    --hm-wide-edge-min:80px;
+    --hm-wide-rise-distance:56px;
+    --hm-wide-rise-overshoot:-7px;
   }
 
   /* Full-bleed black section plane + centered editorial rails. */
