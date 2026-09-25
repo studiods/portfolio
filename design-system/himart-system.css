@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260925-2-detail-major-42");
+@import url("./index.css?v=20260925-3-detail-canvas-1760");
 
 /*
   HIMART Shared System v3.9 — sole final-authority layer.
@@ -24,6 +24,18 @@
   --hm-meta-label-value-gap:0px;
 }
 
+/* WORKS detail-page canvas authority.
+   Generic design-system defaults may remain narrower for non-detail surfaces,
+   but every Himart-system case-study page uses the same 1760px max canvas,
+   80px desktop/tablet side inset and 80px split-rail gap. */
+html body.himart-page-body{
+  --hm-detail-canvas-max:1760px;
+  --hm-detail-side-inset:80px;
+  --hm-detail-rail-gap:80px;
+  --hm-container-wide:var(--hm-detail-canvas-max);
+  --hm-content-wide:var(--hm-detail-canvas-max);
+}
+
 html body.himart-page-body,
 html body.himart-page-body #live-main,
 html body.himart-page-body #live-main > section,
@@ -35,7 +47,10 @@ html body.himart-page-body .hm-footer{background-color:var(--hm-bg-page)!importa
 /* Canvas */
 html body.himart-page-body #live-main .hm-wrap,
 html body.himart-page-body #live-main .hm-ds-wrap{
-  width:min(calc(100% - 80px),var(--hm-container-wide))!important;
+  width:min(
+    calc(100% - var(--hm-detail-side-inset,80px) - var(--hm-detail-side-inset,80px)),
+    var(--hm-container-wide,var(--hm-detail-canvas-max,1760px))
+  )!important;
   max-width:none!important;
   margin-inline:auto!important;
 }
@@ -45,10 +60,6 @@ html body.himart-page-body #live-main .hm-ds-wrap{
    Major chapter titles stay at 42px and wrap only at word boundaries.
    Mobile keeps the canonical mobile scale. */
 @media (min-width:781px) and (max-width:1599px){
-  html body.himart-page-body.hm-wide-editorial{
-    --hm-container-wide:calc(100% - 160px);
-  }
-
   html body.himart-page-body.hm-wide-editorial #live-main .hm-section-title{
     width:100%;
     max-width:100%;
