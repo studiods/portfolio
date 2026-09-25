@@ -33,7 +33,7 @@
 @media (min-width:781px){
   html body.himart-page-body #live-main > .hm-section[data-chapter]
   > .hm-wrap > .hm-section-head .hm-section-title{
-    font-size:var(--hm-type-section,52px)!important;
+    font-size:var(--hm-type-section,var(--hm-detail-major-title,42px))!important;
     line-height:1.12!important;
   }
 }
