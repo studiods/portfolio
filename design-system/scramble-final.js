@@ -353,14 +353,75 @@
     return true;
   };
 
+  const splitMajorTitleIntoTwoLines = text => {
+    const normalized = normalizeText(text);
+    const words = normalized.split(/\s+/).filter(Boolean);
+    if (words.length < 2) return [normalized];
+
+    const totalLength = words.reduce((sum, word) => sum + [...word].length, 0) + (words.length - 1);
+    let best = null;
+
+    for (let index = 1; index < words.length; index += 1) {
+      const first = words.slice(0, index).join(' ');
+      const second = words.slice(index).join(' ');
+      const firstLength = [...first].length;
+      const secondLength = [...second].length;
+      const balance = Math.abs(firstLength - secondLength);
+      const punctuationBonus = /[,，:;·]$/.test(first) ? -4 : 0;
+      const shortLinePenalty =
+        Math.min(firstLength, secondLength) < Math.max(6, totalLength * 0.28) ? 10 : 0;
+      const score = balance + punctuationBonus + shortLinePenalty;
+      if (!best || score < best.score) best = { score, lines:[first, second] };
+    }
+
+    return best?.lines || [normalized];
+  };
+
+  const authoredMajorTitleLines = element => {
+    const directLines = [...element.children]
+      .filter(child => child.classList?.contains('hm-section-title-line'))
+      .map(line => normalizeText(line.textContent))
+      .filter(Boolean);
+    if (directLines.length === 2) return directLines;
+
+    const fragments = [];
+    let current = '';
+    element.childNodes.forEach(node => {
+      if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR') {
+        if (normalizeText(current)) fragments.push(normalizeText(current));
+        current = '';
+        return;
+      }
+      current += node.textContent || '';
+    });
+    if (normalizeText(current)) fragments.push(normalizeText(current));
+    if (fragments.length === 2) return fragments;
+
+    return splitMajorTitleIntoTwoLines(element.textContent || '');
+  };
+
   const normalizeMajorTitleWrapping = (element, kind) => {
     if (!element || kind !== 'major') return;
+    if (element.hasAttribute('data-hm-scramble-active')) return;
 
-    /* Major titles use the available left-rail width as the only line-length rule.
-       Retired authored <br> tags made every page keep a different fixed line break,
-       so replace them with spaces and allow wrapping only at word boundaries. */
-    element.querySelectorAll('br').forEach(br => br.replaceWith(document.createTextNode(' ')));
-    element.normalize();
+    const lines = authoredMajorTitleLines(element);
+    const existingLines = [...element.children]
+      .filter(child => child.classList?.contains('hm-section-title-line'));
+
+    /* Keep animated/restored line wrappers intact. Rebuild only authored/plain markup.
+       Every major title therefore owns exactly two semantic phrases, while CSS decides
+       whether they flow inline (wide/mobile) or as two fixed rows (stacked 781–1599). */
+    if (existingLines.length !== 2 || element.querySelector('br')) {
+      const fragment = document.createDocumentFragment();
+      lines.slice(0, 2).forEach(lineText => {
+        const line = document.createElement('span');
+        line.className = 'hm-section-title-line';
+        line.textContent = lineText;
+        fragment.appendChild(line);
+      });
+      if (fragment.childNodes.length === 2) element.replaceChildren(fragment);
+    }
+
     element.style.setProperty('white-space', 'normal', 'important');
     element.style.setProperty('word-break', 'keep-all', 'important');
     element.style.setProperty('overflow-wrap', 'normal', 'important');
@@ -549,7 +610,7 @@
   addEventListener('pagehide', finishAll);
 
   window.HMDSTitleScrambleRuntime = Object.freeze({
-    version:'2026.09.22-work-archive-hero-2',
+    version:'2026.09.25-two-line-major-title-1',
     selectors:Object.freeze({ hero:heroSelector, major:majorSelector, medium:mediumSelector }),
     scan
   });
