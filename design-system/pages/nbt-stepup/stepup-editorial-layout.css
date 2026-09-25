@@ -6,7 +6,8 @@
   html body.nbt-stepup-page.hm-wide-stepup-ready{
     --hm-wide-title-collision-gap:0px;
     --hm-wide-major-content-gap:200px;
-    --hm-wide-edge-track:max(80px,calc((100vw - 1760px)/2));
+    --hm-wide-canvas-max:1760px;
+    --hm-wide-edge-track:max(80px,calc((100vw - var(--hm-wide-canvas-max))/2));
     --hm-wide-left-track:minmax(0,23fr);
     --hm-wide-gap-track:80px;
     --hm-wide-right-track:minmax(0,77fr);
