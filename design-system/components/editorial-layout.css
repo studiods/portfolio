@@ -26,11 +26,12 @@ html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
 }
 
 /* Reuse stacked layout (781–1599):
-   exact 120px page insets, one full-width chapter-title column, and exactly two
-   authored title lines. The line wrappers prevent Korean words from splitting. */
+   exact 80px page insets, matching the wide editorial minimum edge,
+   one full-width chapter-title column, and exactly two authored title lines.
+   The line wrappers prevent Korean words from splitting. */
 @media (min-width:781px) and (max-width:1599px){
   html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
-    --hm-container-wide:calc(100% - 240px);
+    --hm-container-wide:calc(100% - 160px);
     --hm-type-section-mobile:42px;
   }
 
