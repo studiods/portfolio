@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260925-4-two-line-major-title");
+@import url("./index.css?v=20260925-5-major-title-42-comma-break");
 
 /*
   HIMART Shared System v3.9 — sole final-authority layer.
@@ -66,8 +66,9 @@ html body.himart-page-body #live-main .hm-section-title .hm-section-title-line{
   display:inline;
   white-space:normal;
 }
-html body.himart-page-body #live-main .hm-section-title .hm-section-title-line + .hm-section-title-line::before{
-  content:" ";
+html body.himart-page-body #live-main .hm-section-title .hm-section-title-comma-part{
+  display:inline;
+  white-space:normal;
 }
 html body.himart-page-body #live-main .hm-section-title .hm-section-title-break{
   display:none;
@@ -77,6 +78,8 @@ html body.himart-page-body #live-main .hm-section-title .hm-section-title-break{
   html body.himart-page-body.hm-wide-editorial #live-main .hm-section-title{
     width:100%;
     max-width:100%;
+    font-size:var(--hm-detail-major-title,42px)!important;
+    line-height:1.12!important;
     white-space:normal;
     word-break:keep-all;
     overflow-wrap:normal;
