@@ -23,14 +23,16 @@ html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#
   overflow-wrap:normal !important;
   writing-mode:horizontal-tb !important;
 }
-@media (max-width:1024px){
+@media (max-width:1599px){
   html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head{
     grid-template-columns:minmax(0,1fr) !important;
     gap:20px !important;
   }
+}
+@media (min-width:781px) and (max-width:1599px){
   html body:is(.himart-production-page,.himart-movie-page) #live-main :is(#brand,#data,#journey,#direction) > .hm-wrap > .hm-section-head .hm-section-title{
-    font-size:var(--hm-type-section-mobile) !important;
-    line-height:1.2 !important;
+    font-size:var(--hm-type-section) !important;
+    line-height:1.12 !important;
   }
 }
 @media (max-width:700px){
