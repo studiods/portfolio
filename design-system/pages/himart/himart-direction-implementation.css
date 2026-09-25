@@ -76,18 +76,32 @@ html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction
   padding:0!important;
 }
 
-/* 04.1 confidentiality matte only.
-   04.2 must show its uploaded screens without any black veil. */
+/* 04.1 confidentiality overlay only.
+   Keep the existing 70% opacity, but use a white veil over the uploaded screens.
+   RESTRICTED is the English access-state label; the Korean explanation remains below it.
+   04.2 must show its uploaded screens without any veil. */
 html body.himart-page-body.himart-commerce-page #direction :is(.himart-direction-041,.himart-direction-042) .galaxy-ultra-screen{
   position:relative!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::before{
-  content:""!important;
+  content:"RESTRICTED"!important;
   position:absolute!important;
   z-index:4!important;
   inset:0!important;
-  display:block!important;
-  background:rgba(0,0,0,.70)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  padding:0 24px 74px!important;
+  background:rgba(255,255,255,.70)!important;
+  color:#000!important;
+  font-family:var(--hm-font-en,"Averta PE",Arial,sans-serif)!important;
+  font-size:18px!important;
+  font-weight:600!important;
+  font-variation-settings:"wght" 600!important;
+  line-height:1.2!important;
+  letter-spacing:0!important;
+  text-align:center!important;
   pointer-events:none!important;
 }
 html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen::before,
@@ -105,8 +119,9 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-041
   display:grid!important;
   place-items:center!important;
   box-sizing:border-box!important;
-  padding:0 24px!important;
-  color:#fff!important;
+  padding:58px 24px 0!important;
+  color:#000!important;
+  -webkit-text-fill-color:#000!important;
   font-family:Pretendard,var(--hm-font-ko),sans-serif!important;
   font-size:22px!important;
   font-weight:300!important;
