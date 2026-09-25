@@ -130,6 +130,8 @@
   html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
     width:100%!important;
     max-width:440px!important;
+    font-size:var(--hm-detail-major-title,42px)!important;
+    line-height:1.12!important;
   }
   html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-desc{
     max-width:32ch!important;
