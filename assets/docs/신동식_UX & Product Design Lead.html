@@ -414,6 +414,29 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   .strengths .principle{
     padding-top:20px!important
   }
+
+  /* Header alignment */
+  .header{
+    align-items:start!important
+  }
+  .role{
+    margin-top:4.25mm!important
+  }
+  .meta{
+    align-self:start!important;
+    font-size:9.8px!important;
+    line-height:1.6!important
+  }
+
+  /* Give the three strengths more breathing room from the profile text */
+  .strengths{
+    margin-top:15.6mm!important
+  }
+
+  /* Remove the extra line above Education while keeping Education's own rule */
+  body>.page.experience:last-of-type .exp-list{
+    border-top:0!important
+  }
 }
 </style>
 </head>
@@ -425,7 +448,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
     <div>
       <div class="name">SHIN DONG SIK</div>
       <div class="role screen-only">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
-      <div class="role print-only">디자인 팀 · 프로덕트 디자인 / UX 리드</div>
+      <div class="role print-only">DESIGN TEAM &amp; PRODUCT DESIGN / UX LEAD</div>
     </div>
     <div class="meta">+82 10-3086-5709<br>subtraction.design@gmail.com<br>shindongsik.com</div>
   </header>
@@ -1091,7 +1114,7 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
 </article>
 <article class="exp print-foundation">
   <div class="exp-company">
-    <div class="company">초기 기반 경력</div>
+    <div class="company">초기 경력 사항</div>
     <div class="role-ko">에이전시 · 디바이스 · 기업용 UX</div>
     <div class="years">2005 - 2013</div>
   </div>
@@ -1251,11 +1274,13 @@ body>.page.experience+.page.experience .exp:first-child{margin-top:var(--company
   </div>
   <div class="info-block">
     <div class="mini-label">AI 활용 경험</div>
-    <p>UX 리서치·분석, 목업 · 인터렉션 · 이미지 · 영상 제작 및 업무 자동화에 활용</p>
+    <p class="screen-only">UX 리서치·분석, 목업 · 인터렉션 · 이미지 · 영상 제작 및 업무 자동화에 활용</p>
+    <p class="print-only">UX 리서치·분석, 프로토타입·목업·인터랙션 제작, 이미지·서비스 소개 영상 제작, 캐릭터 디자인·3D 작업, 업무 자동화 툴 제작에 활용</p>
   </div>
   <div class="info-block">
     <div class="mini-label">Skills</div>
-    <p>Adobe Photoshop · Adobe Illustrator · Figma · After Effect</p>
+    <p class="screen-only">Adobe Photoshop · Adobe Illustrator · Figma · After Effect</p>
+    <p class="print-only">Adobe Photoshop · Adobe Illustrator · Adobe Premiere Pro · Figma · After Effect</p>
     <p>그래픽 디자인 · 인터랙션 디자인 · 브랜딩 · 서비스 디자인 · HCI · UI 디자인</p>
   </div>
   <div class="info-block">
