@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260924-2-title-exit");
+@import url("./index.css?v=20260925-1-works-detail-layout");
 
 /*
   HIMART Shared System v3.9 — sole final-authority layer.
@@ -11,9 +11,9 @@
   --hm-description-max-chars:40ch;
   --hm-inner-number-max:12px;
   --hm-hero-ratio:16 / 9;
-  /* Final internal-page type scale: 64 / 52 / 32 / 22 / 16 / 12 / 10(source). */
+  /* Final internal-page type scale: 64 / 42 / 32 / 22 / 16 / 12 / 10(source). */
   --hm-type-hero:64px;
-  --hm-type-section:52px;
+  --hm-type-section:42px;
   --hm-type-subsection:32px;
   --hm-type-group:22px;
   --hm-type-card-title:22px;
@@ -37,6 +37,34 @@ html body.himart-page-body #live-main .hm-ds-wrap{
   width:min(calc(100% - 80px),var(--hm-container-wide))!important;
   max-width:none!important;
   margin-inline:auto!important;
+}
+
+/* WORKS detail-page desktop/tablet layout contract.
+   781–1599 uses one editorial column with exact 80px viewport insets.
+   Major chapter titles stay at 42px and wrap only at word boundaries.
+   Mobile keeps the canonical mobile scale. */
+@media (min-width:781px) and (max-width:1599px){
+  html body.himart-page-body.hm-wide-editorial{
+    --hm-container-wide:calc(100% - 160px);
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main .hm-section-title{
+    width:100%;
+    max-width:100%;
+    white-space:normal;
+    text-wrap:balance;
+    word-break:keep-all;
+    overflow-wrap:normal;
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main .hm-section-title .hm-section-title-line{
+    display:inline;
+    white-space:normal;
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main .hm-section-title .hm-section-title-break{
+    display:block;
+  }
 }
 
 /* Hero */
@@ -95,7 +123,7 @@ html body.himart-page-body :is(.hm-movie-hero,.ways-hero) .hm-title + .hm-lead b
   display:none!important;
 }
 
-/* Canonical type hierarchy: 64 / 52 / 32 / 22 / 16 / 12 / 10(source) */
+/* Canonical type hierarchy: 64 / 42 / 32 / 22 / 16 / 12 / 10(source) */
 html body.himart-page-body #live-main .hm-section-title{
   margin:0!important;
   padding:0!important;
