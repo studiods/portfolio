@@ -92,14 +92,9 @@
   }
 
   html body.nbt-stepup-page.hm-wide-stepup-ready
-  #live-main > .hm-section .hm-section-title .hm-section-title-line{
-    display:contents;
-  }
-
-  html body.nbt-stepup-page.hm-wide-stepup-ready
-  #live-main > .hm-section .hm-section-title .hm-section-title-comma-part{
-    display:block;
-    white-space:normal;
+  #live-main > .hm-section .hm-section-title .hm-section-title-comma::after{
+    content:"\A";
+    white-space:pre;
   }
 
   html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-section-head .hm-section-desc{
