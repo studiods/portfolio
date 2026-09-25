@@ -33,15 +33,16 @@
   }
 
   /* Optional Reuse editorial test variant.
-     Uses exact 80px viewport edges and an exact 80px rail gap.
-     The remaining horizontal space is distributed 23:77 between title/content rails.
-     Only the major chapter title scale is reduced to 42px. */
+     The editorial canvas is capped at 1760px and centered in the viewport.
+     Outer viewport space is never smaller than 80px, the rail gap stays 80px,
+     and the remaining title/content rails keep the approved 23:77 split.
+     Only the major chapter title scale is reduced to 40px. */
   html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
-    --hm-wide-edge-track:80px;
+    --hm-wide-edge-track:max(80px,calc((100vw - 1760px)/2));
     --hm-wide-left-track:minmax(0,23fr);
     --hm-wide-gap-track:80px;
     --hm-wide-right-track:minmax(0,77fr);
-    --hm-type-section:42px;
+    --hm-type-section:40px;
   }
 
   /* Full-bleed black section plane + centered editorial rails. */
