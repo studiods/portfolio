@@ -91,6 +91,17 @@
     line-height:1.12!important;
   }
 
+  html body.nbt-stepup-page.hm-wide-stepup-ready
+  #live-main > .hm-section .hm-section-title .hm-section-title-line{
+    display:contents;
+  }
+
+  html body.nbt-stepup-page.hm-wide-stepup-ready
+  #live-main > .hm-section .hm-section-title .hm-section-title-comma-part{
+    display:block;
+    white-space:normal;
+  }
+
   html body.nbt-stepup-page.hm-wide-stepup-ready #live-main > .hm-section .hm-section-head .hm-section-desc{
     max-width:32ch!important;
   }
