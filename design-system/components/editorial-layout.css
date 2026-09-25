@@ -130,6 +130,22 @@
     font-size:var(--hm-detail-major-title,42px)!important;
     line-height:1.12!important;
   }
+
+  /* Wide split-mode title contract.
+     A comma is a stronger break signal than available line length: every authored
+     comma ends the current visual row. Titles without commas keep natural wrapping. */
+  html body.himart-page-body.hm-wide-editorial
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section
+  .hm-section-title .hm-section-title-line{
+    display:contents;
+  }
+
+  html body.himart-page-body.hm-wide-editorial
+  #live-main > :is(#brand,#data,#journey,#direction).hm-section
+  .hm-section-title .hm-section-title-comma-part{
+    display:block;
+    white-space:normal;
+  }
   html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-desc{
     max-width:32ch!important;
   }
