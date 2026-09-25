@@ -33,11 +33,11 @@
   }
 
   /* Optional Reuse editorial test variant.
-     Uses exact 48px viewport edges and an exact 80px rail gap.
+     Uses exact 80px viewport edges and an exact 80px rail gap.
      The remaining horizontal space is distributed 23:77 between title/content rails.
      Only the major chapter title scale is reduced to 42px. */
   html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
-    --hm-wide-edge-track:48px;
+    --hm-wide-edge-track:80px;
     --hm-wide-left-track:minmax(0,23fr);
     --hm-wide-gap-track:80px;
     --hm-wide-right-track:minmax(0,77fr);
