@@ -1,4 +1,4 @@
-@import url("./index.css?v=20260925-1-works-detail-layout");
+@import url("./index.css?v=20260925-2-detail-major-42");
 
 /*
   HIMART Shared System v3.9 — sole final-authority layer.
@@ -13,7 +13,8 @@
   --hm-hero-ratio:16 / 9;
   /* Final internal-page type scale: 64 / 42 / 32 / 22 / 16 / 12 / 10(source). */
   --hm-type-hero:64px;
-  --hm-type-section:42px;
+  --hm-detail-major-title:42px;
+  --hm-type-section:var(--hm-detail-major-title);
   --hm-type-subsection:32px;
   --hm-type-group:22px;
   --hm-type-card-title:22px;
