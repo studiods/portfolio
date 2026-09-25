@@ -33,18 +33,14 @@
   }
 
   /* Optional Reuse editorial test variant.
-     Keeps the wide editorial canvas at 1600px with an 80px rail gap.
-     The remaining 1520px content rails use a 23:77 split:
-     350px title rail + 80px rail gap + 1170px content rail.
-     Wide-layout outer edge minimum is reduced from 64px to 48px.
+     Uses exact 48px viewport edges and an exact 80px rail gap.
+     The remaining horizontal space is distributed 23:77 between title/content rails.
      Only the major chapter title scale is reduced to 42px. */
   html body.himart-page-body.hm-wide-editorial.hm-wide-editorial--reuse-test{
-    --hm-wide-left-min:350px;
-    --hm-wide-left-max:350px;
-    --hm-wide-column-gap-min:80px;
-    --hm-wide-column-gap-max:80px;
-    --hm-wide-right-max:1170px;
-    --hm-wide-edge-min:48px;
+    --hm-wide-edge-track:48px;
+    --hm-wide-left-track:minmax(0,23fr);
+    --hm-wide-gap-track:80px;
+    --hm-wide-right-track:minmax(0,77fr);
     --hm-type-section:42px;
   }
 
@@ -59,11 +55,11 @@
     padding-left:0!important;
     display:grid!important;
     grid-template-columns:
-      minmax(var(--hm-wide-edge-min),1fr)
-      minmax(var(--hm-wide-left-min),var(--hm-wide-left-max))
-      minmax(var(--hm-wide-column-gap-min),var(--hm-wide-column-gap-max))
-      minmax(0,var(--hm-wide-right-max))
-      minmax(var(--hm-wide-edge-min),1fr)!important;
+      var(--hm-wide-edge-track,minmax(var(--hm-wide-edge-min),1fr))
+      var(--hm-wide-left-track,minmax(var(--hm-wide-left-min),var(--hm-wide-left-max)))
+      var(--hm-wide-gap-track,minmax(var(--hm-wide-column-gap-min),var(--hm-wide-column-gap-max)))
+      var(--hm-wide-right-track,minmax(0,var(--hm-wide-right-max)))
+      var(--hm-wide-edge-track,minmax(var(--hm-wide-edge-min),1fr))!important;
     column-gap:0!important;
     grid-auto-flow:row!important;
     grid-auto-rows:auto!important;
