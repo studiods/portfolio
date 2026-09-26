@@ -410,104 +410,6 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const PATCH_OWNS_LOWER_TIMELINES = document.body.classList.contains('home-page');
 
-  /*
-    HOME entry scroll cue — same timing contract as WORKS, but without moving scrollY:
-    - after 3 seconds with no direct scroll action, move the currently visible
-      Hero quote group upward by 10% of its OWN rendered height, then return;
-    - replay every 7 seconds while the user still has not scrolled;
-    - any direct wheel/touch/scroll-key/real-scroll action permanently disables
-      the guide for the current page load;
-    - if the user scrolls while the guide is moving, remove the guide class
-      immediately so the text returns to its authored position before the native
-      Home scroll timeline continues.
-  */
-  const setupHomeEntryScrollCue = () => {
-    if (reducedMotion || window.scrollY > 0 || !quoteState) return;
-
-    const IDLE_DELAY = 3000;
-    const REPEAT_DELAY = 7000;
-    const CUE_DURATION = 1440;
-
-    let userHasScrolled = false;
-    let idleTimer = 0;
-    let repeatTimer = 0;
-    let cueTimer = 0;
-
-    const scrollKeys = new Set([
-      'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
-    ]);
-
-    const clearCueVisual = () => {
-      window.clearTimeout(cueTimer);
-      cueTimer = 0;
-      quoteState.classList.remove('home-entry-scroll-cue-active');
-    };
-
-    const cancelTimers = () => {
-      window.clearTimeout(idleTimer);
-      window.clearTimeout(repeatTimer);
-      idleTimer = 0;
-      repeatTimer = 0;
-      clearCueVisual();
-    };
-
-    const cancelForUser = () => {
-      if (userHasScrolled) return;
-      userHasScrolled = true;
-      cancelTimers();
-
-      /*
-        Force the authored resting transform immediately. The next native scroll
-        render then owns the Hero timeline without inheriting guide movement.
-      */
-      quoteState.classList.remove('home-entry-scroll-cue-active');
-      quoteState.style.transform = 'none';
-      styleCache.delete(quoteState);
-      requestRender();
-    };
-
-    const onScroll = () => cancelForUser();
-    const onWheel = () => cancelForUser();
-    const onTouchMove = () => cancelForUser();
-    const onKeyDown = event => {
-      if (scrollKeys.has(event.key)) cancelForUser();
-    };
-
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('wheel', onWheel, {passive:true, once:true});
-    window.addEventListener('touchmove', onTouchMove, {passive:true, once:true});
-    window.addEventListener('keydown', onKeyDown);
-
-    const scheduleNextCue = () => {
-      if (userHasScrolled) return;
-      window.clearTimeout(repeatTimer);
-      repeatTimer = window.setTimeout(runCue, REPEAT_DELAY);
-    };
-
-    const runCue = () => {
-      if (userHasScrolled) return;
-
-      if (document.hidden || window.scrollY !== 0 || heroEntryActive) {
-        scheduleNextCue();
-        return;
-      }
-
-      // Exact 7-second start-to-start cadence, matching WORKS.
-      scheduleNextCue();
-
-      clearCueVisual();
-      void quoteState.offsetWidth;
-      quoteState.classList.add('home-entry-scroll-cue-active');
-
-      cueTimer = window.setTimeout(() => {
-        quoteState.classList.remove('home-entry-scroll-cue-active');
-        cueTimer = 0;
-      }, CUE_DURATION + 80);
-    };
-
-    idleTimer = window.setTimeout(runCue, IDLE_DELAY);
-  };
-
   const IDLE_DELAY_MS = 3000;
   const IDLE_UNIT_MS = 1000;
   const IDLE_BASE_ALPHA = 0.05;
@@ -549,10 +451,7 @@
   let idlePatternIndex = 0;
   let idleUnits = [];
   let idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
-  /*
-    Legacy no-input random/brightness idle cue is retired.
-    The only no-input Home guide is setupHomeEntryScrollCue().
-  */
+  /* Legacy no-input random/brightness idle cue remains retired. */
   let idleDisabled = true;
 
   /*
@@ -1043,7 +942,6 @@
 
   refreshMetrics();
   scheduleIdleCue(IDLE_DELAY_MS);
-  setupHomeEntryScrollCue();
 
   addEventListener('scroll', () => {
     if (heroEntryActive && scrollY > 1) finishHeroEntryReveal();
