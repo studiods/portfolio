@@ -34,8 +34,6 @@
   const randomGlyph = (index, step) =>
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
 
-  const body = document.body;
-
   const philosophy = document.querySelector('#philosophy');
   const philosophySticky = philosophy?.querySelector('.philosophy-sticky');
   const philosophyChars = philosophy ? [...philosophy.querySelectorAll('.philosophy-statements .fill-char')] : [];
@@ -339,8 +337,6 @@
   addEventListener('resize', requestUpdate, { passive: true });
 
   update();
-  body?.classList.add('home-motion-ready');
-
   if (document.fonts?.ready) {
     document.fonts.ready.then(() => requestAnimationFrame(requestUpdate)).catch(() => {});
   }
