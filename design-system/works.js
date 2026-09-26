@@ -30,14 +30,16 @@
     - because real scrollY changes, every existing Works scroll-linked behavior follows naturally
       (WORKS title scale/position, project-copy movement, media focus and chapter progress);
     - temporarily disable scroll snap only while the automatic cue is running;
-    - any user scroll intent permanently cancels the cue for the current page load;
-    - never repeat during the same page load.
+    - first cue starts after 3 seconds without user scroll;
+    - after each completed cue, replay after 7 more seconds of no user scroll;
+    - any user scroll intent permanently cancels the cue and every pending replay for the current page load.
   */
   const setupEntryScrollCue = () => {
     const firstProject = cards[0];
     if (!firstProject || reduced || window.scrollY > 0) return;
 
     const IDLE_DELAY = 3000;
+    const REPEAT_DELAY = 7000;
     const UP_DURATION = 900;
     const HOLD_DURATION = 120;
     const DOWN_DURATION = 420;
@@ -45,8 +47,8 @@
 
     let userHasScrolled = false;
     let isAutoScrolling = false;
-    let played = false;
     let idleTimer = 0;
+    let repeatTimer = 0;
     let holdTimer = 0;
     let rafId = 0;
     let programmaticScrollUntil = 0;
@@ -62,8 +64,10 @@
 
     const cancelTimers = () => {
       window.clearTimeout(idleTimer);
+      window.clearTimeout(repeatTimer);
       window.clearTimeout(holdTimer);
       idleTimer = 0;
+      repeatTimer = 0;
       holdTimer = 0;
       if (rafId) {
         cancelAnimationFrame(rafId);
@@ -130,8 +134,23 @@
     const easeOutCubic = value => 1 - Math.pow(1 - value, 3);
     const easeInCubic = value => Math.pow(value, 3);
 
+    const scheduleNextCue = () => {
+      if (userHasScrolled) return;
+      window.clearTimeout(repeatTimer);
+      repeatTimer = window.setTimeout(runCue, REPEAT_DELAY);
+    };
+
     const runCue = () => {
-      if (played || userHasScrolled || document.hidden || window.scrollY !== 0) return;
+      if (userHasScrolled) return;
+
+      /*
+        A hidden tab or a transient non-zero position should not permanently
+        break the repeat loop. Re-check after another 7-second idle window.
+      */
+      if (document.hidden || window.scrollY !== 0) {
+        scheduleNextCue();
+        return;
+      }
 
       const projectHeight = firstProject.getBoundingClientRect().height;
       const maxScroll = Math.max(
@@ -140,9 +159,11 @@
       );
       const targetY = Math.min(projectHeight * .10, maxScroll);
 
-      if (!Number.isFinite(targetY) || targetY <= 0) return;
+      if (!Number.isFinite(targetY) || targetY <= 0) {
+        scheduleNextCue();
+        return;
+      }
 
-      played = true;
       isAutoScrolling = true;
       setAutoScrollMode(true);
 
@@ -158,12 +179,13 @@
 
             /*
               Keep auto mode through the final scroll event tick, then restore
-              the normal Works scroll-snap contract without re-arming the cue.
+              the normal Works scroll-snap contract and schedule the next cue.
             */
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 isAutoScrolling = false;
                 setAutoScrollMode(false);
+                scheduleNextCue();
               });
             });
           });
