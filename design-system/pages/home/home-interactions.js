@@ -158,19 +158,14 @@
     SCRAMBLE_POOL[(index * 17 + step * 13) % SCRAMBLE_POOL.length];
 
   const setScrambleOverlay = (char, glyph, alpha = 1, rgb = '17,17,17') => {
-    if (char.dataset.scramble !== glyph) char.dataset.scramble = glyph;
-    if (!char.classList.contains('is-scrambling')) char.classList.add('is-scrambling');
-    setStyle(char, '--scramble-alpha', clamp(alpha).toFixed(3));
-    setStyle(char, '--scramble-rgb', rgb);
+    window.__hmScrambleContract.show(char, glyph, {
+      rgb,
+      alpha: clamp(alpha).toFixed(3)
+    });
   };
 
   const clearScrambleOverlay = char => {
-    const finalChar = char.dataset.finalChar;
-    if (finalChar != null) char.textContent = finalChar;
-    char.classList.remove('is-scrambling');
-    char.removeAttribute('data-scramble');
-    char.style.removeProperty('--scramble-alpha');
-    char.style.removeProperty('--scramble-rgb');
+    window.__hmScrambleContract.clear(char);
   };
 
   const visibleCharEntries = chars => {
@@ -410,49 +405,145 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const PATCH_OWNS_LOWER_TIMELINES = document.body.classList.contains('home-page');
 
-  const IDLE_DELAY_MS = 3000;
-  const IDLE_UNIT_MS = 1000;
-  const IDLE_BASE_ALPHA = 0.05;
-  const IDLE_WORD_PEAK_ALPHA = 0.50;
-  const IDLE_LINE_PEAK_ALPHA = 0.30;
-  const IDLE_PATTERN_ORDER = Object.freeze(['words', 'lines', 'randomWords', 'lines']);
+  /*
+    HOME SCROLL GUIDE — owned by the same runtime as the Hero.
+    Geometry, 5-second scroll-idle timing, resize/font changes and Hero motion
+    all run here after the full DOM exists. index.html owns markup only.
+  */
+  const createHomeScrollGuide = () => {
+    const guide = $('.index-scroll-guide');
+    const line = $('.index-scroll-guide-line', guide);
+    const label = $('.index-scroll-guide-label', guide);
 
-  const quoteWordGroups = [];
-  quoteLineChars.forEach(chars => {
-    let word = [];
-    const flushWord = () => {
-      if (!word.length) return;
-      quoteWordGroups.push(word);
-      word = [];
+    const noop = {
+      arm() {},
+      onScroll() {},
+      onResize() {},
+      onVisibilityChange() {}
     };
 
-    chars.forEach(char => {
-      if (char.textContent.trim().length > 0) {
-        word.push(char);
-      } else {
-        flushWord();
-      }
-    });
-    flushWord();
-  });
+    if (!guide || !line || !label || !heroQuote) return noop;
 
-  const shuffleUnits = units => {
-    const copy = units.slice();
-    for (let i = copy.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copy[i], copy[j]] = [copy[j], copy[i]];
+    const IDLE_DELAY = 5000;
+    const REPEAT_DELAY = 2000;
+
+    let idleTimer = 0;
+    let repeatTimer = 0;
+    let labelShowTimer = 0;
+    let labelHideTimer = 0;
+    let geometryRaf = 0;
+
+    const syncGeometry = () => {
+      geometryRaf = 0;
+      const rect = heroQuote.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return false;
+
+      const titleGap = rect.width * 0.10;
+      const lineHeight = rect.height * 0.80;
+      const lineTop = rect.top + rect.height * 0.10;
+      const guideLeft = Math.min(
+        rect.right + titleGap,
+        Math.max(0, window.innerWidth - 20)
+      );
+
+      guide.style.setProperty('--index-scroll-guide-left', `${guideLeft.toFixed(2)}px`);
+      guide.style.setProperty('--index-scroll-guide-top', `${lineTop.toFixed(2)}px`);
+      guide.style.setProperty('--index-scroll-guide-height', `${lineHeight.toFixed(2)}px`);
+      return true;
+    };
+
+    const requestGeometrySync = () => {
+      if (geometryRaf) return;
+      geometryRaf = requestAnimationFrame(syncGeometry);
+    };
+
+    const clearAnimationTimers = () => {
+      window.clearTimeout(labelShowTimer);
+      window.clearTimeout(labelHideTimer);
+      labelShowTimer = 0;
+      labelHideTimer = 0;
+      guide.classList.remove('is-sweeping');
+      label.classList.remove('is-label-visible');
+    };
+
+    const stopRepeat = () => {
+      window.clearInterval(repeatTimer);
+      repeatTimer = 0;
+    };
+
+    const hide = () => {
+      stopRepeat();
+      clearAnimationTimers();
+      guide.classList.remove('is-idle-visible');
+    };
+
+    const sweep = () => {
+      if (reducedMotion) {
+        label.classList.add('is-label-visible');
+        return;
+      }
+
+      requestGeometrySync();
+      clearAnimationTimers();
+      void guide.offsetWidth;
+      guide.classList.add('is-sweeping');
+
+      labelShowTimer = window.setTimeout(() => {
+        label.classList.add('is-label-visible');
+        labelHideTimer = window.setTimeout(() => {
+          label.classList.remove('is-label-visible');
+        }, 1000);
+      }, 1000);
+    };
+
+    const arm = () => {
+      window.clearTimeout(idleTimer);
+      hide();
+
+      idleTimer = window.setTimeout(() => {
+        idleTimer = 0;
+        if (document.hidden) return;
+
+        if (!syncGeometry()) {
+          arm();
+          return;
+        }
+
+        guide.classList.add('is-idle-visible');
+        sweep();
+
+        if (!reducedMotion) {
+          repeatTimer = window.setInterval(sweep, REPEAT_DELAY);
+        }
+      }, IDLE_DELAY);
+    };
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        window.clearTimeout(idleTimer);
+        idleTimer = 0;
+        hide();
+        return;
+      }
+      arm();
+    };
+
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(requestGeometrySync);
+      observer.observe(heroQuote);
     }
-    return copy;
+
+    document.fonts?.ready?.then(requestGeometrySync).catch(() => {});
+
+    return {
+      arm,
+      onScroll: arm,
+      onResize: requestGeometrySync,
+      onVisibilityChange
+    };
   };
 
-  let idleTimer = 0;
-  let idleRaf = 0;
-  let idlePatternStartedAt = 0;
-  let idlePatternIndex = 0;
-  let idleUnits = [];
-  let idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
-  /* Legacy no-input random/brightness idle cue remains retired. */
-  let idleDisabled = true;
+  const homeScrollGuide = createHomeScrollGuide();
 
   /*
     Home Hero has one owner: this module. The entry reveal uses the same
@@ -465,64 +556,42 @@
   let heroEntryFinalTimer = 0;
   let heroEntryStates = [];
 
-  const clearHeroEntryNode = ({ char, finalChar }) => {
-    clearScrambleOverlay(char);
-    char.textContent = finalChar;
-    char.style.removeProperty('display');
-    char.style.removeProperty('width');
-    char.style.removeProperty('min-width');
-    char.style.removeProperty('max-width');
-    char.style.removeProperty('color');
-    styleCache.delete(char);
-  };
-
   const finishHeroEntryReveal = () => {
-    if (!heroEntryActive && !heroEntryStarted) return;
+    if (
+      !heroEntryActive &&
+      !heroEntryRaf &&
+      !heroEntryFinalTimer &&
+      heroEntryStates.length === 0
+    ) return;
+
     if (heroEntryRaf) cancelAnimationFrame(heroEntryRaf);
     if (heroEntryFinalTimer) clearTimeout(heroEntryFinalTimer);
     heroEntryRaf = 0;
     heroEntryFinalTimer = 0;
-    heroEntryStates.forEach(clearHeroEntryNode);
-    quoteChars.forEach(char => {
+
+    heroEntryStates.forEach(({ char }) => {
       clearScrambleOverlay(char);
-      const finalChar = char.dataset.finalChar;
-      if (finalChar != null) char.textContent = finalChar;
       char.style.removeProperty('color');
       styleCache.delete(char);
     });
 
-    /*
-      Design-system hard stop: the entry animation is complete only when every
-      quote glyph is back to its authored English character and no scramble
-      class/data/style remains.
-    */
-    window.__hmFinalizeScrambleText?.(quoteState);
+    window.__hmScrambleContract.finalize(quoteState);
+
     heroEntryStates = [];
     if (sourceOnly) {
       sourceOnly.style.removeProperty('color');
       styleCache.delete(sourceOnly);
     }
+
     heroEntryActive = false;
     heroEntryStarted = true;
     lastHeroProgress = -1;
     requestRender();
-
-    requestAnimationFrame(() => {
-      if (scrollY <= 1 && !heroEntryActive) {
-        window.__hmFinalizeScrambleText?.(quoteState);
-        quoteChars.forEach(char => {
-          const finalChar = char.dataset.finalChar;
-          if (finalChar != null) char.textContent = finalChar;
-          char.style.setProperty('color', 'rgba(17,17,17,1)');
-          styleCache.delete(char);
-        });
-        sourceOnly?.style.setProperty('color', 'rgba(17,17,17,1)');
-      }
-    });
   };
 
   const startHeroEntryReveal = () => {
     if (heroEntryStarted || reducedMotion || !hero || scrollY > 1) return;
+
     heroEntryStarted = true;
     heroEntryActive = true;
 
@@ -531,28 +600,23 @@
         char,
         finalChar: char.dataset.finalChar ?? char.textContent,
         index,
-        staggerIndex: -1,
-        width: 0
+        staggerIndex: -1
       }))
       .filter(state => state.finalChar.trim().length > 0);
 
     heroEntryStates.forEach((state, visibleIndex) => {
       state.staggerIndex = visibleIndex;
-      state.char.textContent = state.finalChar;
-      state.width = Math.max(0, state.char.getBoundingClientRect().width);
-      state.char.style.setProperty('display', 'inline-block', 'important');
-      state.char.style.setProperty('width', `${state.width.toFixed(3)}px`, 'important');
-      state.char.style.setProperty('min-width', `${state.width.toFixed(3)}px`, 'important');
-      state.char.style.setProperty('max-width', `${state.width.toFixed(3)}px`, 'important');
-      state.char.style.setProperty('color', 'transparent', 'important');
+      if (state.char.textContent !== state.finalChar) state.char.textContent = state.finalChar;
+      setStyle(state.char, 'color', 'rgba(17,17,17,0)');
     });
-    sourceOnly?.style.setProperty('color', 'transparent', 'important');
+    setStyle(sourceOnly, 'color', 'rgba(17,17,17,0)');
 
     const startedAt = performance.now();
     const cycleMs = 58;
     const cycles = 3;
     const staggerMs = 17;
     const duration = cycleMs * cycles;
+
     heroEntryFinalTimer = window.setTimeout(
       finishHeroEntryReveal,
       duration + Math.max(0, heroEntryStates.length - 1) * staggerMs + 500
@@ -564,26 +628,37 @@
 
       heroEntryStates.forEach(state => {
         const elapsed = now - startedAt - state.staggerIndex * staggerMs;
+
         if (elapsed < 0) {
           complete = false;
+          clearScrambleOverlay(state.char);
+          setStyle(state.char, 'color', 'rgba(17,17,17,0)');
           return;
         }
+
         if (elapsed < duration) {
           complete = false;
           const cycle = Math.min(cycles - 1, Math.floor(elapsed / cycleMs));
-          state.char.textContent = randomGlyph(state.index, cycle);
-          state.char.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+          setStyle(state.char, 'color', 'rgba(17,17,17,0)');
+          setScrambleOverlay(
+            state.char,
+            randomGlyph(state.index, cycle),
+            1,
+            '17,17,17'
+          );
           return;
         }
-        state.char.textContent = state.finalChar;
-        state.char.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+
+        clearScrambleOverlay(state.char);
+        setStyle(state.char, 'color', 'rgba(17,17,17,1)');
       });
 
       if (!complete) {
         heroEntryRaf = requestAnimationFrame(frame);
         return;
       }
-      sourceOnly?.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+
+      setStyle(sourceOnly, 'color', 'rgba(17,17,17,1)');
       finishHeroEntryReveal();
     };
 
@@ -607,98 +682,6 @@
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
   const getHeroProgress = () => clamp((scrollY - metrics.heroTop) / metrics.heroTravel);
   const heroIsAtRest = () => hero && getHeroProgress() < 0.002;
-
-  const paintQuoteBase = () => {
-    quoteChars.forEach(char => {
-      setStyle(char, 'color', `rgba(17,17,17,${IDLE_BASE_ALPHA.toFixed(3)})`);
-    });
-    setWhole(sourceOnly ? [sourceOnly] : [], 0);
-  };
-
-  const paintIdleUnit = (chars, alpha) => {
-    chars.forEach(char => {
-      if (char.textContent.trim().length > 0) {
-        setStyle(char, 'color', `rgba(17,17,17,${alpha.toFixed(3)})`);
-      }
-    });
-  };
-
-  const idlePulseAlpha = (localProgress, peakAlpha) => {
-    const local = clamp(localProgress);
-    const pulse = local < 0.5
-      ? easeInOut(local * 2)
-      : easeInOut((1 - local) * 2);
-    return IDLE_BASE_ALPHA + (peakAlpha - IDLE_BASE_ALPHA) * pulse;
-  };
-
-  const stopIdleCue = (restore = true) => {
-    if (idleTimer) clearTimeout(idleTimer);
-    if (idleRaf) cancelAnimationFrame(idleRaf);
-    idleTimer = 0;
-    idleRaf = 0;
-    idlePatternStartedAt = 0;
-    idleUnits = [];
-    if (restore && heroIsAtRest()) paintQuoteBase();
-  };
-
-  const prepareIdlePattern = () => {
-    const mode = IDLE_PATTERN_ORDER[idlePatternIndex];
-    if (mode === 'lines') {
-      idleUnits = quoteLineChars.map(chars => chars.filter(char => char.textContent.trim().length > 0));
-      idlePeakAlpha = IDLE_LINE_PEAK_ALPHA;
-    } else if (mode === 'randomWords') {
-      idleUnits = shuffleUnits(quoteWordGroups);
-      idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
-    } else {
-      idleUnits = quoteWordGroups.slice();
-      idlePeakAlpha = IDLE_WORD_PEAK_ALPHA;
-    }
-  };
-
-  const scheduleIdleCue = (delay = IDLE_DELAY_MS) => {
-    if (reducedMotion || idleDisabled || !quoteWordGroups.length || document.hidden) return;
-    if (idleTimer) clearTimeout(idleTimer);
-    idleTimer = window.setTimeout(() => {
-      idleTimer = 0;
-      if (idleDisabled || !heroIsAtRest() || document.hidden) return;
-      prepareIdlePattern();
-      paintQuoteBase();
-      idlePatternStartedAt = performance.now();
-      idleRaf = requestAnimationFrame(runIdleCue);
-    }, delay);
-  };
-
-  const runIdleCue = now => {
-    if (idleDisabled || !heroIsAtRest() || document.hidden) {
-      stopIdleCue(true);
-      return;
-    }
-
-    const elapsed = now - idlePatternStartedAt;
-    const totalDuration = Math.max(1, idleUnits.length) * IDLE_UNIT_MS;
-
-    if (elapsed >= totalDuration) {
-      paintQuoteBase();
-      idleRaf = 0;
-      idlePatternStartedAt = 0;
-      idleUnits = [];
-      idlePatternIndex = (idlePatternIndex + 1) % IDLE_PATTERN_ORDER.length;
-      scheduleIdleCue(IDLE_DELAY_MS);
-      return;
-    }
-
-    const unitIndex = Math.min(idleUnits.length - 1, Math.floor(elapsed / IDLE_UNIT_MS));
-    const localProgress = (elapsed - unitIndex * IDLE_UNIT_MS) / IDLE_UNIT_MS;
-    paintQuoteBase();
-    paintIdleUnit(idleUnits[unitIndex], idlePulseAlpha(localProgress, idlePeakAlpha));
-    idleRaf = requestAnimationFrame(runIdleCue);
-  };
-
-  const registerUserAction = () => {
-    if (idleDisabled) return;
-    idleDisabled = true;
-    stopIdleCue(true);
-  };
 
   const philosophySection = $('#philosophy');
   const philosophySticky = $('.philosophy-sticky', philosophySection);
@@ -961,37 +944,41 @@
   };
 
   refreshMetrics();
-  scheduleIdleCue(IDLE_DELAY_MS);
+
+  /*
+    Hero readiness is owned here together with Hero motion and the scroll guide.
+    The lower-section runtime does not control this state.
+  */
+  document.body.classList.add('home-motion-ready');
+  homeScrollGuide.arm();
 
   addEventListener('scroll', () => {
+    homeScrollGuide.onScroll();
     if (heroEntryActive && scrollY > 1) finishHeroEntryReveal();
-    if (getHeroProgress() > 0.002) registerUserAction();
     requestRender();
   }, { passive: true });
-  addEventListener('wheel', registerUserAction, { passive: true });
-  addEventListener('touchstart', registerUserAction, { passive: true });
-  addEventListener('pointerdown', registerUserAction, { passive: true });
-  addEventListener('keydown', registerUserAction);
-  addEventListener('resize', scheduleMetricsRefresh, { passive: true });
+
+  addEventListener('resize', () => {
+    scheduleMetricsRefresh();
+    homeScrollGuide.onResize();
+  }, { passive: true });
 
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      finishHeroEntryReveal();
-      stopIdleCue(true);
-      return;
-    }
-    if (idleDisabled || reducedMotion) return;
-    if (heroIsAtRest()) scheduleIdleCue(IDLE_DELAY_MS);
+    if (document.hidden) finishHeroEntryReveal();
+    homeScrollGuide.onVisibilityChange();
   });
+
   addEventListener('pagehide', finishHeroEntryReveal, { once: true });
 
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
       startHeroEntryReveal();
       scheduleMetricsRefresh();
+      homeScrollGuide.onResize();
     }).catch(() => {
       startHeroEntryReveal();
       scheduleMetricsRefresh();
+      homeScrollGuide.onResize();
     });
   } else {
     startHeroEntryReveal();
