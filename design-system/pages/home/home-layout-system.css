@@ -6,6 +6,81 @@
   white-space:pre!important;
 }
 
+/*
+  HOME SCROLL GUIDE
+  Geometry is supplied by home-interactions.js from the rendered Hero English
+  title. No page-level inline script owns timing or layout.
+*/
+.home-page .index-scroll-guide{
+  position:fixed;
+  z-index:2147483000;
+  left:var(--index-scroll-guide-left,90vw);
+  right:auto;
+  top:var(--index-scroll-guide-top,50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  color:#fff;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .18s ease,visibility 0s linear .18s;
+}
+.home-page .index-scroll-guide.is-idle-visible{
+  opacity:1;
+  visibility:visible;
+  transition:opacity .18s ease,visibility 0s linear 0s;
+}
+.home-page .index-scroll-guide-line{
+  position:relative;
+  width:1px;
+  height:var(--index-scroll-guide-height,25vh);
+  overflow:hidden;
+  background:rgba(255,255,255,.05);
+}
+.home-page .index-scroll-guide-line::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:#fff;
+  transform:scaleY(0);
+  transform-origin:top center;
+  opacity:0;
+}
+.home-page .index-scroll-guide.is-sweeping .index-scroll-guide-line::after{
+  animation:index-scroll-guide-sweep 1s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.home-page .index-scroll-guide-label{
+  margin-top:12px;
+  font-family:"Averta PE",Arial,sans-serif;
+  font-weight:300;
+  font-size:10px;
+  line-height:1;
+  letter-spacing:.04em;
+  color:rgba(255,255,255,.4);
+  opacity:0;
+  transition:opacity .38s ease;
+}
+.home-page .index-scroll-guide-label.is-label-visible{
+  opacity:1;
+}
+@keyframes index-scroll-guide-sweep{
+  0%{transform:scaleY(0);opacity:0}
+  8%{opacity:1}
+  100%{transform:scaleY(1);opacity:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .home-page .index-scroll-guide-line{
+    background:rgba(255,255,255,.45);
+  }
+  .home-page .index-scroll-guide-line::after{
+    display:none;
+  }
+  .home-page .index-scroll-guide-label{
+    transition:none;
+  }
+}
+
 /* One animation vocabulary: hidden -> three A-Z / 0-9 states -> authored glyph. */
 .home-page .managed-character.is-scrambling::after{display:none!important}
 .home-page .managed-character.motion-pending{color:transparent!important}
@@ -26,32 +101,6 @@
 }
 .home-page .managed-character.motion-resolved{
   color:rgba(var(--scramble-rgb,17,17,17),var(--final-alpha,1))!important;
-}
-
-/*
-  Home idle scramble does not use an absolutely-positioned pseudo glyph.
-  The live character itself is replaced, so the random A-Z glyph shares the
-  exact authored baseline. Freeze only its original advance width to prevent
-  neighboring letters from shifting while different glyph widths cycle.
-*/
-.home-page .hero-quote .fill-char.idle-inline-scramble{
-  display:inline-block!important;
-  width:var(--idle-char-width)!important;
-  min-width:var(--idle-char-width)!important;
-  max-width:var(--idle-char-width)!important;
-  position:static!important;
-  vertical-align:baseline!important;
-  line-height:inherit!important;
-  transform:none!important;
-  translate:none!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:visible!important;
-}
-.home-page .hero-quote .fill-char.idle-inline-scramble::before,
-.home-page .hero-quote .fill-char.idle-inline-scramble::after{
-  content:none!important;
-  display:none!important;
 }
 
 /* HERO: keep current font size; reduce current line-height by 5%. */
