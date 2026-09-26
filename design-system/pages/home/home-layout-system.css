@@ -9,7 +9,9 @@
 /*
   HOME SCROLL GUIDE
   Geometry is supplied by home-interactions.js from the rendered Hero English
-  title. No page-level inline script owns timing or layout.
+  title: 5% title-width gap and 100% title-height line.
+  SCROLL stays visible for the full idle-visible state.
+  No page-level inline script owns timing or layout.
 */
 .home-page .index-scroll-guide{
   position:fixed;
@@ -61,7 +63,7 @@
   opacity:0;
   transition:opacity .38s ease;
 }
-.home-page .index-scroll-guide-label.is-label-visible{
+.home-page .index-scroll-guide.is-idle-visible .index-scroll-guide-label{
   opacity:1;
 }
 @keyframes index-scroll-guide-sweep{
