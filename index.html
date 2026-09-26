@@ -28,23 +28,39 @@
 </head>
 <body class="home-page home-dark">
 <style id="index-scroll-guide-styles">
-  /* Idle scroll cue: fixed to the viewport, independent of page sections. */
+  /*
+    Home scroll guide geometry:
+    - horizontal position = Hero English title right edge + 10% of title width;
+    - vertical line height = 80% of Hero English title height;
+    - the line is vertically centered against the title by using the remaining
+      20% as equal 10% top/bottom breathing room.
+    Visibility is controlled only by scroll inactivity, never pointer movement.
+  */
   .index-scroll-guide{
     position:fixed;
     z-index:2147483000;
-    right:10vw;
-    top:50%;
-    transform:translateY(-50%);
+    left:var(--index-scroll-guide-left,90vw);
+    right:auto;
+    top:var(--index-scroll-guide-top,50%);
+    transform:none;
     display:flex;
     flex-direction:column;
     align-items:center;
     pointer-events:none;
     color:#fff;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .18s ease,visibility 0s linear .18s;
+  }
+  .index-scroll-guide.is-idle-visible{
+    opacity:1;
+    visibility:visible;
+    transition:opacity .18s ease,visibility 0s linear 0s;
   }
   .index-scroll-guide-line{
     position:relative;
     width:1px;
-    height:25vh;
+    height:var(--index-scroll-guide-height,25vh);
     min-height:0;
     max-height:none;
     overflow:hidden;
@@ -76,18 +92,10 @@
   .index-scroll-guide-label.is-label-visible{
     opacity:1;
   }
-  .index-scroll-guide.is-user-scrolling{
-    opacity:0;
-    visibility:hidden;
-  }
   @keyframes index-scroll-guide-sweep{
     0%{transform:scaleY(0);opacity:0}
     8%{opacity:1}
     100%{transform:scaleY(1);opacity:0}
-  }
-  @media (max-width:850px){
-    .index-scroll-guide{right:10vw}
-    .index-scroll-guide-line{height:25vh;min-height:0}
   }
   @media (prefers-reduced-motion:reduce){
     .index-scroll-guide{display:none}
@@ -102,51 +110,115 @@
   const guide = document.querySelector('.index-scroll-guide');
   const line = guide?.querySelector('.index-scroll-guide-line');
   const label = guide?.querySelector('.index-scroll-guide-label');
-  if (!guide || !line || !label || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const title = document.querySelector('.hero-quote');
+
+  if (
+    !guide ||
+    !line ||
+    !label ||
+    !title ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) return;
+
+  const IDLE_DELAY = 3000;
+  const REPEAT_DELAY = 2000;
+
   let idleTimer = 0;
   let repeatTimer = 0;
   let labelShowTimer = 0;
   let labelHideTimer = 0;
-  const sweep = () => {
+  let geometryRaf = 0;
+
+  const syncGeometry = () => {
+    geometryRaf = 0;
+    const rect = title.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+
+    const titleGap = rect.width * .10;
+    const lineHeight = rect.height * .80;
+    const lineTop = rect.top + rect.height * .10;
+    const rawLeft = rect.right + titleGap;
+
+    /*
+      Keep the exact title-relative position whenever it fits. On very narrow
+      viewports only, keep the 1px guide inside the viewport instead of clipping it.
+    */
+    const guideLeft = Math.min(rawLeft, window.innerWidth - 20);
+
+    guide.style.setProperty('--index-scroll-guide-left', `${guideLeft.toFixed(2)}px`);
+    guide.style.setProperty('--index-scroll-guide-top', `${lineTop.toFixed(2)}px`);
+    guide.style.setProperty('--index-scroll-guide-height', `${lineHeight.toFixed(2)}px`);
+  };
+
+  const requestGeometrySync = () => {
+    if (geometryRaf) return;
+    geometryRaf = requestAnimationFrame(syncGeometry);
+  };
+
+  const clearAnimationTimers = () => {
     window.clearTimeout(labelShowTimer);
     window.clearTimeout(labelHideTimer);
-    guide.classList.remove('is-sweeping');
-    void guide.offsetWidth;
-    guide.classList.add('is-sweeping');
-    // The highlight reaches the bottom after 1s; reveal SCROLL then hold it
-    // for 1s before fading it out, independent of pseudo-element events.
-    labelShowTimer = window.setTimeout(() => {
-      label.classList.add('is-label-visible');
-      labelHideTimer = window.setTimeout(() => label.classList.remove('is-label-visible'), 1000);
-    }, 1000);
-  };
-  const hideForScroll = () => {
-    guide.classList.add('is-user-scrolling');
-    stop();
-  };
-  const stop = () => {
-    window.clearTimeout(idleTimer);
-    window.clearInterval(repeatTimer);
-    window.clearTimeout(labelShowTimer);
-    window.clearTimeout(labelHideTimer);
-    repeatTimer = 0;
+    labelShowTimer = 0;
+    labelHideTimer = 0;
     guide.classList.remove('is-sweeping');
     label.classList.remove('is-label-visible');
   };
-  const arm = () => {
-    stop();
-    idleTimer = window.setTimeout(() => {
-      sweep();
-      repeatTimer = window.setInterval(sweep, 2000);
-    }, 3000);
+
+  const stopRepeat = () => {
+    window.clearInterval(repeatTimer);
+    repeatTimer = 0;
   };
-  ['pointerdown','pointermove','wheel','touchstart','keydown'].forEach((eventName) => {
-    window.addEventListener(eventName, arm, {passive:true});
+
+  const sweep = () => {
+    requestGeometrySync();
+    clearAnimationTimers();
+    guide.classList.remove('is-sweeping');
+    void guide.offsetWidth;
+    guide.classList.add('is-sweeping');
+
+    labelShowTimer = window.setTimeout(() => {
+      label.classList.add('is-label-visible');
+      labelHideTimer = window.setTimeout(() => {
+        label.classList.remove('is-label-visible');
+      }, 1000);
+    }, 1000);
+  };
+
+  const showAfterIdle = () => {
+    guide.classList.add('is-idle-visible');
+    syncGeometry();
+    sweep();
+    stopRepeat();
+    repeatTimer = window.setInterval(sweep, REPEAT_DELAY);
+  };
+
+  const armFromScrollActivity = () => {
+    window.clearTimeout(idleTimer);
+    stopRepeat();
+    clearAnimationTimers();
+    guide.classList.remove('is-idle-visible');
+
+    idleTimer = window.setTimeout(showAfterIdle, IDLE_DELAY);
+  };
+
+  const scrollKeys = new Set([
+    'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
+  ]);
+
+  // Only scroll-related activity resets the 3-second idle timer.
+  window.addEventListener('scroll', armFromScrollActivity, {passive:true});
+  window.addEventListener('wheel', armFromScrollActivity, {passive:true});
+  window.addEventListener('touchmove', armFromScrollActivity, {passive:true});
+  window.addEventListener('keydown', event => {
+    if (scrollKeys.has(event.key)) armFromScrollActivity();
   });
-  ['scroll','wheel','touchstart'].forEach((eventName) => {
-    window.addEventListener(eventName, hideForScroll, {passive:true});
-  });
-  arm();
+
+  window.addEventListener('resize', requestGeometrySync, {passive:true});
+  window.addEventListener('pageshow', requestGeometrySync);
+  document.fonts?.ready?.then(requestGeometrySync).catch(() => {});
+
+  syncGeometry();
+  armFromScrollActivity();
 })();
 </script>
 
