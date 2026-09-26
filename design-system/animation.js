@@ -2,45 +2,66 @@
    Dynamic content-safe reveal, counter, hero fade, chart drawing and efficient video visibility/sequence. */
 
 /*
-  Canonical scramble-final contract:
-  Any animation that temporarily replaces authored characters with random glyphs
-  must finish through this helper. It restores every character from its recorded
-  final value and removes all transient scramble classes/data/styles so no random
-  glyph can survive the final frame.
+  DESIGN SYSTEM / SCRAMBLE CONTRACT — immutable authored text
+
+  1. Authored textContent is immutable while scramble is running.
+  2. Random glyphs are visual-only overlays carried by data-scramble.
+  3. No animation may assign a random glyph to textContent.
+  4. clear/finalize removes transient scramble state and restores the recorded
+     authored character only as a final safety check.
+  5. One runtime owns a character set at a time.
+
+  This makes a stale random glyph impossible to persist as source text.
 */
-window.__hmFinalizeScrambleText = window.__hmFinalizeScrambleText || ((root) => {
-  if (!root || !(root instanceof Element || root instanceof DocumentFragment)) return;
+window.__hmScrambleContract = (() => {
+  const selector = '[data-final-char],[data-hm-final-char],.fill-char,.hm-scramble-char';
 
-  const nodes = [];
-  if (root instanceof Element && root.matches(
-    '[data-final-char],[data-hm-final-char],.fill-char,.hm-scramble-char'
-  )) nodes.push(root);
+  const authoredChar = char => {
+    if (!char?.dataset) return null;
+    const existing = char.dataset.finalChar ?? char.dataset.hmFinalChar;
+    if (existing != null) return existing;
+    char.dataset.finalChar = char.textContent ?? '';
+    return char.dataset.finalChar;
+  };
 
-  nodes.push(...root.querySelectorAll(
-    '[data-final-char],[data-hm-final-char],.fill-char,.hm-scramble-char'
-  ));
+  const show = (char, glyph, { rgb = '17,17,17', alpha = 1 } = {}) => {
+    if (!char) return;
+    authoredChar(char);
+    char.dataset.scramble = glyph;
+    char.classList.add('is-scrambling');
+    char.style.setProperty('--scramble-rgb', rgb);
+    char.style.setProperty('--scramble-alpha', String(alpha));
+  };
 
-  nodes.forEach(char => {
-    const finalChar = char.dataset?.finalChar ?? char.dataset?.hmFinalChar;
-    if (finalChar != null) char.textContent = finalChar;
-
+  const clear = char => {
+    if (!char) return;
+    const finalChar = authoredChar(char);
+    if (finalChar != null && char.textContent !== finalChar) char.textContent = finalChar;
     char.classList.remove(
       'is-scrambling',
       'idle-inline-scramble',
       'motion-scrambling',
       'motion-pending'
     );
-
     char.removeAttribute('data-scramble');
     char.removeAttribute('data-scramble-glyph');
+    char.style.removeProperty('--scramble-alpha');
+    char.style.removeProperty('--scramble-rgb');
+    char.style.removeProperty('--idle-char-width');
+  };
 
-    [
-      '--scramble-alpha',
-      '--scramble-rgb',
-      '--idle-char-width'
-    ].forEach(name => char.style.removeProperty(name));
-  });
-});
+  const finalize = root => {
+    if (!root || !(root instanceof Element || root instanceof DocumentFragment)) return;
+    const nodes = [];
+    if (root instanceof Element && root.matches(selector)) nodes.push(root);
+    nodes.push(...root.querySelectorAll(selector));
+    nodes.forEach(clear);
+  };
+
+  return Object.freeze({ show, clear, finalize });
+})();
+
+window.__hmFinalizeScrambleText = root => window.__hmScrambleContract.finalize(root);
 
 (() => {
   let started = false;
