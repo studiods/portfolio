@@ -22,6 +22,158 @@
     .map(card => ({card, video:card.querySelector('.works-card-video')}))
     .filter(item => item.video);
 
+
+  /*
+    WORKS entry scroll cue — design-system contract:
+    - only when the page opens at scrollY 0 and the user has not scrolled for 3 seconds;
+    - move the REAL viewport scroll by 10% of the first project card height, then return to 0;
+    - because real scrollY changes, every existing Works scroll-linked behavior follows naturally
+      (WORKS title scale/position, project-copy movement, media focus and chapter progress);
+    - temporarily disable scroll snap only while the automatic cue is running;
+    - any user scroll intent permanently cancels the cue for the current page load;
+    - never repeat during the same page load.
+  */
+  const setupEntryScrollCue = () => {
+    const firstProject = cards[0];
+    if (!firstProject || reduced || window.scrollY > 0) return;
+
+    const IDLE_DELAY = 3000;
+    const UP_DURATION = 900;
+    const HOLD_DURATION = 120;
+    const DOWN_DURATION = 420;
+    const PROGRAMMATIC_SCROLL_GRACE = 140;
+
+    let userHasScrolled = false;
+    let isAutoScrolling = false;
+    let played = false;
+    let idleTimer = 0;
+    let holdTimer = 0;
+    let rafId = 0;
+    let programmaticScrollUntil = 0;
+
+    const scrollKeys = new Set([
+      'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
+    ]);
+
+    const setAutoScrollMode = enabled => {
+      body.classList.toggle('works-auto-scroll-cue-active', enabled);
+      document.documentElement.classList.toggle('works-auto-scroll-cue-active', enabled);
+    };
+
+    const cancelTimers = () => {
+      window.clearTimeout(idleTimer);
+      window.clearTimeout(holdTimer);
+      idleTimer = 0;
+      holdTimer = 0;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const cancelForUser = () => {
+      if (userHasScrolled) return;
+      userHasScrolled = true;
+      cancelTimers();
+      isAutoScrolling = false;
+      setAutoScrollMode(false);
+    };
+
+    const isProgrammaticScrollEvent = () =>
+      isAutoScrolling || performance.now() <= programmaticScrollUntil;
+
+    const onScroll = () => {
+      if (isProgrammaticScrollEvent()) return;
+      cancelForUser();
+    };
+
+    const onWheel = () => cancelForUser();
+    const onTouchMove = () => cancelForUser();
+    const onKeyDown = event => {
+      if (scrollKeys.has(event.key)) cancelForUser();
+    };
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('wheel', onWheel, {passive:true, once:true});
+    window.addEventListener('touchmove', onTouchMove, {passive:true, once:true});
+    window.addEventListener('keydown', onKeyDown);
+
+    const animateScroll = (from, to, duration, easing, done) => {
+      const startedAt = performance.now();
+
+      const frame = now => {
+        if (userHasScrolled) {
+          rafId = 0;
+          return;
+        }
+
+        const progress = clamp((now - startedAt) / duration, 0, 1);
+        const eased = easing(progress);
+        const nextY = from + (to - from) * eased;
+
+        isAutoScrolling = true;
+        programmaticScrollUntil = performance.now() + PROGRAMMATIC_SCROLL_GRACE;
+        window.scrollTo(0, nextY);
+
+        if (progress < 1) {
+          rafId = requestAnimationFrame(frame);
+          return;
+        }
+
+        rafId = 0;
+        done?.();
+      };
+
+      rafId = requestAnimationFrame(frame);
+    };
+
+    const easeOutCubic = value => 1 - Math.pow(1 - value, 3);
+    const easeInCubic = value => Math.pow(value, 3);
+
+    const runCue = () => {
+      if (played || userHasScrolled || document.hidden || window.scrollY !== 0) return;
+
+      const projectHeight = firstProject.getBoundingClientRect().height;
+      const maxScroll = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+      const targetY = Math.min(projectHeight * .10, maxScroll);
+
+      if (!Number.isFinite(targetY) || targetY <= 0) return;
+
+      played = true;
+      isAutoScrolling = true;
+      setAutoScrollMode(true);
+
+      animateScroll(0, targetY, UP_DURATION, easeOutCubic, () => {
+        if (userHasScrolled) return;
+
+        holdTimer = window.setTimeout(() => {
+          if (userHasScrolled) return;
+
+          animateScroll(targetY, 0, DOWN_DURATION, easeInCubic, () => {
+            programmaticScrollUntil = performance.now() + PROGRAMMATIC_SCROLL_GRACE;
+            window.scrollTo(0, 0);
+
+            /*
+              Keep auto mode through the final scroll event tick, then restore
+              the normal Works scroll-snap contract without re-arming the cue.
+            */
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                isAutoScrolling = false;
+                setAutoScrollMode(false);
+              });
+            });
+          });
+        }, HOLD_DURATION);
+      });
+    };
+
+    idleTimer = window.setTimeout(runCue, IDLE_DELAY);
+  };
+
   /*
     WORKS media runtime:
     - videos do not autoplay on page load;
@@ -535,5 +687,6 @@
       });
     } else requestUpdate();
   });
+  setupEntryScrollCue();
   updateTitle();
 })();
