@@ -6,40 +6,6 @@
   white-space:pre!important;
 }
 
-/*
-  HOME no-input scroll affordance:
-  Move the whole currently visible Hero quote group, not the viewport.
-  10% is relative to the text group's own rendered height.
-  Removing the class returns it immediately to the authored position so a user's
-  real scroll can take over without a residual transform.
-*/
-@keyframes home-entry-scroll-cue{
-  0%{
-    transform:translate3d(0,0,0);
-    animation-timing-function:cubic-bezier(.22,.61,.36,1);
-  }
-  62.5%{
-    transform:translate3d(0,-10%,0);
-  }
-  70.8333%{
-    transform:translate3d(0,-10%,0);
-    animation-timing-function:cubic-bezier(.55,.06,.68,.19);
-  }
-  100%{
-    transform:translate3d(0,0,0);
-  }
-}
-.home-page .hero-state-quote.home-entry-scroll-cue-active{
-  animation:home-entry-scroll-cue 1440ms both;
-  will-change:transform;
-}
-@media(prefers-reduced-motion:reduce){
-  .home-page .hero-state-quote.home-entry-scroll-cue-active{
-    animation:none!important;
-    transform:none!important;
-  }
-}
-
 /* One animation vocabulary: hidden -> three A-Z / 0-9 states -> authored glyph. */
 .home-page .managed-character.is-scrambling::after{display:none!important}
 .home-page .managed-character.motion-pending{color:transparent!important}
