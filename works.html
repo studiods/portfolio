@@ -25,125 +25,150 @@
   <link rel="stylesheet" href="./design-system/components/global-footer.css?v=20260924-2">
 </head>
 <body class="works-page-body">
-<style id="index-scroll-guide-styles">
-  /* Idle scroll cue: fixed to the viewport, independent of page sections. */
-  .index-scroll-guide{
-    position:fixed;
-    z-index:2147483000;
-    right:40px;
-    top:50%;
-    transform:translateY(-50%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    pointer-events:none;
-    color:#fff;
+<style id="works-media-idle-cue-styles">
+  /* Works-only idle scroll hint: move the current/right media up by 10% of its own height. */
+  @keyframes works-media-idle-peek{
+    0%{
+      transform:translate3d(0,0,0);
+      animation-timing-function:cubic-bezier(.22,.61,.36,1);
+    }
+    70%{
+      transform:translate3d(0,-10%,0);
+      animation-timing-function:cubic-bezier(.55,.06,.68,.19);
+    }
+    100%{
+      transform:translate3d(0,0,0);
+    }
   }
-  .index-scroll-guide-line{
-    position:relative;
-    width:1px;
-    height:25vh;
-    min-height:0;
-    max-height:none;
-    overflow:hidden;
-    background:rgba(255,255,255,.05);
+  body.works-page-body .works-card-media-link.is-idle-scroll-cue{
+    animation:works-media-idle-peek .8s both;
+    will-change:transform;
   }
-  .index-scroll-guide-line::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:#fff;
-    transform:scaleY(0);
-    transform-origin:top center;
-    opacity:0;
+  @media(max-width:780px){
+    body.works-page-body .works-card-media-link.is-idle-scroll-cue{
+      animation:none!important;
+      transform:none!important;
+    }
   }
-  .index-scroll-guide.is-sweeping .index-scroll-guide-line::after{
-    animation:index-scroll-guide-sweep 1s cubic-bezier(.22,.61,.36,1) forwards;
-  }
-  .index-scroll-guide-label{
-    margin-top:12px;
-    font-family:"Averta PE",Arial,sans-serif;
-    font-weight:300;
-    font-size:10px;
-    line-height:1;
-    opacity:0;
-    transition:opacity .38s ease;
-    letter-spacing:.04em;
-    color:rgba(255,255,255,.4);
-  }
-  .index-scroll-guide-label.is-label-visible{
-    opacity:1;
-  }
-  .index-scroll-guide.is-user-scrolling{
-    opacity:0;
-    visibility:hidden;
-  }
-  @keyframes index-scroll-guide-sweep{
-    0%{transform:scaleY(0);opacity:0}
-    8%{opacity:1}
-    100%{transform:scaleY(1);opacity:0}
-  }
-  @media (max-width:850px){
-    .index-scroll-guide{right:20px}
-    .index-scroll-guide-line{height:25vh;min-height:0}
-  }
-  @media (prefers-reduced-motion:reduce){
-    .index-scroll-guide{display:none}
+  @media(prefers-reduced-motion:reduce){
+    body.works-page-body .works-card-media-link.is-idle-scroll-cue{
+      animation:none!important;
+      transform:none!important;
+    }
   }
 </style>
-<div class="index-scroll-guide" aria-hidden="true">
-  <div class="index-scroll-guide-line"></div>
-  <div class="index-scroll-guide-label">SCROLL</div>
-</div>
 <script>
 (() => {
-  const guide = document.querySelector('.index-scroll-guide');
-  const line = guide?.querySelector('.index-scroll-guide-line');
-  const label = guide?.querySelector('.index-scroll-guide-label');
-  if (!guide || !line || !label || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  'use strict';
+
+  const body = document.body;
+  if (!body?.classList.contains('works-page-body')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const mediaLinks = [...document.querySelectorAll('.works-card-media-link')];
+  if (!mediaLinks.length) return;
+
+  const IDLE_DELAY = 3000;
+  const REPEAT_DELAY = 7000;
+  const CUE_DURATION = 800;
+
   let idleTimer = 0;
   let repeatTimer = 0;
-  let labelShowTimer = 0;
-  let labelHideTimer = 0;
-  const sweep = () => {
-    window.clearTimeout(labelShowTimer);
-    window.clearTimeout(labelHideTimer);
-    guide.classList.remove('is-sweeping');
-    void guide.offsetWidth;
-    guide.classList.add('is-sweeping');
-    // The highlight reaches the bottom after 1s; reveal SCROLL then hold it
-    // for 1s before fading it out, independent of pseudo-element events.
-    labelShowTimer = window.setTimeout(() => {
-      label.classList.add('is-label-visible');
-      labelHideTimer = window.setTimeout(() => label.classList.remove('is-label-visible'), 1000);
-    }, 1000);
+  let cueTimer = 0;
+  let activeLink = null;
+
+  const clearCue = () => {
+    window.clearTimeout(cueTimer);
+    cueTimer = 0;
+    if (activeLink) {
+      activeLink.classList.remove('is-idle-scroll-cue');
+      activeLink = null;
+    }
   };
-  const hideForScroll = () => {
-    guide.classList.add('is-user-scrolling');
-    stop();
-  };
-  const stop = () => {
+
+  const stopTimers = () => {
     window.clearTimeout(idleTimer);
     window.clearInterval(repeatTimer);
-    window.clearTimeout(labelShowTimer);
-    window.clearTimeout(labelHideTimer);
+    idleTimer = 0;
     repeatTimer = 0;
-    guide.classList.remove('is-sweeping');
-    label.classList.remove('is-label-visible');
+    clearCue();
   };
+
+  const getCurrentRightMedia = () => {
+    if (window.innerWidth <= 780) return null;
+
+    const viewportCenter = window.innerHeight * .5;
+    let best = null;
+    let bestDistance = Infinity;
+
+    mediaLinks.forEach(link => {
+      const rect = link.getBoundingClientRect();
+      if (rect.height <= 0 || rect.width <= 0) return;
+
+      const center = rect.top + rect.height * .5;
+      const distance = Math.abs(center - viewportCenter);
+
+      /*
+        Include the current visible media and the immediately upcoming media.
+        At the top of Works this lets the first right-side media peek up from
+        just below the viewport, functioning as the intended scroll hint.
+      */
+      const nearViewport = rect.bottom > -rect.height && rect.top < window.innerHeight + rect.height;
+      if (!nearViewport || distance >= bestDistance) return;
+
+      best = link;
+      bestDistance = distance;
+    });
+
+    return best;
+  };
+
+  const playCue = () => {
+    clearCue();
+    const target = getCurrentRightMedia();
+    if (!target) return;
+
+    activeLink = target;
+    target.classList.remove('is-idle-scroll-cue');
+    void target.offsetWidth;
+    target.classList.add('is-idle-scroll-cue');
+
+    cueTimer = window.setTimeout(() => {
+      if (activeLink === target) {
+        target.classList.remove('is-idle-scroll-cue');
+        activeLink = null;
+      }
+    }, CUE_DURATION + 80);
+  };
+
   const arm = () => {
-    stop();
+    stopTimers();
+    if (document.hidden || window.innerWidth <= 780) return;
+
     idleTimer = window.setTimeout(() => {
-      sweep();
-      repeatTimer = window.setInterval(sweep, 2000);
-    }, 3000);
+      playCue();
+      repeatTimer = window.setInterval(playCue, REPEAT_DELAY);
+    }, IDLE_DELAY);
   };
-  ['pointerdown','pointermove','wheel','touchstart','keydown'].forEach((eventName) => {
-    window.addEventListener(eventName, arm, {passive:true});
+
+  const scrollKeys = new Set([
+    'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
+  ]);
+
+  window.addEventListener('scroll', arm, {passive:true});
+  window.addEventListener('wheel', arm, {passive:true});
+  window.addEventListener('touchstart', arm, {passive:true});
+  window.addEventListener('touchmove', arm, {passive:true});
+  window.addEventListener('resize', arm, {passive:true});
+  window.addEventListener('keydown', event => {
+    if (scrollKeys.has(event.key)) arm();
   });
-  ['scroll','wheel','touchstart'].forEach((eventName) => {
-    window.addEventListener(eventName, hideForScroll, {passive:true});
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stopTimers();
+    else arm();
   });
+
   arm();
 })();
 </script>
