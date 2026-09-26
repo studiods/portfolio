@@ -408,7 +408,9 @@
   /*
     HOME SCROLL GUIDE — owned by the same runtime as the Hero.
     Geometry, 5-second scroll-idle timing, resize/font changes and Hero motion
-    all run here after the full DOM exists. index.html owns markup only.
+    all run here after the full DOM exists. Horizontal gap is 5% of the Hero
+    title width and line height is 100% of the Hero title height.
+    index.html owns markup only.
   */
   const createHomeScrollGuide = () => {
     const guide = $('.index-scroll-guide');
@@ -429,8 +431,6 @@
 
     let idleTimer = 0;
     let repeatTimer = 0;
-    let labelShowTimer = 0;
-    let labelHideTimer = 0;
     let geometryRaf = 0;
 
     const syncGeometry = () => {
@@ -438,9 +438,9 @@
       const rect = heroQuote.getBoundingClientRect();
       if (rect.width <= 0 || rect.height <= 0) return false;
 
-      const titleGap = rect.width * 0.10;
-      const lineHeight = rect.height * 0.80;
-      const lineTop = rect.top + rect.height * 0.10;
+      const titleGap = rect.width * 0.05;
+      const lineHeight = rect.height;
+      const lineTop = rect.top;
       const guideLeft = Math.min(
         rect.right + titleGap,
         Math.max(0, window.innerWidth - 20)
@@ -458,12 +458,7 @@
     };
 
     const clearAnimationTimers = () => {
-      window.clearTimeout(labelShowTimer);
-      window.clearTimeout(labelHideTimer);
-      labelShowTimer = 0;
-      labelHideTimer = 0;
       guide.classList.remove('is-sweeping');
-      label.classList.remove('is-label-visible');
     };
 
     const stopRepeat = () => {
@@ -478,22 +473,12 @@
     };
 
     const sweep = () => {
-      if (reducedMotion) {
-        label.classList.add('is-label-visible');
-        return;
-      }
+      if (reducedMotion) return;
 
       requestGeometrySync();
       clearAnimationTimers();
       void guide.offsetWidth;
       guide.classList.add('is-sweeping');
-
-      labelShowTimer = window.setTimeout(() => {
-        label.classList.add('is-label-visible');
-        labelHideTimer = window.setTimeout(() => {
-          label.classList.remove('is-label-visible');
-        }, 1000);
-      }, 1000);
     };
 
     const arm = () => {
