@@ -44,9 +44,13 @@
   padding:0!important;
   transition:none!important;
 }
+/*
+  Scramble overlay contract: authored text stays unchanged.
+  Random glyphs are drawn only by ::after.
+*/
 .fill-char.is-scrambling{
   position:relative;
-  color:transparent!important;
+  color:transparent;
 }
 .fill-char.is-scrambling::after{
   content:attr(data-scramble);
