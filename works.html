@@ -25,35 +25,87 @@
   <link rel="stylesheet" href="./design-system/components/global-footer.css?v=20260924-2">
 </head>
 <body class="works-page-body">
-<style id="works-media-idle-cue-styles">
-  /* Works-only idle scroll hint: move the current/right media up by 10% of its own height. */
-  @keyframes works-media-idle-peek{
+<style id="works-first-project-peek-styles">
+  /*
+    One-time Works entry hint:
+    the first HIMART project (copy + media) peeks upward by 10% of the
+    first project's own rendered height, then returns below the fold.
+  */
+  @keyframes works-first-project-media-peek{
     0%{
       transform:translate3d(0,0,0);
       animation-timing-function:cubic-bezier(.22,.61,.36,1);
     }
-    70%{
-      transform:translate3d(0,-10%,0);
+    60%{
+      transform:translate3d(0,var(--works-first-peek-offset,0px),0);
+    }
+    72%{
+      transform:translate3d(0,var(--works-first-peek-offset,0px),0);
       animation-timing-function:cubic-bezier(.55,.06,.68,.19);
     }
     100%{
       transform:translate3d(0,0,0);
     }
   }
-  body.works-page-body .works-card-media-link.is-idle-scroll-cue{
-    animation:works-media-idle-peek .8s both;
-    will-change:transform;
-  }
-  @media(max-width:780px){
-    body.works-page-body .works-card-media-link.is-idle-scroll-cue{
-      animation:none!important;
-      transform:none!important;
+
+  @keyframes works-first-project-copy-peek{
+    0%{
+      transform:translateY(-50%) translateY(var(--works-copy-shift,0px)) translateY(0);
+      animation-timing-function:cubic-bezier(.22,.61,.36,1);
+    }
+    60%{
+      transform:translateY(-50%) translateY(var(--works-copy-shift,0px)) translateY(var(--works-first-peek-offset,0px));
+    }
+    72%{
+      transform:translateY(-50%) translateY(var(--works-copy-shift,0px)) translateY(var(--works-first-peek-offset,0px));
+      animation-timing-function:cubic-bezier(.55,.06,.68,.19);
+    }
+    100%{
+      transform:translateY(-50%) translateY(var(--works-copy-shift,0px)) translateY(0);
     }
   }
+
+  @media(min-width:781px){
+    body.works-page-body #works-project-1.is-first-project-peek .works-card-media-link{
+      animation:works-first-project-media-peek 1.1s both;
+      will-change:transform;
+    }
+
+    body.works-page-body #works-project-1.is-first-project-peek .works-card-copy{
+      animation:works-first-project-copy-peek 1.1s both;
+      will-change:top,opacity,transform;
+    }
+  }
+
+  @keyframes works-first-project-mobile-peek{
+    0%{
+      transform:translate3d(0,0,0);
+      animation-timing-function:cubic-bezier(.22,.61,.36,1);
+    }
+    60%{
+      transform:translate3d(0,var(--works-first-peek-offset,0px),0);
+    }
+    72%{
+      transform:translate3d(0,var(--works-first-peek-offset,0px),0);
+      animation-timing-function:cubic-bezier(.55,.06,.68,.19);
+    }
+    100%{
+      transform:translate3d(0,0,0);
+    }
+  }
+
+  @media(max-width:780px){
+    body.works-page-body #works-project-1.is-first-project-peek{
+      animation:works-first-project-mobile-peek 1.1s both;
+      will-change:transform;
+    }
+  }
+
   @media(prefers-reduced-motion:reduce){
-    body.works-page-body .works-card-media-link.is-idle-scroll-cue{
+    body.works-page-body #works-project-1.is-first-project-peek,
+    body.works-page-body #works-project-1.is-first-project-peek .works-card-media-link,
+    body.works-page-body #works-project-1.is-first-project-peek .works-card-copy{
       animation:none!important;
-      transform:none!important;
     }
   }
 </style>
@@ -62,114 +114,58 @@
   'use strict';
 
   const body = document.body;
-  if (!body?.classList.contains('works-page-body')) return;
+  const firstProject = document.getElementById('works-project-1');
+  if (!body?.classList.contains('works-page-body') || !firstProject) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const mediaLinks = [...document.querySelectorAll('.works-card-media-link')];
-  if (!mediaLinks.length) return;
-
   const IDLE_DELAY = 3000;
-  const REPEAT_DELAY = 7000;
-  const CUE_DURATION = 800;
+  const CUE_DURATION = 1100;
 
+  let hasScrolled = window.scrollY > 0;
   let idleTimer = 0;
-  let repeatTimer = 0;
   let cueTimer = 0;
-  let activeLink = null;
+  let played = false;
 
   const clearCue = () => {
     window.clearTimeout(cueTimer);
     cueTimer = 0;
-    if (activeLink) {
-      activeLink.classList.remove('is-idle-scroll-cue');
-      activeLink = null;
-    }
+    firstProject.classList.remove('is-first-project-peek');
   };
 
-  const stopTimers = () => {
+  const disableForever = () => {
+    hasScrolled = true;
     window.clearTimeout(idleTimer);
-    window.clearInterval(repeatTimer);
     idleTimer = 0;
-    repeatTimer = 0;
     clearCue();
   };
 
-  const getCurrentRightMedia = () => {
-    if (window.innerWidth <= 780) return null;
+  const playOnce = () => {
+    if (hasScrolled || played || document.hidden) return;
 
-    const viewportCenter = window.innerHeight * .5;
-    let best = null;
-    let bestDistance = Infinity;
+    const height = firstProject.getBoundingClientRect().height;
+    if (!height) return;
 
-    mediaLinks.forEach(link => {
-      const rect = link.getBoundingClientRect();
-      if (rect.height <= 0 || rect.width <= 0) return;
-
-      const center = rect.top + rect.height * .5;
-      const distance = Math.abs(center - viewportCenter);
-
-      /*
-        Include the current visible media and the immediately upcoming media.
-        At the top of Works this lets the first right-side media peek up from
-        just below the viewport, functioning as the intended scroll hint.
-      */
-      const nearViewport = rect.bottom > -rect.height && rect.top < window.innerHeight + rect.height;
-      if (!nearViewport || distance >= bestDistance) return;
-
-      best = link;
-      bestDistance = distance;
-    });
-
-    return best;
-  };
-
-  const playCue = () => {
-    clearCue();
-    const target = getCurrentRightMedia();
-    if (!target) return;
-
-    activeLink = target;
-    target.classList.remove('is-idle-scroll-cue');
-    void target.offsetWidth;
-    target.classList.add('is-idle-scroll-cue');
+    played = true;
+    firstProject.style.setProperty('--works-first-peek-offset', `${-(height * .10).toFixed(2)}px`);
+    firstProject.classList.remove('is-first-project-peek');
+    void firstProject.offsetWidth;
+    firstProject.classList.add('is-first-project-peek');
 
     cueTimer = window.setTimeout(() => {
-      if (activeLink === target) {
-        target.classList.remove('is-idle-scroll-cue');
-        activeLink = null;
-      }
+      firstProject.classList.remove('is-first-project-peek');
+      cueTimer = 0;
     }, CUE_DURATION + 80);
   };
 
-  const arm = () => {
-    stopTimers();
-    if (document.hidden || window.innerWidth <= 780) return;
+  /*
+    One actual scroll permanently disables the hint for the current page load.
+    It is intentionally never re-armed after scrolling.
+  */
+  window.addEventListener('scroll', disableForever, {passive:true, once:true});
 
-    idleTimer = window.setTimeout(() => {
-      playCue();
-      repeatTimer = window.setInterval(playCue, REPEAT_DELAY);
-    }, IDLE_DELAY);
-  };
-
-  const scrollKeys = new Set([
-    'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
-  ]);
-
-  window.addEventListener('scroll', arm, {passive:true});
-  window.addEventListener('wheel', arm, {passive:true});
-  window.addEventListener('touchstart', arm, {passive:true});
-  window.addEventListener('touchmove', arm, {passive:true});
-  window.addEventListener('resize', arm, {passive:true});
-  window.addEventListener('keydown', event => {
-    if (scrollKeys.has(event.key)) arm();
-  });
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) stopTimers();
-    else arm();
-  });
-
-  arm();
+  if (!hasScrolled) {
+    idleTimer = window.setTimeout(playOnce, IDLE_DELAY);
+  }
 })();
 </script>
 
