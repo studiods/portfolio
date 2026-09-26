@@ -1,5 +1,47 @@
 /* HIMART Design System — animation layer
    Dynamic content-safe reveal, counter, hero fade, chart drawing and efficient video visibility/sequence. */
+
+/*
+  Canonical scramble-final contract:
+  Any animation that temporarily replaces authored characters with random glyphs
+  must finish through this helper. It restores every character from its recorded
+  final value and removes all transient scramble classes/data/styles so no random
+  glyph can survive the final frame.
+*/
+window.__hmFinalizeScrambleText = window.__hmFinalizeScrambleText || ((root) => {
+  if (!root || !(root instanceof Element || root instanceof DocumentFragment)) return;
+
+  const nodes = [];
+  if (root instanceof Element && root.matches(
+    '[data-final-char],[data-hm-final-char],.fill-char,.hm-scramble-char'
+  )) nodes.push(root);
+
+  nodes.push(...root.querySelectorAll(
+    '[data-final-char],[data-hm-final-char],.fill-char,.hm-scramble-char'
+  ));
+
+  nodes.forEach(char => {
+    const finalChar = char.dataset?.finalChar ?? char.dataset?.hmFinalChar;
+    if (finalChar != null) char.textContent = finalChar;
+
+    char.classList.remove(
+      'is-scrambling',
+      'idle-inline-scramble',
+      'motion-scrambling',
+      'motion-pending'
+    );
+
+    char.removeAttribute('data-scramble');
+    char.removeAttribute('data-scramble-glyph');
+
+    [
+      '--scramble-alpha',
+      '--scramble-rgb',
+      '--idle-char-width'
+    ].forEach(name => char.style.removeProperty(name));
+  });
+});
+
 (() => {
   let started = false;
   const revealSelector = '[data-hm-reveal], .hm-reveal, .hm-ds-reveal, .wide-rise-target';
