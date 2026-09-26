@@ -31,7 +31,7 @@
       (WORKS title scale/position, project-copy movement, media focus and chapter progress);
     - temporarily disable scroll snap only while the automatic cue is running;
     - first cue starts after 3 seconds without user scroll;
-    - after each completed cue, replay after 7 more seconds of no user scroll;
+    - after the first cue starts, start the next cue every 7 seconds while there is still no user scroll;
     - any user scroll intent permanently cancels the cue and every pending replay for the current page load.
   */
   const setupEntryScrollCue = () => {
@@ -164,6 +164,12 @@
         return;
       }
 
+      /*
+        Start-to-start cadence is exactly 7 seconds. Scheduling happens when
+        a cue starts, not after it finishes.
+      */
+      scheduleNextCue();
+
       isAutoScrolling = true;
       setAutoScrollMode(true);
 
@@ -179,13 +185,13 @@
 
             /*
               Keep auto mode through the final scroll event tick, then restore
-              the normal Works scroll-snap contract and schedule the next cue.
+              the normal Works scroll-snap contract. The next cue is already
+              scheduled from this cue's start time.
             */
             requestAnimationFrame(() => {
               requestAnimationFrame(() => {
                 isAutoScrolling = false;
                 setAutoScrollMode(false);
-                scheduleNextCue();
               });
             });
           });
