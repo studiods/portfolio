@@ -107,21 +107,22 @@
 </div>
 <script>
 (() => {
-  const guide = document.querySelector('.index-scroll-guide');
-  const line = guide?.querySelector('.index-scroll-guide-line');
-  const label = guide?.querySelector('.index-scroll-guide-label');
-  const title = document.querySelector('.hero-quote');
+  const initScrollGuide = () => {
+    const guide = document.querySelector('.index-scroll-guide');
+    const line = guide?.querySelector('.index-scroll-guide-line');
+    const label = guide?.querySelector('.index-scroll-guide-label');
+    const title = document.querySelector('.hero-quote');
 
-  if (
-    !guide ||
-    !line ||
-    !label ||
-    !title ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) return;
+    if (
+      !guide ||
+      !line ||
+      !label ||
+      !title ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) return;
 
-  const IDLE_DELAY = 3000;
-  const REPEAT_DELAY = 2000;
+    const IDLE_DELAY = 5000;
+    const REPEAT_DELAY = 2000;
 
   let idleTimer = 0;
   let repeatTimer = 0;
@@ -205,20 +206,27 @@
     'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
   ]);
 
-  // Only scroll-related activity resets the 3-second idle timer.
-  window.addEventListener('scroll', armFromScrollActivity, {passive:true});
-  window.addEventListener('wheel', armFromScrollActivity, {passive:true});
-  window.addEventListener('touchmove', armFromScrollActivity, {passive:true});
-  window.addEventListener('keydown', event => {
-    if (scrollKeys.has(event.key)) armFromScrollActivity();
-  });
+    // Only scroll-related activity resets the 5-second idle timer.
+    window.addEventListener('scroll', armFromScrollActivity, {passive:true});
+    window.addEventListener('wheel', armFromScrollActivity, {passive:true});
+    window.addEventListener('touchmove', armFromScrollActivity, {passive:true});
+    window.addEventListener('keydown', event => {
+      if (scrollKeys.has(event.key)) armFromScrollActivity();
+    });
 
-  window.addEventListener('resize', requestGeometrySync, {passive:true});
-  window.addEventListener('pageshow', requestGeometrySync);
-  document.fonts?.ready?.then(requestGeometrySync).catch(() => {});
+    window.addEventListener('resize', requestGeometrySync, {passive:true});
+    window.addEventListener('pageshow', requestGeometrySync);
+    document.fonts?.ready?.then(requestGeometrySync).catch(() => {});
 
-  syncGeometry();
-  armFromScrollActivity();
+    syncGeometry();
+    armFromScrollActivity();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initScrollGuide, {once:true});
+  } else {
+    initScrollGuide();
+  }
 })();
 </script>
 
