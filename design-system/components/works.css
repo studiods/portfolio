@@ -19,6 +19,16 @@ body.works-page-body{
 }
 body.works-page-body *{box-sizing:border-box}
 
+/*
+  WORKS entry scroll cue:
+  The cue uses real viewport scrolling so every scroll-linked interaction remains canonical.
+  Scroll snap is suspended only while the one-time automatic cue runs, then restored.
+*/
+html.works-auto-scroll-cue-active,
+body.works-page-body.works-auto-scroll-cue-active{
+  scroll-snap-type:none!important;
+}
+
 body.works-page-body .works-page{
   min-height:100vh;
   background:var(--hm-bg-page);
