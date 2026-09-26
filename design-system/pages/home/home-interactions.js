@@ -490,6 +490,13 @@
       char.style.removeProperty('color');
       styleCache.delete(char);
     });
+
+    /*
+      Design-system hard stop: the entry animation is complete only when every
+      quote glyph is back to its authored English character and no scramble
+      class/data/style remains.
+    */
+    window.__hmFinalizeScrambleText?.(quoteState);
     heroEntryStates = [];
     if (sourceOnly) {
       sourceOnly.style.removeProperty('color');
@@ -499,6 +506,19 @@
     heroEntryStarted = true;
     lastHeroProgress = -1;
     requestRender();
+
+    requestAnimationFrame(() => {
+      if (scrollY <= 1 && !heroEntryActive) {
+        window.__hmFinalizeScrambleText?.(quoteState);
+        quoteChars.forEach(char => {
+          const finalChar = char.dataset.finalChar;
+          if (finalChar != null) char.textContent = finalChar;
+          char.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+          styleCache.delete(char);
+        });
+        sourceOnly?.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+      }
+    });
   };
 
   const startHeroEntryReveal = () => {
