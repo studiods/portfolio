@@ -410,6 +410,164 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const PATCH_OWNS_LOWER_TIMELINES = document.body.classList.contains('home-page');
 
+  /*
+    HOME entry scroll cue — same interaction contract as WORKS:
+    - after 3 seconds with no user scroll, move the REAL viewport upward by 10% of
+      the viewport height, then return to scrollY 0;
+    - because real scrollY changes, the authored Home hero scroll timeline reacts
+      exactly as it does to a user's scroll rather than faking element motion;
+    - after the first cue starts, replay every 7 seconds while the user still has
+      not performed any direct scroll action;
+    - one direct wheel/touch/scroll-key/real-scroll action permanently disables
+      the cue for the current page load;
+    - programmatic cue scroll events never count as user scroll.
+  */
+  const setupHomeEntryScrollCue = () => {
+    if (reducedMotion || window.scrollY > 0) return;
+
+    const IDLE_DELAY = 3000;
+    const REPEAT_DELAY = 7000;
+    const UP_DURATION = 900;
+    const HOLD_DURATION = 120;
+    const DOWN_DURATION = 420;
+    const PROGRAMMATIC_SCROLL_GRACE = 140;
+
+    let userHasScrolled = false;
+    let isAutoScrolling = false;
+    let idleTimer = 0;
+    let repeatTimer = 0;
+    let holdTimer = 0;
+    let rafId = 0;
+    let programmaticScrollUntil = 0;
+
+    const scrollKeys = new Set([
+      'ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' ','Spacebar'
+    ]);
+
+    const cancelTimers = () => {
+      window.clearTimeout(idleTimer);
+      window.clearTimeout(repeatTimer);
+      window.clearTimeout(holdTimer);
+      idleTimer = 0;
+      repeatTimer = 0;
+      holdTimer = 0;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const cancelForUser = () => {
+      if (userHasScrolled) return;
+      userHasScrolled = true;
+      cancelTimers();
+      isAutoScrolling = false;
+    };
+
+    const isProgrammaticScrollEvent = () =>
+      isAutoScrolling || performance.now() <= programmaticScrollUntil;
+
+    const onScroll = () => {
+      if (isProgrammaticScrollEvent()) return;
+      cancelForUser();
+    };
+
+    const onWheel = () => cancelForUser();
+    const onTouchMove = () => cancelForUser();
+    const onKeyDown = event => {
+      if (scrollKeys.has(event.key)) cancelForUser();
+    };
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('wheel', onWheel, {passive:true, once:true});
+    window.addEventListener('touchmove', onTouchMove, {passive:true, once:true});
+    window.addEventListener('keydown', onKeyDown);
+
+    const easeOutCubic = value => 1 - Math.pow(1 - value, 3);
+    const easeInCubic = value => Math.pow(value, 3);
+
+    const animateScroll = (from, to, duration, easing, done) => {
+      const startedAt = performance.now();
+
+      const frame = now => {
+        if (userHasScrolled) {
+          rafId = 0;
+          return;
+        }
+
+        const progress = clamp((now - startedAt) / duration);
+        const eased = easing(progress);
+        const nextY = from + (to - from) * eased;
+
+        isAutoScrolling = true;
+        programmaticScrollUntil = performance.now() + PROGRAMMATIC_SCROLL_GRACE;
+        window.scrollTo(0, nextY);
+
+        if (progress < 1) {
+          rafId = requestAnimationFrame(frame);
+          return;
+        }
+
+        rafId = 0;
+        done?.();
+      };
+
+      rafId = requestAnimationFrame(frame);
+    };
+
+    const scheduleNextCue = () => {
+      if (userHasScrolled) return;
+      window.clearTimeout(repeatTimer);
+      repeatTimer = window.setTimeout(runCue, REPEAT_DELAY);
+    };
+
+    const runCue = () => {
+      if (userHasScrolled) return;
+
+      if (document.hidden || window.scrollY !== 0) {
+        scheduleNextCue();
+        return;
+      }
+
+      const maxScroll = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+      const targetY = Math.min(window.innerHeight * .10, maxScroll);
+
+      if (!Number.isFinite(targetY) || targetY <= 0) {
+        scheduleNextCue();
+        return;
+      }
+
+      // Match WORKS: exact 7-second start-to-start cadence.
+      scheduleNextCue();
+
+      isAutoScrolling = true;
+
+      animateScroll(0, targetY, UP_DURATION, easeOutCubic, () => {
+        if (userHasScrolled) return;
+
+        holdTimer = window.setTimeout(() => {
+          if (userHasScrolled) return;
+
+          animateScroll(targetY, 0, DOWN_DURATION, easeInCubic, () => {
+            programmaticScrollUntil = performance.now() + PROGRAMMATIC_SCROLL_GRACE;
+            window.scrollTo(0, 0);
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                isAutoScrolling = false;
+              });
+            });
+          });
+        }, HOLD_DURATION);
+      });
+    };
+
+    idleTimer = window.setTimeout(runCue, IDLE_DELAY);
+  };
+
   const IDLE_DELAY_MS = 3000;
   const IDLE_UNIT_MS = 1000;
   const IDLE_BASE_ALPHA = 0.05;
@@ -941,6 +1099,7 @@
 
   refreshMetrics();
   scheduleIdleCue(IDLE_DELAY_MS);
+  setupHomeEntryScrollCue();
 
   addEventListener('scroll', () => {
     if (heroEntryActive && scrollY > 1) finishHeroEntryReveal();
