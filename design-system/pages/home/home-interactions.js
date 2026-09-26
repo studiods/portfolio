@@ -513,10 +513,10 @@
         quoteChars.forEach(char => {
           const finalChar = char.dataset.finalChar;
           if (finalChar != null) char.textContent = finalChar;
-          char.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+          char.style.setProperty('color', 'rgba(17,17,17,1)');
           styleCache.delete(char);
         });
-        sourceOnly?.style.setProperty('color', 'rgba(17,17,17,1)', 'important');
+        sourceOnly?.style.setProperty('color', 'rgba(17,17,17,1)');
       }
     });
   };
