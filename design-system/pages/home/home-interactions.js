@@ -439,7 +439,7 @@
       if (rect.width <= 0 || rect.height <= 0) return false;
 
       const titleGap = rect.width * 0.05;
-      const lineHeight = rect.height;
+      const lineHeight = rect.height * 0.90;
       const lineTop = rect.top;
       const guideLeft = Math.min(
         rect.right + titleGap,
