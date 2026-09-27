@@ -665,8 +665,23 @@
   };
 
   const absoluteTop = el => el ? el.getBoundingClientRect().top + scrollY : 0;
-  const getHeroProgress = () => clamp((scrollY - metrics.heroTop) / metrics.heroTravel);
-  const heroIsAtRest = () => hero && getHeroProgress() < 0.002;
+
+  /* Mobile browser chrome changes the visual viewport height during initial load.
+     Because the Hero uses a negative vh runway to start at quoteHoldEnd, that resize
+     can make raw progress drift slightly past the hold point before the user scrolls.
+     The result is a partially erased/scrambled first line at scrollY=0.
+     Lock only the true mobile rest state to the authored hold frame; once the user
+     actually scrolls, the normal timeline resumes from the same neighborhood. */
+  const mobileHeroRestQuery = window.matchMedia('(max-width:850px)');
+  const MOBILE_HERO_REST_SCROLL_TOLERANCE = 12;
+  const getHeroProgress = () => {
+    if (
+      mobileHeroRestQuery.matches &&
+      scrollY <= MOBILE_HERO_REST_SCROLL_TOLERANCE
+    ) return HERO.quoteHoldEnd;
+    return clamp((scrollY - metrics.heroTop) / metrics.heroTravel);
+  };
+  const heroIsAtRest = () => hero && getHeroProgress() <= HERO.quoteHoldEnd + 0.002;
 
   const philosophySection = $('#philosophy');
   const philosophySticky = $('.philosophy-sticky', philosophySection);
