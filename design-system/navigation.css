@@ -80,25 +80,40 @@ html body.portfolio-progress-page>.top{z-index:2147483646!important}
 
 @media(max-width:850px){
   html body .top{
+    position:fixed!important;
+    inset:0 0 auto 0!important;
+    display:block!important;
     box-sizing:border-box!important;
-    width:100vw!important;
+    width:100%!important;
+    height:52px!important;
+    margin:0!important;
     padding:0!important;
+    transform:none!important;
   }
   html body .top .top-center{
-    position:absolute!important;
-    left:50%!important;
+    position:fixed!important;
+    left:50vw!important;
     right:auto!important;
     top:17px!important;
     grid-column:auto!important;
     justify-self:auto!important;
     align-self:auto!important;
+    display:flex!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
     width:max-content!important;
     max-width:calc(100vw - 36px)!important;
+    margin:0!important;
+    padding:0!important;
     gap:22px!important;
-    transform:translateX(-50%)!important;
+    transform:translate3d(-50%,0,0)!important;
+    white-space:nowrap!important;
   }
-  /* Keep the established mobile GNB type size; only centering authority changes. */
-  html body .top .top-center a{font-size:12px!important}
+  /* Mobile GNB type remains unchanged; only the centering contract is replaced. */
+  html body .top .top-center a{
+    font-size:12px!important;
+    line-height:1.25!important;
+  }
 }
 
 /* 2026-09-09 — REUSE 02.2 copy transition.
