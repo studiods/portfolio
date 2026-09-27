@@ -231,7 +231,9 @@
     if(!gallery||!img)return;
     const commit=()=>{
       if(!img.naturalWidth||!gallery.clientWidth)return;
-      gallery.style.height=`${gallery.clientWidth*(img.naturalHeight/img.naturalWidth)}px`;
+      const nextHeight=`${gallery.clientWidth*(img.naturalHeight/img.naturalWidth)}px`;
+      gallery.style.height=nextHeight;
+      gallery.style.setProperty('--wa-gallery-height',nextHeight);
       gallery.classList.add('is-ratio-ready');
     };
     if(img.complete&&img.naturalWidth)commit();
