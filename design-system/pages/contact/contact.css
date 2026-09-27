@@ -46,14 +46,6 @@ body.contact-page-body .works-page{
   background:transparent;
 }
 
-/* CONTACT must use the same true center lock as the rest of the canonical GNB. */
-html body.contact-page-body>.top .top-center{
-  grid-column:2!important;
-  justify-self:center!important;
-  position:static!important;
-  transform:none!important;
-}
-
 body.contact-page-body .works-hero{
   position:absolute;
   inset:0;
