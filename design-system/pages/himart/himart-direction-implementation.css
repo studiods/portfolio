@@ -190,10 +190,25 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
 @media(max-width:780px){
   html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-mockup{
     padding:4px!important;
-    border-radius:18px!important;
+    border-radius:12px!important;
   }
   html body.himart-page-body.himart-commerce-page #direction .himart-direction-042 .galaxy-ultra-screen{
-    border-radius:15px!important;
+    border-radius:10px!important;
+  }
+
+  /* Confidentiality overlay must remain fully contained inside each half-width
+     mobile mockup. Keep authored line breaks but scale copy to the device. */
+  html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::before{
+    padding:0 8px 42px!important;
+    font-size:12px!important;
+    line-height:1.15!important;
+  }
+  html body.himart-page-body.himart-commerce-page #direction .himart-direction-041 .galaxy-ultra-screen::after{
+    padding:34px 8px 0!important;
+    font-size:11px!important;
+    line-height:1.45!important;
+    white-space:pre-line!important;
+    overflow-wrap:break-word!important;
   }
 }
 
