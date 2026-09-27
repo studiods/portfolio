@@ -5,15 +5,33 @@
 */
 
 /* Global Design System motion bootstrap.
-   All portfolio pages that load navigation.js inherit the same restrained inertial scroll. */
+   Global inertial scrolling is a canonical motion-system behavior.
+   navigation.js is loaded by every production page and owns the single bootstrap. */
 (() => {
   'use strict';
   if (window.__portfolioInertiaLoaderMounted) return;
   window.__portfolioInertiaLoaderMounted = true;
+
+  const owner = document.currentScript;
+  const base = owner?.src
+    ? new URL('.', owner.src)
+    : new URL('./design-system/', document.baseURI);
+  const inertiaUrl = new URL('inertia-scroll.js?v=20260928-1', base).href;
+
+  const existing = [...document.scripts].find(node =>
+    node.dataset.portfolioInertia === 'true' ||
+    /\/design-system\/inertia-scroll\.js(?:\?|$)/.test(node.src || '')
+  );
+  if (existing) return;
+
   const script = document.createElement('script');
-  script.src = './design-system/inertia-scroll.js?v=20260913-2';
+  script.src = inertiaUrl;
   script.async = false;
   script.dataset.portfolioInertia = 'true';
+  script.addEventListener('error', () => {
+    window.__portfolioInertiaLoaderMounted = false;
+    script.remove();
+  }, {once:true});
   (document.head || document.documentElement).appendChild(script);
 })();
 
