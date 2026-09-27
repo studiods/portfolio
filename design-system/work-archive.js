@@ -190,12 +190,29 @@
   const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
   const updateArchiveTitle=()=>{
     if(!hero||!trigger||!menuShell)return;
+
+    /* Mobile does not morph the title into a small top-left label.
+       The hero title disappears as soon as scrolling starts and the same trigger
+       becomes a fixed top-right hamburger that owns the existing menu. */
+    if(mobileMq.matches){
+      const compact=window.scrollY>1;
+      const startSize=clamp(window.innerWidth*.09,72,160);
+      menuShell.style.setProperty('--wa-title-size',compact?'0px':`${startSize.toFixed(2)}px`);
+      menuShell.style.setProperty('--wa-title-top',compact?'18px':`${(window.innerHeight*.5).toFixed(2)}px`);
+      menuShell.style.setProperty('--wa-title-translate',compact?'0%':'-50%');
+      menuShell.style.setProperty('--wa-period-opacity',compact?'0':'1');
+      document.body.classList.toggle('wa-title-compact',compact);
+      trigger.tabIndex=compact?0:-1;
+      if(!compact)setMenuOpen(false);
+      return;
+    }
+
     const range=Math.max(1,Math.min(520,hero.offsetHeight*.55));
     const p=reducedMotion?(window.scrollY>32?1:0):clamp(window.scrollY/range,0,1);
     const startSize=clamp(window.innerWidth*.09,72,160);
     const endSize=32;
     const startTop=window.innerHeight*.5;
-    const endTop=window.innerWidth<=780?24:32;
+    const endTop=32;
     const size=startSize+(endSize-startSize)*p;
     const top=startTop+(endTop-startTop)*p;
     const translate=-50*(1-p);
@@ -317,13 +334,15 @@
       if(headPeriod)headPeriod.textContent=item.period;
       if(headTitle)headTitle.textContent=item.projectTitle;
       if(caption){
-        const visibleCaption=mobileMq.matches?(item.mobileCaption||item.caption||''):(item.caption||'');
+        /* One caption belongs to one active slide on every viewport.
+           Mobile only changes placement below media; it never replaces the page-matched copy. */
+        const visibleCaption=item.caption||'';
         caption.textContent=visibleCaption;
         caption.hidden=!visibleCaption;
       }
       if(note){note.textContent=item.note||'';note.hidden=!item.note;}
       if(status)status.textContent=`${pad(index+1)} / ${pad(slides.length)}`;
-      gallery.classList.toggle('has-caption',Boolean(mobileMq.matches?(item.mobileCaption||item.caption):item.caption));
+      gallery.classList.toggle('has-caption',Boolean(item.caption));
       gallery.classList.toggle('is-core-value',item.coreValue);
       setActiveProject(item.projectId);
       applyContrast();
