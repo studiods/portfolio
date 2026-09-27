@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shindongsik.com/sitemap.xml
