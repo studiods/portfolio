@@ -1,4 +1,4 @@
-# Portfolio Mobile Design System v2.5
+# Portfolio Mobile Design System v2.6
 
 적용 기준: 포트폴리오 전체의 모바일(`max-width: 780px`). PC 규칙과 Desktop DOM/타입/레이아웃은 변경하지 않습니다.
 
@@ -31,6 +31,8 @@
 - 긴 데이터 그래프는 원본 비율을 유지하고 필요한 경우에만 내부 horizontal pan을 허용합니다.
 - Yanolja 03.1 color family palette는 모바일에서 2열로 배열합니다.
 - Trenbe 02.1 age bar의 percentage label은 각 막대 상단 중앙에 직접 연결되도록 배치합니다.
+- Yanolja 01.2의 01~04 answer card는 모바일에서 반드시 1열로 배치해 한 행에 하나의 번호만 노출합니다.
+- Yanolja 04.1/04.2 gallery navigation hit-area는 image plane 전체 높이를 사용하고 arrow glyph는 해당 이미지의 상하 중앙에 둡니다.
 
 ## Circular flow / tablet / capsule rule
 
@@ -63,7 +65,8 @@
 - 모바일 media 높이는 각 source image의 실제 비율을 유지합니다.
 - gallery navigation arrow와 status는 media 영역 안에서만 렌더링합니다.
 - active slide가 바뀌면 하단 copy도 해당 slide의 `pageCaption`으로 함께 교체하며 프로젝트 전체 설명을 모든 이미지에 반복하지 않습니다.
-- 모바일에서는 Hero의 WORK ARCHIVE title이 스크롤 시작과 동시에 사라지고, 우측 상단 고정 3-line hamburger trigger로 전환됩니다. 기존 menu surface와 project list는 유지합니다.
+- Work Archive 모바일 Hero title은 처음에 `WORK / ARCHIVE` 2줄로 노출하고 기존 대비 90% 크기로 시작합니다.
+- Works와 Work Archive의 title handoff는 동일합니다: Hero 중심의 큰 영문 타이틀이 스크롤에 따라 축소되며 우측 상단으로 이동하고, 이동이 거의 끝난 뒤 3-line hamburger trigger로 교체됩니다. 기존 menu surface와 project list는 유지합니다.
 - source raster에 포함된 텍스트를 보완하기 위해 project description이 존재하면 모바일 하단 copy 영역에서 사용할 수 있습니다. PC overlay 정책은 유지합니다.
 
 ### Reuse / shared galleries
@@ -112,3 +115,7 @@
 10. Work Archive가 모바일 스크롤 즉시 우측 hamburger로 전환되는지
 11. Yanolja 원형이 1:1이고 03.1 palette가 2열인지
 12. Trenbe 02.1 percentage가 각 막대 바로 위 중앙에 있는지
+13. Yanolja 01.2의 01~04가 모바일에서 1열인지
+14. Yanolja 04.1/04.2 arrow가 image plane 상하 중앙인지
+15. Works / Work Archive 타이틀이 축소·우측 이동 후 동일한 hamburger로 전환되는지
+16. Work Archive 첫 타이틀이 2줄이며 기존 모바일 크기의 90%인지
