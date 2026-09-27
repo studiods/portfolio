@@ -183,27 +183,44 @@
 
   /* WORKS title handoff parity:
      use the archive switcher label as the single visible title, then drive it
-     with the same scroll math as works.html from hero scale to compact top-left. */
+     with the same scroll math as works.html from hero scale to the shared top-right hamburger state. */
   const hero=document.querySelector('.wa-hero');
   const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
   const updateArchiveTitle=()=>{
     if(!hero||!trigger||!menuShell)return;
 
-    /* Mobile does not morph the title into a small top-left label.
-       The hero title disappears as soon as scrolling starts and the same trigger
-       becomes a fixed top-right hamburger that owns the existing menu. */
+    /* Mobile shares the Works title handoff:
+       begin as a two-line hero title, shrink while travelling to the top-right,
+       then swap to the fixed three-line hamburger at the end of the motion. */
     if(mobileMq.matches){
-      const compact=window.scrollY>1;
-      const startSize=clamp(window.innerWidth*.09,72,160);
-      menuShell.style.setProperty('--wa-title-size',compact?'0px':`${startSize.toFixed(2)}px`);
-      menuShell.style.setProperty('--wa-title-top',compact?'18px':`${(window.innerHeight*.5).toFixed(2)}px`);
-      menuShell.style.setProperty('--wa-title-translate',compact?'0%':'-50%');
-      menuShell.style.setProperty('--wa-period-opacity',compact?'0':'1');
+      const range=Math.max(1,Math.min(520,hero.offsetHeight*.55));
+      const p=reducedMotion?(window.scrollY>32?1:0):clamp(window.scrollY/range,0,1);
+      const startSize=clamp(window.innerWidth*.09,72,160)*.9;
+      const endSize=22;
+      const startTop=window.innerHeight*.5;
+      const endTop=18;
+      const size=startSize+(endSize-startSize)*p;
+      const top=startTop+(endTop-startTop)*p;
+      const translate=-50*(1-p);
+      const periodOpacity=clamp(1-(p*2.5),0,1);
+
+      menuShell.style.setProperty('--wa-title-size',`${size.toFixed(2)}px`);
+      menuShell.style.setProperty('--wa-title-top',`${top.toFixed(2)}px`);
+      menuShell.style.setProperty('--wa-title-translate',`${translate.toFixed(2)}%`);
+      menuShell.style.setProperty('--wa-period-opacity',periodOpacity.toFixed(3));
+
+      const titleWidth=trigger.getBoundingClientRect().width;
+      const travel=Math.max(0,window.innerWidth-36-titleWidth);
+      menuShell.style.setProperty('--wa-title-x',`${(travel*p).toFixed(2)}px`);
+
+      const compact=p>=.985;
       document.body.classList.toggle('wa-title-compact',compact);
       trigger.tabIndex=compact?0:-1;
       if(!compact)setMenuOpen(false);
       return;
     }
+
+    menuShell.style.removeProperty('--wa-title-x');
 
     const range=Math.max(1,Math.min(520,hero.offsetHeight*.55));
     const p=reducedMotion?(window.scrollY>32?1:0):clamp(window.scrollY/range,0,1);
