@@ -14,6 +14,19 @@
 */
 
 @media(max-width:780px){
+  /* ---------- MOBILE TYPOGRAPHY TOKENS ----------
+     Canonical scale: body 14 / group 18 / subsection 22 / section 28 / hero 36.
+     These explicit mobile values also protect the system from stale imported token caches. */
+  html body.himart-page-body{
+    --hm-type-hero-mobile:36px;
+    --hm-type-section-mobile:28px;
+    --hm-type-subsection-mobile:22px;
+    --hm-type-group-mobile:18px;
+    --hm-type-body-mobile:14px;
+    --hm-type-note-mobile:10px;
+    --hm-type-source-mobile:10px;
+  }
+
   /* ---------- CANVAS ---------- */
   html body.himart-page-body #live-main .hm-wrap,
   html body.himart-page-body #live-main .hm-ds-wrap,
@@ -77,7 +90,9 @@
     .voice-group-title,
     .number-panel h4,
     .sentiment-title,
-    .hm-ds-numbered-list > article > h4
+    .hm-ds-numbered-list > article > h4,
+    .ax-friction-card h4,
+    .prototype-case-copy h3
   ){
     font-family:var(--hm-font-ko)!important;
     font-size:var(--hm-type-group-mobile)!important;
@@ -104,7 +119,9 @@
     .prototype-intro p,
     .sentiment-conclusion p,
     .sentiment-keywords,
-    .hm-ds-numbered-list > article > p
+    .hm-ds-numbered-list > article > p,
+    .ax-friction-card p,
+    .prototype-case-copy p
   ){
     font-size:var(--hm-type-body-mobile)!important;
     line-height:1.58!important;
@@ -418,7 +435,8 @@
     .hm-group-title,.problem-item h4,.proof-item h4,.signal-item h4,.behavior-card h4,
     .role-card h4,.direction-card h4,.principle-item h4,.design-rule h4,
     .number-panel h4,.voice-group-title,.ways-operating-stack h4,.ax-maker-step h4,
-    .yanolja-lead-step strong,.aimmo-company-signals h4
+    .yanolja-lead-step strong,.aimmo-company-signals h4,.ax-friction-card h4,
+    .prototype-case-copy h3
   ){
     font-size:var(--hm-type-group-mobile)!important;
     line-height:1.32!important;
@@ -427,7 +445,8 @@
     .hm-lead,.hm-section-desc,.hm-subcopy,.data-card-head .desc,.narrative-copy,
     .journey-block-copy,.behavior-note,.role-card p,.direction-card p,.principle-item p,
     .design-rule p,.number-panel p,.proof-item p,.prototype-intro p,.sentiment-conclusion p,
-    .ways-operating-stack p,.ax-maker-step p,.yanolja-lead-step p,.aimmo-company-signals p
+    .ways-operating-stack p,.ax-maker-step p,.yanolja-lead-step p,.aimmo-company-signals p,
+    .ax-friction-card p,.prototype-case-copy p
   ){
     font-size:var(--hm-type-body-mobile)!important;
     line-height:1.58!important;
