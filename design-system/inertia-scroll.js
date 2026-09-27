@@ -3,7 +3,7 @@
    - Desktop fine-pointer wheel/trackpad only.
    - Uses the real window scroll position, never a transformed wrapper, so sticky,
      IntersectionObserver, progress navigation and scroll-linked effects keep native geometry.
-   - Touch/coarse pointers and prefers-reduced-motion keep native scrolling.
+   - Pure touch/coarse-only devices and prefers-reduced-motion keep native scrolling.
    - Nested native scroll areas keep their own wheel behavior.
    - A page can opt out with data-native-scroll on <html> or <body>.
 
@@ -24,10 +24,13 @@
     if (root.hasAttribute('data-native-scroll') || body.hasAttribute('data-native-scroll')) return;
 
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const coarse = window.matchMedia?.('(pointer: coarse)').matches;
-    if (reduce || coarse || !('requestAnimationFrame' in window)) return;
+    /* Hybrid laptops may report a coarse primary pointer even when a mouse/trackpad is available.
+       Keep inertia whenever any fine pointer exists; pure touch devices remain native. */
+    const hasFinePointer = window.matchMedia?.('(any-pointer: fine)').matches;
+    if (reduce || hasFinePointer === false || !('requestAnimationFrame' in window)) return;
 
     window.__portfolioInertiaScrollMounted = true;
+    window.__portfolioInertiaScrollVersion = '20260928-1';
     root.dataset.inertiaScroll = 'true';
     root.style.scrollBehavior = 'auto';
 
