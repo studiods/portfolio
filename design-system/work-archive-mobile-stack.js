@@ -10,15 +10,8 @@
       if(!gallery||!overlay)return;
 
       if(mq.matches){
-        if(gallery.classList.contains('is-custom-image-gallery')){
-          if(overlay.parentElement!==gallery){
-            const prev=gallery.querySelector('[data-reuse-gallery-prev]');
-            if(prev)gallery.insertBefore(overlay,prev);
-            else gallery.appendChild(overlay);
-          }
-          overlay.classList.remove('is-mobile-stacked');
-          return;
-        }
+        /* Mobile contract: every archive gallery, including custom-image galleries,
+           reads title -> media -> copy. No gallery keeps body copy inside the image plane. */
         if(overlay.parentElement===gallery){
           gallery.insertAdjacentElement('afterend',overlay);
         }
