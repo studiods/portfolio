@@ -35,6 +35,25 @@
   (document.head || document.documentElement).appendChild(script);
 })();
 
+/* Global mobile presentation bootstrap.
+   CSS owns mobile layout; this runtime owns mobile-only separator rendering. */
+(() => {
+  'use strict';
+  if (window.__portfolioMobileCopyLoaderMounted) return;
+  window.__portfolioMobileCopyLoaderMounted = true;
+
+  const owner = document.currentScript;
+  const base = owner?.src
+    ? new URL('.', owner.src)
+    : new URL('./design-system/', document.baseURI);
+
+  const script = document.createElement('script');
+  script.src = new URL('mobile-copy-runtime.js?v=20260928-1', base).href;
+  script.async = false;
+  script.dataset.portfolioMobileCopy = 'true';
+  (document.head || document.documentElement).appendChild(script);
+})();
+
 (() => {
   'use strict';
 
