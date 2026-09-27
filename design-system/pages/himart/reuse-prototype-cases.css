@@ -295,15 +295,28 @@ html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .
     width:100%!important;
     margin-top:24px!important;
   }
+
+  /* Mobile device shell: reduce the exaggerated phone rounding while keeping
+     the inner display slightly tighter than the exterior frame. */
   html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .galaxy-ultra-mockup{
     padding:4px!important;
-    border-radius:18px!important;
+    border-radius:12px!important;
   }
   html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .galaxy-ultra-screen{
-    border-radius:15px!important;
+    border-radius:10px!important;
   }
+
+  /* Mobile copy follows the canonical 14 / 18 hierarchy instead of desktop 16 / 22. */
   html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .prototype-case-copy{
     margin-top:24px!important;
+  }
+  html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .prototype-case-copy h3{
+    font-size:var(--hm-type-group-mobile,18px)!important;
+    line-height:1.32!important;
+  }
+  html body.himart-page-body:is(.reuse-current,.himart-commerce-page) #direction .prototype-case-copy p{
+    font-size:var(--hm-type-body-mobile,14px)!important;
+    line-height:1.55!important;
   }
 }
 
