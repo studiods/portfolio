@@ -78,6 +78,18 @@
 
 공통 규칙으로 재사용되는 `design-system/components/himart-ax.css`는 Himart AX와 Yanolja System이 함께 사용하는 기반이라 `components/`에 유지한다.
 
+## Global inertial scroll contract
+
+- 모든 production 페이지의 스크롤 감속은 `design-system/inertia-scroll.js`가 단독 소유한다.
+- bootstrap은 모든 production 페이지가 공통으로 로드하는 `design-system/navigation.js`가 담당한다. 페이지별 inertia/smooth-scroll runtime을 새로 만들지 않는다.
+- Desktop의 mouse wheel·trackpad 입력은 실제 `window.scrollY`를 사용해 감속한다. transform wrapper 방식은 금지하며 sticky, IntersectionObserver, scroll-linked animation의 native geometry를 보존한다.
+- 공통 tuning은 `wheel gain 0.78 / damping 0.105 / stop epsilon 0.35px`을 기준값으로 유지한다. 페이지별로 별도 감속값을 만들지 않는다.
+- pure touch/coarse-only 환경과 `prefers-reduced-motion: reduce`에서는 native scrolling을 유지한다. touch가 있는 hybrid PC라도 `any-pointer:fine`이 존재하면 Desktop inertia를 유지한다.
+- 내부 modal/gallery처럼 자체 vertical scroll이 필요한 영역은 native scroll을 우선한다. 특정 페이지 전체를 예외 처리해야 할 때만 `data-native-scroll`을 `html` 또는 `body`에 명시한다.
+- CSS `scroll-behavior:smooth`를 이 동작의 대체 수단으로 사용하지 않는다. anchor/programmatic scroll과 wheel inertia의 책임을 분리한다.
+- `inertia-scroll.js` 또는 이를 bootstrap하는 `navigation.js`가 변경되면 **모든 production HTML의 navigation cache key를 같은 버전으로 동시에 갱신**한다.
+- `himart-inertia-scroll.js`는 과거 링크 호환용 legacy entrypoint일 뿐이며 production HTML에서 직접 호출하지 않는다.
+
 ## 로딩 순서
 
 1. `tokens.css`
