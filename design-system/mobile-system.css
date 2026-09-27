@@ -1200,3 +1200,339 @@
     inset:auto!important;
   }
 }
+
+
+/* MOBILE PORTFOLIO SYSTEM v2.4 — vertical flow / gallery / footer authority
+   Desktop is intentionally untouched. These rules are the final <=780px authority. */
+@media(max-width:780px){
+  /* ---------- WORD-BASED MOBILE WRAPPING ---------- */
+  body :is(
+    #live-main,.shell,.portfolio-footer,.hm-project-footer,.hm-project-reflection,.wa-switcher
+  ) :is(h1,h2,h3,h4,h5,h6,p,li,figcaption,strong,a,button,span){
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+    line-break:strict;
+  }
+
+  /* ---------- SITEWIDE MOBILE FOOTERS ---------- */
+  body .portfolio-footer .portfolio-footer__inner{
+    grid-template-columns:1fr!important;
+    row-gap:20px!important;
+    align-items:start!important;
+  }
+  body .portfolio-footer :is(
+    .portfolio-footer__left,.portfolio-footer__right,
+    .portfolio-footer__left p,.portfolio-footer__right p,
+    .portfolio-footer__left a,.portfolio-footer__right a
+  ){
+    width:100%!important;
+    max-width:100%!important;
+    text-align:left!important;
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+
+  html body.himart-page-body .hm-project-footer__rail{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    height:auto!important;
+    min-height:0!important;
+    gap:0!important;
+    align-items:stretch!important;
+  }
+  html body.himart-page-body .hm-project-footer__link{
+    width:100%!important;
+    min-height:82px!important;
+    justify-self:stretch!important;
+    justify-content:flex-start!important;
+    flex-direction:row!important;
+    padding:18px 0 18px 32px!important;
+    text-align:left!important;
+  }
+  html body.himart-page-body .hm-project-footer__link--next{
+    border-top:1px solid rgba(255,255,255,.10)!important;
+  }
+  html body.himart-page-body .hm-project-footer__link--next .hm-project-footer__arrow{
+    right:auto!important;
+    left:0!important;
+  }
+  html body.himart-page-body .hm-project-footer__link--next .hm-project-footer__arrow::before{
+    transform:translate(-65%,-50%) rotate(45deg)!important;
+  }
+  html body.himart-page-body .hm-project-footer__meta,
+  html body.himart-page-body .hm-project-footer__label,
+  html body.himart-page-body .hm-project-footer__name{
+    width:100%!important;
+    max-width:100%!important;
+    text-align:left!important;
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+
+  html body.himart-page-body #live-main :is(.hm-footer > .hm-wrap,.stepup-footer-inner){
+    justify-items:start!important;
+    text-align:left!important;
+  }
+  html body.himart-page-body #live-main :is(
+    .hm-footer > .hm-wrap > *, .hm-footer > .hm-wrap > div > *,
+    .stepup-footer-inner > *, .stepup-footer-inner > div > *
+  ){
+    width:100%!important;
+    max-width:100%!important;
+    text-align:left!important;
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+
+  /* ---------- VERTICAL CIRCLE / TABLET / CAPSULE FLOWS ---------- */
+  html body.himart-page-body #live-main :is(
+    #journey .flow-row,
+    .reuse-confidence-row,
+    .reuse-proof-band__nodes,
+    .aimmo-ownership-sync,
+    .aimmo-business-flow,
+    .stepup-habit-flow,
+    .stepup-reframe-flow
+  ){
+    display:flex!important;
+    width:100%!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:14px!important;
+  }
+
+  html body.himart-page-body #live-main :is(
+    .wide-flow-cluster.v12-journey-tablet,
+    .hm-ds-journey-tablet,
+    .hm-flow-capsule,
+    .aimmo-repeat-capsule
+  ){
+    position:relative!important;
+    display:flex!important;
+    width:min(100%,var(--hm-mobile-tablet-width,320px))!important;
+    max-width:320px!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:14px!important;
+    margin:8px auto!important;
+    padding:36px 18px 24px!important;
+    border-radius:999px!important;
+    box-sizing:border-box!important;
+    overflow:visible!important;
+  }
+
+  html body.himart-page-body #live-main :is(
+    .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-inner,
+    .hm-ds-journey-tablet__inner,
+    .hm-flow-capsule__inner
+  ){
+    display:flex!important;
+    width:100%!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:14px!important;
+  }
+
+  html body.himart-page-body #live-main :is(
+    .wide-flow-cluster.v12-journey-tablet .wide-flow-cluster-label,
+    .hm-ds-journey-tablet__label,
+    .hm-flow-capsule__label,
+    .aimmo-repeat-capsule__label,
+    .aimmo-ownership-sync__label
+  ){
+    position:absolute!important;
+    z-index:2!important;
+    top:0!important;
+    left:50%!important;
+    right:auto!important;
+    width:max-content!important;
+    max-width:82%!important;
+    margin:0!important;
+    padding:0 10px!important;
+    transform:translate(-50%,-50%)!important;
+    background:#000!important;
+    text-align:center!important;
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+
+  /* Every horizontal connector becomes a vertical down-flow connector on mobile. */
+  html body.himart-page-body #live-main :is(
+    #journey .flow-arrow,
+    .reuse-confidence-arrow,
+    .hm-flow-arrowhead
+  ){
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    transform:rotate(90deg)!important;
+    transform-origin:center!important;
+  }
+  html body.himart-page-body #live-main :is(
+    .aimmo-business-flow,
+    .stepup-habit-flow
+  ) > .hm-ds-gallery-arrow{
+    transform:rotate(135deg)!important;
+    transform-origin:center!important;
+  }
+  html body.nbt-stepup-page #live-main .stepup-reframe-flow > .stepup-reframe-arrow{
+    display:grid!important;
+    place-items:center!important;
+    transform:rotate(90deg)!important;
+    transform-origin:center!important;
+  }
+
+  /* Circle content scales from the circle itself, not from viewport width. */
+  html body.himart-page-body #live-main :is(
+    #journey .flow-node,
+    .reuse-confidence-node,
+    .reuse-proof-map__node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article,
+    .stepup-reframe-flow > article
+  ){
+    container-type:inline-size!important;
+  }
+  html body.himart-page-body #live-main :is(
+    #journey .flow-node,
+    .reuse-confidence-node,
+    .reuse-proof-map__node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article,
+    .stepup-reframe-flow > article
+  ) > :is(span,.hm-card-no){
+    font-size:clamp(9px,6cqi,12px)!important;
+    line-height:1.1!important;
+  }
+  html body.himart-page-body #live-main :is(
+    #journey .flow-node,
+    .reuse-confidence-node,
+    .reuse-proof-map__node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article,
+    .stepup-reframe-flow > article
+  ) h4{
+    font-size:clamp(14px,10.5cqi,22px)!important;
+    line-height:1.24!important;
+    word-break:keep-all!important;
+  }
+  html body.himart-page-body #live-main :is(
+    #journey .flow-node,
+    .reuse-confidence-node,
+    .aimmo-ownership-sync__node,
+    .aimmo-business-flow > article,
+    .stepup-habit-flow > article,
+    .stepup-reframe-flow > article
+  ) p{
+    max-width:84%!important;
+    font-size:clamp(10px,6.3cqi,13px)!important;
+    line-height:1.42!important;
+    word-break:keep-all!important;
+  }
+
+  html body.aimmo-system-page #live-main .aimmo-ownership-sync{
+    position:relative!important;
+    width:min(100%,var(--hm-mobile-tablet-width,320px))!important;
+    max-width:320px!important;
+    margin-inline:auto!important;
+    padding:38px 18px 24px!important;
+    border-radius:999px!important;
+  }
+
+  /* ---------- REUSE GALLERY ARROWS: IMAGE-PLANE ONLY ---------- */
+  html body.reuse-current:not(.work-archive-page) #live-main .reuse-image-display-card__nav{
+    top:0!important;
+    bottom:auto!important;
+    height:75cqw!important;
+    transform:none!important;
+  }
+  html body.reuse-current:not(.work-archive-page) #live-main .reuse-production-gallery__nav{
+    top:0!important;
+    bottom:auto!important;
+    height:56.25cqw!important;
+    transform:none!important;
+  }
+  html body.reuse-current:not(.work-archive-page) #live-main :is(
+    .reuse-image-display-card__nav,.reuse-production-gallery__nav
+  )::before{
+    top:50%!important;
+  }
+
+  /* ---------- WORK ARCHIVE: TITLE -> MEDIA -> COPY ---------- */
+  html body.work-archive-page #live-main .wa-project__head{
+    position:relative!important;
+    display:block!important;
+    width:100%!important;
+    margin:0 0 24px!important;
+  }
+  html body.work-archive-page #live-main .wa-company .reuse-production-gallery{
+    display:block!important;
+    width:100%!important;
+    height:var(--wa-gallery-height,auto)!important;
+    aspect-ratio:auto!important;
+    overflow:hidden!important;
+    background:#080808!important;
+    container-type:inline-size!important;
+  }
+  html body.work-archive-page #live-main .wa-company .reuse-production-gallery__viewport{
+    position:absolute!important;
+    inset:0!important;
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    aspect-ratio:auto!important;
+    overflow:hidden!important;
+    background:#080808!important;
+  }
+  html body.work-archive-page #live-main .wa-company .reuse-production-gallery__nav{
+    top:0!important;
+    bottom:auto!important;
+    height:100%!important;
+    transform:none!important;
+  }
+  html body.work-archive-page #live-main .wa-company .reuse-production-gallery__nav::before{
+    top:50%!important;
+  }
+  html body.work-archive-page #live-main .wa-company .reuse-production-gallery__status{
+    top:16px!important;
+    right:16px!important;
+    bottom:auto!important;
+  }
+  html body.work-archive-page #live-main .wa-gallery-overlay.is-mobile-stacked{
+    position:relative!important;
+    inset:auto!important;
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:18px 0 0!important;
+    padding:0 0 28px!important;
+    color:rgba(255,255,255,.70)!important;
+    background:transparent!important;
+    text-align:left!important;
+  }
+  html body.work-archive-page #live-main .wa-gallery-overlay.is-mobile-stacked :is(
+    .wa-gallery-overlay__body,
+    .wa-gallery-overlay__body p,
+    .wa-gallery-note
+  ){
+    width:100%!important;
+    max-width:100%!important;
+    text-align:left!important;
+    white-space:normal!important;
+    word-break:keep-all!important;
+    overflow-wrap:normal!important;
+  }
+}
