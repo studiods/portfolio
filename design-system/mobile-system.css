@@ -807,14 +807,14 @@
 
   /* ---------- HOMEPAGE / WORKS / ABOUT MOBILE TYPE CONTRACT ---------- */
   body.works-page-body .works-page-title{
-    font-size:var(--hm-type-section-mobile,32px)!important;
+    font-size:var(--hm-type-section-mobile,28px)!important;
   }
   body.works-page-body .works-card-title{
-    font-size:var(--hm-type-section-mobile,32px)!important;
+    font-size:var(--hm-type-section-mobile,28px)!important;
     line-height:1.12!important;
   }
   body.works-page-body .works-card-company{
-    font-size:var(--hm-type-note-mobile,11px)!important;
+    font-size:var(--hm-type-note-mobile,10px)!important;
   }
 
   body.about-page-body :is(.about-hero-title,.about-statement){
@@ -822,20 +822,20 @@
     line-height:1.12!important;
   }
   body.about-page-body :is(.principle-title,.interview-q,.leadership-card-title){
-    font-size:var(--hm-type-group-mobile,22px)!important;
+    font-size:var(--hm-type-group-mobile,18px)!important;
     line-height:1.3!important;
   }
   body.about-page-body :is(.about-lead,.principle-copy,.interview-a,.leadership-card-copy){
-    font-size:var(--hm-type-body-mobile,15px)!important;
+    font-size:var(--hm-type-body-mobile,14px)!important;
     line-height:1.58!important;
   }
 
   /* Home has deliberately oversized kinetic typography; only supporting copy is normalized. */
   body.home-page :is(.impact-copy,.subtractive-korean,.hero-identity){
-    font-size:var(--hm-type-body-mobile,15px)!important;
+    font-size:var(--hm-type-body-mobile,14px)!important;
   }
   body.home-page :is(.mini-label,.principle-en){
-    font-size:var(--hm-type-note-mobile,11px)!important;
+    font-size:var(--hm-type-note-mobile,10px)!important;
   }
 }
 
@@ -958,15 +958,17 @@
 }
 
 
-/* MOBILE PORTFOLIO SYSTEM v2.2 — self-contained mobile token bridge */
+/* MOBILE PORTFOLIO SYSTEM v2.4 — canonical self-contained mobile token bridge.
+   This :root bridge is the final authority for HOME / ABOUT / WORKS as well as
+   detail pages, so it must match the 14 / 18 / 22 / 28 / 36 mobile scale above. */
 @media(max-width:780px){
   :root{
-    --hm-type-hero-mobile:clamp(36px,9.2vw,44px);
-    --hm-type-section-mobile:clamp(29px,7.6vw,34px);
-    --hm-type-subsection-mobile:clamp(24px,6.2vw,29px);
-    --hm-type-group-mobile:clamp(19px,5vw,22px);
-    --hm-type-body-mobile:15px;
-    --hm-type-note-mobile:11px;
+    --hm-type-hero-mobile:36px;
+    --hm-type-section-mobile:28px;
+    --hm-type-subsection-mobile:22px;
+    --hm-type-group-mobile:18px;
+    --hm-type-body-mobile:14px;
+    --hm-type-note-mobile:10px;
     --hm-type-source-mobile:10px;
     --hm-type-data-xl-mobile:clamp(48px,14vw,68px);
     --hm-type-data-lg-mobile:clamp(32px,9.5vw,44px);
