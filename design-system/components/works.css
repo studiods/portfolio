@@ -97,7 +97,7 @@ body.works-page-body .works-page-title{
   line-height:.8;
   letter-spacing:-.035em;
   white-space:nowrap;
-  transform:translateY(var(--works-title-translate,-50%));
+  transform:translateX(var(--works-title-x,0px)) translateY(var(--works-title-translate,-50%));
   transform-origin:left center;
   pointer-events:none;
   will-change:top,font-size,transform;
@@ -417,7 +417,37 @@ body.works-page-body .works-footer a{
     scroll-snap-type:none;
   }
   body.works-page-body .works-hero{min-height:580px}
-  body.works-page-body .works-page-title{left:var(--hm-inset-mobile)}
+  body.works-page-body .works-page-title{
+    left:var(--hm-inset-mobile);
+    transform-origin:left center;
+  }
+  body.works-page-body.works-title-compact .works-page-title{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  body.works-page-body .works-title-menu-toggle{
+    width:32px;
+    height:32px;
+  }
+  body.works-page-body.works-title-compact .works-title-menu-toggle{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  body.works-page-body .works-title-menu-toggle::before{
+    top:7px;
+    left:6px;
+    width:20px;
+    height:1px;
+    border:0;
+    background:currentColor;
+    box-shadow:0 8px 0 currentColor,0 16px 0 currentColor;
+    transform:none;
+  }
+  body.works-page-body .works-title-menu-toggle[aria-expanded="true"]::before{
+    transform:none;
+  }
   body.works-page-body .works-card{
     grid-template-columns:1fr;
     min-height:auto;
