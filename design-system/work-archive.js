@@ -12,6 +12,7 @@
   const TRANSITION_MS=720;
   const AUTOPLAY_MS=5000;
   const reducedMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const mobileMq=window.matchMedia('(max-width:780px)');
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pad=n=>String(n).padStart(2,'0');
   const pad3=n=>String(n).padStart(3,'0');
@@ -113,6 +114,7 @@
             projectIndex,
             displayIndex,
             caption:String(project.desc||'').replace(/\r/g,'').trim(),
+            mobileCaption:String(project.desc||'').replace(/\r/g,'').replace(/\n{2,}/g,' ').trim(),
             note:pageNote(project,imageIndex),
             coreValue:false
           });
@@ -129,6 +131,7 @@
             projectIndex,
             displayIndex,
             caption:pageCaption(project,page),
+            mobileCaption:String(project.desc||'').replace(/\r/g,'').replace(/\n{2,}/g,' ').trim(),
             note:pageNote(project,pageIndex),
             coreValue:project.id==='trenbe-core-value'
           });
@@ -311,10 +314,14 @@
       if(headIndex)headIndex.textContent=`${item.displayIndex} · ${item.company}`;
       if(headPeriod)headPeriod.textContent=item.period;
       if(headTitle)headTitle.textContent=item.projectTitle;
-      if(caption){caption.textContent=item.caption||'';caption.hidden=!item.caption;}
+      if(caption){
+        const visibleCaption=mobileMq.matches?(item.mobileCaption||item.caption||''):(item.caption||'');
+        caption.textContent=visibleCaption;
+        caption.hidden=!visibleCaption;
+      }
       if(note){note.textContent=item.note||'';note.hidden=!item.note;}
       if(status)status.textContent=`${pad(index+1)} / ${pad(slides.length)}`;
-      gallery.classList.toggle('has-caption',Boolean(item.caption));
+      gallery.classList.toggle('has-caption',Boolean(mobileMq.matches?(item.mobileCaption||item.caption):item.caption));
       gallery.classList.toggle('is-core-value',item.coreValue);
       setActiveProject(item.projectId);
       applyContrast();
@@ -404,7 +411,7 @@
     gallery.addEventListener('pointercancel',()=>{pointerStart=null;});
 
     const controller={
-      sync:()=>{setGalleryHeight(gallery,activeImage());applyContrast();},
+      sync:()=>{setGalleryHeight(gallery,activeImage());applyContrast();updateCopy();},
       goTo:target=>{stopAutoplay();transitionTo(target,target<index?-1:1,false);scheduleAutoplay();},
       getProjectId:()=>companyData.slides[index]?.projectId
     };
