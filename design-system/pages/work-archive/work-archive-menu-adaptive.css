@@ -24,6 +24,11 @@ html body.work-archive-page .wa-switcher__toggle{
   color:var(--wa-menu-fg)!important;
   transition:color .16s ease!important;
 }
+html body.work-archive-page .wa-switcher__title-word{
+  display:block!important;
+  min-width:0!important;
+  white-space:nowrap!important;
+}
 html body.work-archive-page .wa-switcher__toggle::after{
   border-right-color:currentColor!important;
   border-bottom-color:currentColor!important;
@@ -60,8 +65,8 @@ html body.work-archive-page .wa-menu-group a.is-visited{opacity:.30!important}
 
 
 /* WORK ARCHIVE hero-title handoff parity with works.html.
-   One visible title only: the switcher label occupies the hero title position
-   first, then scales/moves into the compact top-left menu state. */
+   One visible title only: the switcher label occupies the hero title position,
+   then shrinks and travels to the shared top-right hamburger state. */
 html body.work-archive-page #live-main .wa-hero .hm-title{
   opacity:0!important;
   visibility:hidden!important;
@@ -81,7 +86,9 @@ html body.work-archive-page .wa-switcher{
 }
 html body.work-archive-page .wa-switcher__toggle{
   display:inline-flex!important;
+  flex-direction:row!important;
   align-items:flex-start!important;
+  gap:.22em!important;
   width:max-content!important;
   height:auto!important;
   margin:0!important;
@@ -149,18 +156,21 @@ html body.work-archive-page .wa-switcher__menu{
     position:fixed!important;
     top:var(--wa-title-top,50vh)!important;
     left:var(--hm-inset-mobile,18px)!important;
-    width:calc(100vw - (var(--hm-inset-mobile,18px) * 2))!important;
-    max-width:none!important;
+    width:max-content!important;
+    max-width:calc(100vw - (var(--hm-inset-mobile,18px) * 2))!important;
     margin:0!important;
-    transform:translateY(var(--wa-title-translate,-50%))!important;
+    transform:translateX(var(--wa-title-x,0px)) translateY(var(--wa-title-translate,-50%))!important;
+    transform-origin:left center!important;
   }
   html body.work-archive-page .wa-switcher__toggle{
     width:max-content!important;
     height:auto!important;
     padding:0!important;
-    font-size:var(--wa-title-size,clamp(72px,9vw,160px))!important;
+    flex-direction:column!important;
+    gap:0!important;
+    font-size:var(--wa-title-size,clamp(64.8px,8.1vw,144px))!important;
     font-weight:300!important;
-    line-height:.8!important;
+    line-height:.82!important;
     letter-spacing:-.035em!important;
   }
   html body.work-archive-page .wa-switcher__period{
@@ -182,8 +192,8 @@ html body.work-archive-page .wa-switcher__menu{
 
 
 /* WORK ARCHIVE mobile hamburger handoff.
-   Mobile keeps the hero-scale title only at page start. Any scroll switches immediately
-   to a fixed top-right three-line trigger; the existing menu surface/content is unchanged. */
+   The two-line title shrinks/moves toward the top-right and swaps to the fixed
+   three-line trigger only at the end of that motion. Existing menu content is unchanged. */
 @media(max-width:780px){
   html body.work-archive-page.wa-title-compact .wa-switcher{
     position:fixed!important;
@@ -220,6 +230,9 @@ html body.work-archive-page .wa-switcher__menu{
     pointer-events:auto!important;
     cursor:pointer!important;
     -webkit-tap-highlight-color:transparent!important;
+  }
+  html body.work-archive-page.wa-title-compact .wa-switcher__title-word{
+    display:none!important;
   }
 
   html body.work-archive-page.wa-title-compact .wa-switcher__toggle::after{
