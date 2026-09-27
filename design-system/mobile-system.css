@@ -1647,3 +1647,34 @@
     white-space:nowrap!important;
   }
 }
+
+
+/* MOBILE PORTFOLIO SYSTEM v2.6 — Yanolja rows and gallery controls
+   Mobile-only corrections. Desktop remains untouched. */
+@media(max-width:780px){
+  /* YANOLJA 01.2 — one numbered answer per row. */
+  html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:28px!important;
+  }
+  html body.yanolja-system-page #brand .aimmo-collaboration-grid.yanolja-answer-grid>article{
+    grid-column:1!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+
+  /* YANOLJA 04.1 / 04.2 — page CSS previously collapsed gallery controls to 36px.
+     Restore the hit area to the full image plane so arrows remain vertically centered. */
+  html body.yanolja-system-page #direction .hst-ds-gallery__nav{
+    top:0!important;
+    bottom:0!important;
+    width:var(--hm-gallery-nav-hit-width,10%)!important;
+    height:100%!important;
+    margin:0!important;
+    transform:none!important;
+  }
+  html body.yanolja-system-page #direction .hst-ds-gallery__nav::before{
+    top:50%!important;
+  }
+}
