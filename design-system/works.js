@@ -502,6 +502,15 @@
   };
 
   const placeSwitcher = () => {
+    const mobile = window.innerWidth <= 780;
+    if (mobile && body.classList.contains('works-title-compact')) {
+      trigger.style.left = `${Math.max(18, window.innerWidth - 50)}px`;
+      trigger.style.top = '18px';
+      menu.style.left = '18px';
+      menu.style.top = '58px';
+      return;
+    }
+
     const rect = title.getBoundingClientRect();
     const triggerHeight = trigger.getBoundingClientRect().height || 24;
     trigger.style.left = `${Math.round(rect.right + 24)}px`;
@@ -657,10 +666,11 @@
   const updateTitle = () => {
     const range = Math.max(1, Math.min(520, hero.offsetHeight * .55));
     const p = reduced ? (window.scrollY > 32 ? 1 : 0) : clamp(window.scrollY / range, 0, 1);
+    const mobile = window.innerWidth <= 780;
     const startSize = clamp(window.innerWidth * .09,72,160);
-    const endSize = 32;
+    const endSize = mobile ? 22 : 32;
     const startTop = window.innerHeight * .5;
-    const endTop = window.innerWidth <= 780 ? 24 : 32;
+    const endTop = mobile ? 18 : 32;
     const size = startSize + (endSize - startSize) * p;
     const top = startTop + (endTop - startTop) * p;
     const translate = -50 * (1 - p);
@@ -668,6 +678,16 @@
     title.style.setProperty('--works-title-size', `${size.toFixed(2)}px`);
     title.style.setProperty('--works-title-top', `${top.toFixed(2)}px`);
     title.style.setProperty('--works-title-translate', `${translate.toFixed(2)}%`);
+
+    if (mobile) {
+      /* Same title handoff contract as Work Archive:
+         shrink while travelling to the top-right, then swap to the hamburger. */
+      const titleWidth = title.getBoundingClientRect().width;
+      const travel = Math.max(0, window.innerWidth - 36 - titleWidth);
+      title.style.setProperty('--works-title-x', `${(travel * p).toFixed(2)}px`);
+    } else {
+      title.style.removeProperty('--works-title-x');
+    }
 
     const compact = p >= .985;
     body.classList.toggle('works-title-compact', compact);
