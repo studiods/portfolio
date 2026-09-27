@@ -1536,3 +1536,114 @@
     overflow-wrap:normal!important;
   }
 }
+
+
+/* MOBILE PORTFOLIO SYSTEM v2.5 — paired proof / Yanolja / Trenbe corrections
+   Mobile only. Desktop geometry and information order are untouched. */
+@media(max-width:780px){
+  /* REUSE 02.1 — preserve the semantic pair:
+     anxiety circle -> downward arrow -> matching solution circle. */
+  html body.reuse-current #data .reuse-proof-map{
+    display:flex!important;
+    width:100%!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:56px!important;
+  }
+  html body.reuse-current #data .reuse-proof-map > .reuse-proof-band,
+  html body.reuse-current #data .reuse-proof-map > .reuse-proof-band > .reuse-proof-band__nodes{
+    display:contents!important;
+  }
+  html body.reuse-current #data .reuse-proof-map > .reuse-proof-map__arrow{
+    display:none!important;
+  }
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node{
+    position:relative!important;
+    flex:0 0 var(--hm-mobile-circle-size)!important;
+    width:var(--hm-mobile-circle-size)!important;
+    min-width:var(--hm-mobile-circle-size)!important;
+    max-width:var(--hm-mobile-circle-size)!important;
+    height:var(--hm-mobile-circle-size)!important;
+    min-height:var(--hm-mobile-circle-size)!important;
+    aspect-ratio:1/1!important;
+    margin:0 auto!important;
+    border-radius:50%!important;
+    box-sizing:border-box!important;
+  }
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--anxiety:nth-child(1){order:1}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--solution:nth-child(1){order:2}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--anxiety:nth-child(2){order:3}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--solution:nth-child(2){order:4}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--anxiety:nth-child(3){order:5}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--solution:nth-child(3){order:6}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--anxiety:nth-child(4){order:7}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--solution:nth-child(4){order:8}
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--anxiety::after{
+    content:""!important;
+    position:absolute!important;
+    z-index:8!important;
+    left:50%!important;
+    bottom:-31px!important;
+    display:block!important;
+    width:12px!important;
+    height:12px!important;
+    border-right:1px solid rgba(255,255,255,.46)!important;
+    border-bottom:1px solid rgba(255,255,255,.46)!important;
+    background:transparent!important;
+    transform:translateX(-50%) rotate(45deg)!important;
+    transform-origin:center!important;
+    pointer-events:none!important;
+  }
+  html body.reuse-current #data .reuse-proof-map .reuse-proof-map__node--solution:not(:last-child){
+    margin-bottom:34px!important;
+  }
+
+  /* YANOLJA — the source page disabled aspect-ratio on mobile.
+     Reinstate true circles and center them in the single-column flow. */
+  html body.yanolja-system-page #live-main :is(
+    .yanolja-question-grid,
+    .yanolja-direction-grid,
+    .yanolja-goal-grid
+  ){
+    justify-items:center!important;
+  }
+  html body.yanolja-system-page #live-main :is(
+    .yanolja-question-card,
+    .yanolja-direction-card,
+    .yanolja-goal-card
+  ){
+    display:flex!important;
+    flex:0 0 min(76vw,280px)!important;
+    width:min(76vw,280px)!important;
+    min-width:0!important;
+    max-width:280px!important;
+    height:min(76vw,280px)!important;
+    min-height:0!important;
+    aspect-ratio:1/1!important;
+    margin-inline:auto!important;
+    padding:clamp(22px,6vw,32px)!important;
+    border-radius:50%!important;
+    box-sizing:border-box!important;
+    container-type:inline-size!important;
+  }
+
+  /* YANOLJA 03.1 — six color families read as a compact 2-column palette. */
+  html body.yanolja-system-page #journey .yanolja-palette{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:26px 12px!important;
+    align-items:start!important;
+  }
+
+  /* TRENBE 02.1 — value labels sit directly above and centered on each bar. */
+  html body.trenbe-ut-page #data .trenbe-age-bar b{
+    left:50%!important;
+    right:auto!important;
+    bottom:calc(var(--value) * 11px + 6px)!important;
+    transform:translateX(-50%)!important;
+    width:max-content!important;
+    max-width:none!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+  }
+}
