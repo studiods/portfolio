@@ -79,12 +79,26 @@ html body .top .top-center a[aria-current="page"]::after{right:0!important}
 html body.portfolio-progress-page>.top{z-index:2147483646!important}
 
 @media(max-width:850px){
-  html body .top{padding:17px 18px!important}
-  html body .top .top-center{
-    gap:22px!important;
-    max-width:calc(100vw - 36px)!important;
+  html body .top{
+    box-sizing:border-box!important;
+    width:100vw!important;
+    padding:0!important;
   }
-  html body .top .top-center a{font-size:11px!important}
+  html body .top .top-center{
+    position:absolute!important;
+    left:50%!important;
+    right:auto!important;
+    top:17px!important;
+    grid-column:auto!important;
+    justify-self:auto!important;
+    align-self:auto!important;
+    width:max-content!important;
+    max-width:calc(100vw - 36px)!important;
+    gap:22px!important;
+    transform:translateX(-50%)!important;
+  }
+  /* Keep the established mobile GNB type size; only centering authority changes. */
+  html body .top .top-center a{font-size:12px!important}
 }
 
 /* 2026-09-09 — REUSE 02.2 copy transition.
