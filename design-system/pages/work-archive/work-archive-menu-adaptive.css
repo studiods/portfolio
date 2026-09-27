@@ -179,3 +179,85 @@ html body.work-archive-page .wa-switcher__menu{
     max-width:none!important;
   }
 }
+
+
+/* WORK ARCHIVE mobile hamburger handoff.
+   Mobile keeps the hero-scale title only at page start. Any scroll switches immediately
+   to a fixed top-right three-line trigger; the existing menu surface/content is unchanged. */
+@media(max-width:780px){
+  html body.work-archive-page.wa-title-compact .wa-switcher{
+    position:fixed!important;
+    z-index:2147483647!important;
+    top:18px!important;
+    right:18px!important;
+    bottom:auto!important;
+    left:auto!important;
+    width:32px!important;
+    max-width:32px!important;
+    height:32px!important;
+    margin:0!important;
+    transform:none!important;
+    transform-origin:center!important;
+    will-change:auto!important;
+  }
+
+  html body.work-archive-page.wa-title-compact .wa-switcher__toggle{
+    position:relative!important;
+    display:block!important;
+    width:32px!important;
+    min-width:32px!important;
+    height:32px!important;
+    min-height:32px!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    color:var(--wa-menu-fg)!important;
+    background:transparent!important;
+    font-size:0!important;
+    line-height:0!important;
+    letter-spacing:0!important;
+    overflow:visible!important;
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    -webkit-tap-highlight-color:transparent!important;
+  }
+
+  html body.work-archive-page.wa-title-compact .wa-switcher__toggle::after{
+    content:""!important;
+    position:absolute!important;
+    top:7px!important;
+    right:6px!important;
+    bottom:auto!important;
+    left:6px!important;
+    display:block!important;
+    width:20px!important;
+    height:1px!important;
+    border:0!important;
+    background:currentColor!important;
+    box-shadow:0 8px 0 currentColor,0 16px 0 currentColor!important;
+    opacity:.82!important;
+    visibility:visible!important;
+    transform:none!important;
+    pointer-events:none!important;
+  }
+
+  html body.work-archive-page.wa-title-compact .wa-switcher__period{
+    display:none!important;
+    opacity:0!important;
+    visibility:hidden!important;
+  }
+
+  html body.work-archive-page.wa-title-compact .wa-switcher__menu{
+    position:fixed!important;
+    z-index:2147483646!important;
+    top:58px!important;
+    right:18px!important;
+    bottom:auto!important;
+    left:auto!important;
+    width:calc(100vw - 36px)!important;
+    max-width:none!important;
+    max-height:calc(100svh - 76px)!important;
+    margin:0!important;
+    padding:10px 12px 14px!important;
+  }
+}
