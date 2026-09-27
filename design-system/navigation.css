@@ -27,14 +27,25 @@ html body .top{
 }
 html body .top>*{pointer-events:auto!important}
 html body .top .top-center{
+  position:static!important;
+  grid-column:2!important;
+  justify-self:center!important;
+  align-self:start!important;
   display:flex!important;
   align-items:flex-start!important;
   justify-content:center!important;
   gap:26px!important;
+  width:max-content!important;
+  max-width:calc(100vw - 36px)!important;
   margin:0!important;
   padding:0!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  transform:none!important;
+  white-space:nowrap!important;
 }
-html body .top a{
+html body .top .top-center a{
   position:relative!important;
   display:inline-block!important;
   color:#fff!important;
@@ -47,7 +58,7 @@ html body .top a{
   text-transform:none!important;
   opacity:1!important;
 }
-html body .top a::after{
+html body .top .top-center a::after{
   content:""!important;
   position:absolute!important;
   right:100%!important;
@@ -57,26 +68,23 @@ html body .top a::after{
   background:currentColor!important;
   transition:right .3s!important;
 }
-html body .top a:hover::after,
-html body .top a[aria-current="page"]::after{right:0!important}
+html body .top .top-center a:hover::after,
+html body .top .top-center a[aria-current="page"]::after{right:0!important}
 
 /*
-  Detail-page centering lock.
-  Do NOT put grid-column on the generic .top-center: HOME keeps its legacy absolute centering contract.
-  navigation.js assigns .portfolio-progress-page only to WORKS and project detail pages.
+  One global centering contract.
+  HOME / ABOUT / WORKS / CONTACT and every project page use the same .top > .top-center
+  grid placement above. portfolio-progress-page only raises stacking for chapter navigation.
 */
 html body.portfolio-progress-page>.top{z-index:2147483646!important}
-html body.portfolio-progress-page>.top .top-center{
-  position:static!important;
-  grid-column:2!important;
-  justify-self:center!important;
-  transform:none!important;
-}
 
 @media(max-width:850px){
   html body .top{padding:17px 18px!important}
-  html body .top .top-center{gap:22px!important}
-  html body .top a{font-size:11px!important}
+  html body .top .top-center{
+    gap:22px!important;
+    max-width:calc(100vw - 36px)!important;
+  }
+  html body .top .top-center a{font-size:11px!important}
 }
 
 /* 2026-09-09 — REUSE 02.2 copy transition.
