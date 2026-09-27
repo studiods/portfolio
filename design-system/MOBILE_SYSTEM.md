@@ -1,4 +1,4 @@
-# Portfolio Mobile Design System v2.4
+# Portfolio Mobile Design System v2.5
 
 적용 기준: 포트폴리오 전체의 모바일(`max-width: 780px`). PC 규칙과 Desktop DOM/타입/레이아웃은 변경하지 않습니다.
 
@@ -29,6 +29,8 @@
 - 기본 좌우 inset: `18px`
 - Major section spacing은 공통 section token을 유지합니다.
 - 긴 데이터 그래프는 원본 비율을 유지하고 필요한 경우에만 내부 horizontal pan을 허용합니다.
+- Yanolja 03.1 color family palette는 모바일에서 2열로 배열합니다.
+- Trenbe 02.1 age bar의 percentage label은 각 막대 상단 중앙에 직접 연결되도록 배치합니다.
 
 ## Circular flow / tablet / capsule rule
 
@@ -39,6 +41,8 @@
 - 원형 기준 크기는 `--hm-mobile-circle-size`를 사용합니다.
 - 원형 내부 number/title/body는 viewport가 아니라 원형 자체의 container width(`cqi`)를 기준으로 비례 축소합니다.
 - 공통 대상에는 Himart Journey, Reuse confidence/proof circles, AIMMO ownership/repeat flow, StepUp reframe/habit flow가 포함됩니다.
+- Reuse 02.1 proof map은 상·하 원형을 별도 묶음으로 쌓지 않고 `불안 원형 → 아래 화살표 → 매칭 해결 원형`을 하나의 pair로 읽히게 순서를 재구성합니다.
+- Yanolja의 question/direction/goal 원형은 모바일에서도 `aspect-ratio:1/1`을 유지하며 높이 기반 카드로 변형하지 않습니다.
 - 좌우 화살표는 모바일에서 아래 방향을 향하도록 세로 방향으로 전환합니다.
 - tablet/capsule 내부 node도 세로로 쌓습니다.
 - tablet/capsule의 설명 label은 border 중앙이나 좌우가 아니라 항상 capsule의 맨 위 중앙에 배치합니다.
@@ -58,6 +62,8 @@
 - Desktop에서는 기존 overlay composition을 그대로 유지합니다.
 - 모바일 media 높이는 각 source image의 실제 비율을 유지합니다.
 - gallery navigation arrow와 status는 media 영역 안에서만 렌더링합니다.
+- active slide가 바뀌면 하단 copy도 해당 slide의 `pageCaption`으로 함께 교체하며 프로젝트 전체 설명을 모든 이미지에 반복하지 않습니다.
+- 모바일에서는 Hero의 WORK ARCHIVE title이 스크롤 시작과 동시에 사라지고, 우측 상단 고정 3-line hamburger trigger로 전환됩니다. 기존 menu surface와 project list는 유지합니다.
 - source raster에 포함된 텍스트를 보완하기 위해 project description이 존재하면 모바일 하단 copy 영역에서 사용할 수 있습니다. PC overlay 정책은 유지합니다.
 
 ### Reuse / shared galleries
@@ -102,3 +108,7 @@
 6. circle text가 작은 화면에서 cqi 기준으로 함께 축소되는지
 7. top-level / detail footer가 모두 좌측 정렬과 단어 단위 wrapping을 사용하는지
 8. Desktop 복귀 시 mobile separator가 authored `·` 원문으로 복원되는지
+9. Reuse 02.1이 각 불안/해결 pair 단위로 읽히는지
+10. Work Archive가 모바일 스크롤 즉시 우측 hamburger로 전환되는지
+11. Yanolja 원형이 1:1이고 03.1 palette가 2열인지
+12. Trenbe 02.1 percentage가 각 막대 바로 위 중앙에 있는지
