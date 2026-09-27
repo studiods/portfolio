@@ -114,7 +114,6 @@
             projectIndex,
             displayIndex,
             caption:String(project.desc||'').replace(/\r/g,'').trim(),
-            mobileCaption:String(project.desc||'').replace(/\r/g,'').replace(/\n{2,}/g,' ').trim(),
             note:pageNote(project,imageIndex),
             coreValue:false
           });
@@ -131,7 +130,6 @@
             projectIndex,
             displayIndex,
             caption:pageCaption(project,page),
-            mobileCaption:String(project.desc||'').replace(/\r/g,'').replace(/\n{2,}/g,' ').trim(),
             note:pageNote(project,pageIndex),
             coreValue:project.id==='trenbe-core-value'
           });
