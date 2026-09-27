@@ -1699,3 +1699,85 @@
     top:50%!important;
   }
 }
+
+/* MOBILE PORTFOLIO SYSTEM v2.7 — final editorial type authority.
+   This block intentionally sits last so page-specific mobile rules cannot restore
+   older desktop-like sizes. Canonical scale: body 14 / group 18 / subsection 22 / section 28 / hero 36. */
+@media(max-width:780px){
+  html body.himart-page-body{
+    --hm-type-hero-mobile:36px!important;
+    --hm-type-section-mobile:28px!important;
+    --hm-type-subsection-mobile:22px!important;
+    --hm-type-group-mobile:18px!important;
+    --hm-type-body-mobile:14px!important;
+    --hm-type-note-mobile:10px!important;
+    --hm-type-source-mobile:10px!important;
+  }
+
+  html body.himart-page-body #live-main .hm-section-title{
+    font-size:28px!important;
+    line-height:1.16!important;
+  }
+
+  html body.himart-page-body #live-main :is(
+    .hm-subhead .hm-subtitle,
+    .hm-subhead .forced-redesign-title,
+    .narrative-title,
+    .journey-block-title,
+    .data-bridge-title,
+    .data-card-head h3,
+    .prototype-intro h3,
+    .sentiment-conclusion h4
+  ){
+    font-size:22px!important;
+    line-height:1.22!important;
+  }
+
+  html body.himart-page-body #live-main :is(
+    .hm-group-title,
+    .hm-ds-card__title,
+    .problem-item h4,
+    .proof-item h4,
+    .signal-item h4,
+    .behavior-card h4,
+    .role-card h4,
+    .hm-ds-role__title,
+    .hm-ds-flow__node h4,
+    .direction-card h4,
+    .voice-group-title,
+    .number-panel h4,
+    .sentiment-title,
+    .hm-ds-numbered-list > article > h4,
+    .ax-friction-card h4,
+    .prototype-case-copy h3
+  ){
+    font-size:18px!important;
+    line-height:1.32!important;
+  }
+
+  html body.himart-page-body #live-main :is(
+    .hm-lead,
+    .hm-section-desc,
+    .hm-subcopy,
+    .data-card-head .desc,
+    .narrative-copy,
+    .journey-block-copy,
+    .behavior-note,
+    .role-card p,
+    .hm-ds-card__body,
+    .hm-ds-role__body,
+    .hm-ds-flow__node p,
+    .number-panel p,
+    .proof-item p,
+    .prototype-intro p,
+    .sentiment-conclusion p,
+    .sentiment-keywords,
+    .hm-ds-numbered-list > article > p,
+    .ax-friction-card p,
+    .prototype-case-copy p
+  ){
+    font-size:14px!important;
+    line-height:1.55!important;
+  }
+}
+
