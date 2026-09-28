@@ -15,13 +15,13 @@
 
 @media(max-width:780px){
   /* ---------- MOBILE TYPOGRAPHY TOKENS ----------
-     Canonical scale: body 14 / group 18 / subsection 22 / section 28 / hero 36.
+     Canonical scale: body 14 / group 16 / subsection 20 / section 24 / hero 32.
      These explicit mobile values also protect the system from stale imported token caches. */
   html body.himart-page-body{
-    --hm-type-hero-mobile:36px;
-    --hm-type-section-mobile:28px;
-    --hm-type-subsection-mobile:22px;
-    --hm-type-group-mobile:18px;
+    --hm-type-hero-mobile:32px;
+    --hm-type-section-mobile:24px;
+    --hm-type-subsection-mobile:20px;
+    --hm-type-group-mobile:16px;
     --hm-type-body-mobile:14px;
     --hm-type-note-mobile:10px;
     --hm-type-source-mobile:10px;
@@ -807,10 +807,10 @@
 
   /* ---------- HOMEPAGE / WORKS / ABOUT MOBILE TYPE CONTRACT ---------- */
   body.works-page-body .works-page-title{
-    font-size:var(--hm-type-section-mobile,28px)!important;
+    font-size:var(--hm-type-section-mobile,24px)!important;
   }
   body.works-page-body .works-card-title{
-    font-size:var(--hm-type-section-mobile,28px)!important;
+    font-size:var(--hm-type-section-mobile,24px)!important;
     line-height:1.12!important;
   }
   body.works-page-body .works-card-company{
@@ -818,11 +818,11 @@
   }
 
   body.about-page-body :is(.about-hero-title,.about-statement){
-    font-size:clamp(30px,8vw,36px)!important;
+    font-size:clamp(26px,8vw,var(--hm-type-hero-mobile))!important;
     line-height:1.12!important;
   }
   body.about-page-body :is(.principle-title,.interview-q,.leadership-card-title){
-    font-size:var(--hm-type-group-mobile,18px)!important;
+    font-size:var(--hm-type-group-mobile,16px)!important;
     line-height:1.3!important;
   }
   body.about-page-body :is(.about-lead,.principle-copy,.interview-a,.leadership-card-copy){
@@ -960,13 +960,13 @@
 
 /* MOBILE PORTFOLIO SYSTEM v2.4 — canonical self-contained mobile token bridge.
    This :root bridge is the final authority for HOME / ABOUT / WORKS as well as
-   detail pages, so it must match the 14 / 18 / 22 / 28 / 36 mobile scale above. */
+   detail pages, so it must match the 14 / 16 / 20 / 24 / 32 mobile scale above. */
 @media(max-width:780px){
   :root{
-    --hm-type-hero-mobile:36px;
-    --hm-type-section-mobile:28px;
-    --hm-type-subsection-mobile:22px;
-    --hm-type-group-mobile:18px;
+    --hm-type-hero-mobile:32px;
+    --hm-type-section-mobile:24px;
+    --hm-type-subsection-mobile:20px;
+    --hm-type-group-mobile:16px;
     --hm-type-body-mobile:14px;
     --hm-type-note-mobile:10px;
     --hm-type-source-mobile:10px;
@@ -1702,20 +1702,20 @@
 
 /* MOBILE PORTFOLIO SYSTEM v2.7 — final editorial type authority.
    This block intentionally sits last so page-specific mobile rules cannot restore
-   older desktop-like sizes. Canonical scale: body 14 / group 18 / subsection 22 / section 28 / hero 36. */
+   older desktop-like sizes. Canonical scale: body 14 / group 16 / subsection 20 / section 24 / hero 32. */
 @media(max-width:780px){
   html body.himart-page-body{
-    --hm-type-hero-mobile:36px!important;
-    --hm-type-section-mobile:28px!important;
-    --hm-type-subsection-mobile:22px!important;
-    --hm-type-group-mobile:18px!important;
+    --hm-type-hero-mobile:32px!important;
+    --hm-type-section-mobile:24px!important;
+    --hm-type-subsection-mobile:20px!important;
+    --hm-type-group-mobile:16px!important;
     --hm-type-body-mobile:14px!important;
     --hm-type-note-mobile:10px!important;
     --hm-type-source-mobile:10px!important;
   }
 
   html body.himart-page-body #live-main .hm-section-title{
-    font-size:28px!important;
+    font-size:var(--hm-type-section-mobile)!important;
     line-height:1.16!important;
   }
 
@@ -1729,7 +1729,7 @@
     .prototype-intro h3,
     .sentiment-conclusion h4
   ){
-    font-size:22px!important;
+    font-size:var(--hm-type-subsection-mobile)!important;
     line-height:1.22!important;
   }
 
@@ -1751,7 +1751,7 @@
     .ax-friction-card h4,
     .prototype-case-copy h3
   ){
-    font-size:18px!important;
+    font-size:var(--hm-type-group-mobile)!important;
     line-height:1.32!important;
   }
 
@@ -1789,26 +1789,26 @@
    fall back to desktop title sizes. */
 @media(max-width:850px){
   :root{
-    --hm-type-hero-mobile:36px!important;
-    --hm-type-section-mobile:28px!important;
-    --hm-type-subsection-mobile:22px!important;
-    --hm-type-group-mobile:18px!important;
+    --hm-type-hero-mobile:32px!important;
+    --hm-type-section-mobile:24px!important;
+    --hm-type-subsection-mobile:20px!important;
+    --hm-type-group-mobile:16px!important;
     --hm-type-body-mobile:14px!important;
     --hm-type-note-mobile:10px!important;
     --hm-type-source-mobile:10px!important;
   }
   html body.himart-page-body{
-    --hm-type-hero-mobile:36px!important;
-    --hm-type-section-mobile:28px!important;
-    --hm-type-subsection-mobile:22px!important;
-    --hm-type-group-mobile:18px!important;
+    --hm-type-hero-mobile:32px!important;
+    --hm-type-section-mobile:24px!important;
+    --hm-type-subsection-mobile:20px!important;
+    --hm-type-group-mobile:16px!important;
     --hm-type-body-mobile:14px!important;
     --hm-type-note-mobile:10px!important;
     --hm-type-source-mobile:10px!important;
   }
 
   html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
-    font-size:28px!important;
+    font-size:var(--hm-type-section-mobile)!important;
     line-height:1.16!important;
   }
 
@@ -1822,7 +1822,7 @@
     .prototype-intro h3,
     .sentiment-conclusion h4
   ){
-    font-size:22px!important;
+    font-size:var(--hm-type-subsection-mobile)!important;
     line-height:1.22!important;
   }
 
@@ -1843,7 +1843,7 @@
     .ax-friction-card h4,
     .prototype-case-copy h3
   ){
-    font-size:18px!important;
+    font-size:var(--hm-type-group-mobile)!important;
     line-height:1.32!important;
   }
 
@@ -1884,5 +1884,55 @@
   html body.himart-page-body #live-main .hm-ds-index-label[data-index]::before{
     font-size:10px!important;
     line-height:1.2!important;
+  }
+}
+
+/* Shared 781–850px title/body coverage and final mobile hierarchy.
+   Display numerals and the kinetic Home hero retain their separate visual scale. */
+@media(max-width:850px){
+  html body.himart-page-body #live-main :is(.hm-title,.hm-ds-hero__title){
+    font-size:var(--hm-type-hero-mobile)!important;
+  }
+  html body.himart-page-body #live-main :is(.hm-section-title,.hm-ds-section__title){
+    font-size:var(--hm-type-section-mobile)!important;
+  }
+  html body.himart-page-body #live-main :is(
+    .hm-subtitle,.hm-ds-subsection__title,.narrative-title,.journey-block-title,
+    .data-card-head h3,.prototype-intro h3,.sentiment-conclusion h4,
+    .forced-redesign-title,.data-bridge-title
+  ){
+    font-size:var(--hm-type-subsection-mobile)!important;
+  }
+  html body.himart-page-body #live-main :is(
+    .hm-group-title,.hm-ds-card__title,.problem-item h4,.proof-item h4,
+    .signal-item h4,.behavior-card h4,.behavior-pattern-card h4,.role-card h4,
+    .hm-ds-role__title,.hm-ds-flow__node h4,.direction-card h4,
+    .principle-item h4,.design-rule h4,.number-panel h4,.voice-group-title,
+    .ways-operating-stack h4,.ax-maker-step h4,.yanolja-lead-step strong,
+    .aimmo-company-signals h4,.ax-friction-card h4,.prototype-case-copy h3
+  ){
+    font-size:var(--hm-type-group-mobile)!important;
+  }
+  html body.himart-page-body #live-main :is(
+    .hm-lead,.hm-section-desc,.hm-subcopy,.narrative-copy,.journey-block-copy,
+    .behavior-note,.behavior-pattern-card p,.role-card p,.direction-card p,
+    .principle-item p,.design-rule p,.number-panel p,.proof-item p,
+    .ways-operating-stack p,.ax-maker-step p,.yanolja-lead-step p,
+    .aimmo-company-signals p,.ax-friction-card p,.prototype-case-copy p
+  ){
+    font-size:var(--hm-type-body-mobile)!important;
+  }
+  html body.works-page-body :is(.works-page-title,.works-card-title){
+    font-size:var(--hm-type-section-mobile)!important;
+  }
+  html body.about-page-body :is(.about-hero-title,.about-statement){
+    font-size:clamp(26px,8vw,var(--hm-type-hero-mobile))!important;
+  }
+  html body.about-page-body :is(.principle-title,.interview-q,.leadership-card-title){
+    font-size:var(--hm-type-group-mobile)!important;
+  }
+  html body.about-page-body :is(.about-lead,.principle-copy,.interview-a,.leadership-card-copy),
+  html body.home-page :is(.impact-copy,.subtractive-korean,.hero-identity){
+    font-size:var(--hm-type-body-mobile)!important;
   }
 }
