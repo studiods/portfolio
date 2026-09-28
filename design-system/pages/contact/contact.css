@@ -192,41 +192,71 @@ body.contact-page-body .contact-footer a:focus-visible{
   body.contact-page-body{
     --contact-left-column:1fr;
     --contact-right-column:1fr;
+    min-height:100svh;
   }
+
+  /* Mobile Contact owns a vertical flow.
+     The desktop composition centers both the title and details at 50vh, which
+     makes CONTACT collide with the LinkedIn row on narrow screens. Keep the
+     title in the upper field and let details/footer participate in normal flow. */
   body.contact-page-body .works-hero{
+    position:absolute;
+    inset:0;
+    height:auto;
     min-height:0;
   }
   body.contact-page-body .works-page-title{
+    top:clamp(112px,18svh,156px)!important;
     left:var(--hm-inset-mobile)!important;
+    font-size:clamp(48px,13vw,64px)!important;
+    line-height:.9!important;
+    transform:none!important;
+    transform-origin:left top!important;
   }
   body.contact-page-body .contact-content{
-    grid-template-columns:1fr;
-    min-height:100vh;
+    display:block;
+    min-height:0;
+    padding:clamp(244px,34svh,304px) 0 72px;
   }
   body.contact-page-body .contact-spacer{
     display:none;
   }
   body.contact-page-body .contact-details{
-    position:absolute;
-    left:0;
-    right:0;
-    top:50%;
+    position:relative;
+    inset:auto;
+    top:auto;
     padding:0 var(--hm-inset-mobile);
-    transform:translateY(-50%);
+    transform:none;
   }
   body.contact-page-body .contact-row{
     grid-template-columns:1fr;
-    gap:12px;
-    height:75.6px;
-    margin-left:0;
+    gap:8px;
+    height:auto;
+    min-height:0;
+    margin:0 0 30px;
     padding:0;
+  }
+  body.contact-page-body .contact-row:last-child{
+    margin-bottom:0;
+  }
+  body.contact-page-body .contact-label{
+    width:auto;
   }
   body.contact-page-body .contact-value,
   body.contact-page-body .contact-value a{
     font-size:16px;
+    line-height:1.3;
     overflow-wrap:anywhere;
   }
+
+  /* A fixed footer can cover the lower contact rows on short mobile viewports.
+     Mobile therefore uses document flow while preserving the shared footer style. */
   body.contact-page-body .contact-footer{
+    position:relative;
+    z-index:2;
+    left:auto;
+    right:auto;
+    bottom:auto;
     flex-direction:column;
     padding:40px var(--hm-inset-mobile) 48px;
   }
