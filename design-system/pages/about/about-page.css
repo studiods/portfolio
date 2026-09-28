@@ -26,29 +26,6 @@ body{
 
 a{color:inherit;text-decoration:none}
 
-.top{
-  position:fixed;
-  left:0; right:0; top:0;
-  z-index:40;
-  padding:18px var(--pad);
-  pointer-events:none;
-  color:var(--fg);
-  mix-blend-mode:normal;
-}
-.top-center{
-  display:flex;
-  justify-content:center;
-  gap:clamp(24px,2.8vw,44px);
-  pointer-events:auto;
-}
-.top-center a{
-  display:inline-block;
-  font:400 15px/1.1 var(--en);
-  color:rgba(244,242,237,.9);
-  text-transform:lowercase !important;
-}
-.top-center a::first-letter{text-transform:uppercase !important}
-
 .about-page{width:100%}
 .about-stack,
 .about-section,
@@ -316,8 +293,6 @@ a{color:inherit;text-decoration:none}
 
 @media (max-width:980px){
   :root{--pad:clamp(18px,4.4vw,24px);--gap:clamp(20px,5vw,28px)}
-  .top{padding:16px var(--pad)}
-  .top-center a{font-size:14px}
   .about-hero-v2,
   .about-section{grid-template-columns:1fr;row-gap:22px}
   .about-hero-main,
