@@ -97,7 +97,7 @@ html body.portfolio-progress-page>.top{z-index:2147483646!important}
   }
   html body .top .top-center{
     position:fixed!important;
-    left:50vw!important;
+    left:var(--portfolio-gnb-center-x,50vw)!important;
     right:auto!important;
     top:17px!important;
     bottom:auto!important;
