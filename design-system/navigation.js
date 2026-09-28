@@ -109,65 +109,6 @@
     );
   };
 
-  const mountMobileNavigationCenter = () => {
-    if (window.__portfolioMobileNavCenterMounted) {
-      window.__portfolioSyncMobileNavCenter?.();
-      return;
-    }
-    window.__portfolioMobileNavCenterMounted = true;
-
-    const mobileQuery = window.matchMedia('(max-width:850px)');
-    let raf = 0;
-
-    const sync = () => {
-      raf = 0;
-      const nav = document.querySelector('body > .top .top-center');
-      if (!nav) return;
-
-      if (!mobileQuery.matches) {
-        document.documentElement.style.removeProperty('--portfolio-gnb-center-x');
-        nav.removeAttribute('data-gnb-centered');
-        return;
-      }
-
-      const viewport = window.visualViewport;
-      const viewportCenter = viewport
-        ? viewport.offsetLeft + viewport.width / 2
-        : window.innerWidth / 2;
-
-      document.documentElement.style.setProperty(
-        '--portfolio-gnb-center-x',
-        viewportCenter.toFixed(3) + 'px'
-      );
-
-      const rect = nav.getBoundingClientRect();
-      const renderedCenter = rect.left + rect.width / 2;
-      const delta = viewportCenter - renderedCenter;
-
-      if (Math.abs(delta) > 0.5) {
-        document.documentElement.style.setProperty(
-          '--portfolio-gnb-center-x',
-          (viewportCenter + delta).toFixed(3) + 'px'
-        );
-      }
-
-      nav.setAttribute('data-gnb-centered', Math.abs(delta) <= 1 ? '1' : '0');
-    };
-
-    const requestSync = () => {
-      if (!raf) raf = requestAnimationFrame(sync);
-    };
-
-    window.__portfolioSyncMobileNavCenter = requestSync;
-    window.addEventListener('resize', requestSync, {passive:true});
-    window.addEventListener('orientationchange', requestSync, {passive:true});
-    mobileQuery.addEventListener?.('change', requestSync);
-    window.visualViewport?.addEventListener('resize', requestSync, {passive:true});
-    window.visualViewport?.addEventListener('scroll', requestSync, {passive:true});
-    document.fonts?.ready?.then(requestSync).catch(() => {});
-
-    requestSync();
-  };
 
   const progressTargets = () => {
     if (!document.body.classList.contains('portfolio-progress-page')) return [];
@@ -336,7 +277,6 @@
     const active = currentPage();
     mountYanoljaHeroVideo();
     mountNavigation(active);
-    mountMobileNavigationCenter();
     if (active === 'works') mountProgress();
     mountReuseCondensedCopy();
     mountSourceNotes();
