@@ -4,10 +4,6 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
 a{color:inherit;text-decoration:none}
 .shell{padding:0 var(--pad)}
-.top{position:fixed;z-index:30;top:0;left:0;right:0;height:52px;pointer-events:none}
-.top-center{position:absolute;left:50%;top:18px;transform:translateX(-50%);display:flex;gap:30px;pointer-events:auto;white-space:nowrap}
-.top a,.mini-label,.showcase-meta,.footer,.footer *,.case-kicker,.case-meta,.case-section>.label,.section-top,.timeline-row{font-family:'Averta PE',sans-serif;font-weight:400!important}
-.top a{font-size:13px}
 .mini-label{font-size:13px;line-height:1.2;margin:0 0 28px;text-transform:none}
 .light-ui{color:#8c8c8c}
 
@@ -97,7 +93,7 @@ a{color:inherit;text-decoration:none}
 .footer,.footer *{font-weight:400!important}
 .foot-name{display:none!important}
 
-@media(max-width:850px){.top-center{top:18px}
+@media(max-width:850px){
 .hero-sequence{height:185vh}
 .hero-sticky{padding:78px var(--pad) 26px}
 .hero-state{inset:78px var(--pad) 40px}
