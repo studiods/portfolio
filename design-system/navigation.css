@@ -79,22 +79,25 @@ html body .top .top-center a[aria-current="page"]::after{right:0!important}
 html body.portfolio-progress-page>.top{z-index:2147483646!important}
 
 @media(max-width:850px){
+  /* Mobile GNB has one geometry owner: the full viewport-width .top flex row.
+     No page-level grid/absolute/translate centering is allowed on mobile. */
   html body .top{
     position:fixed!important;
     inset:0 0 auto 0!important;
-    display:block!important;
+    display:flex!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
     box-sizing:border-box!important;
-    width:100%!important;
+    width:100vw!important;
+    max-width:none!important;
     height:52px!important;
     margin:0!important;
-    padding:0!important;
+    padding:17px 0 0!important;
     transform:none!important;
   }
   html body .top .top-center{
-    position:fixed!important;
-    left:50vw!important;
-    right:auto!important;
-    top:17px!important;
+    position:static!important;
+    inset:auto!important;
     grid-column:auto!important;
     justify-self:auto!important;
     align-self:auto!important;
@@ -106,10 +109,10 @@ html body.portfolio-progress-page>.top{z-index:2147483646!important}
     margin:0!important;
     padding:0!important;
     gap:22px!important;
-    transform:translate3d(-50%,0,0)!important;
+    transform:none!important;
     white-space:nowrap!important;
   }
-  /* Mobile GNB type remains unchanged; only the centering contract is replaced. */
+  /* Keep the established GNB typography unchanged. */
   html body .top .top-center a{
     font-size:12px!important;
     line-height:1.25!important;
