@@ -1781,3 +1781,84 @@
   }
 }
 
+
+
+/* MOBILE PORTFOLIO SYSTEM v2.8 — high-specificity editorial type lock.
+   Some Himart production/tuning selectors carry multiple body classes + section IDs
+   with !important desktop sizes. Match/exceed that specificity so the canonical
+   14 / 18 / 22 / 28 scale actually wins on mobile. */
+@media(max-width:780px){
+  html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
+    font-size:28px!important;
+    line-height:1.16!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main :is(#brand,#data,#journey,#direction) :is(
+    .hm-subtitle,
+    .forced-redesign-title,
+    .narrative-title,
+    .journey-block-title,
+    .data-bridge-title,
+    .data-card-head h3,
+    .prototype-intro h3,
+    .sentiment-conclusion h4
+  ){
+    font-size:22px!important;
+    line-height:1.22!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main :is(#brand,#data,#journey,#direction) :is(
+    .hm-group-title,
+    .hm-ds-card__title,
+    .problem-item h4,
+    .proof-item h4,
+    .signal-item h4,
+    .behavior-card h4,
+    .behavior-pattern-card h4,
+    .role-card h4,
+    .direction-card h4,
+    .himart-brand-metric-card h4,
+    .himart-data-metric-card h4,
+    .voice-group-title,
+    .number-panel h4,
+    .ax-friction-card h4,
+    .prototype-case-copy h3
+  ){
+    font-size:18px!important;
+    line-height:1.32!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main :is(#brand,#data,#journey,#direction) :is(
+    .hm-lead,
+    .hm-section-desc,
+    .hm-subcopy,
+    .narrative-copy,
+    .journey-block-copy,
+    .behavior-note,
+    .behavior-pattern-card p,
+    .role-card p,
+    .direction-card p,
+    .number-panel p,
+    .proof-item p,
+    .prototype-intro p,
+    .ax-friction-card p,
+    .prototype-case-copy p
+  ){
+    font-size:14px!important;
+    line-height:1.55!important;
+  }
+
+  html body.himart-page-body.hm-wide-editorial #live-main :is(#brand,#data,#journey,#direction) :is(
+    .hm-section-no,
+    .hm-subno,
+    .hm-card-no,
+    .hm-roman-no,
+    .hm-note,
+    .metric-label,
+    .proof-label,
+    .flow-label,
+    .himart-brand-metric-card__index
+  ){
+    font-size:10px!important;
+  }
+}
