@@ -449,9 +449,6 @@
 @media(max-width:850px){
   :root{--pad:clamp(18px,5vw,24px);--gap:clamp(18px,5vw,28px)}
   body{overflow-x:hidden}
-  .top{height:50px}
-  .top-center{top:17px;gap:clamp(20px,7vw,30px)}
-
   .hero-sequence{
     height:538.10vh!important;
     margin-top:-107.335vh!important;
@@ -526,7 +523,6 @@
 }
 
 @media(max-width:480px){
-  .top a{font-size:12px}
   .hero-sequence{
     height:526.75vh!important;
     margin-top:-104.554vh!important;
