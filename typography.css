@@ -13,4 +13,3 @@ body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-family:inherit
 b,strong,.bold{font-weight:700}
 
 /* Global GNB follows the Home reference on every page. */
-.top .top-center a{font-family:'Averta PE',sans-serif!important;font-weight:400!important;font-size:12px!important;line-height:1.25!important;letter-spacing:normal!important;text-transform:none!important}
