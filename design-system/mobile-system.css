@@ -15,10 +15,10 @@
 
 @media(max-width:780px){
   /* ---------- MOBILE TYPOGRAPHY TOKENS ----------
-     Canonical scale: body 14 / group 16 / subsection 20 / section 24 / hero 32.
+     Canonical scale: body 14 / group 16 / subsection 20 / section 24 / hero 28.
      These explicit mobile values also protect the system from stale imported token caches. */
   html body.himart-page-body{
-    --hm-type-hero-mobile:32px;
+    --hm-type-hero-mobile:28px;
     --hm-type-section-mobile:24px;
     --hm-type-subsection-mobile:20px;
     --hm-type-group-mobile:16px;
@@ -818,7 +818,7 @@
   }
 
   body.about-page-body :is(.about-hero-title,.about-statement){
-    font-size:clamp(26px,8vw,var(--hm-type-hero-mobile))!important;
+    font-size:var(--hm-type-hero-mobile)!important;
     line-height:1.12!important;
   }
   body.about-page-body :is(.principle-title,.interview-q,.leadership-card-title){
@@ -960,10 +960,10 @@
 
 /* MOBILE PORTFOLIO SYSTEM v2.4 — canonical self-contained mobile token bridge.
    This :root bridge is the final authority for HOME / ABOUT / WORKS as well as
-   detail pages, so it must match the 14 / 16 / 20 / 24 / 32 mobile scale above. */
+   detail pages, so it must match the 14 / 16 / 20 / 24 / 28 mobile scale above. */
 @media(max-width:780px){
   :root{
-    --hm-type-hero-mobile:32px;
+    --hm-type-hero-mobile:28px;
     --hm-type-section-mobile:24px;
     --hm-type-subsection-mobile:20px;
     --hm-type-group-mobile:16px;
@@ -1702,10 +1702,10 @@
 
 /* MOBILE PORTFOLIO SYSTEM v2.7 — final editorial type authority.
    This block intentionally sits last so page-specific mobile rules cannot restore
-   older desktop-like sizes. Canonical scale: body 14 / group 16 / subsection 20 / section 24 / hero 32. */
+   older desktop-like sizes. Canonical scale: body 14 / group 16 / subsection 20 / section 24 / hero 28. */
 @media(max-width:780px){
   html body.himart-page-body{
-    --hm-type-hero-mobile:32px!important;
+    --hm-type-hero-mobile:28px!important;
     --hm-type-section-mobile:24px!important;
     --hm-type-subsection-mobile:20px!important;
     --hm-type-group-mobile:16px!important;
@@ -1789,7 +1789,7 @@
    fall back to desktop title sizes. */
 @media(max-width:850px){
   :root{
-    --hm-type-hero-mobile:32px!important;
+    --hm-type-hero-mobile:28px!important;
     --hm-type-section-mobile:24px!important;
     --hm-type-subsection-mobile:20px!important;
     --hm-type-group-mobile:16px!important;
@@ -1798,7 +1798,7 @@
     --hm-type-source-mobile:10px!important;
   }
   html body.himart-page-body{
-    --hm-type-hero-mobile:32px!important;
+    --hm-type-hero-mobile:28px!important;
     --hm-type-section-mobile:24px!important;
     --hm-type-subsection-mobile:20px!important;
     --hm-type-group-mobile:16px!important;
@@ -1926,7 +1926,7 @@
     font-size:var(--hm-type-section-mobile)!important;
   }
   html body.about-page-body :is(.about-hero-title,.about-statement){
-    font-size:clamp(26px,8vw,var(--hm-type-hero-mobile))!important;
+    font-size:var(--hm-type-hero-mobile)!important;
   }
   html body.about-page-body :is(.principle-title,.interview-q,.leadership-card-title){
     font-size:var(--hm-type-group-mobile)!important;

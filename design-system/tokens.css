@@ -87,7 +87,7 @@
   /* Canonical mobile editorial hierarchy.
      Body 14px is the baseline; every title tier uses an even-numbered step so
      chapter / subsection / group levels stay distinct without desktop-scale type. */
-  --hm-type-hero-mobile:32px;
+  --hm-type-hero-mobile:28px;
   --hm-type-section-mobile:24px;
   --hm-type-subsection-mobile:20px;
   --hm-type-group-mobile:16px;
