@@ -1783,11 +1783,30 @@
 
 
 
-/* MOBILE PORTFOLIO SYSTEM v2.8 — high-specificity editorial type lock.
-   Some Himart production/tuning selectors carry multiple body classes + section IDs
-   with !important desktop sizes. Match/exceed that specificity so the canonical
-   14 / 18 / 22 / 28 scale actually wins on mobile. */
-@media(max-width:780px){
+/* MOBILE PORTFOLIO SYSTEM v2.9 — final high-specificity editorial type lock.
+   850px is the single mobile breakpoint shared with the canonical GNB.
+   The token bridge lives here as the final authority so 781–850px devices cannot
+   fall back to desktop title sizes. */
+@media(max-width:850px){
+  :root{
+    --hm-type-hero-mobile:36px!important;
+    --hm-type-section-mobile:28px!important;
+    --hm-type-subsection-mobile:22px!important;
+    --hm-type-group-mobile:18px!important;
+    --hm-type-body-mobile:14px!important;
+    --hm-type-note-mobile:10px!important;
+    --hm-type-source-mobile:10px!important;
+  }
+  html body.himart-page-body{
+    --hm-type-hero-mobile:36px!important;
+    --hm-type-section-mobile:28px!important;
+    --hm-type-subsection-mobile:22px!important;
+    --hm-type-group-mobile:18px!important;
+    --hm-type-body-mobile:14px!important;
+    --hm-type-note-mobile:10px!important;
+    --hm-type-source-mobile:10px!important;
+  }
+
   html body.himart-page-body.hm-wide-editorial #live-main > :is(#brand,#data,#journey,#direction).hm-section .hm-section-head .hm-section-title{
     font-size:28px!important;
     line-height:1.16!important;
@@ -1860,5 +1879,10 @@
     .himart-brand-metric-card__index
   ){
     font-size:10px!important;
+  }
+
+  html body.himart-page-body #live-main .hm-ds-index-label[data-index]::before{
+    font-size:10px!important;
+    line-height:1.2!important;
   }
 }
