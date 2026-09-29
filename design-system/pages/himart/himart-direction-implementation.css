@@ -76,11 +76,8 @@ html body.himart-commerce-page #direction .himart-direction-043 .himart-directio
   letter-spacing:var(--hm-track-body)!important;
   word-break:keep-all!important;
 }
-html body.himart-commerce-page #direction .himart-direction-043 .himart-direction-decision__copy + .himart-direction-decision__copy{
-  margin-top:20px!important;
-}
 html body.himart-commerce-page #direction .himart-direction-043 .himart-direction-decision__grid{
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(2,minmax(0,1fr));
   margin-top:40px!important;
 }
 
@@ -293,12 +290,6 @@ html body.himart-page-body.himart-commerce-page #direction .himart-direction-042
   html body.hm-wide-editorial.hm-wide-himart-adapter #live-main > #direction.hm-section .hm-wide-right-rail > :is(.himart-direction-041,.himart-direction-042,.himart-direction-043){
     grid-column:auto!important;
     width:100%!important;
-  }
-}
-
-@media(min-width:781px) and (max-width:1180px){
-  html body.himart-commerce-page #direction .himart-direction-043 .himart-direction-decision__grid{
-    grid-template-columns:1fr!important;
   }
 }
 
