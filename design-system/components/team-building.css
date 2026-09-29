@@ -33,6 +33,9 @@
 .himart-team-page .team-agenda--two-by-two{
   --team-agenda-columns:2;
   --team-agenda-title-color:var(--hm-blue);
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-rows:repeat(2,auto);
+  grid-auto-flow:row;
   row-gap:52px;
 }
 .himart-team-page .team-agenda article{min-width:0;min-height:0;padding:24px 0 28px;border:0;border-top:1px solid var(--hm-line-content-divider,var(--hm-line-weak))}
@@ -164,6 +167,10 @@
 
 @media(max-width:767px){
   .himart-team-page .team-agenda{--team-agenda-columns:1;gap:20px}
+  .himart-team-page .team-agenda--two-by-two{
+    grid-template-columns:1fr;
+    grid-template-rows:none;
+  }
   .himart-team-page .team-agenda article:last-child{grid-column:auto}
   .himart-team-page .team-agenda strong{min-height:0}
   .himart-team-page .team-wow-grid{grid-template-columns:1fr}
