@@ -58,7 +58,7 @@
   --hm-font-en:"Averta PE",Arial,sans-serif;
   --hm-font-en-thin:"Averta PE",Arial,sans-serif;
   --hm-font-en-extralight:"Averta PE ExtraLight","Averta PE",Arial,sans-serif;
-  --hm-font-ko:"Pretendard KO Thin","Averta PE",-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+  --hm-font-ko:Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
 
   /* Desktop type hierarchy: hero / major / middle / group / body / note / source */
   --hm-type-hero:64px;
