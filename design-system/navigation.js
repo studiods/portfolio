@@ -444,3 +444,188 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountProjectEndMatter, {once:true});
   else mountProjectEndMatter();
 })();
+
+
+/* Global realtime visit logger.
+   Loaded by every published portfolio page through navigation.js.
+   Sends dedicated GA4 realtime events and preserves UTM attribution across
+   internal page navigation within the same tab/session. */
+(() => {
+  'use strict';
+
+  if (window.__PORTFOLIO_REALTIME_VISIT_LOGGER__) return;
+  window.__PORTFOLIO_REALTIME_VISIT_LOGGER__ = true;
+
+  const MEASUREMENT_ID = 'G-GSNXK7LY0B';
+  const VISIT_EVENT = 'portfolio_visit_rt';
+  const ENGAGED_EVENT = 'portfolio_engaged_rt';
+  const ATTR_KEY = 'portfolio_rt_attribution_v1';
+  const SESSION_KEY = 'portfolio_rt_session_id_v1';
+
+  const clip = (value, max = 100) => String(value ?? '').slice(0, max);
+
+  const storage = {
+    get(key) {
+      try { return sessionStorage.getItem(key); } catch (_) { return null; }
+    },
+    set(key, value) {
+      try { sessionStorage.setItem(key, value); } catch (_) {}
+    }
+  };
+
+  const randomId = () => {
+    try {
+      if (crypto?.randomUUID) return crypto.randomUUID();
+    } catch (_) {}
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+  };
+
+  const query = new URLSearchParams(location.search);
+  const queryAttribution = {
+    source: query.get('utm_source') || '',
+    medium: query.get('utm_medium') || '',
+    campaign: query.get('utm_campaign') || '',
+    term: query.get('utm_term') || '',
+    content: query.get('utm_content') || ''
+  };
+
+  let attribution = null;
+  const hasQueryAttribution = Object.values(queryAttribution).some(Boolean);
+
+  if (hasQueryAttribution) {
+    attribution = queryAttribution;
+    storage.set(ATTR_KEY, JSON.stringify(attribution));
+  } else {
+    try {
+      attribution = JSON.parse(storage.get(ATTR_KEY) || 'null');
+    } catch (_) {
+      attribution = null;
+    }
+  }
+
+  if (!attribution) {
+    attribution = { source: '', medium: '', campaign: '', term: '', content: '' };
+  }
+
+  let realtimeSessionId = storage.get(SESSION_KEY);
+  if (!realtimeSessionId) {
+    realtimeSessionId = randomId();
+    storage.set(SESSION_KEY, realtimeSessionId);
+  }
+
+  const realtimeVisitId = randomId();
+
+  const getReferrer = () => {
+    if (!document.referrer) return { host: '', path: '' };
+    try {
+      const ref = new URL(document.referrer);
+      return {
+        host: clip(ref.hostname),
+        path: ref.origin === location.origin ? clip(ref.pathname) : ''
+      };
+    } catch (_) {
+      return { host: '', path: '' };
+    }
+  };
+
+  const getNavigationType = () => {
+    try {
+      return performance.getEntriesByType('navigation')[0]?.type || '';
+    } catch (_) {
+      return '';
+    }
+  };
+
+  const referrer = getReferrer();
+  const ownerSelf =
+    attribution.source.toLowerCase() === 'owner' &&
+    attribution.medium.toLowerCase() === 'self';
+
+  const baseParams = {
+    rt_session_id: clip(realtimeSessionId),
+    rt_visit_id: clip(realtimeVisitId),
+    rt_page_path: clip(location.pathname + location.search),
+    rt_page_title: clip(document.title),
+    rt_referrer_host: referrer.host,
+    rt_referrer_path: referrer.path,
+    rt_utm_source: clip(attribution.source),
+    rt_utm_medium: clip(attribution.medium),
+    rt_utm_campaign: clip(attribution.campaign),
+    rt_utm_term: clip(attribution.term),
+    rt_utm_content: clip(attribution.content),
+    rt_owner_self: ownerSelf ? '1' : '0',
+    rt_screen: `${screen.width}x${screen.height}`,
+    rt_viewport: `${innerWidth}x${innerHeight}`,
+    rt_language: clip(navigator.language || ''),
+    rt_navigation_type: clip(getNavigationType()),
+    non_interaction: true,
+    transport_type: 'beacon'
+  };
+
+  const ensureGtag = () => {
+    window.dataLayer = window.dataLayer || [];
+
+    if (typeof window.gtag !== 'function') {
+      window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', MEASUREMENT_ID);
+
+      if (!document.querySelector(`script[src*="googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}"]`)) {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
+        document.head.appendChild(script);
+      }
+    }
+  };
+
+  const emit = (eventName, extra = {}) => {
+    try {
+      ensureGtag();
+      window.gtag('event', eventName, {
+        ...baseParams,
+        ...extra,
+        send_to: MEASUREMENT_ID
+      });
+    } catch (_) {}
+  };
+
+  emit(VISIT_EVENT);
+
+  let engagedSent = false;
+  let visibleMs = 0;
+  let lastTick = performance.now();
+
+  const tick = () => {
+    const now = performance.now();
+
+    if (!document.hidden) {
+      visibleMs += Math.max(0, now - lastTick);
+    }
+
+    lastTick = now;
+
+    if (!engagedSent && visibleMs >= 15000) {
+      engagedSent = true;
+      emit(ENGAGED_EVENT, {
+        rt_visible_seconds: Math.round(visibleMs / 1000)
+      });
+    }
+
+    if (!engagedSent) setTimeout(tick, 1000);
+  };
+
+  document.addEventListener('visibilitychange', () => {
+    lastTick = performance.now();
+  }, { passive: true });
+
+  setTimeout(tick, 1000);
+
+  window.__portfolioRealtimeVisit = Object.freeze({
+    measurementId: MEASUREMENT_ID,
+    sessionId: realtimeSessionId,
+    visitId: realtimeVisitId,
+    ownerSelf,
+    attribution: { ...attribution }
+  });
+})();
