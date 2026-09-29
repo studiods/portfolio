@@ -9,7 +9,7 @@
 @import url("./components/hero-meta-layout.css?v=20260912-2");
 @import url("./components/section.css?v=20260916-4");
 @import url("./components/cards.css?v=20260912-1");
-@import url("./components/team-building.css?v=20260930-7-explicit-two-rows");
+@import url("./components/team-building.css?v=20260930-8-team-card-type");
 @import url("./components/data-viz.css?v=20260909-1");
 @import url("./components/landing-action.css?v=20260909-4");
 @import url("./components/table.css?v=20260907-1");
@@ -33,7 +33,7 @@
 @import url("./components/title-emphasis.css?v=20260914-1");
 @import url("./components/major-section-rhythm.css?v=20260925-7-detail-major-42");
 @import url("./components/gallery-rhythm.css?v=20260912-2");
-@import url("./components/project-end-matter.css?v=20260913-1");
+@import url("./components/project-end-matter.css?v=20260930-2-reflection-align");
 @import url("./components/footer.css?v=20260913-2");
 @import url("./components/graph-color-policy.css?v=20260912-3");
 @import url("./components/graph-color-legend-bridge.css?v=20260912-2");
