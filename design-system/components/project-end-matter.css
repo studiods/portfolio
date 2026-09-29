@@ -4,7 +4,7 @@
    Reflection contract
    - the divider belongs to the editorial canvas, never the full viewport;
    - on wide editorial layouts the divider spans the combined left-title + gap + right-content rails;
-   - PROJECT REFLECTION stays in the LEFT editorial/title rail and is left-aligned;
+   - PROJECT REFLECTION starts on the same RIGHT content rail as case-study content;
    - reflection copy uses roughly half of the viewport width (max 960px) so desktop copy
      wraps at a readable measure and normally stays within four line breaks without clamping;
    - reflection starts 100px below its divider, title-to-copy gap is 20px,
@@ -26,7 +26,16 @@ html body.himart-page-body .hm-project-reflection{
   border-top:0;
   background:#000;
 }
-html body.himart-page-body .hm-project-reflection__inner{box-sizing:border-box;width:min(calc(100% - 80px),var(--hm-container-wide,1360px));margin:0 auto;padding-top:100px;border-top:1px solid var(--hm-line-weak)}
+html body.himart-page-body .hm-project-reflection__inner{
+  box-sizing:border-box;
+  width:min(
+    calc(100% - var(--hm-detail-side-inset,80px) - var(--hm-detail-side-inset,80px)),
+    var(--hm-container-wide,var(--hm-detail-canvas-max,1760px))
+  );
+  margin:0 auto;
+  padding-top:100px;
+  border-top:1px solid var(--hm-line-weak);
+}
 html body.himart-page-body .hm-project-reflection__title{margin:0!important;color:var(--hm-blue)!important;font-family:var(--hm-font-en)!important;font-size:12px!important;font-weight:300!important;line-height:1.2!important;letter-spacing:var(--hm-track-note)!important;text-align:left!important}
 html body.himart-page-body .hm-project-reflection__copy{
   width:var(--hm-project-reflection-copy-measure)!important;
@@ -50,24 +59,39 @@ html body.himart-page-body .hm-project-reflection__copy strong{color:#fff!import
 html body.himart-page-body #live-main > .hm-section:last-of-type{padding-bottom:var(--hm-section-padding-bottom-last,200px)!important}
 
 @media(min-width:1600px){
-  /* PROJECT REFLECTION follows the same wide editorial rails as page content.
-     Both its label and copy begin on the right-content rail, not the left title rail. */
+  /* Use the exact same five-track grid as 01-04.
+     PROJECT REFLECTION and its copy occupy column 4, the canonical right-content rail. */
   html body.himart-page-body.hm-wide-editorial .hm-project-reflection__inner{
-    width:auto;
-    margin-left:var(--hm-wide-edge-track);
-    margin-right:var(--hm-wide-edge-track);
+    position:relative;
+    width:100%;
+    margin:0;
+    padding-top:100px;
+    border-top:0;
     display:grid;
-    grid-template-columns:var(--hm-wide-left-track) var(--hm-wide-gap-track) var(--hm-wide-right-track);
+    grid-template-columns:
+      var(--hm-wide-edge-track)
+      var(--hm-wide-left-track)
+      var(--hm-wide-gap-track)
+      var(--hm-wide-right-track)
+      var(--hm-wide-edge-track);
     column-gap:0;
     align-items:start;
   }
+  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__inner::before{
+    content:"";
+    position:absolute;
+    top:0;
+    right:var(--hm-wide-edge-track);
+    left:var(--hm-wide-edge-track);
+    border-top:1px solid var(--hm-line-weak);
+  }
   html body.himart-page-body.hm-wide-editorial .hm-project-reflection__title{
-    grid-column:3;
+    grid-column:4;
     justify-self:start;
     width:100%;
   }
   html body.himart-page-body.hm-wide-editorial .hm-project-reflection__copy{
-    grid-column:3;
+    grid-column:4;
     justify-self:start;
     width:var(--hm-project-reflection-copy-measure)!important;
     max-width:100%!important;
