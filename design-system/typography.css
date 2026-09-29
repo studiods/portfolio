@@ -1,12 +1,12 @@
 /* HIMART Design System v1.2 — canonical typography foundation */
-@font-face{font-family:"Pretendard";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"Pretendard";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}\n@font-face{font-family:"Pretendard KO Thin";src:url("../fonts/PretendardVariable.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap;unicode-range:U+1100-11FF,U+3130-318F,U+A960-A97F,U+AC00-D7AF,U+D7B0-D7FF}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Regular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE";src:url("../fonts/Averta-PE-Bold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap}
 @font-face{font-family:"Averta PE ExtraLight";src:url("../fonts/Averta-PE-Thin.otf") format("opentype");font-weight:200;font-style:normal;font-display:swap}
 
 /* Base tracking is 10% tighter than the previous authored values. */
-html body.himart-page-body{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:var(--hm-track-base)}
+html body.himart-page-body{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:var(--hm-track-base);font-variation-settings:"wght" 100!important}\nhtml body.himart-page-body *{font-variation-settings:"wght" 100!important}
 .hm-ds-en{font-family:var(--hm-font-en);font-weight:300;letter-spacing:var(--hm-track-base)}
 .hm-ds-ko{font-family:var(--hm-font-ko);font-weight:300;letter-spacing:var(--hm-track-base)}
 
