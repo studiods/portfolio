@@ -26,7 +26,7 @@ html body.works-page-body .works-card-title.works-card-title--aimmo{
 
 /* Selected long English titles scale fluidly inside the canonical left rail. */
 html body.works-page-body .works-card-title.works-card-title--fluid{
-  font-size:clamp(32px,2.2vw,42px)!important;
+  font-size:var(--works-card-title-size)!important;
 }
 
 /* English title links use the exact same rail as Korean titles. */
@@ -39,6 +39,6 @@ html body.works-page-body .works-card-title-link:has(.works-card-title--aimmo){
 
 @media(max-width:780px){
   html body.works-page-body .works-card-title.works-card-title--fluid{
-    font-size:clamp(30px,8.5vw,44px)!important;
+    font-size:clamp(34px,9vw,52px)!important;
   }
 }
