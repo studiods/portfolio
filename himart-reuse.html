@@ -343,25 +343,24 @@ html body.reuse-current #direction .reuse-direction-rule .ax-friction-card p{
 html body.reuse-current #direction .reuse-direction-rule + .phone-gallery{
   margin-top:60px!important;
 }
-/* 04.1 — separate the final change summary from the screen gallery.
-   Use the established title-to-subsection rhythm so it reads as a new numbered block. */
-html body.reuse-current #direction .phone-gallery + .reuse-change-summary{
+/* 04.1 — this spacing belongs to the section itself.
+   The runtime replaces .phone-gallery with .prototype-case-list, so a sibling selector
+   tied to .phone-gallery stops matching after mount. Keep the 160px rhythm on 04.1. */
+html body.reuse-current #direction .reuse-change-summary{
   margin-top:var(--hm-title-to-subsection-gap,160px);
 }
 
-/* 04.1 — improved state is a filled trust state, not another outline state. */
-html body.reuse-current #direction .reuse-change-summary .reuse-proof-map__node--solution{
-  background:var(--hm-blue);
-  border-color:var(--hm-blue);
+/* 04.1 — keep the existing outline-circle treatment.
+   Only the solution title weight changes to Pretendard Light. */
+html body.reuse-current #direction .reuse-change-summary{
+  --hm-circle-title-weight:300;
 }
 html body.reuse-current #direction .reuse-change-summary .reuse-proof-map__node h4{
   width:100%;
   max-width:none;
 }
 html body.reuse-current #direction .reuse-change-summary .reuse-proof-map__node--solution h4{
-  --reuse-proof-copy-color:#000;
-  font-weight:var(--hm-circle-title-weight,100);
-  font-variation-settings:"wght" 100;
+  font-variation-settings:"wght" 300;
 }
 html body.reuse-current #direction .reuse-change-summary .reuse-proof-title-line{
   display:block;
