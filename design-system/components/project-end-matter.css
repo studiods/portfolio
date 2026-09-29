@@ -59,14 +59,9 @@ html body.himart-page-body .hm-project-reflection__copy strong{color:#fff!import
 html body.himart-page-body #live-main > .hm-section:last-of-type{padding-bottom:var(--hm-section-padding-bottom-last,200px)!important}
 
 @media(min-width:1600px){
-  /* Use the exact same five-track grid as 01-04.
-     PROJECT REFLECTION and its copy occupy column 4, the canonical right-content rail. */
-  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__inner{
-    position:relative;
-    width:100%;
-    margin:0;
-    padding-top:100px;
-    border-top:0;
+  /* PROJECT REFLECTION uses the exact same right-content rail as 01-04.
+     The divider is owned by that rail too, so its start/end points match the content width. */
+  html body.himart-page-body.hm-wide-editorial .hm-project-reflection{
     display:grid;
     grid-template-columns:
       var(--hm-wide-edge-track)
@@ -75,24 +70,19 @@ html body.himart-page-body #live-main > .hm-section:last-of-type{padding-bottom:
       var(--hm-wide-right-track)
       var(--hm-wide-edge-track);
     column-gap:0;
-    align-items:start;
   }
-  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__inner::before{
-    content:"";
-    position:absolute;
-    top:0;
-    right:var(--hm-wide-edge-track);
-    left:var(--hm-wide-edge-track);
+  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__inner{
+    grid-column:4;
+    width:100%;
+    margin:0;
+    padding-top:100px;
     border-top:1px solid var(--hm-line-weak);
+    display:block;
   }
   html body.himart-page-body.hm-wide-editorial .hm-project-reflection__title{
-    grid-column:4;
-    justify-self:start;
     width:100%;
   }
   html body.himart-page-body.hm-wide-editorial .hm-project-reflection__copy{
-    grid-column:4;
-    justify-self:start;
     width:var(--hm-project-reflection-copy-measure)!important;
     max-width:100%!important;
   }
