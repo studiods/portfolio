@@ -187,6 +187,15 @@ body.works-page-body .works-card-title{
   word-break:keep-all;
   text-wrap:balance;
 }
+
+/* Korean sentence-style project titles only.
+   English labels such as WORK ARCHIVE keep the existing Averta treatment. */
+.works-card-title[lang="ko"]{
+  font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+  font-weight:100;
+  font-variation-settings:"wght" 100;
+  font-synthesis:none;
+}
 body.works-page-body .works-card-company{
   display:block;
   max-width:var(--works-title-content-width);
