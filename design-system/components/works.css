@@ -8,8 +8,6 @@ body.works-page-body{
   --works-project-rule-width:calc(var(--works-title-column) / 6);
   --works-project-rule-gap:56px;
   --works-footer-gap:200px;
-  /* One shared desktop scale keeps Korean/Pretendard and English/Averta titles visually aligned. */
-  --works-card-title-size:clamp(34px,3vw,42px);
   margin:0;
   overflow-x:hidden;
   overflow-y:auto;
@@ -181,7 +179,7 @@ body.works-page-body .works-card-title{
   margin:0;
   color:inherit;
   font-family:var(--hm-font-ko);
-  font-size:var(--works-card-title-size);
+  font-size:42px;
   font-weight:100;
   font-variation-settings:'wght' 100;
   line-height:1.12;
