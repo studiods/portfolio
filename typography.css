@@ -1,13 +1,15 @@
+@font-face{font-family:'Pretendard';src:url('./fonts/PretendardVariable.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:'Pretendard KO Thin';src:url('./fonts/PretendardVariable.woff2') format('woff2');font-style:normal;font-weight:100 900;font-display:swap;unicode-range:U+1100-11FF,U+3130-318F,U+A960-A97F,U+AC00-D7AF,U+D7B0-D7FF}
 @font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Thin.otf') format('opentype');font-style:normal;font-weight:300;font-display:swap}
 @font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Regular.otf') format('opentype');font-style:normal;font-weight:400;font-display:swap}
 @font-face{font-family:'Averta PE';src:url('./fonts/Averta-PE-Bold.otf') format('opentype');font-style:normal;font-weight:700;font-display:swap}
 
 /* English is always drawn with Averta as soon as the preloaded face is ready; swap avoids FOIT. */
-html,body{font-family:'Averta PE',Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300}
-body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-family:inherit}
+html,body{font-family:'Pretendard KO Thin','Averta PE',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-weight:300;font-variation-settings:'wght' 100!important}
+body,p,a,span,div,li,button,input,textarea,h1,h2,h3,h4,h5,h6{font-family:inherit;font-variation-settings:'wght' 100!important}
 
 /* Explicit Korean copy uses Pretendard only. */
-.ko,[lang='ko'] .ko{font-family:Pretendard,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.ko,[lang='ko'] .ko{font-family:'Pretendard KO Thin','Averta PE',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-variation-settings:'wght' 100!important}
 
 .light,.thin{font-weight:300}
 b,strong,.bold{font-weight:700}
