@@ -343,10 +343,25 @@ html body.reuse-current #direction .reuse-direction-rule .ax-friction-card p{
 html body.reuse-current #direction .reuse-direction-rule + .phone-gallery{
   margin-top:60px!important;
 }
-/* 04.1 is a new numbered subsection after the screen gallery.
-   Match the shared subsection rhythm instead of letting the blocks touch. */
-html body.reuse-current #direction .phone-gallery + .data-list{
-  margin-top:var(--hm-subsection-gap,100px)!important;
+/* 04.1 — separate the final change summary from the screen gallery.
+   Use the established title-to-subsection rhythm so it reads as a new numbered block. */
+html body.reuse-current #direction .phone-gallery + .reuse-change-summary{
+  margin-top:var(--hm-title-to-subsection-gap,160px);
+}
+
+/* 04.1 — improved state is a filled trust state, not another outline state. */
+html body.reuse-current #direction .reuse-change-summary .reuse-proof-map__node--solution{
+  background:var(--hm-blue);
+  border-color:var(--hm-blue);
+}
+html body.reuse-current #direction .reuse-change-summary .reuse-proof-map__node--solution h4{
+  --reuse-proof-copy-color:#000;
+  font-weight:var(--hm-circle-title-weight,100);
+  font-variation-settings:"wght" 100;
+}
+html body.reuse-current #direction .reuse-change-summary .reuse-proof-title-line{
+  display:block;
+  white-space:nowrap;
 }
 @media(max-width:1180px){
   html body.reuse-current #brand .reuse-ring-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -490,7 +505,7 @@ html body.reuse-current #direction .phone-gallery + .data-list{
   <article class="ax-friction-card"><span>02</span><h4><span>상품화 과정과 이동 경로를 투명하게 보여줘</span><span>불확실성을 확신으로 바꿨습니다.</span></h4><p><span>입고·검수·세척·상품화·배송 과정과 책임 주체를 공개해,</span><span>확인하기 어려운 정보를 구매 판단의 근거로 바꿨습니다.</span></p></article>
 </div>
 <div class="phone-gallery hm-ds-media-grid hm-ds-subtitle-to-content hm-reveal"><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">01</span><b>HOME MAIN</b><p>탐색 허브</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">02</span><b>SUBHOME</b><p>목적형 탐색</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">03</span><b>SEARCH ENTRY</b><p>검색 진입·보조</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">04</span><b>SEARCH RESULT</b><p>니즈 구체화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">05</span><b>SRP / PLP</b><p>후보 압축</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">06</span><b>COMPARISON</b><p>핵심 정보 비교</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">07</span><b>PDP KEY INFO</b><p>확신 형성</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">08</span><b>PDP SERVICE</b><p>매장·설치·케어</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">09</span><b>CART</b><p>총액·조건 확인</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">10</span><b>CHECKOUT</b><p>입력 최소화</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">11</span><b>INSTALLATION</b><p>설치 일정</p></div></article><article class="phone-card hm-ds-media-card"><div class="phone-frame"></div><div class="phone-meta"><span data-hm-number="normal">12</span><b>CARE FLOW</b><p>구매 이후 관리</p></div></article></div>
-<div class="data-list">
+<div class="data-list reuse-change-summary">
   <article class="data-card hm-ds-card hm-reveal">
     <div class="data-card-head">
       <span class="hm-card-no hm-ds-index-label" data-index="04.1">04.1</span>
@@ -503,22 +518,25 @@ html body.reuse-current #direction .phone-gallery + .data-list{
       <section class="reuse-proof-band reuse-proof-band--anxiety" aria-label="이전 방식">
         <span class="reuse-proof-band__label">이전 방식</span>
         <div class="reuse-proof-band__nodes">
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>상태에 대한<br>설명 중심</h4></div>
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>검수 여부만<br>단순 안내</h4></div>
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>구매 이후에<br>보증 정보 제공</h4></div>
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4>판매자에 대한<br>신뢰에 의존</h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4><span class="reuse-proof-title-line">상태에 대한</span><span class="reuse-proof-title-line">설명 중심</span></h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4><span class="reuse-proof-title-line">검수 여부만</span><span class="reuse-proof-title-line">단순 안내</span></h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4><span class="reuse-proof-title-line">구매 이후에</span><span class="reuse-proof-title-line">보증 정보 제공</span></h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--anxiety"><h4><span class="reuse-proof-title-line">판매자에 대한</span><span class="reuse-proof-title-line">신뢰에 의존</span></h4></div>
         </div>
       </section>
       <div class="reuse-proof-map__arrow" aria-hidden="true">
-        <svg viewBox="0 0 300 48" preserveAspectRatio="none"><polyline points="0,0 150,48 300,0"></polyline></svg>
+        <span class="reuse-proof-map__arrow-item"></span>
+        <span class="reuse-proof-map__arrow-item"></span>
+        <span class="reuse-proof-map__arrow-item"></span>
+        <span class="reuse-proof-map__arrow-item"></span>
       </div>
       <section class="reuse-proof-band reuse-proof-band--solution" aria-label="개선 후">
         <span class="reuse-proof-band__label">개선 후</span>
         <div class="reuse-proof-band__nodes">
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>실사진 · 상태 등급 ·<br>흠집 근접 이미지</h4></div>
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>점검 항목과<br>검수 과정 공개</h4></div>
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>구매 전에<br>보증 기준 선노출</h4></div>
-          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4>검수 · 배송 · 설치 ·<br>사후관리 책임 명확화</h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4><span class="reuse-proof-title-line">실사진 · 상태 등급</span><span class="reuse-proof-title-line">흠집까지 공개</span></h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4><span class="reuse-proof-title-line">점검 항목과</span><span class="reuse-proof-title-line">검수 과정 공개</span></h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4><span class="reuse-proof-title-line">구매 전에</span><span class="reuse-proof-title-line">보증 기준 안내</span></h4></div>
+          <div class="reuse-confidence-node reuse-proof-map__node reuse-proof-map__node--solution"><h4><span class="reuse-proof-title-line">검수 · 배송 · 설치</span><span class="reuse-proof-title-line">사후 책임 명확화</span></h4></div>
         </div>
       </section>
     </div>
