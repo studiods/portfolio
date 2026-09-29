@@ -461,6 +461,34 @@
   const ENGAGED_EVENT = 'portfolio_engaged_rt';
   const ATTR_KEY = 'portfolio_rt_attribution_v1';
   const SESSION_KEY = 'portfolio_rt_session_id_v1';
+  const COLLECTOR_GLOBAL = '__PORTFOLIO_RT_COLLECTOR__';
+
+  const ownerScript = document.currentScript;
+  const designSystemBase = ownerScript?.src
+    ? new URL('.', ownerScript.src)
+    : new URL('./design-system/', document.baseURI);
+
+  const collectorReady = (() => {
+    if (window[COLLECTOR_GLOBAL]) return Promise.resolve();
+
+    return new Promise(resolve => {
+      const existing = document.querySelector('script[data-portfolio-rt-config="true"]');
+      if (existing) {
+        existing.addEventListener('load', resolve, {once:true});
+        existing.addEventListener('error', resolve, {once:true});
+        setTimeout(resolve, 1500);
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = new URL('realtime-log-config.js?v=20260929-1', designSystemBase).href;
+      script.async = false;
+      script.dataset.portfolioRtConfig = 'true';
+      script.addEventListener('load', resolve, {once:true});
+      script.addEventListener('error', resolve, {once:true});
+      (document.head || document.documentElement).appendChild(script);
+    });
+  })();
 
   const clip = (value, max = 100) => String(value ?? '').slice(0, max);
 
@@ -579,6 +607,37 @@
     }
   };
 
+  const sendCollector = async (eventName, extra = {}) => {
+    try {
+      await collectorReady;
+      const config = window[COLLECTOR_GLOBAL];
+      if (!config?.enabled || !config?.endpoint) return;
+
+      const payload = {
+        event_name: eventName,
+        occurred_at: new Date().toISOString(),
+        page_url: clip(location.href, 500),
+        user_agent: clip(navigator.userAgent || '', 300),
+        ...baseParams,
+        ...extra
+      };
+
+      const headers = {
+        'Content-Type': 'application/json',
+        ...(config.headers || {})
+      };
+
+      fetch(config.endpoint, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'omit',
+        keepalive: true,
+        headers,
+        body: JSON.stringify(payload)
+      }).catch(() => {});
+    } catch (_) {}
+  };
+
   const emit = (eventName, extra = {}) => {
     try {
       ensureGtag();
@@ -588,6 +647,8 @@
         send_to: MEASUREMENT_ID
       });
     } catch (_) {}
+
+    sendCollector(eventName, extra);
   };
 
   emit(VISIT_EVENT);
