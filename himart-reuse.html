@@ -343,6 +343,11 @@ html body.reuse-current #direction .reuse-direction-rule .ax-friction-card p{
 html body.reuse-current #direction .reuse-direction-rule + .phone-gallery{
   margin-top:60px!important;
 }
+/* 04.1 is a new numbered subsection after the screen gallery.
+   Match the shared subsection rhythm instead of letting the blocks touch. */
+html body.reuse-current #direction .phone-gallery + .data-list{
+  margin-top:var(--hm-subsection-gap,100px)!important;
+}
 @media(max-width:1180px){
   html body.reuse-current #brand .reuse-ring-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
