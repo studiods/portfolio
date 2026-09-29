@@ -9,6 +9,17 @@
 - page-local inline CSS와 실험용 override 파일을 새로 만들지 않는다. Himart 운영 상태·정적 레이아웃 규칙은 `design-system/pages/himart/himart-production-state.css`가 소유한다.
 - `design-system/components/`는 여러 페이지가 함께 쓰는 규칙만 소유하고, 페이지 전용 CSS·JS는 `design-system/pages/<slug>/` 아래에서 관리한다.
 
+## 필수 규칙: CSS cascade와 `!important`
+
+- 신규 디자인 시스템 코드에서 `!important`는 **원칙적으로 사용하지 않는다.**
+- 스타일 충돌은 먼저 **소유 파일, import/link 선언 순서, selector 범위, component modifier, CSS custom property** 순서로 해결한다.
+- 공통 컴포넌트의 변형은 selector 강도를 계속 높이지 말고, 가능한 경우 base component가 읽는 CSS custom property를 modifier가 바꾸는 방식으로 설계한다.
+- 반응형 규칙은 동일 속성을 별도 selector로 강제 덮어쓰기보다, 같은 custom property의 값을 breakpoint에서 변경하는 방식을 우선한다.
+- `!important`가 없으면 해결할 수 없는 예외는 브라우저/외부 라이브러리의 강제 inline style, 접근성·안전상 즉시 차단이 필요한 runtime rule 등으로 한정한다. 이 경우에도 코드 바로 위에 **사용 이유, 적용 범위, 제거 조건**을 주석으로 남긴다.
+- 기존 코드의 `!important`를 새 수정의 근거로 삼지 않는다. 해당 영역을 수정할 때는 가능하면 cascade 구조를 함께 정상화해 제거한다.
+
+이 규칙의 목적은 단기적으로 화면을 맞추는 것보다 **스타일 위계와 소유권을 예측 가능하게 유지하는 것**이다. 같은 specificity에서 뒤 선언이 이기는 문제를 `!important`로 덮지 않고, 선언 순서 또는 변수 소유권을 바로잡는다.
+
 ## 필수 규칙: 기존 소스 우선 수정
 
 동일한 기능이나 스타일을 고칠 때는 먼저 현재 기준 파일을 추적하고, 그 **기존 파일을 수정**한다. 같은 책임을 위한 새 버전·수정·최종·테스트 파일을 추가하는 방식은 사용하지 않는다.
