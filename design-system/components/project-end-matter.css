@@ -50,15 +50,19 @@ html body.himart-page-body .hm-project-reflection__copy strong{color:#fff!import
 html body.himart-page-body #live-main > .hm-section:last-of-type{padding-bottom:var(--hm-section-padding-bottom-last,200px)!important}
 
 @media(min-width:1600px){
-  html body.himart-page-body .hm-project-reflection__inner{
-    width:min(calc(100% - 128px),1600px);
+  /* Match the exact wide-editorial canvas used by the 01-04 sticky chapter titles.
+     The reflection title starts on the same left rail; no separate 1600px container. */
+  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__inner{
+    width:auto;
+    margin-left:var(--hm-wide-edge-track);
+    margin-right:var(--hm-wide-edge-track);
     display:grid;
-    grid-template-columns:minmax(var(--hm-wide-left-min,400px),var(--hm-wide-left-max,440px)) minmax(var(--hm-wide-column-gap-min,80px),var(--hm-wide-column-gap-max,100px)) minmax(0,var(--hm-wide-right-max,1060px));
+    grid-template-columns:var(--hm-wide-left-track) var(--hm-wide-gap-track) var(--hm-wide-right-track);
     column-gap:0;
     align-items:start;
   }
-  html body.himart-page-body .hm-project-reflection__title{grid-column:1;justify-self:start;width:100%}
-  html body.himart-page-body .hm-project-reflection__copy{
+  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__title{grid-column:1;justify-self:start;width:100%}
+  html body.himart-page-body.hm-wide-editorial .hm-project-reflection__copy{
     grid-column:1 / -1;
     justify-self:start;
     width:var(--hm-project-reflection-copy-measure)!important;
