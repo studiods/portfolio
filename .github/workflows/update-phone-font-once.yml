@@ -1,0 +1,31 @@
+name: One-time phone font update
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-phone-font-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-phone-font:
+    if: github.event.head_commit.message == 'Run one-time phone font update'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pymupdf==1.26.4
+      - name: Change phone to Averta Thin
+        run: python scripts/update_phone_font_once.py
+      - name: Commit PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "assets/docs/신동식_이력서_UX & Product Design Lead.pdf"
+          git commit -m "Use Averta Thin for resume phone number"
+          git push origin HEAD:main
