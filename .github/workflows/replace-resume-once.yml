@@ -5,13 +5,14 @@ on:
   push:
     paths:
       - '.github/workflows/replace-resume-once.yml'
+      - 'tmp/resume_payload_16.b64'
 
 permissions:
   contents: write
 
 jobs:
   replace-resume:
-    if: github.event.head_commit.message == 'Replace About resume with attached PDF'
+    if: github.event.head_commit.message == 'Replace About resume with attached PDF' || github.event.head_commit.message == 'Stage resume payload 16'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
