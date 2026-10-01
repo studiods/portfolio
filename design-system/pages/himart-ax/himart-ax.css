@@ -1256,7 +1256,7 @@ html body.himart-ax-page #brand .ax-learning-signal-grid>article>p{
 
 /* AX card title authored-line contract · 2026-10-01
    Use block spans instead of <br> so the shared card wrapping contract cannot
-   collapse authored Korean word spacing. No !important is required. */
+   collapse authored Korean word spacing. No priority override is required. */
 html body.himart-ax-page #journey :is(.ax-maker-step,.ways-operating-stack>article) h4 > .ax-title-line{
   display:block;
 }
