@@ -1,113 +1,119 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hi-Check Exposure & Rule Guide</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hi-Check Standard — Fixed 4 Axis</title>
 <style>
-:root{--bg:#070707;--panel:#101010;--line:#2b2b2b;--text:#f6f6f2;--muted:#9a9a92;--accent:#d6c85b;--soft:#17160e}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif;line-height:1.55}
-.wrap{width:min(1260px,calc(100% - 40px));margin:auto}
-.hero{padding:64px 0 34px;border-bottom:1px solid var(--line)}.ey{font-size:11px;letter-spacing:.14em;color:var(--accent)}.hero h1{font-weight:250;font-size:clamp(36px,5vw,66px);letter-spacing:-.05em;line-height:1.06;margin:12px 0 12px}.hero p{color:#aaa;margin:0;max-width:760px}
-nav{position:sticky;top:0;z-index:20;background:rgba(7,7,7,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}nav .wrap{display:flex;gap:8px;overflow:auto;padding:12px 0}.tab{white-space:nowrap;border:1px solid #323232;background:#111;color:#aaa;text-decoration:none;padding:9px 12px;font-size:12px}.tab:hover{border-color:var(--accent);color:#fff}
-section.cat{padding:66px 0;border-bottom:1px solid var(--line)}.cat-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:22px}.cat-head h2{font-size:clamp(30px,4vw,48px);font-weight:300;letter-spacing:-.04em;margin:7px 0 0}.cat-head p{max-width:620px;color:#999;font-size:13px;margin:0}
-.sample{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}.chip{font-size:11px;border:1px solid #45412a;background:#15140c;color:#d9d39a;padding:6px 9px;border-radius:99px}
-.preview-wrap{border:1px solid #383838;background:#0d0d0d;padding:18px}.preview-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:#777;font-size:11px}.pdp{background:#fff;color:#111;padding:24px;border-radius:14px}.pdp-title{font-size:13px;font-weight:700;color:#777;margin-bottom:12px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{border:1px solid #e5e5e5;border-radius:14px;padding:20px;min-height:215px}.num{font-size:11px;font-weight:700;color:#7b7000;letter-spacing:.08em}.q{font-size:21px;line-height:1.35;letter-spacing:-.03em;margin:8px 0 9px}.answer{font-size:14px;color:#2a2a2a;line-height:1.65;margin:0}.facts{display:flex;gap:6px;flex-wrap:wrap;margin-top:13px}.fact{font-size:11px;background:#f3f0d7;color:#5b5200;padding:5px 8px;border-radius:99px}.caution{font-size:11px;color:#777;margin-top:13px;padding-top:11px;border-top:1px solid #eee}
-.rules{margin-top:22px}.rules h3{font-size:18px;margin:0 0 10px}.table-wrap{overflow:auto;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:980px;background:#0e0e0e}th,td{padding:13px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:12px}th{color:#999;font-weight:500;background:#111}td strong{color:#eee}.rule{color:#d8d29a}.muted{color:#888}
-.output{display:block;margin-top:4px;color:#ddd}
-footer{padding:36px 0 70px;color:#666;font-size:11px}
-@media(max-width:780px){.wrap{width:min(100% - 24px,1260px)}.cat-head{display:block}.cards{grid-template-columns:1fr}.pdp{padding:14px}.card{min-height:auto}.hero{padding-top:46px}}
+:root{--bg:#080808;--panel:#111;--line:#2e2e2e;--text:#f5f5f1;--muted:#9b9b94;--accent:#d6c85b;--soft:#17160e}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif;line-height:1.6}
+.wrap{width:min(1260px,calc(100% - 40px));margin:auto}.hero{padding:72px 0 38px;border-bottom:1px solid var(--line)}.ey{font-size:11px;letter-spacing:.14em;color:var(--accent)}h1{font-size:clamp(42px,6vw,80px);font-weight:220;letter-spacing:-.055em;line-height:1.02;margin:14px 0 20px}.hero p{max-width:900px;color:#b7b7af;font-size:17px}.core{margin-top:28px;border:1px solid #4e4928;background:#15140d;padding:20px 22px}.core b{color:#fff}.core strong{color:var(--accent)}
+nav{position:sticky;top:0;z-index:10;background:rgba(8,8,8,.95);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}nav .wrap{display:flex;gap:8px;padding:12px 0;overflow:auto}nav a{white-space:nowrap;text-decoration:none;color:#aaa;border:1px solid #333;padding:9px 12px;font-size:12px}nav a:hover{border-color:var(--accent);color:#fff}
+section{padding:64px 0;border-bottom:1px solid var(--line)}h2{font-size:clamp(30px,4vw,52px);font-weight:260;letter-spacing:-.04em;line-height:1.1;margin:8px 0 14px}.lead{color:#999;max-width:840px;margin-bottom:26px}.fixed{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}.axis{border:1px solid var(--line);background:var(--panel);padding:18px;min-height:140px}.axis .n{color:var(--accent);font-size:11px}.axis h3{font-size:18px;margin:8px 0 7px}.axis p{color:#999;font-size:13px;margin:0}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:10px;align-items:center;margin:28px 0}.flow .box{border:1px solid var(--line);padding:18px;background:#0e0e0e}.flow i{color:#777;font-style:normal}.flow b{display:block;margin-bottom:4px}.flow span{color:#999;font-size:12px}
+.preview{border:1px solid #363636;background:#0d0d0d;padding:18px;margin-top:20px}.preview-label{font-size:11px;color:#777;margin-bottom:10px}.pdp{background:#fff;color:#111;padding:22px;border-radius:14px}.pdp h4{margin:0 0 14px;font-size:14px;color:#666}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{border:1px solid #e5e5e5;border-radius:13px;padding:19px;min-height:215px}.k{font-size:10px;font-weight:700;letter-spacing:.08em;color:#776c00}.card h3{font-size:20px;line-height:1.35;margin:7px 0 9px}.card p{font-size:14px;color:#333;margin:0;line-height:1.65}.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}.fact{font-size:11px;background:#f3f0d6;color:#564e00;padding:5px 8px;border-radius:99px}.check{margin-top:12px;padding-top:10px;border-top:1px solid #eee;color:#777!important;font-size:11px!important}
+.table{overflow:auto;border:1px solid var(--line);margin-top:18px}table{width:100%;border-collapse:collapse;min-width:1100px;background:#0e0e0e}th,td{padding:12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:12px}th{color:#999;font-weight:500;background:#111}td strong{color:#eee}.rule{color:#d8d29a}.source{color:#888}
+.evidence{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.ev{border:1px solid var(--line);padding:18px;background:#0f0f0f}.ev h3{font-size:16px;margin:4px 0 8px}.ev p{font-size:12px;color:#999}.badge{display:inline-block;font-size:10px;border:1px solid #494425;color:#d5ce92;padding:3px 6px}
+footer{padding:40px 0 70px;color:#666;font-size:11px}
+@media(max-width:900px){.fixed,.evidence{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr}.flow i{display:none}.cards{grid-template-columns:1fr}}
+@media(max-width:620px){.wrap{width:min(100% - 24px,1260px)}.fixed,.evidence{grid-template-columns:1fr}.hero{padding-top:48px}.pdp{padding:14px}}
 </style>
-</head>
-<body>
-<header class="hero"><div class="wrap"><div class="ey">LOTTE HI-MART · HI-CHECK</div><h1>그래서 고객에게<br>어떻게 보이는가.</h1><p>아래는 카테고리별 샘플 상품 데이터를 넣었을 때 하이체크가 실제 상세페이지 안에서 어떻게 노출되는지와, 그 문구를 만들기 위해 MD가 어떤 기준을 관리해야 하는지를 바로 연결해 보여주는 화면입니다.</p></div></header>
-<nav><div class="wrap"><a class="tab" href="#tv">TV</a><a class="tab" href="#fridge">양문형 냉장고</a><a class="tab" href="#washer">세탁기</a><a class="tab" href="#aircon">벽걸이 에어컨</a><a class="tab" href="#vacuum">무선청소기</a></div></nav>
+</head><body>
+<header class="hero"><div class="wrap"><div class="ey">LOTTE HI-MART · HI-CHECK STANDARD</div><h1>추천하는 게 아니라,<br>같은 잣대로 쉽게 풀어줍니다.</h1><p>하이체크는 고객 정보를 받아 맞춤 추천하는 기능이 아닙니다. 제조사가 제공한 복잡한 스펙을 카테고리마다 고정된 4개의 판단축으로 해석해, 어떤 PDP를 보더라도 같은 순서와 같은 기준으로 제품의 성격을 빠르게 파악하게 하는 기능입니다.</p>
+<div class="core"><b>하이체크의 본질</b><br><strong>제조사 정보 → 공통 기준으로 분류 → 고객 언어로 해석 → 고객이 자기 상황에 맞는지 스스로 판단</strong><br><span style="color:#aaa">같은 카테고리는 항상 같은 1·2·3·4를 보여줍니다. 바뀌는 것은 제품 스펙에 따른 ‘해석 결과’뿐입니다.</span></div></div></header>
+<nav><div class="wrap"><a href="#rule">공통 원칙</a><a href="#tv">TV</a><a href="#fridge">양문형 냉장고</a><a href="#washer">세탁기</a><a href="#aircon">벽걸이 에어컨</a><a href="#vacuum">무선청소기</a><a href="#evidence">검증 근거</a></div></nav>
 
-<section class="cat" id="tv"><div class="wrap">
-<div class="cat-head"><div><div class="ey">01 · TV</div><h2>TV 하이체크</h2></div><p>화면 크기, 패널, 주사율 같은 숫자를 그대로 보여주는 것이 아니라 ‘내 공간과 사용 목적에 어떤 의미인지’로 바꿉니다.</p></div>
-<div class="sample"><span class="chip">75형</span><span class="chip">4K</span><span class="chip">OLED</span><span class="chip">120Hz</span><span class="chip">HDMI 2.1</span><span class="chip">VRR / ALLM</span></div>
-<div class="preview-wrap"><div class="preview-label"><span>실제 상세페이지 노출 예시</span><span>SAMPLE PRODUCT DATA → HI-CHECK</span></div><div class="pdp"><div class="pdp-title">이 제품, 이렇게 확인해 보세요</div><div class="cards">
-<article class="card"><div class="num">HI-CHECK 01</div><h3 class="q">약 2.3~3.1m 거리에서 보기 좋은 75형 대화면</h3><p class="answer">영화처럼 몰입해서 볼 때는 약 2.3m, 일반적인 TV 시청에서는 약 3.1m까지를 참고할 수 있습니다.</p><div class="facts"><span class="fact">75형</span><span class="fact">4K</span><span class="fact">권장거리 2.3~3.1m</span></div><p class="caution">※ 실제 적정 거리는 콘텐츠와 개인 선호에 따라 달라질 수 있습니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 02</div><h3 class="q">어두운 장면의 명암과 블랙 표현을 중요하게 본다면</h3><p class="answer">OLED 패널은 픽셀 단위로 빛을 제어해 영화·드라마처럼 어두운 장면이 많은 콘텐츠에서 강점을 갖는 타입입니다.</p><div class="facts"><span class="fact">OLED</span><span class="fact">HDR</span></div><p class="caution">※ 실제 밝기와 반사 대응은 모델별 세부 사양을 함께 확인해야 합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 03</div><h3 class="q">스포츠·액션 장면을 부드럽게 보고 싶다면</h3><p class="answer">120Hz 주사율을 지원해 빠른 움직임이 많은 콘텐츠에서 60Hz 제품보다 화면 움직임을 더 세밀하게 표현할 수 있습니다.</p><div class="facts"><span class="fact">Native 120Hz</span></div><p class="caution">※ 입력 소스와 콘텐츠 프레임에 따라 체감 차이가 달라질 수 있습니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 04</div><h3 class="q">PS5·Xbox 같은 콘솔 게임까지 고려한다면</h3><p class="answer">HDMI 2.1과 VRR·ALLM을 지원해 고주사율 콘솔 게임 환경을 구성하기 좋은 조건입니다.</p><div class="facts"><span class="fact">HDMI 2.1</span><span class="fact">VRR</span><span class="fact">ALLM</span></div><p class="caution">※ 연결 기기와 사용 포트가 동일 규격을 지원해야 합니다.</p></article>
-</div></div></div>
-<div class="rules"><h3>MD 판정 기준</h3><div class="table-wrap"><table><thead><tr><th>항목</th><th>필수 입력</th><th>판정 기준</th><th>결과 코드</th><th>노출 방식</th><th>주의</th></tr></thead><tbody>
-<tr><td><strong>화면 크기</strong></td><td>screen_size_inch</td><td class="rule">65형 2.0~2.7m / 75형 2.3~3.1m / 85형 2.6~3.5m / 98형 3.0~4.1m</td><td>VIEW_DISTANCE</td><td><span class="output">“약 X~Y m 거리에서 보기 좋은 N형”</span></td><td class="muted">평수는 판정값이 아니라 참고값으로만 사용</td></tr>
-<tr><td><strong>패널</strong></td><td>panel_type</td><td class="rule">OLED / MiniLED / QLED·LCD 타입별 해석</td><td>PANEL_USAGE</td><td><span class="output">“어두운 장면 / 밝은 공간 / 범용 사용” 중심 해석</span></td><td class="muted">패널명만으로 밝기·반사 성능을 단정하지 않음</td></tr>
-<tr><td><strong>주사율</strong></td><td>native_refresh_hz</td><td class="rule">≤60 일반 / 100·120 고주사율 / ≥144 게이밍 강화</td><td>REFRESH_CLASS</td><td><span class="output">“스포츠·액션·게임에 유리”</span></td><td class="muted">Native 값 우선</td></tr>
-<tr><td><strong>게임</strong></td><td>hdmi_2_1, vrr, allm</td><td class="rule">120Hz↑ + HDMI2.1 + VRR + ALLM</td><td>GAME_READY</td><td><span class="output">“고사양 콘솔게임 활용에 적합”</span></td><td class="muted">데이터 없으면 생성하지 않음</td></tr>
-</tbody></table></div></div>
+<section id="rule"><div class="wrap"><div class="ey">00 · COMMON RULE</div><h2>모든 PDP에서 답변 구조가 같아야 합니다.</h2><div class="fixed">
+<div class="axis"><div class="n">01</div><h3>고정된 판단축</h3><p>카테고리별 4개 항목과 노출 순서는 모든 상품에서 동일합니다.</p></div>
+<div class="axis"><div class="n">02</div><h3>제품의 객관적 분류</h3><p>“75형”, “24kg”, “280W”를 미리 정의한 구간과 규칙에 매칭합니다.</p></div>
+<div class="axis"><div class="n">03</div><h3>생활 언어로 해석</h3><p>숫자를 반복하지 않고 실제 사용에서 무엇을 의미하는지 한 문장으로 바꿉니다.</p></div>
+<div class="axis"><div class="n">04</div><h3>판단은 고객에게</h3><p>“추천”보다 “이 제품은 이런 성격이니 내 환경과 맞는지 확인”으로 끝냅니다.</p></div></div>
+<div class="flow"><div class="box"><b>Raw Spec</b><span>75형 · OLED · 120Hz</span></div><i>→</i><div class="box"><b>Rule Engine</b><span>크기·화질·움직임·사운드 4축</span></div><i>→</i><div class="box"><b>Hi-Check</b><span>“이 제품은 이런 TV입니다.”</span></div></div>
 </div></section>
 
-<section class="cat" id="fridge"><div class="wrap">
-<div class="cat-head"><div><div class="ey">02 · SIDE-BY-SIDE REFRIGERATOR</div><h2>양문형 냉장고 하이체크</h2></div><p>설치 치수는 이번 핵심 하이체크에서 제외하고, 실제 사용량과 보관 방식에 바로 연결되는 항목만 노출합니다.</p></div>
-<div class="sample"><span class="chip">총 870L</span><span class="chip">냉장 503L</span><span class="chip">냉동 367L</span><span class="chip">냉동비중 42.2%</span><span class="chip">에너지 1등급</span></div>
-<div class="preview-wrap"><div class="preview-label"><span>실제 상세페이지 노출 예시</span><span>870L SIDE-BY-SIDE</span></div><div class="pdp"><div class="pdp-title">이 제품, 이렇게 확인해 보세요</div><div class="cards">
-<article class="card"><div class="num">HI-CHECK 01</div><h3 class="q">대량 장보기까지 고려하기 좋은 870L급 대용량</h3><p class="answer">3~4인 가구가 여유 있게 사용하거나, 한 번에 식재료를 많이 보관하는 생활 패턴에 적합한 용량대입니다.</p><div class="facts"><span class="fact">총 870L</span></div><p class="caution">※ 가족 수는 참고 기준이며 장보기 주기와 김치냉장고 보유 여부에 따라 달라집니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 02</div><h3 class="q">냉동식품과 밀키트를 자주 보관한다면</h3><p class="answer">전체 용량 중 냉동실 비중이 약 42%로, 냉장과 냉동을 비교적 고르게 사용하는 구성입니다.</p><div class="facts"><span class="fact">냉동 367L</span><span class="fact">냉동비중 42.2%</span></div><p class="caution">※ 냉동 비중 분류는 시장 분포를 기반으로 한 내부 운영 기준으로 MD 검증이 필요합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 03</div><h3 class="q">오래 켜두는 만큼 전기 사용도 신경 쓴다면</h3><p class="answer">에너지소비효율 1등급 제품입니다. 같은 용량대 제품을 비교할 때 연간 소비전력까지 함께 보면 더 정확합니다.</p><div class="facts"><span class="fact">에너지 1등급</span></div><p class="caution">※ 등급만으로 실제 전기요금을 단정하지 않습니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 04</div><h3 class="q">신선식품 보관을 중요하게 본다면</h3><p class="answer">정온·독립냉각·도어쿨링 등 온도 변화와 냉기 손실을 줄이는 기능이 있는지 확인하는 것이 핵심입니다.</p><div class="facts"><span class="fact">정온 기능</span><span class="fact">냉각 방식</span></div><p class="caution">※ 제조사별 기능명은 공통 기능 코드로 변환해 노출합니다.</p></article>
+<section id="tv"><div class="wrap"><div class="ey">01 · TV</div><h2>TV는 항상 이 4가지만 봅니다.</h2><div class="fixed">
+<div class="axis"><div class="n">01</div><h3>화면 크기</h3><p>인치를 시청거리로 번역합니다.</p></div><div class="axis"><div class="n">02</div><h3>화질 성향</h3><p>패널·백라이트를 밝은 공간/영화 감상 언어로 번역합니다.</p></div><div class="axis"><div class="n">03</div><h3>움직임 성능</h3><p>주사율·VRR을 스포츠·게임에서 체감하는 차이로 해석합니다.</p></div><div class="axis"><div class="n">04</div><h3>사운드 구성</h3><p>채널·출력·eARC를 TV 단독/외부 사운드 활용 관점으로 풉니다.</p></div></div>
+<div class="preview"><div class="preview-label">예시 입력 · 75형 / OLED / 120Hz / 2.0ch 20W / HDMI 2.1·eARC</div><div class="pdp"><h4>이 제품, 4가지만 빠르게 확인하세요</h4><div class="cards">
+<div class="card"><div class="k">01 · SCREEN SIZE</div><h3>75형 대화면, 약 2.3~3.1m 시청거리를 참고하세요</h3><p>몰입형 시청은 약 2.3m, 일반적인 혼합 시청은 약 3.1m가 하나의 기준입니다.</p><div class="facts"><span class="fact">75형</span><span class="fact">4K</span></div><p class="check">집에서 소파와 TV 사이 실제 거리를 확인해보세요.</p></div>
+<div class="card"><div class="k">02 · PICTURE</div><h3>OLED, 어두운 장면의 명암 표현에 강점이 있는 타입입니다</h3><p>픽셀 단위로 빛을 제어하는 구조라 영화·드라마처럼 암부 표현이 중요한 콘텐츠에 강점이 있습니다.</p><div class="facts"><span class="fact">OLED</span></div><p class="check">낮에 아주 밝은 거실에서 주로 보는지, 밤 영화 감상이 많은지 판단해보세요.</p></div>
+<div class="card"><div class="k">03 · MOTION</div><h3>120Hz, 스포츠와 빠른 화면을 자주 본다면 체감하기 쉬운 구간입니다</h3><p>60Hz보다 화면 갱신 빈도가 높아 빠른 움직임 표현과 고주사율 게임 활용에 유리합니다.</p><div class="facts"><span class="fact">120Hz</span><span class="fact">VRR</span></div><p class="check">스포츠·게임 비중이 낮다면 이 성능의 우선순위는 낮아질 수 있습니다.</p></div>
+<div class="card"><div class="k">04 · SOUND</div><h3>2.0채널 20W, 일상 시청용 기본 사운드 구성입니다</h3><p>뉴스·예능·OTT 일상 시청은 TV 단독으로 가능하지만 영화·공연의 저음과 공간감을 중시하면 외부 사운드를 함께 비교할 수 있습니다.</p><div class="facts"><span class="fact">2.0ch</span><span class="fact">20W</span><span class="fact">eARC</span></div><p class="check">사운드바를 쓸 계획이라면 eARC 지원과 HDMI 포트를 함께 확인하세요.</p></div>
 </div></div></div>
-<div class="rules"><h3>MD 판정 기준</h3><div class="table-wrap"><table><thead><tr><th>항목</th><th>필수 입력</th><th>판정 기준</th><th>결과 코드</th><th>노출 방식</th><th>주의</th></tr></thead><tbody>
-<tr><td><strong>총용량</strong></td><td>total_capacity_l</td><td class="rule">&lt;600 컴팩트 / 600~699 슬림 대용량 / 700~799 대용량 / 800~899 여유로운 대용량 / ≥900 초대용량</td><td>CAPACITY_CLASS</td><td>가구 규모 + 장보기 패턴을 참고 문구로 변환</td><td class="muted">가구수 단정 금지</td></tr>
-<tr><td><strong>냉동 비중</strong></td><td>freezer_l, total_l</td><td class="rule">&lt;38% 냉장 중심 / 38~42% 균형 / &gt;42% 냉동 중심</td><td>FREEZER_RATIO</td><td>“냉동식품 비축이 많은 생활에 유리” 등</td><td class="muted">내부 운영 기준 · MD 검증 필요</td></tr>
-<tr><td><strong>에너지</strong></td><td>energy_grade, annual_kwh</td><td class="rule">동일 용량군 내 등급·연간소비전력 비교</td><td>ENERGY_CLASS</td><td>“같은 용량대에서 전력 사용을 비교하기 좋은 제품”</td><td class="muted">요금 직접 추정 금지</td></tr>
-<tr><td><strong>신선보관</strong></td><td>feature_codes</td><td class="rule">TEMP_STABILITY / INDEPENDENT_COOLING / DOOR_COOLING 등</td><td>FRESHNESS</td><td>브랜드명이 아닌 생활 의미로 변환</td><td class="muted">브랜드 기능 taxonomy 필요</td></tr>
-</tbody></table></div></div>
-</div></section>
+<div class="table"><table><thead><tr><th>고정축</th><th>Raw Spec</th><th>Rule</th><th>고객 문장 구조</th><th>데이터 없을 때</th></tr></thead><tbody>
+<tr><td><strong>화면 크기</strong></td><td>screen_size_inch</td><td class="rule">55=1.67~2.27m / 65=1.98~2.69m / 75=2.28~3.10m / 85=2.59~3.51m / 98=2.98~4.05m</td><td>“N형 대화면, 약 X~Ym 시청거리를 참고”</td><td>인치만 표시하고 거리 해석 미생성</td></tr>
+<tr><td><strong>화질 성향</strong></td><td>panel_type, backlight, HDR</td><td class="rule">OLED / MiniLED / QLED·LCD별 기술 특성만 해석</td><td>“이 패널은 ○○ 표현에 강점”</td><td>“패널 정보 확인 필요”</td></tr>
+<tr><td><strong>움직임</strong></td><td>native_refresh_hz, VRR, ALLM</td><td class="rule">≤60 기본 / 100~120 고주사율 / ≥144 고주사율 강화</td><td>“빠른 화면을 자주 볼 때 체감하기 쉬운 구간”</td><td>주사율 미확인 표시</td></tr>
+<tr><td><strong>사운드</strong></td><td>speaker_channel, output_w, eARC</td><td class="rule">출력·채널은 절대적 음질 점수로 변환하지 않음</td><td>“TV 단독 기본 / 외부 사운드 확장 가능”</td><td>“사운드 상세 정보 확인 필요”</td></tr>
+</tbody></table></div></div></section>
 
-<section class="cat" id="washer"><div class="wrap">
-<div class="cat-head"><div><div class="ey">03 · WASHER</div><h2>세탁기 하이체크</h2></div><p>먼저 드럼/통돌이 타입을 분리하고, 용량·대형 빨래·자동화·위생 기능을 생활 패턴으로 해석합니다.</p></div>
-<div class="sample"><span class="chip">드럼</span><span class="chip">24kg</span><span class="chip">AI 무게감지</span><span class="chip">자동세제</span><span class="chip">스팀 살균</span></div>
-<div class="preview-wrap"><div class="preview-label"><span>실제 상세페이지 노출 예시</span><span>24kg FRONT LOAD</span></div><div class="pdp"><div class="pdp-title">이 제품, 이렇게 확인해 보세요</div><div class="cards">
-<article class="card"><div class="num">HI-CHECK 01</div><h3 class="q">빨래를 몰아서 하는 집이라면 여유 있는 24kg급</h3><p class="answer">3~4인 가구 또는 주말에 빨래를 한 번에 많이 하는 생활 패턴에서 활용하기 좋은 대용량 구간입니다.</p><div class="facts"><span class="fact">드럼 24kg</span></div><p class="caution">※ 가족 수보다 실제 세탁 주기와 빨래량을 우선합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 02</div><h3 class="q">이불 빨래까지 자주 한다면</h3><p class="answer">이불 코스와 제조사 명시 허용 중량이 확인되는 경우에만 ‘대형 침구 세탁 가능’ 하이체크를 노출합니다.</p><div class="facts"><span class="fact">이불 코스</span></div><p class="caution">※ kg 용량만 보고 이불 가능 여부를 자동 추정하지 않습니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 03</div><h3 class="q">매번 세제를 계량하는 번거로움을 줄이고 싶다면</h3><p class="answer">자동세제투입 기능이 있어 세탁 때마다 세제량을 직접 맞추는 과정을 줄일 수 있습니다.</p><div class="facts"><span class="fact">AUTO_DETERGENT</span></div><p class="caution">※ 지원 세제 종류와 탱크 용량은 모델별 확인이 필요합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 04</div><h3 class="q">위생 세탁을 중요하게 본다면</h3><p class="answer">스팀·살균 계열 기능을 지원해 수건·침구·아이 옷처럼 위생 관리가 중요한 세탁에서 활용할 수 있습니다.</p><div class="facts"><span class="fact">STEAM_HYGIENE</span></div><p class="caution">※ 살균 성능은 제조사가 명시한 코스와 시험 조건을 함께 표시해야 합니다.</p></article>
+<section id="fridge"><div class="wrap"><div class="ey">02 · SIDE-BY-SIDE REFRIGERATOR</div><h2>양문형 냉장고는 항상 이 4가지만 봅니다.</h2><div class="fixed">
+<div class="axis"><div class="n">01</div><h3>보관 규모</h3><p>총용량을 “얼마나 많이 보관하는 제품인지”로 해석합니다.</p></div><div class="axis"><div class="n">02</div><h3>수납 구조</h3><p>2도어/4도어와 냉장·냉동 구성을 실제 꺼내쓰기 관점으로 풉니다.</p></div><div class="axis"><div class="n">03</div><h3>냉각·신선 보관</h3><p>정온·도어쿨링·독립냉각 등을 식재료 보관 의미로 번역합니다.</p></div><div class="axis"><div class="n">04</div><h3>생활 편의</h3><p>홈바·아이스메이커·오토오픈처럼 자주 쓰는 기능을 해석합니다.</p></div></div>
+<div class="preview"><div class="preview-label">예시 입력 · 871L / 4도어 / 냉장504L·냉동367L / 미세자동정온·도어쿨링 / 매직스페이스</div><div class="pdp"><h4>이 제품, 4가지만 빠르게 확인하세요</h4><div class="cards">
+<div class="card"><div class="k">01 · CAPACITY</div><h3>871L, 식재료를 넉넉하게 보관하는 대용량 구간입니다</h3><p>한 번에 많이 장보거나 여러 식재료를 여유 있게 보관하려는 경우 비교하기 좋은 용량대입니다.</p><div class="facts"><span class="fact">871L</span></div><p class="check">평소 장보기 주기와 별도 김치냉장고 사용 여부를 같이 보세요.</p></div>
+<div class="card"><div class="k">02 · STORAGE</div><h3>4도어, 냉장과 냉동을 나눠 정리하기 쉬운 구조입니다</h3><p>상하·좌우 공간을 나눠 식재료 종류별로 정리하기 좋은 타입입니다.</p><div class="facts"><span class="fact">4도어</span><span class="fact">냉장504L</span><span class="fact">냉동367L</span></div><p class="check">냉동식품을 자주 꺼내는지, 큰 냄비·반찬통 수납이 많은지 확인해보세요.</p></div>
+<div class="card"><div class="k">03 · FRESHNESS</div><h3>정온·도어쿨링, 온도 변화와 문 쪽 냉기 손실을 줄이는 데 초점을 둔 구성입니다</h3><p>냉장실 온도 변화를 줄이고 문 주변까지 냉기를 전달하는 기능이 포함된 타입입니다.</p><div class="facts"><span class="fact">미세자동정온</span><span class="fact">도어쿨링</span></div><p class="check">신선식품을 오래 보관하는 비중이 높은지 판단해보세요.</p></div>
+<div class="card"><div class="k">04 · CONVENIENCE</div><h3>매직스페이스, 자주 꺼내는 음료·식품 접근을 줄여주는 편의 기능입니다</h3><p>전체 도어를 열지 않고 자주 쓰는 식품을 꺼낼 수 있어 반복 사용이 많은 생활에서 편리합니다.</p><div class="facts"><span class="fact">홈바</span><span class="fact">매직스페이스</span></div><p class="check">이 기능을 실제로 자주 쓸지, 기본형과의 가격 차이가 가치 있는지 보세요.</p></div>
 </div></div></div>
-<div class="rules"><h3>MD 판정 기준</h3><div class="table-wrap"><table><thead><tr><th>항목</th><th>필수 입력</th><th>판정 기준</th><th>결과 코드</th><th>노출 방식</th><th>주의</th></tr></thead><tbody>
-<tr><td><strong>타입</strong></td><td>washer_type</td><td class="rule">FRONT_LOAD / TOP_LOAD 분리</td><td>WASHER_TYPE</td><td>타입별 별도 용량·기능 기준 적용</td><td class="muted">혼합 판정 금지</td></tr>
-<tr><td><strong>용량</strong></td><td>capacity_kg</td><td class="rule">≤9 소용량 / 10~15 중소형 / 16~19 중대형 / 20~22 대용량 / 23~25 초대용량</td><td>CAPACITY_CLASS</td><td>세탁 주기·빨래량 중심 표현</td><td class="muted">가구수는 참고 정보</td></tr>
-<tr><td><strong>이불</strong></td><td>bedding_supported, max_bedding_weight</td><td class="rule">제조사 명시 true일 때만 노출</td><td>BEDDING_READY</td><td>“대형 침구 세탁까지 고려 가능”</td><td class="muted">추정 금지</td></tr>
-<tr><td><strong>편의·위생</strong></td><td>feature_codes</td><td class="rule">AUTO_DETERGENT / LOAD_SENSING / STEAM_HYGIENE / TUB_CLEAN 등</td><td>WASH_FEATURE</td><td>기능명을 불편 해소 관점으로 번역</td><td class="muted">기능 수로 우열 판단 금지</td></tr>
-</tbody></table></div></div>
-</div></section>
+<div class="table"><table><thead><tr><th>고정축</th><th>Raw Spec</th><th>Rule</th><th>고객 문장 구조</th><th>데이터 없을 때</th></tr></thead><tbody>
+<tr><td><strong>보관 규모</strong></td><td>total_capacity_l</td><td class="rule">&lt;600 컴팩트 / 600~699 중형 / 700~799 대용량 / 800~899 대용량 여유 / ≥900 초대용량</td><td>“N L, ○○ 보관에 여유 있는 구간”</td><td>용량 확인 필요</td></tr>
+<tr><td><strong>수납 구조</strong></td><td>door_count, fridge_l, freezer_l, storage_features</td><td class="rule">도어·실 구성의 사실을 생활 동선으로 해석</td><td>“○도어, 냉장·냉동을 이렇게 쓰는 구조”</td><td>도어 타입만 설명</td></tr>
+<tr><td><strong>냉각·신선</strong></td><td>cooling_features</td><td class="rule">TEMP_STABILITY / DOOR_COOLING / INDEPENDENT_COOLING 등 공통 코드</td><td>“온도 변화/냉기 분배에 초점을 둔 구성”</td><td>기본 냉각 외 추가 기능 미확인</td></tr>
+<tr><td><strong>생활 편의</strong></td><td>homebar, ice_maker, auto_open</td><td class="rule">지원 기능을 실제 행동 감소로 번역</td><td>“자주 여닫기/얼음 준비/문 열기 수고를 줄임”</td><td>기본형 편의 구성</td></tr>
+</tbody></table></div></div></section>
 
-<section class="cat" id="aircon"><div class="wrap">
-<div class="cat-head"><div><div class="ey">04 · WALL-MOUNTED AIR CONDITIONER</div><h2>벽걸이 에어컨 하이체크</h2></div><p>전체 아파트 평수가 아니라 실제 냉방할 방의 면적을 기준으로 하고, 효율·바람·관리 기능을 함께 해석합니다.</p></div>
-<div class="sample"><span class="chip">냉방면적 18.7㎡</span><span class="chip">6평형</span><span class="chip">1등급</span><span class="chip">저소음</span><span class="chip">자동건조</span></div>
-<div class="preview-wrap"><div class="preview-label"><span>실제 상세페이지 노출 예시</span><span>18.7㎡ WALL AC</span></div><div class="pdp"><div class="pdp-title">이 제품, 이렇게 확인해 보세요</div><div class="cards">
-<article class="card"><div class="num">HI-CHECK 01</div><h3 class="q">침실·작은 방처럼 약 18.7㎡ 공간에 맞는 냉방 용량</h3><p class="answer">6평형 벽걸이 에어컨으로, 실제 냉방할 공간이 약 18.7㎡ 전후인 경우 기본 비교 대상으로 볼 수 있습니다.</p><div class="facts"><span class="fact">18.7㎡</span><span class="fact">6평형</span></div><p class="caution">※ 서향·최상층·복층·큰 창 등 열부하가 큰 공간은 상향 검토가 필요합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 02</div><h3 class="q">장시간 사용할 때 전기 사용이 신경 쓰인다면</h3><p class="answer">에너지소비효율 1등급 제품입니다. 같은 냉방면적 제품끼리 소비전력을 함께 비교하는 것이 좋습니다.</p><div class="facts"><span class="fact">1등급</span></div><p class="caution">※ 실제 요금은 운전시간·설정온도·단열 상태에 따라 달라집니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 03</div><h3 class="q">침실에서 직접 닿는 바람이 부담스럽다면</h3><p class="answer">무풍·간접풍·미세풍 같은 바람 제어 기능이 있다면 직접적인 찬바람을 줄이는 용도로 활용할 수 있습니다.</p><div class="facts"><span class="fact">AIRFLOW_COMFORT</span></div><p class="caution">※ 실제 풍량과 체감은 설치 위치와 운전모드에 따라 달라집니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 04</div><h3 class="q">에어컨 내부 습기 관리까지 신경 쓴다면</h3><p class="answer">자동건조·열교환기 세척 계열 기능이 있어 냉방 후 내부 습기 관리에 도움을 주는 타입입니다.</p><div class="facts"><span class="fact">AUTO_DRY</span></div><p class="caution">※ 기능명과 작동 방식은 제조사별로 다릅니다.</p></article>
+<section id="washer"><div class="wrap"><div class="ey">03 · WASHER</div><h2>세탁기는 항상 이 4가지만 봅니다.</h2><div class="fixed">
+<div class="axis"><div class="n">01</div><h3>세탁 방식</h3><p>드럼/통돌이의 작동방식을 실제 사용 차이로 풉니다.</p></div><div class="axis"><div class="n">02</div><h3>세탁량</h3><p>kg를 빨래량·세탁 주기로 해석합니다.</p></div><div class="axis"><div class="n">03</div><h3>의류 케어</h3><p>스팀·AI DD·특화코스를 옷감/위생 관리 의미로 번역합니다.</p></div><div class="axis"><div class="n">04</div><h3>자동화 편의</h3><p>자동세제·오토도어·자동코스를 반복 작업 감소로 해석합니다.</p></div></div>
+<div class="preview"><div class="preview-label">예시 입력 · 드럼 / 24kg / AI DD / 스팀 / 자동세제</div><div class="pdp"><h4>이 제품, 4가지만 빠르게 확인하세요</h4><div class="cards">
+<div class="card"><div class="k">01 · WASH TYPE</div><h3>드럼 방식, 낙차로 세탁하는 프런트로드 타입입니다</h3><p>통 안에서 세탁물을 들어 올렸다 떨어뜨리는 방식이라 물 사용량과 옷감 케어를 함께 고려하는 제품군입니다.</p><div class="facts"><span class="fact">드럼</span></div><p class="check">강한 물살의 통돌이 방식과 사용감이 다르니 평소 선호 방식을 보세요.</p></div>
+<div class="card"><div class="k">02 · CAPACITY</div><h3>24kg, 빨래를 몰아서 하거나 양이 많은 집에서 여유 있는 구간입니다</h3><p>대용량 세탁물을 한 번에 처리하기 좋은 구간이지만 kg 숫자가 곧 세탁조 부피와 동일한 것은 아닙니다.</p><div class="facts"><span class="fact">24kg</span></div><p class="check">평소 1회 빨래량과 이불 세탁 빈도를 기준으로 보세요.</p></div>
+<div class="card"><div class="k">03 · GARMENT CARE</div><h3>AI DD·스팀, 옷감과 위생 관리 기능을 강화한 구성입니다</h3><p>세탁물 특성을 감지해 동작을 조절하거나 스팀 코스로 위생 관리를 보조하는 기능이 포함됩니다.</p><div class="facts"><span class="fact">AI DD</span><span class="fact">스팀</span></div><p class="check">일반 세탁보다 섬세한 의류나 위생 코스를 자주 쓰는지 판단해보세요.</p></div>
+<div class="card"><div class="k">04 · AUTOMATION</div><h3>자동세제, 매번 세제량을 직접 맞추는 과정을 줄여줍니다</h3><p>세제함에 미리 채워두고 세탁량에 맞춰 자동 투입하는 방식입니다.</p><div class="facts"><span class="fact">자동세제</span></div><p class="check">편의 기능을 자주 쓸지, 수동 투입으로도 충분한지 판단해보세요.</p></div>
 </div></div></div>
-<div class="rules"><h3>MD 판정 기준</h3><div class="table-wrap"><table><thead><tr><th>항목</th><th>필수 입력</th><th>판정 기준</th><th>결과 코드</th><th>노출 방식</th><th>주의</th></tr></thead><tbody>
-<tr><td><strong>냉방면적</strong></td><td>rated_area_m2</td><td class="rule">약 18.7㎡=6평 / 23㎡=7평 / 26㎡=8평 / 29㎡=9평 / 32~34㎡=10~11평</td><td>COOLING_AREA</td><td>“실제 X㎡ 공간에 맞는 냉방 용량”</td><td class="muted">전체 아파트 평수 사용 금지</td></tr>
-<tr><td><strong>보정 조건</strong></td><td>room_conditions</td><td class="rule">서향·큰창·최상층·복층·고천장·개방형 공간이면 상향 검토</td><td>HEAT_LOAD_ADJUST</td><td>주의문으로 함께 노출</td><td class="muted">정량 상향 폭은 추가 검증 필요</td></tr>
-<tr><td><strong>에너지</strong></td><td>energy_grade, power_w</td><td class="rule">동일 냉방면적 내 효율 비교</td><td>ENERGY_CLASS</td><td>등급 + 소비전력 해석</td><td class="muted">전기요금 직접 단정 금지</td></tr>
-<tr><td><strong>관리 기능</strong></td><td>feature_codes</td><td class="rule">AUTO_DRY / HEAT_EXCHANGER_CLEAN / AIRFLOW_COMFORT</td><td>AC_COMFORT</td><td>바람·습기관리 관점으로 번역</td><td class="muted">브랜드명 공통화 필요</td></tr>
-</tbody></table></div></div>
-</div></section>
+<div class="table"><table><thead><tr><th>고정축</th><th>Raw Spec</th><th>Rule</th><th>고객 문장 구조</th><th>데이터 없을 때</th></tr></thead><tbody>
+<tr><td><strong>세탁 방식</strong></td><td>washer_type</td><td class="rule">FRONT_LOAD / TOP_LOAD</td><td>작동원리와 사용 차이 설명</td><td>타입 확인 필요</td></tr>
+<tr><td><strong>세탁량</strong></td><td>capacity_kg</td><td class="rule">≤9 소용량 / 10~15 중소형 / 16~19 중대형 / 20~22 대용량 / 23~25 초대용량</td><td>“빨래를 ○○하는 집에서 여유 있는 구간”</td><td>kg만 표시</td></tr>
+<tr><td><strong>의류 케어</strong></td><td>steam, ai_dd, special_cycles</td><td class="rule">기능 존재를 위생/옷감/특수세탁 의미로 변환</td><td>“○○ 관리 기능을 강화한 구성”</td><td>기본 세탁 코스 중심</td></tr>
+<tr><td><strong>자동화 편의</strong></td><td>auto_detergent, auto_door, auto_course</td><td class="rule">반복 행동을 얼마나 줄이는지 설명</td><td>“매번 ○○하는 과정을 줄임”</td><td>수동 조작 중심</td></tr>
+</tbody></table></div></div></section>
 
-<section class="cat" id="vacuum"><div class="wrap">
-<div class="cat-head"><div><div class="ey">05 · CORDLESS STICK VACUUM</div><h2>무선청소기 하이체크</h2></div><p>로봇청소기는 제외하고, 흡입력·사용시간·무게·배터리/스테이션처럼 실제 체감 사용성을 만드는 항목에 집중합니다.</p></div>
-<div class="sample"><span class="chip">280W</span><span class="chip">최대 60분</span><span class="chip">2.5kg</span><span class="chip">탈착 배터리</span><span class="chip">자동먼지비움</span></div>
-<div class="preview-wrap"><div class="preview-label"><span>실제 상세페이지 노출 예시</span><span>CORDLESS STICK VACUUM</span></div><div class="pdp"><div class="pdp-title">이 제품, 이렇게 확인해 보세요</div><div class="cards">
-<article class="card"><div class="num">HI-CHECK 01</div><h3 class="q">흡입 성능을 중요하게 본다면 280W급 고흡입 구간</h3><p class="answer">200W대 후반 흡입력으로, 다양한 바닥과 집중 청소에서 강한 흡입 성능을 원하는 사용자에게 맞는 구간입니다.</p><div class="facts"><span class="fact">280W</span></div><p class="caution">※ W/AW와 Pa는 직접 환산하지 않으며 측정 조건이 다른 수치는 비교하지 않습니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 02</div><h3 class="q">한 번 충전으로 오래 청소하고 싶다면</h3><p class="answer">최대 60분 사용시간을 제공하는 타입입니다. 실제로는 브러시 장착 여부와 사용 모드에 따라 시간이 달라집니다.</p><div class="facts"><span class="fact">최대 60분</span></div><p class="caution">※ 일반모드·브러시 장착 기준 시간을 우선 사용합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 03</div><h3 class="q">매일 들고 쓰기에 부담이 적은 편일까요?</h3><p class="answer">브러시 장착 기준 약 2.5kg라면 현재 주요 제품군에서 일반적인 무게 범위로 볼 수 있습니다.</p><div class="facts"><span class="fact">2.5kg</span></div><p class="caution">※ 무게 구간은 시장 분포 기반 내부 운영 기준으로 MD 검증이 필요합니다.</p></article>
-<article class="card"><div class="num">HI-CHECK 04</div><h3 class="q">청소 후 먼지통 비우는 번거로움을 줄이고 싶다면</h3><p class="answer">자동먼지비움 스테이션이 있어 청소 후 먼지통을 직접 비우는 과정을 줄일 수 있습니다.</p><div class="facts"><span class="fact">자동먼지비움</span><span class="fact">탈착 배터리</span></div><p class="caution">※ 먼지봉투 교체 주기와 소모품 비용은 별도 확인이 필요합니다.</p></article>
+<section id="aircon"><div class="wrap"><div class="ey">04 · WALL AC</div><h2>벽걸이 에어컨은 항상 이 4가지만 봅니다.</h2><div class="fixed">
+<div class="axis"><div class="n">01</div><h3>냉방 범위</h3><p>㎡·평형을 실제 방 크기로 번역합니다.</p></div><div class="axis"><div class="n">02</div><h3>전력 효율</h3><p>등급·소비전력을 장시간 사용 관점으로 풉니다.</p></div><div class="axis"><div class="n">03</div><h3>바람·쾌적</h3><p>무풍·간접풍·제습을 체감 바람의 성격으로 해석합니다.</p></div><div class="axis"><div class="n">04</div><h3>내부 관리</h3><p>자동건조·열교환기 세척을 관리 수고 관점으로 설명합니다.</p></div></div>
+<div class="preview"><div class="preview-label">예시 입력 · 18.7㎡(6평) / 1등급 / 무풍 / 자동건조</div><div class="pdp"><h4>이 제품, 4가지만 빠르게 확인하세요</h4><div class="cards">
+<div class="card"><div class="k">01 · COOLING AREA</div><h3>18.7㎡, 침실·작은 방의 단독 냉방을 비교할 때 보는 6평형입니다</h3><p>벽걸이 에어컨에서 가장 흔한 소형 냉방 구간 중 하나입니다.</p><div class="facts"><span class="fact">18.7㎡</span><span class="fact">6평형</span></div><p class="check">아파트 전체 평수가 아니라 실제 냉방할 방의 면적을 확인하세요.</p></div>
+<div class="card"><div class="k">02 · EFFICIENCY</div><h3>에너지 1등급, 장시간 사용할 때 효율을 중시한 구간입니다</h3><p>동일한 냉방면적 제품을 비교할 때 소비전력과 함께 보면 더 정확합니다.</p><div class="facts"><span class="fact">1등급</span></div><p class="check">실제 전기요금은 사용시간·설정온도·단열 조건에 따라 달라집니다.</p></div>
+<div class="card"><div class="k">03 · AIRFLOW</div><h3>무풍, 직접 닿는 강한 찬바람을 줄이는 데 초점을 둔 타입입니다</h3><p>강한 직바람보다 부드러운 냉방감을 선호하는 환경에서 체감 차이가 큽니다.</p><div class="facts"><span class="fact">무풍</span></div><p class="check">빠른 강풍 냉방과 부드러운 유지 냉방 중 무엇을 더 자주 쓰는지 보세요.</p></div>
+<div class="card"><div class="k">04 · SELF CARE</div><h3>자동건조, 냉방 후 내부 습기를 줄이는 관리 기능이 있습니다</h3><p>사용 후 열교환기 주변 습기를 말리는 과정을 자동으로 진행하는 타입입니다.</p><div class="facts"><span class="fact">자동건조</span></div><p class="check">자동관리 기능이 있어도 정기적인 필터·내부 청소는 필요합니다.</p></div>
 </div></div></div>
-<div class="rules"><h3>MD 판정 기준</h3><div class="table-wrap"><table><thead><tr><th>항목</th><th>필수 입력</th><th>판정 기준</th><th>결과 코드</th><th>노출 방식</th><th>주의</th></tr></thead><tbody>
-<tr><td><strong>흡입력</strong></td><td>suction_value, suction_unit, test_condition</td><td class="rule">&lt;100 / 100~149 / 150~199 / 200~279 / 280~319 / ≥320 W·AW</td><td>SUCTION_CLASS</td><td>“일상 / 강력 / 고흡입” 구간 해석</td><td class="muted">Pa와 직접 비교 금지</td></tr>
-<tr><td><strong>사용시간</strong></td><td>runtime_min, runtime_mode</td><td class="rule">&lt;30 / 30~49 / 50~59 / 60~89 / ≥90분</td><td>RUNTIME_CLASS</td><td>장시간 청소 적합성 표현</td><td class="muted">브러시 장착 일반/Auto 기준 우선</td></tr>
-<tr><td><strong>무게</strong></td><td>total_weight_kg</td><td class="rule">≤2.0 매우 가벼움 / 2.01~2.40 가벼움 / 2.41~2.70 일반 / &gt;2.70 무게감 있음</td><td>WEIGHT_CLASS</td><td>“매일 들고 쓰는 부담” 관점</td><td class="muted">내부 운영 기준 · MD 검증 필요</td></tr>
-<tr><td><strong>편의</strong></td><td>battery_removable, battery_count, auto_empty</td><td class="rule">true/false 조합</td><td>CONVENIENCE</td><td>교체 배터리·자동먼지비움 의미로 변환</td><td class="muted">지원 여부 확인된 경우만 노출</td></tr>
-</tbody></table></div></div>
-</div></section>
+<div class="table"><table><thead><tr><th>고정축</th><th>Raw Spec</th><th>Rule</th><th>고객 문장 구조</th><th>데이터 없을 때</th></tr></thead><tbody>
+<tr><td><strong>냉방 범위</strong></td><td>rated_area_m2</td><td class="rule">18.7=6평 / 23.1=7평 / 26=8평 / 29.3=9평 / 32.5=10평 / 34.1=11평</td><td>“N㎡, ○○ 공간을 비교할 때 보는 용량”</td><td>냉방면적 확인 필요</td></tr>
+<tr><td><strong>전력 효율</strong></td><td>energy_grade, power_w</td><td class="rule">등급은 동일 냉방면적끼리 비교</td><td>“장시간 사용에서 효율을 보는 구간”</td><td>등급 미확인</td></tr>
+<tr><td><strong>바람·쾌적</strong></td><td>airflow_features, dehumidify</td><td class="rule">DIRECT / INDIRECT / STILL_AIR / DEHUMIDIFY</td><td>바람 체감과 제습 사용성을 설명</td><td>기본 냉방 중심</td></tr>
+<tr><td><strong>내부 관리</strong></td><td>auto_dry, heat_exchanger_clean</td><td class="rule">지원 여부를 청소 수고 감소로 해석</td><td>“사용 후 내부 습기 관리 기능”</td><td>수동 관리 중심</td></tr>
+</tbody></table></div></div></section>
 
-<footer><div class="wrap">Hi-Check Exposure & Rule Guide · 고객 노출 예시 + MD 판정 기준만 남긴 실무용 버전</div></footer>
-</body>
-</html>
+<section id="vacuum"><div class="wrap"><div class="ey">05 · CORDLESS STICK VACUUM</div><h2>무선청소기는 항상 이 4가지만 봅니다.</h2><div class="fixed">
+<div class="axis"><div class="n">01</div><h3>흡입 성능</h3><p>W/AW/Pa를 같은 단위끼리만 분류합니다.</p></div><div class="axis"><div class="n">02</div><h3>사용시간</h3><p>최대 시간이 어떤 모드 기준인지 함께 해석합니다.</p></div><div class="axis"><div class="n">03</div><h3>다루기 쉬움</h3><p>무게를 매일 들고 쓰는 부담으로 번역합니다.</p></div><div class="axis"><div class="n">04</div><h3>청소 범위·관리</h3><p>브러시·물걸레·스테이션을 실제 청소 영역과 관리 수고로 풉니다.</p></div></div>
+<div class="preview"><div class="preview-label">예시 입력 · 280W / 최대 30분 / 2.49kg / 와이드헤드·자동먼지비움</div><div class="pdp"><h4>이 제품, 4가지만 빠르게 확인하세요</h4><div class="cards">
+<div class="card"><div class="k">01 · SUCTION</div><h3>280W, 메인 청소기로 강한 흡입을 원하는 제품군에 속합니다</h3><p>200W 이상을 메인 무선청소기의 한 기준으로 볼 때 높은 흡입력 구간입니다.</p><div class="facts"><span class="fact">280W</span></div><p class="check">카펫·틈새 청소가 많은지, 강모드 사용시간까지 같이 보세요.</p></div>
+<div class="card"><div class="k">02 · RUNTIME</div><h3>최대 30분, 짧고 집중적인 청소에 가까운 사용시간입니다</h3><p>최대 시간만으로 집 전체 청소 가능 여부를 단정하지 않고, 일반모드와 브러시 장착 조건을 함께 봐야 합니다.</p><div class="facts"><span class="fact">최대30분</span></div><p class="check">평소 한 번 청소하는 데 걸리는 시간과 배터리 교체 가능 여부를 확인하세요.</p></div>
+<div class="card"><div class="k">03 · HANDLING</div><h3>2.49kg, 주요 상중심 무선청소기에서 일반적인 무게 범위입니다</h3><p>무게 숫자뿐 아니라 모터와 배터리가 손잡이 쪽에 있는 구조인지에 따라 손목 체감이 달라집니다.</p><div class="facts"><span class="fact">2.49kg</span></div><p class="check">계단·침구처럼 들어 올려 쓰는 청소가 많은지 보세요.</p></div>
+<div class="card"><div class="k">04 · COVERAGE</div><h3>와이드헤드 + 자동먼지비움, 바닥 청소와 사후 관리 편의를 강화한 구성입니다</h3><p>넓은 바닥을 빠르게 청소하고 사용 후 먼지통을 직접 비우는 횟수를 줄여주는 타입입니다.</p><div class="facts"><span class="fact">와이드헤드</span><span class="fact">자동먼지비움</span></div><p class="check">침구·펫·물걸레 등 별도 브러시가 필요한 생활인지 확인하세요.</p></div>
+</div></div></div>
+<div class="table"><table><thead><tr><th>고정축</th><th>Raw Spec</th><th>Rule</th><th>고객 문장 구조</th><th>데이터 없을 때</th></tr></thead><tbody>
+<tr><td><strong>흡입 성능</strong></td><td>suction_value, unit</td><td class="rule">W/AW는 같은 계열끼리만 구간화. Pa와 직접 환산 금지</td><td>“메인/보조 용도에서 어느 정도 흡입 구간”</td><td>흡입력 수치 미확인</td></tr>
+<tr><td><strong>사용시간</strong></td><td>runtime_min, runtime_condition</td><td class="rule">최대보다 일반/중간모드 정보 우선</td><td>“짧은 집중 / 일반 / 장시간 청소”</td><td>최대 시간만 사실 표시</td></tr>
+<tr><td><strong>다루기 쉬움</strong></td><td>weight_kg, balance_type</td><td class="rule">≤2.0 가벼움 / 2.0~2.4 비교적 가벼움 / 2.4~2.7 일반 / &gt;2.7 무게감</td><td>“매일 들고 쓰는 부담”으로 번역</td><td>무게 미확인</td></tr>
+<tr><td><strong>청소 범위·관리</strong></td><td>main_brush, extra_brush, mop, auto_empty</td><td class="rule">브러시·스테이션 기능을 청소영역/관리 행동과 연결</td><td>“어디를 청소하고 어떤 수고를 줄이는지”</td><td>기본 바닥 청소 구성</td></tr>
+</tbody></table></div></div></section>
+
+<section id="evidence"><div class="wrap"><div class="ey">06 · VALIDATION</div><h2>왜 이 4축인가</h2><p class="lead">정확한 ‘검색량 TOP4’라고 주장하지 않습니다. 공개 검색량 원데이터가 없기 때문입니다. 대신 구매가이드에서 반복되는 의사결정 기준과 다나와에 안정적으로 구조화되어 있는 상품 필드를 교차해, 모든 PDP에서 일관되게 답할 수 있는 4축을 우선했습니다.</p>
+<div class="evidence">
+<div class="ev"><span class="badge">TV</span><h3>화질·크기·부가기능 + 사운드</h3><p>노써치는 TV 구매 기준을 화질·크기·부가기능 중심으로 설명하고, LG는 화질·화면크기·사운드를 구매 체크포인트로 제시합니다. 다나와 TV 스펙에도 화면크기·패널·주사율·사운드·HDMI가 구조화되어 있습니다.</p></div>
+<div class="ev"><span class="badge">냉장고</span><h3>타입/용량·수납·냉각·부가기능</h3><p>노써치 냉장고 구매가이드의 핵심 축과 삼성 구매가이드의 도어·용량·주요기능 구조가 겹칩니다. 다나와 양문형 상품에는 총용량·냉장/냉동·홈바·아이스메이커·정온/도어쿨링이 반복적으로 존재합니다.</p></div>
+<div class="ev"><span class="badge">세탁기</span><h3>방식·용량·세탁코스·부가기능</h3><p>노써치가 일반vs드럼·용량·세탁코스·부가기능을 4대 기준으로 제시하며, LG 역시 세탁 방식·용량·AI/스팀·자동세제 등의 차이를 생활 상황과 연결합니다.</p></div>
+<div class="ev"><span class="badge">에어컨</span><h3>평형·효율·부가기능·관리</h3><p>노써치는 평형선택·냉방효율·부가기능을 핵심으로 보고, 삼성은 설치공간 크기·전기료·부가기능을 체크리스트로 제시합니다. 다나와 벽걸이 카테고리는 냉방면적을 주요 선택필드로 제공합니다.</p></div>
+<div class="ev"><span class="badge">무선청소기</span><h3>성능·사용시간·사용편의·부가기능</h3><p>노써치는 청소성능·사용편의·부가기능을 핵심으로 설명하고 흡입력·배터리·무게·브러시를 구체적으로 다룹니다. 다나와에서도 흡입력·사용시간·무게·브러시·스테이션이 구조화 필드로 반복됩니다.</p></div>
+<div class="ev"><span class="badge">SYSTEM</span><h3>중요한 건 ‘같은 질문’입니다</h3><p>제품마다 하이체크 주제를 새로 고르면 비교 기준이 흔들립니다. 카테고리별 4축은 고정하고, 상품 스펙에 따라 분류 결과만 바꾸는 것이 시스템화와 학습효과에 맞습니다.</p></div>
+</div>
+</div></section>
+<footer><div class="wrap">Hi-Check Standard · Fixed 4 Axis · Same category, same questions, product-specific interpretation</div></footer>
+</body></html>
