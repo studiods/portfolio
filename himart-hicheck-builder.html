@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hi-Check Builder</title>
+<style>
+:root{--b:#080808;--p:#111;--l:#303030;--t:#f5f5f2;--m:#999;--a:#d6c85b}*{box-sizing:border-box}body{margin:0;background:var(--b);color:var(--t);font-family:Pretendard,system-ui,sans-serif}.app{width:min(1180px,calc(100% - 32px));margin:auto;padding:48px 0}h1{font-size:52px;font-weight:250;letter-spacing:-.05em;line-height:1.05;margin:8px 0 40px}.ey{color:var(--a);font-size:11px;letter-spacing:.14em}.row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--l)}h2{font-size:17px;margin:5px 0}.sub{color:#777;font-size:12px}.cats,.tools{display:flex;gap:8px;flex-wrap:wrap}.cats button,.tools button{background:#121212;color:#aaa;border:1px solid #3b3b3b;padding:11px 14px;cursor:pointer}.cats button.on,.tools .primary{border-color:var(--a);background:#1b190d;color:#fff}.drop{min-height:230px;border:1px dashed #555;display:grid;place-items:center;text-align:center;background:#0d0d0d;padding:24px}.drop.hot{border-color:var(--a);background:#17160d}.drop b{font-size:20px}.drop p{color:#888;font-size:13px}.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.thumbs img{width:120px;height:90px;object-fit:contain;border:1px solid #333}textarea{width:100%;min-height:170px;background:#0b0b0b;color:#ddd;border:1px solid #333;padding:14px;font:13px/1.55 ui-monospace,monospace}.tools{margin-top:10px}.status{color:#999;font-size:12px;margin-top:9px}.cards{display:grid;gap:10px}.card{border:1px solid #333;background:#0f0f0f;padding:18px}.card h3{margin:6px 0 8px;font-size:20px}.card p{color:#aaa;font-size:13px}.fact{display:inline-block;background:#1b190d;border:1px solid #4b4624;color:#d9d29a;padding:5px 8px;font-size:11px;margin:3px}.preview{background:#fff;color:#111;padding:22px}.hicheck-snippet{display:grid;gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-caution{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:760px){h1{font-size:38px}.row{grid-template-columns:1fr}}
+</style></head><body><main class="app"><div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>상세페이지 캡처 →<br>하이체크 HTML</h1>
+<section class="row"><div><div class="ey">01</div><h2>카테고리</h2><div class="sub">규칙을 먼저 고정합니다.</div></div><div class="cats" id="cats"></div></section>
+<section class="row"><div><div class="ey">02</div><h2>이미지</h2><div class="sub">드롭 / 붙여넣기 / 선택</div></div><div><div class="drop" id="drop"><div><b>상세페이지 캡처를 놓으세요</b><p>PNG · JPG · WEBP / Ctrl·Cmd+V 지원</p><button id="pick">파일 선택</button><input id="file" type="file" accept="image/*" multiple hidden></div></div><div class="thumbs" id="thumbs"></div><div class="status" id="status">이미지를 추가해 주세요.</div><div class="tools"><button class="primary" id="ocr">OCR 실행</button><button id="reset">초기화</button></div></div></section>
+<section class="row"><div><div class="ey">03</div><h2>추출 텍스트</h2><div class="sub">숫자·단위를 검수합니다.</div></div><div><textarea id="txt" placeholder="OCR 결과 또는 직접 복사한 상세페이지 텍스트"></textarea><div class="tools"><button class="primary" id="make">하이체크 생성</button><button id="sample">샘플</button></div></div></section>
+<section class="row"><div><div class="ey">04</div><h2>후보</h2><div class="sub">근거가 잡힌 항목만 표시합니다.</div></div><div class="cards" id="cards"><div class="sub">아직 결과가 없습니다.</div></div></section>
+<section class="row"><div><div class="ey">05</div><h2>HTML 조각</h2><div class="sub">전체 페이지가 아닌 영역만 출력합니다.</div></div><div><div class="preview" id="preview">생성 결과가 여기에 표시됩니다.</div><div class="tools"><button class="primary" id="copy">HTML 복사</button><button id="down">HTML 다운로드</button></div></div></section>
+</main>
+<script type="module">
+import { createWorker } from 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.esm.min.js';
+const defs={
+fridge:{label:'냉장고',sample:'4도어 냉장고 905L 프리스탠딩 크기 912 x 1853 x 922 mm 냉장 539L 냉동 366L 설치 가이드',rules:[
+['FR-01','우리 집 설치 공간에 들어갈까요?',['mm','설치','크기','깊이'],'제품 크기와 설치 여유 공간, 도어 오픈과 배송 동선을 함께 확인해 주세요.','외형 치수만으로 설치 가능을 단정하지 않습니다.'],
+['FR-02','우리 가족이 쓰기에 용량이 충분할까요?',['용량','L','냉장','냉동'],'총용량보다 가족 수·장보기 주기·냉동 보관 비중을 함께 보세요.','가족 수 기준은 참고값이며 보관 습관에 따라 달라집니다.'],
+['FR-03','키친핏과 프리스탠딩 중 어떤 타입인가요?',['키친핏','프리스탠딩','깊이'],'장 라인에 맞춰 설치하려면 설치 타입과 실제 깊이를 같이 확인하세요.','브랜드별 권장 설치 여유 공간이 다를 수 있습니다.'],
+['FR-04','냉장·냉동 사용 습관에 맞는 구조인가요?',['4도어','양문형','냉동실','팬트리'],'자주 꺼내는 식재료와 냉동 비중을 기준으로 도어와 내부 구조를 보세요.','체감 수납성은 선반 구성에 따라 달라집니다.']]},
+laundry:{label:'세탁기·건조기',sample:'AI 콤보 세탁 25kg 건조 15kg 크기 686 x 1110 x 875 mm 이불 코스 설치',rules:[
+['LA-01','우리 집 빨래량에 맞는 용량일까요?',['kg','용량'],'가족 수보다 실제 빨래량과 세탁 주기를 기준으로 용량을 보세요.','빨래 종류와 부피에 따라 체감 용량이 달라집니다.'],
+['LA-02','세탁실에 설치하거나 직렬로 올릴 수 있나요?',['설치','직렬','mm','키트'],'제품 크기와 모델 호환 키트, 문이 열리는 공간까지 확인하세요.','직렬 설치는 모델 조합별 호환 확인이 필요합니다.'],
+['LA-03','세탁부터 건조까지 한 번에 끝낼 수 있나요?',['콤보','세탁','건조'],'콤보형은 세탁 용량과 건조 용량을 따로 확인하세요.','세탁 용량과 건조 용량은 다를 수 있습니다.'],
+['LA-04','이불처럼 부피 큰 빨래도 가능한가요?',['이불','침구'],'이불 빨래가 잦다면 전용 코스와 대용량 대응 여부를 확인하세요.','소재·크기·두께에 따라 가능 여부가 달라집니다.']]},
+tv:{label:'TV',sample:'OLED TV 77형 194cm 4K 144Hz HDMI 2.1 VRR 벽걸이 설치',rules:[
+['TV-01','우리 집 시청거리에 화면 크기가 맞을까요?',['형','인치','cm','4K'],'화면 크기는 소파와 TV 사이 실제 거리와 함께 판단하세요.','권장 시청거리는 개인 선호에 따라 달라집니다.'],
+['TV-02','밝은 거실과 영화 감상 중 어디에 더 잘 맞나요?',['OLED','QLED','HDR','밝기'],'밝은 거실은 밝기·반사 대응, 영화는 명암과 블랙 표현을 함께 보세요.','패널 명칭만으로 화질을 단정하지 않습니다.'],
+['TV-03','콘솔·PC 게임용으로도 충분할까요?',['Hz','HDMI 2.1','VRR','ALLM'],'게임은 주사율과 HDMI 규격, VRR/ALLM 지원 여부를 확인하세요.','연결 기기도 같은 조건을 지원해야 합니다.'],
+['TV-04','벽걸이 설치가 가능한 환경인가요?',['벽걸이','VESA','설치'],'벽걸이는 벽체가 제품 하중을 지탱할 수 있는지 먼저 확인하세요.','벽 재질에 따라 설치가 제한될 수 있습니다.']]},
+aircon:{label:'에어컨',sample:'스탠드 에어컨 냉방면적 62.6㎡ 에너지효율 1등급 저소음 일반배관 실외기',rules:[
+['AC-01','우리 집 면적을 충분히 냉방할 수 있나요?',['냉방면적','㎡'],'표기 냉방면적을 실제 설치 공간과 비교하세요.','통유리·복층·서향은 더 큰 냉방 여유가 필요할 수 있습니다.'],
+['AC-02','우리 집 설치 방식과 배관 조건에 맞나요?',['배관','실외기','설치','벽걸이','스탠드'],'배관 방식과 실외기 위치를 구매 전에 확인하세요.','현장 조건에 따라 추가 작업이 발생할 수 있습니다.'],
+['AC-03','전기요금 부담을 줄이는 데 유리한가요?',['에너지','등급','소비전력'],'효율등급과 소비전력을 함께 보세요.','실제 요금은 사용시간·온도·단열에 따라 달라집니다.'],
+['AC-04','침실에서 조용하게 쓸 수 있나요?',['저소음','dB','소음'],'침실 사용이 많다면 저소음 운전 지원 여부를 확인하세요.','체감 소음은 설치환경과 운전 단계에 따라 달라집니다.']]},
+vacuum:{label:'청소기',sample:'무선 청소기 최대 흡입력 280W 최대 사용시간 60분 본체 무게 2.5kg 배터리',rules:[
+['VC-01','우리 집 청소 방식에 흡입력이 충분할까요?',['흡입력','W','AW'],'흡입력은 바닥 유형과 실제 사용하는 모드에서 충분한지 함께 보세요.','최대 수치는 특정 시험·모드 조건일 수 있습니다.'],
+['VC-02','한 번 충전으로 집 전체를 청소할 수 있나요?',['사용시간','분','배터리'],'최대 사용시간과 측정 모드를 함께 확인하세요.','강한 모드에서는 사용시간이 짧아질 수 있습니다.'],
+['VC-03','매일 들고 쓰기에 부담스럽지 않을까요?',['무게','kg','경량'],'자주 쓰는 제품이라면 손에 들리는 무게와 보관 방식도 중요합니다.','브러시 구성에 따라 체감 무게가 달라집니다.'],
+['VC-04','로봇청소기가 우리 집 구조를 잘 다닐 수 있을까요?',['로봇','문턱','카펫','라이다'],'문턱·카펫·장애물 대응을 집 구조와 함께 확인하세요.','시험환경과 실제 집 구조에 따라 차이가 날 수 있습니다.']]}
+};
+let cat='fridge',files=[],fragment='';const $=s=>document.querySelector(s);
+function cats(){ $('#cats').innerHTML=Object.entries(defs).map(([k,v])=>'<button data-k="'+k+'" class="'+(k===cat?'on':'')+'">'+v.label+'</button>').join('');document.querySelectorAll('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.k;cats();});}
+function add(list){[...list].forEach(f=>{if(f.type.startsWith('image/'))files.push(f)});$('#thumbs').innerHTML=files.map(f=>'<img src="'+URL.createObjectURL(f)+'">').join('');$('#status').textContent=files.length+'개 이미지 준비됨';}
+$('#pick').onclick=()=>$('#file').click();$('#file').onchange=e=>add(e.target.files);
+['dragover','dragenter'].forEach(x=>$('#drop').addEventListener(x,e=>{e.preventDefault();$('#drop').classList.add('hot')}));
+$('#drop').ondrop=e=>{e.preventDefault();$('#drop').classList.remove('hot');add(e.dataTransfer.files)};
+document.addEventListener('paste',e=>{const a=[...e.clipboardData.items].filter(i=>i.type.startsWith('image/')).map(i=>i.getAsFile());if(a.length)add(a)});
+$('#ocr').onclick=async()=>{if(!files.length)return alert('이미지를 먼저 추가해 주세요.');$('#status').textContent='OCR 준비 중';const w=await createWorker('kor+eng',1,{logger:m=>{if(m.progress)$('#status').textContent='OCR '+Math.round(m.progress*100)+'%'}});let out=[];for(const f of files){const r=await w.recognize(f);out.push(r.data.text)}await w.terminate();$('#txt').value=out.join('\n\n');$('#status').textContent='OCR 완료';};
+function facts(t){let a=[],m;if(m=t.match(/\d{2,4}\s*[x×]\s*\d{2,4}\s*[x×]\s*\d{2,4}\s*mm/i))a.push(m[0]);for(const r of [/\d{2,4}\s*L/ig,/\d+(?:\.\d+)?\s*kg/ig,/\d{2,3}\s*Hz/ig,/\d+(?:\.\d+)?\s*㎡/g,/\d{2,3}\s*분/g]){const z=t.match(r);if(z)a.push(...z.slice(0,2))}return [...new Set(a)].slice(0,6)}
+$('#make').onclick=()=>{const t=$('#txt').value;if(!t.trim())return alert('추출 텍스트를 먼저 넣어 주세요.');const f=facts(t),items=defs[cat].rules.map(r=>({r,score:r[2].filter(k=>t.toLowerCase().includes(k.toLowerCase())).length})).filter(x=>x.score>0);$('#cards').innerHTML=items.map(x=>'<div class="card"><div class="ey">'+x.r[0]+' · SIGNAL '+x.score+'</div><h3>'+x.r[1]+'</h3><p>'+x.r[3]+'</p>'+f.map(v=>'<span class="fact">'+v+'</span>').join('')+'<p>※ '+x.r[4]+'</p></div>').join('')||'<div class="sub">근거 데이터가 잡히지 않았습니다.</div>';fragment='<section class="hicheck-snippet" data-category="'+cat+'">'+items.map(x=>'<article class="hicheck-item"><div class="hicheck-kicker">HI-CHECK · '+x.r[0]+'</div><h3 class="hicheck-title">'+x.r[1]+'</h3><p class="hicheck-summary">'+x.r[3]+'</p><p class="hicheck-caution">※ '+x.r[4]+'</p></article>').join('')+'</section>';$('#preview').innerHTML=fragment;};
+$('#sample').onclick=()=>{$('#txt').value=defs[cat].sample;$('#make').click()};$('#reset').onclick=()=>{files=[];$('#thumbs').innerHTML='';$('#txt').value='';$('#cards').innerHTML='<div class="sub">아직 결과가 없습니다.</div>';$('#preview').textContent='생성 결과가 여기에 표시됩니다.'};
+$('#copy').onclick=()=>navigator.clipboard.writeText(fragment);$('#down').onclick=()=>{if(!fragment)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([fragment],{type:'text/html;charset=utf-8'}));a.download='hicheck-'+cat+'-snippet.html';a.click()};cats();
+</script></body></html>
