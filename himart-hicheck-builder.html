@@ -8,100 +8,178 @@
 .notice{margin:24px 0 34px;border:1px solid #494426;background:#15140d;padding:16px 18px;color:#c8c39a;font-size:13px}.row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--line)}h2{font-size:17px;margin:6px 0}.sub{color:#777;font-size:12px}.cats,.tools{display:flex;gap:8px;flex-wrap:wrap}.cats button,.tools button{background:#121212;color:#aaa;border:1px solid #3b3b3b;padding:11px 14px;cursor:pointer}.cats button.on,.tools .primary{border-color:var(--accent);background:#1b190d;color:#fff}.drop{min-height:220px;border:1px dashed #555;display:grid;place-items:center;text-align:center;background:#0d0d0d;padding:24px}.drop.hot{border-color:var(--accent);background:#17160d}.drop b{font-size:19px}.drop p{color:#888;font-size:13px}.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.thumbs img{width:120px;height:90px;object-fit:contain;border:1px solid #333}textarea{width:100%;min-height:170px;background:#0b0b0b;color:#ddd;border:1px solid #333;padding:14px;font:13px/1.55 ui-monospace,monospace}.status{color:#999;font-size:12px;margin-top:9px}.tools{margin-top:10px}
 .fixed-note{color:#aaa;font-size:12px;margin-bottom:10px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid #333;background:#0f0f0f;padding:18px}.card h3{margin:6px 0 8px;font-size:19px;line-height:1.4}.card p{color:#aaa;font-size:13px;line-height:1.6}.fact{display:inline-block;background:#1b190d;border:1px solid #4b4624;color:#d9d29a;padding:5px 8px;font-size:11px;margin:3px}.missing{color:#b47d74!important}.preview{background:#fff;color:#111;padding:22px}.hicheck-snippet{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;line-height:1.35;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-check{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:760px){.row{grid-template-columns:1fr}.cards,.hicheck-snippet{grid-template-columns:1fr}}
 </style></head><body><main class="app">
-<div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>같은 카테고리는<br>항상 같은 4가지로 해석합니다.</h1><p class="intro">상세페이지 캡처에서 제조사 스펙을 추출한 뒤, 카테고리별로 고정된 4개의 판단축에 넣습니다. 제품마다 질문을 새로 만들지 않습니다. 결과는 “이 제품은 이런 성격이다 → 내 상황과 맞는지 확인해보라”는 동일한 문장 구조로 생성됩니다.</p>
-<div class="notice">하이체크는 개인 맞춤 추천기가 아니라 <b>제품 해석기</b>입니다. 같은 카테고리에서는 1·2·3·4가 항상 동일하며, 스펙에 따라 분류 결과만 달라집니다. 데이터가 없으면 추정하지 않고 ‘확인 필요’로 표시합니다.</div>
+<div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>같은 카테고리는<br>항상 같은 6가지로 해석합니다.</h1><p class="intro">상세페이지 캡처에서 제조사 스펙을 추출한 뒤, 카테고리별로 고정된 6개의 판단축에 넣습니다. 상품마다 6개 판단축을 바꾸지 않습니다. 결과는 “이 제품은 이런 성격이다 → 내 상황과 맞는지 확인해보라”는 동일한 문장 구조로 생성됩니다.</p>
+<div class="notice">하이체크는 개인 맞춤 추천기가 아니라 <b>제품 해석기</b>입니다. 같은 카테고리에서는 1·2·3·4·5·6이 항상 동일하며, 스펙에 따라 분류 결과만 달라집니다. 데이터가 없으면 추정하지 않고 ‘확인 필요’로 표시합니다.</div>
 
-<section class="row"><div><div class="ey">01</div><h2>카테고리</h2><div class="sub">고정 4축을 선택합니다.</div></div><div class="cats" id="cats"></div></section>
+<section class="row"><div><div class="ey">01</div><h2>카테고리</h2><div class="sub">고정 6축을 선택합니다.</div></div><div class="cats" id="cats"></div></section>
 <section class="row"><div><div class="ey">02</div><h2>이미지 입력</h2><div class="sub">드롭 / 붙여넣기 / 선택</div></div><div><div class="drop" id="drop"><div><b>상세페이지 스펙 영역을 넣으세요</b><p>PNG · JPG · WEBP / Ctrl·Cmd+V 지원</p><button id="pick">파일 선택</button><input id="file" type="file" accept="image/*" multiple hidden></div></div><div class="thumbs" id="thumbs"></div><div class="status" id="status">이미지를 추가해 주세요.</div><div class="tools"><button class="primary" id="ocr">OCR 실행</button><button id="reset">초기화</button></div></div></section>
-<section class="row"><div><div class="ey">03</div><h2>추출 텍스트</h2><div class="sub">OCR 오류를 검수합니다.</div></div><div><textarea id="txt" placeholder="OCR 결과 또는 직접 복사한 상세페이지 텍스트"></textarea><div class="tools"><button class="primary" id="make">고정 4개 하이체크 생성</button><button id="sample">샘플</button></div></div></section>
-<section class="row"><div><div class="ey">04</div><h2>해석 결과</h2><div class="sub">항상 동일한 4개 축</div></div><div><div class="fixed-note" id="axisnote"></div><div class="cards" id="cards"><div class="sub">아직 결과가 없습니다.</div></div></div></section>
+<section class="row"><div><div class="ey">03</div><h2>추출 텍스트</h2><div class="sub">OCR 오류를 검수합니다.</div></div><div><textarea id="txt" placeholder="OCR 결과 또는 직접 복사한 상세페이지 텍스트"></textarea><div class="tools"><button class="primary" id="make">고정 6개 하이체크 생성</button><button id="sample">샘플</button></div></div></section>
+<section class="row"><div><div class="ey">04</div><h2>해석 결과</h2><div class="sub">항상 동일한 6개 축</div></div><div><div class="fixed-note" id="axisnote"></div><div class="cards" id="cards"><div class="sub">아직 결과가 없습니다.</div></div></div></section>
 <section class="row"><div><div class="ey">05</div><h2>하이체크 HTML</h2><div class="sub">영역만 복사/다운로드</div></div><div><div class="preview" id="preview">생성 결과가 여기에 표시됩니다.</div><div class="tools"><button class="primary" id="copy">HTML 복사</button><button id="down">HTML 다운로드</button></div></div></section>
 </main>
 <script>
+(function(){
 const D={
-tv:{label:'TV',axes:['화면 크기','화질 성향','움직임 성능','사운드 구성'],sample:'75인치 4K OLED 주사율 120Hz HDMI2.1 VRR ALLM 스피커 2.0채널 출력 20W eARC',
-make:t=>{
- let inch=num(t,/(\d{2,3})\s*(?:인치|형|inch|")/i),hz=num(t,/(\d{2,3})\s*Hz/i),w=num(t,/(\d{1,3})\s*W/i);
- let panel=kw(t,['OLED','Mini LED','미니LED','QLED','QNED','LED','LCD']);
- let sound=(t.match(/(\d\.\d)\s*채널/)||[])[1];
- let dist={55:'약 1.7~2.3m',65:'약 2.0~2.7m',75:'약 2.3~3.1m',77:'약 2.3~3.2m',83:'약 2.5~3.4m',85:'약 2.6~3.5m',98:'약 3.0~4.1m'}[inch]||null;
- return [
-  card('01 · SCREEN SIZE',inch?inch+'형, '+(dist?dist+' 시청거리를 참고할 수 있는 화면 크기입니다': '대화면 제품입니다'):'화면 크기 정보 확인이 필요합니다',inch?'인치 숫자를 그대로 보지 말고 실제 소파와 TV 사이 거리와 함께 보세요.':'화면 크기 스펙이 확인되지 않아 거리 해석은 생성하지 않습니다.',dist?'집의 실제 시청거리가 '+dist.replace('약 ','')+' 범위와 얼마나 가까운지 확인해보세요.':'화면 크기 데이터가 확보되면 동일 기준으로 거리 정보를 생성합니다.',inch?[inch+'형']:[]),
-  card('02 · PICTURE',panel?panel+', '+pic(panel):'패널 정보 확인이 필요합니다',panel?'패널 방식이 주는 대표적인 화면 특성을 생활 언어로 풀었습니다.':'패널/백라이트 정보가 없어 화질 성향을 추정하지 않습니다.','낮에 밝은 공간에서 보는지, 영화처럼 어두운 장면을 많이 보는지 판단해보세요.',panel?[panel]:[]),
-  card('03 · MOTION',hz?hz+'Hz, '+(hz>=120?'스포츠·빠른 화면을 자주 볼 때 체감하기 쉬운 고주사율 구간입니다':'일반 방송·OTT 시청 중심의 기본 주사율 구간입니다'):'주사율 정보 확인이 필요합니다',hz?'Native 주사율을 기준으로 움직임 특성을 해석합니다. '+(/VRR/i.test(t)?'VRR도 지원합니다.':''):'주사율을 추정하지 않습니다.','스포츠·게임 비중이 낮다면 이 항목의 우선순위는 낮아질 수 있습니다.',[hz?hz+'Hz':null,/VRR/i.test(t)?'VRR':null,/ALLM/i.test(t)?'ALLM':null].filter(Boolean)),
-  card('04 · SOUND',(sound||w)?(sound? sound+'채널 ':'')+(w?w+'W ':'')+'사운드 구성입니다':'사운드 정보 확인이 필요합니다',(sound||w)?'채널과 출력은 절대적인 음질 점수가 아니라 TV 단독 사용의 기본 구성을 이해하는 값입니다.':'스피커 채널/출력 정보가 없어 추정하지 않습니다.',/eARC/i.test(t)?'외부 사운드바를 쓸 계획이라면 eARC 연결을 활용할 수 있습니다.':'영화·공연 사운드를 중시한다면 외부 사운드 연결 사양도 함께 확인해보세요.',[sound?sound+'채널':null,w?w+'W':null,/eARC/i.test(t)?'eARC':null].filter(Boolean))
- ]}},
-fridge:{label:'양문형 냉장고',axes:['보관 규모','수납 구조','냉각·신선 보관','생활 편의'],sample:'양문형 냉장고 총용량 871L 4도어 냉장 504L 냉동 367L 미세자동정온 도어쿨링 홈바 매직스페이스 아이스메이커',
-make:t=>{
- let total=num(t,/(?:총용량|용량)\s*:?\s*(\d{3,4})\s*L/i),fr=num(t,/냉장\s*:?\s*(\d{2,4})\s*L/i),fz=num(t,/냉동\s*:?\s*(\d{2,4})\s*L/i),door=num(t,/(\d)\s*도어/);
- let cap=total?(total>=900?'초대용량':total>=800?'대용량 중에서도 여유 있는':total>=700?'대용량':total>=600?'중형':'컴팩트'):null;
- let cool=arrkw(t,['미세자동정온','정온','도어쿨링','독립냉각','메탈쿨링','급속냉동']);
- let conv=arrkw(t,['매직스페이스','홈바','푸드쇼케이스','아이스메이커','오토오픈','자동문열림']);
- return [
-  card('01 · CAPACITY',total?total+'L, '+cap+' 보관 구간입니다':'총용량 정보 확인이 필요합니다',total?'식재료를 얼마나 많이 보관하는 제품인지 용량 구간으로 먼저 해석합니다.':'용량을 추정하지 않습니다.','평소 장보기 주기와 별도 김치냉장고 사용 여부를 함께 보세요.',total?[total+'L']:[]),
-  card('02 · STORAGE',door?(door+'도어, 냉장·냉동 공간을 나눠 쓰는 구조입니다'):'도어·수납 구조 확인이 필요합니다',(fr||fz)?'냉장 '+(fr||'?')+'L / 냉동 '+(fz||'?')+'L 구성입니다. 도어 수와 실별 용량을 실제 수납 동선으로 해석합니다.':'냉장/냉동 개별 용량이 없어 수납 비중을 추정하지 않습니다.','큰 냄비·반찬통이 많은지, 냉동식품을 자주 꺼내는지 보세요.',[door?door+'도어':null,fr?fr+'L 냉장':null,fz?fz+'L 냉동':null].filter(Boolean)),
-  card('03 · FRESHNESS',cool.length?cool.join('·')+', 냉각과 신선 보관을 강화한 구성입니다':'추가 냉각·신선 기능 확인이 필요합니다',cool.length?'제조사 기능명을 온도 유지·냉기 분배·급속 냉동 같은 공통 의미로 번역합니다.':'기본 냉각 외 추가 기능을 추정하지 않습니다.','신선식품을 오래 보관하는 비중이 높은지 판단해보세요.',cool),
-  card('04 · CONVENIENCE',conv.length?conv.join('·')+', 반복 사용의 수고를 줄이는 편의 기능입니다':'추가 생활 편의 기능이 확인되지 않습니다',conv.length?'홈바·얼음·자동문열림처럼 자주 반복되는 행동을 줄이는 기능만 묶어 설명합니다.':'없는 기능을 만들어내지 않고 기본형으로 표시합니다.','이 기능을 실제로 자주 쓸지, 기본형과의 가격 차이가 가치 있는지 보세요.',conv)
- ]}},
-washer:{label:'세탁기',axes:['세탁 방식','세탁량','의류 케어','자동화 편의'],sample:'드럼 세탁기 24kg AI DD 스팀 알러지케어 자동세제 자동문열림',
-make:t=>{
- let kg=num(t,/(\d+(?:\.\d+)?)\s*kg/i),type=/드럼|프런트/i.test(t)?'드럼':/통돌이|일반세탁기|탑로드/i.test(t)?'통돌이':null;
- let care=arrkw(t,['AI DD','스팀','트루스팀','알러지케어','삶음','이불코스','울코스']);
- let auto=arrkw(t,['자동세제','자동 세제','오토오픈','자동문열림','AI세탁','AI 세탁','무게감지']);
- let cap=kg?(kg>=23?'초대용량':kg>=20?'대용량':kg>=16?'중대형':kg>=10?'중소형':'소용량'):null;
- return [
-  card('01 · WASH TYPE',type?(type+' 방식, '+(type==='드럼'?'낙차를 이용해 세탁하는 프런트로드 타입입니다':'강한 물살을 이용하는 탑로드 타입입니다')):'세탁 방식 확인이 필요합니다',type?(type==='드럼'?'옷감을 들어 올렸다 떨어뜨리는 구조의 특성을 쉽게 풀어 설명합니다.':'세탁판과 통의 물살을 활용하는 구조의 특성을 쉽게 풀어 설명합니다.'):'방식을 추정하지 않습니다.','평소 선호하는 세탁 방식과 투입·꺼내기 동선을 비교해보세요.',type?[type]:[]),
-  card('02 · CAPACITY',kg?kg+'kg, '+cap+' 세탁 구간입니다':'세탁용량 정보 확인이 필요합니다',kg?'kg는 세탁조 부피 그 자체가 아니라 제품이 처리할 수 있는 세탁물 무게 기준입니다.':'용량을 추정하지 않습니다.','가족 수보다 실제 1회 빨래량과 세탁 주기를 기준으로 보세요.',kg?[kg+'kg']:[]),
-  card('03 · GARMENT CARE',care.length?care.join('·')+', 의류·위생 관리 기능이 강화된 구성입니다':'특화 의류 케어 기능이 확인되지 않습니다',care.length?'스팀·AI·특화코스를 옷감 보호나 위생 관리의 의미로 바꿔 설명합니다.':'기본 세탁 기능 중심으로 표시합니다.','섬세한 의류나 침구·위생 코스를 실제로 자주 쓰는지 보세요.',care),
-  card('04 · AUTOMATION',auto.length?auto.join('·')+', 반복적인 세탁 설정의 수고를 줄이는 구성입니다':'추가 자동화 편의 기능이 확인되지 않습니다',auto.length?'세제 계량·코스 선택·문 열기처럼 반복 행동을 얼마나 줄이는지 설명합니다.':'없는 편의 기능을 추정하지 않습니다.','자동화 기능에 지불하는 추가 가격이 내 사용 빈도에 맞는지 판단해보세요.',auto)
- ]}},
-aircon:{label:'벽걸이 에어컨',axes:['냉방 범위','전력 효율','바람·쾌적','내부 관리'],sample:'벽걸이 에어컨 냉방면적 18.7㎡ 6평 에너지소비효율 1등급 무풍 제습 자동건조 열교환기 세척',
-make:t=>{
- let area=num(t,/냉방면적\s*:?\s*(\d+(?:\.\d+)?)\s*㎡/i)||num(t,/(\d+(?:\.\d+)?)\s*㎡/),grade=num(t,/([1-5])\s*등급/);
- let airflow=arrkw(t,['무풍','간접풍','미세풍','제습','쾌적']);
- let care=arrkw(t,['자동건조','열교환기세척','열교환기 세척','셀프클린','필터클린']);
- let py=area?Math.round(area/3.3058):null;
- return [
-  card('01 · COOLING AREA',area?area+'㎡, 약 '+py+'평형 냉방 구간입니다':'냉방면적 정보 확인이 필요합니다',area?'벽걸이 에어컨의 표기 냉방면적을 실제 방 크기와 비교할 수 있게 환산합니다.':'아파트 전체 평수로 추정하지 않습니다.','실제 냉방할 방의 면적을 기준으로 비교하세요. 큰 창·서향·최상층은 여유가 더 필요할 수 있습니다.',area?[area+'㎡',py+'평형']:[]),
-  card('02 · EFFICIENCY',grade?grade+'등급, 동일 냉방면적 제품끼리 효율을 비교할 때 보는 값입니다':'에너지효율 정보 확인이 필요합니다',grade?'등급 자체를 전기요금으로 직접 환산하지 않고 비교 기준으로만 해석합니다.':'효율을 추정하지 않습니다.','실제 전기요금은 사용시간·설정온도·단열 조건에 따라 달라집니다.',grade?[grade+'등급']:[]),
-  card('03 · AIRFLOW',airflow.length?airflow.join('·')+', 바람 체감과 습도 관리에 초점을 둔 구성입니다':'추가 바람·쾌적 기능이 확인되지 않습니다',airflow.length?'제조사 기능명을 직접바람 감소·제습 같은 실제 체감 의미로 바꿉니다.':'기본 냉방 중심으로 표시합니다.','빠른 강풍 냉방과 부드러운 유지 냉방 중 무엇을 더 자주 쓰는지 보세요.',airflow),
-  card('04 · SELF CARE',care.length?care.join('·')+', 사용 후 내부 관리 수고를 줄이는 구성입니다':'추가 내부관리 기능이 확인되지 않습니다',care.length?'자동건조·열교환기 세척을 청소 수고 감소의 의미로 설명합니다.':'없는 기능을 추정하지 않습니다.','자동관리 기능이 있어도 정기적인 필터·내부 청소는 필요합니다.',care)
- ]}},
-vacuum:{label:'무선청소기',axes:['흡입 성능','사용시간','다루기 쉬움','청소 범위·관리'],sample:'무선 핸디스틱 흡입력 280W 사용시간 30분 최대 무게 2.49kg 와이드브러시 침구브러시 먼지비움 스테이션',
-make:t=>{
- let suction=num(t,/흡입력\s*:?\s*(\d+(?:\.\d+)?)\s*(W|AW)/i),unit=(t.match(/흡입력\s*:?\s*\d+(?:\.\d+)?\s*(W|AW|Pa)/i)||[])[1],runtime=num(t,/(?:사용시간|최대)\s*:?\s*(\d{1,3})\s*분/i)||num(t,/(\d{1,3})\s*분\s*\(최대\)/i),weight=num(t,/무게\s*:?\s*(\d(?:\.\d+)?)\s*kg/i);
- let tools=arrkw(t,['와이드','침구브러시','펫브러시','펫브러쉬','물걸레','먼지비움','자동먼지비움','스테이션']);
- let suckText=suction&&unit?(unit.toUpperCase()==='PA'?suction+unit+', Pa는 W/AW와 직접 비교하지 않는 흡입 압력 단위입니다':suction+unit+', '+(suction>=200?'메인 청소기로 강한 흡입을 원하는 제품군입니다':suction>=150?'일상 청소 중심의 중간 흡입 구간입니다':'가벼운 부분 청소에 가까운 흡입 구간입니다')):'흡입력 정보 확인이 필요합니다';
- let wt=weight?(weight<=2?'가벼운 편':weight<=2.4?'비교적 가벼운 편':weight<=2.7?'일반적인 범위':'무게감이 있는 편'):null;
- return [
-  card('01 · SUCTION',suckText,suction&&unit?'흡입력은 단위와 측정 조건을 함께 보고 같은 단위끼리만 비교합니다.':'수치를 추정하거나 Pa와 W/AW를 임의 환산하지 않습니다.','카펫·틈새 청소가 많은지, 강모드 사용시간까지 함께 보세요.',suction&&unit?[suction+unit]:[]),
-  card('02 · RUNTIME',runtime?'최대 '+runtime+'분, '+(runtime>=60?'장시간 청소를 고려할 수 있는 구간입니다':runtime>=40?'일반적인 1회 청소를 비교할 때 보는 구간입니다':'짧고 집중적인 청소에 가까운 구간입니다'):'사용시간 정보 확인이 필요합니다',runtime?'최대 시간은 실제 일반모드 시간과 다를 수 있어 측정 조건을 같이 봐야 합니다.':'시간을 추정하지 않습니다.','평소 한 번 청소하는 데 걸리는 시간과 배터리 교체 가능 여부를 확인하세요.',runtime?[runtime+'분']:[]),
-  card('03 · HANDLING',weight?weight+'kg, 주요 무선청소기에서 '+wt+'으로 볼 수 있습니다':'무게 정보 확인이 필요합니다',weight?'무게 숫자와 함께 모터·배터리 위치에 따른 손목 체감 차이가 있음을 안내합니다.':'체감무게를 추정하지 않습니다.','계단·침구처럼 들어 올려 쓰는 청소가 많은지 보세요.',weight?[weight+'kg']:[]),
-  card('04 · COVERAGE',tools.length?tools.join('·')+', 청소 범위와 사후 관리 편의를 넓히는 구성입니다':'추가 브러시·관리 기능이 확인되지 않습니다',tools.length?'브러시와 스테이션을 “어디를 청소하고 어떤 수고를 줄이는지”로 번역합니다.':'기본 바닥 청소 구성으로 표시합니다.','침구·펫·물걸레 등 실제 집에서 필요한 청소영역이 포함되는지 확인하세요.',tools)
- ]}}
+tv:{name:'TV',axes:['화면 크기·거리','패널·명암','해상도·HDR','주사율·움직임','사운드','OTT·외부 연결'],sample:'75인치 / OLED / 4K / Dolby Vision / Native 120Hz / 스피커 2.0채널 출력 20W / Google TV / HDMI 2.1 / VRR'},
+fridge:{name:'양문형 냉장고',axes:['보관 용량','수납 구조','냉각·신선도','에너지 소비','꺼내 쓰는 편의','위생·냄새 관리'],sample:'양문형 냉장고 총용량 870L / 2도어 / 냉장 503L / 냉동 367L / 독립냉각 / 에너지 1등급 / 홈바 / 탈취'},
+washer:{name:'세탁기',axes:['세탁 방식','세탁 용량','이불·큰 빨래','옷감별 세탁 코스','물·전기 사용','자동화·관리 편의'],sample:'드럼세탁기 24kg / 이불 코스 / AI DD / 울 코스 / 섬세 코스 / 에너지 1등급 / 자동세제'},
+aircon:{name:'벽걸이 에어컨',axes:['냉방 면적','전력 효율','바람 방식','제습 기능','소음·취침','자동건조·청소'],sample:'벽걸이 에어컨 냉방면적 18.7㎡ / 인버터 / 에너지 1등급 / 무풍 / 제습 / 저소음 / 자동건조'},
+vacuum:{name:'무선청소기',axes:['흡입 성능','사용시간·배터리','무게·손목 부담','바닥·브러시 구성','먼지통·자동비움','필터·세척 관리'],sample:'무선 스틱청소기 흡입력 280W / 최대 사용시간 60분 일반모드 / 전체무게 2.5kg / 소프트브러시 / 자동먼지비움 / HEPA 필터'}
 };
-function num(t,r){let m=t.match(r);return m?parseFloat(m[1]):null}
-function kw(t,a){return a.find(x=>t.toLowerCase().includes(x.toLowerCase()))||null}
-function arrkw(t,a){return [...new Set(a.filter(x=>t.toLowerCase().includes(x.toLowerCase())))]}
-function pic(p){p=p.toLowerCase();if(p.includes('oled'))return '어두운 장면의 명암과 블랙 표현에 강점이 있는 타입입니다';if(p.includes('mini'))return '높은 밝기와 세밀한 백라이트 제어를 함께 노리는 타입입니다';if(p.includes('qled')||p.includes('qned'))return '밝은 화면과 색 표현을 강화한 LCD 계열 타입입니다';return '범용적인 LCD/LED 화면 특성을 가진 타입입니다'}
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function card(k,title,summary,check,facts){return{k,title,summary,check,facts}}
-let cat='tv',files=[],fragment='';
 const $=s=>document.querySelector(s);
-function renderCats(){ $('#cats').innerHTML=Object.entries(D).map(([k,v])=>'<button data-k="'+k+'" class="'+(k===cat?'on':'')+'">'+v.label+'</button>').join('');document.querySelectorAll('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.k;renderCats();$('#axisnote').textContent=D[cat].axes.map((x,i)=>(i+1)+'. '+x).join('  ·  ');});$('#axisnote').textContent=D[cat].axes.map((x,i)=>(i+1)+'. '+x).join('  ·  ');}
-function add(list){[...list].forEach(f=>{if(f.type&&f.type.startsWith('image/'))files.push(f)});$('#thumbs').innerHTML=files.map(f=>'<img src="'+URL.createObjectURL(f)+'">').join('');$('#status').textContent=files.length+'개 이미지 준비됨';}
-$('#pick').onclick=()=>$('#file').click();$('#file').onchange=e=>add(e.target.files);['dragover','dragenter'].forEach(x=>$('#drop').addEventListener(x,e=>{e.preventDefault();$('#drop').classList.add('hot')}));$('#drop').ondragleave=()=>$('#drop').classList.remove('hot');$('#drop').ondrop=e=>{e.preventDefault();$('#drop').classList.remove('hot');add(e.dataTransfer.files)};
-document.addEventListener('paste',e=>{if(!e.clipboardData)return;const a=[...e.clipboardData.items].filter(i=>i.type.startsWith('image/')).map(i=>i.getAsFile()).filter(Boolean);if(a.length)add(a)});
-$('#ocr').onclick=async()=>{if(!files.length)return alert('이미지를 먼저 추가해 주세요.');if(!window.Tesseract)return alert('OCR 라이브러리를 불러오지 못했습니다.');$('#status').textContent='OCR 준비 중';const w=await Tesseract.createWorker('kor+eng',1,{logger:m=>{if(m.progress)$('#status').textContent='OCR '+Math.round(m.progress*100)+'%'}});let out=[];for(const f of files){const r=await w.recognize(f);out.push(r.data.text)}await w.terminate();$('#txt').value=out.join('\n\n');$('#status').textContent='OCR 완료 · 숫자와 단위를 확인한 뒤 생성하세요.';};
-function build(){
- const t=$('#txt').value;if(!t.trim())return alert('추출 텍스트를 먼저 넣어 주세요.');
- const items=D[cat].make(t);
- $('#cards').innerHTML=items.map(x=>'<article class="card"><div class="ey">'+esc(x.k)+'</div><h3>'+esc(x.title)+'</h3><p>'+esc(x.summary)+'</p><div>'+x.facts.map(f=>'<span class="fact">'+esc(f)+'</span>').join('')+'</div><p class="'+(x.title.includes('확인')?'missing':'')+'">판단 포인트 · '+esc(x.check)+'</p></article>').join('');
- fragment='<section class="hicheck-snippet" data-category="'+cat+'">'+items.map(x=>'<article class="hicheck-item"><div class="hicheck-kicker">'+esc(x.k)+'</div><h3 class="hicheck-title">'+esc(x.title)+'</h3><p class="hicheck-summary">'+esc(x.summary)+'</p>'+(x.facts.length?'<div class="hicheck-facts">'+x.facts.map(f=>'<span class="hicheck-fact">'+esc(f)+'</span>').join('')+'</div>':'')+'<p class="hicheck-check">'+esc(x.check)+'</p></article>').join('')+'</section>';
- $('#preview').innerHTML=fragment;
+let category='tv',files=[],fragment='';
+const n=(s,p)=>{let m=s.match(p);return m?Number(m[1]):null};
+const match=(s,p)=>p.test(s);
+const any=(s,l)=>l.filter(x=>s.toLowerCase().includes(x.toLowerCase()));
+const numStr=x=>Number.isFinite(x)?String(x):'';
+const fact=(...a)=>a.filter(Boolean);
+function item(i,title,body,check,values){return {i,title,body,check,values:values||[],unknown:false};}
+function unknown(i,field){return {i,title:'이 제품의 '+field+' 정보는 확인이 필요해요',body:'상세페이지 이미지에서 해당 정보가 명확하게 확인되지 않았어요. 다른 기능으로 대신 채우지 않고 동일한 기준을 유지해요.',check:'제조사 공식 제원에서 확인해보세요.',values:[],unknown:true};}
+function tv(t){
+ const size=n(t,/(\d{2,3})\s*(?:인치|형|inch|["”])/i);
+ const screen=size?(()=>{const width=size*0.0254*16/Math.sqrt(16*16+9*9);return [(width/(2*Math.tan(40*Math.PI/360))).toFixed(1),(width/(2*Math.tan(30*Math.PI/360))).toFixed(1)]})():null;
+ const panel=any(t,['OLED','Mini LED','MiniLED','미니LED','QLED','QNED','LCD','LED'])[0];
+ const res=any(t,['8K','4K','FHD'])[0];
+ const hdr=any(t,['Dolby Vision','돌비비전','HDR10+','HDR10','HLG'])[0];
+ const hz=n(t,/(?:Native\s*)?(\d{2,3})\s*Hz/i);
+ const ch=(t.match(/(\d\.\d)\s*(?:ch|채널)/i)||[])[1];
+ const watt=n(t,/(?:스피커|오디오|출력|음향)[^\n]{0,45}?(\d{1,3})\s*W/i);
+ const os=any(t,['Google TV','webOS','Tizen','Android TV','타이젠'])[0];
+ const hdmi=match(t,/HDMI\s*2\.1/i);
+ return [
+  size?item(1,size+'형, '+(screen?'약 '+screen[0]+'~'+screen[1]+'m 시청거리를 참고하기 좋아요':'화면 크기를 확인하기 좋아요'),screen?'16:9 화면의 시야각 40°~30° 기준 참고 거리예요. 인치보다 소파에서 TV까지의 실제 거리를 함께 보면 좋아요.':'화면 크기와 실제 시청거리를 함께 비교하면 좋아요.','시청 환경과 몰입감 취향에 따라 선호 거리가 달라져요.',fact(size+'형')):unknown(1,'화면 크기'),
+  panel?item(2,panel+'는 '+(panel.toUpperCase().includes('OLED')?'영화의 어두운 장면을 보기 좋아요':panel.toLowerCase().includes('mini')?'명암 제어와 밝기를 함께 살펴보기 좋아요':'화면의 색·밝기 특성을 비교하기 좋아요'),'패널·백라이트 구조의 특징을 해석했어요. 실제 밝기와 눈부심 대응은 모델별 차이가 있어요.','밝은 거실에서 많이 보는지, 밤 영화 감상이 많은지 판단해보세요.',fact(panel)):unknown(2,'패널·화질'),
+  (res||hdr)?item(3,(res||'해상도 미확인')+(hdr?'에 '+hdr+'까지, ':' 규격으로 ')+(res==='4K'?'고화질 OTT를 즐기기 좋아요':res==='8K'?'초고해상도 영상을 활용하기 좋아요':'영상 규격을 비교하기 좋아요'),'지원 해상도와 HDR 형식을 생활 언어로 풀었어요. 영상 원본과 구독 요금제도 해당 규격을 지원해야 해요.','지원 포맷만으로 실제 화질 우열을 단정하지 않아요.',fact(res,hdr)):unknown(3,'해상도·HDR'),
+  hz?item(4,hz+'Hz, '+(hz>=120?'스포츠나 빠른 화면을 볼 때 좋아요':'뉴스·예능·일반 OTT 시청을 위한 기본 구간이에요'),'TV 화면이 1초에 갱신되는 횟수예요. 실제 영상의 프레임과 입력 조건에 따라 체감은 달라요.','콘솔 게임을 즐긴다면 VRR과 HDMI 규격도 함께 확인해보세요.',fact(hz+'Hz',match(t,/VRR/i)?'VRR':null)):unknown(4,'주사율'),
+  (ch||watt)?item(5,(ch?ch+'채널 ':'')+(watt?watt+'W ':'')+'사운드 구성이라 일상 시청에 활용할 수 있어요','스피커 채널과 출력으로 구성만 확인했어요. 영화 저음·공간감은 실제 청취와 외부 사운드 구성을 함께 비교하면 좋아요.','숫자가 크다고 체감 음질이 반드시 좋은 것은 아니에요.',fact(ch?ch+'ch':null,watt?watt+'W':null)):unknown(5,'사운드'),
+  (os||hdmi)?item(6,(os||'스마트 TV')+(hdmi?'와 HDMI 2.1로 ':' 기능으로 ')+'OTT·외부기기를 활용하기 좋아요','지원하는 운영체제와 연결 규격을 확인했어요. 사용하는 OTT 앱과 게임기의 지원 여부는 별도로 확인해보세요.','포트별 대역폭과 앱 지원은 모델·지역·버전에 따라 달라질 수 있어요.',fact(os,hdmi?'HDMI 2.1':null)):unknown(6,'OTT·연결')
+ ];
 }
-$('#make').onclick=build;$('#sample').onclick=()=>{$('#txt').value=D[cat].sample;build()};$('#reset').onclick=()=>{files=[];$('#thumbs').innerHTML='';$('#txt').value='';$('#cards').innerHTML='<div class="sub">아직 결과가 없습니다.</div>';$('#preview').textContent='생성 결과가 여기에 표시됩니다.'};
-$('#copy').onclick=()=>{if(!fragment)return;navigator.clipboard.writeText(fragment)};
-$('#down').onclick=()=>{if(!fragment)return;const style='<style>.hicheck-snippet{font-family:Pretendard,system-ui,sans-serif;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px;background:#fff;color:#111}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;line-height:1.35;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.hicheck-fact{font-size:11px;background:#f3f0d6;color:#564e00;padding:5px 8px;border-radius:99px}.hicheck-check{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:700px){.hicheck-snippet{grid-template-columns:1fr}}</style>';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([style+fragment],{type:'text/html;charset=utf-8'}));a.download='hicheck-'+cat+'-snippet.html';a.click()};
+function fridge(t){
+ const capacity=n(t,/(?:총\s*용량|총용량|용량)\s*[:：]?\s*(\d{3,4})\s*L/i)||n(t,/(\d{3,4})\s*L/i);
+ const door=n(t,/([234])\s*도어/);
+ const fridgeL=n(t,/냉장(?:실|용량)?\s*[:：]?\s*(\d{2,4})\s*L/i);
+ const freezerL=n(t,/냉동(?:실|용량)?\s*[:：]?\s*(\d{2,4})\s*L/i);
+ const cold=any(t,['독립냉각','미세자동정온','정온','도어쿨링','급속냉동']);
+ const en=n(t,/(?:에너지[^\n]{0,14}?)?([1-5])\s*등급/i);
+ const home=any(t,['매직스페이스','홈바','푸드쇼케이스','아이스메이커','제빙기','자동문열림','오토오픈']);
+ const hygiene=any(t,['탈취','UV','제균','항균필터','탈취필터']);
+ return [
+  capacity?item(1,capacity+'L급이라 '+(capacity>=800?'식재료를 넉넉하게 보관하기 좋아요':capacity>=600?'여러 식재료를 나눠 보관하기 좋아요':'보관 규모가 크지 않은 생활에서 살펴보기 좋아요'),'표기 용량을 그대로 반복하기보다 한 번에 장보는 식재료의 양으로 생각하면 쉬워요.','가족 수 외에도 장보기 빈도와 다른 냉장고 보유 여부를 함께 보세요.',fact(capacity+'L')):unknown(1,'용량'),
+  (door||fridgeL||freezerL)?item(2,(door?door+'도어, ':'')+'냉장·냉동 공간을 구분해서 쓰기 좋아요','도어 수와 냉장·냉동실 용량을 함께 확인하면 식재료 정리 방식을 이해하기 쉬워요.','양문형·4도어는 내부 수납 형태가 달라요. 선반 폭도 확인해보세요.',fact(door?door+'도어':null,fridgeL?'냉장 '+fridgeL+'L':null,freezerL?'냉동 '+freezerL+'L':null)):unknown(2,'수납 구조'),
+  cold.length?item(3,cold.join('·')+', 식재료의 온도 관리에 신경 쓴 구성이에요','온도 변화 제어와 냉기 분배 관련 기능을 생활 언어로 풀었어요.','기능 이름만으로 신선도 유지 기간을 보장하지 않아요.',cold):unknown(3,'냉각·신선도'),
+  en?item(4,'에너지 '+en+'등급, 오래 켜두는 전력 효율을 살펴보기 좋아요','같은 용량대에서는 연간 소비전력(kWh)도 함께 비교하면 좋아요.','등급만으로 실제 한 달 전기요금을 단정하지 않아요.',fact(en+'등급')):unknown(4,'에너지'),
+  home.length?item(5,home.join('·')+' 기능이 있어 자주 쓰는 식품을 꺼내기 편해요','도어 일부를 열거나 자동으로 얼음을 만드는 기능처럼 반복 행동을 줄이는 구성이에요.','기능마다 제공 범위가 다르므로 실제 지원 항목만 확인하세요.',home):unknown(5,'생활 편의'),
+  hygiene.length?item(6,hygiene.join('·')+' 기능으로 냉장고 속 냄새를 관리하기 좋아요','식재료를 함께 보관할 때 탈취·위생 기능을 활용하는 구성이에요.','살균률이나 탈취 효율은 공식 시험 데이터가 있을 때만 비교할 수 있어요.',hygiene):unknown(6,'위생·탈취')
+ ];
+}
+function washer(t){
+ const type=/드럼|프런트로드/i.test(t)?'드럼':/통돌이|일반\s*세탁기|탑로드/i.test(t)?'통돌이':null;
+ const kg=n(t,/(\d{1,2}(?:\.\d+)?)\s*kg/i);
+ const bedding=any(t,['이불 코스','이불코스','침구 코스','침구코스']);
+ const cycles=any(t,['AI DD','울 코스','울코스','섬세 코스','섬세코스','급속코스','삶음','스팀']);
+ const grade=n(t,/([1-5])\s*등급/i);
+ const auto=any(t,['자동세제','자동 세제','자동문열림','오토오픈','통세척','자동코스']);
+ return [
+  type?item(1,type+' 방식이라 '+(type==='드럼'?'옷감을 들어 올려 떨어뜨리며 세탁해요':'회전 물살로 세탁물을 세탁해요'),'세탁 방식의 실제 움직임과 투입 방향을 설명했어요.','방식만으로 세탁력의 절대 우열을 말하지 않아요.',fact(type)):unknown(1,'세탁 방식'),
+  kg?item(2,kg+'kg급이라 '+(kg>=20?'빨래를 몰아서 하는 집에서 여유 있게 쓰기 좋아요':kg>=10?'평소 의류 세탁을 나누어 하기 좋아요':'소량 빨래를 자주 하는 생활에 잘 맞아요'),'kg는 세탁 가능한 세탁물 무게예요. 세탁조 부피와 꼭 같은 의미는 아니에요.','이불처럼 부피 큰 빨래는 세탁조 크기도 함께 보세요.',fact(kg+'kg')):unknown(2,'세탁용량'),
+  bedding.length?item(3,'이불 코스가 있어 침구 세탁을 할 때 살펴보기 좋아요','부피 큰 침구류에 맞춘 운전 코스를 선택할 수 있어요.','제조사의 허용 무게·크기 정보 없이는 모든 이불이 된다고 보장하지 않아요.',bedding):unknown(3,'이불 코스'),
+  cycles.length?item(4,cycles.join('·')+' 기능으로 옷감에 맞춰 세탁하기 좋아요','일반 빨래 외에 특정 소재나 오염에 맞게 운전하는 구성이에요.','의류 라벨과 각 코스의 실제 지원 조건을 함께 확인하세요.',cycles):unknown(4,'의류 코스'),
+  grade?item(5,'에너지 '+grade+'등급이라 반복 세탁의 효율을 확인하기 좋아요','평소 자주 사용한다면 동일 시험 조건의 물 사용량과 전력 소비량을 같이 비교하면 좋아요.','최대 소비전력(W)은 1회 사용전력(kWh)과 달라요.',fact(grade+'등급')):unknown(5,'물·전기 효율'),
+  auto.length?item(6,auto.join('·')+' 기능으로 매번 하는 세탁 준비가 편해요','세제 계량과 관리 같은 반복적인 동작을 줄여주는 구성이에요.','지원 기능과 세제/관리 조건은 모델마다 달라요.',auto):unknown(6,'자동화·관리')
+ ];
+}
+function aircon(t){
+ const area=n(t,/(?:냉방면적)?\s*[:：]?\s*(\d{1,3}(?:\.\d+)?)\s*㎡/);
+ const grade=n(t,/([1-5])\s*등급/i);
+ const inv=match(t,/인버터/i);
+ const airflow=any(t,['무풍','간접풍','미세풍','풍향조절','강풍']);
+ const dehum=match(t,/제습/i);
+ const quiet=any(t,['저소음','취침모드','수면모드','조용모드']);
+ const care=any(t,['자동건조','열교환기 세척','열교환기세척','필터 자동청소','워시클린']);
+ return [
+  area?item(1,area+'㎡, 침실이나 독립된 방 냉방을 비교하기 좋아요','제조사가 표시한 냉방면적을 기준으로 실제 냉방할 방의 면적과 비교해보세요.','아파트 전체 공급 평수는 기준이 아니에요. 큰 창·서향·복층은 추가 여유를 고려하세요.',fact(area+'㎡',Math.round(area/3.3058)+'평형(참고)')):unknown(1,'냉방면적'),
+  (grade||inv)?item(2,(inv?'인버터':'운전방식 미확인')+(grade?'·'+grade+'등급':'')+', 장시간 냉방 효율을 비교하기 좋아요','인버터 여부와 공식 효율등급을 분리해서 확인했어요.','등급만으로 실제 전기요금 금액을 보장할 수는 없어요.',fact(inv?'인버터':null,grade?grade+'등급':null)):unknown(2,'전력 효율'),
+  airflow.length?item(3,airflow.join('·')+' 기능으로 원하는 바람에 맞춰 쓰기 좋아요','찬바람이 직접 닿는 것이 부담스러운지, 강하게 빠르게 식히는 편인지에 따라 활용을 생각해보세요.','바람의 실제 느낌은 위치와 운전 모드에 따라 달라요.',airflow):unknown(3,'바람 방식'),
+  dehum?item(4,'제습 모드가 있어 습한 날 실내 습도 관리에 좋아요','냉방과 구분해서 제습 운전을 선택할 수 있는 구성으로 표기돼 있어요.','제습량과 물 제거 성능은 별도 공식 측정값이 있어야 비교할 수 있어요.',fact('제습 모드')):unknown(4,'제습 기능'),
+  quiet.length?item(5,quiet.join('·')+' 기능이 있어 잠잘 때 활용하기 좋아요','풍량 또는 제어 모드를 조절하는 기능으로 야간 사용을 고려할 수 있어요.','실제 소음은 운전 단계와 설치 환경에 따라 달라요.',quiet):unknown(5,'소음·취침'),
+  care.length?item(6,care.join('·')+' 기능이 있어 사용 후 내부 관리에 좋아요','냉방 후 습기를 말리거나 내부를 세척하도록 돕는 기능을 확인했어요.','자동 관리가 있어도 정기적인 청소는 필요해요.',care):unknown(6,'내부 관리')
+ ];
+}
+function vacuum(t){
+ const suction=n(t,/흡입력\s*[:：]?\s*(\d{2,4}(?:\.\d+)?)\s*(?:W|AW|Pa)/i);
+ const unit=(t.match(/흡입력\s*[:：]?\s*\d{2,4}(?:\.\d+)?\s*(AW|W|Pa)/i)||[])[1];
+ const min=n(t,/(?:사용시간|사용 시간|최대 사용시간)\s*[:：]?\s*(\d{1,3})\s*분/i);
+ const weight=n(t,/(?:전체\s*무게|전체무게|무게)\s*[:：]?\s*(\d(?:\.\d+)?)\s*kg/i);
+ const brush=any(t,['소프트브러시','마루브러시','카펫브러시','침구브러시','펫브러시','틈새브러시','물걸레']);
+ const dust=any(t,['자동먼지비움','먼지 자동비움','클린스테이션','먼지통']);
+ const filter=any(t,['HEPA','헤파','고성능필터','필터 물세척','워셔블필터']);
+ const battery=any(t,['탈착식 배터리','교체형 배터리','배터리 2개']);
+ return [
+  suction&&unit?item(1,suction+unit+', '+(unit.toLowerCase()==='pa'?'흡입 압력 수치예요':'흡입 성능을 비교할 때 참고하기 좋아요'),'흡입력 단위와 측정 방법을 먼저 확인했어요. 같은 단위도 테스트 방식에 따라 다를 수 있어요.','Pa와 W/AW는 서로 바꿔 계산하지 않아요.',fact(suction+unit)):unknown(1,'흡입력'),
+  (min||battery.length)?item(2,(min?'최대 '+min+'분, ':'교체형 배터리로 ')+(min?'한 번 충전한 청소시간을 알아보기 좋아요':'연속 청소를 계획하기 좋아요'),'사용 시간은 모드·브러시·배터리 조합에 따라 달라져요.','최대 시간은 강모드의 실제 시간이 아닐 수 있어요.',fact(min?min+'분':null,...battery)):unknown(2,'사용시간·배터리'),
+  weight?item(3,weight+'kg, 손목 부담을 따져보면 좋아요','몸통·배터리·브러시 구성과 무게 중심에 따라 실제 들리는 느낌은 달라요.','표기 기준이 본체만인지, 전체 조립 무게인지 확인하세요.',fact(weight+'kg')):unknown(3,'무게'),
+  brush.length?item(4,brush.join('·')+' 구성이어서 사용하는 바닥에 맞춰 청소하기 좋아요','마루·카펫·침구처럼 공간별로 필요한 헤드가 포함되어 있는지 확인해보세요.','브러시는 판매 패키지별로 구성품이 다를 수 있어요.',brush):unknown(4,'브러시'),
+  dust.length?item(5,dust.join('·')+' 기능으로 청소 후 관리 부담을 덜기 좋아요','먼지통 비우기와 먼지 날림에 신경 쓰는지에 따라 편의 차이가 있어요.','자동비움은 확실히 표시된 제품만 해당해요.',dust):unknown(5,'먼지통 관리'),
+  filter.length?item(6,filter.join('·')+' 구성으로 배출 공기와 필터 관리를 살펴보기 좋아요','필터 규격, 물세척 지원, 교체주기 등 실제 관리 조건을 확인해보세요.','필터명만으로 미세먼지 제거율을 보장하지 않아요.',filter):unknown(6,'필터 관리')
+ ];
+}
+const rules={tv,fridge,washer,aircon,vacuum};
+function escape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderCats(){
+ $('#cats').innerHTML=Object.entries(D).map(([k,v])=>'<button class="'+(k===category?'on':'')+'" data-cat="'+k+'">'+v.name+'</button>').join('');
+ $('#cats').querySelectorAll('button').forEach(b=>b.onclick=()=>{category=b.dataset.cat;renderCats();clearResults();});
+ $('#axisnote').textContent=D[category].axes.map((v,i)=>(i+1)+'. '+v).join('   ·   ');
+}
+function addFiles(list){
+ [...list].forEach(f=>{if(f&&f.type&&f.type.startsWith('image/'))files.push(f);});
+ $('#thumbs').innerHTML='';files.forEach(f=>{const img=document.createElement('img');img.src=URL.createObjectURL(f);$('#thumbs').appendChild(img);});
+ $('#status').textContent=files.length+'개 이미지 준비됨 · OCR을 실행해 주세요.';
+}
+$('#pick').onclick=()=>$('#file').click();
+$('#file').onchange=e=>{addFiles(e.target.files);e.target.value='';};
+['dragenter','dragover'].forEach(evt=>$('#drop').addEventListener(evt,e=>{e.preventDefault();$('#drop').classList.add('hot');}));
+['dragleave','drop'].forEach(evt=>$('#drop').addEventListener(evt,e=>{e.preventDefault();$('#drop').classList.remove('hot');}));
+$('#drop').addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+document.addEventListener('paste',e=>{
+ const found=e.clipboardData?[...e.clipboardData.items].filter(it=>it.type.startsWith('image/')).map(it=>it.getAsFile()).filter(Boolean):[];
+ if(found.length){addFiles(found);e.preventDefault();}
+});
+$('#ocr').onclick=async()=>{
+ if(!files.length){alert('이미지를 먼저 추가해 주세요.');return;}
+ if(!window.Tesseract){alert('OCR 라이브러리를 불러오지 못했어요. 인터넷 연결을 확인해주세요.');return;}
+ $('#ocr').disabled=true;$('#status').textContent='한글·영어 OCR 준비 중';
+ try{
+  const worker=await Tesseract.createWorker('kor+eng',1,{logger:m=>{if(m.progress!=null)$('#status').textContent='OCR '+Math.round(m.progress*100)+'%';}});
+  const extracted=[];
+  for(const f of files){const r=await worker.recognize(f);extracted.push(r.data.text);}
+  await worker.terminate();$('#txt').value=extracted.join('\n\n-----\n\n');$('#status').textContent='OCR 완료 · 잘못 읽힌 스펙을 검수하고 생성해주세요.';
+ }catch(err){console.error(err);$('#status').textContent='OCR 오류 · 직접 텍스트를 붙여넣을 수 있어요.';}
+ $('#ocr').disabled=false;
+};
+const snippetCSS='.hicheck-snippet{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;font-family:Pretendard,Arial,sans-serif}.hicheck-item{padding:20px;border:1px solid #e6e6e6;border-radius:12px;background:#fff;color:#111}.hicheck-kicker{font-size:11px;color:#877800;font-weight:700}.hicheck-title{font-size:20px;line-height:1.36;margin:9px 0}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-facts{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.hicheck-fact{background:#f3f0d6;border-radius:99px;padding:5px 8px;font-size:11px;color:#554c00}.hicheck-check{font-size:11px;line-height:1.5;color:#777;border-top:1px solid #ececec;padding-top:10px}@media(max-width:700px){.hicheck-snippet{grid-template-columns:1fr}}';
+function clearResults(){
+ fragment='';
+ $('#cards').innerHTML='<div class="sub">아직 생성된 결과가 없습니다.</div>';
+ $('#preview').innerHTML='결과가 여기에 표시됩니다.';
+}
+function make(){
+ const t=$('#txt').value;
+ if(!t.trim()){alert('이미지 OCR을 실행하거나 상세페이지 텍스트를 붙여넣어 주세요.');return;}
+ const out=rules[category](t);
+ $('#cards').innerHTML=out.map((o,index)=>'<article class="card"><div class="ey">0'+(index+1)+' · '+escape(D[category].axes[index])+'</div><h3>'+escape(o.title)+'</h3><p>'+escape(o.body)+'</p><div>'+o.values.map(x=>'<span class="fact">'+escape(x)+'</span>').join('')+'</div><p class="'+(o.unknown?'missing':'')+'">판단할 때 · '+escape(o.check)+'</p></article>').join('');
+ fragment='<section class="hicheck-snippet" data-category="'+escape(category)+'">'+out.map((o,index)=>'<article class="hicheck-item"><div class="hicheck-kicker">HI-CHECK 0'+(index+1)+' · '+escape(D[category].axes[index])+'</div><h3 class="hicheck-title">'+escape(o.title)+'</h3><p class="hicheck-summary">'+escape(o.body)+'</p>'+(o.values.length?'<div class="hicheck-facts">'+o.values.map(x=>'<span class="hicheck-fact">'+escape(x)+'</span>').join('')+'</div>':'')+'<p class="hicheck-check">'+escape(o.check)+'</p></article>').join('')+'</section>';
+ $('#preview').innerHTML='<style>'+snippetCSS+'</style>'+fragment;
+}
+$('#make').onclick=make;
+$('#sample').onclick=()=>{$('#txt').value=D[category].sample;make();};
+$('#reset').onclick=()=>{files=[];$('#thumbs').innerHTML='';$('#txt').value='';$('#status').textContent='이미지를 추가해 주세요.';clearResults();};
+$('#copy').onclick=async()=>{if(!fragment){alert('먼저 생성해 주세요.');return;}await navigator.clipboard.writeText('<style>'+snippetCSS+'</style>'+fragment);};
+$('#down').onclick=()=>{
+ if(!fragment){alert('먼저 생성해 주세요.');return;}
+ const blob=new Blob(['<meta charset="utf-8"><style>'+snippetCSS+'</style>'+fragment],{type:'text/html;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='hicheck-'+category+'-snippet.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);
+};
 renderCats();
+})();
 </script></body></html>
