@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hi-Check Builder — Fixed 4 Axis</title>
+<title>Hi-Check Builder · 구체적인 사용 사례 6가지</title>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
 :root{--bg:#080808;--panel:#111;--line:#303030;--text:#f5f5f2;--muted:#999;--accent:#d6c85b}
@@ -8,7 +8,7 @@
 .notice{margin:24px 0 34px;border:1px solid #494426;background:#15140d;padding:16px 18px;color:#c8c39a;font-size:13px}.row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--line)}h2{font-size:17px;margin:6px 0}.sub{color:#777;font-size:12px}.cats,.tools{display:flex;gap:8px;flex-wrap:wrap}.cats button,.tools button{background:#121212;color:#aaa;border:1px solid #3b3b3b;padding:11px 14px;cursor:pointer}.cats button.on,.tools .primary{border-color:var(--accent);background:#1b190d;color:#fff}.drop{min-height:220px;border:1px dashed #555;display:grid;place-items:center;text-align:center;background:#0d0d0d;padding:24px}.drop.hot{border-color:var(--accent);background:#17160d}.drop b{font-size:19px}.drop p{color:#888;font-size:13px}.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.thumbs img{width:120px;height:90px;object-fit:contain;border:1px solid #333}textarea{width:100%;min-height:170px;background:#0b0b0b;color:#ddd;border:1px solid #333;padding:14px;font:13px/1.55 ui-monospace,monospace}.status{color:#999;font-size:12px;margin-top:9px}.tools{margin-top:10px}
 .fixed-note{color:#aaa;font-size:12px;margin-bottom:10px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid #333;background:#0f0f0f;padding:18px}.card h3{margin:6px 0 8px;font-size:19px;line-height:1.4}.card p{color:#aaa;font-size:13px;line-height:1.6}.fact{display:inline-block;background:#1b190d;border:1px solid #4b4624;color:#d9d29a;padding:5px 8px;font-size:11px;margin:3px}.missing{color:#b47d74!important}.preview{background:#fff;color:#111;padding:22px}.hicheck-snippet{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;line-height:1.35;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-check{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:760px){.row{grid-template-columns:1fr}.cards,.hicheck-snippet{grid-template-columns:1fr}}
 </style></head><body><main class="app">
-<div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>같은 카테고리는<br>항상 같은 6가지로 해석합니다.</h1><p class="intro">상세페이지 캡처에서 제조사 스펙을 추출한 뒤, 카테고리별로 고정된 6개의 판단축에 넣습니다. 상품마다 6개 판단축을 바꾸지 않습니다. 결과는 “이 제품은 이런 성격이다 → 내 상황과 맞는지 확인해보라”는 동일한 문장 구조로 생성됩니다.</p>
+<div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>같은 카테고리는<br>항상 같은 6가지로 해석합니다.</h1><p class="intro">상세페이지 캡처에서 제조사 스펙을 추출한 뒤, 카테고리별로 고정된 6개의 판단축에 넣고, 조건이 충족되면 거리·횟수·요금 같은 수치로 환산합니다. 상품마다 6개 판단축을 바꾸지 않습니다. 결과는 “이 제품은 이런 성격이다 → 내 상황과 맞는지 확인해보라”는 동일한 문장 구조로 생성됩니다.</p>
 <div class="notice">하이체크는 개인 맞춤 추천기가 아니라 <b>제품 해석기</b>입니다. 같은 카테고리에서는 1·2·3·4·5·6이 항상 동일하며, 스펙에 따라 분류 결과만 달라집니다. 데이터가 없으면 추정하지 않고 ‘확인 필요’로 표시합니다.</div>
 
 <section class="row"><div><div class="ey">01</div><h2>카테고리</h2><div class="sub">고정 6축을 선택합니다.</div></div><div class="cats" id="cats"></div></section>
@@ -21,10 +21,10 @@
 (function(){
 const D={
 tv:{name:'TV',axes:['화면 크기·거리','패널·명암','해상도·HDR','주사율·움직임','사운드','OTT·외부 연결'],sample:'75인치 / OLED / 4K / Dolby Vision / Native 120Hz / 스피커 2.0채널 출력 20W / Google TV / HDMI 2.1 / VRR'},
-fridge:{name:'양문형 냉장고',axes:['보관 용량','수납 구조','냉각·신선도','에너지 소비','꺼내 쓰는 편의','위생·냄새 관리'],sample:'양문형 냉장고 총용량 870L / 2도어 / 냉장 503L / 냉동 367L / 독립냉각 / 에너지 1등급 / 홈바 / 탈취'},
-washer:{name:'세탁기',axes:['세탁 방식','세탁 용량','이불·큰 빨래','옷감별 세탁 코스','물·전기 사용','자동화·관리 편의'],sample:'드럼세탁기 24kg / 이불 코스 / AI DD / 울 코스 / 섬세 코스 / 에너지 1등급 / 자동세제'},
-aircon:{name:'벽걸이 에어컨',axes:['냉방 면적','전력 효율','바람 방식','제습 기능','소음·취침','자동건조·청소'],sample:'벽걸이 에어컨 냉방면적 18.7㎡ / 인버터 / 에너지 1등급 / 무풍 / 제습 / 저소음 / 자동건조'},
-vacuum:{name:'무선청소기',axes:['흡입 성능','사용시간·배터리','무게·손목 부담','바닥·브러시 구성','먼지통·자동비움','필터·세척 관리'],sample:'무선 스틱청소기 흡입력 280W / 최대 사용시간 60분 일반모드 / 전체무게 2.5kg / 소프트브러시 / 자동먼지비움 / HEPA 필터'}
+fridge:{name:'양문형 냉장고',axes:['보관 용량','수납 구조','냉각·신선도','에너지 소비','꺼내 쓰는 편의','위생·냄새 관리'],sample:'양문형 냉장고 총용량 870L / 도어포켓 유효 폭 33cm / 월간 소비전력량 30kWh / 2도어 / 냉장 503L / 냉동 367L / 독립냉각 / 에너지 1등급 / 홈바 / 탈취'},
+washer:{name:'세탁기',axes:['세탁 방식','세탁 용량','이불·큰 빨래','옷감별 세탁 코스','물·전기 사용','자동화·관리 편의'],sample:'드럼세탁기 24kg / 이불 코스 / AI DD / 울 코스 / 섬세 코스 / 에너지 1등급 / 1회 소비전력 0.65kWh / 1회 물사용량 65L / 자동세제'},
+aircon:{name:'벽걸이 에어컨',axes:['냉방 면적','전력 효율','바람 방식','제습 기능','소음·취침','자동건조·청소'],sample:'벽걸이 에어컨 냉방면적 18.7㎡ / 인버터 / 평균 소비전력 600W / 에너지 1등급 / 무풍 / 제습 / 저소음 / 자동건조'},
+vacuum:{name:'무선청소기',axes:['흡입 성능','사용시간·배터리','무게·손목 부담','바닥·브러시 구성','먼지통·자동비움','필터·세척 관리'],sample:'무선 스틱청소기 흡입력 280W / 최대 사용시간 60분 일반모드 / 전체무게 2.5kg / 소프트브러시 / 자동먼지비움 / HEPA 필터 / 필터 교체주기 6개월 / 필터 가격 20000원'}
 };
 const $=s=>document.querySelector(s);
 let category='tv',files=[],fragment='';
@@ -163,10 +163,241 @@ function clearResults(){
  $('#cards').innerHTML='<div class="sub">아직 생성된 결과가 없습니다.</div>';
  $('#preview').innerHTML='결과가 여기에 표시됩니다.';
 }
+
+function enrich(category,text,out){
+ const t=text;
+ const k=(r)=>{const m=t.match(r);return m?Number(m[1]):null;};
+ const fmt=(v)=>Math.round(v).toLocaleString('ko-KR');
+ const change=(idx,title,body,check,values)=>{
+  if(!out[idx].unknown){
+   out[idx].title=title;out[idx].body=body;out[idx].check=check;
+   if(values)out[idx].values=values;
+  }
+ };
+ if(category==='tv'){
+  const inch=k(/(\d{2,3})\s*(?:인치|형|inch|["”])/i);
+  if(inch){
+   const width=inch*2.54*16/Math.sqrt(16*16+9*9);
+   const height=inch*2.54*9/Math.sqrt(16*16+9*9);
+   const near=width/100/(2*Math.tan(Math.PI*40/360));
+   const far=width/100/(2*Math.tan(Math.PI*30/360));
+   change(0,inch+'형은 화면 가로가 약 '+Math.round(width)+'cm예요. TV장을 먼저 재보세요.',
+    '16:9 화면이라면 세로는 약 '+Math.round(height)+'cm예요. 영화 몰입형 '+near.toFixed(1)+'m부터 일반 시청 '+far.toFixed(1)+'m까지 참고할 수 있어요.',
+    '본체 외형과 다리는 별도 제원이에요. 실제 시청거리는 취향에 따라 달라져요.',
+    [inch+'형','가로 약 '+Math.round(width)+'cm',near.toFixed(1)+'~'+far.toFixed(1)+'m']);
+  }
+  if(/OLED/i.test(t)){
+   change(1,'OLED는 밤에 영화·드라마의 어두운 장면을 보기 좋아요.',
+    '픽셀별로 빛을 켜고 끄는 방식이라 야경이나 우주 장면의 블랙·명암 차이를 표현하는 데 강점이 있어요.',
+    '낮에 강한 햇빛이 들어온다면 화면 반사와 밝기도 별도로 비교하세요.',['OLED']);
+  }
+  if(/\b4K\b|3840\s*[x×]\s*2160/i.test(t)){
+   const hdr=out[2].values.filter(v=>/HDR|Dolby|돌비/i.test(v));
+   change(2,'4K는 FHD보다 픽셀 수가 4배예요.',
+    '4K UHD는 3,840×2,160=약 830만 픽셀, FHD는 약 207만 픽셀이에요. 대화면에서 4K 원본 영상을 볼 때 특히 의미가 있어요.',
+    'FHD 방송이 자동으로 4K 원본 영상이 되는 것은 아니에요. HDR는 해당 콘텐츠가 있어야 해요.',['4K','약 830만 픽셀',...hdr]);
+  }
+  const hz=k(/(?:Native\s*)?(\d{2,3})\s*Hz/i);
+  if(hz&&hz>=60)change(3,hz+'Hz, 60Hz보다 화면을 '+(hz/60).toFixed(1)+'배 자주 갱신해요.',
+   '화면 갱신 간격은 60Hz에서 약 16.7ms, '+hz+'Hz에서는 약 '+(1000/hz).toFixed(1)+'ms예요. 빠른 스포츠·게임 영상에서 비교하기 좋아요.',
+   '콘텐츠 자체가 높은 프레임레이트를 제공해야 체감할 수 있어요.',out[3].values);
+  if(/2\.0\s*(?:ch|채널)/i.test(t)){
+   change(4,'2.0채널은 별도 저음 채널이 없는 기본 스피커 구성이에요.',
+   '일반 방송은 TV 스피커부터 써 볼 수 있지만 영화의 강한 저음·공간감을 중시하면 별도 오디오도 비교해보세요.',
+   '스피커 출력 W만으로 음질의 절대적인 우열을 단정할 수 없어요.',out[4].values);
+  }
+  if(/HDMI\s*2\.1/i.test(t)&&hz&&hz>=120)
+   change(5,'4K·120Hz 게임기를 연결하려면 HDMI 2.1의 포트별 지원을 확인하세요.',
+    '120Hz 화면에 HDMI 2.1이 표시돼도 각 단자별 입력 지원이 다를 수 있어요. 콘솔을 쓴다면 4K 120Hz·VRR 사용 가능 단자를 확인하세요.',
+    'OTT 앱 제공도 TV 운영체제·지역·버전에 따라 달라져요.',out[5].values);
+ }
+ if(category==='fridge'){
+  const capacity=k(/(?:총\s*용량|총용량|용량)\s*[:：]?\s*(\d{3,4})\s*L/i)||k(/(\d{3,4})\s*L/i);
+  if(capacity&&capacity>=800)
+   change(0,capacity+'L, 4인 가족이 주 1회 장볼 때 살펴볼 만한 대용량이에요.',
+    '예를 들어 4인 가족이 일주일 치 식재료를 몰아서 보관하는 생활에서 비교하기 좋아요. 정확한 적정 용량은 장보기 양과 냉동 비중에 달려 있어요.',
+    '가족 수만으로 식재료가 충분히 들어간다고 보장하지 않아요.',[capacity+'L','4인·주1회 장보기는 가정']);
+  const pocket=k(/(?:도어포켓|도어 포켓|선반)\s*(?:유효)?\s*폭\s*[:：]?\s*(\d+(?:\.\d+)?)\s*cm/i);
+  if(pocket){
+   const count=Math.floor(pocket/9);
+   change(1,'도어포켓 폭 '+pocket+'cm라면 2L 생수병을 가로 최대 '+count+'병 놓는 계산이에요.',
+    '병 지름을 9cm로 가정하면 '+pocket+'cm ÷ 9cm ≈ '+count+'병이에요. 실제로는 병 높이·선반 깊이·간섭 공간이 모두 필요해요.',
+    '실제 판매 생수병의 지름을 재어봐야 하고 수납 보장 개수는 아니에요.',[pocket+'cm','지름 9cm 가정',count+'병(폭 기준)']);
+  }else if(!out[1].unknown){
+   out[1].title='2L 생수병이 몇 병 들어갈지는 도어포켓 폭이 있어야 알 수 있어요.';
+   out[1].body+=' 용량 '+(capacity||'')+'L만으로 생수병의 실제 수납 개수를 계산할 수는 없어요.';
+   out[1].check='제조사에서 내부 선반·도어포켓 유효폭을 확인한 뒤 병 지름과 비교하세요.';
+  }
+  if(!out[2].unknown){
+   out[2].title=out[2].values.join('·')+' 기능은 냉장실·냉동실 온도 관리를 따져볼 때 좋아요.';
+   out[2].body='문을 자주 열거나 냉장·냉동 식재료를 많이 나눠 보관할 때 어떤 온도관리 방식인지 알기 좋아요.';
+   out[2].check='기능명만으로 식품 보관일수가 늘어난다고 단정하지 않아요.';
+  }
+  const monthly=k(/(?:월간\s*소비전력량|월\s*소비전력량|월\s*전력사용량)\s*[:：]?\s*(\d+(?:\.\d+)?)\s*kWh/i);
+  if(monthly){
+   const additional=Math.round(monthly*(214.6+14)*1.127/100)*100;
+   change(3,'월 '+monthly+'kWh라면 전기요금이 약 '+fmt(additional)+'원 늘어나는 예시예요.',
+    '기존 월 250kWh를 쓰는 집의 비하계 주택용 저압 2단계 안에서 추가되는 사용량으로 계산했어요.',
+    '기본요금 구간을 넘는 경우에는 다시 계산해야 해요. 실제 효율라벨과 계약종별을 확인하세요.',[monthly+'kWh/월','기존 250kWh 가정','월 약 '+fmt(additional)+'원 추가']);
+  }else if(!out[3].unknown){
+   out[3].title=out[3].values.join('·')+'만으로 월 전기요금은 알 수 없어요.';
+   out[3].body='예를 들어 실제 월간 소비전력량이 30kWh라면, 기존 250kWh를 쓰는 집에서 비하계 저압 기준 약 7,700원이 늘어나는 계산이에요.';
+   out[3].check='30kWh는 가정 예시예요. 실제 제품의 월간 kWh를 확인해야 확정할 수 있어요.';
+  }
+  if(!out[4].unknown){
+   out[4].title='하루 5번 음료를 꺼낸다면 홈바를 한 달 150번 사용할 수 있어요.';
+   out[4].body='자주 꺼내는 음료를 전체 냉장고 문 대신 홈바로 꺼낼 수 있는 타입이에요. 사용 빈도가 높을수록 편의 차이가 커져요.';
+   out[4].check='하루 5회는 생활 가정이며, 문 열림 횟수나 전기료 절감을 보장하지는 않아요.';
+  }
+  if(!out[5].unknown){
+   const rep=k(/(?:탈취필터|필터)\s*(?:교체주기)?\s*[:：]?\s*(\d{1,2})\s*개월/i);
+   if(rep)change(5,'필터를 '+rep+'개월마다 바꾼다면 연 '+(12/rep).toFixed(1)+'회 교체해요.',
+     '탈취 기능 외에도 유지관리 빈도를 확인해보세요. 교체주기가 명시돼 있다면 12개월을 주기로 나눠 연간 횟수를 계산할 수 있어요.',
+     '필터 가격은 제품별 소모품 가격이 있어야 계산할 수 있어요.',[rep+'개월 주기',(12/rep).toFixed(1)+'회/년']);
+   else{
+    out[5].title='탈취 기능보다 필터 관리 주기를 함께 보는 게 좋아요.';
+    out[5].body='교체주기가 6개월인 제품이라면 1년에 2번 필터를 교체해야 해요. 실제 이 제품의 주기는 공식 제원에서 확인해보세요.';
+    out[5].check='6개월은 계산 예시일 뿐 이 제품의 공식 교체주기는 아니에요.';
+   }
+  }
+ }
+ if(category==='washer'){
+  const capacity=k(/(\d{1,2}(?:\.\d+)?)\s*kg/i);
+  if(/드럼/i.test(t)&&!out[0].unknown){
+   out[0].title='드럼 세탁기는 앞에서 넣는 방식이라 문 앞 공간을 살펴보세요.';
+   out[0].body='세탁기를 설치할 벽면 길이뿐 아니라 세탁물을 넣고 꺼낼 때 전면 도어가 열리는 공간이 필요해요.';
+   out[0].check='정확한 개폐 여유는 모델별 도어 크기·설치가이드가 있어야 계산할 수 있어요.';
+  }
+  if(capacity){
+   const weekly=2*7;
+   change(1,capacity+'kg, 하루 2kg씩 쌓이면 일주일 '+weekly+'kg과 비교해보세요.',
+    '예시로 하루 2kg씩 7일 모이면 '+weekly+'kg이에요. 공칭 '+capacity+'kg 제품이지만 빨래를 색상·소재별로 나누면 횟수는 달라져요.',
+    '24kg 등의 공칭 무게가 모든 빨래를 한 번에 최적으로 세탁한다는 뜻은 아니에요.',[capacity+'kg','2kg×7일=14kg(가정)']);
+  }
+  if(!out[2].unknown){
+   out[2].title='이불이 2.5kg이라면 이불 코스의 허용 무게를 확인해보세요.';
+   out[2].body='이불 코스가 표시된 제품이에요. 예를 들어 집의 이불이 2.5kg이면 제조사 안내에 이 무게·크기가 허용되는지 비교하는 게 먼저예요.';
+   out[2].check='세탁용량만 보고 퀸·킹 사이즈 이불 세탁이 된다고 판단할 수 없어요.';
+  }
+  if(!out[3].unknown){
+   out[3].title='울·섬세 의류를 주 2번 이상 따로 빤다면 코스를 확인해보세요.';
+   out[3].body='예를 들어 일주일 12회 빨래 중 니트·섬세 의류를 2회 분리한다면 이런 전용 코스가 도움이 될 수 있어요.';
+   out[3].check='주 2회는 예시예요. 물세탁 금지 옷은 전용 코스도 사용할 수 없어요.';
+  }
+  const cyc=k(/(?:1회\s*소비전력|회당\s*소비전력|표준코스\s*소비전력)\s*[:：]?\s*(\d+(?:\.\d+)?)\s*kWh/i);
+  const wat=k(/(?:1회\s*물사용량|회당\s*물사용량|표준코스\s*물사용량)\s*[:：]?\s*(\d{2,4})\s*L/i);
+  if(cyc||wat){
+   let monthly=cyc?Number((cyc*12).toFixed(1))+'kWh':'',water=wat?(wat*12)+'L':'';
+   change(4,'주 3회 세탁하면 한 달 '+(monthly||water)+' 정도 쓰는 계산이에요.',
+    '제조사의 표준 코스 1회 측정값에 한 달 12회(주 3회×4주)를 곱했어요. '+(monthly?'전기 '+monthly+' ':'')+(water?'물 '+water+' ':'')+'로 비교해볼 수 있어요.',
+    '코스·급수 온도·세탁물에 따라 실제 사용량은 달라져요.',[...fact(cyc?cyc+'kWh/회':null,wat?wat+'L/회':null),'월 12회(가정)']);
+  }else if(!out[4].unknown){
+    out[4].title='세탁을 주 3번 한다면 한 달 12회의 사용량을 비교해보세요.';
+    out[4].body='공식 표준 코스 1회 사용전력이 0.65kWh인 제품이라면 12회에 7.8kWh예요. 이 제품의 실제 1회 값을 확인해야 정확해져요.';
+    out[4].check='0.65kWh는 계산 예시이지 이 제품의 확정 소비전력이 아니에요.';
+  }
+  if(!out[5].unknown&&/자동\s*세제/.test(t)){
+   out[5].title='주 3번 빨래한다면 월 12번의 세제 계량을 줄일 수 있어요.';
+   out[5].body='자동세제 기능이 있는 제품으로, 매번 직접 세제량을 맞추는 과정을 줄이기 좋아요.';
+   out[5].check='주 3회는 사용 가정이에요. 세제통 보충·세척은 필요해요.';
+  }
+ }
+ if(category==='aircon'){
+  const area=k(/(?:냉방면적)?\s*[:：]?\s*(\d{1,3}(?:\.\d+)?)\s*㎡/);
+  if(area)change(0,area+'㎡는 약 '+(area/3.3058).toFixed(1)+'평이에요. 방 크기를 곱해보세요.',
+    '예를 들어 가로 3m×세로 6m인 방은 18㎡예요. 제품의 표기 냉방면적과 직접 비교하기 좋아요.',
+    '복층·서향·통유리처럼 열부하가 큰 공간은 여유가 더 필요해요.',[area+'㎡','3m×6m=18㎡(예시)']);
+  const avg=k(/(?:평균\s*소비전력|평균\s*운전전력|평균소비전력)\s*[:：]?\s*(\d{2,4})\s*W/i);
+  const power=avg?avg/1000:0.6;
+  if(!out[1].unknown){
+   const inc=power*8*30;
+   const calcBill=(v,summer)=>{
+    const f=summer?[300,450]:[200,400];
+    const a=Math.min(v,f[0])*120;
+    const b=Math.max(0,Math.min(v,f[1])-f[0])*214.6;
+    const c=Math.max(0,v-f[1])*307.3;
+    const base=v<=f[0]?910:v<=f[1]?1600:7300;
+    return (base+a+b+c+v*14)*1.127;
+   };
+   const diff=calcBill(250+inc,true)-calcBill(250,true);
+   const rounded=Math.round(diff/1000)*1000;
+   out[1].title='하루 8시간씩 30일 쓰면 전기요금이 약 '+fmt(rounded)+'원 늘어나는 예시예요.';
+   out[1].body='평균 운전전력을 '+Math.round(power*1000)+'W'+(avg?'(입력 스펙)':'(가정)')+'로 놓으면 월 '+inc.toFixed(1)+'kWh예요. 기존 250kWh인 가정의 여름 주택용 저압 청구액 증가분을 계산했어요.';
+   out[1].check='평균 운전전력이 정격 소비전력과 같다는 뜻은 아니에요. 실제 실외기 운전·기본요금 구간·계약종별에 따라 달라져요.';
+   out[1].values=['8h×30일',inc.toFixed(1)+'kWh','약 '+fmt(rounded)+'원 증가(가정)'];
+  }
+  if(!out[2].unknown){
+    out[2].title='밤 8시간 자는 동안 찬바람이 직접 닿는 게 싫다면 좋아요.';
+    out[2].body='무풍·간접풍 등 지원되는 모드를 활용하면 침대 쪽으로 강한 찬바람이 바로 닿는 상황을 줄일 수 있어요.';
+    out[2].check='실내기 배치와 풍향에 따라 실제 바람의 느낌은 달라져요.';
+  }
+  if(!out[3].unknown){
+    out[3].title='습도가 65%인 방이라면 제습 모드가 활용도가 높아요.';
+    out[3].body='예를 들어 습도계가 65%라면 55%를 목표로 관리하고 싶을 수 있어요. 제습 모드를 이용해 조절할 수 있어요.';
+    out[3].check='특정 습도까지 내려간다는 보장과 제습량은 공식 측정값이 필요해요.';
+  }
+  const db=k(/(?:최저\s*운전소음|저소음\s*운전|최저소음)\s*[:：]?\s*(\d{2})\s*dB/i);
+  if(db&&!out[4].unknown)change(4,'최저 '+db+'dB, 밤에 사용하는 소음을 비교하기 좋아요.',
+    '예를 들어 다른 모델이 같은 조건에서 '+(db+10)+'dB라면 음압레벨 수치 차이가 10dB예요. 같은 측정조건끼리 비교하세요.',
+    '체감 소음이 단순히 10배 차이라는 의미는 아니에요.',[db+'dB(최저)']);
+  if(!out[5].unknown){
+   out[5].title='하루 한 번 끈다면 자동건조를 월 약 30번 활용하는 셈이에요.';
+   out[5].body='매일 사용 후 1회 종료하는 생활을 가정했어요. 자동건조가 작동하면 매번 직접 건조 모드를 켜는 수고를 줄일 수 있어요.';
+   out[5].check='자동건조가 곰팡이를 완전히 막는 기능은 아니에요.';
+  }
+ }
+ if(category==='vacuum'){
+  const suction=k(/흡입력\s*[:：]?\s*(\d{2,4}(?:\.\d+)?)\s*(?:W|AW|Pa)/i);
+  if(suction&&!out[0].unknown){
+   out[0].title='최대 '+suction+'W라도 반려동물 털 청소는 브러시를 함께 봐야 해요.';
+   out[0].body='먼지가 바닥에 붙거나 러그 속에 끼는 집이라면 흡입력 수치뿐 아니라 털을 긁어 모으는 헤드가 중요해요.';
+   out[0].check='표기 최대 흡입력으로 모든 바닥에서의 청소 성능을 보장하지 않아요.';
+  }
+  const min=k(/(?:사용시간|사용 시간|최대 사용시간)\s*[:：]?\s*(\d{1,3})\s*분/i);
+  if(min&&!out[1].unknown){
+   const times=Math.floor(min/25);
+   out[1].title='최대 '+min+'분이면 25분 청소를 이론상 '+times+'번 할 수 있어요.';
+   out[1].body='예를 들어 한 번 청소에 25분이 걸리는 집이라면 '+(times*25)+'분 사용 뒤 '+(min-times*25)+'분이 남는 계산이에요.';
+   out[1].check='동일 모드에서 실제로 '+min+'분을 사용할 수 있는지 확인해야 해요. 최대 시간만으로 실청소 횟수를 확정하지 않아요.';
+  }
+  const wt=k(/(?:전체\s*무게|전체무게|무게)\s*[:：]?\s*(\d(?:\.\d+)?)\s*kg/i);
+  if(wt&&!out[2].unknown){
+   out[2].title=wt+'kg을 들고 계단·천장을 10분씩 청소한다면 부담을 따져보세요.';
+   out[2].body='계단과 침구처럼 제품을 들어 올리는 작업이 많다면 손잡이 무게와 무게중심을 별도로 비교하는 편이 정확해요.';
+   out[2].check='10분은 생활 예시예요. 사용자 체력·헤드 구성에 따라 체감 무게가 달라져요.';
+  }
+  if(!out[3].unknown){
+   out[3].title='마루 70%·러그 30%인 집이라면 브러시 구성이 중요해요.';
+   out[3].body='마루용 소프트브러시가 있다면 마루에 맞고, 러그를 많이 쓴다면 카펫 브러시가 포함되는지도 따져보세요.';
+   out[3].check='바닥 비중은 설명을 위한 가정이에요. 실제 패키지 구성품을 확인하세요.';
+  }
+  if(!out[4].unknown&&/자동먼지비움|먼지 자동비움|클린스테이션/i.test(t)){
+   out[4].title='매일 먼지통을 비우던 집이라면 월 최대 30번 수고를 줄일 수 있어요.';
+   out[4].body='하루 한 번 청소·먼지통을 비운다고 가정했을 때예요. 자동비움 스테이션이 수동으로 비우는 행동을 대체할 수 있어요.';
+   out[4].check='30회는 가정한 빈도예요. 스테이션 봉투 교체와 소모품 비용은 별도예요.';
+  }
+  if(!out[5].unknown){
+   const mo=k(/(?:필터\s*교체주기|필터\s*교체)\s*[:：]?\s*(\d{1,2})\s*개월/i);
+   const price=k(/(?:필터\s*가격|교체필터\s*가격)\s*[:：]?\s*(\d{4,6})\s*원/i);
+   if(mo){
+    const count=12/mo;
+    out[5].title='필터 교체주기 '+mo+'개월이라면 연 '+count.toFixed(1)+'번 교체해요.';
+    out[5].body=price?'필터 1개 '+fmt(price)+'원이라면 1년 소모품 가격이 약 '+fmt(price*count)+'원이에요.':'연간 사용 비용을 보려면 교체 필터의 실제 판매 가격도 확인해보세요.';
+    out[5].check='교체주기와 필터 가격은 정확한 호환 품번 기준으로 확인하세요.';
+   }else{
+    out[5].title='필터를 6개월마다 바꾸는 제품이라면 연 2회 교체가 필요해요.';
+    out[5].body='HEPA라는 표시만 보고 끝내지 말고, 실제 필터 교체주기·물세척 여부·소모품 가격을 확인해보세요.';
+    out[5].check='6개월은 계산 예시이며 이 제품의 교체주기를 뜻하지 않아요.';
+   }
+  }
+ }
+ return out;
+}
+
 function make(){
  const t=$('#txt').value;
  if(!t.trim()){alert('이미지 OCR을 실행하거나 상세페이지 텍스트를 붙여넣어 주세요.');return;}
- const out=rules[category](t);
+ const out=enrich(category,t,rules[category](t));
  $('#cards').innerHTML=out.map((o,index)=>'<article class="card"><div class="ey">0'+(index+1)+' · '+escape(D[category].axes[index])+'</div><h3>'+escape(o.title)+'</h3><p>'+escape(o.body)+'</p><div>'+o.values.map(x=>'<span class="fact">'+escape(x)+'</span>').join('')+'</div><p class="'+(o.unknown?'missing':'')+'">판단할 때 · '+escape(o.check)+'</p></article>').join('');
  fragment='<section class="hicheck-snippet" data-category="'+escape(category)+'">'+out.map((o,index)=>'<article class="hicheck-item"><div class="hicheck-kicker">HI-CHECK 0'+(index+1)+' · '+escape(D[category].axes[index])+'</div><h3 class="hicheck-title">'+escape(o.title)+'</h3><p class="hicheck-summary">'+escape(o.body)+'</p>'+(o.values.length?'<div class="hicheck-facts">'+o.values.map(x=>'<span class="hicheck-fact">'+escape(x)+'</span>').join('')+'</div>':'')+'<p class="hicheck-check">'+escape(o.check)+'</p></article>').join('')+'</section>';
  $('#preview').innerHTML='<style>'+snippetCSS+'</style>'+fragment;
