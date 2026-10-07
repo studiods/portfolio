@@ -1,54 +1,107 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hi-Check Builder</title>
+<title>Hi-Check Builder — Fixed 4 Axis</title>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
-:root{--b:#080808;--p:#111;--l:#303030;--t:#f5f5f2;--m:#999;--a:#d6c85b}*{box-sizing:border-box}body{margin:0;background:var(--b);color:var(--t);font-family:Pretendard,system-ui,sans-serif}.app{width:min(1180px,calc(100% - 32px));margin:auto;padding:48px 0}h1{font-size:52px;font-weight:250;letter-spacing:-.05em;line-height:1.05;margin:8px 0 40px}.ey{color:var(--a);font-size:11px;letter-spacing:.14em}.row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--l)}h2{font-size:17px;margin:5px 0}.sub{color:#777;font-size:12px}.cats,.tools{display:flex;gap:8px;flex-wrap:wrap}.cats button,.tools button{background:#121212;color:#aaa;border:1px solid #3b3b3b;padding:11px 14px;cursor:pointer}.cats button.on,.tools .primary{border-color:var(--a);background:#1b190d;color:#fff}.drop{min-height:230px;border:1px dashed #555;display:grid;place-items:center;text-align:center;background:#0d0d0d;padding:24px}.drop.hot{border-color:var(--a);background:#17160d}.drop b{font-size:20px}.drop p{color:#888;font-size:13px}.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.thumbs img{width:120px;height:90px;object-fit:contain;border:1px solid #333}textarea{width:100%;min-height:170px;background:#0b0b0b;color:#ddd;border:1px solid #333;padding:14px;font:13px/1.55 ui-monospace,monospace}.tools{margin-top:10px}.status{color:#999;font-size:12px;margin-top:9px}.cards{display:grid;gap:10px}.card{border:1px solid #333;background:#0f0f0f;padding:18px}.card h3{margin:6px 0 8px;font-size:20px}.card p{color:#aaa;font-size:13px}.fact{display:inline-block;background:#1b190d;border:1px solid #4b4624;color:#d9d29a;padding:5px 8px;font-size:11px;margin:3px}.preview{background:#fff;color:#111;padding:22px}.hicheck-snippet{display:grid;gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-caution{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:760px){h1{font-size:38px}.row{grid-template-columns:1fr}}
-</style></head><body><main class="app"><div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>상세페이지 캡처 →<br>하이체크 HTML</h1>
-<section class="row"><div><div class="ey">01</div><h2>카테고리</h2><div class="sub">규칙을 먼저 고정합니다.</div></div><div class="cats" id="cats"></div></section>
-<section class="row"><div><div class="ey">02</div><h2>이미지</h2><div class="sub">드롭 / 붙여넣기 / 선택</div></div><div><div class="drop" id="drop"><div><b>상세페이지 캡처를 놓으세요</b><p>PNG · JPG · WEBP / Ctrl·Cmd+V 지원</p><button id="pick">파일 선택</button><input id="file" type="file" accept="image/*" multiple hidden></div></div><div class="thumbs" id="thumbs"></div><div class="status" id="status">이미지를 추가해 주세요.</div><div class="tools"><button class="primary" id="ocr">OCR 실행</button><button id="reset">초기화</button></div></div></section>
-<section class="row"><div><div class="ey">03</div><h2>추출 텍스트</h2><div class="sub">숫자·단위를 검수합니다.</div></div><div><textarea id="txt" placeholder="OCR 결과 또는 직접 복사한 상세페이지 텍스트"></textarea><div class="tools"><button class="primary" id="make">하이체크 생성</button><button id="sample">샘플</button></div></div></section>
-<section class="row"><div><div class="ey">04</div><h2>후보</h2><div class="sub">근거가 잡힌 항목만 표시합니다.</div></div><div class="cards" id="cards"><div class="sub">아직 결과가 없습니다.</div></div></section>
-<section class="row"><div><div class="ey">05</div><h2>HTML 조각</h2><div class="sub">전체 페이지가 아닌 영역만 출력합니다.</div></div><div><div class="preview" id="preview">생성 결과가 여기에 표시됩니다.</div><div class="tools"><button class="primary" id="copy">HTML 복사</button><button id="down">HTML 다운로드</button></div></div></section>
+:root{--bg:#080808;--panel:#111;--line:#303030;--text:#f5f5f2;--muted:#999;--accent:#d6c85b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,sans-serif}.app{width:min(1180px,calc(100% - 32px));margin:auto;padding:48px 0 80px}h1{font-size:clamp(38px,5vw,64px);font-weight:240;letter-spacing:-.05em;line-height:1.05;margin:10px 0 18px}.intro{max-width:850px;color:#aaa;line-height:1.65}.ey{font-size:11px;letter-spacing:.14em;color:var(--accent)}
+.notice{margin:24px 0 34px;border:1px solid #494426;background:#15140d;padding:16px 18px;color:#c8c39a;font-size:13px}.row{display:grid;grid-template-columns:180px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--line)}h2{font-size:17px;margin:6px 0}.sub{color:#777;font-size:12px}.cats,.tools{display:flex;gap:8px;flex-wrap:wrap}.cats button,.tools button{background:#121212;color:#aaa;border:1px solid #3b3b3b;padding:11px 14px;cursor:pointer}.cats button.on,.tools .primary{border-color:var(--accent);background:#1b190d;color:#fff}.drop{min-height:220px;border:1px dashed #555;display:grid;place-items:center;text-align:center;background:#0d0d0d;padding:24px}.drop.hot{border-color:var(--accent);background:#17160d}.drop b{font-size:19px}.drop p{color:#888;font-size:13px}.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.thumbs img{width:120px;height:90px;object-fit:contain;border:1px solid #333}textarea{width:100%;min-height:170px;background:#0b0b0b;color:#ddd;border:1px solid #333;padding:14px;font:13px/1.55 ui-monospace,monospace}.status{color:#999;font-size:12px;margin-top:9px}.tools{margin-top:10px}
+.fixed-note{color:#aaa;font-size:12px;margin-bottom:10px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{border:1px solid #333;background:#0f0f0f;padding:18px}.card h3{margin:6px 0 8px;font-size:19px;line-height:1.4}.card p{color:#aaa;font-size:13px;line-height:1.6}.fact{display:inline-block;background:#1b190d;border:1px solid #4b4624;color:#d9d29a;padding:5px 8px;font-size:11px;margin:3px}.missing{color:#b47d74!important}.preview{background:#fff;color:#111;padding:22px}.hicheck-snippet{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;line-height:1.35;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-check{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:760px){.row{grid-template-columns:1fr}.cards,.hicheck-snippet{grid-template-columns:1fr}}
+</style></head><body><main class="app">
+<div class="ey">LOTTE HI-MART · HI-CHECK BUILDER</div><h1>같은 카테고리는<br>항상 같은 4가지로 해석합니다.</h1><p class="intro">상세페이지 캡처에서 제조사 스펙을 추출한 뒤, 카테고리별로 고정된 4개의 판단축에 넣습니다. 제품마다 질문을 새로 만들지 않습니다. 결과는 “이 제품은 이런 성격이다 → 내 상황과 맞는지 확인해보라”는 동일한 문장 구조로 생성됩니다.</p>
+<div class="notice">하이체크는 개인 맞춤 추천기가 아니라 <b>제품 해석기</b>입니다. 같은 카테고리에서는 1·2·3·4가 항상 동일하며, 스펙에 따라 분류 결과만 달라집니다. 데이터가 없으면 추정하지 않고 ‘확인 필요’로 표시합니다.</div>
+
+<section class="row"><div><div class="ey">01</div><h2>카테고리</h2><div class="sub">고정 4축을 선택합니다.</div></div><div class="cats" id="cats"></div></section>
+<section class="row"><div><div class="ey">02</div><h2>이미지 입력</h2><div class="sub">드롭 / 붙여넣기 / 선택</div></div><div><div class="drop" id="drop"><div><b>상세페이지 스펙 영역을 넣으세요</b><p>PNG · JPG · WEBP / Ctrl·Cmd+V 지원</p><button id="pick">파일 선택</button><input id="file" type="file" accept="image/*" multiple hidden></div></div><div class="thumbs" id="thumbs"></div><div class="status" id="status">이미지를 추가해 주세요.</div><div class="tools"><button class="primary" id="ocr">OCR 실행</button><button id="reset">초기화</button></div></div></section>
+<section class="row"><div><div class="ey">03</div><h2>추출 텍스트</h2><div class="sub">OCR 오류를 검수합니다.</div></div><div><textarea id="txt" placeholder="OCR 결과 또는 직접 복사한 상세페이지 텍스트"></textarea><div class="tools"><button class="primary" id="make">고정 4개 하이체크 생성</button><button id="sample">샘플</button></div></div></section>
+<section class="row"><div><div class="ey">04</div><h2>해석 결과</h2><div class="sub">항상 동일한 4개 축</div></div><div><div class="fixed-note" id="axisnote"></div><div class="cards" id="cards"><div class="sub">아직 결과가 없습니다.</div></div></div></section>
+<section class="row"><div><div class="ey">05</div><h2>하이체크 HTML</h2><div class="sub">영역만 복사/다운로드</div></div><div><div class="preview" id="preview">생성 결과가 여기에 표시됩니다.</div><div class="tools"><button class="primary" id="copy">HTML 복사</button><button id="down">HTML 다운로드</button></div></div></section>
 </main>
-<script type="module">
-import { createWorker } from 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.esm.min.js';
-const defs={
-fridge:{label:'냉장고',sample:'4도어 냉장고 905L 프리스탠딩 크기 912 x 1853 x 922 mm 냉장 539L 냉동 366L 설치 가이드',rules:[
-['FR-01','우리 집 설치 공간에 들어갈까요?',['mm','설치','크기','깊이'],'제품 크기와 설치 여유 공간, 도어 오픈과 배송 동선을 함께 확인해 주세요.','외형 치수만으로 설치 가능을 단정하지 않습니다.'],
-['FR-02','우리 가족이 쓰기에 용량이 충분할까요?',['용량','L','냉장','냉동'],'총용량보다 가족 수·장보기 주기·냉동 보관 비중을 함께 보세요.','가족 수 기준은 참고값이며 보관 습관에 따라 달라집니다.'],
-['FR-03','키친핏과 프리스탠딩 중 어떤 타입인가요?',['키친핏','프리스탠딩','깊이'],'장 라인에 맞춰 설치하려면 설치 타입과 실제 깊이를 같이 확인하세요.','브랜드별 권장 설치 여유 공간이 다를 수 있습니다.'],
-['FR-04','냉장·냉동 사용 습관에 맞는 구조인가요?',['4도어','양문형','냉동실','팬트리'],'자주 꺼내는 식재료와 냉동 비중을 기준으로 도어와 내부 구조를 보세요.','체감 수납성은 선반 구성에 따라 달라집니다.']]},
-laundry:{label:'세탁기·건조기',sample:'AI 콤보 세탁 25kg 건조 15kg 크기 686 x 1110 x 875 mm 이불 코스 설치',rules:[
-['LA-01','우리 집 빨래량에 맞는 용량일까요?',['kg','용량'],'가족 수보다 실제 빨래량과 세탁 주기를 기준으로 용량을 보세요.','빨래 종류와 부피에 따라 체감 용량이 달라집니다.'],
-['LA-02','세탁실에 설치하거나 직렬로 올릴 수 있나요?',['설치','직렬','mm','키트'],'제품 크기와 모델 호환 키트, 문이 열리는 공간까지 확인하세요.','직렬 설치는 모델 조합별 호환 확인이 필요합니다.'],
-['LA-03','세탁부터 건조까지 한 번에 끝낼 수 있나요?',['콤보','세탁','건조'],'콤보형은 세탁 용량과 건조 용량을 따로 확인하세요.','세탁 용량과 건조 용량은 다를 수 있습니다.'],
-['LA-04','이불처럼 부피 큰 빨래도 가능한가요?',['이불','침구'],'이불 빨래가 잦다면 전용 코스와 대용량 대응 여부를 확인하세요.','소재·크기·두께에 따라 가능 여부가 달라집니다.']]},
-tv:{label:'TV',sample:'OLED TV 77형 194cm 4K 144Hz HDMI 2.1 VRR 벽걸이 설치',rules:[
-['TV-01','우리 집 시청거리에 화면 크기가 맞을까요?',['형','인치','cm','4K'],'화면 크기는 소파와 TV 사이 실제 거리와 함께 판단하세요.','권장 시청거리는 개인 선호에 따라 달라집니다.'],
-['TV-02','밝은 거실과 영화 감상 중 어디에 더 잘 맞나요?',['OLED','QLED','HDR','밝기'],'밝은 거실은 밝기·반사 대응, 영화는 명암과 블랙 표현을 함께 보세요.','패널 명칭만으로 화질을 단정하지 않습니다.'],
-['TV-03','콘솔·PC 게임용으로도 충분할까요?',['Hz','HDMI 2.1','VRR','ALLM'],'게임은 주사율과 HDMI 규격, VRR/ALLM 지원 여부를 확인하세요.','연결 기기도 같은 조건을 지원해야 합니다.'],
-['TV-04','벽걸이 설치가 가능한 환경인가요?',['벽걸이','VESA','설치'],'벽걸이는 벽체가 제품 하중을 지탱할 수 있는지 먼저 확인하세요.','벽 재질에 따라 설치가 제한될 수 있습니다.']]},
-aircon:{label:'에어컨',sample:'스탠드 에어컨 냉방면적 62.6㎡ 에너지효율 1등급 저소음 일반배관 실외기',rules:[
-['AC-01','우리 집 면적을 충분히 냉방할 수 있나요?',['냉방면적','㎡'],'표기 냉방면적을 실제 설치 공간과 비교하세요.','통유리·복층·서향은 더 큰 냉방 여유가 필요할 수 있습니다.'],
-['AC-02','우리 집 설치 방식과 배관 조건에 맞나요?',['배관','실외기','설치','벽걸이','스탠드'],'배관 방식과 실외기 위치를 구매 전에 확인하세요.','현장 조건에 따라 추가 작업이 발생할 수 있습니다.'],
-['AC-03','전기요금 부담을 줄이는 데 유리한가요?',['에너지','등급','소비전력'],'효율등급과 소비전력을 함께 보세요.','실제 요금은 사용시간·온도·단열에 따라 달라집니다.'],
-['AC-04','침실에서 조용하게 쓸 수 있나요?',['저소음','dB','소음'],'침실 사용이 많다면 저소음 운전 지원 여부를 확인하세요.','체감 소음은 설치환경과 운전 단계에 따라 달라집니다.']]},
-vacuum:{label:'청소기',sample:'무선 청소기 최대 흡입력 280W 최대 사용시간 60분 본체 무게 2.5kg 배터리',rules:[
-['VC-01','우리 집 청소 방식에 흡입력이 충분할까요?',['흡입력','W','AW'],'흡입력은 바닥 유형과 실제 사용하는 모드에서 충분한지 함께 보세요.','최대 수치는 특정 시험·모드 조건일 수 있습니다.'],
-['VC-02','한 번 충전으로 집 전체를 청소할 수 있나요?',['사용시간','분','배터리'],'최대 사용시간과 측정 모드를 함께 확인하세요.','강한 모드에서는 사용시간이 짧아질 수 있습니다.'],
-['VC-03','매일 들고 쓰기에 부담스럽지 않을까요?',['무게','kg','경량'],'자주 쓰는 제품이라면 손에 들리는 무게와 보관 방식도 중요합니다.','브러시 구성에 따라 체감 무게가 달라집니다.'],
-['VC-04','로봇청소기가 우리 집 구조를 잘 다닐 수 있을까요?',['로봇','문턱','카펫','라이다'],'문턱·카펫·장애물 대응을 집 구조와 함께 확인하세요.','시험환경과 실제 집 구조에 따라 차이가 날 수 있습니다.']]}
+<script>
+const D={
+tv:{label:'TV',axes:['화면 크기','화질 성향','움직임 성능','사운드 구성'],sample:'75인치 4K OLED 주사율 120Hz HDMI2.1 VRR ALLM 스피커 2.0채널 출력 20W eARC',
+make:t=>{
+ let inch=num(t,/(\d{2,3})\s*(?:인치|형|inch|")/i),hz=num(t,/(\d{2,3})\s*Hz/i),w=num(t,/(\d{1,3})\s*W/i);
+ let panel=kw(t,['OLED','Mini LED','미니LED','QLED','QNED','LED','LCD']);
+ let sound=(t.match(/(\d\.\d)\s*채널/)||[])[1];
+ let dist={55:'약 1.7~2.3m',65:'약 2.0~2.7m',75:'약 2.3~3.1m',77:'약 2.3~3.2m',83:'약 2.5~3.4m',85:'약 2.6~3.5m',98:'약 3.0~4.1m'}[inch]||null;
+ return [
+  card('01 · SCREEN SIZE',inch?inch+'형, '+(dist?dist+' 시청거리를 참고할 수 있는 화면 크기입니다': '대화면 제품입니다'):'화면 크기 정보 확인이 필요합니다',inch?'인치 숫자를 그대로 보지 말고 실제 소파와 TV 사이 거리와 함께 보세요.':'화면 크기 스펙이 확인되지 않아 거리 해석은 생성하지 않습니다.',dist?'집의 실제 시청거리가 '+dist.replace('약 ','')+' 범위와 얼마나 가까운지 확인해보세요.':'화면 크기 데이터가 확보되면 동일 기준으로 거리 정보를 생성합니다.',inch?[inch+'형']:[]),
+  card('02 · PICTURE',panel?panel+', '+pic(panel):'패널 정보 확인이 필요합니다',panel?'패널 방식이 주는 대표적인 화면 특성을 생활 언어로 풀었습니다.':'패널/백라이트 정보가 없어 화질 성향을 추정하지 않습니다.','낮에 밝은 공간에서 보는지, 영화처럼 어두운 장면을 많이 보는지 판단해보세요.',panel?[panel]:[]),
+  card('03 · MOTION',hz?hz+'Hz, '+(hz>=120?'스포츠·빠른 화면을 자주 볼 때 체감하기 쉬운 고주사율 구간입니다':'일반 방송·OTT 시청 중심의 기본 주사율 구간입니다'):'주사율 정보 확인이 필요합니다',hz?'Native 주사율을 기준으로 움직임 특성을 해석합니다. '+(/VRR/i.test(t)?'VRR도 지원합니다.':''):'주사율을 추정하지 않습니다.','스포츠·게임 비중이 낮다면 이 항목의 우선순위는 낮아질 수 있습니다.',[hz?hz+'Hz':null,/VRR/i.test(t)?'VRR':null,/ALLM/i.test(t)?'ALLM':null].filter(Boolean)),
+  card('04 · SOUND',(sound||w)?(sound? sound+'채널 ':'')+(w?w+'W ':'')+'사운드 구성입니다':'사운드 정보 확인이 필요합니다',(sound||w)?'채널과 출력은 절대적인 음질 점수가 아니라 TV 단독 사용의 기본 구성을 이해하는 값입니다.':'스피커 채널/출력 정보가 없어 추정하지 않습니다.',/eARC/i.test(t)?'외부 사운드바를 쓸 계획이라면 eARC 연결을 활용할 수 있습니다.':'영화·공연 사운드를 중시한다면 외부 사운드 연결 사양도 함께 확인해보세요.',[sound?sound+'채널':null,w?w+'W':null,/eARC/i.test(t)?'eARC':null].filter(Boolean))
+ ]}},
+fridge:{label:'양문형 냉장고',axes:['보관 규모','수납 구조','냉각·신선 보관','생활 편의'],sample:'양문형 냉장고 총용량 871L 4도어 냉장 504L 냉동 367L 미세자동정온 도어쿨링 홈바 매직스페이스 아이스메이커',
+make:t=>{
+ let total=num(t,/(?:총용량|용량)\s*:?\s*(\d{3,4})\s*L/i),fr=num(t,/냉장\s*:?\s*(\d{2,4})\s*L/i),fz=num(t,/냉동\s*:?\s*(\d{2,4})\s*L/i),door=num(t,/(\d)\s*도어/);
+ let cap=total?(total>=900?'초대용량':total>=800?'대용량 중에서도 여유 있는':total>=700?'대용량':total>=600?'중형':'컴팩트'):null;
+ let cool=arrkw(t,['미세자동정온','정온','도어쿨링','독립냉각','메탈쿨링','급속냉동']);
+ let conv=arrkw(t,['매직스페이스','홈바','푸드쇼케이스','아이스메이커','오토오픈','자동문열림']);
+ return [
+  card('01 · CAPACITY',total?total+'L, '+cap+' 보관 구간입니다':'총용량 정보 확인이 필요합니다',total?'식재료를 얼마나 많이 보관하는 제품인지 용량 구간으로 먼저 해석합니다.':'용량을 추정하지 않습니다.','평소 장보기 주기와 별도 김치냉장고 사용 여부를 함께 보세요.',total?[total+'L']:[]),
+  card('02 · STORAGE',door?(door+'도어, 냉장·냉동 공간을 나눠 쓰는 구조입니다'):'도어·수납 구조 확인이 필요합니다',(fr||fz)?'냉장 '+(fr||'?')+'L / 냉동 '+(fz||'?')+'L 구성입니다. 도어 수와 실별 용량을 실제 수납 동선으로 해석합니다.':'냉장/냉동 개별 용량이 없어 수납 비중을 추정하지 않습니다.','큰 냄비·반찬통이 많은지, 냉동식품을 자주 꺼내는지 보세요.',[door?door+'도어':null,fr?fr+'L 냉장':null,fz?fz+'L 냉동':null].filter(Boolean)),
+  card('03 · FRESHNESS',cool.length?cool.join('·')+', 냉각과 신선 보관을 강화한 구성입니다':'추가 냉각·신선 기능 확인이 필요합니다',cool.length?'제조사 기능명을 온도 유지·냉기 분배·급속 냉동 같은 공통 의미로 번역합니다.':'기본 냉각 외 추가 기능을 추정하지 않습니다.','신선식품을 오래 보관하는 비중이 높은지 판단해보세요.',cool),
+  card('04 · CONVENIENCE',conv.length?conv.join('·')+', 반복 사용의 수고를 줄이는 편의 기능입니다':'추가 생활 편의 기능이 확인되지 않습니다',conv.length?'홈바·얼음·자동문열림처럼 자주 반복되는 행동을 줄이는 기능만 묶어 설명합니다.':'없는 기능을 만들어내지 않고 기본형으로 표시합니다.','이 기능을 실제로 자주 쓸지, 기본형과의 가격 차이가 가치 있는지 보세요.',conv)
+ ]}},
+washer:{label:'세탁기',axes:['세탁 방식','세탁량','의류 케어','자동화 편의'],sample:'드럼 세탁기 24kg AI DD 스팀 알러지케어 자동세제 자동문열림',
+make:t=>{
+ let kg=num(t,/(\d+(?:\.\d+)?)\s*kg/i),type=/드럼|프런트/i.test(t)?'드럼':/통돌이|일반세탁기|탑로드/i.test(t)?'통돌이':null;
+ let care=arrkw(t,['AI DD','스팀','트루스팀','알러지케어','삶음','이불코스','울코스']);
+ let auto=arrkw(t,['자동세제','자동 세제','오토오픈','자동문열림','AI세탁','AI 세탁','무게감지']);
+ let cap=kg?(kg>=23?'초대용량':kg>=20?'대용량':kg>=16?'중대형':kg>=10?'중소형':'소용량'):null;
+ return [
+  card('01 · WASH TYPE',type?(type+' 방식, '+(type==='드럼'?'낙차를 이용해 세탁하는 프런트로드 타입입니다':'강한 물살을 이용하는 탑로드 타입입니다')):'세탁 방식 확인이 필요합니다',type?(type==='드럼'?'옷감을 들어 올렸다 떨어뜨리는 구조의 특성을 쉽게 풀어 설명합니다.':'세탁판과 통의 물살을 활용하는 구조의 특성을 쉽게 풀어 설명합니다.'):'방식을 추정하지 않습니다.','평소 선호하는 세탁 방식과 투입·꺼내기 동선을 비교해보세요.',type?[type]:[]),
+  card('02 · CAPACITY',kg?kg+'kg, '+cap+' 세탁 구간입니다':'세탁용량 정보 확인이 필요합니다',kg?'kg는 세탁조 부피 그 자체가 아니라 제품이 처리할 수 있는 세탁물 무게 기준입니다.':'용량을 추정하지 않습니다.','가족 수보다 실제 1회 빨래량과 세탁 주기를 기준으로 보세요.',kg?[kg+'kg']:[]),
+  card('03 · GARMENT CARE',care.length?care.join('·')+', 의류·위생 관리 기능이 강화된 구성입니다':'특화 의류 케어 기능이 확인되지 않습니다',care.length?'스팀·AI·특화코스를 옷감 보호나 위생 관리의 의미로 바꿔 설명합니다.':'기본 세탁 기능 중심으로 표시합니다.','섬세한 의류나 침구·위생 코스를 실제로 자주 쓰는지 보세요.',care),
+  card('04 · AUTOMATION',auto.length?auto.join('·')+', 반복적인 세탁 설정의 수고를 줄이는 구성입니다':'추가 자동화 편의 기능이 확인되지 않습니다',auto.length?'세제 계량·코스 선택·문 열기처럼 반복 행동을 얼마나 줄이는지 설명합니다.':'없는 편의 기능을 추정하지 않습니다.','자동화 기능에 지불하는 추가 가격이 내 사용 빈도에 맞는지 판단해보세요.',auto)
+ ]}},
+aircon:{label:'벽걸이 에어컨',axes:['냉방 범위','전력 효율','바람·쾌적','내부 관리'],sample:'벽걸이 에어컨 냉방면적 18.7㎡ 6평 에너지소비효율 1등급 무풍 제습 자동건조 열교환기 세척',
+make:t=>{
+ let area=num(t,/냉방면적\s*:?\s*(\d+(?:\.\d+)?)\s*㎡/i)||num(t,/(\d+(?:\.\d+)?)\s*㎡/),grade=num(t,/([1-5])\s*등급/);
+ let airflow=arrkw(t,['무풍','간접풍','미세풍','제습','쾌적']);
+ let care=arrkw(t,['자동건조','열교환기세척','열교환기 세척','셀프클린','필터클린']);
+ let py=area?Math.round(area/3.3058):null;
+ return [
+  card('01 · COOLING AREA',area?area+'㎡, 약 '+py+'평형 냉방 구간입니다':'냉방면적 정보 확인이 필요합니다',area?'벽걸이 에어컨의 표기 냉방면적을 실제 방 크기와 비교할 수 있게 환산합니다.':'아파트 전체 평수로 추정하지 않습니다.','실제 냉방할 방의 면적을 기준으로 비교하세요. 큰 창·서향·최상층은 여유가 더 필요할 수 있습니다.',area?[area+'㎡',py+'평형']:[]),
+  card('02 · EFFICIENCY',grade?grade+'등급, 동일 냉방면적 제품끼리 효율을 비교할 때 보는 값입니다':'에너지효율 정보 확인이 필요합니다',grade?'등급 자체를 전기요금으로 직접 환산하지 않고 비교 기준으로만 해석합니다.':'효율을 추정하지 않습니다.','실제 전기요금은 사용시간·설정온도·단열 조건에 따라 달라집니다.',grade?[grade+'등급']:[]),
+  card('03 · AIRFLOW',airflow.length?airflow.join('·')+', 바람 체감과 습도 관리에 초점을 둔 구성입니다':'추가 바람·쾌적 기능이 확인되지 않습니다',airflow.length?'제조사 기능명을 직접바람 감소·제습 같은 실제 체감 의미로 바꿉니다.':'기본 냉방 중심으로 표시합니다.','빠른 강풍 냉방과 부드러운 유지 냉방 중 무엇을 더 자주 쓰는지 보세요.',airflow),
+  card('04 · SELF CARE',care.length?care.join('·')+', 사용 후 내부 관리 수고를 줄이는 구성입니다':'추가 내부관리 기능이 확인되지 않습니다',care.length?'자동건조·열교환기 세척을 청소 수고 감소의 의미로 설명합니다.':'없는 기능을 추정하지 않습니다.','자동관리 기능이 있어도 정기적인 필터·내부 청소는 필요합니다.',care)
+ ]}},
+vacuum:{label:'무선청소기',axes:['흡입 성능','사용시간','다루기 쉬움','청소 범위·관리'],sample:'무선 핸디스틱 흡입력 280W 사용시간 30분 최대 무게 2.49kg 와이드브러시 침구브러시 먼지비움 스테이션',
+make:t=>{
+ let suction=num(t,/흡입력\s*:?\s*(\d+(?:\.\d+)?)\s*(W|AW)/i),unit=(t.match(/흡입력\s*:?\s*\d+(?:\.\d+)?\s*(W|AW|Pa)/i)||[])[1],runtime=num(t,/(?:사용시간|최대)\s*:?\s*(\d{1,3})\s*분/i)||num(t,/(\d{1,3})\s*분\s*\(최대\)/i),weight=num(t,/무게\s*:?\s*(\d(?:\.\d+)?)\s*kg/i);
+ let tools=arrkw(t,['와이드','침구브러시','펫브러시','펫브러쉬','물걸레','먼지비움','자동먼지비움','스테이션']);
+ let suckText=suction&&unit?(unit.toUpperCase()==='PA'?suction+unit+', Pa는 W/AW와 직접 비교하지 않는 흡입 압력 단위입니다':suction+unit+', '+(suction>=200?'메인 청소기로 강한 흡입을 원하는 제품군입니다':suction>=150?'일상 청소 중심의 중간 흡입 구간입니다':'가벼운 부분 청소에 가까운 흡입 구간입니다')):'흡입력 정보 확인이 필요합니다';
+ let wt=weight?(weight<=2?'가벼운 편':weight<=2.4?'비교적 가벼운 편':weight<=2.7?'일반적인 범위':'무게감이 있는 편'):null;
+ return [
+  card('01 · SUCTION',suckText,suction&&unit?'흡입력은 단위와 측정 조건을 함께 보고 같은 단위끼리만 비교합니다.':'수치를 추정하거나 Pa와 W/AW를 임의 환산하지 않습니다.','카펫·틈새 청소가 많은지, 강모드 사용시간까지 함께 보세요.',suction&&unit?[suction+unit]:[]),
+  card('02 · RUNTIME',runtime?'최대 '+runtime+'분, '+(runtime>=60?'장시간 청소를 고려할 수 있는 구간입니다':runtime>=40?'일반적인 1회 청소를 비교할 때 보는 구간입니다':'짧고 집중적인 청소에 가까운 구간입니다'):'사용시간 정보 확인이 필요합니다',runtime?'최대 시간은 실제 일반모드 시간과 다를 수 있어 측정 조건을 같이 봐야 합니다.':'시간을 추정하지 않습니다.','평소 한 번 청소하는 데 걸리는 시간과 배터리 교체 가능 여부를 확인하세요.',runtime?[runtime+'분']:[]),
+  card('03 · HANDLING',weight?weight+'kg, 주요 무선청소기에서 '+wt+'으로 볼 수 있습니다':'무게 정보 확인이 필요합니다',weight?'무게 숫자와 함께 모터·배터리 위치에 따른 손목 체감 차이가 있음을 안내합니다.':'체감무게를 추정하지 않습니다.','계단·침구처럼 들어 올려 쓰는 청소가 많은지 보세요.',weight?[weight+'kg']:[]),
+  card('04 · COVERAGE',tools.length?tools.join('·')+', 청소 범위와 사후 관리 편의를 넓히는 구성입니다':'추가 브러시·관리 기능이 확인되지 않습니다',tools.length?'브러시와 스테이션을 “어디를 청소하고 어떤 수고를 줄이는지”로 번역합니다.':'기본 바닥 청소 구성으로 표시합니다.','침구·펫·물걸레 등 실제 집에서 필요한 청소영역이 포함되는지 확인하세요.',tools)
+ ]}}
 };
-let cat='fridge',files=[],fragment='';const $=s=>document.querySelector(s);
-function cats(){ $('#cats').innerHTML=Object.entries(defs).map(([k,v])=>'<button data-k="'+k+'" class="'+(k===cat?'on':'')+'">'+v.label+'</button>').join('');document.querySelectorAll('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.k;cats();});}
-function add(list){[...list].forEach(f=>{if(f.type.startsWith('image/'))files.push(f)});$('#thumbs').innerHTML=files.map(f=>'<img src="'+URL.createObjectURL(f)+'">').join('');$('#status').textContent=files.length+'개 이미지 준비됨';}
-$('#pick').onclick=()=>$('#file').click();$('#file').onchange=e=>add(e.target.files);
-['dragover','dragenter'].forEach(x=>$('#drop').addEventListener(x,e=>{e.preventDefault();$('#drop').classList.add('hot')}));
-$('#drop').ondrop=e=>{e.preventDefault();$('#drop').classList.remove('hot');add(e.dataTransfer.files)};
-document.addEventListener('paste',e=>{const a=[...e.clipboardData.items].filter(i=>i.type.startsWith('image/')).map(i=>i.getAsFile());if(a.length)add(a)});
-$('#ocr').onclick=async()=>{if(!files.length)return alert('이미지를 먼저 추가해 주세요.');$('#status').textContent='OCR 준비 중';const w=await createWorker('kor+eng',1,{logger:m=>{if(m.progress)$('#status').textContent='OCR '+Math.round(m.progress*100)+'%'}});let out=[];for(const f of files){const r=await w.recognize(f);out.push(r.data.text)}await w.terminate();$('#txt').value=out.join('\n\n');$('#status').textContent='OCR 완료';};
-function facts(t){let a=[],m;if(m=t.match(/\d{2,4}\s*[x×]\s*\d{2,4}\s*[x×]\s*\d{2,4}\s*mm/i))a.push(m[0]);for(const r of [/\d{2,4}\s*L/ig,/\d+(?:\.\d+)?\s*kg/ig,/\d{2,3}\s*Hz/ig,/\d+(?:\.\d+)?\s*㎡/g,/\d{2,3}\s*분/g]){const z=t.match(r);if(z)a.push(...z.slice(0,2))}return [...new Set(a)].slice(0,6)}
-$('#make').onclick=()=>{const t=$('#txt').value;if(!t.trim())return alert('추출 텍스트를 먼저 넣어 주세요.');const f=facts(t),items=defs[cat].rules.map(r=>({r,score:r[2].filter(k=>t.toLowerCase().includes(k.toLowerCase())).length})).filter(x=>x.score>0);$('#cards').innerHTML=items.map(x=>'<div class="card"><div class="ey">'+x.r[0]+' · SIGNAL '+x.score+'</div><h3>'+x.r[1]+'</h3><p>'+x.r[3]+'</p>'+f.map(v=>'<span class="fact">'+v+'</span>').join('')+'<p>※ '+x.r[4]+'</p></div>').join('')||'<div class="sub">근거 데이터가 잡히지 않았습니다.</div>';fragment='<section class="hicheck-snippet" data-category="'+cat+'">'+items.map(x=>'<article class="hicheck-item"><div class="hicheck-kicker">HI-CHECK · '+x.r[0]+'</div><h3 class="hicheck-title">'+x.r[1]+'</h3><p class="hicheck-summary">'+x.r[3]+'</p><p class="hicheck-caution">※ '+x.r[4]+'</p></article>').join('')+'</section>';$('#preview').innerHTML=fragment;};
-$('#sample').onclick=()=>{$('#txt').value=defs[cat].sample;$('#make').click()};$('#reset').onclick=()=>{files=[];$('#thumbs').innerHTML='';$('#txt').value='';$('#cards').innerHTML='<div class="sub">아직 결과가 없습니다.</div>';$('#preview').textContent='생성 결과가 여기에 표시됩니다.'};
-$('#copy').onclick=()=>navigator.clipboard.writeText(fragment);$('#down').onclick=()=>{if(!fragment)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([fragment],{type:'text/html;charset=utf-8'}));a.download='hicheck-'+cat+'-snippet.html';a.click()};cats();
+function num(t,r){let m=t.match(r);return m?parseFloat(m[1]):null}
+function kw(t,a){return a.find(x=>t.toLowerCase().includes(x.toLowerCase()))||null}
+function arrkw(t,a){return [...new Set(a.filter(x=>t.toLowerCase().includes(x.toLowerCase())))]}
+function pic(p){p=p.toLowerCase();if(p.includes('oled'))return '어두운 장면의 명암과 블랙 표현에 강점이 있는 타입입니다';if(p.includes('mini'))return '높은 밝기와 세밀한 백라이트 제어를 함께 노리는 타입입니다';if(p.includes('qled')||p.includes('qned'))return '밝은 화면과 색 표현을 강화한 LCD 계열 타입입니다';return '범용적인 LCD/LED 화면 특성을 가진 타입입니다'}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function card(k,title,summary,check,facts){return{k,title,summary,check,facts}}
+let cat='tv',files=[],fragment='';
+const $=s=>document.querySelector(s);
+function renderCats(){ $('#cats').innerHTML=Object.entries(D).map(([k,v])=>'<button data-k="'+k+'" class="'+(k===cat?'on':'')+'">'+v.label+'</button>').join('');document.querySelectorAll('#cats button').forEach(b=>b.onclick=()=>{cat=b.dataset.k;renderCats();$('#axisnote').textContent=D[cat].axes.map((x,i)=>(i+1)+'. '+x).join('  ·  ');});$('#axisnote').textContent=D[cat].axes.map((x,i)=>(i+1)+'. '+x).join('  ·  ');}
+function add(list){[...list].forEach(f=>{if(f.type&&f.type.startsWith('image/'))files.push(f)});$('#thumbs').innerHTML=files.map(f=>'<img src="'+URL.createObjectURL(f)+'">').join('');$('#status').textContent=files.length+'개 이미지 준비됨';}
+$('#pick').onclick=()=>$('#file').click();$('#file').onchange=e=>add(e.target.files);['dragover','dragenter'].forEach(x=>$('#drop').addEventListener(x,e=>{e.preventDefault();$('#drop').classList.add('hot')}));$('#drop').ondragleave=()=>$('#drop').classList.remove('hot');$('#drop').ondrop=e=>{e.preventDefault();$('#drop').classList.remove('hot');add(e.dataTransfer.files)};
+document.addEventListener('paste',e=>{if(!e.clipboardData)return;const a=[...e.clipboardData.items].filter(i=>i.type.startsWith('image/')).map(i=>i.getAsFile()).filter(Boolean);if(a.length)add(a)});
+$('#ocr').onclick=async()=>{if(!files.length)return alert('이미지를 먼저 추가해 주세요.');if(!window.Tesseract)return alert('OCR 라이브러리를 불러오지 못했습니다.');$('#status').textContent='OCR 준비 중';const w=await Tesseract.createWorker('kor+eng',1,{logger:m=>{if(m.progress)$('#status').textContent='OCR '+Math.round(m.progress*100)+'%'}});let out=[];for(const f of files){const r=await w.recognize(f);out.push(r.data.text)}await w.terminate();$('#txt').value=out.join('\n\n');$('#status').textContent='OCR 완료 · 숫자와 단위를 확인한 뒤 생성하세요.';};
+function build(){
+ const t=$('#txt').value;if(!t.trim())return alert('추출 텍스트를 먼저 넣어 주세요.');
+ const items=D[cat].make(t);
+ $('#cards').innerHTML=items.map(x=>'<article class="card"><div class="ey">'+esc(x.k)+'</div><h3>'+esc(x.title)+'</h3><p>'+esc(x.summary)+'</p><div>'+x.facts.map(f=>'<span class="fact">'+esc(f)+'</span>').join('')+'</div><p class="'+(x.title.includes('확인')?'missing':'')+'">판단 포인트 · '+esc(x.check)+'</p></article>').join('');
+ fragment='<section class="hicheck-snippet" data-category="'+cat+'">'+items.map(x=>'<article class="hicheck-item"><div class="hicheck-kicker">'+esc(x.k)+'</div><h3 class="hicheck-title">'+esc(x.title)+'</h3><p class="hicheck-summary">'+esc(x.summary)+'</p>'+(x.facts.length?'<div class="hicheck-facts">'+x.facts.map(f=>'<span class="hicheck-fact">'+esc(f)+'</span>').join('')+'</div>':'')+'<p class="hicheck-check">'+esc(x.check)+'</p></article>').join('')+'</section>';
+ $('#preview').innerHTML=fragment;
+}
+$('#make').onclick=build;$('#sample').onclick=()=>{$('#txt').value=D[cat].sample;build()};$('#reset').onclick=()=>{files=[];$('#thumbs').innerHTML='';$('#txt').value='';$('#cards').innerHTML='<div class="sub">아직 결과가 없습니다.</div>';$('#preview').textContent='생성 결과가 여기에 표시됩니다.'};
+$('#copy').onclick=()=>{if(!fragment)return;navigator.clipboard.writeText(fragment)};
+$('#down').onclick=()=>{if(!fragment)return;const style='<style>.hicheck-snippet{font-family:Pretendard,system-ui,sans-serif;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.hicheck-item{border:1px solid #e6e6e6;border-radius:12px;padding:20px;background:#fff;color:#111}.hicheck-kicker{font-size:11px;font-weight:700;color:#7a6e00}.hicheck-title{font-size:20px;line-height:1.35;margin:6px 0 10px}.hicheck-summary{font-size:14px;line-height:1.65;color:#333}.hicheck-facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.hicheck-fact{font-size:11px;background:#f3f0d6;color:#564e00;padding:5px 8px;border-radius:99px}.hicheck-check{font-size:11px;color:#777;border-top:1px solid #eee;padding-top:10px;margin-top:12px}@media(max-width:700px){.hicheck-snippet{grid-template-columns:1fr}}</style>';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([style+fragment],{type:'text/html;charset=utf-8'}));a.download='hicheck-'+cat+'-snippet.html';a.click()};
+renderCats();
 </script></body></html>
