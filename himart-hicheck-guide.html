@@ -87,7 +87,17 @@ details.fold[open]>summary .fold-arrow{transform:rotate(180deg)}
 .local-panel .sources{margin:20px 0 0}
 @media(max-width:680px){.local-tabs{gap:4px}.local-tab{flex:1;text-align:center;font-size:15px;padding:13px 6px}.local-panel{padding-top:14px}}
 @media print{.local-tabs{display:none}.local-panel[hidden]{display:block!important}.local-panel{break-inside:auto}}
-</style></head><body><header><h1>카테고리별 필요 정보 요약</h1></header><main><section id="tv" class="cat"><div class="cat-head"><span class="cat-no">01 / 05</span><h2>TV</h2><p>화면 크기·거리, 실제 보는 콘텐츠, 게임·오디오 연결까지 같은 6개 항목으로 비교</p></div> <div class="local-tabs" role="tablist" aria-label="TV 정보 보기">
+
+/* Single-file offline export actions */
+header{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.file-actions{display:flex;gap:8px;align-items:center}
+.file-actions button{font:650 13px Pretendard,"Apple SD Gothic Neo",Arial,sans-serif;color:#171607;border:1px solid var(--point);background:var(--point);padding:12px 16px;cursor:pointer;white-space:nowrap;transition:filter .15s ease}
+.file-actions button:hover{filter:brightness(1.14)}
+.file-actions button:first-child{color:var(--point);background:#1b1a0e;border:1px solid #887f2d}
+.file-actions span{font-size:15px;margin-left:7px}
+@media(max-width:720px){.file-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}.file-actions button{white-space:normal;font-size:12px;padding:11px 7px}}
+@media print{.file-actions{display:none}}
+</style></head><body><header><h1>카테고리별 필요 정보 요약</h1><div class="file-actions"><button type="button" id="download-html" title="스타일과 동작이 모두 포함된 HTML 파일 저장">HTML 다운로드 <span>↓</span></button><button type="button" id="download-zip" title="독립 실행 HTML·선정 근거·문구 데이터·사용 안내가 포함된 ZIP 저장">전체 ZIP 다운로드 <span>↓</span></button></div></header><main><section id="tv" class="cat"><div class="cat-head"><span class="cat-no">01 / 05</span><h2>TV</h2><p>화면 크기·거리, 실제 보는 콘텐츠, 게임·오디오 연결까지 같은 6개 항목으로 비교</p></div> <div class="local-tabs" role="tablist" aria-label="TV 정보 보기">
     <button class="local-tab active" type="button" id="tv-tab-preview" role="tab" aria-selected="true" aria-controls="tv-panel-preview" tabindex="0" data-view="preview">실제 노출 내용</button>
     <button class="local-tab" type="button" id="tv-tab-reasons" role="tab" aria-selected="false" aria-controls="tv-panel-reasons" tabindex="-1" data-view="reasons">선정 근거</button>
     <button class="local-tab" type="button" id="tv-tab-rules" role="tab" aria-selected="false" aria-controls="tv-panel-rules" tabindex="-1" data-view="rules">문구 기준표</button>
@@ -243,5 +253,153 @@ document.querySelectorAll(".lab[data-category]").forEach(lab=>{
     }
   });
   refresh();
+});
+
+// Export works locally with no remote libraries, stylesheets, images or scripts.
+const utf8=new TextEncoder();
+function saveBlob(blob,name){
+ const url=URL.createObjectURL(blob);
+ const anchor=document.createElement("a");
+ anchor.href=url;anchor.download=name;
+ document.body.append(anchor);anchor.click();anchor.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),5000);
+}
+function offlineHTML(){
+ const clone=document.documentElement.cloneNode(true);
+ // The six preview cards are created by the embedded JS at run time.
+ // Remove those transient nodes so the exported file does not duplicate cards.
+ clone.querySelectorAll(".results").forEach(el=>el.replaceChildren());
+ clone.querySelectorAll(".cat").forEach(cat=>{
+  const tabs=[...cat.querySelectorAll(".local-tab")];
+  tabs.forEach((tab,index)=>{
+   tab.classList.toggle("active",index===0);
+   tab.setAttribute("aria-selected",index===0?"true":"false");
+   tab.tabIndex=index===0?0:-1;
+  });
+  cat.querySelectorAll(".local-panel").forEach((panel,index)=>{
+   if(index===0)panel.removeAttribute("hidden");
+   else panel.setAttribute("hidden","");
+  });
+ });
+ return "<!doctype html>\n"+clone.outerHTML;
+}
+function dataJSON(){
+ const categories=[...document.querySelectorAll("section.cat")].map(cat=>{
+  const rationale=[...cat.querySelectorAll("table.why tbody tr")].map(tr=>{
+   const td=tr.querySelectorAll("td");
+   return {
+    axis:td[0].textContent.trim(),
+    question:td[1].textContent.trim(),
+    selection_reason:td[2].textContent.trim(),
+    shown_information:td[3].childNodes[0]?.textContent?.trim()||"",
+    source_fields:td[3].querySelector(".why-fields")?.textContent.trim()||"",
+    references:[...td[3].querySelectorAll("a[href]")].map(a=>({label:a.textContent.trim(),url:a.href}))
+   };
+  });
+  const axes=[...cat.querySelectorAll(".axis")].map(axis=>({
+   axis_id:axis.id,
+   axis_name:axis.querySelector("h4")?.textContent.trim()||"",
+   rules:[...axis.querySelectorAll("tbody tr")].map(tr=>{
+    const td=tr.querySelectorAll("td");
+    return {
+     code:td[0].querySelector(".code-label")?.textContent.trim()||"",
+     condition:td[0].querySelector("strong")?.textContent.trim()||"",
+     display_copy:td[1].textContent.trim(),
+     evidence_type:td[2].textContent.trim()
+    };
+   })
+  }));
+  return {category:cat.querySelector("h2")?.textContent.trim()||"",key:cat.id,selection_reasons:rationale,axes};
+ });
+ return JSON.stringify({title:"카테고리별 필요 정보 요약",note:"선정 근거·규칙은 검토용 초안이며 제조사 실제 SKU와 MD 검증 전에는 확정하지 않습니다.",categories},null,2);
+}
+let crcTable;
+function crc32(bytes){
+ if(!crcTable){
+  crcTable=new Uint32Array(256);
+  for(let i=0;i<256;i++){
+   let c=i;
+   for(let k=0;k<8;k++)c=c&1?(0xedb88320^(c>>>1)):(c>>>1);
+   crcTable[i]=c>>>0;
+  }
+ }
+ let crc=0xffffffff;
+ for(const b of bytes)crc=crcTable[(crc^b)&255]^(crc>>>8);
+ return (crc^0xffffffff)>>>0;
+}
+function zipBytes(files){
+ // Valid ZIP with UTF-8 names, STORE method and CRC-32, generated locally.
+ const locals=[],centrals=[];
+ let offset=0;
+ for(const [name,content] of files){
+  const fname=utf8.encode(name);
+  const body=utf8.encode(content);
+  const checksum=crc32(body);
+  const local=new Uint8Array(30+fname.length);
+  const l=new DataView(local.buffer);
+  l.setUint32(0,0x04034b50,true);
+  l.setUint16(4,20,true);
+  l.setUint16(6,0x0800,true);
+  l.setUint16(8,0,true);
+  l.setUint32(14,checksum,true);
+  l.setUint32(18,body.length,true);
+  l.setUint32(22,body.length,true);
+  l.setUint16(26,fname.length,true);
+  local.set(fname,30);
+  locals.push(local,body);
+  const central=new Uint8Array(46+fname.length);
+  const c=new DataView(central.buffer);
+  c.setUint32(0,0x02014b50,true);
+  c.setUint16(4,20,true);
+  c.setUint16(6,20,true);
+  c.setUint16(8,0x0800,true);
+  c.setUint16(10,0,true);
+  c.setUint32(16,checksum,true);
+  c.setUint32(20,body.length,true);
+  c.setUint32(24,body.length,true);
+  c.setUint16(28,fname.length,true);
+  c.setUint32(42,offset,true);
+  central.set(fname,46);
+  centrals.push(central);
+  offset+=local.length+body.length;
+ }
+ const centralSize=centrals.reduce((n,part)=>n+part.length,0);
+ const end=new Uint8Array(22);
+ const v=new DataView(end.buffer);
+ v.setUint32(0,0x06054b50,true);
+ v.setUint16(8,files.length,true);
+ v.setUint16(10,files.length,true);
+ v.setUint32(12,centralSize,true);
+ v.setUint32(16,offset,true);
+ return new Blob([...locals,...centrals,end],{type:"application/zip"});
+}
+function readmeText(){
+ return [
+  "HI-CHECK | 카테고리별 필요 정보 요약",
+  "",
+  "1. index.html 을 Chrome / Safari / Edge 등 브라우저에서 열면 됩니다.",
+  "2. 서버 설치, 인터넷 연결, 외부 자바스크립트 또는 이미지 파일이 필요하지 않습니다.",
+  "3. TV·양문형 냉장고·세탁기·벽걸이 에어컨·무선청소기 5개 카테고리가 세로로 배치됩니다.",
+  "4. 각 카테고리 안에서 실제 노출 내용 / 선정 근거 / 문구 기준표 탭을 이용할 수 있습니다.",
+  "5. 실제 노출 내용의 6개 카드에서 사양을 선택하면 문구가 즉시 바뀝니다.",
+  "6. content-data.json 에는 전체 선정 근거와 조건별 문구가 포함됩니다.",
+  "7. 참고문헌 웹사이트로 이동하는 링크만 인터넷 연결이 필요합니다.",
+  "8. Pretendard 폰트가 기기에 없으면 시스템의 한국어 폰트를 사용합니다. 폰트 파일은 포함하지 않습니다.",
+  "9. 모든 분류 기준과 문구는 MD 검증을 위한 초안이며, 실제 SKU의 승인 정보가 아닙니다.",
+  ""
+ ].join("\n");
+}
+document.getElementById("download-html")?.addEventListener("click",()=>{
+ saveBlob(new Blob([offlineHTML()],{type:"text/html;charset=utf-8"}),"himart-hicheck-offline.html");
+});
+document.getElementById("download-zip")?.addEventListener("click",()=>{
+ const html=offlineHTML();
+ const json=dataJSON();
+ const zip=zipBytes([
+  ["index.html",html],
+  ["content-data.json",json],
+  ["README.txt",readmeText()]
+ ]);
+ saveBlob(zip,"himart-hicheck-offline-complete.zip");
 });
 })();</script></body></html>
