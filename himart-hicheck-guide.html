@@ -70,10 +70,10 @@ details.fold[open]>summary .fold-arrow{transform:rotate(180deg)}
 
 /* Three locally-scoped tabs for each vertically stacked category */
 .cat{scroll-margin-top:18px}
-.local-tabs{display:flex;align-items:stretch;gap:0;border-bottom:1px solid #454545;margin:18px 0 0}
-.local-tab{font:600 13px Pretendard,"Apple SD Gothic Neo",Arial,sans-serif;white-space:nowrap;background:transparent;color:#8f8f8f;border:0;border-bottom:2px solid transparent;padding:15px 23px;cursor:pointer}
-.local-tab:hover{color:#ddd}
-.local-tab.active,.local-tab[aria-selected="true"]{color:#f4f4f4;border-color:var(--point)}
+.local-tabs{display:flex;align-items:stretch;gap:8px;border-bottom:1px solid #57513a;margin:20px 0 0}
+.local-tab{font:700 18px Pretendard,"Apple SD Gothic Neo",Arial,sans-serif;white-space:nowrap;background:#18170b;color:var(--point);border:1px solid #726a2d;border-bottom:3px solid #726a2d;padding:16px 30px;cursor:pointer;border-radius:8px 8px 0 0;transition:background .15s ease,color .15s ease,border-color .15s ease}
+.local-tab:hover{color:#fff;background:#343016;border-color:var(--point)}
+.local-tab.active,.local-tab[aria-selected="true"]{background:var(--point);color:#111;border-color:var(--point);font-weight:750}
 .local-tab:focus-visible{outline:2px solid var(--point);outline-offset:-3px}
 .local-panel[hidden]{display:none!important}
 .local-panel{padding:18px 0 0}
@@ -85,7 +85,7 @@ details.fold[open]>summary .fold-arrow{transform:rotate(180deg)}
 .local-panel .axisnav{display:none}
 .local-panel .axis{margin:22px 0 28px}
 .local-panel .sources{margin:20px 0 0}
-@media(max-width:680px){.local-tab{flex:1;text-align:center;font-size:12px;padding:13px 8px}.local-panel{padding-top:14px}}
+@media(max-width:680px){.local-tabs{gap:4px}.local-tab{flex:1;text-align:center;font-size:15px;padding:13px 6px}.local-panel{padding-top:14px}}
 @media print{.local-tabs{display:none}.local-panel[hidden]{display:block!important}.local-panel{break-inside:auto}}
 </style></head><body><header><h1>카테고리별 필요 정보 요약</h1></header><main><section id="tv" class="cat"><div class="cat-head"><span class="cat-no">01 / 05</span><h2>TV</h2><p>화면 크기·거리, 실제 보는 콘텐츠, 게임·오디오 연결까지 같은 6개 항목으로 비교</p></div> <div class="local-tabs" role="tablist" aria-label="TV 정보 보기">
     <button class="local-tab active" type="button" id="tv-tab-preview" role="tab" aria-selected="true" aria-controls="tv-panel-preview" tabindex="0" data-view="preview">실제 노출 내용</button>
