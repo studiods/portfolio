@@ -2,50 +2,66 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Cache-Control" content="no-store">
-<title>FOR KURLY · Interview Preparation</title>
+<title>FOR KURLY · Private Interview Workspace</title>
 <style>
-:root{color-scheme:dark;--bg:#080a0d;--txt:#f1f4f8;--sub:#b2bdcb;--blue:#89b6ff}
+:root{color-scheme:dark;--bg:#080a0d;--txt:#f1f4f8;--sub:#b2bdcb;--blue:#89b6ff;--outline:#29394c}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--txt);min-height:100vh;display:grid;place-items:center;font:14px/1.8 Pretendard,"Apple SD Gothic Neo",-apple-system,system-ui,sans-serif;padding:28px}
-main{width:min(100%,510px);padding:34px;border:1px solid #263546;border-radius:12px;background:#101721}
-h1{font-size:clamp(34px,6vw,48px);letter-spacing:-.055em;margin:10px 0;line-height:1.13}
-small{color:var(--blue);font-size:11px;font-weight:750;letter-spacing:.12em}
-p{color:var(--sub);margin:12px 0}
-button{cursor:pointer;background:#2c5eac;color:#fff;border:0;border-radius:7px;padding:12px 20px;font:inherit;font-weight:700}
-#error{display:none;margin-top:20px;color:#f5b2af;font-size:13px}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--txt);font:14px/1.78 Pretendard,"Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;padding:25px;letter-spacing:-.02em}
+main{max-width:460px;width:100%;border:1px solid var(--outline);background:linear-gradient(135deg,#152136,#0e141c);border-radius:14px;padding:36px 34px}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--blue)}
+h1{font-size:44px;line-height:1.12;letter-spacing:-.06em;margin:18px 0 13px}
+p{color:var(--sub);margin:0 0 25px;font-size:13px}
+label{font-size:11px;font-weight:750;letter-spacing:.07em;color:#c6d6ec;display:block;margin-bottom:8px}
+input{width:100%;background:#0b1118;border:1px solid #475e76;border-radius:7px;padding:14px;color:#fff;font-size:17px;letter-spacing:.13em;outline:none}
+input:focus{border-color:#8db4ff;box-shadow:0 0 0 3px #3b5e9e44}
+button{width:100%;border:0;border-radius:7px;background:#3568b5;color:white;padding:14px 16px;font:inherit;font-weight:750;cursor:pointer;margin-top:14px}
+button:hover{background:#467ac9}button:disabled{opacity:.65;cursor:wait}
+#error{min-height:25px;margin-top:11px;color:#ffb0ac;font-size:12px;line-height:1.65}
+.footer{margin-top:19px;padding-top:17px;border-top:1px solid var(--outline);font-size:11px;color:#8494a7}
+@media(max-width:480px){body{padding:16px}main{padding:28px 22px}h1{font-size:38px}}
 </style>
 </head>
 <body>
 <main>
-<small>FOR KURLY · INTERVIEW PLAYBOOK</small>
-<h1>면접 준비 자료를<br>불러오고 있습니다.</h1>
-<p>컬리 프로덕트 디자인 그룹장 예상 질문·답변 40문항</p>
-<p id="state" aria-live="polite">별도의 비밀번호 없이 자동으로 열립니다.</p>
-<div id="error"><p>자료를 불러오지 못했습니다. 연결 상태를 확인한 후 다시 시도해 주세요.</p><button id="retry" type="button">다시 불러오기</button></div>
+<div class="eyebrow">PRIVATE · PRODUCT DESIGN GROUP LEAD</div>
+<h1>FOR KURLY</h1>
+<p>컬리 프로덕트 디자인 그룹장 면접 준비 자료입니다.<br>접근 비밀번호를 입력해 주세요.</p>
+<form id="auth">
+ <label for="pass">ACCESS PASSWORD</label>
+ <input id="pass" type="password" name="password" autocomplete="current-password" required maxlength="64" autofocus>
+ <button type="submit" id="submit">면접 준비 자료 열기 →</button>
+ <div id="error" role="alert" aria-live="polite"></div>
+</form>
+<div class="footer">개인용 면접 준비 자료 · 검색엔진 색인 차단 설정</div>
 </main>
 <script>
-(function(){
-"use strict";
-var endpoint="https://kkshbnlpmogdzkoyjait.supabase.co/functions/v1/for-kurly/site-access";
-var state=document.getElementById("state"),err=document.getElementById("error");
-async function load(){
- err.style.display="none";state.textContent="비공개 메뉴에 등록되지 않은 독립 페이지를 준비하고 있습니다.";
- try{
-   var response=await fetch(endpoint,{method:"GET",mode:"cors",credentials:"omit",cache:"no-store",referrerPolicy:"no-referrer"});
-   if(!response.ok)throw Error("HTTP "+response.status);
-   var html=await response.text();
-   if(!/^\s*<!doctype html>/i.test(html)||html.indexOf("questionsContainer")<0||html.indexOf("id=\"priority10\"")<0)throw Error("Not a complete interview page");
-   document.open();
-   document.write(html);
-   document.close();
- }catch(e){state.textContent="자료를 불러오는 과정에서 오류가 발생했습니다.";err.style.display="block";}
-}
-document.getElementById("retry").addEventListener("click",load);
-load();
+(()=>{
+ "use strict";
+ const form=document.getElementById("auth");
+ const pass=document.getElementById("pass");
+ const button=document.getElementById("submit");
+ const error=document.getElementById("error");
+ const API="https://kkshbnlpmogdzkoyjait.supabase.co/functions/v1/for-kurly/site-access";
+ form.addEventListener("submit",async e=>{
+  e.preventDefault();if(button.disabled)return;
+  button.disabled=true;button.textContent="확인 중…";error.textContent="";
+  const body=new URLSearchParams({password:pass.value});
+  pass.value="";
+  try{
+    const res=await fetch(API,{method:"POST",mode:"cors",credentials:"omit",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body,cache:"no-store",referrerPolicy:"no-referrer"});
+    if(res.status===401||res.status===403){error.textContent="비밀번호가 일치하지 않습니다.";return}
+    if(res.status===429){error.textContent="시도 횟수가 많습니다. 잠시 후 다시 시도해 주세요.";return}
+    if(!res.ok)throw new Error("HTTP "+res.status);
+    const html=await res.text();
+    if(!/^\s*<!doctype html>/i.test(html)||!html.includes("questionsContainer")||!html.includes('id="priority10"'))throw new Error("Invalid interview document");
+    document.open();document.write(html);document.close();
+  }catch(e){error.textContent="자료를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."}
+  finally{button.disabled=false;button.textContent="면접 준비 자료 열기 →"}
+ });
 })();
 </script>
 </body>
